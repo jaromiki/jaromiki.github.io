@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Množinové algoritmy</h3>
+Množinové operátory nemusíme robiť len s množinami, fungujú aj s inými štruktúrami len tieto musia byť usporiadané
+a musí existovať iterátor, ktorým možno štruktúry prechádzať (nemôžme použiť stack, queue).
+Vo väčšine príkladov budem voliť 2 vstupné "množiny" a jednu výstupnú, všetky budú rovnakého typu.
+Budem sa venovať nasledovným algoritmom. 
+<ul>
+	<li>set_union() ... zjednotenie množín
+	<li>set_intersection() ... prienik množín
+	<li>set_difference() ... prvky z 1. množiny, ktoré nie sú v 2.množine
+	<li>set_symmetric_difference() ... prvky, které nie sú v oboch množinách
+	<li>includes() ... vracia true pokiaľ je podmnožinou
+</ul>	
+<h4>Zjednotenie množín</h4>
+<b>set_union(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)</b>
+	množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec ... iterátory určujúce oblasti na zjednotenie
+	množina3_začiatok ... kam sa má začať zapisovať výsledok, 
+	<br> &nbsp; &nbsp; - pre objekty, ktoré môžu meniť prvky je to OK, ale napr. set to neumožňuje a tam ho musíme pretypovať na vsúvací iterátor - pozri v príklade
+	<br> &nbsp; &nbsp; - samozrejme to pretypovanie možno použiť aj pri zvyšných objektoch aby sa prvky neprepisovali ale vsúvali
+	<br> &nbsp; &nbsp; - ak prvky vo výsledku prepisujeme musíme mať dostatok miesta vo výstupe a preto to pretypovanie je vhodné robiť pri všetkých objektoch
+	<br> &nbsp; &nbsp; - pretypovanie robíme buď priamo na mieste výstupného parametra <b>inserter(object, objekt.begin())</b>
+	<br> &nbsp; &nbsp; - alebo vytvorím vsúvací iterátor  <b>insert_iterator&lt;set&lt;int> > iter(v,v.begin());</b> tu patrí množine/set a je nazvaný iter
+	<br>navratov8 hodnota je iterátor rovnakého typu ako 5. parameter a ukazuje na koniec výstupného objektu
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// zjednotenie množín
+#include &lt;iostream>     // cout
+#include &lt;algorithm>    // set_union,sort,set_intersection 
+#include &lt;vector>       // vector
+#include &lt;list>         // list
+#include &lt;set>          // set
+using namespace std;
+
+int pole1[] = {32,71,12,45,26,80,53,33};         // vytvoríme pole 8 int
+int pole2[] = {12,11,22,80,66,75,45,63};         // vytvoríme pole 8 int
+vector &lt;int> v1(pole1, pole1+8);		//32,71,12,45,26,80,53,33
+vector &lt;int> v2(pole2, pole2+8);		//12,11,22,80,66,75,45,63
+vector &lt;int> v(20);
+list &lt;int> list1(pole1, pole1+8);			//32,71,12,45,26,80,53,33
+list &lt;int> list2(pole2, pole2+8);			//12,11,22,80,66,75,45,63
+list &lt;int> list3(20);
+set &lt;int> s1(pole1, pole1+8);			//12,26,32,33,45,53,71,80
+set &lt;int> s2(pole2, pole2+8);			//11,12,22,45,63,66,75,80
+set &lt;int> s;
+
+int i;
+int main ()
+{ // *************** zjednotenie vektorov prepisovanim
+        cout &lt;&lt;"vektor - prepis: ";
+        sort(v1.begin(),v1.end()); sort(v2.begin(),v2.end());
+        vector &lt;int>::iterator it=set_union(v1.begin(),v1.end(),v2.begin(),v2.end(),v.begin());
+        v.erase(it,v.end());     //odstranim prebytocne
+        for (i=0; i&lt;(int)v.size();i++)
+          cout &lt;&lt;v[i]&lt;&lt;' ';     //11 12 22 26 32 33 45 53 63 66 71 75 80
+        system("pause");
+// zjednotenie vektorov vsuvanim v1,v2 su stale utriedene
+        cout &lt;&lt;"vektor - vsuvanie: ";
+        v.clear();              //vymazem vystupny objekt
+         insert_iterator&lt;vector&lt;int> > iter(v,v.begin());
+//  navratova hodnota ma rovnaky typ ako 5. parameter, ked chcem navratovu hodnotu potrebujem vsuvaci iterator
+//  i ked v tomto pripade ani tu navratovu hodnotu nepotrebujem
+        iter=set_union(v1.begin(),v1.end(),v2.begin(),v2.end(), inserter(v, v.begin()));
+//alebo iter=set_union(v1.begin(),v1.end(),v2.begin(),v2.end(), iter);
+        for (i=0; i&lt;(int)v.size();i++)
+          cout &lt;&lt;v[i]&lt;&lt;' ';     //11 12 22 26 32 33 45 53 63 66 71 75 80
+        system("pause");
+
+// ***************  zjednotenie listov prepisovanim
+        cout &lt;&lt;"list - prepis: ";
+        list1.sort(); list2.sort();
+        list&lt;int>::iterator it_list= set_union(list1.begin(),list1.end(),list2.begin(),list2.end(),list3.begin());
+        list3.erase(it_list,list3.end());     //odstranim prebytocne
+        for (it_list=list3.begin(); it_list!=list3.end();it_list++)
+          cout &lt;&lt;*it_list&lt;&lt;' ';     //11 12 22 26 32 33 45 53 63 66 71 75 80
+        system("pause");
+
+        // zjednotenie vektorov vsuvanim v1,v2 su stale utriedene
+        cout &lt;&lt;"list - vsuvanie: ";
+        list3.clear();              //vymazem vystupny objekt
+         insert_iterator&lt;list&lt;int> > iter_listi(list3,list3.begin());
+        //  navratova hodnota ma rovnaky typ ako 5. parameter, ked chcem navratovu hodnotu potrebujem vsuvaci iterator
+        //  i ked v tomto pripade ani tu navratovu hodnotu nepotrebujem
+        iter_listi= set_union(list1.begin(),list1.end(),list2.begin(),list2.end(), iter_listi);
+        //alebo iter_list=set_union(list1.begin(),list1.end(),list2.begin(),list2.end(), iter_list);
+        for (it_list=list3.begin(); it_list!=list3.end();it_list++)
+          cout &lt;&lt;*it_list&lt;&lt;' ';     //11 12 22 26 32 33 45 53 63 66 71 75 80
+        system("pause");
+// ***************  zjednotenie množín vsuvanim v1,v2 su stale utriedene
+        cout &lt;&lt;"set - vsuvanie: ";
+         s.clear();              //vymazem vystupny objekt
+         set&lt;int>::iterator it_set;  //"obyčajný iterátor"
+         insert_iterator&lt;set&lt;int> > iter_set(s,s.begin());  //vsúvací iterátor
+         iter_set= set_union(s1.begin(),s1.end(),s2.begin(),s2.end(), iter_set);
+      //alebo iter_list=set_union(list1.begin(),list1.end(),list2.begin(),list2.end(), inserter(v, v.begin()));
+         for (it_set=s.begin(); it_set!=s.end();it_set++)
+           cout &lt;&lt;*it_set&lt;&lt;' ';     //11 12 22 26 32 33 45 53 63 66 71 75 80
+         system("pause");
+
+  return 0;
+}
+
+</pre>
+				</tr></table>
+
+<h4>Prienik množín</h4>
+<b>set_intersection(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)</b>
+	množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec ... iterátory určujúce oblasti na zjednotenie
+	množina3_začiatok ... kam sa má začať zapisovať výsledok, 
+	<br> &nbsp; &nbsp; - pre objekty, ktoré môžu meniť prvky je to OK, ale napr. set to neumožňuje a tam ho musíme pretypovať na vsúvací iterátor - pozri v príklade
+	<br> &nbsp; &nbsp; - samozrejme to pretypovanie možno použiť aj pri zvyšných objektoch aby sa prvky neprepisovali ale vsúvali
+	<br> &nbsp; &nbsp; - ak prvky vo výsledku prepisujeme musíme mať dostatok miesta vo výstupe a preto to pretypovanie je vhodné robiť pri všetkých objektoch
+	<br> &nbsp; &nbsp; - pretypovanie robíme buď priamo na mieste výstupného parametra <b>inserter(object, objekt.begin())</b>
+	<br> &nbsp; &nbsp; - alebo vytvorím vsúvací iterátor  <b>insert_iterator&lt;set&lt;int> > iter(v,v.begin());</b> tu patrí množine/set a je nazvaný iter
+	<br>navratová hodnota je iterátor rovnakého typu ako 5. parameter a ukazuje na koniec výstupného objektu
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// prienik množín
+#include &lt;iostream>     // cout
+#include &lt;algorithm>    // set_union,sort,set_intersection 
+#include &lt;vector>       // vector
+#include &lt;list>         // list
+#include &lt;set>          // set
+using namespace std;
+
+int pole1[] = {32,71,12,45,26,80,53,33};         // vytvoríme pole 8 int
+int pole2[] = {12,11,22,80,66,75,45,63};         // vytvoríme pole 8 int
+vector &lt;int> v1(pole1, pole1+8);		//32,71,12,45,26,80,53,33
+vector &lt;int> v2(pole2, pole2+8);		//12,11,22,80,66,75,45,63
+vector &lt;int> v(20);
+list &lt;int> list1(pole1, pole1+8);			//32,71,12,45,26,80,53,33
+list &lt;int> list2(pole2, pole2+8);			//12,11,22,80,66,75,45,63
+list &lt;int> list3(20);
+set &lt;int> s1(pole1, pole1+8);			//12,26,32,33,45,53,71,80
+set &lt;int> s2(pole2, pole2+8);			//11,12,22,45,63,66,75,80
+set &lt;int> s;
+
+int i;
+int main ()
+{ // *************** prienik vektorov prepisovanim
+        cout &lt;&lt;"vektor - prepis: ";
+        sort(v1.begin(),v1.end()); sort(v2.begin(),v2.end());
+        vector &lt;int>::iterator it=set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),v.begin());
+        v.erase(it,v.end());     //odstranim prebytocne
+        for (i=0; i&lt;(int)v.size();i++)
+          cout &lt;&lt;v[i]&lt;&lt;' ';     //12 45 80
+        system("pause");
+// prienik vektorov vsuvanim v1,v2 su stale utriedene
+        cout &lt;&lt;"vektor - vsuvanie: ";
+        v.clear();              //vymazem vystupny objekt
+         insert_iterator&lt;vector&lt;int> > iter(v,v.begin());
+//  navratova hodnota ma rovnaky typ ako 5. parameter, ked chcem navratovu hodnotu potrebujem vsuvaci iterator
+//  i ked v tomto pripade ani tu navratovu hodnotu nepotrebujem
+        iter=set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(), inserter(v, v.begin()));
+//alebo iter=set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(), iter);
+        for (i=0; i&lt;(int)v.size();i++)
+          cout &lt;&lt;v[i]&lt;&lt;' ';     //12 45 80
+        system("pause");
+
+// ***************  prienik listov prepisovanim
+        cout &lt;&lt;"list - prepis: ";
+        list1.sort(); list2.sort();
+        list&lt;int>::iterator it_list= set_union(list1.begin(),list1.end(),list2.begin(),list2.end(),list3.begin());
+        list3.erase(it_list,list3.end());     //odstranim prebytocne
+        for (it_list=list3.begin(); it_list!=list3.end();it_list++)
+          cout &lt;&lt;*it_list&lt;&lt;' ';     //12 45 80
+        system("pause");
+
+        // prienik vektorov vsuvanim v1,v2 su stale utriedene
+        cout &lt;&lt;"list - vsuvanie: ";
+        list3.clear();              //vymazem vystupny objekt
+         insert_iterator&lt;list&lt;int> > iter_listi(list3,list3.begin());
+        //  navratova hodnota ma rovnaky typ ako 5. parameter, ked chcem navratovu hodnotu potrebujem vsuvaci iterator
+        //  i ked v tomto pripade ani tu navratovu hodnotu nepotrebujem
+        iter_listi= set_intersection(list1.begin(),list1.end(),list2.begin(),list2.end(), iter_listi);
+        //alebo iter_list=set_intersection(list1.begin(),list1.end(),list2.begin(),list2.end(), iter_list);
+        for (it_list=list3.begin(); it_list!=list3.end();it_list++)
+          cout &lt;&lt;*it_list&lt;&lt;' ';     //12 45 80
+        system("pause");
+// ***************  prienik množín vsuvanim v1,v2 su stale utriedene
+        cout &lt;&lt;"set - vsuvanie: ";
+         s.clear();              //vymazem vystupny objekt
+         set&lt;int>::iterator it_set;  //"obyčajný iterátor"
+         insert_iterator&lt;set&lt;int> > iter_set(s,s.begin());  //vsúvací iterátor
+         iter_set= set_intersection(s1.begin(),s1.end(),s2.begin(),s2.end(), iter_set);
+      //alebo iter_list=set_intersection(list1.begin(),list1.end(),list2.begin(),list2.end(), inserter(v, v.begin()));
+         for (it_set=s.begin(); it_set!=s.end();it_set++)
+           cout &lt;&lt;*it_set&lt;&lt;' ';     //12 45 80
+         system("pause");
+
+  return 0;
+}
+
+</pre>
+				</tr></table>
+
+<h4>Rozdiel množín</h4>
+Prvky z 1. množiny, ktoré nie sú v druhej sa zapíšu do tretej
+<br><b>set_difference(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)</b>
+<br>Prvky zo vstupných množín, ktoré sa nachádzajú práve v jednej množine sa zapíšu do tretej
+<br><b>set_symmetric_difference(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// rozdiel množín
+#include &lt;iostream>     // cout
+#include &lt;algorithm>    // set_difference, set_symmetric_difference 
+#include &lt;set>          // set
+using namespace std;
+
+int pole1[] = {32,71,12,45,26,80,53,33};         // vytvoríme pole 8 int
+int pole2[] = {12,11,22,80,66,75,45,63};         // vytvoríme pole 8 int
+set &lt;int> s1(pole1, pole1+8);			//12,26,32,33,45,53,71,80
+set &lt;int> s2(pole2, pole2+8);			//11,12,22,45,63,66,75,80
+set &lt;int> s;
+
+int i;
+int main ()
+{// ***********  rozdiel mnozin s1,s2
+        s.clear();              //vymazem vystupny objekt
+//  navratova hodnota ma rovnaky typ ako 5. parameter, ked chcem navratovu hodnotu potrebujem vsuvaci iterator
+//  i ked v tomto pripade ani tu navratovu hodnotu nepotrebujem
+         set&lt;int>::iterator it_set;  //"obyčajný iterátor"
+         insert_iterator&lt;set&lt;int> > iter_set(s,s.begin());  //vsúvací iterátor
+         iter_set= set_difference(s1.begin(),s1.end(),s2.begin(),s2.end(), iter_set);
+//alebo iter_set=set_difference(set.begin(),set1.end(),set2.begin(),set2.end(), iter_list);
+        for (it_set=s.begin(); it_set!=s.end();it_set++)
+          cout &lt;&lt;*it_list&lt;&lt;' ';     //26 32 33 53 71
+        system("pause");
+// ***********  symetrický rozdiel mnozin s1,s2
+        s.clear();              //vymazem vystupny objekt
+//  navratova hodnota ma rovnaky typ ako 5. parameter, ked chcem navratovu hodnotu potrebujem vsuvaci iterator
+//  i ked v tomto pripade ani tu navratovu hodnotu nepotrebujem
+         iter_set=s.begin();  //vsúvací iterátor nastavím na začiatok
+         iter_set= set_symmetric_difference(s1.begin(),s1.end(),s2.begin(),s2.end(), iter_set);
+//alebo iter_set=set_symmetric_difference(set.begin(),set1.end(),set2.begin(),set2.end(), iter_list);
+        for (it_set=s.begin(); it_set!=s.end();it_set++)
+          cout &lt;&lt;*it_list&lt;&lt;' ';     //11 22 26 32 33 53 63 66 71 75
+        system("pause");
+
+  return 0;
+}
+</pre>
+				</tr></table>
+<h4>test A je podmnožinou B?</h4>
+<b>bool includes(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec)</b>
+Funkcia vráti true ak je množina1 podmnožinou množiny2, inak vráti false
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// rozdiel množín
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::include
+#include &lt;set>          // std::set
+using namespace std;
+
+int pole1[] = {22,75,22,80,45,63};         // vytvoríme pole 8 int
+int pole2[] = {12,11,22,80,66,75,45,63};         // vytvoríme pole 8 int
+set &lt;int> s1(pole1, pole1+8);			//22,45,63,75,80
+set &lt;int> s2(pole2, pole2+8);			//11,12,22,45,63,66,75,80
+
+int main ()
+{// ***********  test mnozin s1,s2
+         if (includes(s1.begin(),s1.end(),s2.begin(),s2.end())
+		 cout <<"mnozina1 je podmnozinou mnoziny2";
+		 else
+		 cout <<"mnozina1 nie je podmnozinou mnoziny2";
+        system("pause");
+
+  return 0;
+}
+</pre>
+				</tr></table>
+
+</body>
+</html>

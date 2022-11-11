@@ -1,0 +1,133 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_v_C++_=282.=29?=
+Date: Thu, 12 Jul 2007 10:01:47 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=570
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED v C++ =
+(2.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED v C++ (2.)</H2>
+<H4>Druh=FD d=EDl o z=E1kladech programov=E1n=ED v jazyce C++, =
+tentokr=E1t o nejd=F9le=9Eit=ECj=9A=ED=20
+=E8=E1sti program=F9 pro Windows - smy=E8ka zpr=E1v</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Proto=9Ee v=9Aechny procesy Windows komunikuj=ED zpr=E1vami, je u =
+v=9Aech program=F9,=20
+kter=E9 p=ED=9Aeme, nutn=E9 tyto zpr=E1vy zpracov=E1vat. Ka=9Ed=FD =
+program, kter=FD k n=EC=E8emu=20
+vyu=9E=EDv=E1 sv=F9j hlavn=ED proces, by m=ECl obsahovat smy=E8ku, =
+kter=E1 "vyt=E1hne" zpr=E1vu z=20
+fronty zpr=E1v dan=E9ho procesu a p=F8ed=E1 ji ke zpracov=E1n=ED a =
+kter=E1 se ukon=E8=ED po=20
+obdr=9Een=ED ukon=E8ovac=ED zpr=E1vy.=20
+<P>Je zde v=9Aak jeden probl=E9m: Pokud program pracuje na n=ECjak=E9m =
+slo=9Eit=E9m v=FDpo=E8tu,=20
+m=ECli byste jej nechat zobrazit dialog se zpr=E1vou nebo, a to je =
+nejv=FDhodn=ECj=9A=ED=20
+=F8e=9Aen=ED, v hlavn=EDm okn=EC vytvo=F8it indik=E1tor zpracov=E1n=ED =
+v=FDpo=E8tu, proto=9Ee pokud=20
+program d=E9le neodpov=EDd=E1 na =9E=E1dnou zpr=E1vu, nebo pokud se jeho =
+fronta rapidn=EC=20
+prodlou=9E=ED, m=F9=9Eete p=F8i stisku Ctrl-Alt-Delete vid=ECt, =9Ee =
+program neodpov=EDd=E1.=20
+Nerv=F3zn=ED u=9Eivatel by se jej mohl takov=FDmto zp=F9sobem pokusit =
+zav=F8=EDt a ztratit tak=20
+d=F9le=9Eit=E1 data. Pou=9Eit=EDm standardn=EDho Windowsovsk=E9ho =
+indik=E1toru (modr=E9=20
+=E8tvere=E8ky), tento probl=E9m odpadne, proto=9Ee tento proces obsahuje =
+vlastn=ED smy=E8ku=20
+zpr=E1v a pokud v=FDpo=E8et nen=ED nijak extr=E9m=EC n=E1ro=E8n=FD, =
+stihne odpov=EDdat i na zpr=E1vy.=20
+<P>Te=EF jak takov=E1 standardn=ED smy=E8ka zpr=E1v vypad=E1:=20
+<P><FONT style=3D"FONT-SIZE: 9pt; FONT-FAMILY: Courier New"><FONT=20
+color=3D#3333ff>while(GetMessage(&amp;messages, NULL, 0, 0))</FONT> =
+<BR><FONT=20
+color=3D#3333ff>{</FONT> <BR><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+TranslateMessage(&amp;messages);</FONT> <BR><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+DispatchMessage(&amp;messages);</FONT> <BR><FONT =
+color=3D#3333ff>}</FONT></FONT>=20
+<P>Tato smy=E8ka se opakuje, dokud funkce GetMessage nevr=E1t=ED nulu. =
+GetMessage=20
+vr=E1t=ED nulu v p=F8=EDpad=EC, =9Ee tento proces obdr=9E=ED zpr=E1vu =
+WM_QUIT, kter=E1 mu oznamuje,=20
+=9Ee si Windows p=F8ej=ED tento program ukon=E8it.=20
+<P>Funkce <B>TranslateMessage</B> prov=E1d=ED to, =9Ee p=F8ekl=E1d=E1 =
+hodnoty virtu=E1ln=EDch=20
+kl=E1ves na zpr=E1vy, kter=FDm u=9E va=9Ae procedura okna rozum=ED. =
+<BR>A=20
+<B>DispatchMessage</B> prov=E1d=ED jen to, =9Ee zpr=E1vu po=9Ale =
+procedu=F8e okna, kterou=20
+m=E1te zaregistrovanou ve t=F8=EDd=EC okna (nepl=E9st t=F8=EDdy okna =
+Windows s t=F8=EDdami v C++=20
+!!!).=20
+<P>Pod=EDvejme se te=EF na p=F8=EDklad z prvn=EDho d=EDlu:=20
+<P><FONT face=3D"Courier New" color=3D#3333ff size=3D2>#include=20
+&lt;windows.h&gt;<BR><BR></FONT><FONT=20
+style=3D"FONT-SIZE: 9pt; FONT-FAMILY: Courier New"><FONT =
+color=3D#3333ff>int=20
+STDCALL</FONT> <BR><FONT color=3D#3333ff>WinMain (HINSTANCE hInst, =
+HINSTANCE=20
+hPrev, LPSTR lpCmd, int nShow)</FONT> <BR><FONT color=3D#3333ff>{</FONT> =
+<BR><FONT=20
+color=3D#3333ff>&nbsp; MessageBox (NULL, "Hello World" , "M=F9j =
+program", 0 +=20
+MB_OKCANCEL + MB_ICONASTERISK);</FONT> <BR><FONT color=3D#3333ff>&nbsp; =
+return=20
+0;</FONT> <BR><FONT color=3D#3333ff>}</FONT></FONT>=20
+<P>Pokud tento progr=E1mek spust=EDte, zjist=EDte, =9Ee a=E8koliv zde =
+=9E=E1dnou smy=E8ku zpr=E1v=20
+nem=E1te, Windows proti del=9A=EDmu zobrazen=ED dialogu nijak =
+neprotestuj=ED. Je to t=EDm,=20
+=9Ee zde smy=E8ka zpr=E1v vlastn=EC je. Nev=EC=F8=EDte? Co ud=ECl=E1 =
+tento program p=F8i spu=9At=ECn=ED?=20
+Hlavn=ED funkce zavol=E1 MessageBox, a pokud je MessageBox ukon=E8en, =
+program okam=9Eit=EC=20
+skon=E8=ED.=20
+<P>V podstat=EC Windows maj=ED implmentov=E1nu vlastn=ED smy=E8ku =
+zpr=E1v v ka=9Ed=E9m sv=E9m=20
+procesu a ve v=ECt=9Ain=EC funkc=ED. V tomto p=F8=EDpad=EC funkce =
+MessageBox vytvo=F8=ED dle=20
+va=9Aeho p=F8=E1n=ED okno, proceduru okna a smy=E8ku zpr=E1v, kter=E1 je =
+ukon=E8ena po kliknut=ED=20
+na kter=E9koliv tla=E8=EDtko a toto tla=E8=EDtko je vr=E1ceno touto =
+funkc=ED. O tvorb=EC=20
+dialogov=FDch oken, procedur=E1ch a t=F8=EDd=E1ch oken n=ECkdy =
+p=F8=ED=9At=EC.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:01:23 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

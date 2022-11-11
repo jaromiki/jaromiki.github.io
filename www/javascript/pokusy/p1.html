@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+	<script>
+	var pole = new Array();
+	pole.length = 52;
+	var s='';
+	var v=0,v1=0,v2=0,cas=4;
+	 var i=50,ii=0,j=0,ij=1,tr,h=49,d=0;
+	function init()
+	{ for (var ii=0; ii<50; ii++)
+	  { document.images[ii].style.height=pole[ii];
+        document.images[ii].style.top=160-pole[ii];
+        document.images[ii].style.background='#eeeeff';
+	  }
+    }
+	function buble()
+	{ vvv.innerText='index: '+j+' beûÌ od: '+ d+' aû po:'+h;
+	  v1=parseInt(document.images[j].style.height);
+	  v2=parseInt(document.images[j+1].style.height);
+	  if (v1>v2)
+		 { document.images[j].style.height=v2;
+		   document.images[j].style.top=160-v2;
+		   document.images[j+1].style.height=v1;
+		   document.images[j+1].style.top=160-v1;
+		   i = j;
+	     }
+      document.images[j].style.background='#eeeeff';
+      document.images[j+1].style.background='blue';
+	  j=j+1;	 
+	  if (j==h) {j=0; h=i;i=0;}	 	  
+	  if (h<2) {h=49;j=0;clearInterval(tr);vvv.innerText='Hotovo';}	 	  
+    }
+	function tras()
+	{  vvv.innerText='index: '+j+' beûÌ od: '+ d+' aû po:'+h;
+	  v1=parseInt(document.images[j].style.height);
+	  v2=parseInt(document.images[j+1].style.height);
+	  if (v1>v2)
+		 { document.images[j].style.height=v2;
+		   document.images[j].style.top=160-v2;
+		   document.images[j+1].style.height=v1;
+		   document.images[j+1].style.top=160-v1;
+		   i = j;
+	     }
+	  j=j+ij;
+	  if (ij==1) 
+	  { 
+        document.images[j-1].style.background='#eeeeff';
+        document.images[j].style.background='blue';
+	    if (j==h) {h=i; ij=-1;j=h-1;}
+	  }
+	  else       
+	  { 
+        document.images[j+2].style.background='#eeeeff';
+        document.images[j+1].style.background='blue';
+	    if (j==d-1) {d=i+1; ij=+1;j=d;}
+	  } 
+	  if ((h-d)< 2) {h=49;j=0;d=0;clearInterval(tr);vvv.innerText='Hotovo';}	 	  
+    }
+	function vsuv()
+	{  vvv.innerText='index: '+j+' beûÌ od: '+ h;
+	  v1=parseInt(document.images[j].style.height);
+	  v2=parseInt(document.images[j-1].style.height);
+	  if (v1<v2)
+		 { document.images[j].style.height=v2;
+		   document.images[j].style.top=160-v2;
+		   document.images[j-1].style.height=v1;
+		   document.images[j-1].style.top=160-v1;
+           document.images[j].style.background='#eeeeff';
+           document.images[j-1].style.background='blue';
+ 	       j--;
+	       if (j==0) 
+		   { 
+              document.images[j].style.background='#eeeeff';
+ 		      h++;j=h; 
+		   }
+	     }
+	 else 
+	 {	
+       document.images[j].style.background='#eeeeff';
+       document.images[j-1].style.background='#eeeeff';
+	 h++; j=h;}
+	 if (h==50) { h=49;j=0;d=0;clearInterval(tr);vvv.innerText='Hotovo';} 
+	        
+	}
+	function max()
+	{  vvv.innerText='maximum na pozÌciu: '+ h;
+	   ii=parseInt(document.images[0].style.height);
+	   jj=0;
+	   for (j=1; j<=h; j++) {if (ii< parseInt(document.images[j].style.height)) 
+	                            { ii= parseInt(document.images[j].style.height); jj=j}
+							}
+	  v1=parseInt(document.images[jj].style.height);
+	  v2=parseInt(document.images[h].style.height);
+		   document.images[jj].style.height=v2;
+		   document.images[jj].style.top=160-v2;
+		   document.images[h].style.height=v1;
+		   document.images[h].style.top=160-v1;
+	h--;
+	if (h==0) {	 h=49;j=0;d=0;clearInterval(tr);vvv.innerText='Hotovo';}
+	}
+
+	function stop()
+	{ h=49;j=0;d=0;
+	  clearInterval(tr);
+	  vvv.innerText='Beh zastaven˝ ';
+	}  
+	function rych()
+	{if (cas<10) {cas++; par.innerText = 'R˝chlosù anim·cie (1-10): '+cas;}
+	       else  {par.innerText += ' max';}
+	}
+	function pom()
+	{if (cas>1) {cas--; par.innerText = 'R˝chlosù anim·cie (1-10): '+cas;}
+	       else  {par.innerText += ' min';}
+	}
+
+	function shell()
+	{  vvv.innerText='zaraduje sa cislo index: '+h+'  beûÌ od: '+ h+'dole,  krok je:'+dj;
+	  v1=parseInt(document.images[j].style.height);
+	  v2=parseInt(document.images[j+dj].style.height);
+	  if (v1>v2)
+		 { document.images[j].style.height=v2;
+		   document.images[j].style.top=160-v2;
+		   document.images[j+dj].style.height=v1;
+		   document.images[j+dj].style.top=160-v1;
+		   document.images[j].style.background='#ffcccc';
+		   document.images[j+dj].style.background='#ffcccc';
+		   if ((j+2*dj)<=49) {document.images[j+2*dj].style.background='#eeeeff';}
+	       j-=dj;
+	       if (j<0) { document.images[j+2*dj].style.background='#eeeeff';
+		   				document.images[j+dj].style.background='#eeeeff';
+		   				h++;
+		              if (h>49-dj) { dj=Math.round(dj/3+1); h=0; j=0;} 
+					  else {j=h;}
+					 }
+	     }
+	 else {	document.images[j+dj].style.background='#eeeeff';
+	        if (j+2*dj<=49) {document.images[j+2*dj].style.background='#eeeeff';}
+	 		h++;
+		    if (h>49-dj) { dj=Math.round(dj/3+1); h=0; j=0;} 
+			else {j=h;}
+}
+	 if (dj<3) { clearInterval(tr);vvv.innerText='Hotovo';
+	             h=1, j=1,tr=setInterval('vsuv()',Math.round(450 / cas))} 
+	        
+	}
+	
+	</script>
+</head>
+
+<body>
+<span style="background:#ccccff; height:150; width:610" ><center> Triedenie demo</center>
+</span>
+
+<script>
+for (var i=1;i<51;i++) 
+{    v=Math.round(100*Math.random());
+	pole[i-1] = v+10;
+     s='<img src="x.gif" style="position:absolute; top:'+(150-v)+'; left:'+12*i+'; width:10; height:'+(10+v)+'; background:#eeeeff">';
+     document.write(s);
+}
+     i=50; j=0;
+</script>
+<br><br>
+<button type="button" onclick="tr=setInterval('buble()',Math.round(450 / cas))" style="width=80">bubliny</button>
+<button type="button" onclick="tr=setInterval('tras()',Math.round(450 / cas))" style="width=80">trasenie</button>
+<button type="button" onclick="h=1, j=1,tr=setInterval('vsuv()',Math.round(450 / cas))" style="width=80">vsuvanie</button>
+<button type="button" onclick="h=49, j=0,tr=setInterval('max()',Math.round(450 / cas)+100)" style="width=80">maximum</button>
+<button type="button" onclick="h=0, j=0, dj=12, tr=setInterval('shell()',Math.round(450 / cas))" style="width=80">shell</button>
+<br>
+<button type="button" onclick="stop()" style="width=80">stop</button>
+<button type="button" onclick="pom();" style="width=80">pomalöie</button>
+<button type="button" onclick="rych();" style="width=80">r˝chlejöie</button>
+<button type="button" onclick="init()" style="width=80">pÙvodnÈ</button>
+<br>
+<span id=par >R˝chlosù anim·cie (1-10): 4</span> 
+<br><span id=vvv></span>
+</body>
+</html>

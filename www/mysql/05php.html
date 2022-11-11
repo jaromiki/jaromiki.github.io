@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+     <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Mysql-php</title>
+</head>
+
+<body>
+<h2>Príkazy PHP pre MySQL</h2>
+V minulej časti sme si ukázali ako získať dáta z MySQL databázy pomocou rozhrania http (PHP jazyka + prehliadača), 
+teraz ukážem ako dáta v databáze meniť (pridávať, rušiť a editovať záznamy)
+<h3>Vkladanie nového záznamu</h3>
+Na vkladanie záznamov v jazyku MySQL máme príkaz INSERT a jeho možnosti možno pozrieť v časti o príkazoch MySQL. 
+<br>Jeho typická syntax je: 
+<p style="background-color:silver">
+INSERT INTO [názov tabuľky] (stĺpec, ...) VALUES (hodnota, ...) 
+</p>
+To platí v prípade, že dáta do tabuľky vkladáme z kódu a pridá to len jeden riadok. 
+<br>Zadávané stĺpce uvádzame v okrúhlych zátvorkách podobne ako odpovedajúce hodnoty.
+<br>Hodnotz môžu obsahovať názvy stĺpcov,ktorým už boli priradené hodnoty 
+<br>Dáta však môžeme vkladať aj z inej tabuľky. Potom je syntax nasledovné:
+<p style="background-color:silver">
+INSERT INTO [názov tabuľky] (stĺpec, ...) SELECT ... 
+</p>
+a dodajme, že táto syntax môže vložiť všeobecne nula až veľa riadkov. Tabuľka, do ktorej vkladáme, musí v databáze už existovať. 
+Ak by neexistovala, mali by sme ju najprv vytvoriť príkazom CREATE TABLE. 
+Príkaz INSERT patrí medzi tzv manipulačné príkazy jazyka SQL. To znamená, že po jeho použití sa dáta v databáze môžu zmeniť. 
+Čo sa po SELECT nikdy nestane, SELECT je teda naproti tomu výberový príkaz.
+<h3>Insert pomocou PHP</h3>
+Ako ste asi čakali, v PHP sa pridávajúce otázky tiež realizujú pomocou funkcie mysql_query. 
+V prípade manipulačných dotazov vracia funkcia mysql_query TRUE ak sa vydarila, v ostatných prípadoch vracia FALSE. 
+Funkcia mysql_query teda nijako nevracia počet vložených záznamov. Ten môžeme zistiť pomocou inej funkcie, a síce <b>mysql_affected_rows</b>. 
+Tá funguje tak, že vráti počet vložených (zmenených, odstránených) riadkov ovplyvnených poslednom manipulačným dotazom. 
+Ak posledný manipulačný dotaz zlyhal, vracia -1.
+<h3>Menenie záznamov</h3>
+Z databázy už vieme záznamy vyberať a vieme ich do nej vkladať. Ďalší úkon, ktorý nás čaká je vedieť dáta upraviť alebo aktualizovať.
+
+
+Zase trocha SQL
+V SQL sa k aktualizácii riadku alebo riadkov v databáze používa príkaz UPDATE. UPDATE narozdiel od INSERT nevkladá do databázy žiadne riadky, ale upravuje existujúce dáta. To znamená, že vykonáte ak na tabulkce príkaz UPDATE, počet riadkov v tejto tabuľke sa nezmení, ale môžu sa zmeniť údaje v jednotlivých riadkoch. V MySQL je pochopiteľne aj k príkazu UPDATE rozsiahla dokumentácia. Jeho najprimitívnejšie forma potom je: 
+
+
+
+</body>
+</html>

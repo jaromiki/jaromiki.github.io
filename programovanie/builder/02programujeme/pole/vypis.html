@@ -1,0 +1,67 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+<dt class=main>Výpis poľa
+<dd>Pole môžme chcieť vypísať z dôvodu:
+	<ul><li>Hodnoty poľa sú výsledkom
+		<li>výpis robíme na kontrolné účely
+			(napr. na kontrolu, či je správne naplnené)
+	</ul>
+	<br>Asi najčastejšie riešime výpis poľa do objektu Memo, ale možný je aj výpis do txt súboru alebo objektu StringGrid. Najčastejšie vypisujeme všetky prvky poľa
+	(celé pole), ale je možné jednoduchou úpravou dosiahnuť aby cyklus išiel od indexu <b>A</b> po index <b>B</b>.
+   <dl>
+   <dt>Výpis do Mema
+   <dd>Najčastejší prípad, postup je nasledovný:
+   		<ul><li>vymažeme celé Memo1
+			<li>prejdeme všetky prvky poľa a zapíšeme ich do Memo1
+		</ul>
+		Nech chceme vypísať <b>Pole</b> od indexu <b>1</b> po index <b>N</b>, potom príslušné riadky programu môžu vyzerať nasledovne:	 
+   		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Výpis poľa do Mema:</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<code>Memo1->Clear;
+			   <br>for (int i=0;i&lt; N; i++) Memo1.Lines.Add(IntToStr(pole[i]));
+			   </code></tr>
+		</table>
+   <dt>Výpis do StringGrid
+   <dd>StringGrid je vlastne tabuľka (umožňuje výpis tabuľky) a umožňuje nám vypísať viac jednorozmerných polí vedľa/pod seba,
+    	resp. jedno pole viackrát (napr. pole vypíšeme pred zmenou a po zmene a môžme skontrolovať či sme požadovanú zmenu poľa
+		naprogramovali správne). Odporúčam nultý riadok tabuľky mať šedý a pevný (nerolujúci) a samozrejme počet riadkov tabuľky mať väčší
+		počtu prvkov vo vypisovanom poli. Ak niečo nie je jasné ako, stačí pozrieť učivo práca s tabuľkami. 
+   		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Výpis celého poľa do StringGrid1:</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<code>StrinGrid1->RowCount= N;
+				<br>StringGrid->Cells[0][0]:="Pole";
+			   <br>for i:=0 to N do StringGrid.Cells[i+1][0]:=IntToStr(Pole[i]);
+			   </code></tr>
+		</table>
+   <dt>Výpis do textového súboru
+   <dd>Nebudem tu popisovať ako zadeklarovať, zadať meno súboru, ani ako tento súbor otvoriť na zápis, tu len vypíšem riadky ktoré 
+   		z poľa Pole zapíšu všetky hodnoty do txt súboru, pričom každé číslo bude na samostatnom riadku.
+		<br>Odporúčam pozrieť učivo o textových súboroch.
+   		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Výpis celého poľa do súboru:</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<code>for (i=0;i&lt;N;i++) printf(f,"%f\n",pole[i]);
+			   </code></tr>
+		</table>
+		Pre prípad, ak chceme mať čísla v jednom riadku oddelené medzerou, tak to urobíme takto:
+   		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Výpis celého poľa do súboru:</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<code>for (i=0; i&lt;N; i++) do printf(f,"%f ",Pole[i]);
+			   </code></tr>
+		</table>
+		
+   </dl>
+</dl>   
+</body>
+</html>

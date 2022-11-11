@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<title>Vetvenie</title>
+</head>
+
+<body>
+<h3>Príkazy</h3>
+Príkazy tvoria reakciu na nejakú udalosť, ktorá nastala (najčastejšie na akciu užívateľa). Našou úlohou (úlohou programátora) je 
+<ul><li>stanoviť, čo sa má vykonať na nejakú akciu užívateľa (napr. stlačenie tlačídka)
+	<li>preložiť túto akciu na postupnosť príkazov, ktoré Builder pozná
+	<li>nájsť miesto kam tie príkazy napísať, aby sa v správny čas vykonali
+</ul>	
+Často chceme, aby sa niektorý príkaz za nejakých podmienok vykonal ale inokedy zas nevykonal. 
+<br>Príklad zo života: Ak je chladnička prázdna -&gt; ide sa nakupovať
+<br>V tomto príklade sa príkaz na nakupovanie nevykonáva vždy ale len ak nastane udalosť, že chladnička je prázna. V C-čku (všeobecne v každom programovacom jazyku) používame na tento cieľ vetvenie.
+<h3>Neúplný if</h3>
+<dl><dt>Syntax - ako sa to píše
+	<dd><b><u>if (</u></b> <i>podmienka</i><b><u>)</u></b> <i>príkaz</i>
+	<br>podčiarknutý text je treba presne opísať (podmienka je vždy v zátvorkách)
+	<ul>
+	<li><i>podmienka</i> - toto slovo nahradíme logickým výrazom (výraz, ktorého výsledná hodnota je TRUE alebo FALSE)
+		<br>(čo j jazyku C znamená, že ide o celočíselný výraz TRUE znamená rôzne od nuly)	
+	    <br>Napr. a&gt;5
+		<br>Relačné (porovnávacie) operátory:
+		<ul><li> == ... test na rovnosť (napr. a == b  ... ak je v premenných a,b rovnaká hodnota -&gt; TRUE)
+			<li> &lt; ... menší (Napr. a&lt; 0)
+			<li> &gt; ... väčší (Napr. a&gt; 0)
+			<li> &lt;= ... menší alebo rovný (Napr. a&lt;= 0)
+			<li> &gt;= ... väčší alebo rovný (Napr. a&lt;= 0)
+			<li> != ... nerovný (Napr. a !=5)
+		</ul>	
+	<li><i>príkaz</i> ... toto slovo nahradíme ľubovoľným príkazom jazyka C (napr. aj opäť vetvenie if)
+	</ul>
+	Z kapitoly ako písať výrazy vieme že na konci jednoduchého príkazu je vždy bodkočiarka.
+	<dt>Sémantika - ako to funguje
+	<dd>Program keď má vykonať takýto príkaz tak:
+	<ul><li>vyhodnotí podmienku
+		<li>ak dostane pravdu (!=0) vykoná príkaz uvedený za podmienkou
+		<li>ak dostane nepravdu (==0) tak príkaz uvedený za podmienkou nevykoná
+		<li>týmto je príkaz if ukončený
+	</ul>
+	Poznámka:
+	<br>Takýto if sa nazýva neúplný, lebo nie je určené čo máme robiť ak podmienka nepravdivá
+</dl>	
+<h3>Úplný if</h3>	
+<br>Príklad zo života:
+	<br>Ak bude pršať budem čítať knihu, inak pojdem hrať futbal.
+	<br>Na rozdiel od neúplného if, tu vždy budem niečo robiť a tom že čo, rozhodne podmienka.
+<dl><dt>Syntax - ako sa to píše
+	<dd><b><u>If (</u></b> <i>podmienka</i> <b><u>)</u></b> <i>príkaz1</i> <b><u>else </u></b><i>príkaz2</i>
+	<br>podčiarknutý text je treba presne opísať
+	<br>všetko je ako v neúplnom
+	<br>Z vlastnosti príkazov vieme, že tu budeme písať bodkočiarku aj pred <b><u>else </u></b>, narozdiel od pascalu
+	<dt>Sémantika - ako to funguje
+	<dd>Program keď má vykonať takýto príkaz tak:
+	<ul><li>vyhodnotí podmienku
+		<li>ak dostane pravdu (!=0) vykoná príkaz1 uvedený za podmienkou
+		<li>ak dostane nepravdu (==0) tak vykoná príkaz uvedený za <b><u>else</u></b>
+		<li>týmto je príkaz if ukončený
+	</ul>
+</dl>	
+<br>Úlohy
+<br>Nasledovné zadania naprogramuj v Builderi
+<br><div style="background-color:silver; width:500; padding:20;border-width:3;border-style:outset">
+	<form>
+	Číslo: <input type="Text" id="c1" value="0"><br>
+	<br>Odpoved: <span id="o1" style="color:'red'"> .................... </span><br>
+	<br><input value=" Test na delitelnosť 2 " type="Button" onclick="if (c1.value % 2) o1.innerHTML='nie je delitelné dvomi'; else o1.innerHTML='je delitelné dvomi'; ">
+	</form>
+	
+	</div>	
+<br><hr>
+<br>Nezabudni ošetriť delenie nulou
+    <div style="background-color:silver; width:500; padding:20;border-width:3;border-style:outset">
+	<form>
+	Do prvých dvoch políčok zadaj celé čísla, potom stlač tlačídko "Výpočet"
+	<input type="Text" id="c21" value="0" style="width:50" onchange="{c23.value=''; c24.value=''; }"> /
+	 <input type="Text" id="c22" value="0" style="width:50" onchange="{c23.value=''; c24.value=''; }"> = 
+	<input type="Text" id="c23" value="" READONLY style="width:80"> zvyšok 
+	<input type="Text" id="c24" value=" " READONLY style="width:100"><br>
+	<br><input value=" Výpočet " type="Button" 
+	      onclick="if (c22.value == 0) {c23.value='ERROR'; c24.value='delenie nulou'; } else {c24.value=c21.value % c22.value; c23.value=(c21.value-c24.value)/c22.value;}  ">
+	</form>
+	</div>	
+<h3>Príkaz switch</h3>
+Príkaz switch slúži tiež na vetvenie, ktorý príkaz sa má vykonať podľa nejakej podmienky, ale môžme si vyberať aj z viacerých príkazov ako z dvoch
+<dl><dt>Syntax - ako sa to píše
+	<dd>
+<u><b>switch(</b></u> <i>výraz</i> <u><b>)</b></u>
+<br><u><b>{</b></u>
+<br><u><b>case</b></u><i>prípad1</i> <u><b> : </b></u> <i>príkaz1</i><u><b> break;&nbsp;</b></u>
+<br><u><b>case</b></u><i>prípad2</i><u><b> : </b></u><i>príkaz2</i><u><b> break;&nbsp;</b></u>
+<br> .............
+<br><u><b>default:</b></u> <i>príkaz</i><u><b> ;&nbsp;</b></u>]
+<br><u><b>}</b></u>
+<ul><li><i>výraz</i> - celočíselný alebo znakový výraz (prípady a výraz musia byť kompatibilného typu)
+	<li><i>prípad</i> - celočíselná alebo znaková konštanta
+	<li><i>príkaz</i> - ľubovoľný príkaz jazyka
+	<li>vetva default je nepovinná
+</ul>
+<br>Nevýhody switch oproti if
+<br>... pri zadávaní prípadu nemožno používať premenné
+<br>... výraz za case nemôže byť textový (povolený je len char)  
+	<dt>sémantika
+	<dd><ol><li>vyhodnotí sa výraz->podmienka
+			<li>vypočítaná hodnota sa hľadá v zadaných prípadoch, ak hodnotu nájde vykonáva všetky prípady=vetvy smerom nadol
+				<br>pokiaľ ho nevyhodí príkaz break ktorí ukončí celý príkaz switch
+			<li>ak hodnotu nenájde vykoná vetvu default ak je použitá (ak vetva default nie je neurobí nič)
+		</ol>
+	Dôležité poznámky:
+	<br>vetvu default dávajte až ako poslednú vetvu a tiež ju radšej ukončite príkazom break;
+				
+</dl>
+    <div style="background-color:silver; width:710; padding:20;border-width:3;border-style:outset">
+	<table ><tr><th width="300">Spustené<th onclick="c33.style.visibility='visible'">Zdroják - Help</tr>
+	<tr><td>
+	<form>
+	Do prvého políčka zadaj známku 1 - 5  "Prevod"<br>
+	<input type="Text" id="c31" value="" style="width:50">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <input type="Text" id="c32" value="----" style="width:120">
+	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="Button" value="Prevod" onclick="switch (c31.value) 
+	{case '1': c32.value='výborný'; break;
+	 case '2': c32.value='chválitebný'; break;   
+	 case '3': c32.value='dobrý'; break;   
+	 case '4': c32.value='dostatočný'; break;   
+	 case '5': c32.value='nedostatočný'; break;   
+	 default: c32.value='----';
+	}">
+	</form>
+	<td style="visibility: hidden;" id="c33">
+	<code><pre>
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{ int a=3;
+switch (a)
+{ case 1: Label1->Caption="výborný";break;
+  case 2: Label1->Caption="chválitebný";break;
+  case 3: Label1->Caption="dobrý";break;
+  case 4: Label1->Caption="dostatočný";break;
+  case 5: Label1->Caption="nedostatočný";break;
+  default: Label1->Caption="-----------";break;
+}
+}
+</pre></code>
+</tr></table>
+</div>
+</body>
+</html>

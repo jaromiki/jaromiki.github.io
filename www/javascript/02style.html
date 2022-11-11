@@ -1,0 +1,289 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Štýly - Časovač</title>
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	 <script>
+	 var a= new Date(), pc=1;
+	function anim()
+	{
+	obr.filters(0).FinishOpacity=obr.filters(0).opacity=(obr.filters(0).opacity+1) % 101;
+	if  (obr.filters(0).opacity == 100) {clearInterval(window.tmr); tlac.disabled=0;}
+	}	
+function trans()
+{ logo.style.visibility='hidden';
+logo.filters(0).transition=pc;
+logo.filters.item(0).Apply();
+logo.style.visibility="";
+logo.filters.item(0).Play();
+pc=(pc+1) % 23; }
+
+function skry()
+{ logo.style.visibility='visible';
+logo.filters(0).transition=pc;
+logo.filters.item(0).Apply();
+logo.style.visibility="hidden";
+logo.filters.item(0).Play();
+}
+</script>
+</head>
+
+<body onload="datum.innerText+=a.getDate()+'.'+(a.getMonth()+1)+'.'+a.getYear()">
+<dl><dt>Štýl
+	<dd>Väčšina objektov - tagov má vlastnosť style. Pomocou nej možno nastaviť veľké množstvo vlastností 
+		- farba písma, pozadia, veľkosť písma, typ, rez.
+		<br>V HTML sa ku položkám tohto objektu dostaneme nasledovne:
+		<br>style="vlast1: 'hodnota1' ; vlast2: 'hodnota2'; ..."
+		<br>Hodnotu priraďujeme vlastnosti cez dvojbodku, každá hodnota je uzavretá v apostrofoch, položky sú od seba
+		    oddelené bodkočiarkami. Tieto vlastnosti možno meniť pomocou nástrojov JS, tvorca musí vedieť kedy (pri akej udalosti) sa má vlastnosť zmeniť
+			a musí vedieť zadať korektný príkaz na vykonanie tejto zmeny. JS je založený na jazyku C a základná znalosť tohoto jazyka mnohé uľahčí.
+		<div style="color:blue">Základné vlastnosti prístupné cez style:</div>
+		<dl><dt>Box a jeho vlastnosti
+			<dd>Tu môžme nastaviť vlastnosti obdĺžnika v ktorom je náš objekt zobrazený
+				<ul>
+				<li>margin:cislo1 cislo2 cislo3 cislo4 -  okraje zvonku od objektu
+				<li>padding:cislo1 cislo2 cislo3 cislo4 - okraj zvnútra farby objektu
+				<li>border-width:cislo1 cislo2 cislo3 cislo4  - okraje zvnútra objektu hore, vpravo, dole, vlavo (mozu mať inú farbu ako objekt)
+				<li>border-color:far1 far2 far3 far4 - farba okraja (v JS borderColor)
+				<li>border-style:none|dotted|dashed|solid|double|groove|ridge|inset|outset (v JS borderStyle)
+				<br>žiadne, bodkované, čiarkované, plné, dvojité, kanál, kopec, osvetlené vyduté, osvetlené vpadnuté
+				<li>height: vyska - výška objektu v bodoch
+				<li>width: sirka - šírka objektu
+				<li>display: box|inline|none 
+				    <ul><li>box vždy vloží nový objekt na samostatné riadky 
+					    <li>inline objekt pridá do toho istého riadku
+						<li>none objekt sa nevloží ani sa preň neurobí miesto
+					</ul>
+				<li>visibility: inherited|visible|hidden  
+				    <ul><li>inherited viditeľnosť je podľa rodiča 
+					    <li>visible objekt je viditeľný
+						<li>hidden objekt zaberá miesto ale je neviditeľný
+					</ul>
+				</ul>
+			<dt>farby objektu
+			<dd><ul>	
+				<li>color: farba - farba písma
+				<li>background: farba | transparent - farba podkladu, priehladná
+				</ul>
+			<dt>pozícia objektu	
+			<dd><ul>
+				<li>position:absolute|relative ... či poloha na stránke je absolútna alebo relatívna 
+				<li>top:cislo, left:cislo ... poloha na stránke
+				</ul>
+			<dt>všeobecné vlastnosti
+			<dd><ul>	 
+				<li>cursor: default| hand| text| move - určuje tvar kurzoru nad objektom
+				</ul>
+			<dt>písmo
+			<dd><ul>	 
+				<li>font-size: cislo veľkosť písma (veľkosť určíme absolútne alebo relatívne &plusmn;cislo
+				<li>line-height: cislo ... výška riadka  		
+				</ul>
+		Ak chceme meniť vlastnosti objektu style, tak ku každej vlastnosti pristupujeme cez bodku.
+		<br>Napr: objekt1.style.color= 'red'; // kde objekt1 je názov objektu v položke ID 
+
+			<dt style="color:blue">Ukážky použitia štýlov:
+			<dd>
+		<div style="color:#990000; background:#ffcccc; height:50; width:550; margin:10 50 10 50">
+		&lt;div style="color:#990000; background:ffcccc; height:50; width:550; margin:10 100 10 100">
+		</div>
+		<div style="height:50; width:550; margin:10 50 10 50; 
+		            border-width:thick; border-color:red; border-style:inset">
+		&lt;div style="height:50; width:550; margin:0 10 0 10; 
+		            <br>border-width:thick; border-color:red; border-style:inset"&gt;
+		</div>
+			<dt style="color:blue">Ošetrenie udalosti:
+			<dd>Pri vizuálnych objektoch možno ošetriť nasledujúce udalosti súvisiace s myšou
+				<ul><li>onmousemove - myš sa nad objektom pohla
+					<li>onmouseover - sme nad objektom
+					<li>onmousedown - sme nad objektom a stlačili sme tlačídko myši (ošetrí len raz)
+					<li>onmouseup - sme nad objektom a pustili sme tlačídko myši (ošetrí len raz)
+					<li>onmouseout - opúšťame objekt - prechádzame hranicu smerom von
+					<li>onclick - klikli sme na objekt
+				</ul>
+				Ošetrenie udalosti spočíva v tom, že do atribútov objektu zadáme napríklad
+				<br>onmouseover="this.style.color=#0000ff"
+				<br>týmto objektu nad ktorý príde myš zmeníme farbu písma	
+				<div style="width:120; padding:15;color:#cc0000; background:#ffcccc; margin:10 50 10 50; border-width:thick; border-color:red; border-style:inset;"
+				id="prvy"
+			    onclick="this.style.borderColor='Green'"	
+				onmousedown="this.style.border='blue thick groove';" 
+				onmouseup="this.style.border='red thick inset';" 
+				onmouseover="this.style.color='#0000cc'; this.style.background='#ccccff';this.style.cursor='hand'"
+				onmouseout="this.style.color='#cc0000'; this.style.background='#ffcccc';this.style.cursor='default'">
+				Príď a stlač
+				</div>
+			<br>
+    		<dt style="color:blue">Zmena obsahu objektu
+			<dd>Je prekvapivé, že objektom môžme meniť nielen vlastnosti ale aj obsah. Používame k tomu objekty <font color="Green">div</font>
+			 	a <font color="Green">span</font>. Obsah týchto objektov je odpamätaný vo vlastnosti innerText 
+				<div style="width:120;color:#cc0000; background:#ffcccc; margin:10 50 10 50; border-width:thick; border-color:red; border-style:inset;"
+		            onmouseover="this.innerText='\nSi nad - stlač'"
+				    onmousedown="this.innerText='Stlačil si - už stačí'"
+					onmouseup="this.innerText='Tak a je to - treba odísť'"
+					onmouseout="if (this.innerText=='Tak a je to - treba odísť') this.innerText='Koniec akcie - možeš si to zopakovať';
+					                                                        else this.innerText='Nestlačil si - nepodvádzaj';"
+		><br>Presuň sa sem</div>
+	<dt>Výpis dátumu
+	<dd>Na výpis dátumu potrebujeme vytvoriť premennú a tak sa téma trochu vymyká, ale je to pekné využitie innerText. 
+		<ol>
+		<li>V hlavičke vytvoríme sekciu &lt;script> &lt;/script> kde vytvoríme dátumovú premennú: var a = new Date();
+		<li>V body vytvoríme sekciu &lt;div id="datum"> &lt;/div>
+		<li>V tagu &lt;Body> ošetríme udalosť onload, kde pripíšeme do objektu datum.innerText postupne
+			<br>a.getDate() //den v mesiaci
+			<br>a.getMount() // mesiac 0..11
+			<br>a.getYear() // rok
+			<br>a.getDay() // deň v týždni 0..6
+		</ol>
+		Ukážka - <span>Dnešný dátum: </span><span id="datum"style="width:120; background:#ddddff;">...</span>
+
+<br><br>
+	<dt>Filter - fintičky s obrázkami pod IE
+	<dd>filter je ďalšia vlastnosť popísaná v ojekte style. Ako filter možno nastaviť niektorú z nasl. funkcií:
+	<ul>
+	<li>STYLE="filter:Alpha(Opacity=opacity, FinishOpacity=finishopacity, Style=style, StartX=startX, StartY=startY, FinishX=finishX, FinishY=finishY)" 
+	<br> &nbsp; opacity... startová priesvitnosť 0..100, finishopacity ... 0..100, style=0..3, startx,starty...zaciatok, finishx,finishy...koniec 
+	<li>STYLE="filter:Blur(Add = add, Direction = direction, Strength = strength)" 
+	<br> &nbsp; add...aj povodny obrázok? 0..1, direction...uhol tieňa 0..360, strength - počet pixelov 
+	<li>STYLE="filter:Chroma(Color = color)" možno jednu farbu určiť ako priesvitnú. 
+	<li>STYLE="filter:DropShadow(Color=color, OffX=offX, OffY=offY, Positive=positive)" - položí tieň pod písmo. 
+	<br> &nbsp; color ... farba tieňa, OffX,OffY ... posunutie tieňa, positive ...logická 1 aj priesvitná dáva tieň
+	<li>FlipH - preklopenie. 
+	<li>FlipV - preklopenie. 
+	<li>STYLE="filter:Glow(Color=color, Strength=strength)" - rozmazaný efekt 
+	<br> &nbsp; color ... farba okolo, strength ... intenzita 0-100
+	<li>Gray - urobí čiernobiele. 
+	<li>Invert - urobí inverzné farby. 
+	<li>Light - svetelný zdroj Projects a light source onto an object. 
+	<li>STYLE="filter:Shadow(Color=color, Direction=direction)" - vytvorí dymový tieň v danom smere. 
+	<br> &nbsp; color ... farba, direction
+	<li>STYLE="filter: Wave(Add=add, Freq=freq, LightStrength=strength, Phase=phase, Strength=strength)" - zvlní text alebo obrázok
+	</ul>
+	<br>Všetky filtre možno používať v animáciach - postupné zobrazovanie-vystupovanie obrázkov.
+	<br<br>
+	Druhou možnosťou, ktorú pri prechode z jedného elementu na druhý ponúkajú filtre, sú prechodové filtre. 
+	Prechodový filter sa volá revealTrans a pracuje sa s ním trochu inak ako s ostatnými filtrami. 
+	Filter má dva parametre -- typ prechodu (transition) a dobu prechodu (duration). U elementou, 
+	které chceme zmeniť najskôr nastavíme typ prechodu a dobu prechodu. Potom zavoláme metodu Apply() filtra.
+	Ta pripraví všetko potrebné pre vykonanie prechodu. Teraz zmeníme niektorú vlastnosť objektu
+	(napr. pomocou vlastnosti innerText, src u obrázkov, viditelnosť a pod.), prechod potom spustíme 
+	vyvolaním metody Play(). Ta spustí prechod a použije pritom zadaný typ přechodu. 
+	IE 4.0 podporuje 23 prechodov (typy 0--22). Prechod číslo 23 je náhodný a vybere jednu z predošlých typov.
+	
+	Prechod môžeme hocikedy skončiť pomocou metody Stop(). Pokiaľ chceme nejakou činnosťou naviazať 
+	na skončení prechodu, využijeme toho, že po skončení prechodu je vyvolána událost onFilterChange.
+
+	Všetky uvedené skutočnosti si ukážeme na nasledujúcich obrázkoch.
+	<ul>
+	<li>RevealTrans - obrázok sa dynamicky vytvorí
+	</ul>
+	<br>Velmi pekné efekty možno dosianuť použitím filtra <font color="Green">Light.</font> Ten umožňuje nad jeden element umiestniť
+	 až desať svetelných zdrojov. Zdroje svetla rôznzmi zpôsobmi nasvecujú element a určujú tak, která jeho časť bude viditelná. 
+	IE 4.0 podporuje až tri druhy zdrojov svetla: 
+	<br>rovnoměrný (Ambient), 
+	<br>bodový (Point) 
+	<br>a kuželový (Cone). 
+	<br>Zdroje svetla nemožno definovať priamo ako parametre filtra, musia sa pridať až priamo v skripte volaním metody addAmbient, 
+	addCone nebo addPoint. Nejjednoduchšie je pridanie rovnomerného zdroja svetla: 
+	<br><font color="Green">addAmbient(R, G, B, intenzita)</font>
+	<br>Parametre R, G a B určujú intenzitu základních zložiek farby svetla. Môžu nadobúdať hodnoty od 0 do 255. Celková intenzita 
+	svetelného zdroja je určená pomocou posledného celočíselného parametra. 
+	<br>Ku pridaniu kuželového zdroja svetla potrebujeme zadať viac parametrov: 
+	<br><font color="Green">addCone(X1, Y1, Z1, X2, Y2, R, G, B, intenzita, vrch._uhol) </font>
+	Súradnice (x1, y1, z1) udávajú priestorové súradnice zdroja svetla, ktorý svieti do bodu (x2, y2, 0). Uhol určuje vrcholový uhol 
+	vrhnutého kužela svetla. Ostatné parametre majú rovnaký význam ako u rovnomerného zdroja svetla. 
+	<br>Pridanie bodového zdroja svetla je jednoduché: 
+	<br><font color="Green">addPoint(x, y, z, R, G, B, intenzita)</font>
+	Po pridaní svetiel môžeme meniť ich polohu pomocou metody moveLight a vytvárať tak zaujímavé efekty: 
+	<br><font color="Green">moveLight(číslo_světla, x, y, z, true)</font>
+    <br>Tiež môžme meniť farbu svetla
+	<br><font color="Green">ChangeColor(lightnumber, r,g,b, true)</font>
+    <br>a intenzitu
+	<br><font color="Green">ChangeStrength(lightnumber, intenzita, true)</font>
+	<br><br>
+	Svetlá v jednom filtri sú číslované od nuly podla poradia v akom boli pridávané. 
+    <br>Praktické použitie zdrojov svetla je v príklade Svetlo v kap. Ukážky. Vytvoríme stránku s nápisom. Nápis bude čiastočne viditelný 
+	(vďaka zdroju rovnomerného svetla) a bude cez neho jazdiť kužel svetla, který vždy zviditelní osvetlenou čásť nápisu. 
+	<br><a href="hry/svetlo.html" target="_blank">ukážka svetla</a>
+	<br><br>
+	<table border="3">
+	<tr><th>zdrojový text
+	<tr><td  bgcolor="silver">
+	<code><pre>
+function trans()
+{ logo.style.visibility='hidden';
+logo.filters(0).transition=pc;
+logo.filters.item(0).Apply();
+logo.style.visibility="";
+logo.filters.item(0).Play();
+pc=(pc+1) % 23; }
+
+function skry()
+{ logo.style.visibility='visible';
+logo.filters(0).transition=pc;
+logo.filters.item(0).Apply();
+logo.style.visibility="hidden";
+logo.filters.item(0).Play();
+}
+	
+&lt;img src="bez_nazvu.bmp" height="53" border="0" alt="" id="logo"
+style="filter: revealtrans(duration=3.1);VISIBILITY:hidden" 
+title="filter: revealtrans(duration=3.1)">
+&lt;br>&lt;br>
+&lt;INPUT TYPE="button" VALUE="Show image" OnClick="trans()">
+&lt;INPUT TYPE="button" VALUE="Hidden image" OnClick="skry()">
+</pre></code>
+			</table>
+</dl>
+</dl>
+<h3>Niekoľko ukážok práce s filtrami</h3>
+<br>
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" title="pôvodný obrázok">
+<img src="bez_nazvu.bmp" height="53" border="0" alt=""
+ style="filter:Chroma(Color=black)" title="filter:Chroma(Color=black)">
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" STYLE="filter:Blur(Add = 1, Direction = 45, Strength = 8)" title="filter:Blur(Add = 1, Direction = 45, Strength = 8)" >
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" STYLE="filter:Blur(Add = 0, Direction = 45, Strength = 8)" title="filter:Blur(Add = 0, Direction = 45, Strength = 8)">
+ <br>
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" 
+ style="filter:Wave(Add=0, Freq=4, LightStrength=25, Phase=25, Strength=3" title="filter:Wave(Add=0, Freq=4, LightStrength=25, Phase=25, Strength=3">
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" 
+ STYLE="filter:Alpha(Opacity=5, FinishOpacity=80, Style=1, StartX=0, StartY=0)"  title="filter:Alpha(Opacity=10, FinishOpacity=80, Style=1, StartX=0, StartY=0)">
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" 
+ STYLE="filter:Alpha(Opacity=10, FinishOpacity=80, Style=2, StartX=0, StartY=0)" title="filter:Alpha(Opacity=10, FinishOpacity=80, Style=2, StartX=0, StartY=0)">
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" 
+ STYLE="filter:Alpha(Opacity=10, FinishOpacity=80, Style=3, StartX=0, StartY=0)" title="filter:Alpha(Opacity=10, FinishOpacity=80, Style=3, StartX=0, StartY=0)">
+<br>
+<img src="bez_nazvu.bmp" height="53" border="0" alt="" id="logo"
+ style="filter: revealtrans(duration=3.1);VISIBILITY:hidden" title="filter: revealtrans(duration=3.1)">
+ <br>
+<span STYLE="font-family:Impact;font-size:large; height:35; width:125;border-Width:5;border-Color:'Blue'; border-Style:inset; margin: 0 14 0 14;filter:DropShadow(Color='blue', OffX=5, OffY=-2, Positive=1);" 
+  onmouseover="this.filters[0].color=0x660099"
+  onmouseout="this.filters[0].color=0x0000ff" title="filter:DropShadow(color=#0000ff, OffX=5, OffY=-2, Positive=1)">&nbsp; P O Z O R </span>
+<span STYLE="font-family=Impact;font-size:large; height:35; width:125; border-Color:'Blue'; border-Style:solid; filter:Shadow(Color='blue',Direction='45');margin: 0 24 0 24; border-Width:0 0 5 0;"
+  onmouseover="this.filters[0].color='#660099'"
+  onmouseout="this.filters[0].color='#0000ff'" title="Shadow(Color='blue',Direction='45')">&nbsp;P O Z O R</span>
+<span STYLE="font-family:Impact;font-size:large;height:35; width:125; border-color:'Blue'; border-style:solid; filter:Glow(Color='blue',Strength=4);margin: 0 24 0 24; border-Width:0 0 5 0;"
+  onmouseover="this.filters[0].color=0x660099"
+  onmouseout="this.filters[0].color=0x0000ff" title="Glow(Color='blue',Strength=5)">&nbsp;P O Z O R</span>
+<span STYLE="font-family:Impact;font-size:large;height:35; width:125; border-color:'Blue'; border-style:solid; filter:Light();margin: 0 24 0 24; border-Width:0 0 5 0;background:#000; color:#ffffff"
+  onmouseover="this.filters[0].moveLight(0, 90, 5, 50, true)"
+  onmouseout="this.filters[0].moveLight(0, 25, 5, 50, true)" title="Light()" id="L1">&nbsp;P O Z O R</span>
+<br>
+<span STYLE="font-family:Impact;font-size:large;height:35; width:125; border-color:'Blue'; border-style:solid; filter:Light();margin: 0 14 0 14; border-Width:0 0 5 0;background:#000; color:#ffffff"
+  onmousemove="var aaa=event.clientX; this.filters.Light.moveLight(0, aaa-30, 20, 50, true)" title="Light()" id="L2">&nbsp;P O Z O R</span>
+
+<br><br>
+<INPUT TYPE="button" VALUE="Show image" OnClick="trans()">
+<INPUT TYPE="button" VALUE="Hidden image" OnClick="skry()">
+
+<script>
+ L1.filters.Light.addPoint(25, 5, 50, 255, 0, 0, 100);
+ L1.filters.Light.addAmbient(0, 0, 150, 80);
+ L2.filters.Light.addCone(100, 20, 50, 70, 20, 255, 100, 100, 125, 15);
+ L2.filters.Light.addAmbient(0, 0, 150, 80);
+
+</script>
+
+<br><br>
+</body>
+</html>

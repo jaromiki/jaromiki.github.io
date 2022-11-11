@@ -1,0 +1,301 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	  <script>
+	  var x1; var x2; var x3;
+	  var y1; var y2; var y3;
+	  var z1; var z2; var z3;
+	  var x0; var yo; var z0;
+	  var i;
+	  var k=[[0,0,0],[4,0,0],[4,4,0],[0,4,0],[0,0,4],[4,0,4],[4,4,4],[0,4,4]];
+	  var h=[[0,1],[1,2],[2,3],[3,0],[0,4],[1,5],[2,6],[3,7],[4,5],[5,6],[6,7],[7,4]];
+	  var s=[[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
+	  var f=['red','green','blue','#ffff00','#00ffff','#ff00ff'];
+	  var alfa=30/180*Math.PI; var beta=30/180*Math.PI;
+	  var alfa2=30/180*Math.PI; var beta2=30/180*Math.PI;
+	  function init()
+	  {	canvas = document.getElementById("platno");
+   		if (canvas.getContext) 
+   		{	context = canvas.getContext("2d");
+   			context.fillStyle = "#a8c101";
+    		context.fillRect(0, 0, 800, 600); 
+ 		}
+           canvas2 = document.getElementById("platno2");
+   		if (canvas2.getContext) 
+   		{	context2 = canvas2.getContext("2d");
+   			context2.fillStyle = "#a8c101";
+    		context2.fillRect(0, 0, 800, 600); 
+ 		}
+	  }	
+	  function plocha(j)
+	  {  context.fillStyle = "#6666ff"
+	    
+//		if (alfa>2*Math.PI) alfa
+           x1=k[h[j][0]][0]; y1=k[h[j][0]][1]; z1=k[h[j][0]][2]; 
+		   x2=x1*Math.cos(alfa)+y1*Math.sin(alfa);
+		   y2=y1*Math.cos(alfa)-x1*Math.sin(alfa);
+		   z2=z1;
+		   x3=x2;
+		   y3=y2*Math.cos(beta)+z2*Math.sin(beta);
+		   z3=z2*Math.cos(beta)-y2*Math.sin(beta);
+		   xo=300+Math.round(50*x3);
+		   yo=350-Math.round(50*z3);
+		   context.beginPath();
+		   context.moveTo(xo,yo);
+		   for (i=j;i<j+4;i++)
+		  {x1=k[h[i][1]][0]; y1=k[h[i][1]][1]; z1=k[h[i][1]][2];
+		   x2=x1*Math.cos(alfa)+y1*Math.sin(alfa);
+		   y2=y1*Math.cos(alfa)-x1*Math.sin(alfa);
+		   z2=z1;
+		   x3=x2;
+		   y3=y2*Math.cos(beta)+z2*Math.sin(beta);
+		   z3=z2*Math.cos(beta)-y2*Math.sin(beta);
+		   xo=300+Math.round(50*x3);
+		   yo=350-Math.round(50*z3);
+		   context.lineTo(xo,yo);
+		   }
+		   context.closePath();
+		   context.fill();
+
+	  }
+	  function osi()
+	  {context.lineWidth=5;
+	   z0=350-Math.round(50*6*Math.cos(beta));
+	   context.beginPath();
+	   context.moveTo(300,350);
+	   context.lineTo(300,z0);
+		   context.closePath();
+		   context.stroke();
+ 
+ 	   context.beginPath();
+	   context.moveTo(300,350);
+	   context.lineTo(300+50*6*0.8660254,350+50*3*Math.sin(beta));
+		   context.closePath();
+		   context.stroke();
+		   
+ 	   context.beginPath();
+	   context.moveTo(300,350);
+	   context.lineTo(300+50*6*0.5,350-6*0.8660254*50*Math.sin(beta));
+		   context.closePath();
+		   context.stroke();
+		   context.lineWidth=1;
+	  }
+	  function kresli()
+	  { context.fillStyle = "#a8c101";context.fillRect(0, 0, 800, 600);
+        alfa=alfa+1/180*Math.PI;
+//        if (os.checked) osi();
+		if (dolna_plocha.checked) plocha(0);   
+	    for (i=0;i<12;i++)
+	  	{  x1=k[h[i][0]][0]; y1=k[h[i][0]][1]; z1=k[h[i][0]][2]; 
+		   x2=x1*Math.cos(alfa)+y1*Math.sin(alfa);
+		   y2=y1*Math.cos(alfa)-x1*Math.sin(alfa);
+		   z2=z1;
+		   x3=x2;
+		   y3=y2*Math.cos(beta)+z2*Math.sin(beta);
+		   z3=z2*Math.cos(beta)-y2*Math.sin(beta);
+		   xo=300+Math.round(50*x3);
+		   yo=350-Math.round(50*z3);
+		   context.beginPath();
+		   context.moveTo(xo,yo);
+			x1=k[h[i][1]] [0]; y1=k[h[i][1]][1]; z1=k[h[i][1]][2];
+		   x2=x1*Math.cos(alfa)+y1*Math.sin(alfa);
+		   y2=y1*Math.cos(alfa)-x1*Math.sin(alfa);
+		   z2=z1;
+		   x3=x2;
+		   y3=y2*Math.cos(beta)+z2*Math.sin(beta);
+		   z3=z2*Math.cos(beta)-y2*Math.sin(beta);
+		   xo=300+Math.round(50*x3);
+		   yo=350-Math.round(50*z3);
+		   context.lineTo(xo,yo);
+		   context.closePath();
+		   context.stroke();
+		}
+		   if (horna_plocha.checked) plocha(8);
+	  }
+	  function kresli()
+	  { context.fillStyle = "#a8c101";context.fillRect(0, 0, 800, 600);
+        
+	  }
+	  </script>
+</head>
+
+<body onload="init();">
+<h3 class=nadpis>Kreslenie priestorových útvarov</h3>
+<dl><dt class=main>Opakovanie:
+	<dd>Ktorý objekt je určený na vykreslovanie?
+	<br>Kde na kresliacej ploche je bod [0,0]?
+	<br>Aká je súradnicová sústava na kresliacej ploche?
+	<br>Ako kreslíme čiaru?
+</dl>
+<h3  class=main>Priestor</h3>
+V priestore je poloha bodu určená trojicou súradníc [x,y,z] na obrazovke máme súradnice dve [xo,yo]. Keď chceme na monitore zobraziť časť priestoru musíme vymyslieť zobrazenie [x,y,z] --&gt;[xo,yo]. 
+Nakoľko zobrazenie je vhodné, keď je jednoduché, zvolíme najjednoduchšie a to že jednu súradnicu zahodíme
+<br>xo = x
+<br>yo = z
+<br>Vlastne priestor premietnem do roviny xz
+<br>Aby som si 3D objekt mohol pozrieť "zo všetkých strán" musím ho vedieť priestorovo otáčať. Uspokojíme sa s dvoma 
+otáčaniami <ul><li>okolo osi z ... uhol budeme nazývať alfa
+				<li>okolo osi x ... uhol budeme nazývať beta
+			</ul>
+<dl>
+	<dt><font color="Blue">Rovnice na otáčanie okolo osi z</font>
+	<dd>    x2 = x1*cos(alfa)+y1*sin(alfa);
+        <br>y2 = y1*cos(alfa)-x1*sin(alfa);
+		<br>z2 = z1;
+	<dt><font color="Blue">Rovnice na otáčanie okolo osi y</font>
+	<dd>x3 = x2;
+	<br>y3 = y2*cos(beta)+z2*sin(beta);
+	<br>z3 = z2*cos(beta)-y2*sin(beta);
+	<dt><font color="Blue">Rovnice na prechod na obrazovkové súradnice</font>
+		<dd>xo = 200+round(50*x1);
+		<br>yo = 300-round(50*z1);
+		<br>[200,300] ... sú súradnice kam sa premietne bod [0,0,0] teda bod, ktorý sa pri otáčaniach nepohne
+		<br>50 ... je mierka zväčšenia (normálne by bolo, keby si ju program vedel vypočítať sám, toto je pre jednoduchosť
+		<br>yo ... vidíme, že je tam mínus - je to preto, že na obrazovke ide os y opačným smerom (zhora-&gt;nadol)
+</dl>
+<br>Nakoľko musíme otočiť každý vykreslovaný bod je vhodné si na otočenie spraviť podprogram
+<div style="width:580;backgroung-color:white; border-color:blue;border-width:3;border-style:outset; padding:5;margin:10">
+<div style="background-color:blue;color:white;">Unit1</div>
+<code><pre>
+void otoc(double alfa,double beta,double x1,double y1,double z1;int &amp;xo, int &amp;yo)
+{  double x2,y2,z2;                 // pomocné
+   x2 = x1*cos(alfa)+y1*sin(alfa);     // okolo z
+   y2 = y1*cos(alfa)-x1*sin(alfa);     // uhly sú samozrejme v radiánoch
+   z2 = z1;
+   x1 = x2;
+   y1 = y2*cos(beta)+z2*sin(beta);     // okolo y
+   z1 = z2*cos(beta)-y2*sin(beta);
+   xo = 200+round(50*x1);              // mierkovanie
+   yo = 300-round(50*z1);
+}
+</pre></code>
+</div> 	
+Prechod z reálnych 3D súradníc na obrazovkové teda máme	   	
+Ako bude vyzerať program:<a href="project1.exe">Project1.exe</a>
+<br>Po spustení si program 
+<ul><li>zoberie z memo1 súradnice 
+		<br>A=[x1,y1,z1] ... prvé tri riadky 
+		<br>B=[x2,y2,z2] ... druhé tri riadky 
+	<li>otočí usečky dĺžky 5 položené na osiach x,y,z a vykreslí ich
+	<li>otočí úsečku AB a vykreslí ju
+</ul>
+(veľkosti uhlov sú v TrackBaroch)		
+<div style="width:680;backgroung-color:white; border-color:blue;border-width:3;border-style:outset; padding:5;margin:10">
+<div style="background-color:blue;color:white;">Unit1</div>
+<code><pre>
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{   Timer1->Enabled = 0;                       //vypnem casovac
+    Image1->Canvas->FillRect(Image1->ClientRect);   //zotriem
+    x1 = StrToInt(Memo1->Lines[0]);                //nacitam body usecky
+    y1 = StrToInt(Memo1->Lines[1]);
+    z1 = StrToInt(Memo1->Lines[2]);
+    x2 = StrToInt(Memo1->Lines[3]);
+    y2 = StrToInt(Memo1->Lines[4]);
+    z2 = StrToInt(Memo1->Lines[5]);
+    u0 = TrackBar1->Position;
+    u1 = u0;
+    u2 = TrackBar2->Position;
+    alfa = u1/180*3.1415;        //alfa - okolo osi z
+    beta = u2/180*3.1415;        //beta - okolo osi x
+    image1->Canvas->Pen->Width = 3;
+    otoc(alfa,beta,5,0,0,xo,yo);                // otoc ciaru leziacu na osi x
+    image1->Canvas->MoveTo(200,300);
+    image1->Canvas->LineTo(xo,yo);
+
+    otoc(alfa,beta,0,5,0,xo,yo);                // otoc ciaru leziacu na osi y
+    Image1->Canvas->MoveTo(200,300);
+    Image1->Canvas->LineTo(xo,yo);
+
+    otoc(alfa,beta,0,0,5,xo,yo);               // otoc ciaru leziacu na osi z
+    Image1->Canvas->MoveTo(200,300);
+    Image1->Canvas->LineTo(xo,yo);
+    Image1->Canvas->Pen->Width = 1;
+    otoc(alfa,beta,x1,y1,z1,xo,yo);           //otoc bod [x1,y1,z1]
+    image1->Canvas->MoveTo(xo,yo);
+
+    otoc(alfa,beta,x2,y2,z2,xo,yo);           //otoc bod [x2,y2,z2]
+    Image1->Canvas->Pen->Color = clred;
+    Image1->Canvas->LineTo(xo,yo);
+    Image1->Canvas->Pen->Color = clblack;
+}
+</pre></code>
+</div> 	
+Pozn. 
+<br>Ak stlačíme tlačidlo Vstup, zavolá sa opäť FormCreate, čím sa načítajú hodnoty z memo1
+<br>Pri každej zmene TrackBar sa tiež zavolá FormCreate 
+Pozn. 2 
+<br>V časovači nechávam narastať uhol alfa po jednom stupni ale osi netočím, pre ne sa uhol alfa nemení
+<br>Pre obzvlášnenie som nezotieral obrazovku, aby rotovaním úsečky vzniklo rotačné teleso
+<div style="width:750;backgroung-color:white; border-color:blue;border-width:3;border-style:outset; padding:5;margin:10">
+<div style="background-color:blue;color:white;">Unit1</div>
+<code><pre>
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+   // image1.Canvas.FillRect(image1.ClientRect);   aby sa nam ciary nezotierali
+   Image1->Canvas->Pen->Width = 3;
+   u1 = (u1+1) % 360;                         // uhol alfa sa pre usecku bude menit
+   alfa = u0/180.0*3.1415;                        // osi vykreslujem v zakladnom uhle alfa0
+   beta = u2/180*3.1415;
+
+   otoc(alfa,beta,5,0,0,xo,yo);                //kresba osi - kedze nezotieram mozno vynechat
+   Image1->Canvas->MoveTo(200,300);
+   Image1->Canvas->LineTo(xo,yo);
+
+   otoc(alfa,beta,0,5,0,xo,yo);
+   Image1->Canvas->MoveTo(200,300);
+   Image1->Canvas->LineTo(xo,yo);
+
+   otoc(alfa,beta,0,0,5,xo,yo);
+   Image1->Canvas->MoveTo(200,300);
+   Image1->Canvas->LineTo(xo,yo);
+
+   alfa = u1/180.0*3.1415;
+   otoc(alfa,beta,x1,y1,z1,xo,yo);              // 1. bod úsečky
+   Image1->Canvas->MoveTo(xo,yo);
+   otoc(alfa,beta,x2,y2,z2,xo,yo);              // 1. bod úsečky
+   Image1->Canvas->Pen->Width = 1;
+   Image1->Canvas->Pen->Color = clred;
+   Image1->Canvas->LineTo(xo,yo);
+   Image1->Canvas->Pen->Color = clblack;
+
+}
+</pre></code>
+</div> 	
+<br>Ukážka
+<div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0"  onclick="window.clearInterval(window.tr4)";>
+   </div>
+  	<div style="background-color:silver; width:850px;" >
+<canvas width="800" height="600" id="platno" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<table><tr><td width="150">
+<input type="Button" value="Kresli" onclick="window.tr4=window.setInterval('kresli()',30);">
+<br><input type="Button" value="Beta+" onclick="beta+=1/180*Math.PI;">
+<br><input type="Button" value="Beta-" onclick="beta-=1/180*Math.PI;">
+<td>dolná plocha <input type="Checkbox" id="dolna_plocha" >
+	<br>horná plocha <input type="Checkbox" id="horna_plocha" >
+	<br>kresba osí <input type="Checkbox" id="os" >
+</tr></table>	
+</div>
+<br>
+<div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0"  onclick="window.clearInterval(window.tr4)";>
+   </div>
+  	<div style="background-color:silver; width:850px;" >
+<canvas width="800" height="600" id="platno2" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<table><tr><td width="150">
+<input type="Button" value="Kresli" onclick="'kresli2()';">
+</tr></table>	
+</div>
+
+</body>
+</html>

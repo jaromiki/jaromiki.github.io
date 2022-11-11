@@ -1,0 +1,71 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Textury</h3>
+<dl>
+<dt>Tvorba textúry z obrázka
+<dd>Texturovanie je ofarbenie stien trojrozmerných telies nanesením dvojrozmerných rastrových
+	obrazcov. Tento postup bol navrhnutý aby  umožňoval grafické efekty bez veľkého zaťaženia
+	grafického systému. Textúry môžu byť
+	<ul><li>jednorozmerné - sem patria farebné prechody (majú len šírku)
+		<li>dvojrozmerné - sem patria zosnímané obrázky a tiež vypočítané textury (fraktály)
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(majú šírku a výšku)
+		<li>trojrozmerné
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(majú šírku, výšku a hĺbku)
+	</ul>
+Ukážeme si ako položiť textúry na steny kocky. Najťažšie je načítať obrázok do špeciálnej dátovej štruktúry, ktorú potrebuje príkaz
+<br><b>glTexImage2D</b>. Pre C++ existuje viacero loaderov, ktoré do tejto dátovej štruktúry vedia načítať obrázky rôznych typov,
+ale je možné si to urobiť aj vo vlastnej réžii. Tu si ukážeme ako načítať obrázok typu *.bmp bez špeciálneho softu. Využijem znalosť
+jednoduchej štruktúry bmp súboru. Každý 24-bit bmp súbor má hlavičku pevnej dĺžky 54B, kde má zapísané okrem iného napr. rozmer obrázka.
+<br>Mohli by sme údaje o šírke resp. výške z hlavičky aj načítať ale budeme využívať, že program vie aký rozmer náš obrázok má.
+<br>V prvej úlohe urobíme kocku, kde na všetkých stenách bude rovnaký obrázok
+<ul><li>zoženiem si podľa možnosti štvorcový obrázok
+	<li>upravím ho na veľkosť 256x256 alebo 128x128 (orezaním, prevzorkovaním) napr. v programe IrfanView)
+	<li>vytvorím si globálnu premennú bmp128
+		<br><b>char bmp128[128][128][3];</b> //resp bmp256[256][256][3]
+		<br>sem potrebujem dať pre každý pixel obrázka množstvo farieb R,G,B.
+	<li>Otvorím súbor s obrázkom (vytvorím premennú typu FILE a otvorím ho na čítanie)
+		<br><b>FILE *f  =fopen("images2.bmp","r");</b>	
+	<li>naplním pole <b>bmp128</b>
+		<br><b>fread(bmp,54,1,f);</b> // načítam celú hlavičku obrázka a zahodím ju, kurzor sa presunie na začiatok dát
+    	<br><b>fread(bmp,128*128*3,1,f);</b> //a obrázok je načítaný, pod win je ale problém, že farby sú zapísané v tvare bgr a nie rgb
+	 <li>Teraz zapneme texturu a nastavíme parametre textury
+	 	<br><b>glEnable(GL_TEXTURE_2D);</b>
+ 		<br><b>glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_linear);</b>
+ 		<br><b>glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_linear);</b>
+	<li>Určíme, ktorá textúra sa bude zobrazovať
+		<br><b>glTexImage2D(GL_TEXTURE_2D,</b> 
+		    <br><b>0,</b>&nbsp; &nbsp; &nbsp;//to je číslo textúry (ak je jedna dáme 0) 
+			<br><b>3,</b>&nbsp; &nbsp; &nbsp;//počet farieb (ak nedávame priesvitnosť dáme vždy 3)
+			<br><b>128,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -šírka
+			<br><b>128,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -výška 
+			<br><b>0,</b> 
+			<br><b>GL_BGR_EXT,</b> // musíme prehodiť poradie farieb, štandartne sa dáva GL_RGB
+			<br><b>GL_UNSIGNED_BYTE,</b> 
+			<br><b>@bmp);</b>&nbsp; &nbsp; &nbsp;//adresa dát kde je textúra načítaná
+	<li>a môžeme dať vykresliť 
+	
+		<br>glBegin(GL_QUADS);
+		<br>glTexCoord2f(0.0,0.0);glVertex3f(-0.5,-0.5,0.5);
+		<br>glTexCoord2f(0.0,1.0);glVertex3f(-0.5,0.5,0.5);
+		<br>glTexCoord2f(1.0,1.0);glVertex3f(0.5,0.5,0.5);
+		<br>glTexCoord2f(1.0,0.0);glVertex3f(0.5,-0.5,0.5);
+		<br>glEnd();
+		<br>SwapBuffers(DC);
+</ul>	
+Celý program bude vyzerať asi takto (v texte je vykreslená len predná stena).
+<br><img src="obr/u3.png" width="731" height="590" border="0" alt="">
+
+<br>Použitá textúra:
+<br><img src="obr/textury/t1-128x128.bmp" width="128" height="128" border="0" alt="">
+Ak využijeme tento postup, môžme v programe použiť jednu obrázkovú textúru, počet manuálnych prechodových textúr nie je obmedzený.
+<br>V ďalšej časti si ukážeme ako vytvoriť v jednom programe viac obrázkových textúr (napr. na každú stenu kocky inú).
+</body>
+</html>

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 42 - Více viewportů</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_42.jpg" class="nehe_maly" alt="Lekce 42" />
+
+<h1>Lekce 42 - Více viewportů</h1>
+
+<p class="nadpis_clanku">Tento tutoriál byl napsán pro všechny z vás, kteří se chtěli dozvědět, jak do jednoho okna zobrazit více pohledů na jednu scénu, kdy v každém probíhá jiný efekt. Jako bonus přidám získávání velikosti OpenGL okna a velice rychlý způsob aktualizace textury bez jejího znovuvytváření.</p>
+
+<p>Vítejte do dalšího perfektního tutoriálu. Tentokrát se pokusíme v jednom okně zobrazit čtyři viewporty, které se budou při změně velikosti okna bez problémů zmenšovat i zvětšovat. Ve dvou z nich zapneme světla, jeden bude používat pravoúhlou projekci a tři perspektivní. Abychom demu zajistili kvalitní efekty, budeme do textury postupně generovat půdorys bludiště a mapovat ji na objekty v jednotlivých viewportech.</p>
+
+<p>Jakmile jednou porozumíte tomuto tutoriálu, nebudete mít nejmenší problémy při vytváření her pro více hráčů s rozdělenými scénami nebo 3D aplikací, ve kterých potřebujete několik pohledů na modelovaný objekt (půdorys, nárys, bokorys, drátěný model ap.).</p>
+
+<p>Jako základní kód můžete použít buď nejnovější NeHeGL nebo IPicture. Je to, dá se říct, jedno, ale provedeme v něm několik úprav. Nejdůležitější změnu najdete ve funkci ReshapeGL(), ve které se definují dimenze scény (hlavní viewport). Všechna nastavení přesuneme do vykreslovací smyčky, zůstane zde pouze definování rozměrů hlavního okna.</p>
+
+<p class="src0">void ReshapeGL(int width, int height)<span class="kom">// Volá se při změně velikosti okna</span></p>
+<p class="src0">{</p>
+<p class="src1">glViewport(0, 0, (GLsizei)(width), (GLsizei)(height));<span class="kom">// Reset aktuálního viewportu</span></p>
+<p class="src0">}</p>
+
+<p>Druhá změna spočívá v ošetření systémové události WM_ERASEBKGND. Ukončením funkce zamezíme různému mihotání a blikání scény při roztahování okna, kdy systém automaticky maže pozadí. Pokud nerozumíte, odstraňte oba řádky a porovnejte chování okna při změně jeho velikosti.</p>
+
+<p class="src0"><span class="kom">// Funkce WindowProc()</span></p>
+<p class="src1">switch (uMsg)<span class="kom">// Větvení podle došlé zprávy</span></p>
+<p class="src1">{</p>
+<p class="src2">case WM_ERASEBKGND:<span class="kom">//Okno zkouší smazat pozadí</span></p>
+<p class="src3">return 0;<span class="kom">// Zákaz mazání (prevence blikání)</span></p>
+
+<p>Nyní přejdeme k opravdovému kódu tohoto tutoriálu. Začneme deklarací globálních proměnných. Mx a my specifikují místnost v bludišti, ve které se právě nacházíme. Width a height definují rozměry textury, každému pixelu bludiště odpovídá jeden pixel na textuře. Pokud vaše grafická karta podporuje větší textury, zkuste zvětšit toto číslo na následující násobky dvou např. 256, 512, 1024. Ujistěte se ale, že ho nezvětšíte příliš mnoho. Má-li například okno šířku 1024 pixelů, viewporty budou poloviční, takže nemá cenu, aby textura byla větší než 512, protože by se stejně zmenšovala. To samé samozřejmě platí i pro výšku.</p>
+
+<p class="src0">int mx, my;<span class="kom">// Řídící proměnné cyklů</span></p>
+<p></p>
+<p class="src0">const width = 128;<span class="kom">// Šířka textury (musí být mocninou čísla 2)</span></p>
+<p class="src0">const height = 128;<span class="kom">// Výška textury (musí být mocninou čísla 2)</span></p>
+
+<p>Done povede záznam o tom, jestli už bylo generování bludiště dokončeno. Více podrobností se dozvíte později. Sp používáme k ošetření toho, aby program nebral dlouhý stisk mezerníku za několik spolu nesouvisejících stisků. Po jeho zmáčknutí resetujeme texturu a začneme kreslit bludiště od znova.</p>
+
+<p class="src0">BOOL done;<span class="kom">// Bludiště vygenerováno?</span></p>
+<p class="src0">BOOL sp;<span class="kom">// Flag stisku mezerníku</span></p>
+
+<p>Čtyřprvková pole r, g, b ukládají složky barev pro jednotlivé viewporty. Používáme datový typ BYTE, protože se lépe získávají náhodná čísla od 0 do 255 než od 0.0f do 1.0f. Tex_data ukazuje na paměť dat textury.</p>
+
+<p class="src0">BYTE r[4], g[4], b[4];<span class="kom">// Čtyři náhodné barvy</span></p>
+<p class="src0">BYTE* tex_data;<span class="kom">// Data textury</span></p>
+
+<p>Xrot, yrot a zrot specifikují úhel rotace 3D objektu na jednotlivých souřadnicových osách. Quadratic použijeme pro kreslení koule a válce.</p>
+
+<p class="src0">GLfloat xrot, yrot, zrot;<span class="kom">// Úhly rotací objektů</span></p>
+<p class="src0">GLUquadricObj *quadric;<span class="kom">// Objekt quadraticu</span></p>
+
+<p>Pomocí následující funkce budeme moci snadno zabílit pixel textury na souřadnicích dmx, dmy. Tex_data představuje ukazatel na data textury. Lokaci pixelu získáme vynásobením y pozice (dmy) šířkou řádku (width) a přičtením pozice na řádku (dmx). Protože se každý pixel skládá ze tří bytů násobíme výsledek třemi. Aby konečná barva byla bílá, musíme přiřadit číslo 255 všem třem barevným složkám.</p>
+
+<p class="src0">void UpdateTex(int dmx, int dmy)<span class="kom">// Zabílí určený pixel na textuře</span></p>
+<p class="src0">{</p>
+<p class="src1">tex_data[0 + ((dmx + (width * dmy)) * 3)] = 255;<span class="kom">// Červená složka</span></p>
+<p class="src1">tex_data[1 + ((dmx + (width * dmy)) * 3)] = 255;<span class="kom">// Zelená složka</span></p>
+<p class="src1">tex_data[2 + ((dmx + (width * dmy)) * 3)] = 255;<span class="kom">// Modrá složka</span></p>
+<p class="src0">}</p>
+
+<p>Reset má na starosti několik relativně důležitých úkonů. V první řadě kompletně začerní texturu a tím odstraní dosavadní bludiště, dále přiřazuje nové barvy viewportům a reinicializuje pozici v bludišti. První řádkou kódu nulujeme data textury, což ve výsledku znamená, že všechny pixely budou černé.</p>
+
+<p class="src0">void Reset(void)<span class="kom">// Reset textury, barev, aktuální pozice v bludišti</span></p>
+<p class="src0">{</p>
+<p class="src1">ZeroMemory(tex_data, width * height * 3);<span class="kom">// Nuluje paměť textury</span></p>
+
+<p>Potřebujeme nastavit náhodnou barvu viewportů. Pro ty z vás, kteří to ještě neví, random není zase tak náhodný, jak by se mohl na první pohled zdát. Pokud vytvoříte jednoduchý program, který má vypsat deset náhodných čísel, tak samozřejmě vypíše deset náhodných čísel, která nemáte šanci předem odhadnout. Ale při příštím spuštění se bude všech deset &quot;náhodných&quot; čísel opakovat. Abychom tento problém odstranili, inicializujeme generátor. Pokud bychom ho ale nastavili na konstantní hodnotu (1, 2, 3...), výsledkem by opět byla při více spuštěních stejná čísla. Proto předáváme funkci srand() hodnotu aktuálního času (Překl.: počet milisekund od spuštění OS), který se samozřejmě vždy mění.</p>
+
+<p>Překl.: Bývá zvykem inicializovat generátor náhodných čísel pouze jednou a to někde na začátku funkce main() a ne, jak děláme zde, při každém volání Reset() - není to špatně, ale je to zbytečné.</p>
+
+<p class="src1">srand(GetTickCount());<span class="kom">// Inicializace generátoru náhodných čísel</span></p>
+
+<p>V cyklu, který projde všechny čtyři viewporty nastavujeme pro každý náhodnou barvu. Mohli bychom generovat číslo v plném rozsahu (0 až 255), ale neměli bychom tak zaručeno, že nezískáme nějakou nízkou hodnotu (aby na černé byla vidět). Přičtením 128 získáme světlejší barvy.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; 4; loop++)<span class="kom">// Generuje čtyři náhodné barvy</span></p>
+<p class="src1">{</p>
+<p class="src2">r[loop] = rand() % 128 + 128;<span class="kom">// Červená složka</span></p>
+<p class="src2">g[loop] = rand() % 128 + 128;<span class="kom">// Zelená složka</span></p>
+<p class="src2">b[loop] = rand() % 128 + 128;<span class="kom">// Modrá složka</span></p>
+<p class="src1">}</p>
+
+<p>Nakonec nastavíme počáteční bod v bludišti - opět náhodný. Výsledkem musí být sudé číslo (zajistí násobení dvěma), protože liché pozice označují stěny mezi místnostmi.</p>
+
+<p class="src1">mx = int(rand() % (width / 2)) * 2;<span class="kom">// Náhodná x pozice</span></p>
+<p class="src1">my = int(rand() % (height / 2)) * 2;<span class="kom">// Náhodná y pozice</span></p>
+<p class="src0">}</p>
+
+<p>Prvním řádkem v inicializaci alokujeme dynamickou paměť pro uložení textury.</p>
+
+<p class="src0">BOOL Initialize (GL_Window* window, Keys* keys)<span class="kom">// Inicializace OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">tex_data = new BYTE[width * height * 3];<span class="kom">// Alokace paměti pro texturu</span></p>
+<p></p>
+<p class="src1">g_window = window;<span class="kom">// Okno</span></p>
+<p class="src1">g_keys = keys;<span class="kom">// Klávesy</span></p>
+
+<p>Voláme Reset(), abychom ji začernili a nastavili barvy viewportů.</p>
+
+<p class="src1">Reset();<span class="kom">// Reset textury, barev, pozice</span></p>
+
+<p>Inicializaci textury začneme nastavením clamp parametrů do rozmezí [0; 1]. Tímto odstraníme možné artefakty v podobě tenkých linek, které vznikají na okrajích textury. Příčina jejich zobrazování spočívá v lineárním filtrování, které se pokouší vyhladit texturu, ale zahrnuje do ní i její okraje. Zkuste odstranit první dva řádky a uvidíte, co myslím. Jak už jsem zmínil, nastavíme lineární filtrování a vytvoříme texturu.</p>
+
+<p class="src1">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);<span class="kom">// Clamp parametry textury</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);</p>
+<p></p>
+<p class="src1">glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); </p>
+<p></p>
+<p class="src1">glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, tex_data);<span class="kom">// Vytvoří texturu</span></p>
+
+<p>Pozadí budeme mazat černou barvou a hloubku jedničkou. Dále nastavíme testování hloubky na menší nebo rovno a zapneme ho.</p>
+
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.0f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení depth bufferu</span></p>
+<p></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ hloubkového testování</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+
+<p>Povolení GL_COLOR_MATERIAL umožní měnit barvu textury použitím funkce glColor3f(). Také zapínáme mapování textur.</p>
+
+<p class="src1">glEnable(GL_COLOR_MATERIAL);<span class="kom">// Zapne vybarvování materiálů</span></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+
+<p>Vytvoříme a inicializujeme objekt quadraticu tak, aby obsahoval normálové vektory pro světlo a texturové koordináty.</p>
+
+<p class="src1">quadric = gluNewQuadric();<span class="kom">// Vytvoří objekt quadraticu</span></p>
+<p class="src1">gluQuadricNormals(quadric, GLU_SMOOTH);<span class="kom">// Normály pro světlo</span></p>
+<p class="src1">gluQuadricTexture(quadric, GL_TRUE);<span class="kom">// Texturové koordináty</span></p>
+
+<p>I když ještě nemáme povoleny světla globálně, zapneme světlo 0.</p>
+
+<p class="src1">glEnable(GL_LIGHT0);<span class="kom">// Zapne světlo 0</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Po jakékoli alokaci dynamické paměti musí přijít její uvolnění. Tuto akci vložíme do funkce Deinitialize(), která se volá před ukončením programu.</p>
+
+<p class="src0">void Deinitialize(void)<span class="kom">// Deinicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">delete [] tex_data;<span class="kom">// Smaže data textury</span></p>
+<p class="src0">}</p>
+
+<p>Update má na starosti aktualizaci zobrazované scény, stisky kláves, pohyby, rotace a podobně. Celočíselnou proměnnou dir využijeme k pohybu náhodným směrem.</p>
+
+<p class="src0">void Update(float milliseconds)<span class="kom">// Aktualizace scény</span></p>
+<p class="src0">{</p>
+<p class="src1">int dir;<span class="kom">// Ukládá aktuální směr pohybu</span></p>
+
+<p>V první fázi ošetříme klávesnici. Při stisku Esc ukončíme program, F1 přepíná mód fullscreen/okno a mezerník resetuje bludiště.</p>
+
+<p class="src1">if (g_keys-&gt;keyDown[VK_ESCAPE])<span class="kom">// Klávesa Esc</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication (g_window);<span class="kom">// Konec programu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_F1])<span class="kom">// Klávesa F1</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen (g_window);<span class="kom">// Přepne fullscreen/okno</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[' '] &amp;&amp; !sp)<span class="kom">// Mezerník</span></p>
+<p class="src1">{</p>
+<p class="src2">sp = TRUE;</p>
+<p class="src2">Reset();<span class="kom">// Resetuje scénu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!g_keys-&gt;keyDown[' '])<span class="kom">// Uvolnění mezerníku</span></p>
+<p class="src1">{</p>
+<p class="src2">sp = FALSE;</p>
+<p class="src1">}</p>
+
+<p>Rot proměnné zvětšíme v závislosti na počtu uplynulých milisekund od minulého volání této funkce. Tím zajistíme rotaci objektů.</p>
+
+<p class="src1">xrot += (float)(milliseconds) * 0.02f;<span class="kom">// Aktualizace úhlů natočení</span></p>
+<p class="src1">yrot += (float)(milliseconds) * 0.03f;</p>
+<p class="src1">zrot += (float)(milliseconds) * 0.015f;</p>
+
+<p>Kód níže zjišťuje, jestli bylo kreslení bludiště ukončeno (textura kompletně zaplněna). Nejdříve nastavíme flag done na true. Předpokládáme tedy, že už vykresleno bylo. Ve dvou vnořených cyklech procházíme jednotlivé řádky i sloupce a kontrolujeme, zda byl náš odhad správný. Pokud ne, nastavíme done na false.</p>
+
+<p>Jak pracuje kód? Řídící proměnné cyklů zvyšujeme o dva, protože nám jde jen o sudé indexy v poli. Každé bludiště se skládá ze stěn (liché) a místností (sudé). Když otevřeme dveře, dostaneme se do místnosti a právě ty tedy musíme testovat. Kontroly stěn jsou samozřejmě zbytečné. Pokud se hodnota v poli rovná nule, znamená to, že jsme do něj ještě nekreslili a místnost nebyla navštívena.</p>
+
+<p class="src1">done = TRUE;<span class="kom">// Předpokládá se, že je už bludiště kompletní</span></p>
+<p></p>
+<p class="src1">for (int x = 0; x &lt; width; x += 2)<span class="kom">// Prochází všechny místnosti na ose x</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int y = 0; y &lt; height; y += 2)<span class="kom">// Prochází všechny místnosti na ose y</span></p>
+<p class="src2">{</p>
+<p class="src3">if (tex_data[((x + (width * y)) * 3)] == 0)<span class="kom">// Pokud má pixel černou barvu</span></p>
+<p class="src3">{</p>
+<p class="src4">done = FALSE;<span class="kom">// Bludiště ještě není hotové</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Pokud byly všechny místnosti objeveny, změníme titulek okna na ...Maze Complete!, potom počkáme pět sekund, aby si ho stihl uživatel přečíst, vrátíme titulek zpět a resetujeme bludiště.</p>
+
+<p class="src1">if (done)<span class="kom">// Je bludiště hotové?</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Změna titulku okna</span></p>
+<p class="src2">SetWindowText(g_window-&gt;hWnd, &quot;Lesson 42: Multiple Viewports... 2003 NeHe Productions... Maze Complete!&quot;);</p>
+<p class="src2">Sleep(5000);<span class="kom">// Zastavení na pět sekund</span></p>
+<p></p>
+<p class="src2">SetWindowText(g_window-&gt;hWnd, &quot;Lesson 42: Multiple Viewports... 2003 NeHe Productions... Building Maze!&quot;);</p>
+<p class="src2">Reset();<span class="kom">// Reset bludiště a scény</span></p>
+<p class="src1">}</p>
+
+<p>Předpokládám, že pro vás následující podmínka vypadá totálně šíleně, ale vůbec není těžká. skládá se ze čtyř AND-ovaných podpodmínek a každá z nich ze dvou dalších. Všechny čtyři hlavní části jsou skoro stejné a dohromady zjišťují, jestli existuje místnost okolo aktuální pozice, která ještě nebyla navštívena. Vše si vysvětlíme na první z podpodmínek: Nejprve se ptáme, jestli jsme v místnosti vpravo už byli a potom, jestli jsou vpravo ještě nějaké místnosti (kvůli okraji textury). Pokud se červená složka pixelu rovná 255, podmínka platí. Okraj textury v daném směru nalezneme také snadno.</p>
+
+<p>To samé vykonáme pro všechny směry a pokud nemáme kam jít, musíme vygenerovat novou pozici. Vše si ztížíme tím, že chceme, abychom se objevili na pozici, která už byla navštívena. Pokud ne, vygenerujeme v cyklu další souřadnici. Možná se ptáte, proč hledáme navštívenou místnost? Protože nechceme spoustu malých oddělených částí bludiště, ale jedno obrovské. Dokážete si to představit?</p>
+
+<p>Zdá se vám to moc složité? Abychom udrželi velikost kódu na minimu, nekontrolujeme, jestli je mx-2 menší než nula a podobně pro všechny směry. Pokud si přejete 100% ošetření chyb, modifikujte podmínku tak, aby netestovala paměť, která už nepatří textuře.</p>
+
+
+<p class="src1"><span class="kom">// Máme kam jít?</span></p>
+<p class="src1">if (((tex_data[(((mx+2)+(width*my))*3)] == 255) || mx&gt;(width-4)) &amp;&amp; ((tex_data[(((mx-2)+(width*my))*3)] == 255) || mx&lt;2) &amp;&amp; ((tex_data[((mx+(width*(my+2)))*3)] == 255) || my&gt;(height-4)) &amp;&amp; ((tex_data[((mx+(width*(my-2)))*3)] == 255) || my&lt;2))</p>
+<p class="src1">{</p>
+<p class="src2">do</p>
+<p class="src2">{</p>
+<p class="src3">mx = int(rand() % (width / 2)) * 2;<span class="kom">// Nová pozice</span></p>
+<p class="src3">my = int(rand() % (height / 2)) * 2;</p>
+<p class="src2">}</p>
+<p class="src2">while (tex_data[((mx + (width * my)) * 3)] == 0);<span class="kom">// Hledá se navštívená místnost</span></p>
+<p class="src1">}</p>
+
+<p>Do proměnné dir vygenerujeme náhodné číslo od nuly do tří, které vyjadřuje směr, kterým se pokusíme jít.</p>
+
+<p class="src1">dir = int(rand() % 4);<span class="kom">// Náhodný směr pohybu</span></p>
+
+<p>Pokud se rovná nule (směr doprava) a pokud nejsme na okraji bludiště (textury), zkontrolujeme, jestli už byla místnost vpravo navštívena. Pokud ne, označíme dveře (pixel stěny, ne místnosti) jako navštívené a projdeme do další místnosti.</p>
+
+<p class="src1">if ((dir == 0) &amp;&amp; (mx &lt;= (width-4)))<span class="kom">// Směr doprava; vpravo je místo</span></p>
+<p class="src1">{</p>
+<p class="src2">if (tex_data[(((mx+2) + (width*my)) * 3)] == 0)<span class="kom">// Místnost vpravo ještě nebyla navštívena</span></p>
+<p class="src2">{</p>
+<p class="src3">UpdateTex(mx+1, my);<span class="kom">// Označí průchod mezi místnostmi</span></p>
+<p class="src3">mx += 2;<span class="kom">// Posunutí doprava</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Analogicky ošetříme všechny další směry.</p>
+
+<p class="src1">if ((dir == 1) &amp;&amp; (my &lt;= (height-4)))<span class="kom">// Směr dolů; dole je místo</span></p>
+<p class="src1">{</p>
+<p class="src2">if (tex_data[((mx + (width * (my+2))) * 3)] == 0)<span class="kom">// Místnost dole ještě nebyla navštívena</span></p>
+<p class="src2">{</p>
+<p class="src3">UpdateTex(mx, my+1);<span class="kom">// Označí průchod mezi místnostmi</span></p>
+<p class="src3">my += 2;<span class="kom">// Posunutí dolů</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if ((dir == 2) &amp;&amp; (mx &gt;= 2))<span class="kom">// Směr doleva; vlevo je místo</span></p>
+<p class="src1">{</p>
+<p class="src2">if (tex_data[(((mx-2) + (width*my)) * 3)] == 0)<span class="kom">// Místnost vlevo ještě nebyla navštívena</span></p>
+<p class="src2">{</p>
+<p class="src3">UpdateTex(mx-1, my);<span class="kom">// Označí průchod mezi místnostmi</span></p>
+<p class="src3">mx -= 2;<span class="kom">// Posunutí doleva</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if ((dir == 3) &amp;&amp; (my &gt;= 2))<span class="kom">// Směr nahoru; nahoře je místo</span></p>
+<p class="src1">{</p>
+<p class="src2">if (tex_data[((mx + (width * (my-2))) * 3)] == 0)<span class="kom">// Místnost nahoře ještě nebyla navštívena</span></p>
+<p class="src2">{</p>
+<p class="src3">UpdateTex(mx, my-1);<span class="kom">// Označí průchod mezi místnostmi</span></p>
+<p class="src3">my -= 2;<span class="kom">// Posunutí nahoru</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Po přesunutí se do nové místnosti ji musíme označit.</p>
+
+<p class="src1">UpdateTex(mx, my);<span class="kom">// Označení nové místnosti</span></p>
+<p class="src0">}</p>
+
+<p>Vykreslování začneme netradičně. Potřebujeme zjistit velikost klientské oblasti okna, abychom mohli jednotlivé viewporty roztahovat korektně. Deklarujeme objekt struktury obdélníku a nagrabujeme do něj souřadnice okna. Šířku a výšku spočítáme jednoduchým odečtením.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">RECT rect;<span class="kom">// Struktura obdélníku</span></p>
+<p></p>
+<p class="src1">GetClientRect(g_window-&gt;hWnd, &amp;rect);<span class="kom">// Grabování rozměrů okna</span></p>
+<p></p>
+<p class="src1">int window_width = rect.right - rect.left;<span class="kom">// Šířka okna</span></p>
+<p class="src1">int window_height = rect.bottom - rect.top;<span class="kom">// Výška okna</span></p>
+
+<p>Texturu musíme aktualizovat při každém překreslení scény. Nejrychlejší metodou je příkaz glTexSubImage2D(), který namapuje jakoukoli část obrázku na objekt ve scéně jako texturu. První parametr oznamuje, že chceme použít 2D texturu. Číslo úrovní detailů nastavíme na nulu a také nechceme žádný x ani y offset. Šířka a výška je určena rozměry obrázku. Každý pixel se skládá z RGB složek a data jsou ve formátu bezznaménkových bytů. Poslední parametr představuje ukazatel na začátek dat.</p>
+
+<p>Jak jsem již napsal, funkcí glTexSubImage2D() velmi rychle aktualizujeme texturu bez nutnosti jejího opakovaného smazání a sestavení. Tento příkaz ji ale NEVYTVÁŘÍ!!! Musíte ji tedy sestavit před první aktualizací, v našem případě se jedná o glTexImage2D() ve funkci Initialize().</p>
+
+<p class="src1"><span class="kom">// Zvolí aktualizovanou texturu</span></p>
+<p class="src1">glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, tex_data);</p>
+
+<p>Všimněte si následujícího řádku, je opravdu důležitý. Smažeme jím kompletně celou scénu. Z toho plyne, že nemažeme podscény jednotlivých viewportů postupně, ale VŠECHNY NAJEDNOU před tím, než cokoli vykreslíme. Také si všimněte, že v tuto chvíli k volání nepřidáváme mazání depth bufferu. Ten naopak ošetříme u každého viewportu zvlášť.</p>
+
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT);<span class="kom">// Smaže obrazovku</span></p>
+
+<p>Chceme vykreslit čtyři rozdílné viewporty, takže založíme cyklus od nuly do tří, pomocí řídící proměnné nastavíme barvu.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; 4; loop++)<span class="kom">// Prochází viewporty</span></p>
+<p class="src1">{</p>
+<p class="src2">glColor3ub(r[loop], g[loop], b[loop]);<span class="kom">// Barva</span></p>
+
+<p>Předtím než cokoli vykreslíme, potřebujeme nastavit viewporty. První bude umístěn vlevo nahoře. Na ose x tedy začíná na nule a na ose y v polovině okna. Šířku i výšku nastavíme na polovinu rozměrů okna. Pokud se nacházíme ve fullscreenu s rozlišením obrazovky 1024x768, bude tento viewport začínat na souřadnicích [0; 384]. Šířka se bude rovna 512 a výška 384.</p>
+
+<p class="src2">if (loop == 0)<span class="kom">// První scéna</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Levý horní viewport, velikost poloviny okna</span></p>
+<p class="src3">glViewport(0, window_height / 2, window_width / 2, window_height / 2);</p>
+
+<p>Po definování viewportu zvolíme projekční matici, resetujeme ji a nastavíme kolmou 2D projekci, která kompletně zaplňuje celý viewport. Levý roh spočívá na nule a pravý na polovině velikosti okna (šířka viewportu). Spodní bod je také polovinou okna a hornímu předáme nulu. Souřadnice [0; 0] tedy odpovídá levému hornímu rohu.</p>
+
+<p class="src3">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src3">glLoadIdentity();<span class="kom">// Reset projekční matice</span></p>
+<p></p>
+<p class="src3">gluOrtho2D(0, window_width / 2, window_height / 2, 0);<span class="kom">// Pravoúhlá projekce</span></p>
+<p class="src2">}</p>
+
+<p>Druhý viewport leží v pravém horním rohu. Opět zvolíme projekční matici a resetujeme ji. Tentokrát nenastavujeme pravoúhlou, ale perspektivní scénu.</p>
+
+<p class="src2">if (loop == 1)<span class="kom">// Druhá scéna</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Pravý horní viewport, velikost poloviny okna</span></p>
+<p class="src3">glViewport(window_width / 2, window_height / 2, window_width / 2, window_height / 2);</p>
+<p class="src3">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src3">glLoadIdentity();<span class="kom">// Reset projekční matice</span></p>
+<p></p>
+<p class="src3"><span class="kom">// Perspektivní projekce</span></p>
+<p class="src3">gluPerspective(45.0, (GLfloat)(width) / (GLfloat)(height), 0.1f, 500.0); </p>
+<p class="src2">}</p>
+
+<p>Třetí viewport umístíme vpravo a čtvrtý vlevo dolů.</p>
+
+<p class="src2">if (loop == 2)<span class="kom">// Třetí scéna</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Pravý dolní viewport, velikost poloviny okna</span></p>
+<p class="src3">glViewport(window_width / 2, 0, window_width / 2, window_height / 2);</p>
+<p class="src3">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src3">glLoadIdentity();<span class="kom">// Reset projekční matice</span></p>
+<p></p>
+<p class="src3"><span class="kom">// Perspektivní projekce</span></p>
+<p class="src3">gluPerspective(45.0, (GLfloat)(width) / (GLfloat)(height), 0.1f, 500.0); </p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">if (loop == 3)<span class="kom">// Čtvrtá scéna</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Levý dolní viewport, velikost poloviny okna</span></p>
+<p class="src3">glViewport(0, 0, window_width / 2, window_height / 2);</p>
+<p class="src3">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src3">glLoadIdentity();<span class="kom">// Reset projekční matice</span></p>
+<p></p>
+<p class="src3"><span class="kom">// Perspektivní projekce</span></p>
+<p class="src3">gluPerspective(45.0, (GLfloat)(width) / (GLfloat)(height), 0.1f, 500.0); </p>
+<p class="src2">}</p>
+
+<p>Zvolíme matici modelview, resetujeme ji a smažeme hloubkový buffer.</p>
+
+<p class="src2">glMatrixMode(GL_MODELVIEW);<span class="kom">// Matice modelview</span></p>
+<p class="src2">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src2">glClear(GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže hloubkový buffer</span></p>
+
+<p>Scéna prvního viewportu bude obsahovat plochý otexturovaný obdélník. Protože se nacházíme v pravoúhlé projekci, nepotřebujeme zadávat souřadnice na ose z. Objekty by se stejně nezmenšily. Vertexům předáme rozměry viewportu, který tudíž bude kompletně vyplněn.</p>
+
+<p class="src2">if (loop == 0)<span class="kom">// První scéna, bludiště přes celý viewport</span></p>
+<p class="src2">{</p>
+<p class="src3">glBegin(GL_QUADS);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex2i(window_width / 2, 0);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex2i(0, 0);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex2i(0, window_height / 2);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex2i(window_width / 2, window_height / 2);</p>
+<p class="src3">glEnd();</p>
+<p class="src2">}</p>
+
+<p>Jako druhý objekt nakreslíme kouli. Máme zapnutou perspektivu, takže se nejdříve přesuneme o 14 jednotek do obrazovky. Potom objekt natočíme o daný úhel na všech třech souřadnicových osách, zapneme světla, vykreslíme kouli o poloměru 4.0f jednotky a vypneme světla.</p>
+
+<p class="src2">if (loop == 1)<span class="kom">// Druhá scéna, koule</span></p>
+<p class="src2">{</p>
+<p class="src3">glTranslatef(0.0f, 0.0f, -14.0f);<span class="kom">// Přesun do hloubky</span></p>
+<p></p>
+<p class="src3">glRotatef(xrot, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace</span></p>
+<p class="src3">glRotatef(yrot, 0.0f, 1.0f, 0.0f);</p>
+<p class="src3">glRotatef(zrot, 0.0f, 0.0f, 1.0f);</p>
+<p></p>
+<p class="src3">glEnable(GL_LIGHTING);<span class="kom">// Zapne světlo</span></p>
+<p class="src3">gluSphere(quadric, 4.0f, 32, 32);<span class="kom">// Koule</span></p>
+<p class="src3">glDisable(GL_LIGHTING);<span class="kom">// Vypne světlo</span></p>
+<p class="src2">}</p>
+
+<p>Třetí viewport se velmi podobá prvnímu, ale na rozdíl od něj používá perspektivu. Přesuneme obdélník o dvě jednotky do hloubky a natočíme matici o 45 stupňů. Horní hrana se tím pádem vzdálí a spodní přiblíží. Abychom ještě přidali nějaký ten efekt, rotujeme jím také na ose z.</p>
+
+<p class="src2">if (loop == 2)<span class="kom">// Třetí scéna, bludiště na rovině</span></p>
+<p class="src2">{</p>
+<p class="src3">glTranslatef(0.0f, 0.0f, -2.0f);<span class="kom">// Přesun do hloubky</span></p>
+<p></p>
+<p class="src3">glRotatef(-45.0f, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace o 45 stupňů</span></p>
+<p class="src3">glRotatef(zrot / 1.5f, 0.0f, 0.0f, 1.0f);<span class="kom">// Rotace na ose z</span></p>
+<p></p>
+<p class="src3">glBegin(GL_QUADS);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, 0.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, 0.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 0.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, 0.0f);</p>
+<p class="src3">glEnd();</p>
+<p class="src2">}</p>
+
+<p>Čtvrtým a posledním objektem je válec, který se nachází sedm jednotek hluboko ve scéně a rotuje na všech třech osách. Zapneme světla a potom se ještě posuneme o dvě jednotky (o polovinu jeho délky) na ose z. Chceme, aby se otáčel okolo svého středu a ne konce. Vykreslíme ho a vypneme světla.</p>
+
+<p class="src2">if (loop == 3)<span class="kom">// Třetí scéna, válec</span></p>
+<p class="src2">{</p>
+<p class="src3">glTranslatef(0.0f,0.0f,-7.0f);<span class="kom">// Přesun do hloubky</span></p>
+<p></p>
+<p class="src3">glRotatef(-xrot/2,1.0f,0.0f,0.0f);<span class="kom">// Rotace</span></p>
+<p class="src3">glRotatef(-yrot/2,0.0f,1.0f,0.0f);</p>
+<p class="src3">glRotatef(-zrot/2,0.0f,0.0f,1.0f);</p>
+<p></p>
+<p class="src3">glEnable(GL_LIGHTING);<span class="kom">// Zapne světlo</span></p>
+<p class="src3">glTranslatef(0.0f,0.0f,-2.0f);<span class="kom">// Vycentrování</span></p>
+<p class="src3">gluCylinder(quadric,1.5f,1.5f,4.0f,32,16);<span class="kom">// Válec</span></p>
+<p class="src3">glDisable(GL_LIGHTING);<span class="kom">// Vypne světlo</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Na konci vykreslování flushneme renderovací pipeline.</p>
+
+<p class="src1">glFlush();<span class="kom">// Vyprázdnění pipeline</span></p>
+<p class="src0">}</p>
+
+<p>Doufám, že tento tutoriál zodpověděl všechny vaše otázky ohledně více viewportů v jednom okně. Nyní také znáte jeden z mnoha způsobů generování bludiště a umíte upravit texturu bez jejího komplikovaného mazání a znovuvytváření. Co víc si přát?</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson42.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson42_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson42.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson42.zip">Delphi</a> kód této lekce. ( <a href="mailto:Eshat@gmx.net">Eshat Cakar</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson42.zip">Dev C++</a> kód této lekce. ( <a href="mailto:robohog_64@hotmail.com">Victor Andr?e</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson42.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:evik@chaos.hu">Evik</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson42.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson42.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/extras/lesson42/lesson42_dual_window.zip">Lesson 42 - Multi Window</a> Code For This Lesson by Marcel Laverdet</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_42_big.jpg" class="nehe_velky" alt="Lekce 42" /></div>
+<p class="okolni_lekce"><a href="tut_41.php">&lt;&lt;&lt; Lekce 41</a> | <a href="tut_43.php">Lekce 43 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_42.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

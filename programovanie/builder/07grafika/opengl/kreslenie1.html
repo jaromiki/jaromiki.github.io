@@ -1,0 +1,93 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Kreslenie</h3>
+<dl>
+<dt>Double Buffering
+<dd>Z programovania grafiky (najmä animácií) pod Builder poznáme príkaz 
+	<br><code>DoubleBuffered=1;</code>,
+	<br>ktorý zabezpečil, aby nám animácie neblikali. Myšlienka je v tom, že kreslenie nebeží priamo na obrazovku
+	ale len do buffra v pamäti a až po ukončení celého kreslenia sa obraz ukáže (dáta sa nekopírujú, len karte sa povie, 
+	že dáta na zobrazenie má v buffri). V OpenGl som v úvodných "zaklínadlách"	dvojité bafrovanie zapol a výsledok kreslenia 
+	uvidíme, až keď dáme príkaz na prepnutie bafrov:
+	<br><font color="Red" style="font-family:'Courier'">SwapBuffers(DC);</font>
+	<br>Tento príkaz bude vždy ukončovať každé kreslenie.
+<dt>Kreslenie primitív
+<dd>Ak chceme kresliť niektorú z primitív (elementárny grafický objekt) použijeme konštrukciu:
+	<pre>
+glBegin(zvolená_primitiva);
+   ...
+	zadávanie súradníc a farieb zvoleného objektu
+	...
+glEnd();	
+	</pre>
+	Budeme používať nasledovné primitiva:
+	<ul><li>GL_POINTS - kreslí body
+		<li>GL_LINES - kreslí čiary-úsečky
+		<li>GL_TRIANGLES - kreslí trojuholníky
+		<li>GL_LINE_STRIP - kreslí lomenú čiaru
+		<li>GL_LINE_LOOP - uzavretá lomená čiara
+		<li>GL_TRIANGLES - trojuholník (každé tri vrcholy definujú jeden trojúholník)
+		<li>GL_TRIANGLE_FAN - vejář z trojuholníkov
+		<li>GL_TRIANGLE_STRIP - pás trojuholníkov
+		<li>GL_QUADS - štvoruholníky (quadrilateral)
+		<li>GL_QUAD_STRIP - pás štvoruholníkov
+		<li>GL_POLYGON - polygony (len konvexné polygony s nepretínajúcimi sa hranami) 
+ 	</ul>
+	Na vykreslenie obdĺžnika ležiaceho v rovine xy možno použiť príkaz glRect(x1,y1,x2,y2);
+<dt>Súradnice
+<dd>Každé primitivum je jednoznačne určené postupnosťou bodov. Body zadávame jednotlivo príkazom
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">GlVertex3f(suradnice_bodu);</font>
+	<br>(pre typ single = 4B)
+	<br>alebo
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">GlVertex3d(suradnice_bodu);</font>
+	<br>(pre typ double = 8B)
+	<br>alebo
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">GlVertex3i(suradnice_bodu);</font>
+	<br>(pre typ int = 4B)
+	<br>Súradnice možno zadať 2 - pre dvojrozmerný priestor (GlVertex2f), alebo 3 - pre trojrozmerný oriestor (GlVertex2f),
+	<br>zadávať ich možno celými alebo desatinnými číslami.
+	<br><br>V prípade úsečiek vždy dvojica bodov (2 príkazy GlVertex3f) tvorí úsečku
+		<br>V prípade 3-uholníka trojica vrchol vytvorí trojuholník a tak ďalej
+		<br>Prebývajúce vrcholy sa ignorujú. 
+<dt>Hrúbka čiary
+<dd><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glLineWidth(hodnota);</font>
+	<br>Štandartná hrúbka je 1, ak zaokrúhlením je hrúbka menšia ako 1 je nastavená na 1. Celá čiara má rovnakú hrúbku.
+<dt>Farba
+<dd>Vkladaním príkazov na nastavenie farby určíme farbu vrcholov umiestnených nižšie v popise objektu. 
+Ak sú v objekte (stene) vrcholy s rovnakou farbou bude stena (čiara) jednofarebná, ak sú rôznej farby
+vznikne farebný prechod
+Príkaz je tiež vo viacerých variantách
+	<br>font color="#cc0000" style="font-family:'Courier'; font-weight:700">glColor(r,g,b,p)</font>
+	<br>r,g,b - určujú množtvo farby v RGB modeli a p určuje priesvitnosť (nemusí byť zadaná)
+	<br>parametre môžu byť všetky celé - vtedy volíme hodnoty od 0 po 255, alebo desatinné, tu zadávame hodnoty od 0 po 1
+	<br>Tiež je možné už v mene príkazu určiť aké a koľko parametrov zadáme
+	<br>glColor3f - zadávame 3 reálne čísla, glColor4i - zadávame 4 celé čísla 
+	<br>Príklady  
+	<br>glColor3f(1,0,0) - kriklavá červená
+	<br>glColor3i(1,0,0) - čierna s nádychom do červena
+	<br>Ak chceme používať priesvitné farby, musíme priesvitnosť aktivovať príkazom (v našom projekte je nastavená):
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">  glEnable(GL_BLEND);</font>
+	<br>a potom zvoliť, čo sa má s farbami pri zmiešavaní udiať, napr. môžme zadať toto: 
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);</font>
+	<br>
+<dt>Úlohy
+<dd><ul><li>Vykresli osi x a y tak aby ich hrúbka bola 3 a farba z počiatku prechádzala zo žltej cez červenú do modra
+		<li>Nakresli na osi x plot z paličiek hrúbky 5, počet latiek plota bude 20 a medzera medzi paličkami bude rovná latke
+			<br>prvá palička bude červená, posledná modrá - tie medzi budú robiť farebný prechod
+		<li>Nakresli osi x,y a modrý trojuholník na súradniciach A=[-3,-3,-3], B=[+3,-3,-3], C=[0,3,0]
+			pridaj tlačídko, ktoré zmení súradnice nasledovne:
+			<br>bodu A,B sa y súradnica zväčší o 0.2
+			<br>bodu C sa y súradnica zmenší o 0.2
+			<br>Vykresli nový trojuholník  	 
+	</ul>	
+</dl>
+</body>
+</html>

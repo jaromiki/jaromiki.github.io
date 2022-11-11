@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl><dt>Vodorovný text
+	<dd>Na písanie textu na grafické okátno (Canvas) sú k dipozícii tieto príkazy:
+		<ul><li>TextOut(x,y:integer; text:string) - vypíše na udané miesto text
+			<li>TextHeight(const Text: String): Integer -  Zistí výšku textu v bodoch
+			<li>TextWidth(const Text: String): Integer -  Zistí šírku textu v bodoch
+			<li>TextRect(Rect: TRect; X, Y: Integer; Text: String;) - Umožní zápis textu do vymedzenej oblasti
+				<br>Text začne písať na súradniciach X,Y a vidieť bude len to čo spadne do Rect
+			<li>Font - vlastnosti písma, je to objekt typu Tfont a má rovnaké vlastnosti ako Font napr. v Edite
+				<ul><li>size - veľkosť písma, tento údaj poznáme aj z programu word
+					<li>name - text - názov fontu (najľahšie je okopírovať z Object inspector napr. z Edit)
+					<li>color - farba písma
+					<li>style - (fsBold,fsItalic, fsNormal, fsUnderline)
+				</ul>	
+		</ul>
+	<dt>Otočenie smeru písania textu
+	<dd>Delphi nemá priamy nástroj na voľbu smeru písania, ale umožňuje vytvoriť si svoj vlastný font,
+		ktorý už môže byť o daný uhol otočený.Postup je nasledovný:
+		<table width="70%" bgcolor="silver" border="3" bordercolordark="Gray" bordercolorlight=#cccccc>
+		<tr><td><pre>
+Procedure RotaciaTextu(Canvas: Tcanvas; x,y,u: integer; Text: string);
+	{Canvas - platno na ktore sa bude kreslit,
+ 	 x,y - suradnice od kade sa zacne pisat,
+	 u - uhol v desatinach stupna o ktory bude text otoceny
+	 text - zobrazeny text}
+	 Var font, oldfont: Tfont; 
+		 lf : Tlogfont; //logicky font, len tento sa da natacat
+	 Begin
+	     font:=Tfont.Create; //vytvorenie premennej na odpamatania fontu
+		 ZeroMemory(@lf, sizeof(lf));      //nastavi vsetky parametre lf na 0
+		 lf.lfheight:=canvas.font.height;  //vyska pisma
+		 lf.lfweight:=FW_Bold;             //hrubka ciary
+		 lf.lfquality:=Proof_Quality;      //kvalita pisma
+		 lf.lfEscapement:=u;               //tieto nastavit rovnako
+		 lf.lfOrientation:=u;
+		 for i:=1 to length(canvas.font.name) do lf.lfFaceName[i-1]:=canvas.font.name[i];
+         lf.lfFaceName[length(s)]:=#0;
+		 
+		 font.Handle:=CreateFontIndirect(lf); //naplni font podla logickeho fontu
+		 oldfont:=Canvas.Font;             //odlozime si aktualny font 
+		 Canvas.font:=font;                //konecne nas font je aktivny
+		 Canvas.TextOut(x,y,text);         //a textje na svete
+		 Canvas.Font:=oldFont;             //vratime font nazad 
+		 font.free;                        //zrusime vytvoreny font
+	 End;			
+				</code></pre>
+		</td></tr>
+		</table>
+	Možnosti hrúbky pera:	
+    <br> FW_DONTCARE	0
+	<br>FW_THIN	100
+	<br>FW_EXTRALIGHT	200
+	<br>FW_ULTRALIGHT	200
+	<br>FW_LIGHT	300
+	<br>FW_NORMAL	400
+	<br>FW_REGULAR	400
+	<br>FW_MEDIUM	500
+	<br>FW_SEMIBOLD	600
+	<br>FW_DEMIBOLD	600
+	<br>FW_BOLD	700
+	<br>FW_EXTRABOLD	800
+	<br>FW_ULTRABOLD	800
+	<br>FW_HEAVY	900
+	<br>FW_BLACK	900
+
+</dl>
+
+
+</body>
+</html>

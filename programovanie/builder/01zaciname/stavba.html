@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<title>Niektoré možnosti výstupu dát</title>
+</head>
+
+<body>
+<h3>Stavba programu</h3>
+<dl>
+	<dt class=main>	Opakovanie
+	<dd>- Ako zadáme farbu pomocou mena
+	<br>- Ako zadáme farbu v 16-kovej sústave
+	<br>- Ako vypočítame čídlo farby v desiatkovej sústave
+	<br>- Ako vložíme objekt do programu
+	<br>- Sú všetky objekty vizuálne (viditeľné po spustení programu)
+	<br>- Aké základné vlastnosti má každý vizuálny objekt
+	<br>- Kde môžme nastaviť počiatočné vlastnosti objektu
+	<dt class="main">Stavba programu
+	<dd>Pre nás bude najdôležitejší ten program-súbor do ktorého budeme zapisovať svoje podprogramy. V C-čku sa volá Unit1.cpp.
+		Premenné môžme vytvárať 
+		<br> vnútri fukcií - tieto budú lokálne (platné len v danej fukcii - funkciu main nevynímajúc)
+		<br> mimo funkcií - tieto budú globálne - platné vo všetkých funkciách
+		<br><img src="unit1cpp.png" width="704" height="398" border="0" alt="">
+		<br>
+	    Hlavný program - je ukrytý v projektovom súbore a zatiaľ tam nebudeme nič meniť.
+		<br>Niečo tu meniť budeme až keď budeme vytvárať viacoknové aplikácie.
+		Po stlačení Ctrl F12 a voľbe projekt sa nám ukážu nasledovné riadky:
+		<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1
+			   <tr><td bgcolor="White">	
+<pre><code>
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+//---------------------------------------------------------------------------
+USEFORM("Unit1.cpp", Form1);
+//---------------------------------------------------------------------------
+WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+{
+        try
+        {
+                 Application->Initialize();
+                 Application->CreateForm(__classid(TForm1), &Form1);
+                 Application->Run();
+        }
+        catch (Exception &exception)
+        {
+                 Application->ShowException(&exception);
+        }
+        catch (...)
+        {
+                 try
+                 {
+                         throw Exception("");
+                 }
+                 catch (Exception &exception)
+                 {
+                         Application->ShowException(&exception);
+                 }
+        }
+        return 0;
+}
+//---------------------------------------------------------------------------
+</table>
+Program navyše vytvorí hlavičkový súhor Unit.h s nasledovným obsahom, kam si zapisuje nami vložené objekty.
+<br>Nemáme dôvod doňho niečo priamo zapisovať.
+<table width="90%" border="1"><tr><td bgcolor="#6666ff">Hlavičkový súbor
+			   <tr><td bgcolor="White">	
+
+<pre><code>
+//---------------------------------------------------------------------------
+
+#ifndef Unit1H
+#define Unit1H
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+//---------------------------------------------------------------------------
+class TForm1 : public TForm
+{
+__published:	// IDE-managed Components
+private:	// User declarations
+public:		// User declarations
+        __fastcall TForm1(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm1 *Form1;
+//---------------------------------------------------------------------------
+#endif
+</code></pre>
+</table>		
+
+
+
+</body>
+</html>

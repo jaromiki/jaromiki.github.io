@@ -1,0 +1,85 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Hmla</h3>
+Pre vytvorenie realistickej scény možno nastaviť hmlu, ktorá skrýva objekty, ktoré sú od nás na osi y viac vzdialené.
+Existujú viaceré scenáre zobrazenia hmly, tu si ukážeme hmlu lineárnu a exponenciálnu (ide o to ako narastá hustita hmly
+v závislosti od súradnice y). 
+Polohu hmly určujeme súradnicami z (start, end) vzdialenosťou od oka
+<dl><dt>Umožnenie hmly
+	<dd>Štandartne je výpočet hmly vypnutý a ak chceme hmlu používať, musíme zapnúť hmlu podobne ako pri zadávaní svetla
+		<br>Príkaz: <b>glEnable(GL_FOG)</b>
+		<br>Bez tohoto príkazy pre výpočet hmly nemajú žiadny účinok
+	<dt>Typ hmly
+	<dd>Ako sme už uviedli máme možnosti:
+		<ul><li>GL_LINEAR
+			<li>GL_EXP
+			<li>GL_EXP2
+		</ul>
+		<dl><dt>lineárna hmla
+			<dd>Aby sme pochopili ako lineárnu hmlu nastaviť, musíme vedieť kde sa nachádza "oko" scény. Štandartne je 
+				umiestnené v bode [0;0;0]. Pri tvorbe hmly je výhodné mať celú scénu v jednom polpriestore (napr. všetky z súradnice budú záporné/kladné 
+				- čo dosiahneme príkazom glTranslatef())
+				lebo hmla je vytvárané symetricky v oboch polpriestoroch.
+				Pri lineárnej hmle určujeme začiatok, kde hmla začína (par. GL_FOG_START) a kde končí (par. GL_FOG_END)
+				Oba nastavíme príkazom:
+				<br>glFogf(GL_FOG_START,<i>hodnota</i>); &nbsp; &nbsp;//default je 0
+				<br>glFogf(GL_FOG_END,<i>hodnota</i>); &nbsp; &nbsp;//default je 1
+				<br>Výpočet koľko bude pôvodnej farby z intervalu &lt;0;1&gt; je určené vzorcom f=(end-z)/(end-start),
+				<br>výsledná farba sa vypočíta podľa vzorca: vysl_farba =f*farba+(1-f)*hmla.
+				<br>Pre z&lt;start je farba bez hmly, pre z&gt;end je len farba hmly
+				<br><br>Príklad:
+				<br>Nech scéna je tvorená telesom o súradniciach z patriacich do intervalu &lt;-3;3&gt;. Nedá sa priamo vytvoriť hmlu napr. od 1 po 3,
+				ale posunutím scény napr. príkazom glTranslatef(0,0,+4); zväčšíme z-súradnice o 4 a teleso bude teda na sur. &lt;+1;+7&gt;.
+				<br>Určením napr. start = 9, end = 1 bude "začiatok" tesesa v ľahkej hmle a najvzdialenejšia časť tesesa bude už v úplnej hmle.
+				<br>Určením napr. start = 0, end = 6 bude hmla narastať v opačnom smere (smerom ku nám) a vidieť budeme lepšie vzdialenejšie časti telesa.
+				<div style="border-width:3;border-style:outset;width:700px;margin:10px;background-color:silver;">
+   				<div align="right" style="background-color:#3366ff; width:700px; padding:0;border-width:0;">
+	   				<img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   				</div>
+  				<div style="background-color:silver; width:700px;" onclick="mdole(event.pageX-this.offsetLeft-5,event.pageY-this.offsetTop-5 );">
+				<pre> glMatrixMode(GL_MODELVIEW);
+ glLoadIdentity();
+ glTranslatef(0,0,+4);     //posun telesa o 4 ku nám
+ glRotatef(20,1,0,0);      //pootočenie okolo osi x o 20 stupňov
+ glRotatef(uholx,0,1,0);   //pootočenie okolo osi y, veľkosť meníme v časovači
+ glBegin(GL_QUADS);
+        glTexCoord2f(0.0, 0.0); glVertex3i(0,0,-3);
+        glTexCoord2f(1.0, 0.0); glVertex3i(3,0,-3);
+        glTexCoord2f(1.0, 1.0); glVertex3i(3,3,-3);
+        glTexCoord2f(0.0, 1.0); glVertex3i(3,3,-3);
+
+        glTexCoord2f(0.0, 0.0); glVertex3i(0,0,+3);
+        glTexCoord2f(1.0, 0.0); glVertex3i(3,0,+3);
+        glTexCoord2f(1.0, 1.0); glVertex3i(3,3,+3);
+        glTexCoord2f(0.0, 1.0); glVertex3i(0,3,+3);
+
+        glTexCoord2f(0.0, 0.0); glVertex3i(0,3,+3);
+        glTexCoord2f(1.0, 0.0); glVertex3i(3,3,+3);
+        glTexCoord2f(1.0, 1.0); glVertex3i(3,3,-3);
+        glTexCoord2f(0.0, 1.0); glVertex3i(0,3,-3);
+ glEnd();
+ glFlush();
+ SwapBuffers(hdc);
+				</pre>
+ 				</div>
+				</div>
+		<dt>exponenciálna hmla 1
+		<dd>Tu je automaticky nastavený začiatok hmly do z=0 a narastá do nekonečna s rastúcim |z| podľa funkcie f=exp(-denzity*|z|), 
+			parameter denzity nastavíme príkazom:
+			<br>glFogf(GL_FOG_DENSITY,<i>hodnota</i>); &nbsp; &nbsp;//default hodnota je 1
+			<br>Povolené sú kladné čísla, čím väčšiu hodnotu zadáme tým hmla hustne rýchlejšie. Obyčajne posunieme objekty do záporných čísel
+			aby hmla narastala smerom od nás. Nevýhodou takejto hmly je nemožnosť určiť oblasť, kde by hmla ešte nebola (oproti linear)
+			a tiež dosť rýchly nástup narastania hmly (pomalší nábeh je pri voľbe EXP2)
+			 
+
+
+</body>		
+
+</html>

@@ -1,0 +1,286 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk"> 
+	<title>Excel-vzorce</title>
+ 	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	 
+</head>
+
+<body>
+<h2>Vzorce</h2>
+<H3>Opakovanie</h3>
+<ul><li>Ako sa zadávajú vzorce do bunky
+	<li>Čo je absolútna a čo relatívna adresa
+	<li>Aké aritmetické operátory máme k dispozícii
+	<li>Aké relačné operátory máme k dispozícii
+	<li>Čo sa stane, ak bunku na ktorú ukazuje nejaký vzorec premiestnim inam?
+</ul>	
+<H3>Ako zadať do bunky funkciu</H3>
+(Pozn. V starších verziách Excelu bola snaha "poslovenčiť" prípadne "počeštiť" názvy niektorých funkcií, čo viedlo ku zmätkom, 
+ dnes sa názvy funkcií neprekladajú a píšeme ich v anglickom jazyku)
+Excel nám na najbežnejšie operácie s bunkami ponúka veľké množstvo funkcií - matematických, logických, dátumových, časových, ...
+ma ich zápis máme nasledovné možnosti:
+<dl><dt>Pomocou sprievodcu
+	<dd>Funkcie možno do vzorca vložiť pomocou sprievodcu - tlačidlo <img src="obr/fx.gif" width="26" height="30" border="0" alt="" align="middle">
+		Po stlačení tohto tlačítka získame nasledovné okno (obr.3):
+		 <table cellspacing="20"><tr>
+		 <td><img src="obr/funkcia1.jpg" width="387" height="317" border="0" alt=""> <br>obr.3
+		 <td><img src="obr/funkcia2.jpg" width="466" height="219" border="0" alt=""> <br>obr.4
+		 </tr>
+		 </table>
+		 Funkcie sú rozdelené do skupín a zoznam skupín je v ľavom zozname, obsah jedného zoznamu je 
+		 v pravom výpise. Voľbu ktorý zoznam chcem mať otvorený vpravo urobím jednoducho kliknutím myši naň.
+		 Jeden zoznam má častejšie použitie a to "Naposledy použité" a "Vše". Po prepnutí do pravého okna
+		 stačí stlačiť prvé písmeno hľadanej funkcie a potom klávesovými šipkami si nájdeme hľadanú funkciu
+		 a stlačíme Enter. Zobrazí sa nám pomocný expert pomocou ktorého správne vyplníme parametre funkcie. 
+		 Napr. pre funkciu Suma je to (obr.4). Do jednotlivých okienok zadávame parametre, podľa nápovedy
+		 ku každému parametru v dolnej polovici okna. Na spodu okna máme aj aktuálny stav výsledku pri zvolených parametroch.
+		 Parametrom väčšinou môže byť bunka alebo oblasť. Ak chceme oblasť môžeme ju priamo naklepať do cst. riadka
+		 alebo stlačíme červenú šipku a pomom označíme v dokumente požadovanú oblasť. Ak parametrov môže byť viac
+		 budú vstupné riadky pribúdať tým tempom ako ich zapĺňame.
+	<dt>Písaním vzorca
+	<dd>písaním do vstupného riadku (písanie začneme stlačením tlačidla <img src="obr/rovnasa.gif" width="21" height="23" border="0" alt="" align="middle">). 
+		<dl><dt>Zadávanie oblastí vo funkcii
+			<dd><ul><li>samotná bunka ... SUM(C7) 
+					<li>jedna oblasť  ... SUM(B3:D5) 
+					<li>oblasti oddelené bodkočiarkou ... SUM(C7;B3:D5)
+				</ul>
+		</dl>				 			
+    <dt>Funkcia SUM
+	<dd>V praxi sa najviac stretávame s potrebou spočítať údaje v riadku (stĺpci) tabuľky 
+		preto je tejto funkcii venované aj špeciálne tlačítko v paneli nástrojov - je na ňom 
+		zobrazený znak sumy <img src="obr/suma.gif" width="26" height="25" border="0" alt="" align="middle">. 
+		Ak do tabuľky z predošlej kapitoly vložíme ešte jeden riadok získame nasledovnú tabuľku:
+		<table>
+			<tr><td>
+			<table border="2" cellspacing="1" bgcolor="White">
+			<tr><td bgcolor="Silver"> <th bgcolor="Silver">A<th bgcolor="Silver">B<th bgcolor="Silver">C</tr> 
+			<tr><td bgcolor="Silver"> 1 <th>Meno<th>Plat<th>NovyPlat<th> </tr>
+			<tr><td bgcolor="Silver"> 2 <td>Daniš<td>8500<td> ?</tr>
+			<tr><td bgcolor="Silver"> 3 <td>Frano<td>7200<td> ?</tr>
+			<tr><td bgcolor="Silver"> 4 <td>Gábor<td>7800<td> ?</tr>
+			<tr><td bgcolor="Silver"> 5 <td>Maco<td>6900<td> ?</tr>
+			<tr><td bgcolor="Silver"> 6 <td>Rak<td>8800<td> ?</tr>
+			<tr><td bgcolor="Silver"> 7 <td>Spolu<td> ?<td> ?</tr>
+			</table>
+        	<td valign="top"> 
+			<table border="2" cellspacing="1" bgcolor="White"> 
+		 	<tr><th bgcolor="Silver"> G </tr>
+		 	<tr><th>Percento rastu</tr>
+		 	<tr><td>18 </tr>
+		 	</table></tr>
+		</table>
+		<ul><li>Výpočet platu spolu bez funkcie - <span style="background:#cccccc"> =B2+B3+B4+B5+B6 </span>
+		 			Tento spôsob je použitelný pre menší počet argumentov, tiež každé pridanie-ubratie riadku 
+					nás núti meniť vzorec, čo je nepraktické.
+		 	<li>Výpočet platu spolu s funkciou <b>SUM</b>
+			 	<ul><li>nastavíme kurzor do políčka B7
+					<li>stlačíme tlačítko <b>SUM</b> <img src="obr/sum.png" width="37" height="28" border="0" alt="" align="absmiddle">
+					<li>Excel sa pokúsi označiť blok, ktorý chceme spočítať
+						<br> - ak s jeho návrhom súhlasíme stlačíme Enter
+						<br> - ak chceme sčítač iný blok označíme ho manuálne
+					<li>Teraz si pozrieme výsledok - v bunke bude zapísane <span style="background:#cccccc">=SUM(B2:B7) </span>
+						<br>čo vlastne znamená <b>SPOČÍTAJ</b> bunky od B2 po B7 
+				</ul>		
+		</ul>
+		 Veľkou výhodou je, že ak v oblasti riadkov 2..7 pridáme resp. odstránime riadky náš vzorec sa "sám" upraví aby ukazoval správny výsledok.
+		 Tento vzorec možno okopírovať do bunky C7, lebo adresy spočítavanej oblasti sú relatívne.
+	   	<hr width="50%" size="2">
+		<dt>Syntax,sémantika niektorých funkcií
+		<dd>
+			<dl>
+          		<dt style="color:green">SUM(zoznam oblastí oddelených bodkočiarkou)<dd>
+		      		Spočíta všetky bunky všetkých zadaných oblastí, ak sú tam bunky textové nevadí, berie ich ako 0. 
+			  		<br>Príklad SUM(a1;B2:C10)
+          		<dt style="color:green">Average(zoznam oblastí oddelených bodkočiarkou)
+	  			<dd>Spočíta všetky bunky všetkých zadaných oblastí a vydelí počtom číselných buniek v rozsahu. 			
+			  		<br>Príklad Average(a1;B2:C10)
+          		<dt style="color:green">Max(zoznam oblastí oddelených bodkočiarkou)
+	  			<dd>Nájde maximálnu číselnú hodnotu zo všetkých vymenovaných oblastí. 
+		  			<br>Príklad MAX(a1;B2:C3) ... nájde maximum z A1,B2,B3,C2,C3
+          		<dt style="color:green">Min(zoznam oblastí oddelených bodkočiarkou)
+	  			<dd>Nájde minimálnu číselnú hodnotu zo všetkých vymenovaných oblastí. 
+		  			<br>Príklad MIN(a1;B2:C3) ... nájde minimum z A1,B2,B3,C2,C3
+          		<dt style="color:green; width:400">SUMIF(oblasť podmienok; podmienka; oblasť sčitovania)
+           		<dd>oblasť podmienok - oblasť kde sa kontroluje podmienka
+			  		<br>podmienka - buď hodnota, alebo testovacia otazka ako text v úvodzovkách
+			  		<br>oblasť súčtu - oblasť ktorá vytvára súčet
+			  		<br>Je vlastne cyklus, kde bežia ukazovatele na oboch oblastiach, ak prvá hodnota
+			  		vyhovuje podmienke, druhá hodnota je pridaná do súčtu. Je odporúčané voliť obe oblasti
+			  		rovnako početné.
+			  		<br>Príklad 
+			  		<table><tr><td>
+			  				<table border="1" bgcolor="#F2F2F2" cellpadding="10"><tr bgcolor="#9696BF"><th>&nbsp;<th>A<th>B<th>C<th>D</tr>
+			         		<tr><td bgcolor="#9696BF">1<td>1<td>15<td>&nbsp;<td>=sumif(a1:a5,1,b1:b5)</tr>
+			         		<tr><td bgcolor="#9696BF">2<td>2<td>10<td>&nbsp;<td>&nbsp; </tr>
+			         		<tr><td bgcolor="#9696BF">3<td>1<td>2<td>&nbsp;<td>&nbsp; </tr>
+			         		<tr><td bgcolor="#9696BF">4<td>3<td>5<td>&nbsp;<td>&nbsp; </tr>
+			         		<tr><td bgcolor="#9696BF">5<td>1<td>3<td>&nbsp;<td>&nbsp; </tr>
+			  				</table>
+			  				<td>V bunke D1 bude hodnota 20 získaná súčtom 15+2+3 </tr>
+			  		</table> 
+			  		obr. 5
+			  		<br>
+          		<dt style="color:green">COUNTIF(oblast; podmienka)
+	  			<dd>Podmienka: najjednoduhšia je iba uvedená hodnota, napr. 5, Jano, Pravda
+		      		<br> &nbsp;&nbsp;&nbsp;&nbsp;môže byť aj výraz napr. E15 - nepíšeme rovná sa pred
+		      		<br> &nbsp;&nbsp;&nbsp;&nbsp;okrem rovnosti môžeme tvoriť podmienky pomocou relačných operátorov
+		      		<font face="Keystroke" size="+2">&gt;,&lt; &gt;= &lt;= &lt;&gt;</font>, ale potom musí byť podmienka ako textový výraz.
+		      		Spočíta počet buniek v zadanej oblastí, ktoré spĺňajú danú podmienku. 			
+			  		<br>Príklad COUNTIF(B2:C10;1) ... spočíta počet 1 v oblasti B2:C10
+			  		<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COUNTIF(B2:C10;"&lt;0") spočíta počet záporných čísel
+          		<dt style="color:green;width:400">COUNTBLANK(zoznam oblastí oddelených bodkočiarkou)
+       			<dd>Zistí počet prázdnych buniek vo výbere
+		  			<br> Príklad COUNTBLANK(a1;B2:C3) ... zistí počet prázdnych buniek z A1,B2,B3,C2,C3
+		   		<dt style="color:green">ROUND(výraz; počet des.)
+				<dd>vyhodnotí daný výraz a zaokrúhli ho podľa matematických pravidiel na daný počet des. miest.
+				  	<br>Príklad: Round(3,2, 0) -&gt; 3
+				  	<br> Round(3,226; 2) -&gt; 3,23
+		   		<dt style="color:green">ROUNDDOWN(výraz; počet des.)
+				<dd>vyhodnotí daný výraz a zaokrúhli ho nadol (smerom k nule)na daný počet des. miest.
+				  	<br>Príklad: RoundDown(3,6;0) -&gt; 3
+				  	<br> RoundDown(3,226; 2) -&gt; 3.22
+				  	<br> RoundDown(-3,6; 0) -&gt; -3.0
+		   		<dt style="color:green">ROUNDUP(výraz; počet des.)
+				<dd>vyhodnotí daný výraz a zaokrúhli ho nahor (smerom od nuly)na daný počet des. miest.
+				  	<br>Príklad: RoundUP(3,6;0) -&gt; 4
+				  	<br> RoundUp(3,226; 2) -&gt; 3.23
+				  	<br> RoundUp(-3,6; 0) -&gt; -4.0
+			  	<dt style="color:green;width:100%">ABS(výraz), SIN(výraz), COS(výraz), TG(výraz), EXP(výraz),LN(výraz),LOG(výraz),PI() 
+				<dd>
+			    	štandartné matematické funkcie, pri goniometrických funkciách je argument samozrejme v radiánoch.
+				<dt style="color:green">SUBTOTAL(číslo_fun; oblasť)
+				<dd>Táto funkcia dokáže zastúpiť viacero už spomenutých funkcií ale pre svoju pomernú zložitosť sa používa len v spojitosti
+			    	s filtrovaním. Jej uplatnenie je v tom,	že do výsledku neberie riadky, ktoré nevyhovujú podmienke nastaveného filtra (pozri filtrovanie). 
+					Napr. hodnota funkcie SUM sa nezmení aj keď nastavením filtra sa sa zníži počet riadkov výberu, ale hodnota
+					funkcie SUBTOTAL(9;...) sa bude meniť podľa zvoleného filtra. Funkcia má dva parametre:
+					<br>1. určuje činnosť funkcie
+					<br>2. určuje oblasť
+			  		<table cols="2" cellpadding="5" cellspacing="0"><tr align="center" bgcolor="Silver"><th>Číslo funkce<th>Funkcia</tr>
+                    <tr align="center"><td>1<td>AVERAGE</tr>
+                    <tr align="center"><td>2<td>COUNT</tr>
+                    <tr align="center"><td>3<td>COUNTa</tr>
+                    <tr align="center"><td>4<td>MAX</tr>
+                    <tr align="center"><td>5<td>MIN</tr>
+					<tr align="center"><td>6<td>PRODUKT</tr>
+					<tr align="center"><td>7<td>STDEV</tr>
+					<tr align="center"><td>8<td>STDEVP</tr>
+					<tr align="center"><td>9<td>SUM</tr>
+                    <tr align="center"><td>10<td>VAR</tr>
+					<tr align="center"><td>11<td>VARP</tr>
+			 		</table>
+        	</dl>
+		   	<hr width="60%" size="2">
+			<dt>Úlohy na precvičenie:
+    		<dd><table cellspacing="20"><tr><td>
+	    	   	<img src="obr/vitez.gif" border="0" alt="" height="50">
+				<td>
+	    		<ol>
+				<li><a href="kratke/2_vzorce.xls" target="_blank">Krátke úlohy-suhrn</a>				   
+				<li><a href="priklady/vzorce-sumif.xls" target="_blank">Úloha na sumif, countif</a>				   
+				<li><a href="priklady/countif.xls" target="_blank">Úloha na sumif, countif</a>				   
+				<li><a href="priklady/sumaif.xls" target="_blank">Úloha na sumif</a>				   
+	        	<li>Navrhni tabuľku na evidovanie údajov žiakov pre zdravotný ústav, keď potrebujeme
+	            	evidovať meno, výšku, váhu, pohl. Tabulka musí dovoliť pripisovať a editovať údaje
+	            	a zobrazovať aktuálny stav - počet žiakov, počet chlapcov, počet dievčat, primerná výška 
+	            	clapcov, priemerná výška dievčat.   
+            	</ol>
+				</tr>
+            	</table>
+		   		<hr width="60%" size="2">
+			<dt>Logické funkcie
+			<dd>
+		      	<dl>
+		      	<dt style="color:green">IF(podmienka;ano;nie)<dd>
+			      	Používa sa ak obsah bunky sa má úplne meniť podľa nejakej podmienky. 
+			      	Vyhodnotí podmienku a ak je podmienka pravdivá vyhodnotí a zobrazí výraz ano inak vyhodnotí a zobrazí výraz nie
+				  	<br>Príklad: IF(c5&gt;0;"kladné",if(c5&lt;0;"záporné";"nulové"))
+		      	<dt style="color:green">AND(zoznam log. výrazov oddelených bodkočiarkou)<dd>
+			      	vyhodnotí log. výrazy a urobí medzi nimi operáciu <font color="Fuchsia">and</Font>
+				  	Výsledkom je výsledný logický výraz. Používa sa na tvorbu zložených podmienok.
+				  	<br>Príklad: IF(AND(c5&gt;0,c5&quot),"vyhovuje","nevyhovuje")
+		      	<dt style="color:green">OR(zoznam log. výrazov oddelených bodkočiarkou)<dd>
+			      	vyhodnotí log. výrazy a urobí medzi nimi operáciu <font color="Fuchsia">or</Font>
+				  	Výsledkom je výsledný logický výraz. Používa sa na tvorbu zložených podmienok.
+				  	<br>Príklad: IF(OR(c5&gt;0;c6&gt;0),"aspon jedno kladné","ani jedno kladné")
+		      	<dt style="color:green">NOT(logický výraz)<dd>
+			      	vyhodnotí log. výrazy a urobí jeho <font color="Fuchsia"> negáciu</Font>
+				  	Výsledkom je výsledný logický výraz. Používa sa na tvorbu zložených podmienok.
+				  	<br>Príklad: IF(NOT(c5&gt;0),"nekladné","kladné")
+			  	</dl>	  
+			<dt>Úlohy na precvičenie:
+    			<dd><table cellspacing="20"><tr><td>
+	        	<img src="obr/stastny.gif" border="0" alt="" height="50">
+				<td>
+	    		<ol>
+				<li><a href="priklady/podmienka1.xls" target="_blank">krátke jednoduché úlohy</a>
+				<li><a href="priklady/podmienka2.xls" target="_blank">úloha o 13. plate</a>
+				<li><a href="priklady/funkcieif.xls" target="_blank">podmienený súčet-počet</a>
+				<li><a href="kratke/4_podmienky.xls" target="_blank">Krátke úlohy-suhrn</a>				   
+	        	<li>Navrhni tabulky na evidenciu známok pre polročné vysvedčenie. Max. počet známok je 12 a maximálny počet žiakov 35.
+			    	Každému žiakovi vypočítaj priemernú známku (ak nemá ešte naklepané známky údaj bude vyparafovaný znakm -)
+					Každému žiakovi vytvor stĺpec Celkové hodnotenie, kde bude zapísané PVYZ, PVD, P, NP (NP bude napísané červeno).
+	        	<li>Navrhni tabuľku na hľadanie koreňa rovnice F(x)=0, na intervale &lt;a,b&gt;, pričom
+			    	F(a)*F(b)&lt;0 a funkcia F je polynóm stupňa maximálne 5.
+					<br>Koreň budeme hľadať metódou polenia intervalu, pričom počet delení je pevný 100.
+					<br>Vstup budú tvoriť: koeficienty polynomu a hodnoty a,b
+					<br>Výstup bude nájdený koreň, zaručená presnosť, resp. pri nedodržaní podmienky F(a)*F(b)&lt;0 oznam o chybe. 
+            	</ol></tr>
+            	</table>
+			<dt>Dátumové a časové funkcie<dd>
+		      	<dl>
+		      	<dt style="color:green">DATEVALUE(text), DATE(cislo_den, cislo_mes, cislo_rok)<dd>
+					prevedie text (resp. 3 čísla) na dátum. Používa sa ak je dátum zapísaný roztrhnuto (den, mes, rok v samostatných stĺpcoch)
+					a potrebujeme vykonať nejaké dátumové príkazy (zistiť rozdiel dní, deň v týždni a pod)
+					<br>Príklad: DATEVALUE("25.03.2004")-DATEVALUE(11.09.2002) ... zistí počet dní medzi dátumami
+		      	<dt style="color:green">DEN(datumový_výraz)<dd>
+					Z dátumu vie vytiahnuť deň.
+					<br>Príklad: DAY(DATEVALUE("25.03.2004")) -> 25
+		      	<dt style="color:green">MONTH(dátumový_výraz)<dd>
+					Z dátumu vie vytiahnuť číslo mesiaca.
+					<br>Príklad: MONTH(DATEVALUE("25.03.2004")) -> 3
+		      	<dt style="color:green">YEAR(dátumový_výraz)<dd>
+					Z dátumu vie vytiahnuť číslo mesiaca.
+					<br>Príklad: YEAR(DATEVALUE("25.03.2004")) -> 2004
+		      	<dt style="color:green">WEEKDAY(dátumový_výraz;2) <span style="color:black">alebo</span> WEEKDAY(text;2)<dd>
+					Z dátumu vie vytiahnuť číslo poradové číslo dňa v týždni 1=pondelok, ....
+					<br>Príklad: WEEKDAY(DATEVALUE("25.03.2004")) -> 6
+		      	<dt style="color:green">TODAY()<dd>
+					Hodnotou je dnešný dátum ako dátumová hodnota
+					<br>Príklad: TODAY() -> vypíše napr. 27.03.2004
+		      	<dt style="color:green">NOW()<dd>
+					Hodnotou je dnešný dátum a aktuálny čas
+					<br>Príklad: NOW() -> vypíše napr. 27.03.2004 10:08
+		      	<dt style="color:green">TIMEVALUE(text), ČAS(cislo_hod, cislo_min, cislo_sek)<dd>
+					prevedie text (resp. 3 čísla) na časový údaj.
+		      	<dt style="color:green">HOUR(časový_výraz)<dd>
+					Z časového údaja vie vytiahnuť hodinu.
+					<br>Príklad: HOUR(NOW()) -> 10
+		      	<dt style="color:green">MINUTE(časový_výraz)<dd>
+					Z časového údaja vie vytiahnuť minutu.
+					<br>Príklad: MINUTE(NOW()) -> 8
+		      	<dt style="color:green">SECOND(časový_výraz)<dd>
+					Z časového údaja vie vytiahnuť sekundu.
+					<br>Príklad: SECOND(NOW()) -> 15
+				</dl>
+   	<hr width="80%" size="4">
+	<dt>Písanie vnorených funkcií
+	<dd><br>Často sa stane že namiesto niektorého argumenta funkcie potrebujeme vložiť výsledok nejakej funkcie (jedna funkcia bude vnútri inej).
+		Pokiaľ vnorenú funkciu vieme korektne zapísať nie je problém:
+		<ul><li>Začneme vytváraním vonkajšej funkcie 
+			<li>Do riadka pre parameter naklepeme funkciu (tu sa musíme spoľahnúť na svoju pamäť a napísať ju správne)
+				<br>(napríklad vo funkcii IF() do riadka pre podmienku naklepeme OR(a1&gt;0; A2&gt;0)
+		</ul>
+		<br>Pokiaľ si vnorenú funkciu netrúfame korektne zapísať sami a chceme zavolať "pomocníka"="dialogóvé okno" použijeme nasledovný postup:
+		<ul><li>Začneme vytváraním vonkajšej funkcie (napr. funkcia IF)
+			<li>nastavíme sa do riadku parameter
+			<li>rozbalíme ponuku "adresné pole" a vyberieme funkciu (napr. OR), ak tam nie je zvolíme "ďalšie funkcie"
+			<li>po zvolení funkcie sa zavolá dialógové okno a my nastavujeme parametre vnútornej funkcie
+			<li>po zadaní parametrov stlačíme "OK" okno sa zavrie a nami zadaná funkcia sa korektne zapíše na miesto parametra vonkajšej funkcie
+		</ul>
+		<br>Pozn.:
+		<br>Funkcie možno do seba vnárať do hĺbky 7.	   
+				
+</dl>
+</body>
+</html>

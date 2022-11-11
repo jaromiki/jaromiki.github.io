@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+<meta name="Content-language" content="sk">
+	<LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+<dt class=main>Deliteľnosť polynómov
+<dd>Polynómom nazývame zápis/mnohočlen 
+	P(x)=a<sub>n</sub>*x<sup>n</sup> + a<sub>n-1</sub>x<sup>n</sup> + a<sub>1</sub>x<sup>1</sup> + a<sub>0</sub>
+	<br>Pozri Vietove vzťahy
+	<br>Pozri násobenie/delenie mnohočlenov
+	<br>Delenie polynomu lineárnym členom - Hornerova schéma
+	<br>NSD dvoch polynomov
+	<br>zlomok dvoch polynomov - určenie, či je zlomok v základnom tvare
+	<br><br>Príklad na delenie polynómov
+	<br>Nájdi všetky dvojice (p,g) aby polynóm x^2+px+g delil polynóm x^4+px^2+g 
+	<br>Po vydelení polynómov dostaneme zvyšok xp(2q-q^2-p)+q(q-pq-p+1)
+	<br>Najprv riešime p=0, potom q=0 a nakoniec p*q rôzna od 0
+	<br>56-B-dom-5
+	  
+	<h4>Rovnosť dvoch zlomkov - Veta</h4>
+	Nech zlomky a/b, c/d sú v základnom tvare a a/b=c/d => a=c a b=d
+	<br>Táto veta nám pomôže riešiť veľa úloh
+	<br>Príklad
+	<br>Nech a,b sú nesúdeliteľné celé a platí ab/(a+b)=p/q, kde p,q sú prvočísla. Nájdi všetky a,b.
+	<br>Ľahko sa ukáže že zlomok ab/(a+b) je v základnom tvare => ab=p, a+b=q =>a=1,b=p alebo b=1,a=p => [1,2],[2,1]
+	<br><br>Úlohy
+	<ul><li>Vypočítaj NSD(x^2+1,x+1)
+			<br><input type="Button"  value="Pomoc1" onclick="alert('(x^2+1)/(x+1) = (x^2+2x+1 -2x)/(x+1) = (x+1) + 2x/(x+1)  -> NSD(x^2+1,x+1) = NSD(2x,x+1)')">
+			<br><input type="Button"  value="Pomoc2" onclick="alert('nakoľko x, x+1 sú nesúdeliteľné tak spoločné delitele môžu byť len 1 a 2, treba overiť,\nči existujú x aby čitateľ aj menovateľ boli párny\nčo ľahko zistíme,\nže pre všetky x neparne je NSD=2, inak NSD=1')">
+	<li>Nájdi nsd(2n+1, 2n-1)
+			<br><input type="Button"  value="Pomoc1" onclick="alert('NSD(2n+1,2n-1) = NSD(2,2n-1), z prvého čísla vidíme, že delitele oboch môžu byť len 1 a 2, z druhého, že 2 byť nemôže -> NSD =1 ')">
+		<li>Vypočítaj NSD(14m+17,21m+25)
+			<br><input type="Button"  value="Pomoc1" onclick="alert('NSD(14m+17,21m+25) = NSD(14m+17,7m+8) = NSD(7m+9,7m+8) = NSD(1,7m+8) -> NSD=1')">
+		<li>Nájdi všetky n: n-3 | n^3-3
+			<br><input type="Button"  value="Pomoc1" onclick="alert('(x^2+1)/(x+1) = (x^2+2x+1 -2x)/(x+1) = (x+1) + 2x/(x+1)  -> NSD(x^2+1,x+1) = NSD(2x,x+1)')">
+		<li>Nájdi n,m nesúdeliteľné (n+m)/(n^2-nm+m^2) = 8/73
+			<br><input type="Button"  value="Pomoc1" onclick="alert('(n+m)/(n^2-nm+m^2) = (n+m)/((n+m)^2-3nm)  -> NSD = 3 alebo1')">		
+			<br><input type="Button"  value="Pomoc2" onclick="alert('NSD == 1\n -> n+m=8  (n+m)^2-3nm=73  -> nemá riešenie')">		
+			<br><input type="Button"  value="Pomoc3" onclick="alert('NSD == 3\n -> n+m=8*3  (n+m)^2-3nm=73*3  -> nájdeme riešenie [7;17], [17,7]')">		
+		<li>Nájdi n,m nesúdeliteľné: n*m/(n+m)=3/4
+		<li>Nájdi všetky n pre ktoré je zlomok (n^3-n^2-n+10)/(n-2) v základnom tvare
+			<br><input type="Button"  value="Pomoc1" onclick="alert('6k+1')">
+
+		<li>Nájdi všetky n,m pre ktoré platí: (n^3-n^2-n+10)/(n-2) = (m+1)/m 
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Zistím, že NSD môže byť 1,2,3,4,6,12  -> Riešim pre každé NSD sústavu')">				
+		<li>Nájdi všetky n,m pre ktoré platí: (n^3-n^2-n+10)/(n-2) = m 
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Zistím, že NSD môže byť 1,2,3,4,6,12  -> Riešim pre každé NSD sústavu')">				
+		<li>Nájdi všetky prvočísla p,q ku ktorým existuje prirodzené c:
+			<br>pq/(p+q) = (c^2+1)/c+1
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Zistím, že NSD pravého zlomku môže byť 1,2  -> Riešim pre každé NSD sústavu')">				
+		<li>Nájdi všetky prirodzené x,y: xy^2/(x+y)=p, p je prvočíslo
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Pomohlo by keby x,y boli nesúdeliteľné ')">
+			<br><input type="Button"  value="Pomoc2" onclick="alert('x=a*d, y=b*d')">
+			<br><input type="Button"  value="Pomoc3" onclick="alert('d*d*a*b*b = p(a+b) -> b=1')">
+			<br><input type="Button"  value="Pomoc4" onclick="alert('d*d*a = p(a+1) -> a=p\nd*d = p+1 -> (d+1)(d-1)=p -> d=2, p=3 -> x=6, y=2')">
+	</ul> 
+	<br>Niektoré zaujímavé rovnice
+	<ul><li>Nájdi všetky n pre ktoré je: n^5/5 + n^3/3 +7n/15 celé číslo
+			<br><input type="Button"  value="Pomoc1" onclick="alert('To naozaj tu treba pomoc?')">
+	    <li>Nájdi riešenie v NxN rovnice: n^3 - 27^m = 37
+			<br><input type="Button"  value="Pomoc1" onclick="alert('n^3 - 27^m = n^3 - (3^m)^3 = (n^3-3^m)(n^2+n*3^m+(3^m)^2)=37 (prvočíslo)')">
+	 	<li>V obore celých čísel vyriešte rovnicu MO2011/2012-škola-B1
+			<br>x^2 + y^2 + x + y = 4.
+			<br><input type="Button"  value="Pomoc2" onclick="alert('stačí si uvedomiť, že x*x+x>=0, y*y+y>=0')">
+		<li>Predpokladajme, že pre kladné reálne čísla a, b, c, d platí
+			<br>ab + cd = ac + bd = 4 a ad + bc = 5.
+			<br>Nájdite najmenšiu možnú hodnotu súčtu a+b+c+d a zistite, ktoré vyhovujúce štvorice
+			<br>a, b, c, d ju dosahujú. MO2011/12-kraj-A4
+			<br>Pomoc: (a+b+c+d)^2=a^2+b^2+c^2+d^2+2ab+2ac+2ad+2bc+2bd+2cd=a^2+b^2+c^2+d^2+26>=2ad+2bc+26=36
+			<br>rovnosť nastane pri a=d a b=c, riešime sústavu 2ab=4, a^2+b^2=5 -> rieš [1,2], [2,1]
+		<li>Nech a, b, c sú reálne čísla, ktorých súčet je 6. Dokážte, že aspoň jedno z čísel
+			<br>ab + bc, bc + ca, ca + ab nie je väčšie ako 8. MO-2010/11-doma-B3
+		<li>V obore reálnych čísel riešte sústavu rovníc MO-2009/10-škola-B1
+			<br>sqrt(x - y<sup>2</sup>) = z - 1,
+			<br>sqrt(y - z<sup>2</sup>) = x - 1,
+			<br>sqrt(z - x<sup>2</sup>) = y - 1.
+		<li>V obore reálnych čísel vyriešte sústavu rovníc
+			<br>x<sup>2</sup> + 2yz = 6(y + z - 2),
+			<br>y<sup>2</sup> + 2zx = 6(z + x - 2),
+			<br>z<sup>2</sup> + 2xy = 6(x + y - 2).
+			<br>Pomoc: odčítať 1. rovnicu od 2. aj 3. rovnice a upraviť
+			<br>2003/2004-skol-A3
+		<li>Nájdite všetky kvadratické trojčleny ax^2 + bx + c také, že ak ľubovoľný z koeficientov
+			a, b, c zväčšíme o 1, dostaneme nový kvadratický trojčlen, ktorý bude mať dvojnásobný koreň.	
+			<br>2003/2004-kraj-B2
+		<li>Určte všetky polynómy P(x) také, že pre každé reálne číslo x je splnená rovnosť
+			<br>P(2x) = 8P(x) + (x - 2)<sup>2</sup>.
+		<li>Nech P(x) = ax^2+bx+c je kvadratický trojčlen s nezápornými reálnymi koeficientmi.
+			<br>Dokážte, že pre ľubovoľné kladné číslo x platí
+			<br>P(x)*P(1/x) &gt;= P<sup>2</sup>(1)
+			<br>Pomoc: Roznásobiť a upraviť.
+		<li>Zistite, pre ktoré reálne čísla p má sústava rovníc
+			<br>x<sup>2</sup> + 1 = (p + 1)x + py - z,
+			<br>y<sup>2</sup> + 1 = (p + 1)y + pz - x,
+			<br>z<sup>2</sup> + 1 = (p + 1)z + px - y
+			<br>s neznámymi x, y, z práve jedno riešenie v obore reálnych čísiel.	
+			<br>Pomoc: Riešenia sú symetrické -> x=y=z 
+	</ul>
+</dl>
+
+</body>
+</html>

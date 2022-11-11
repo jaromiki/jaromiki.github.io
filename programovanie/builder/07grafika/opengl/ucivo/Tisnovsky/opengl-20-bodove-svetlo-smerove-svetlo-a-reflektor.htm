@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (20): bodové světlo, směrové světlo a reflektor - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="Dnešní pokračování seriálu o grafické knihovně OpenGL došlo již ke svému jubilejnímu dvacátému pokračování. Místo nudných oslavných řečí si však povíme podrobnější informace o nastavení světelných zdrojů, které mohou být třech typů: bodové světlo, směrové světlo a reflektor." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-20-bodove-svetlo-smerove-svetlo-a-reflektor%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-20-bodove-svetlo-smerove-svetlo-a-reflektor%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-20-bodove-svetlo-smerove-svetlo-a-reflektor%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (20): bodové světlo, směrové světlo a r...</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 18. 11. 2003 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (20): bodové světlo, směrové světlo a reflektor</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+Dnešní pokračování seriálu o grafické knihovně OpenGL došlo již ke svému jubilejnímu dvacátému pokračování. Místo nudných oslavných řečí si však povíme podrobnější informace o nastavení světelných zdrojů, které mohou být třech typů: bodové světlo, směrové světlo a reflektor.
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Materiály, stínování - třetí část</h2>
+
+<h4>Nastavení světelných zdrojů podrobněji</h4>
+
+<p>Jak jsme si již řekli v předminulém dílu, je nutné před použitím osvětlení
+ve scéně toto osvětlení globálně zapnout. To se provede příkazem void
+glEnable(GL_LIGHTING). Opětovné vypnutí lze provést příkazem void
+glDisable(GL_LIGHTING), dotaz na stav (tj. zapnutí či vypnutí osvětlení)
+lze provést zavoláním funkce GLboolean glIsEnabled(GL_LIGHTING). Pokud
+je osvětlení globálně zapnuto, počítá se barva tělesa z charakteristiky světla
+a materiálu. Pokud je naopak osvětlení vypnuto, odpovídá barva povrchu tělesa
+hodnotám zadaným příkazy void glColor*() nebo barvě texelu z
+textury.</p>
+
+<p>V každé implementaci OpenGL lze používat minimálně osm světel, i když v
+některých implementacích může být tento počet vyšší. Tato světla se ve všech
+funkcích označují symbolickými konstantami GL_LIGHT0 až
+GL_LIGHT7. Každé světlo lze nezávisle na ostatních povolit, 
+zakázat a nastavit jeho vlastnosti.</p>
+
+<p>Povolení některého světla lze provést příkazem void
+glEnable(GL_LIGHT?), kde za otazník se doplní číslo světla. Opětovné
+zakázání světla se provede příkazem void glDisable(GL_LIGHT?).
+Programový dotaz, zda je nějaké světlo povoleno, se provede zavoláním funkce
+GLboolean glIsEnabled(GL_LIGHT?).</p>
+
+<p>Při práci s více světly je důležité si uvědomit, že větší množství
+povolených (tj. zapnutých) světel může znatelně zpomalovat vykreslování celé
+scény. Je to způsobeno faktem, že především starší grafické akcelerátory
+nepodporovaly výpočty osvětlení, a tak se osvětlení počítalo programově s
+využitím výpočetního výkonu hlavního procesoru. Vzhledem k tomu, že výpočetní
+náročnost výpočtu osvětlení lineárně roste s počtem zapnutých světel, může
+větší počet světel zatížit hlavní procesor, který pak nestačí dodávat data
+grafickému akcelerátoru. Moderní grafické akcelerátory, které obsahují GPU, již
+podporují výpočet osvětlení přímo na grafické kartě, takže se výkon hlavního
+procesoru dá využít na důležitější věci (například odstranění neviditelných
+částí scén).</p>
+
+<p>Vlastnosti jednotlivých světel se nastaví pomocí následujících funkcí:</p>
+
+<div class="urs-pre"><pre>
+void glLightf(
+    GLenum light,
+    GLenum pname,
+    GLfloat param
+);
+
+void glLighti(
+    GLenum light,
+    GLenum pname,
+    GLint param
+);
+</pre></div>
+
+<p>Tyto funkce se liší pouze typem posledního parametru. Význam všech parametrů:</p>
+
+<ol class="urs-decimal"><li>Do parametru <i>light</i> se zadává symbolické jméno světla, jehož
+parametry chceme měnit. To znamená, že tento parametr může nabývat hodnot
+
+GL_LIGHT0 až GL_LIGHT7.</li>
+
+<li>Parametr <i>pname</i> udává vlastnost světla, kterou potřebujeme nastavit
+nebo změnit. Pro dvě funkce uvedené výše můžeme použít hodnoty:
+GL_SPOT_EXPONENT, GL_SPOT_CUTOFF,
+GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION nebo
+
+GL_QUADRATIC_ATTENUATION. První dva parametry mají smysl pouze u
+reflektorového světla a budou popsány dále. Další tři parametry udávají faktory
+poklesu intenzity světla se vzdáleností od světelného zdroje.</li>
+
+<li>Do parametru <i>param</i> se zadá číselná hodnota vlastnosti světla, která
+byla vybrána předchozím parametrem.</li>
+
+</ol>
+
+<p>Předchozí dvě funkce umožňovaly nastavit pouze jednu číselnou hodnotu.
+Světla však mají i další vlastnosti, u kterých se nastavuje více hodnot (tj.
+vektor) současně. Pro tyto případy jsou vytvořeny následující dvě funkce, které
+jako svůj třetí parametr akceptují pole:</p>
+
+<div class="urs-pre"><pre>
+void glLightfv(
+  GLenum light,
+  GLenum pname,
+  const GLfloat *params
+);
+
+void glLightiv(
+  GLenum light,
+  GLenum pname,
+  const GLint *params
+);
+
+</pre></div>
+
+<p>Význam parametrů těchto funkcí:</p>
+
+<ol class="urs-decimal"><li>Do parametru <i>light</i> se, podobně jako u funkcí glLighti() a
+glLightf(), zadává symbolické jméno světla, jehož parametry chceme
+měnit. To znamená, že tento parametr může nabývat hodnot GL_LIGHT0 až
+
+GL_LIGHT7.</li>
+
+<li>Parametr <i>pname</i> opět udává vlastnost světla, která se má nastavit:
+GL_AMBIENT (RGB hodnoty ambientní složky světla), GL_DIFFUSE
+(RGB hodnoty difúzní složky světla), GL_SPECULAR (RGB barva odlesků),
+
+GL_POSITION (pozice světelného zdroje nebo směr šíření směrového
+světla), GL_SPOT_DIRECTION (směr šíření reflektorového světla).</li>
+</ol>
+
+<p>Konkrétní význam všech parametrů bude podrobněji vysvětlen v následujícím
+textu.</p>
+
+<h4>Bodové světlo</h4>
+
+<p>Nejjednodušší (alespoň pro pochopení, programová implementace je poměrně
+složitá) je <i>bodové světlo</i>. Toto světlo si můžeme představit například
+jako žárovku v prostoru, která vyzařuje světlo na všechny strany se stejnou
+intenzitou. Pozice bodového světla se zadává příkazy:</p>
+
+<div class="urs-pre"><pre>
+glLightfv(GL_LIGHT?, GL_POSITION, position);
+glLightiv(GL_LIGHT?, GL_POSITION, position);
+</pre></div>
+
+<p>kde parametr <i>position</i> je ukazatel na pole čtyř hodnot typu
+<i>GLfloat</i> nebo <i>GLint</i>. První tři hodnoty reprezentují pozici světla
+ve světových souřadnicích, tedy složky <i>(x, y, z)</i>. Poslední hodnota v
+tomto poli musí vždy obsahovat jedničku, protože pomocí této hodnoty OpenGL
+rozliší, zda se jedná o bodové, nebo směrové světlo (podrobnější informace viz
+<a href="#hrfpoznamka">poznámka</a> níže). Je potřeba si dát pozor na skutečnost,
+že implicitně je světlo nastavené na souřadnice (0, 0, 1, 0), takže jde o
+směrové světlo umístěné na <i>z</i>-ové souřadné ose. Jednoduché použití
+bodového světla je ukázáno v <a href="#hrfpriklad1">prvním demonstračním
+příkladu</a> uvedeném na konci tohoto textu.</p>
+
+<p>V době zadání pozice světla je tato pozice podrobena transformaci podle
+obsahu transformační matice MODELVIEW (viz první díly tohoto seriálu).
+Proto je zapotřebí tuto transformační matici před zadáním pozice světla
+korektně nastavit. Této vlastnosti se dá dobře využít v případě, kdy
+požadujeme, aby se světlo pohybovalo současně s objektem, tj. aby se pro
+transformaci pozice světla i objektu používala stejná transformační matice.
+Ukázky této techniky budou uvedeny v dalším dílu.</p>
+
+<h4>Směrové světlo</h4>
+
+<p>Směrové světlo nemá v pojetí OpenGL žádný pevně daný světelný zdroj. Světlo
+se šíří z jednoho směru (je zadáno vektorem) nezávisle na vzájemné poloze a
+vzdálenosti objektů v zobrazované scéně. Za směrové světlo lze považovat
+například slunce, neboť světelné paprsky, které dopadají na povrch těles ze
+slunce, jsou víceméně paralelní (vzhledem k poměru vzdáleností slunce a těles
+od sebe). Směr směrového světla se zadává stejným příkazem jako u světla
+bodového, tj. příkazy:</p>
+
+<div class="urs-pre"><pre>
+glLightfv(GL_LIGHT?, GL_POSITION, direction);
+glLightiv(GL_LIGHT?, GL_POSITION, direction);
+</pre></div>
+
+<p>kde parametr <i>direction</i> je ukazatel na pole čtyř hodnot typu
+<i>GLfloat</i> nebo <i>GLint</i>. Narozdíl od bodového světla však v tomto poli
+není uložena pozice světla, ale vektor reprezentující směr šíření světla.
+Poslední složka v poli tedy musí v tomto případě obsahovat nulu (viz <a href="#hrfpoznamka">poznámka</a>). V případě směrového světla se při výpočtu
+difúzního osvětlení a odlesků nebere v potaz pozice světla, ale přímo zde
+zadaný vektor, proto jsou výpočty se směrovým světlem jednodušší a tím pádem i
+rychlejší. Jednoduché použití směrového světla je ukázáno ve <a href="#hrfpriklad2">druhém demonstračním příkladu</a> uvedeném na konci tohoto
+textu.</p>
+
+<h4>Plošné světlo</h4>
+
+<p>Plošné světlo, tj. světlo, které se šíří z plošného zdroje osvětlení, není v
+knihovně OpenGL podporováno. Jedná se totiž o výpočetně nejnáročnější zdroj
+světla, který není jednoduché simulovat. V počítačové grafice, která se zabývá
+fotorealistickým zobrazením scén, se pro plošné zdroje světla používá
+<i>radiační metoda</i> (radiosity), jež má však velkou výpočetní složitost,
+která prudce roste s počtem plošek v zobrazované scéně.</p>
+
+<p>Zde se o plošném světle zmiňuji především proto, že toto světlo je v reálném
+světě velmi časté. Typickým příkladem je například zářivkové osvětlení, ale i
+takové okno do místnosti je v podstatě plošným zdrojem světla v této místnosti.
+Tam, kde je zapotřebí použít plošné světlo, se musí v OpenGL použít buď
+<i>světelné mapy</i> (lightmapy), nebo více zdrojů směrového resp.
+reflektorového světla.</p>
+
+<h4>Reflektorové světlo</h4>
+
+<p>Nejsložitějším světlem v OpenGL je reflektorové světlo. Tento typ světelného
+zdroje se chová podobně jako klasický reflektor, tj. světlo se šíří (stejně
+jako u bodového světla) z jednoho bodu, ale ne do všech směrů, nýbrž pouze v
+předem zadaném kuželu. U tohoto světla se také musí zadat nejvíce parametrů.
+Kromě pozice světla (tj. kde je umístěn reflektor) se musí zadat také hlavní
+směr šíření světelných paprsků (kam je reflektor namířen) a úhel síření světla
+(světelný kužel), ve kterém intenzita světla postupně klesá směrem k nule.</p>
+
+<p>Reflektorovým světlem se budeme podrobněji zabývat v dalším pokračování.</p>
+
+<h4>"Záporné" světlo</h4>
+
+<p>Při zadávání barvy jakékoliv světelné složky je možné zadat i záporné
+hodnoty. Toto nastavení má za následek odečtení hodnot barevných složek od
+barvy materiálu. V zobrazované scéně je potom vidět, že světlo se zápornými
+hodnotami osvětlení materiálu ve skutečnosti snižuje, místo aby ji zvyšovalo.
+Použití "záporného" světla je ukázáno ve <a href="#hrfpriklad4">čtvrtém
+demonstračním příkladu</a> na konci tohoto textu.</p>
+
+<span id="hrfpoznamka"></span><h4>Poznámka o rozdílu mezi bodem a vektorem</h4>
+
+<p>Zejména v počítačové grafice, ale například i v geometrii, je zapotřebí
+nějakým způsobem rozlišit body a vektory. Řešení spočívá v použití takzvaných
+homogenních souřadnic, kdy místo třech souřadnic <i>(x, y, z)</i> používáme
+souřadnice čtyři <i>(x, y, z, w)</i>. Čtvrtá souřadnice je nazývána váha -
+odtud plyne její označení symbolem <i>w</i> (weight). Pokud je váha nastavena
+na jedničku, tj. (x, y, z, 1), jedná se o zadání bodu, pokud je váha nastavena
+na nulu, tj. (x, y, z, 0), jedná se o vektor. Jiné (nenulové) hodnoty váhy
+<i>w</i> se eliminují tak, že se provede transformace z (x, y, z, w) na (x/w,
+y/w, z/w, 1).</p>
+
+<p>Všechny operace nad vektory i body musí mít výsledek takový, aby váha byla
+buď jedničková, nebo nulová. Podívejme se, jak je tato podmínka splněna pro
+základní operace:</p>
+
+<ul><li><i>Sčítání bodů</i> není korektní operace (je závislá na změně souřadného
+systému). Je to také vidět ze zápisu této operace:
+p<sub>1 </sub>+p<sub>2 </sub>=
+(x<sub>1 </sub>, y<sub>1 </sub>, z<sub>1 </sub>, 1)+
+(x<sub>2 </sub>, y<sub>2 </sub>, z<sub>2 </sub>, 1)=
+(x<sub>1 </sub>+x<sub>2 </sub>, y<sub>1 </sub>+y<sub>2 </sub>, z<sub>1 </sub>+z<sub>2 </sub>, 2),
+takže výsledkem není ani bod ani vektor.</li>
+
+<li><i>Sčítání vektorů</i> je korektní operace, což lze poznat ze zápisu této operace:
+v<sub>1 </sub>+v<sub>2 </sub>=
+(x<sub>1 </sub>, y<sub>1 </sub>, z<sub>1 </sub>, 0)+
+(x<sub>2 </sub>, y<sub>2 </sub>, z<sub>2 </sub>, 0)=
+(x<sub>1 </sub>+x<sub>2 </sub>, y<sub>1 </sub>+y<sub>2 </sub>, z<sub>1 </sub>+z<sub>2 </sub>, 0),
+takže výsledkem součtu vektorů je opět vektor.</li>
+
+<li><i>Součet vektoru a bodu</i> (tj. posun bodu ve směru daného vektoru) je korektní operace:
+p<sub>1 </sub>+v<sub>1 </sub>=
+(x<sub>1 </sub>, y<sub>1 </sub>, z<sub>1 </sub>, 1)+
+(x<sub>2 </sub>, y<sub>2 </sub>, z<sub>2 </sub>, 0)=
+(x<sub>1 </sub>+x<sub>2 </sub>, y<sub>1 </sub>+y<sub>2 </sub>, z<sub>1 </sub>+z<sub>2 </sub>, 1),
+takže výsledkem součtu je bod na nových souřadnicích.</li>
+
+<li><i>Odečítání bodů</i> je korektní operace, neboť jejím provedením získáme vektor mezi těmito body:
+p<sub>1 </sub>-p<sub>2 </sub>=
+(x<sub>1 </sub>, y<sub>1 </sub>, z<sub>1 </sub>, 1)-
+(x<sub>2 </sub>, y<sub>2 </sub>, z<sub>2 </sub>, 1)=
+(x<sub>1 </sub>-x<sub>2 </sub>, y<sub>1 </sub>-y<sub>2 </sub>, z<sub>1 </sub>-z<sub>2 </sub>, 0).
+
+</li>
+
+<li><i>Odečítání vektorů</i> je operace totožná s sčítáním vektorů, protože
+poslední prvek čtveřice je vždy nastaven na nulu, která není znaménkem operace
+ovlivněna.</li>
+
+</ul>
+
+<h4>Pokračování</h4>
+
+<p>V následujícím dílu dokončíme část věnovanou osvětlení a materiálům. Budeme
+se podrobněji zabývat reflektorovým světelným zdrojem a změnám pozice
+světelného zdroje pomocí transformační matice <i>ModelView</i>.</p>
+
+<h4>Demonstrační příklady</h4>
+
+<span id="hrfpriklad1"></span><p><a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_1.c">První demonstrační příklad</a> 
+(<a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_1.html">HTML verze</a>)
+předvádí použití bodového zdroje světla, kterým se osvětluje objekt ve
+vykreslované scéně. V našem případě jde o čajovou konvičku použitou i v
+předchozích demonstračních příkladech. Pomocí levého tlačítka myši se s
+objektem rotuje, pravé tlačítko myši slouží k přiblížení nebo oddálení objektu
+od pozorovatele.</p>
+
+<span id="hrfpriklad2"></span><p><a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_2.c">Druhý demonstrační příklad</a>
+(<a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_2.html">HTML verze</a>)
+je podobný prvnímu příkladu s tím rozdílem, že pro osvětlení je použito směrové
+světlo namísto světla bodového. Další funkčnost programu zůstáva nezměněna.
+Všimněte si, že oproti minulému příkladu se osvětlení konvičky nemění s posunem
+dopředu/dozadu, protože u směrového světla není zadán jeho zdroj.</p>
+
+<span id="hrfpriklad3"></span><p>Ve <a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_3.c">třetím demonstračním příkladu</a> (<a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_3.html">zde HTML verze</a>) je zobrazena čajová konvička
+osvětlená více zdroji světla. Každý světelný zdroj osvětluje těleso jednou
+základní barvou. Tyto barvy se potom na povrchu tělesa mohou sčítat a vytvářet
+tak zajímavé světelné efekty. Použití více světelných zdrojů však s sebou nese
+větší výpočetní náročnost, což se může projevit zejména u rozsáhlejších
+scén.</p>
+
+<span id="hrfpriklad4"></span><p>Poslední, <a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_4.c">čtvrtý demonstrační příklad</a> (<a href="http://i.iinfo.cz/r/photos/opengl/opengl_20_4.html">i s HTML verzí</a>), ukazuje použití světelného zdroje,
+který má barevné složky nastavené na záporné hodnoty. Výsledek je ten, že se
+barva tohoto světla odečítá od barvy na povrchu tělesa a místo světelného
+zdroje tak používáme světelný "vysavač".</p>
+
+<p>Pro majitele pomalejšího připojení k internetu je zde k dispozici celý
+článek i s přílohami zabalený do jednoho <a href="http://i.iinfo.cz/r/photos/opengl/opengl_20.zip">zip
+souboru</a>.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-18-vykreslovani-osvetlenych-teles/">Grafická knihovna OpenGL (18): vykreslování osvětlených těles</a></li>
+			<li><a href="/clanky/opengl-19-phonguv-osvetlovaci-model/">Grafická knihovna OpenGL (19): Phongův osvětlovací model</a></li>
+			<li class="actual">Grafická knihovna OpenGL (20): bodové světlo, směrové světlo a reflektor</li>
+			<li><a href="/clanky/opengl-21-nastaveni-svetelnych-zdroju/">Grafická knihovna OpenGL (21): nastavení světelných zdrojů</a></li>
+			<li><a href="/clanky/opengl-22-texturovani/">Grafická knihovna OpenGL (22): texturování</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-20-bodove-svetlo-smerove-svetlo-a-reflektor%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-20-bodove-svetlo-smerove-svetlo-a-reflektor%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/">Vlastní</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q2/">2</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q3/">3</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q4/">4</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q5/">5</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q6/">6</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q7/">7</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q8/">8</a>
+<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[27508]" /></td>
+	<th><a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/27508/">o5</a></th>
+	<td class="op-au">tucix</td>
+	<td class="op-dt">20. 11. 2003 21:55	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[27551]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/27551/">Re: o5</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">21. 11. 2003 13:40	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3762">IT PROJECT MANAGER (i2438) / až 65.000,- / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3646">PROGRAMÁTOR C/C++ (i5140) / VÍCE POZIC / NADNÁRODNÍ SPOLEČNOST / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3466">SPECIALISTA ROZVOJE SYSTÉMŮ A MOBIL. APLIKACÍ (i4557) / MEZINÁR. SPOL. / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4098">ANALYTIK DATOVÉHO SKLADU (i3548) / NADNÁRODNÍ SPOL. / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3935">IT PROJECT MANAGER (i4548) / MEZINÁRODNÍ SPOLEČNOST / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3790">JAVA, XML DEVELOPER (i3284) / INTERNATIONAL COMPANY / PRAGUE</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3029">J2EE ARCHITEKT (i6582) / 45-80.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4080">DB SPECIALISTA PRO DATOVÉ SKLADY - SQL (i4378) / PRAHA</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

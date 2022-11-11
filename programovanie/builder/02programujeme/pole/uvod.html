@@ -1,0 +1,92 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Jednorozmerné pole - úvod</h3>
+<dl>
+<dt class=main>Štruktúry 
+<dd>Používanie jednoduchých neštruktúrovaných premenných je obmedzené na veľmi malý počet premenných. Chceme odpamätávať dĺžku skokov pretekárov a určiť víťaza, pri
+počte pretekárov 3 je možné použiť napr. premenné d1, d2, d3. Pri väčšom počte je práca s premennými d1,d2,...dn veľmi komplikovaná, navyše pri zmene
+počtu pretekárov je potrebné radikálne zasahovať do programu. Potrebovali by sme objekt, v ktorom by sme mali zapísané viac údajov pod jedným názvom.
+Takéto premenné voláme štruktúrované (alebo len štruktúry).
+<br>Rozdelenie štrutúrovaných premenných:
+<ul>
+	<li>Homogénne štruktúry - štruktúra, ktorej položky sú rovnakého typu, napr. pole
+	<li>Nehomogénne štruktúry - štruktúry, ktorých položky môže byť rôznych typov napr. záznam
+	<li>Konečné štruktúry - počet položiek je obmedzený predpisom napr. pole
+	<li>Nekonečné štruktúry - počet položiek je obmedzený pamäťou napr. súbor
+		<br>
+	<li>Statické štruktúry - počet položiek (prvkov) je známy už pri preklade
+	<li>Dynamické štruktúry - počet položiek sa určí až za behu programu.  
+</ul>
+
+<dt class=main>Štruktúrovaný typ pole
+<dd>Štruktúrovaný typu pole je homogénna konečná statická/dynamická  štruktúra. Ako neskôr uvidíme existujú aj statické aj dynamické polia. Neskôr sa zoznámime aj s "prešpekulovanejšími"
+štruktúrami ako je pole, ale práca s poľom patrí ku základom každého programátora. Príchodom poľa sa programovanie dostáva na úplne inú úroveň a po zvládnutí poľa sme vlastne už schopný naprogramovať
+väčšinu úloh, ktoré programátori riešia. V poli teda možno uložiť viacero hodnôt a prístup ku jednotlivým hodnotám máme pomocou indexu, uvádzaného v hranatých zátvorkách (hodnoty sú teda "očíslované" 
+a podľa tohoto číslovania sa ku jednotlivým položkám poľa možno dostať. 
+<dt class=main>Statické pole
+	<dd>Statické pole je také ktoré má pevný vopred daný počet prvkov.
+		<br>Vlastnosti:
+		<ul>
+            <LI>všetky prvky poľa sú rovnakého typu = pole sa skladá z veľa  "jednoduchších" premenných 
+            <LI>tieto premenné sú prístupné cez index 
+            <LI>typ_indexu - celočíselný typ 
+            <LI>typ_prvkov - ľubovoľný typ
+            <LI>už neplatí, že celá štruktúra musí zaberať menej ako 64 KB 
+            <LI>obmedzenie na veľkosť je len také, aby to zvládal Windows a ten bez problémov zvládne dosť veľa MB 
+            <LI>Builder dovolí zadeklarovať maximálne 2 GB štruktúru, ale Windows má väčšinou k dispozícii pre aplikáciu väčšinou len niekoľko 100MB 
+            <LI>všetky prvky poľa sa nedajú naraz načítať, vypísať <b>ani priradiť</b> jediným príkazom - treba to rozpísať, napr. pomocou <B>for</B>-cyklu
+
+        </UL>
+
+
+<dt class=main>Deklarovanie premennej typu pole/array
+<dd><i>typ meno [pocet] </i>
+		<br>typ ......... identifikátor typu položiek poľa
+		<br>meno ........ identifikátor poľa
+		<br>pocet ....... celočíselná konštanta
+		<br>položky poľa majú indexy 0 .. pocet-1
+<dt class=main>Práca s poľom
+<dd><ol><li>celé pole - ak uvedieme identifikátor poľa bez indexu je to chápané ako smerníkový výraz ukazujúci na nultú polozku poľa.
+		<li>položka - identifikátor[index], alebo *(identifikátor+index). Oba tieto zápisy sú rovnocenné a môžeme ich ľubovoľne zamieňať
+		</ol>	
+
+<dt class=main>Inicializácia
+<dd>Podobne ako pri jednoduchých premenných možno v deklarácii určiť počiatočné hodnoty 
+		<br>Možnosti:
+		<ul><li>uvedieme počet a daný počet prvkov aj uvedieme int a[5]={1,2,3,4,5}
+			<li>uvedieme počet a menší počet prvkov aj uvedieme int a[5]={1,2} //...zvyšné sú nulové/nenastavené
+			<li>neuvedieme počet a nejaký počet prvkov uvedieme int a[]={1,2,3,4,5}  // vytvorí pole 5 prvkov
+			<LI>znakové pole char z[5]={'A','h','o','j','!'}
+			<LI>znakové pole char z[5]={"Ahoj!"}  // je povolene pole znakov zadávať ako reťazec
+		</ul>	 
+		Ak pole má položky desatinné čísla hodnoty môžu byť desatinné ale aj celé.
+		<br>Ak pole má položky typu char - tomuto prípadu je venovaná samostatná látka Znakové pole.		
+		<br>Ak pole má položky string tak hodnoty môžu byť textové konštanty.
+
+<dt>Zistenie veľkosti poľa
+<dd><ul><li>sizeof(pole) ................. vráti velkosť poľa v B (len pri statickom poli!)
+			<li>sizeof(*pole)................. vráti velkosť položky poľa
+			<li>sizeof(pole+1)................ vráti veľkosť smerníka
+		</ul>		
+
+<dt>Základné operácie s prvkami poľa
+	<dd>Inak povedané, základné činnosti, kde je výhodné pole použiť. Najviac sa budeme venovať poliam, kde prvky poľa sú čísla (celé alebo desatinné).
+		Ak neuvediem aké sú prvky poľa, myslím na číselné pole. Práca s prvkami poľa je skoro vždy realizovaná pomocou cyklu (najčastejšie cyklu for),
+		preto kým nemáme príkazy cyklu zvládnuté nie možné dobre využívať štruktúru pole.
+		<dl><dt>Prístup ku položkám poľa
+			<dd><ul><li>pomocou indexu v hranatých zátvorkách - nekontroluje, či sme z poľa "nevybehli"
+					<li>pomocou smerníkov
+				</ul>
+		</dl>			 
+</dl>
+Teraz si v ďalších častiach ukážeme základné operácie s prvkami poľa.
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <STYLE type="text/css">
+		span {height:100; width:100;background:#eeeeee;border:2; border-style:'solid'; border-color:#999999; margin:8; font-size:52; padding:15 1 18 20;font-family:'monospace'}
+	</STYLE>
+
+	<title>Ukladaná</title>
+    <script type="text/javascript">
+	var pr=24;
+	function miesaj()
+	{  
+    for(i=9;i<25;i++) 
+	{ j=9+Math.floor(15*Math.random()); 
+	  vymen(i,j); 
+    } 
+	}
+	function vymen(i,j)
+	{var k=0; 
+//		alert(""+i+","+document.all[i].innerText);
+	 k=document.all[i].innerText;
+	 document.all[i].innerText=document.all[j].innerText;
+	 document.all[j].innerText=k;
+	 k=document.all[i].style.visibility;
+	 document.all[i].style.visibility=document.all[j].style.visibility;
+	 document.all[j].style.visibility=k;
+	 if (i==pr) pr=j;
+	 else if(j==pr) pr=i;
+	 
+	} 
+	function tahaj(i)
+	{
+	 if (i+1==pr && (i)%4) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+	   document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i-1==pr && (i-1)%4) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+       document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i+4==pr) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+	   document.all[i].style.visibility='hidden';
+	   pr=i;// alert(document.all[i].innerText+i);
+	}
+	 if (i-4==pr) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+   document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	}
+	</script>
+
+</head>
+<body>
+
+<div style="height:490; width:490; background:#dddddd; border:2; border-style:'solid'; border-color:#999999; padding:5" id="M1">
+<span onclick="tahaj( 9)"> 1 </span>
+<span onclick="tahaj(10)"> 2 </span>
+<span onclick="tahaj(11)"> 3 </span>
+<span onclick="tahaj(12)"> 4 </span>
+<span onclick="tahaj(13)"> 5 </span>
+<span onclick="tahaj(14)"> 6 </span>
+<span onclick="tahaj(15)"> 7 </span>
+<span onclick="tahaj(16)"> 8 </span>
+<span onclick="tahaj(17)"> 9 </span>
+<span onclick="tahaj(18)"> A </span>
+<span onclick="tahaj(19)"> B </span>
+<span onclick="tahaj(20)"> C </span>
+<span onclick="tahaj(21)"> D </span>
+<span onclick="tahaj(22)"> E </span>
+<span onclick="tahaj(23)"> F </span>
+<span style="visibility=hidden"onclick="tahaj(24)" > X </span>
+</div>
+
+<input type="Button" value="Zamiešaj" onclick="miesaj()" style="margin:20">
+<script  type="text/javascript">
+  
+//alert (document.all[pr].innerText);
+</script>
+</body>
+
+</html>
+

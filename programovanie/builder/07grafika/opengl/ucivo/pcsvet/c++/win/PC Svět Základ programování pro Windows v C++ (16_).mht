@@ -1,0 +1,174 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_pro_Windows_v_C++?=
+	=?windows-1250?Q?_=2816.=29?=
+Date: Thu, 12 Jul 2007 10:08:45 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1525
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED pro =
+Windows v C++ (16.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED pro Windows v C++ (16.)</H2>
+<H4>Standartn=ED ovl=E1dac=ED prvky - stavov=FD =F8=E1dek</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Pokud spust=EDte n=ECkter=E9 programy jako t=F8eba P=F8ehr=E1va=E8 =
+CD, ur=E8it=EC si v=9Aimnete=20
+stavov=E9ho =F8=E1dku ve spodn=ED =E8=E1sti okna. Vytvo=F8it takov=FDto =
+stavov=FD =F8=E1dek nen=ED v=F9bec=20
+nic slo=9Eit=E9ho. Op=ECt vyu=9Eijeme knihovnu Common controls, kter=E1 =
+je standardn=ED=20
+sou=E8=E1st=ED Windows.=20
+<P>Pon=ECvad=9E jsou funkce nejen pro tento ovl=E1dac=ED prvek ulo=9Eeny =
+v extern=ED=20
+knihovn=EC, konkr=E9tn=EC comctl32.dll, mus=EDme p=F8ed pou=9Eit=EDm =
+tohoto a dal=9A=EDch b=EC=9En=FDch=20
+prvk=F9 zavolat funkci InitCommonControls, =E8=EDm=9E zajist=EDme =
+nata=9Een=ED t=E9to knihovny v=20
+p=F8=EDpad=EC, =9Ee se o to je=9At=EC nepostarala jin=E1 aplikace. U =
+v=ECt=9Ainy kompil=E1tor=F9 je=20
+t=F8eba je=9At=EC uv=E9st tuto knihovnu jako parametr kompil=E1toru / =
+linkeru. U Dev-C++ 5=20
+toto provedeme z menu Projekt / Vlastnosti projektu a do pole =
+Linker/Dal=9A=ED=20
+knihovny, kter=E9 je ve spodn=ED =E8=E1sti okna, uvedeme "-lcomctl32", =
+samoz=F8ejm=EC bez=20
+uvozovek. A d=E1le je t=F8eba k souboru s projektem p=F8ipojit =
+hlavi=E8kov=FD soubor=20
+commctrl.h.=20
+<P>A nyn=ED n=E1m ji=9E nic nebr=E1n=ED p=F8idat stavov=FD =F8=E1dek k =
+na=9Aemu oknu. To provedeme=20
+pomoc=ED funkce CreateStatusWindow, kter=E1 je definov=E1na takto:=20
+<P><TT><FONT color=3D#000099>HWND CreateStatusWindow(</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;LONG =
+style,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// styl=20
+stavov=E9ho =F8=E1dku</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;LPCTSTR lpszText,=20
+// text, kter=FD se ve stavov=E9m =F8=E1dku m=E1 objevit</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;HWND hwndParent,&nbsp; // okno, ke kter=E9mu bude =
+stavov=FD=20
+=F8=E1dek p=F8ipojen</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;UINT=20
+wID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =
+identifika=E8n=ED=20
+=E8=EDslo, kter=E9=20
+chceme<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+// stavov=E9mu =F8=E1dku p=F8i=F8adit</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>);</FONT></TT>=20
+<P>Tato funkce n=E1m vr=E1t=ED handle na okno stavov=E9ho =F8=E1dku.=20
+<P>Parametr styl ud=E1v=E1 styl stavov=E9ho =F8=E1dku tak, jak bychom =
+jej norm=E1ln=EC pou=9Eili=20
+ve funkci CreateWindow. Styl by m=ECl v=9Edy obsahovat WS_CHILD a =
+WS_VISIBLE,=20
+p=F8=EDpadn=EC jednu z dal=9A=EDch hodnot definovan=FDch pro stavov=E9 =
+=F8=E1dky:=20
+<UL>
+  <LI><B>CCS_TOP</B> - specifikuje, =9Ee se stavov=FD =F8=E1dek =
+um=EDst=ED v horn=ED =E8=E1sti=20
+  mate=F8sk=E9ho okna. Nen=ED-li tento styl specifikov=E1n, je stavov=FD =
+=F8=E1dek um=EDst=ECn=20
+  implicitn=EC v doln=ED =E8=E1sti okna.=20
+  <LI><B>SBARS_SIZEGRIP</B> - p=F8id=E1 ke stavov=E9mu =F8=E1dku na =
+prav=E9m okraji=20
+  troj=FAheln=ED=E8ek, kter=FDm je mo=9En=E9 m=ECnit velikost okna. Je =
+pou=9Eit nap=F8=EDklad u=20
+  WordPadu. </LI></UL>Nen=ED doporu=E8eno pou=9E=EDt v=FD=9Ae =
+zm=EDn=ECn=E9 styly sou=E8asn=EC. P=F8esto=9Ee=20
+se troj=FAheln=ED=E8ek zobraz=ED, nen=ED mo=9En=E9 jej pro zm=ECnu =
+velikosti okna pou=9E=EDt.=20
+<P>Velikost stavov=E9ho =F8=E1dku se automaticky upravuje po =
+obdr=9Een=ED zpr=E1vy WM_SIZE.=20
+V podstat=EC sta=E8=ED, kdy=9E ji okno vlastn=EDc=ED stavov=FD =F8=E1dek =
+po obdr=9Een=ED t=E9to zpr=E1vy=20
+p=F8epo=9Ale oknu stavov=E9ho =F8=E1dku. Pro =FApravu vzhledu a =
+nastaven=ED textu stavov=E9ho=20
+=F8=E1dku je mo=9En=E9 pou=9E=EDt tyto zpr=E1vy:=20
+<UL>
+  <LI><B>SB_SETMINHEIGHT</B> - wParam =3D minim=E1ln=ED v=FD=9Aka - =
+nastav=ED minim=E1ln=ED=20
+  v=FD=9Aku stavov=E9ho =F8=E1dku na danou hodnotu=20
+  <LI><B>SB_GETBORDERS</B> - lParam =3D ukazatel na pole, kter=E9 m=E1 =
+t=F8i elementy -=20
+  prvn=ED element pole obdr=9E=ED =9A=ED=F8ku horizont=E1ln=EDho okraje, =
+druh=FD obdr=9E=ED =9A=ED=F8ku=20
+  vertik=E1ln=EDho okraje a t=F8et=ED =9A=ED=F8ku okraje mezi bloky.=20
+  <LI><B>SB_SETPARTS</B> - wParam =3D po=E8et blok=F9; lParam =3D =
+ukazatel na pole=20
+  obsahuj=EDc=ED =9A=ED=F8ky jednotliv=FDch blok=F9 - pomoc=ED t=E9to =
+zpr=E1vy m=F9=9Eete stavov=FD =F8=E1dek=20
+  rozkouskovat na bloky. Maxim=E1ln=ED po=E8et blok=F9 m=F9=9Ee b=FDt =
+255, posledn=ED hodnota=20
+  pole by m=ECla b=FDt -1, =E8=EDm=9E je posledn=ED blok prota=9Een k =
+prav=E9mu okraji okna.=20
+  <LI><B>SB_GETPARTS</B> - jako SB_SETPARTS - funkce vr=E1t=ED =
+aktu=E1ln=ED po=E8et blok=F9=20
+  <LI><B>SB_SETTEXT</B> - wParam =3D =E8=EDslo bloku | styl zobrazen=ED; =
+lParam =3D=20
+  ukazatel na textov=FD =F8et=ECzec - nastav=ED dan=FD text do bloku =
+uveden=E9ho wParam.=20
+  Styl zobrazen=ED m=F9=9Ee b=FDt: <I>SBT_NOBORDERS</I> - text bude =
+vykreslen bez=20
+  okraje, <I>SBT_OWNERDRAW</I> - text je vykreslen rodi=E8ovsk=FDm =
+oknem,=20
+  <I>SBT_POPOUT</I> - text je vykreslen s opa=E8n=FDm okrajem =
+(vym=E1=E8kl=FD) ne=9E=20
+  implicitn=EC (vtla=E8en=FD).=20
+  <LI><B>SB_GETTEXTLENGTH</B> - wParam =3D =E8=EDslo bloku - ve =
+spodn=EDm slov=EC vr=E1t=ED=20
+  d=E9lku =F8et=ECzce v bloku uveden=E9m ve wParam, v horn=EDm slov=EC =
+pak styl.=20
+  <LI><B>SB_GETTEXT</B> - jako SB_SETTEXT - vr=E1t=ED styl textu, =
+j=EDm=9E vypln=ED lParam=20
+  </LI></UL>Mimo funkce CreateStatusWindow m=F9=9Eeme stavov=FD =
+=F8=E1dek vytvo=F8it i v=EDce=20
+"n=EDzko", a to funkc=ED CreateWindow, pokud specifikujeme t=F8=EDdu =
+STATUSCLASSNAME.=20
+<BR>Pokud ale pot=F8ebujete vykreslit jednoduch=FD stavov=FD =F8=E1dek a =
+nechcete do sv=E9ho=20
+programu integrovat tento typ prvku, m=F9=9Eete p=F8i kreslen=ED =
+odpov=ECdi na zpr=E1vu=20
+WM_PAINT pou=9E=EDt funkci DrawStatusText (v=EDce v MSDN), kter=E1 =
+vykresl=ED informaci v=20
+podstat=EC =FApln=EC stejn=EC jako klasick=FD stavov=FD =F8=E1dek.=20
+<P>Stavov=FD =F8=E1dek je prvkem, kter=FDm m=F9=9Eete snadno a =
+kompaktn=EC informovat=20
+u=9Eivatele o stavu programu a kter=FD si ur=E8it=EC najde sv=E9 m=EDsto =
+v nejedn=E9 va=9A=ED=20
+aplikaci.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:08:32 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<title>Podprogramy</title>
+</head>
+
+<body>
+<center><h3 class=nadpis>Podprogramy</h3></center>
+Už sme sa stretli s písaním podprogramov - každá akcia na udalosť bola riešená podprogramom.
+Tieto podprogramy boli metódami vložených objektov a o ich zahniezdenie sa postará systém
+Okrem týchto podprogramov môžme písať aj svoje podprogramy, kde si už musíme sami premyslieť
+v ktorej časti unitu podprogram zadeklarovať.
+<br>
+<dl><dt class=main>Podprogramy nepatriace žiadnemu objektu
+	<dd><dl><dt class=second>Deklarácia
+			<dd>Narozdiel od podprogramov vytvorených ako metody nejakých objektov (najčastejšie formulára), 
+				tieto podprogramy nemajú pred menom <b>__fastcall TForm1::</b> lebo nepatria formuláru a ani žiadnemu inému objektu.
+				<br>Umiestnenie:
+				<ul>
+				<li>Pod riadok 
+				<b>TForm1 *Form1;</b>
+				pred naše globálne premenné. Ak vytvárame podprogramy, ktoré sa niektoré medzi sebou volajú 
+				treba vedieť, že v podprograme môžme volať tie podprogramy, ktoré sú fyzicky vyššie.
+				Narozdiel od podprogramov produkovaných IDE prostredím (podprogramy patriace formuláru)pri zadávaní akcie,
+				tieto naše podprogramy nemajú pred menom __fastcall TForm1:: lebo nepatria formuláru 
+				(nepatria žiadnemu objektu).
+			<dt class=second>Volanie objektov vnútri podprogramu
+			<dd>Na rozdiel od podprogramov patriacich formuláru, každý objekt (okrem Form1) musíme volať celým menom 
+				(s predponou Form1->) inak povedané vnútri takýchto podprogramov nevidíme objekty patriace formuláru 
+				ale vidíme formulár a cez jeho meno	máme prístup ku jeho objektom - 
+				<font color="Blue">Form1.Button2.enabled</font>.
+			<dt class=second>Vnáranie podprogramov
+			<dd>V jazyku C (a teda ani v Builderi) nie je možné vnárať podprogramy do seba ako to poznáme z pascalu. 
+		</dl> 
+    <br>
+	<dt class=main>Podprogramy patriace formuláru - metódy
+	<dd>Je možné podprogram vložiť aj do objektu formulár - podprogram má potom podobné vlastnosti ako ostatné 
+		akčné podprogramy na ošetrenie nejakých udalostí. Deklarácia spočíva v dvoch krokoch:
+		<ol>
+		<li>Vložiť hlavičku podprogramu do popisu objektu Form1 (súbor unit1.h) do niektorej časti
+		<br><b>__published:</b>
+		<br><b>private:</b>
+		<br><b>public:</b>
+		<br>Vložený riadok bude vyzerať napr. takto:
+		<br><b>void __fastcall f9();</b> //f9 je názov nášho podprogramu
+		<li>Klasická deklarácia podprogramu v súbore Unit1.cpp
+		<br>void __fastcall TForm1::f9()
+		<br> &nbsp; &nbsp; &nbsp; { Edit1->Clear();}
+		</ol>
+    <br>
+	<dt class=main>Parametre
+	<dd><ul>
+		<li><b>predávané hodnotou</b> - klasické vstupné parametre, pri volaní sa vytvoria plnohodnotné premenné 
+			s inicializáciou poč. hodnoty.
+			<br>Napr. 
+			<br>int sucet(int a,int b,int c)
+			<br>{ return a+b+c; }
+		<li><b>predávané menom</b> - vstupno-výstupné parametre, uvedené znakom <b>&amp;</b>. Tu žiadna nová premenná 
+		     nevzniká, len premenná zapísaná vo volaní dostala ďalšie meno.
+			<br>Napr. 
+			<br>int vymena(int &amp;a,int &amp;b)
+			<br>{ int c; c=a;a=b;b=c; }
+		<li><b>predávané adresou</b> - vstupno-výstupné parametre, uvedené znakom <b>*</b>. Prenáša sa teda hodnota=adrese dát.
+			<br>Napr. 
+			<br>int vymena(int *a,int *b)
+			<br>{ int c; c=*a;*a=*b;*b=c; }
+		<li><b>parametre s default hodnotami</b>
+			<br>Niekoľko posledných parametrov môže mať predpísané "zástupné" hodnoty, ktoré sa použijú ak parameter 
+			pri volaní nie je zadaný  
+			<br>
+			<br>int sucet(int a,int b=0,int c=0,int d=0)
+			<br>{ return a+b+c+d; }
+			<br>//takýto podprogram možno volať s jedným až štyrmi celočíselnými parametrami.
+		</ul>
+    <dt class=main>Návratová hodnota pri funkciách
+	<dd>Pri deklarácii funkcie je nutné aby v každej vetvy bol príkaz <font color="Green">return </font> výraz
+		<br>Funkcie je možno volať ako procedúry (na samostatnom riadku).
+    <dt class=main>Ako pracuje počítač pri volaní procedúry:
+	<dd>Keď sa objaví v programe meno procedúry (musela byť už deklarovaná), ide o volanie tejto procedúry, t.j. 
+         <OL type=1>
+           	<LI>zapamätá sa návratová adresa (kam sa bude treba vrátiť) 
+           	<LI>vytvoria sa <B>lokálne premenné</B> (s nedefinovanou hodnotou)
+			<LI>parametrom sa priradia hodnoty podľa hodnôt pri volaní
+           	<LI>prenesie sa riadenie programu do tela podprogramu 
+           	<LI>vykonajú sa všetky príkazy podprogramu 
+           	<LI>zrušia sa lokálne premenné
+           	<LI>riadenie sa vráti za miesto v programe, odkiaľ bol podprogram volaný 
+		 </OL>
+    <br>
+	<dt class=main>Otázky:
+	<dd>
+	<ol>
+	<li>Ako zadeklarovať podprogram
+	<li>Aké typy parametrov poznáme
+	<li>Aký je rozdiel medzi funkciou a procedúrov
+	<li>Ako zabezpečíme priradenie výsledku vo funkcii
+	</ol>
+	
+	<dt class=main>Úlohy:
+	<dd>
+		<ol>
+		<li>Napíš podprogramy NSD(a,b), NSN(a,b). Vytvor formulár s dvoma vstupnými editmi a dvoma výstupnými,
+			kde sa zobrazia výsledky podprogramov pri každej zmene vo vstupných riadkoch.
+		</ol>
+</dl>
+
+
+</body>
+</html>

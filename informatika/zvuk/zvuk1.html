@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk"> 
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body background="image15.gif">
+<h3>Náš cieľ</h3>
+Našim cieľom bude naučiť sa základom práce s tvorbou videozáznamu. Naša činnosť bude spočívať z nasledovných činností:
+<ol><li>nahrávanie zvuku cez mikrofón do videa - nastavenie zvukovej karty
+	<li>tvorba video stopy z videosekvencií, obrázkov
+	<li>spájanie videostopy so zvukovou stopou
+	<li>titulkovanie
+</ol>	
+Na strihanie videa existuje viacero programov mnohé sú free a mnohé su komerčné, my sa budeme orientovať na programy, ktoré sú free.	
+<h3>Zvuk</h3>
+    <P  style="margin-left:20">Zvuk je pozdĺžne mechanické vlnenie s istou vlnovou dĺžkou a teda odpovedajúcou <B>frekvenciou</B>, s istou <B>farbou</B> 
+	a <B>intenzitou</B> (hlasitosťou). Zvuk sa šíri len v prostredí vyplnenom atómami alebo molekulami látok. Rýchlosť šírenia vo vzduchu závisí od 
+	teploty a tlaku ale približne je asi 330 m/s. Vo vode sa šíri asi 4x rýchlejšie. Každé chvenie hmotného telesa v hmotnom prostredí vedie ku
+	vzniku zvuku (nie každý zvuk ale musí byť ľudským uchom zachytitelný). Výška tónu je daná jeho frekvenciou. 
+	<br>Vyvolajme v prostredí nejaký zvuk - napríklad tón. Sledujme pohyb nejakej malej vzorky tohoto hmotného prostredia a výchylku zapíšme
+	na os y na os x dáme čas. V prípade čistého (jedného) tónu nám vznikne krivka sinusoida. V praxi sa s úplne čistým tónom nestretneme (každý zvuk je vlastne
+	zmes tónov rôznych frekvencií a hlasitostí)a sínusovka
+	bude mať drobné odchýlky od svojho ideálu spôsobené ďalšími frekvenciami, ktoré vytvárajú farbu tónu. (inak znie komorné a na klavíri a inak na trúbke).
+	Ľudské ucho vie zachytiť a rozpoznať zvuky frekvencií &lt;20Hz, 20kHz&gt; . Tento rozsah sa udáva z dávnejšej histórie, keď sluch človeka nebol tak
+	namáhaný a atakovaný rôznymi "nepriatelskými" vymoženosťami ako sú walkmany, koncerty pop hudby, diskotéky, autá, zbíjačky a pod. Tiež nie všetky frekvencie
+	sú rovnako intenzívne spracovávané. Najlepšia citlivosť je na zvuky &lt;1000Hz, 5000Hz&gt;. 
+	 </p>
+<h3 style="width:450">Prevod zvuku z analógovej podoby do digitálnej</h3>
+	<P  style="margin-left:20"><IMG src="obr/digitalizacia.gif" align=right>
+	Počítače však vedia spracovávať len digitálne informácie. Analógový signál sa pred spracovaním v počítači musí kódovať - digitalizovať.
+	Zabezpečuje to <B>A/D - analógovo - digitálny prevodník</B>. Táto zmena samozrejme pôvodný signál skreslí - ide o to aby toto skreslenie
+	nemalo pre ľudský sluch významnosť. Najrozšírenejšia forma kódovania je <B>pulzná kódová modulácia - PCM</B>. 
+	Než sa z analógového signálu stane PCM zvuk, musí najprv prejsť <B>vzorkovaním, kvantovaním a kódovaním</B>. 
+	<br><font size="+1" color='#b0600c'>Vzorkovanie</font><br>
+	Vzorkovač zaznamenáva aktuálne hodnoty  (výchylky) analógového signálu v pravidelných intervaloch s istou frekvenciou 
+	napr. pri frekvencii 10kHz sa zaznamená hodnota signálu 10 000 krát za sekundu. Vzniká signál <B>PAM - pulzná amplitúdová modulácia</B>.<br>
+	<font size="+1" color="#b0600c">Vzorkovacia frekvencia (Sampling rate)</font><br>
+    Aby sa dal vzorkovaný signál PAM pri reprodukcii plne zrekonštruovať, musí byť splnené tzv. 
+    <B>"Nyquistovo kritérium"</B> : frekvencia, ktorou sa vzorkovanie prevádza, musí byť aspoň 2-krát vyššia ako frekvencia pôvodného signálu. 
+	Ak je počuteľný zvuk od 20Hz - 20kHz, tak vzorkovacia frekvencia musí byť aspoň 40kHz. V praxi sa vzorkuje s 10% navýšením, preto sa používa 
+    vzorkovacia frekvencia 44,1kHz. Všeobecne možno povedať, že čím väčšia vzorkovacia frekvencia tým je lepšie zachytená farba tónov a naopak znižovaním
+	vzorkovacej frekvencie prvá odchádza farba zvuku a ďalším znižovaním sa znižujú vyššie frekvencie (zvuk plechatie)
+	<br>	
+	<font size="+1" color="#b0600c">Kvantovanie</font>
+    <IMG src="obr/vzorkovanie.gif" align=right>
+	<br>Kvantovaním sa namerané hodnoty "zaokrúhľujú" na najbližšiu úroveň amplitúdy každej vzoky , preto má digitálny signál na rozdiel od analógového 
+	schodovitý priebeh.<br> 
+    <FONT color=#b0600c  size="+1">Kódovanie</FONT><br>
+	Pri kódovaní zvuku hudobného CD sa používa 16 bitové kódovanie - t.z že každú vzorku zakódujeme 16 - ticou jednotiek a núl - všetkých 
+    možných napäťových úrovní signálu teda môže byť 2<SUP>16</SUP>=65536 (hovor v telefóne je kódovaný 8 bitmi - rozlišuje 256 napäťovýh úrovní). 
+	V prípade stereofónneho signálu sa používajú 2 kanály a výstupom sú 2 prúdy digitálnych hodnôt. Pre porovnanie uvádzame nasledujúcu tabuľku:<BR><BR>
+    <TABLE width="60%" border=1>
+    <TBODY><TR align=middle><TD><B>Kvalita digitálneho záznamu</B></TD>
+                            <TD><B>vzorkovacia frekvencia</B></TD>
+							<TD><B>rozlišenie, kanály</B></TD></TR>
+           <TR><TD>Telefóna kvalita  <TD align=middle>11 025Hz<TD>8 bit - mono
+           <TR><TD>Rozhlasová kvalita<TD align=middle>22 050Hz<TD>8 bit - mono
+           <TR><TD>CD kvalita        <TD align=middle>44 100Hz<TD>16 bit - stereo
+           <TR><TD>DVD kvalita       <TD align=middle>192 000Hz<TD>24 bit - 5.1 surround sound	
+	</TBODY></TABLE>
+	<BR><FONT color="#b0600c"><B>Príklad: </B></FONT>Ak chceme zakódovať 1 minútu stereo nahrávky s použitím vzorkovacej frekvencie CD 
+                  kvality, tak takýto PCM zvuk bude zaberať 60x2x44100x16 bitov čo je asi 10MB pamäte. <IMG src="obr/cd_dvd.gif" align=left> 
+				  Čím je vyššia vzorkovacia frekvencia, tým kvalitnejší zvuk získame. Doteraz najkvalitnejší zvuk v <B>CD kvalite</B> so 
+				  vzorkovacou frekvenciou 44,1kHz, 16bit stereo je prekonaný formátom <B>DVD-Audio</B>, kde vzorkovacia frekvencia je až 192kHz 
+				  s 24 bitovým rozlíšením. <BR><BR><BR>
+                  <HR SIZE=2>
+                  <P align=justify><FONT color=#b0600c><B>ÚLOHA:</B></FONT> 
+                  Vypočítajte dĺžku zvukovej nahrávky (5+1 kanálový zvuk), ktorá 
+                  na DVD zaberá 64MB a je nahraná v DVD kvalite.</P>
+                  <HR SIZE=2>
+<h3>Nahrávanie zvuku</h3>
+	
+	<P  style="margin-left:20"><IMG src="obr/nahravanie.jpeg" align=right>
+	Čo k tomu potrebujeme:
+	<ul><li>PC so zvukovou kartou
+		<li>V "správnej dierke" pripojený mikrofón
+	</ul></p>
+	<P  style="margin-left:20">Čo k tomu potrebujeme:<br>
+	Samotnému nahrávaniu predchádza trochu experimentovania - nastavenie citlivosti mikrofónu. Urobíme to cez program nastavenie hlasitosti
+	(dva krát zaklopeme na ikonku reproduktora na hlavnom paneli vpravo dole alebo nájdeme tento program cez Start v časti Zábava.)
+	<br>Zvolíme z menu Vlastnosti časť nahrávanie a nastavíme na mikrofóne hlasitosť.
+</p>
+   <P  style="margin-left:20"> Pre vytvorenie jednoduchého záznamu zvuku môžme použiť program, ktorý je súčasťou príslušenstva OS 
+   Windows. Umožňuje záznam dlhý až 1 minútu, ktorý môžeme uložiť vo formáte <B>wav</B> - Windows PCM zvuk (pozri digitalizácia 
+   zvuku). Program ponúka aj jednoduché efekty, ako je zrýchlenie, či spomalenie záznamu, vloženie ozveny a zaujímavé spätné prehrávanie.
+	<br>Náročnejší užívatelia môžu siahnuť po programe audacity, ktorý je free a poskytuje oproti win klasike bohatšie možnosti</P>
+	<H3>Audacity</H3>
+      <H3>Opis programu</H3>
+      <IMG alt="audacity" src="obr/audio4.png" align=right>
+      <P style="margin-left:20">Aplikácia obsahuje tri panely: ovládací, editačný a panel mixéru. 
+	  Ktorýkoľvek z panelov môžeme nechať "plávať" (zapíname to napr. v menu Zobrazenie).
+      <br>Editačný panel umožňuje kopírovať, vystrihovať, vkladať výber resp. ticho; neobmedzený krok späť (Undo), 
+	  zväčšenie resp. zmenšenie náhľadu stopy. 
+	  <br>Panel nástrojov obsahuje ovládacie prvky na nahrávanie- prehrávanie zvuku a niekoľko špeciálnych nástrojov. 
+	  Opakované prehrávanie dosiahneme stlačením klávesy Shift+ ikony Play. Ostatné nástroje umožnia vybrať čas nahrávky, 
+	  časový posuv (teda aj synchronizáciu) súboru, lupa, obálka na ľubovoľnú úpravu hlasitosti nahrávky a napokon (v ríši hudby nezvyčajný) 
+      nástroj kreslenie, ktorým pri dostatočnom zväčšení stopy môžeme upraviť drobné prasknutia a iné rušivé zvuky v nahrávke. Kreslením takto dokončíme 
+      prácu filtra na odstránenie praskania.       
+	  <br>Panel mixéru umožňuje nastaviť hlasitosť vstupu a výstupu zvuku. V dolnej časti programu si vyberieme vzorkovaciu frekvenciu. Je z čoho 
+      :-) (až 96 kHz alebo vlastná...). Je tam tiež riadok so zobrazením informácií o prvku, ktorý je momentálne pod kurzorom myši. Nad ním sa 
+      nachádza samotné okno so zvukovými stopami, v ľavej časti sú panely pre jednotlivé stopy. Ich menu vyvoláme kliknutím na tlačidlo so šípkou. 
+      Môžeme si v ňom vybrať meno stopy, jej presun, spôsob zobrazenia, vzorkovaciu frekvenciu, rozdelenie (spojenie) stereo stopy atď. Najmä 
+      treba upozorniť na možnosť programu pracovať s formátom vzorkovania 32-bitov float (na Audio CD je to iba 16 bitov !), čo síce značne zväčší 
+      výsledný súbor, no kvalita záznamu bude lepšia. Stopu možno tieš umlčať, resp. zvýrazniť, alebo zmeniť vyváženie príslušnými tlačidlami. </P>
+      <H3>Podporované formáty</H3>
+      <P style="margin-left:20">Audacity vie importovať formáty midi, mp3, ogg,wav, aiff, raw, IRCAM, Sun Au/NeXT. Má aj vlastný formát pre ukladanie 
+	  projektov aup (AUdacity Project format), čo je výhodné vtedy, ak pracujeme na väčšom projekte a nechceme ho neustále konvertovať na mp3. 
+	  Ak sme ku programu nahrali aj požadovaný kompresor MP3 dokáže exportovať súbory do formátu MP3, štandartne robí export do Wav. 
+	  Platí: mp3 je zaťažený patentom, preto kompresor napr. lame) nie je súčasťou Audacity, ale musíme si ho stiahnuť zvlášť. Prevod skladby na formát 
+      mp3, alebo ogg spôsobí zníženie kvality skladieb, je to stratová kompresia. </P>
+<h3>Ukážky</h3>
+<div style="height:85; width:520;">
+	  <embed name="queen1" src="ukazky/queen1.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="queen2" src="ukazky/queen2.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="queen3" src="ukazky/queen3.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="abba1" src="ukazky/abba1.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="abba2" src="ukazky/abba2.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="abba3" src="ukazky/abba3.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="eminem1" src="ukazky/eminem1.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+	  <embed name="eminem2" src="ukazky/eminem2.mid" autostart="false" width="512" height="64" loop="-1" hidden >
+</div>	  
+<table border="1"><tr bgcolor="silver"><th rowspan="2" width="50">Queen<th width="138" height="25">We are the Champions<th width="138">Bohemian Rapsody<th width="138">Radio GaGa    
+				<tr><td>&nbsp;<input type="Button" value="Play" onclick="queen1.hidden=false; queen1.play()" style="width:65"> <input type="Button" value="Stop" onclick="queen1.hidden=true;queen1.stop()" style="width:65">
+				    <td>&nbsp;<input type="Button" value="Play" onclick="queen2.hidden=false;queen2.play()" style="width:65"> <input type="Button" value="Stop" onclick="queen2.hidden=true;queen2.stop()" style="width:65">
+				    <td>&nbsp;<input type="Button" value="Play" onclick="queen3.hidden=false;queen3.play()" style="width:65"> <input type="Button" value="Stop" onclick="queen3.hidden=true;queen3.stop()" style="width:65">
+                  <tr bgcolor="silver"><th rowspan="2">Abba<th height="25">Honey Honeys<th>Gimme Gimmy<th>Fernando    
+				<tr><td>&nbsp;<input type="Button" value="Play" onclick="abba1.hidden=false;abba1.play()" style="width:65"> <input type="Button" value="Stop" onclick="abba1.hidden=true;abba1.stop()" style="width:65">
+				    <td>&nbsp;<input type="Button" value="Play" onclick="abba2.hidden=false;abba2.play()" style="width:65"> <input type="Button" value="Stop" onclick="abba2.hidden=true;abba2.stop()" style="width:65">
+				    <td>&nbsp;<input type="Button" value="Play" onclick="abba3.hidden=false;abba3.play()" style="width:65"> <input type="Button" value="Stop" onclick="abba3.hidden=true;abba3.stop()" style="width:65">
+                  <tr bgcolor="silver"><th rowspan="2">Eminem<th height="25">My name is<th>Slimshady
+				<tr><td>&nbsp;<input type="Button" value="Play" onclick="eminem1.hidden=false;eminem1.play()" style="width:65"> <input type="Button" value="Stop" onclick="eminem1.hidden=true;eminem1.stop()" style="width:65">
+				    <td>&nbsp;<input type="Button" value="Play" onclick="eminem2.hidden=false;eminem2.play()" style="width:65"> <input type="Button" value="Stop" onclick="eminem2.hidden=true;eminem2.stop()" style="width:65">
+</table>	  
+<h3>Úloha</h3>
+<ul><li>V programe audacity vytvorte dve zvukové stopy - v jednej bude hudobné pozadie a na druhej bude vaše hovorené (spievané slovo).
+		Hudba nech sa začína postupným pridávaním hlasitosti a posledné slovo nech je s ozvenou.
+		Urobte export do mp3.
+		Pozn.
+		<ul><li>hudbu mozno nájsť na stránke: <a href="http://www.abcmusic.tk/midi/browse.php" target="_blank">http://www.abcmusic.tk/midi/browse.php</a>
+			<li>modul na MP3 nájdeme na adrese: <a href="http://www.gympd.sk/jaro/lame/lame_enc.dll">MP3</a> 
+</body>
+</html>

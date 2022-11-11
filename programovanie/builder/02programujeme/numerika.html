@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+	<dt><font color="Blue" size="+1">Čo je numerika</font>
+    <dd>Numerika je odbor matematiky, ktorý sa zaoberá približným riešením rôznych matematických problémov.
+    Tu sa pre krátkosť času obmedzíme len na približné riešenie nelineárnej rovnice.
+       <dl>
+	   <dt><font color="Red">Rovnica</font><dd>Nech y=f(x), je funkcia definovaná na intervale &lt;a,b&gt; a je na ňom spojitá. Nech aspoň raz 
+	   prechádza cez os x. Vzťah f(x)=0, budeme nazývať rovnica o jednej neznámej a x budeme volať neznáma.		   
+	   <dt><font color="Red">Koreň</font><dd>Číslo <font color="Red">k</font> nazveme koreňom práve vtedy, keď f(k)=0 je pravdivý výrok,
+	   resp. [k,0] patrí do množiny bodov funkcie y=f(x). 	
+	   <dt><font color="Red">Približné riešenie</font><dd> Číslo <font color="Red">p</font> nazveme približným riešením, ak spĺňa niektorú
+	   z nasledových podmienok:
+	   <ol>
+	   <li>abs(k-p) &lt; eps1
+	   <li>abs(f(k)) &lt; eps2
+	   <li>sú splnené podmienka 1 aj podmienka 2
+       </ol>
+       kde eps1, eps2 sú požadované presnosti hľadaného riešenia. V praxi sa najviac používa podmienka 1, ktorá
+       hovorí, že približný koreň nesmie byť od exaktného "moc" ďaleko.
+	   <dt><font color="Red">Metódy hľadania približného riešenia</font><dd>Na rozdiel od presného riešenia, ktoré vieme určiť v niektorých prípadoch
+	   vzorcom - napr. kvadratická rovnica - hľadanie približného riešenia spočíva v upresňovaní nejakého odhadu riešenia.
+	   Majme danú rovnicu f(x)=0
+	   <br>interval &lt;a,b&gt;, kde sa nachádza minimálne jeden koreň
+	   <br>požadovanú presnosť eps1
+	   <br>odhad x0 z intervalu &lt;a,b&gt;
+	   <br><br>Vytvoríme "lepši" odhad x1, potom "ešte lepší" x2 atď. Tieto odhady vylepšujeme pokiaľ nevieme zaručiť
+	   že už sme od koreňa vzdialený o menej ako o eps1. Posledný odhad xn potom vyhlásime za približný koreň.
+	   <br>Metódy riešenia nelineárnej rovnice môžme rozdeliť podľa viacerých hľadísk
+	      <dl>
+	      <dt>Metódy vždy konvergentné<dd>Obyčajne pomalšie, ale vždy idúce k cieľu. Používame ich ak interval, 
+	      kde hľadáme koreň je moc veľký a funkcia sa na ňom chová moc "divoko" resp. nemáme o nej žiadne
+	      vedomosti o jej priebehu. Patria sem polenie intervalu, metóda tetív. 
+	      <dt>Metódy nie vždy konvergentné<dd>Zato, že sa vedia k cieľu rútiť väčšími rýchlosťami, platia tým,
+	      že niekedy sa rozbehnú aj nesprávnym smerom. Všeobecne ale platí, že ku každej funcii existuje okolie
+	      koreňa k v ktorom už táto metóda vždy konverguje - ide ku koreňu. Patrí sem upravená metóda tetív
+	      a metóda dotyčníc - Newtonova metóda.
+          </dl>
+		V literatúre existuje veľké množstvo metód na riešenie všeobecných nelineárnych rovníc, ďalšie množstvo metód na riešenie
+		polynomiálnych rovníc. Ja sa obmedzím len na tie "jednoduhšie".   
+  	   <dt><font color="Red">Porovnávanie metód</font></dt>
+	   <dd>Metódy budeme porovnávať podľa toho, koľko krát sa pri danej metóde musí počítať hodnota
+	   funkcie f(x), aby sa získal koreň s danou presnosťou.</dd>   
+       </dl>
+	<dt><font color="Blue" size="+1">Metóda polenia intervalov</font></dt>   
+	 <dd>  Majme danú rovnicu f(x)=0
+	   <br>- interval &lt;a,b&gt;, taký že f(a)*f(b) &lt;0, čím je zaručená existencia koreňa na intervale.te
+	   <br>- požadovanú presnosť eps1 - povolenú vzdialenosť od koreňa
+	   <br>- odhad x0 z intervalu &lt;a,b&gt; volíme stred intervalu
+	   <br><br>ak je interval menší ako 2*eps1, tak zrejme platí |x0-k|&lt;eps1 a teda náš odhad spĺňa požadovanú podmienku,
+	   ak je väčší hľadáme na intervale polovičnej dĺžky oproti &lt;a,b&gt;. Vyberieme tú polovicu &lt;a,b&gt;, ktorá
+	   má v krajných bodoch opäť opačné znamienka funkčných hodnôt. Tento postup opakujeme, pokiaľ dĺžka vyšetrovaného intervalu
+	   je väčšia ako 2*eps1.
+	<dt><font color="Blue" size="+1">Metóda tetív</font></dt>   
+	<dd>Myšlienka spočíva v tom, že štatisticky možno predvídať, že koreň bude
+	bližšie ku tomu kraju intervalu, ktorého vzdialenosť funkčnej hodnoty od osi x
+	je menšia.<br>Geometricky to znamená, že položíme cez body [a,f(a)], [b,f{b)] priamku a jej priesečník x0
+	určíme za odhad riešenia a vytvoríme nový interval podobne ako v metóde stredov. Z intervalov
+	&lt;a,x0&gt;, &lt;x0,b> vyberieme ten ktorý má opačné znamienka na koncoch. Takto vzniká postupnosť
+	odhadov x0,x1,x2,...xn Proces tvorby odhadov zastavíme vtedy, keď po sebe idúce členy tejto postupností
+	sa od seba líšia o menej ako eps1. Vo veľkej väčšine prípadov je tým aj zaručená podmienka 
+	|xn-k|&lt;eps1, táto podmienka sa často kombinuje s podmienkou 2.
+	<br>Rovnica priamky: y=f(a)+(f(b)-f(a))/(b-a)*(x-a)
+	<br>y položíme nule a vypočítame x: x=(f(b)*a - f(a)*b)/(f(b)-f(a))
+	<dt><font color="Blue" size="+1">Upravená metóda tetív</font></dt>   
+	<dd>Úprava spočíva v tom, že pri voľbe intervalu, kde hľadáme koreň sa nestaráme o zachovanie rôznych znamienok.
+	Týmto získame väčšiu efektívnosť ale zaplatíme tým, že metóda nemusí vždy konvergovať.
+	Vytvárame postupnosť odhadov koreňa x0,x1,x3,..., kde x0=a,x1=b, x<sub>i+1</sub>=(f(x<sub>i</sub>)*x<sub>i-1</sub>-f(x<sub>i-1</sub>)*x<sub>i</sub>)/(f(x<sub>i</sub>)-f(x<sub>i-1</sub>)*)
+	V praxi to používame tak, že do k*eps1 necháme pracovať metódu tetív a potom prepneme na upravené tetivy.
+	<dt><font color="Blue" size="+1">Metóda dotyčníc - Newtonova metóda</font></dt>   
+	 <dd>Majme prvý odhad riešenia x0, zostrojíme v bode [x0,f(x0)] dotyčnicu a jej priesečník s osou x
+	 bude nový odhad koreňa. Matematicky zapísané
+	 <br>x<sub>i+1</sub>=x<sub>i</sub>-f(x<sub>i</sub>)/f'(x<sub>i</sub>)
+	 <br>Táto metóda na výpočet ďalšieho odhadu potrebuje vedieť vypočítať deriváciu funkcie.
+	 Metóda je veľmi rýchla ale nemusí vždy konvergovať.
+	 <br>Použitie:
+	 <br>Metódu je možné použiť aj na výpočet komplexných koreňov, len výpočet nového x musí prebehnúť
+	 v komplexnej aritmetike.
+	 <br>Táto metóda sa používa aj na výpočet odmocnín z čísla <font color="Red">a</font>. Vytvoríme 
+	 rovnicu x<sup>2</sup>-a=0 a počiatočný odhad dáme x0=1.
+	 <br>x<sub>i+1</sub>=x<sub>i</sub>-f(x<sub>i</sub>)/f'(x<sub>i</sub>)=x<sub>i</sub>-(x<sub>i</sub>*x<sub>i</sub>-a)/(2*x<sub>i</sub>)
+	 <br>=(a+x<sub>i</sub>*x<sub>i</sub>)/(2*x<sub>i</sub>)
+	 <br>Pre a=10 a presnosť eps1=1.e-4 sa vytvorí nasledovná postupnosť odhadov
+	
+      <pre><code>
+      1.0000000000E+00
+      5.5000000000E+00
+      3.6590909091E+00
+      3.1960050819E+00
+      3.1624556228E+00
+      3.1622776652E+00
+      3.1622776602E+00
+      </code></pre>
+	  Vidíme, že keď Newton "chytí" stopu ide k cieľu veľmi rýchlo a jeho rýchlosť rastie s približovaním.
+	  Táto metóda výpočtu odmocnín konverguje pre ľuvoľné a&gt;0 a pre ľubovoľné x0&gt;0.
+    <dt>Úlohy</dt>
+	<dd><ol>
+	<li>Porovnajte efektívnosť metód pri hľadaní koreňov rovnice sin(x)-x/2=0 na intervale &lt;pi/2,pi&gt;
+	<li>Upravte Newtonovu metódu pre výpočet koreňov polynómu, kde koeficienty polynomu aj x0 zadáme z klávesnice
+	<li>Vypočítajte tretiu odmocninu zo 100 s presnosťou na 5 desatinných miest
+	<li>Nájdi komlexný koreň rovnice x<sup>3</sup>-7*x<sup>2</sup>+17*x+25=0 a x0=2+2i s presnosťou eps1=1.e-4
+	</ol> 
+</dl>	   
+</body>
+</html>

@@ -1,0 +1,88 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Textury - viac obrázkov</h3>
+<dl>
+<dt>Viaceré textúry
+<dd>Jedna z možností ako vložiť do programu viaceré obrázkové textúry je vytvoriť si jeden obrázok o rozmere 256x256
+    v ktorom budú 4 obrázky o rozmere 128x128. Načítame tak jedinú textúru a tom ktorý obrázok sa má ukázať sa rozhodne parametrami
+	príkazu glTexCoord2f().
+	
+<br>V prvej úlohe urobíme kocku, kde na všetkých stenách bude rovnaký obrázok
+<ul><li>zoženiem si podľa možnosti 4 štvorcové obrázky a vložíme ich do jedného images4.bmp.
+	<li>upravím ho na veľkosť 256x256
+	<li>vytvorím si globálnu premennú bmp
+		<br><b>char bmp[256][256][3];</b> 		
+		<br>sem potrebujem dať pre každý pixel 4-obrázka množstvo farieb R,G,B.
+	<li>Otvorím súbor s obrázkom (vytvorím premennú typu FILE a otvorím ho na čítanie)
+		<br><b>FILE *f  =fopen("images2.bmp","r");</b>	
+	<li>naplním pole <b>bmp</b>
+		<br><b>fread(bmp,54,1,f);</b> // načítam celú hlavičku obrázka a zahodím ju, kurzor sa presunie na začiatok dát
+    	<br><b>fread(bmp,256*256*3,1,f);</b> //a obrázok je načítaný, pod win je ale problém, že farby sú zapísané v tvare bgr a nie rgb
+	 <li>Teraz zapneme texturu a nastavíme parametre textury
+	 	<br><b>glEnable(GL_TEXTURE_2D);</b>
+ 		<br><b>glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_linear);</b>
+ 		<br><b>glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_linear);</b>
+	<li>Určíme, ktorá textúra sa bude zobrazovať
+		<br><b>glTexImage2D(GL_TEXTURE_2D,</b> 
+		    <br><b>0,</b>&nbsp; &nbsp; &nbsp;//to je číslo textúry (ak je jedna dáme 0) 
+			<br><b>3,</b>&nbsp; &nbsp; &nbsp;//počet farieb (ak nedávame priesvitnosť dáme vždy 3)
+			<br><b>256,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -šírka
+			<br><b>256,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -výška 
+			<br><b>0,</b> 
+			<br><b>GL_BGR_EXT,</b> // musíme prehodiť poradie farieb, štandartne sa dáva GL_RGB
+			<br><b>GL_UNSIGNED_BYTE,</b> 
+			<br><b>@bmp);</b>&nbsp; &nbsp; &nbsp;//adresa dát kde je textúra načítaná
+	<li>a môžeme dať vykresliť 
+<pre>	
+void TForm1::ogl_draw()
+{ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glRotatef(uholx,1.0f,0.0f,0.0f);
+  glRotatef(uholy,0.0f,1.0f,0.0f);
+
+//tu zadávame príkazy na kreslenie
+  glColor4f(1.0f, 1.0f, 1.0f,1.0f);
+    glBegin(GL_QUADS);
+        glTexCoord2f(0.0, 0.0); glVertex3f(-4,-4,-4);
+        glTexCoord2f(0.0, 0.5); glVertex3f(-4,+4, -4);
+        glTexCoord2f(0.5, 0.5); glVertex3f(+4, +4,-4);
+        glTexCoord2f(0.5, 0.0); glVertex3f(+4, -4,-4);
+
+        glTexCoord2f(0.0, 0.5); glVertex3f(-4,-4,+4);
+        glTexCoord2f(0.5, 0.5); glVertex3f(-4,+4, +4);
+        glTexCoord2f(0.5, 1.0); glVertex3f(+4, +4,+4);
+        glTexCoord2f(0.0, 1.0); glVertex3f(+4, -4,+4);
+
+        glTexCoord2f(0.5, 0.0); glVertex3f(-4,-4,-4);
+        glTexCoord2f(0.5, 0.5); glVertex3f(-4,+4, -4);
+        glTexCoord2f(1.0, 0.5); glVertex3f(-4, +4,+4);
+        glTexCoord2f(1.0, 0.0); glVertex3f(-4, -4,+4);
+
+         glTexCoord2f(0.5, 0.5); glVertex3f(+4,-4,-4);
+        glTexCoord2f(1.0, 0.5); glVertex3f(+4,+4, -4);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+4, +4,+4);
+        glTexCoord2f(0.5, 1.0); glVertex3f(+4, -4,+4);
+   glEnd();
+
+glFlush();
+SwapBuffers(hdc);
+
+}
+</pre>
+</ul>	
+
+<br>Použitá textúra:
+<br><img src="obr/textury/obr256.bmp" width="128" height="128" border="0" alt="">
+Ak využijeme tento postup, môžme v programe použiť 4 obrázkové textúry 128x128, počet manuálnych prechodových textúr nie je obmedzený.
+<br>V ďalšej časti si ukážeme ako vytvoriť v jednom programe viac obrázkových textúr (napr. na každú stenu kocky inú).
+</body>
+</html>

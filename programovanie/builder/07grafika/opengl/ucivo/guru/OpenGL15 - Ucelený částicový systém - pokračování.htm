@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (15.) - Ucelený částicový systém - pokračování</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="V minulém článku jsem popsal, jak by měl vypadat takový manager částicového systému. Dnes budu pokračovat v tom, jak vytvořit samotný systém."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/uceleny-casticovy-system-v-opengl&amp;title=OpenGL (15.) - Ucelený částicový systém - pokračování" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (15.) - Ucelený částicový systém - pokračování</h1><i>V minulém článku jsem popsal, jak by měl vypadat takový manager částicového systému. Dnes budu pokračovat v tom, jak vytvořit samotný systém.</i><br/><hr/><br/><H2>Particle System</H2>
+
+<P>Tak jsem napsal první článek o částicovém systému, ale ještě jsem se ani nezmínil co to částice (particles) vůbec jsou. Jedná se vlastně o čtverec nebo jiný tvar, na který naneseme černobílou texturu hvězdy, kapky deště nebo, zapneme průhlednost tak, aby černé kraje textury byly průhledné a prostředek, kde je textura bílá necháme neprůhledný, popř. ho dobarvíme.</P>
+
+<P>Částicový systém je systém, který se stará o částice. Vytváří je, počítá jejich pozici, barvu a po uplynutí jejich životnosti je vymaže.</P>
+
+<P>Manager se stará o částicové systémy. Je-li potřeba, vytvoří nový nebo uvolní starý. K jednotlivým systémům přistupujeme přes ParticleManager.</P>
+
+<P>Samotný částicový systém má trochu složitější strukturu než jeho manager. Jednotlivé parametry jsou snadno pochopitelné podle názvu: Jméno systému, typ, max. počet částic, aktivita, směr a síla větru, velikost gravitace, pozice systému, směr emitování částic, jejich rychlost a doba jejich viditelnosti, barvy, velikosti a materiál, ze kterého jsou částice složeny. Aby se částice neemitovaly jedním směrem v řadě za sebou, je třeba nastavit také maximální odchylku od zvoleného směru a dobu života částic. Samotné částice jsou uchovány v poli particles.</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/particles/particle1.jpg" BORDER=0></TD><TD><IMG SRC="articles/particles/particle2.jpg" BORDER=0></TD></TR><TR><TD colspan=2>Takovéto částice si můžete jednoduše vytvořit třeba v Adobe Photoshopu.</TD></TR></TABLE></CENTER>
+
+
+<PRE><B>type</B>
+  ParticleSystemC = class
+    <B>private
+    public</B>
+      Name: <B>string</B>;
+      SystemType: TParticleSystemType;
+      MaxParticlesInSystem: integer;
+      Active: boolean;
+      Wind: TAffineVector;
+      Gravity: single;
+
+      //Particle physical features:
+      Direction: TAffineVector;
+      Speed: single;
+      LifeTime: single;
+      Position: TAffineVector;
+      StartColor, EndColor: TColorRGBAs;
+      StartSize, EndSize: single;
+      Material: MaterialC;
+
+      // K hodnotám direction a lifetime připočítáváme také náhodnou odchylku která
+      // je v rozsahu 0..127 - 127=max.
+      DirectionError, LifeTimeError: byte;
+
+      Particles: <B>Array of</B> TParticle;
+      <B>procedure</B> Render(Camera: CameraC);
+      <B>constructor</B> Create;
+  <B>end;</B></PRE>
+
+<P>Snad bych se jen pozastavil u vlastnosti SystemType. Tou definujeme základní vlastnost částicového systému. psSmoke znamená, že částice budou vždy tvaru čtverce-budou mít stejnou víšku i šířku. psSpark znamená, že budou tvaru obdelníku, kde začátek bude v aktuální pozici částice a konec bude v předešlé pozici částice. To vytvoří efekt odlétajících jisker.</P>
+
+<PRE><B>type</B>
+  TParticleSystemType = (
+    psSpark,                //Jiskry za sebou zanechávají stopu
+    psSmoke,                //Částice mají stejnou šířku i výšku
+    {..});</PRE>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/particles/system1.jpg" BORDER=0></TD></TR><TR><TD>Takto vypadá systém bez použití blendingu. Jeho největší výhodou je velká rychlost.</TD></TR></TABLE></CENTER>
+
+<P>Také už dnes budu pracovat se strukturou částic, tak ji pro jistotu uvedu zde:</P>
+
+<PRE><B>type</B>
+  TParticle = record
+    Position, Direction, OldPosition: TAffineVector;
+    EndTime: single;
+  <B>end;</B></PRE>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/particles/system2.jpg" BORDER=0></TD><TD><IMG SRC="articles/particles/system3.jpg" BORDER=0></TD></TR><TR><TD colspan=2>Takto může vypadat třeba oheň nebo plyn, který uniká z barelu.</TD></TR></TABLE></CENTER>
+
+<P>Protože třída ParticleSystemC má jen konstruktor a jednu proceduru pro vykreslení systému, nebudu se dlouho zdržovat a uvádím zde jejich výpis:</P>
+
+<PRE><B>constructor</B> KParticleSystemC.Create;
+<B>begin</B>
+  Active := true;
+  SystemType := psSmoke;
+  Wind := AffineVectorMake(0,0,0);
+  Gravity := 0.01;
+  Speed := 2;
+  Direction := VectorNormalize(AffineVectorMake(0,1,0.6));
+  DirectionError := 30;
+  LifeTime := 4;
+  LifeTimeError := 127;
+  Position := AffineVectorMake(2,0,2);
+  StartColor := clrOrange;
+  EndColor := clrBlack;
+  StartSize := 2;
+  EndSize := 2;
+
+  MaxParticlesInSystem := 50;
+  setlength(Particles,MaxParticlesInSystem-1);
+<B>end;</B>
+
+<B>procedure</B> KParticleSystemC.Render(Camera: KCameraC);
+<B>var</B>
+  i: integer;
+  Time: single;
+  u, v, c: TAffineVector;
+  W, X, Y, Z: TAffineVector;
+  AmbientStart, AmbientEnd, Ambient: TAffineVector;
+  size: single;
+<B>begin</B>
+  Time := GetTickCount/100;
+  <B>if</B> (length(Particles) <> MaxParticlesInSystem) <B>then</B>
+    SetLength(Particles, MaxParticlesInSystem-1);
+
+  AmbientStart := AffineVectorMake(StartColor.r,StartColor.g,StartColor.b);
+  AmbientEnd := AffineVectorMake(EndColor.r,EndColor.g,EndColor.b);
+
+
+
+  <B>if</B> (SystemType=psSpark) <B>then begin
+    for</B> i:=0 <B>to</B> length(Particles)-1 <B>do
+      if</B> (Particles[i].EndTime >= Time) <B>then begin</B>
+        size := lerp(StartSize, EndSize, 1-(Particles[i].EndTime-Time)/LifeTime);
+
+        // Získáme směrový vektor
+        u := VectorNormalize(
+               VectorSubstract(
+                 Particles[i].Position,
+                 Particles[i].OldPosition));
+
+        // Získáme vektor kamera-částice
+        v := VectorNormalize(VectorAdd(
+               Particles[i].Position,
+               AffineVectorMake(
+                 Camera.Position.X,
+                 Camera.Position.Y,
+                 Camera.Position.Z)));
+
+        // Získáme vektor kolmý k předešlým dvěma vektorům
+        c := VectorCrossProduct(u,v);
+
+        NormalizeVector(c);
+        ScaleVector(c,size);
+
+        W := VectorAdd(Particles[i].Position, c);
+        X := VectorAdd(Particles[i].OldPosition, c);
+        Y := VectorSubstract(Particles[i].Position, c);
+        Z := VectorSubstract(Particles[i].OldPosition, c);
+
+        Ambient := VectorLerp(AmbientStart, AmbientEnd,1-(Particles[i].EndTime-Time)/LifeTime);
+        glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,@Ambient);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE);
+
+        glBegin(GL_TRIANGLE_STRIP);
+          glColor3f(255,0,0);
+          glTexCoord2f(0,1);
+          glVertex3f(W[0], W[1], W[2]);
+          glTexCoord2f(1,1);
+          glVertex3f(X[0], X[1], X[2]);
+          glTexCoord2f(0,0);
+          glVertex3f(Y[0], Y[1], Y[2]);
+          glTexCoord2f(0,1);
+          glVertex3f(Z[0], Z[1], Z[2]);
+        glEnd;
+      <B>end;
+  end else
+  if</B> (SystemType=psSmoke) <B>then begin
+    for</B> i:=0 to length(Particles)-1 <B>do
+      if</B> Particles[i].EndTime >= Time <B>then begin</B>
+        size := lerp(StartSize, EndSize, 1-(Particles[i].EndTime-Time)/LifeTime);
+
+        // Získáme směrový vektor
+        u := VectorNormalize(
+              VectorSubstract(
+                Particles[i].Position,
+                Particles[i].OldPosition));
+
+        // Získáme vektor kamera-částice
+        v := VectorNormalize(
+               VectorAdd(
+                 Particles[i].Position,
+                 AffineVectorMake(
+                   Camera.Position.X,
+                   Camera.Position.Y,
+                   Camera.Position.Z)));
+
+        // Získáme vektor kolmý k předešlým dvěma vektorům
+        c := VectorCrossProduct(u,v);
+
+        NormalizeVector(c);
+        ScaleVector(c,size);
+        ScaleVector(u,size);
+
+        W := VectorAdd(VectorAdd(Particles[i].Position, c),u);
+        X := VectorSubstract(VectorAdd(Particles[i].Position, c),u);
+        Y := VectorAdd(VectorSubstract(Particles[i].Position, c),u);
+        Z := VectorSubstract(VectorSubstract(Particles[i].Position, c),u);
+
+        Ambient := VectorLerp(AmbientStart, AmbientEnd,1-(Particles[i].EndTime-Time)/LifeTime);
+        glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,@Ambient);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ZERO);
+
+        glBegin(GL_TRIANGLE_STRIP);
+          glColor3f(255,0,0);
+          glTexCoord2f(0,1);
+          glVertex3f(W[0], W[1], W[2]);
+          glTexCoord2f(1,1);
+          glVertex3f(X[0], X[1], X[2]);
+          glTexCoord2f(0,0);
+          glVertex3f(Y[0], Y[1], Y[2]);
+          glTexCoord2f(0,1);
+          glVertex3f(Z[0], Z[1], Z[2]);
+        glEnd;
+
+        glDisable(GL_BLEND);
+      <B>end;
+  end;
+end;</B></PRE>
+
+
+<P>Funkce Lerp(start, stop, t) vypočítá lineární interpolaci mezi body start a stop v bodě 0<t<1. Tuto funkci potřebujeme pro vypočítání velikosti a barvy každé částice. Jak získáme všechny čtyři body částice? To je velmi jednoduché. Stačí vypočítat směrový vektor u (nemůžeme použít vlastnost částice direction, protože v ní není započítáno působení gravitace a větru) odečtením staré pozici částice od pozice nové. Poté vypočítáme vektor v mezi kamerou a danou částicí (Pro zvýšení rychlosti bychom mohli počítat vektor mezi kamerou a pozicí celého systému - dopouštěli bychom se ale toho, že by vzdálenější částice nebyly natočeny kolmo ke kameře) a nakonec vypočítáme (vektorovým součinem) vektor c kolmý k předešlým dvěma vektorům. Jeho využijeme při počítání rohů částice. Všechny potřebné funkce pro práci s vektory jsou k disposici v knihovně geometry.pas.</P>
+
+<P>Teď, když přičteme nebo odečteme vektory c nebo u k souřadnici částice, dostaneme 4 rohy částice. Vynásobíme-li tyto vektory c a u proměnnou size, dostaneme částici buď zvětšenou nebo zmenšenou parametrem size. Tímto docílíme efektu psSmoke. Chceme-li, aby částice byly protáhlé ve směru, kam letí, nepotřebujeme parametr u, ale využijeme staré pozice částice. Změna je pouze v tom, že k pozici a ke staré pozici přičteme a odečteme vektor c.</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/particles/system4.jpg" BORDER=0></TD><TD><IMG SRC="articles/particles/system5.jpg" BORDER=0></TD></TR><TR><TD colspan=2>Zde je vidět, že použití většího počtu menších částic je také velmi pěkné (... ale náročné).</TD></TR></TABLE></CENTER>
+
+<P>Tento článek má sloužit jako poradce při návrhu vlastního částicového systému. Je napsán tak, aby byla popsána hlavně struktura a základní chování částicového systému. Zbytek si už musí napsat každý sám. Pokud vám nebude něco jasné nebo najdete větší či menší chybu, napište mi to prosím do diskuse nebo na <A href="mailto:rschulz@centrum.cz"><B>mejl</B></A></P>.<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="casticovy-system-v-opengl">OpenGL (14.) - Ucelený částicový systém</a></li><li><a href="nastaveni-opengl-v-c">OpenGL (13.) - Nastavení OpenGL v jazyce C/C++</a></li><li><a href="3d-studio-max-modifikacni-funkce">3D Studio MAX (13.) - Popis modifikačních funkcí ve 3D Studiu MAX</a></li><li><a href="knihovna-fmod-zvuky-direct-sound-eax">Delphi (10.) - knihovna FMOD</a></li><li><a href="vizualizacni-plugin-pro-winamp">OpenGL (12.) - visualizační plugin pro WinAMP</a></li><li><a href="3d-engine-mengine">Herní grafické enginy (1.) - MEngine od Mister Group</a></li><li><a href="download-manager-2">Delphi (9.) - Download 2</a></li><li><a href="download-manager-1">Delphi (8.) - Download</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne2">3D Studio MAX (12.) - Tvorba realistické jeskyně 2</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne">3D Studio MAX (11.) - Tvorba realistické jeskyně</a></li><li><a href="jak-na-programovani-her">Jak na tvorbu her - Na co máme myslet při programování hry?</a></li><li><a href="3d-studio-max-izometricky-pohled">3D Studio MAX (10.) - Izometrický pohled ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-tutorial-chromovy-text">Adobe Photoshop (4.) - Chromový text</a></li><li><a href="export-do-pdf">Zoner Callisto (2.) - Export do PDF</a></li><li><a href="detekce-kolizi-ve-3d">OpenGL (11.) - Nová detekce kolizí</a></li><li><a href="matematicka-knihovna-geometry-pas-delphi">OpenGL (10.) - Nová knihovna geometry.pas</a></li><li><a href="generovani-textur-terenu-a-far-clip">OpenGL (9.) - Generování textur a vylepšení FarClip Distance</a></li><li><a href="export-do-gif">Zoner Callisto (1.) - Export do GIFu</a></li><li><a href="3d-studio-max-odlesky-na-vodni-hladine">3D Studio MAX (9.) - Vytváření odlesků vodní hladiny</a></li><li><a href="slovnik-pojmu-opengl">OpenGL (8.) - Slovníček pojmů v OpenGL</a></li><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li><li><a href="co-je-to-minigl">OpenGL (6.) - Co je to MiniGL</a></li><li><a href="opengl-vertex-array-gldrawelements">OpenGL (5.) - Urychlení pomocí glDrawElements</a></li><li><a href="system-speaker-a-destrukce-souboru">Delphi (7.) - Syst. repro a autodestrukce souboru</a></li><li><a href="opengl-fullscreen">OpenGL (4.) - FullScreen</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=4&amp;url=%2Fuceleny-casticovy-system-v-opengl" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.227682017px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12653 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

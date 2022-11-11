@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+
+	<script>x=168;	</script>
+</head>
+
+<body>
+<h3>Premenné</h3>
+Program pri svojom výpočte potrebuje mať nejaké hodnoty odpamätané, ide o hodnoty, 
+<ul><li>ktoré užívateľ do programu zadáva
+	<li>hodnoty, ktoré program načítava z externeho zdroja (napr. textového súbora)
+	<li>medzivýsledky, ktoré si program odloží, aby ich neskôr mohol použiť 
+	<li>tiež výsledky, ktoré neskôr v rôznej forme chceme užívateľovi ukázať
+</ul>
+Takéto hodnoty môžu byť odpamätané:
+<ul><li><b>vo vložených objektoch do formulára</b>
+		<br>objekty predstavujú štruktúry, ktoré obsahujú viacero hodnôt čiže vlastností, ktoré tieto objekty dostatočne popisujú. Vizuálne objekty
+		majú napr. vlastnosti <b>Left</b> a <b>Top</b>, ktoré určujú jeho polohu. Prístup ku týmto vlastnostiam je pomocou operátora <b>-></b>, napr. Label1->Left je vlastnosť objektu Label1, ktorá popisuje vzdialenosť tohto objektu od ľavého mantinelu rodičovského objektu. 
+		<br>Väčšina objektov umožňuje zapisovanie hodnôt v Object inspector. Vstupné objekty umožňujú užívateľovi po spustení programu zadávať do nich hodnoty (napr. Edit1->Text sa naplní ak užívateľ do okienka Edit1 niečo naklepe),
+		alebo príkazom v programe pomocou operátora priradenia (rovna_sa &nbsp; = &nbsp; )
+		<br>Edit->Text="hocijaký text";
+		<br>Napr. Objekt Label1 umožňuje určiť napr. hodnoty 
+			<ul><li><b>Label1->Caption</b> - zobrazovaná textová hodnota (ostatné vlastnosti nie sú priamo zobrazované)
+				<li><b>Label1->Top</b>, <b>Label1.Left</b> - číselné hodnoty určujúce polohu
+				<li><b>Label1->Tag</b> - všeobecná celočíselná hodnota
+				<li>... - väčšinu vlastností nájdeme v <b>Object Inspector</b>
+			</ul>
+	<li><b>v premenných</b> - premenná je objekt, ktorý sa "sám od seba" na obrazovke nezjaví ale môžme doňho v programe zapísať jednu hodnotu
+		<br>(neskôr si ukážeme, že vieme vytvárať aj premenné do ktorých možno zapísať aj viac hodnôt)
+		<br>Premenná má svoje 
+		<ul><li><b>meno</b> (tým menom ju používame), 
+			<li><b>typ</b> - aké hodnoty môžme do premennej zapísať (napr. celé číslo, desatinné, text, ...)
+			<li><b>hodnotu</b> - čo je v nej zapísané
+		</ul>
+</ul>
+Platí, že môžme používať len objekty, ktoré sme do formuláru vložili a tiež len tie premenné, ktoré v časti deklarácii/ popisu_premenných zadáme.Vloženým objektom môžme meniť vlastnosti=zapisovať_hodnoty aj v objekt inspector (počiatočné vlastnosti, ktoré bude mať objekt nazačiatku) aj v príkazoch programu (príkazmi možno meniť vlastnosti "hocikedy za behu programu").
+<dl><dt>Ukážka zmeny/nastavenia vlastnosti objektu v programe
+<dd>objekt->vlastnosť = nová_hodnota/výraz; &nbsp; &nbsp; &nbsp; &nbsp; Label1->Left = 10;
+<br>objekt->vlastnosť->vlastnosť = nová_hodnota/výraz; &nbsp; &nbsp; &nbsp; &nbsp; Label1->Font->Size = 12;
+	<br> &nbsp; &nbsp; &nbsp; &nbsp;(niektoré vlastnosti objektu nemožno popísať jednou hodnotou a sú zase nejaký objekt, ktorý môže mať ako celý objekt viacero vlastností dostupných po ďalšom<b> -></b>)
+</p>
+<dt>Ukážka zápisu hodnoty do premennej v programe
+<dd>Ako sme už spomínali, do premennej možno zapísať hodnotu len v programe (neexistuje object inspektor pre premenné)
+<br>premenná = nová_hodnota/výraz; &nbsp; &nbsp; &nbsp; &nbsp; x = 10;
+</dl>
+<dl>
+<dt class="main"><b>Typy premenných</b> 
+	<dd>Do objektov, ktoré sme pokládli do okna Form1, môžme príkazmi programu zapisovať textové údaje (napr. do Label1->Caption) a môžme ich používať a meniť. Okrem vkladania hodnôt do týchto objektov môžme ešte hodnoty zapisovať aj do vizuálne neviditelných prvkov - premenných. Ako sme už spomínali - každá premenná má určený svoj typ. Tu si popíšeme základné typy premenných.
+	<dl><dt>číselné
+		<dd>Väčšina nami vytvorených premenných bude číselná (Do takýchto premenných možno zapisovať číselné hodnoty)
+			lebo väčšinou budeme niečo počítať. Číselné premenné delíme na:
+			<ul><li><b>celočíselné</b> - do takýchto premenných možno zapísať len celočíselné hodnoty, rozdeľujeme ich podľa
+			        toho či obsahujú znamienko na:
+					<ul><li>neznamienkové - do takýchto premenných možno zapísať len kladné hodnoty
+						<li>znamienkové -  do takýchto premenných možno zapísať kladné aj záporné hodnoty
+					</ul>
+					<table border="1">
+					<tr><th>Názov<th>+/-<th>Dĺžka<th>Min<th>Max
+					<tr><td>char<td>znam.<td>1B<td>-128<td>127	
+					<tr><td>short int<td>znam.<td>2B<td>-32768<td>32767
+					<tr><td>int<td>znam.<td>4B<td>-2147483648<td>2147483648
+					<tr><td>long int<td>znam.<td>4B<td>-2147483648<td>2147483648	
+					<tr><td>long long<td>znam.<td>8B<td>-9223372036854775808<td>9223372036854775807	
+					<tr><td>unsigned char<td>neznam.<td>1B<td>0<td>255	
+					<tr><td>unsigned short int<td>neznam.<td>2B<td>0<td>65535	
+					<tr><td>unsigned int<td>neznam.<td>4B<td>0<td>4294967295		
+					</table>
+				<li><b>desatinné</b> (reálne) - do takýchto premenných možno zapísať aj čísla desatinné.
+					<table border="1">
+					<tr><th>Názov<th>Dĺžka<th>Min<th>Max<th>Presnosť
+					<tr><td>float<td>4B<td>10^-45<td>10^38<td>7-8 číslic	
+					<tr><td>double<td>8B<td>10^-324<td>10^308<td>15-16 číslic	
+					<tr><td>long double<td>10B<td>.<td>.<td>.
+					</table>
+					Je odporúčané používať typy float - pre nízku presnosť a typ double pre vyššiu presnosť
+			</ul>	
+			<dt>znakové - <b>unsigned char</b>
+			<dd>používame ak chceme vytvoriť "úložisko" pre jeden znak (napr. jedno písmeno). Do takto vytvorenej premennej možno zapísať jeden zo znakov od poradového čísla 0 po poradové číslo 255 z ASCII tabuľky, v pamäti zaberajú 1B.
+<br>(na zápis "malých" čísel a znakov používame v C rovnaké typy premenných.)
+			<hr>
+			<br>Pozn: Určením typu premennej nie je určený len rozsah povolených hodnôt, ale aj operátory ktoré možno na takýto typ aplikovať
+			<br>(viac pozri výrazy)
+	</dl>
+	<br>Poznámka:
+	<br>Teraz to vyzerá veľmi zložito - to veľké množstvo rôznych typov premenných - ale tu sú uvedené pokope z dôvodu aby ste si mohli ľahko násť
+	aj menej používaný typ. My budeme používať
+	<ul><li>pre celé čísla <b>int</b>, pre veľmi veľké čísla <b>long long</b>
+		<li>pre desatinné typ <b>double</b>
+	</ul>	
+	<dt class="main">Deklarácia - popis premenných
+	<dd>Globálne premenné budeme zapisovať/deklarovať v okne Unit1.cpp pod riadky:
+	<br>#pragma resource "*.dfm"
+	<br>TForm1 *Form1;
+	<br>napríklad takto:
+	<table border="1" width="200"><tr><th bgcolor="Aqua">Unit1
+	<tr><td>
+	<div style="color:blue">
+	...
+	<br>TForm1 *Form1;
+	</div>
+	typ1 prem1,prem2,...;
+	<br>typ2 prem1, ........;
+	<br>
+	<br>//Napr.
+	<br>int i=5,j=-1,c;
+	<br>double x=100,y=1e6;
+	<br>char z='Y';
+	<br>...
+	</tr></table>
+	Takto vytvorené premenné sú viditelné vo všetkých nami vytvorených podprogramoch, kde môžeme "čítať" ich hodnoty
+	a aj ich meniť.
+	<br><br>Pokiaľ by sme chceli vytvoriť premennú len pre jeden pre jeden podprogram urobíme to hneď za úvodnou ozdobnou zátvorkou tohoto podprogramu. Tieto premenné možno používať len v tom podprograme v ktorom sú popísané.
+	<table border="1" width="400"><tr><th bgcolor="Aqua">Unit1
+	<tr><td>
+	...
+	<br>void __fastcall TForm1::FormCreate(TObject *Sender)
+	<br>{    
+	<div style="color:blue"> &nbsp; &nbsp; int i=0,n=5;</div>
+	}
+	<br> ...
+	</tr></table>
+
+	<br><br>Pravidlá:
+	<ul><li>jedným riadkom popisujeme premenné rovnakého (jedného) typu (napr. int)
+	<li>jednotlivé premenné zapísané v jednom riadku oddeľujeme čiarkou 
+	<li>každý riadok-popis ukončíme <b>bodkočiarkou</b>
+	<li>každá premenná môže byť spomenutá len raz
+	<li>premennej možno predpísať počiatočnú hodnotu pomocou rovná sa ( = )
+	</ul>
+	<dt class="main">Úlohy
+	<dd><ul><li>vlož do formulára objekty Edit1, Edit2, Edit3, Edit4 a nastav im v Object Inspektor vlastnosti
+				<ul><li>šírku aj výšku 100
+					<li>farbu podkladu svetlomodrú
+					<li>farbu písma tmavomodrú
+					<li>do vlastnosti tag zapíš poradové číslo editu (Edit1.Tag bude 1)
+					<li>všetkým nastav písmo Courier New veľkosti 20
+					<li>pomocou vlastnosti Top a left ich umiestni po 2 do riadku a stĺpca
+						<br>&nbsp;<span style="width:50;height:50;border-style:solid;border-width:1">&nbsp;</span>
+						<span style="width:50;height:50;border-style:solid;border-width:1">&nbsp;</span>
+						<br>&nbsp;<span style="width:50;height:50;border-style:solid;border-width:1">&nbsp;</span>
+						<span style="width:50;height:50;border-style:solid;border-width:1">&nbsp;</span>
+				</ul>		
+			<li>úloha 2
+			<div style="background-color:silver; width:500; padding:20;border-width:3;border-style:outset">
+			<form>
+			<input type="Text" id="c1" name="c1" value="0" style="position:absolute;left:x;"><br>
+			<br><input type="Button" value="Vlož - Ahoj" onclick="c1.value='Ahoj'">&nbsp; &nbsp;
+			    <input type="Button" value="Vlož - Čau" onclick="c1.value='Čau'">&nbsp; &nbsp;
+				<input type="Button" value="Zotri"  onclick="c1.value=''"><br>
+			<br><input type="Button" value="červená" onclick="c1.style.color='red'">&nbsp; &nbsp;
+			    <input type="Button" value="zelená" onclick="c1.style.color='green'">&nbsp; &nbsp;
+				<input type="Button" value="modrá" onclick="c1.style.color='blue'"><br>
+				
+			<br><input type="Button" value="vľavo" onclick="c1.style.left=(x-=5);">&nbsp; &nbsp;
+			    <input type="Button" value="vpravo" onclick="c1.style.left=(x+=5);">&nbsp; &nbsp;
+			</form>	
+		</ul>				
+</dl>
+</body>
+</html>

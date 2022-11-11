@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Programovanie v html kóde</title>
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	<script>
+	function zisti(aa,bb)
+	{
+	  if (aa>bb) {vysl.innerText="a>b";}
+      else if (aa<bb) {vysl.innerText="a<b";}
+	       else {vysl.innerText="a=b";};
+	}
+	</script>
+</head>
+
+<body>
+Naše programovanie bude spočívať z načítania vstupu pomocou pomocných vstupných okien (prompt) alebo formulárov (&lt;input&gt;), spracovaní 
+vstupných dát a výpis výsledku do html kódu pomocou príkazu document.write(). Príkazy JS vkladáme medzi tagy
+<b><br>&lt;Script&gt;
+<br>&lt;/Script&gt;</b>
+<br><br>Ukážka
+<table bgcolor="Silver" width="600"><tr bgcolor="Gray"><th width="300">Html kód<th width="300">Zobrazenie</tr>
+		<tr bgcolor="#FFFFFF"><td>
+		<br>&lt;Script&gt;
+		    <br> &nbsp; &nbsp; document.write("Ahojte všetci");
+		<br>&lt;/Script&gt;
+		<td>Ahojte všetci
+		</tr>
+</table>		
+Narozdiel od jazyka C JS nie je case-senzitívny.
+<h2>Dátové typy</h2>
+<dl><dt>Čísla
+	<dd>Základný typ, oproti iným jazykom nerobí rozdiel medzi celými a desatinnými číslami. Každý číselný údaj je objektom a máme k dispozícii
+		tieto funkcie:
+		<ul><li>cislo.NEGATIVE_INFINITY - vráti mínus nekonečno (toto číslo je menšie ako všetky ostatné, nedá sa vypísať)
+		    <li>cislo.POSITIVE_INFINITY - vráti plus nekonečno (toto číslo je väčšie ako všetky ostatné, nedá sa vypísať)
+		    <li>cislo.toFixed(n) - vráti reťazec, kde zaokrúhli číslo na n desatinných miest (0&lt;=n&lt;=20) 
+		    <li>cislo.toString(základ) - vráti reťazec, kde celé číslo prevedie do zadanej sústavy (2&lt;=základ&lt;=36) 
+		    <li>cislo.toPrecision(n) - vráti reťazec, kde je číslo zapísané s daným počtom platných cifier (1&lt;=n&lt;=21)
+		</ul>
+		Literály<br>
+		Celé:  12, -18, 0xA, 017<br>
+		Desatinné: 0.8, .33, 6.5e5, 1e6
+	<dt>String
+	<dd>Texty môžu byť uzavreté v úvodzovkách ("text") alebo apostrofoch ('text'). JS nepodporuje typ char.	 	 
+		Každý textový údaj je objektom a máme k dispozícii tieto funkcie:
+		<ul><li>text.charAt(n) - vráti n-ty znak z textu (0&lt;=n), ak je mimo vráti ""
+			<li>text.indexOf(podreťazec) - vráti index prvého výskytu
+			<li>text.indexOf(podreťazec, zač) - vráti index prvého výskytu, prehľadáva od zač
+			<li>text.lastIndexOf(podreťazec) - vráti index prvého výskytu, prehľadáva odkonca
+			<li>text.lastIndexOf(podreťazec,zač) - vráti index prvého výskytu, prehľadáva odkonca
+			<li>text.length - vráti dĺžku
+			<li>text.localeCompare(reťazec) - porovná text a reťazec, vráti &lt;0, 0, &gt;0
+			<li>text.slice(zač, kon) - vráti podreťazec
+			<li>text.split("") - vráti pole znakov  
+			<li>text.split(znak) - vráti pole stringov, strihanie určuje znak-oddelovač
+			<li>text.toLocaleLowerCase() - vráti text, kde sú všetky malé  
+			<li>text.toLocaleUpperCase() - vráti text, kde sú všetky velké
+		</ul>
+		Pri výpise možno používať ešte:
+		<ul><li>text.sub() - pridá pred &lt;sub&gt; a za &lt;/sub&gt;	  
+		    <li>text.sup() - pridá pred &lt;sup&gt; a za &lt;/sup&gt;	  
+		    <li>text.small() - pridá pred &lt;small&gt; a za &lt;/small&gt;	  
+		    <li>text.big() - pridá pred &lt;big&gt; a za &lt;/big&gt;	  
+		    <li>text.bold() - pridá pred &lt;b&gt; a za &lt;/b&gt;	  
+		    <li>text.fixed() - pridá pred &lt;tt&gt; a za &lt;/tt&gt;	  
+		    <li>text.italics() - pridá pred &lt;i&gt; a za &lt;/i&gt;	  
+		    <li>text.fontsize(n) - pridá pred &lt;font size=n&gt; a za &lt;/font&gt;	  
+		    <li>text.fontcolor(far) - pridá pred &lt;font color=far&gt; a za &lt;/font&gt;	  
+		</ul>
+	<dt>Logické hodnoty
+	<dd>JS pozná dve logické konštanty:
+		<ul><li>true
+			<li>false
+		</ul>
+		Ľubovoľnú logickú hodnotu možno previesť na textovú pomocou metódy:
+		<br>boolean.toString() - vráti "true" alebo "false"		
+</dl>		
+<h2>Výstup na stránku</h2>
+Aby sme mohli vypisovať "výsledky" kódu do stránky používame príkaz <b>document.write(text);</b> alebo <b>document.writeln(text);</b>.
+Ak v zátvorke uvedieme číselný výraz alebo logický bude zmenený na text. Vložený text môže obsahovať aj html tagy, ktoré sa vykonajú.
+<br>Ukážka:
+<table bgcolor="Silver" width="800"><tr bgcolor="Gray"><th width="500">Html kód<th width="300">Zobrazenie</tr>
+		<tr bgcolor="#FFFFFF"><td>
+		<br>&lt;Script&gt;
+		    <br> &nbsp; &nbsp; document.write("&lt;h4>Nadpis&lt;/h4>");
+		    <br> &nbsp; &nbsp; document.write("5 + 6 = "+((5+6).toString()).fontcolor('blue')+"&lt;BR&gt;";
+		    <br> &nbsp; &nbsp; document.write("&lt;Span style='background-color:silver'&gt;"
+			<br> &nbsp; &nbsp; document.write(5 == 6);
+			<BR> &nbsp; &nbsp; document.write(&lt;/SPAN&gt;
+		<br>&lt;/Script&gt;
+		<td style="PADDING:5"><h4>Nadpis</h4>
+			5 + 6 = <font color="Blue">11</font><BR>
+			<SPAN style="background-color:silver">false</SPAN> 
+		</tr>
+</table>		
+
+<h2>Premenné</h2>
+JS je netypový jazyk, premenné nemajú určený typ len hodnotu. Do tej istej premennej možno zapísať hodnoty rôznych typov.
+Typ premennej je určený hodnotou zapísanou v premennej. Premenná je deklarovaná pomocou kľúčového slova var.
+<br>Deklarácia
+<br>var i;
+<br>var n=10, nn=n+5;
+<br>var s1="Blava", s2="Prievidza";
+<br>var b=true;
+<br>Pozn.:
+<br>Určite časom zistite, že slovo var možno aj vynechať, ale má význam najmä pri deklarovaní lokálnych premenných vo funkciách.
+<br>Používaním slova var predídeme problémom s lokálnymi premennými a my ho radšej budeme používať vždy.
+<br>Viditeľnosť: premenné sú viditelné v celej funkcii, kde sú deklarované (nepozná pojem blok z jazyka C), globálne sú viditelné všade
+ak nie sú odtienené.
+<br>Pozn.
+<br>Ak vo výraze použijeme nedeklarovanú premennú skončí to chybou. Nenaplnenú premennú možno vopísať - vypíše undefined.
+
+<h2>Výrazy, operátory</h2>
+Väčšinou sa chovajú rovnako ako výrazy v C ale sú rozdiely s pretypovaním operandov
+<br>+ Ak je jeden s operandov textový je druhý automaticky pretypovaný na text a=5+""; //do a zapíše "5"
+<br>*,/,- oba operandy pretypuje na čísla document.write("5"*"3"); vypíše 15.
+<br>delenie nulou dáva kladné alebo záporné nekonečno.
+<br>Porovnávanie, test rovnosti , zhody
+<br>porovnávať možno čísla a texty (tie radšej porovnávame pomocou metódy localeCompare  
+<br>Naprogramuj:
+<table style="background-color:#ccddff;">
+<tr><td  style="padding:10" align="center">
+    číslo a=<input type="Text" value="0" id="a">
+<br>číslo b=<input type="Text" value="0" id="b">
+<br><input value="Zisti" type="Button" onclick='zisti(parseFloat(a.value),parseFloat(b.value));' >
+<div id="vysl" style="background-color:'silver'">sem príde porovnanie údajov a,b
+</div>
+</tr></table>
+
+</body>
+</html>

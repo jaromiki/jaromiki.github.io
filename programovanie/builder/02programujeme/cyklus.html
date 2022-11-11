@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	  <script>
+	   function Right(str, n)
+	   {   if (n <= 0) return "";
+    		else if (n > String(str).length) return str;
+    			else { var iLen = String(str).length;
+       					return String(str).substring(iLen, iLen - n);
+    				}
+		}
+		function u3(a,b,c,d)
+		{ var ss3=Right("     "+a+" |",5);
+		  var ss4=Right("       "+b+" |",6);
+		  var ss5=Right("       "+c+" |",7);
+		  var ss6=Right("            "+d+" |",15);
+		  return ss3+ss4+ss5+ss6;
+		}
+		function u4(a)
+		{ 
+		  if (a==2) return "Je prvočíslo";
+		  else for (i=2,b=0;i<a;i++) if (!(a%i)) b=1;
+		  return b?"Nie je prvočíslo":"Je prvočíslo"; 
+		}  
+		function nsd(a,b)
+		{	if (a<=0 || b<=0) return 1; 
+			else  while (a-b) if (b>a) b=b-a; else a=a-b; 
+			return a;
+		}
+</script>
+	  
+</head>
+
+<body>
+<h3>Cyklus - viacnásobné vykonávanie</h3>
+Cykly používame na opakované vykonávanie nejakého príkazu (prípadne skupiny príkazov). Aj v ľudskej reči používame v návode na nejakú činnosť opakovanie, napr. "urob desať drepov", "napíš 3 pohľadnice", "rob kliky pokiaľ vládzeš".
+Jazyk C pozná viac druhov cyklov. Počet opakovaní môže byť známy zo zadania
+<br>... zapíš do mema 100-krát "mám rád programovanie"
+<br>alebo počet nemusí známy zo zadania, ale zadá ho až užívateľ
+<br>... zapíš do mema x-krát "mám rád programovanie", číslo x načítaj z Edit1
+<br>alebo počet nemusí známy ani užívateľovi a zastavenie opakovania je dané nejakou podmienkou
+<br>... umývaj taniere (umývanie končí keď je dres prázdny)
+<br>... vlož 1000€ na 2.3% ročný úrok, nechaj úročiť pokiaľ uložená suma neprevýši 2000€ 
+<dl><dt><font size="+1" color="Blue">Cyklus for</font>  
+	<dd>V jazyku C sa tento príkaz nazýva "univerzálny cyklus". Najčastejšie ho používame, ak pri jeho vykonávaní už vieme, koľko krát chceme príkaz opakovať. 
+		<dl><dt>Syntax:
+			<dd><font color="Red"><b>for (</b></font>start; podm; iterácia) príkaz
+				<br><b>start</b> - ľubovoľný výraz (môže byť vynechané)
+				<br><b>podm</b> - ľubovoľný celočíselný/logický výraz (môže byť vynechané, potom sa chápe ako TRUE)
+				<br><b>iterácia</b> - ľubovoľný výraz (môže byť vynechané)
+				<br><b>príkaz</b> - ľubovoľný príkaz jazyka C (nemôže byť vynechané, ak nechceme zadať príkaz dáme prázdny príkaz - bodkočiarku)
+				<br>&nbsp; &nbsp; &nbsp; &nbsp; (ak chceme opakovať skupinu príkazov použijeme zložený príkaz - nazývaný aj blok, čiže príkazy "zabalíme do zátvoriek <b>{ }</b>)
+			<dt>Sémantika:
+			<dd><ol>
+				<li>vyhodnotí sa startovací výraz - start (treba si všmnúť/zapamätať, že sa vyhodnotí len raz), pou69va sa na počiatočné nastavenie premenných v cykle  
+				<li>vyhodnotí sa podmienka - podm 
+				<li>ak podm = TRUE tak sa urobí príkaz , potom sa urobí iter a potom späť na 2. (test podmienky)
+				<li>ak podm = FALSE cyklus končí 
+				</ol>	
+			<dt>Poznámky:
+			<dd> ... príkaz v cykle sa nemusí vykonať ani raz (ak je podmienka hneď nepravdivá)
+			<br> ... for cyklus môže byť nekonečný (ak podmienka bude stále TRUE, resp. nie je uvedená žiadna podmienka)
+			<br> ... v časti start možno zadeklarovať nové premenné platné len v cykle
+			<dt>Ukážky
+			<dd><ul><li>for (;;) rob(); //podprogram rob sa bude opakovane vykonávať (donekonečna) ak sám nemá príkaz na ukončenie celého programu
+					<li>for (int i=0;i&lt;10;i++) {Memo1->Lines->App(IntToStr(i));} //pridá do mema1 10 riadkov, cyklus si vytvoril premennú i
+			<dt>Úlohy:
+			<dd>Všetky viacriadkové výstupy v úlohách rieš do objektu Memo.
+			<ol>
+			<li>Načítaj znak malej anglickej abecedy a vypíš znaky od a až po zadaný znak
+			<li>Načítaj prirodzené číslo n a vypíš 
+				<br> - či sa dá rozložiť na súčet čísel 5,7,11
+				<br> - ak sa dá vypíš ten súčet
+				<br> - napr. n=29, ..... dá sa, n=5+5+8+11
+				<br> - napr. n=20, ..... nedá sa
+			<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš obdĺžnik tvorený znakmi z 
+			<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš rovnobežník (vrch posunutý vľavo) tvorený znakmi z 
+			<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš rovnobežník (vrch posunutý vpravo) tvorený znakmi z 
+			<li>Načítaj prirodzené číslo a načítaj znak z a vypíš a-riadkový pravoúhly trojuholník tvorený znakmi z 
+			<code>
+			<br> *
+			<br> **
+			<br> ***
+			<br> ...
+			</code>
+			<li>Načítaj prirodzené číslo a načítaj znak z a vypíš a-riadkový pravoúhly trojuholník tvorený znakmi z 
+			<code>
+			<br> &nbsp; &nbsp; *
+			<br> &nbsp; &nbsp;**
+			<br> &nbsp; ***
+			<br> &nbsp;...
+			</code>
+			<li>Načítaj prirodzené číslo a načítaj znak z a vypíš  a-riadkovú pyramídu tvorenú znakmi z 
+			<code>
+			<br> &nbsp; &nbsp; *
+			<br> &nbsp; &nbsp;***
+			<br> &nbsp; *****
+			<br> &nbsp;.....
+			</code>
+			<li>Načítaj suma, urok, pocet_rokov a zisti koľko našetrí ak vloží suma peňazí na dobu pocet_rokov pri úroku urok
+			<li>na vstupe je číslo pri základe (-2) napr. 11<sub>-2</sub>=1*(-2)<sup>0</sup>+1*(-2)<sup>1</sup> = 1 - 2 = -1
+				do ďalšieho riadku vypíš to číslo v 10-tkovej sústave a do ďalšieho v klasickej dvojkovej	
+			<li>V Memo1 majú byť zadané v riadkoch čísla (v každom riadku jedno). Vlož tlačídko TEST, ktoré skontroluje
+				či je to naozaj tak. Výsledok vypíš do okna ShowMessage.
+			<li>V predošlej úlohe pridaj tlačídko MIN, ktoré nájde najmenšie zadané číslo, výsledok zapíš.
+			<li>K predošlej úlohe pridaj tlačídko CopyReverz, ktoré Memo1 okopíruje do Memo2 ale riadky budú v opačnom poradí
+			<li>Naplň Memo1 20-timi náhodnými číslami od 1-6 (každé v samostatnom riadku). Tlačídko zistí, ktoré číslo
+				sa vyskytuje najviac. Ak je takých viac, vypíše niektoré z nich.	 	
+			</ol>
+		</dl>
+		<br>
+		<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+		   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+		   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+		   </div>
+	   <div style="background-color:silver; width:500px;" id="back1">
+	      <div style="margin:10">
+          <h4>Výpis všetkých deliteľov prirodzeného čísla</h4>		
+		  číslo: <input type="Text" value="10" id="c0" style="width:80;text-align:right" > &nbsp; &nbsp;
+		  <input type="Button" value="Výpočet" onclick="m0.innerText='';m0.textContent='';for (i=1,x=eval(c0.value);i<=x;i++) if (x%i==0) {m0.innerText+='\n'+i;m0.textContent=m0.textContent+'\n'+i;}" >
+			<textarea readonly id="m0" rows="10" >&nbsp;</textarea>
+		  </div></div></div>  
+	<br><br>
+	<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+		   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+		   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+		   </div>
+	   <div style="background-color:silver; width:500px;" id="back1">
+	      <div style="margin:10">
+		  číslo: <input type="Text" value="10" id="c1" style="width:80;text-align:right" > &nbsp; &nbsp;
+		  <input type="Button" value="Výpočet" onclick="for (i=1,s=0;i<=eval(c1.value);i++) s+=i; v1.value=s;" > &nbsp; &nbsp;
+		  súčet 1+2+ ... +číslo: <input type="Text" value="10" id="v1" style="width:80;text-align:right">
+		  </div>
+		</div></div>  
+<br><br>
+		<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+		   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+		   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+		   </div>
+	   <div style="background-color:silver; width:450px;" id="back1">
+	      <div style="margin:10">
+		  počet členov Fibonacci postupnosti: <input type="Text" value="10" id="c2" style="width:80;text-align:right" >
+		  <br>
+		  <textarea readonly id="m2" rows="10" >&nbsp;</textarea>
+		  <input type="Button" value="Výpočet" onclick="for (a=0,b=1,c=1,i=1;i<=eval(c2.value);i++,c=a+b,a=b,b=c) {m2.innerText+='\n'+c;m2.textContent+='\n'+c;}" >
+		  </div>
+		</div></div>  
+<br><br>
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1">
+   <div style="margin:10">Tabelovanie hodnôt funkcií: i^2, i^3, i!<br>Dodrž zarovnanie čísel v stĺpcoch 
+   <table><tr><td>n: <input type="Text" value="15" id="a3" style="width:75;font-family:monospace;text-align:right"><br><br>
+				 <input type="Button" value="Výpočet" onclick="t3.innerText=t3.textContent='  i | i^2 |  i^3 |             i! '+'\n----------------------------------';for (f=1,i=1;i<=Math.min(eval(a3.value),15);i++) 
+{t3.innerText+='\n'+u3(i,i*i,i*i*i,f*=i); t3.textContent+='\n'+u3(i,i*i,i*i*i,f);}">
+         <td>       <textarea id="t3" cols="35" rows="8" style="margin-top:10">Memo1</textarea>
+		 </tr></table>
+	</div></div>
+</div>	
+	<br><br>
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1">
+   <div style="margin:10">Zistenie, či zadané číslo je prvočíslo<br>
+				číslo: <input type="Text" value="15" id="a4" style="width:100;font-family:monospace;text-align:right"> &nbsp; &nbsp; &nbsp;
+				 <input type="Button" value="Výpočet" onclick="v4.value=u4(eval(a4.value));">
+                <br><br>Odpoveď: <input type="Text" value="?" id="v4" style="width:100;;text-align:right">
+	</div></div>
+</div>
+	
+<hr width="85%" size="3">
+<hr width="40%" size="2">
+</font>		
+<br>
+
+<dt><font size="+1" color="Blue">Cyklus while</font> - cyklus s podmienkou na začiatku
+<dd><dl><dt>Syntax:
+		<dd><font color="Red"><b>while </b></font> (podm) prikaz;
+ 		<br>podm ... ľubovoľný celočíselný/logický výraz
+		<dt>Sémantika:
+		<dd>pokiaľ je podm = TRUE vykonáva sa príkaz
+		<dt>Príklad
+		<dd>Napíšeme program, ktorý bude načítavať čísla zo vstupu (InputBox()) ukončené nulou a do Editu zapíše súčet týchto čísel
+		<table width="60%" bgcolor="#cccccc" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{ int a,s=0;
+  while (a=StrToInt(InputBox("Vstup čísla", "Číslo:","0")) s+=a;
+  Edit1->Text = IntToStr(s);
+}
+</pre>
+		</td></tr>
+		</table>
+			<dt>Úlohy:
+			<dd>			
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1">
+   <div style="margin:10">Rozklad čísla na súčin prvočísel<br>
+				číslo: <input type="Text" value="30" id="a7" style="width:100;font-family:monospace;text-align:right"><br><br>
+				 <input type="Button" value="Výpočet" onclick="for (s='1',i=2,a=eval(a7.value);a>1;) if (a%i) i++;
+				                                                                              else {s+='*'+i;a=(a-a%i)/i;} r7.value=s;"><br><br>
+				rozklad: <input type="Text" value="?" id="r7" style="width:100;font-family:monospace;text-align:right" READONLY><br><br>
+	</div></div>
+</div>
+<br><br>		
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1">
+   <div style="margin:10">Zistenie ciferného súčtu čísla<br>
+				číslo: <input type="Text" value="20" id="a6" style="width:100;font-family:monospace;text-align:right"><br><br>
+				 <input type="Button" value="Výpočet" onclick="s=0; abc=eval(a6.value); while (abc) {s+=abc%10;abc=Math.round(abc/10-0.499);} cif6.value=s;"><br><br>
+				cif. súčet: <input type="Text" value="?" id="cif6" style="width:100;font-family:monospace;text-align:right" READONLY><br><br>
+	</div></div>
+</div>
+<br><br>		
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1">
+   <div style="margin:10">Zistenie najväčšieho spoločného deliteľa<br>a najmenšieho spoločného násobku<br><br>
+				číslo a: <input type="Text" value="20" id="a5" style="width:100;font-family:monospace;text-align:right"> &nbsp; &nbsp; &nbsp;
+				číslo b: <input type="Text" value="15" id="b5" style="width:100;font-family:monospace;text-align:right"><br><br>
+				 <input type="Button" value="Výpočet" onclick="nsd5.value=nsd(eval(a5.value),eval(b5.value));nsn5.value=eval(a5.value)*eval(b5.value)/nsd(eval(a5.value),eval(b5.value));"><br><br>
+				NSD(a,b): <input type="Text" value="?" id="nsd5" style="width:100;font-family:monospace;text-align:right" READONLY> &nbsp; &nbsp; &nbsp;
+				NSN(a,b): <input type="Text" value="?" id="nsn5" style="width:100;font-family:monospace;text-align:right" READONLY><br>
+	</div></div>
+</div>
+		
+<dt><font size="+1" color="Blue">Cyklus do while(podm)</font> - cyklus s podmienkou na konci
+<dd><dl><dt>Syntax:
+		<dd><font color="Red"><b>repeat</b></font> prikazy <font color="Red"><b>until (</b></font>podm; 
+ 		<br>podm ... ľubovoľný logický výraz (ak je pravda cyklus pokračuje)
+		<dt>Sémantika:
+		<dd>vykoná sa príkaz
+		<br>pokiaľ je podm = TRUE vykonáva sa príkaz
+		<dt>Pozn.
+		<dd>príkaz sa vykoná aspoň raz
+		<dt>Úlohy:
+		<dd><ol>
+		<li>Načítaj číslo n a vypíš ho v dvojkovej sústave
+		</ol>
+	</dl>	
+	<br>
+	<font size="-3"></font>		
+	<hr width="85%" size="3">
+	<hr width="40%" size="2">
+	</font>		
+	<br>
+	<dt><font size="+1" color="Blue">Príkaz break</font> - ukončí cyklus
+	<dd><dl><dt>Syntax:
+			<dd><font color="Red"><b>break;</b></font>
+			<dt>Sémantika:
+			<dd>Používa sa v zložených príkazoch na ich ukončenie a pokračovanie až za blokom cyklu
+			<br>Pokiaľ sa dá sa takejto konštrukcii cyklu s break vyhýbame, no často je to najjednoduchší spôsob ako "násilne" ukončiť cyklus
+		</dl>	
+	<br>
+	<hr width="85%" size="3">
+	<hr width="40%" size="2">
+	<br>
+	<dt><font size="+1" color="Blue">Príkaz continue</font> - ukončí iteráciu cyklu
+	<dd><dl><dt>Syntax:
+			<dd><font color="Red"><b>continue;</b></font>
+			<dt>Sémantika:
+			<dd>Používa sa v zložených príkazoch v cykloch na ukončenie "behu cyklu (zloženého príkazu)" a návrat na začiatok príkazu cyklu na vyhodnotenie podmienky
+		</dl>
+</dl> 
+
+</body>
+</html>

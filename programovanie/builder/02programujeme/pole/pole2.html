@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	 <meta name="autor" content="RNDr. Jaroslav Mikuláš">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3 class=main>Dvojrozmerné pole</h3>
+Pri jednorozmernom poli sme videli, že prvky sú poukladané zasebou, každý prvok okrem prvého má predchodcu
+a každý okrem prvého má nasledovníka. Prvok poľa môže byť ľubovoľný (ale pre všetky prvky rovnaký) typ - prvkom poľa môže
+byť zas pole - čím vznikne 2-rozmerné pole . Prvky takejto štruktúry sú usporiadané do tabuľky, prístup ku položkám je cez poradové číslo riadku a stĺpca.
+<table><tr><td>
+<table border="1">
+<tr><td bgcolor="#ddddee">Jednorozmerné pole </tr>
+<tr><td align="center" bgcolor="#9999ff">Položka1</tr>
+<tr><td align="center" bgcolor="#9999ff">Položka2</tr>
+<tr><td align="center" bgcolor="#9999ff">...</tr>
+<tr><td align="center" bgcolor="#9999ff">Položka n</tr>
+</table>
+<td valign="middle">Všetky položky pola sú jednoduché hodnoty</tr>
+</table>
+Ak do každej položky takéhoto pola zapíšeme opäť pole o m prvkoch, získame tabuľku.
+<table border="1">
+<tr bgcolor="#ddddee"><th colspan="7">Dvojrozmerné pole</tr>
+<tr bgcolor="#ddddee"><th>&nbsp;<th colspan="6">Stĺpec</tr>
+<tr bgcolor="#ddddee"><th rowspan="5" width="25">R<br>i<br>a<br>d<br>o<br>k<td width="25">&nbsp;<th width="85">1<th width="85">2<th width="85">3<th width="85"> ... <th width="85">m</tr>
+<tr bgcolor="#9999ff"><th bgcolor="#ddddee">1<td>položka 11<td>položka 12<td>položka 13<td align="center">...<td>položka 1m</tr>
+<tr bgcolor="#9999ff"><th bgcolor="#ddddee">2<td>položka 21<td>položka 22<td>položka 23<td align="center">...<td>položka 2m</tr>
+<tr bgcolor="#9999ff"><th bgcolor="#ddddee">.<td colspan="5" align="center"> ... </tr>
+<tr bgcolor="#9999ff"><th bgcolor="#ddddee">n<td>položka n1<td>položka n2<td>položka n3<td align="center">...<td>položka nm</tr>
+
+</table>
+<dl><dt class=second>Deklarovanie
+	<dd>Existuje viacero spôsobov ako vytvoriť dvojrozmerné pole:
+		<br>(vo všetkých variantoch je výtvárané pole/tabuľka o 100 riadkoch a 3 stĺpcoch)
+		<table bgcolor="#9999ff" border="1">
+		<tr bgcolor="#dddddd"><th>variant1</tr>
+		<tr><td>
+		<pre>...
+int a [100][3]; &nbsp; &nbsp; &nbsp;//zadeklaroval som pole o 100 riadkoch a 3 stĺpcoch
+		</pre></tr>
+
+		<tr bgcolor="#dddddd"><th>variant2</tr>
+		<tr><td>
+		<pre>//pocet riadkov urcim za behu
+int (*a) [3]; &nbsp; &nbsp; &nbsp;//a je ukazovatel na pole 3 prvkov
+a= new int a[100][3]; &nbsp; &nbsp; &nbsp;//a je ukazovatel na pole 3 prvkov, pocet riadkov urceny za behu
+...
+delete[] a; &nbsp; &nbsp; &nbsp;//odstranim riadky
+		</pre></tr>
+
+		<tr bgcolor="#dddddd"><th>variant2b - pomocou def. typu</tr>
+		<tr><td>
+		<pre>//pocet riadkov urcim za behu
+typedef int Tpole [3]; //vytvorim typ Tpole, ktory je polom 3 intov 
+...
+Tpole *a; &nbsp; &nbsp; &nbsp;//vytvorime pole ukazovatelov na pole 3 prvkov (pocet riadkov nie je urceny)
+pole *a;
+a= new pole [100]; &nbsp; &nbsp; &nbsp;//a je ukazovatel na pole 3 prvkov, pocet riadkov urceny za behu
+...
+delete[] a; &nbsp; &nbsp; &nbsp;//odstranim riadky
+		</pre></tr>
+
+		<tr bgcolor="#dddddd"><th>variant3</tr>
+		<tr><td>
+		<pre>//pocet stlpcov urcim za behu
+int *a [100]; &nbsp; &nbsp; &nbsp;//a je pole 100 ukazovatelov na int (100 riadkov, pocet stlpcov kazdeho riadka urcim za behu)
+for (int i=0;i&lt;100;i++) a[i]= new int[3]; &nbsp; &nbsp; &nbsp;//nemusim tu v kazdom riadku urcit tri prvky
+...
+for (int i=0;i&lt;100;i++) delete [] a[i]; rusim stlpce
+		</pre></tr>
+
+		<tr bgcolor="#dddddd"><th>variant4</tr>
+		<tr><td>
+		<pre>//pocet stlpcov aj stlpcov urcim za behu
+int **a; &nbsp; &nbsp; &nbsp;//a je ukayovatel na ukazovatel }inak povedane dvojroymerne dynamicke pole)
+a= new int* [100]; &nbsp; &nbsp; &nbsp;//urcil som pocet riadkov, <b>a</b> uz je ukazovatel na 100 ukazovatelov na int
+for (int i=0;i&lt;100;i++) a[i]= new int[3]; &nbsp; &nbsp; &nbsp;//nemusim tu v kazdom riadku urcit tri prvky
+...
+for (int i=0;i&lt;100;i++) delete [] a[i]; rusim stlpce
+delete[] a; &nbsp; &nbsp; &nbsp;//odstranim riadky
+		</pre></tr>
+		</table>
+    <dt class=second>Poznámky
+	<dd><ul><li>pole nemožno priďovať do iného poľa
+	        <li>Prechod cez pole možno robiť pomocou indexov, pomocou smerníkov, pričom tieto prístupy možno kombinovať
+		</ul>			
+    <dt class=second>Prechod poľa<br>
+	<dd>Na prechod poľa potrebujeme dva cykly vnorené
+	<table bgcolor="#9999ff" border="1">
+	<tr bgcolor="#dddddd"><th>prechod poľa</tr>
+	<tr><td>
+	<pre>...
+int a[100][3];
+int (*b) [3];
+int **c; 
+for (i=0;i&lt;100;i++)
+ &nbsp;for(j=0;j&lt;3;j++) a[i][j]=...
+ //
+ b=a[0]; &nbsp; &nbsp;//b ukazuje na nulty riadok
+for (i=0;i&lt;100;i++,b++) &nbsp; &nbsp;//b bude ukayovat na i-ty riadok
+ &nbsp;for(j=0;j&lt;3;j++) b[j]=...
+ //
+c=a; 
+for (i=0;i&lt;100;i++,c++)
+{ &nbsp;for(j=0;j&lt;3;j++,(*c)++) **c=...
+</pre></tr>
+</table>	
+	<dt class=second>Pole ako parameter
+	<dd>Podobne ako jednorozmerné pole aj dvojrozmerné pole môže byť parametrom v podprograme. Ale pocet stlpcov aj ked je rovnaky pre všetky riadky musíme v parametri zadať
+		<br>(inak by sme sa nevedeli smernikom presunúť do ďalšieho riadka)
+		<br>Príklad:
+	<table bgcolor="#9999ff" border="1">
+	<tr bgcolor="#dddddd"><th>Pole ako parameter</tr>
+	<tr><td>
+	<pre>...
+void NaplnPole(int r, int pole[][3])
+{ &nbsp;for(i= 0;i&lt;r;i++) 
+ &nbsp; &nbsp; for(j=0;j&lt;3;j++) pole[i][j]=random(10);
+}
+</pre></tr>
+</table>		
+	<dt class=main>Úlohy na riešenie
+	<dd><ul type="square"><li>Naplň pole 10x8 hodnotami
+								<br> 1  1  1  1 ...
+								<br> 2  2  2  2 ...
+								<br>. . . 
+								<br>10 10 10 10 ...
+								<br>a vypíš ho do mema
+						  <li>Naplň pole 10x8 hodnotami	
+								<br> 1  2  3  4 ...
+								<br> 1  2  3  4 ...
+								<br>. . . 
+								<br> 1  2  3  4 ...
+								<br>a vypíš ho do mema
+						  <li>Naplň pole 20x61 znakovými hodnotami	
+								<br>V každom riadku je prvých ni položiek zaplnených hviezdičkami a zvyšné medzerami
+								<br>ni je náhodné číslo 1-60 a pre každý riadok iné
+								<br>a vypíš ho do mema
+						  <li>Napíš podprogram na výmenu dvoch riadkov 
+						  (čísla riadkov sú parametrami)	
+						  <li>Napíš podprogram na výmenu dvoch stĺpcov 
+						  (čísla stĺpcov sú parametrami)	
+						  <li>Je známy spôsob šifrovania textu pomocou šifrovacej tabuľky 2k*2k, ktorá má vystrihnuté (k^2) políčok. Vždy po otočení tabuľky
+						  	o 90 stupňov sa nám zobrazia iné políčka textu. Pri dešifrovaní musíme ešta vedieť, ktorá poloha čítacej tabulky je prvá a aký je smer otáčania
+							<br>(tu stačí dohoda, že prvá poloha bude pri odkrytí políčka napr. [2,2])
+							Úloha: načítaj n=2k a čítaciu tabuľku t[2k][2k] a zisti, či je čítacia tabuľka korektná
+							<br>(či odkrýva každé políčko práve raz)
+						  <li>Naprogramuj hru life
+						  	<br>hracie pole 20x40
+							<br>bunka hynie ak má menej ako 2 susedov
+							<br>bunka hynie ak má viac ako 3 susedov
+							<br>bunka sa narodi ak prázdna má 3 susedov
+							<br>program si vypýta počiatočný stav (n, x1,z1, ... xn,yn)
+						<li>Vlož do formulára StringGrid o 8 riadkoch a 8-mich stĺpcoch (šachovnica), vlož na šachovnicu dámu (D do náhodného políčka).
+							<br>označ * políčka kam može dáma ísť na jeden ťah
+						<li>to isté ako predošlá úloha len vlož popisový riadok pre každý stĺpec (A-H) a popisový riadok pre každý riadok (1-8)
+							<br>do LabeL vypíš miesta kam môže dáma ísť na jeden ťah v tvare A4, B5, C6, ...
+						<li>Vlož do formulára StringGrid o 8 riadkoch a 8-mich stĺpcoch (šachovnica), vlož na šachovnicu dve dámy (D do náhodného políčka).
+							<br>Zisti, či sa dámy napádajú a vypíš do do Labelu
+						<li>Vlož do formulára StringGrid o 8 riadkoch a 10-tich stĺpcoch, vlož na šachovnicu poklad (P) do náhodného políčka.
+							<br>Nech na políčku [0,0] stoja Jano, Peťo a Ďuro. Jano chodí ako rolba po riadkoch (nevidí, kde je poklad, zbadá ho až keď do neho narazí),
+							Peťo poklad vidí a môže sa pohybovať vodorovne a zvislo, Ďuro poklad tiež vidí a može sa pohybovať aj šikmo. Pridaj do formulára tlačídka
+							Jano, Peťo, Ďuro, ktoré vyznačia cestu (pomocou písmen J/P/D)  z políčka [0,0] na políčko s pokladom.
+						<LI>Vlož do formulára StringGrid o 8 riadkoch a 8-mich stĺpcoch	a naplň ho náhodnými dvojcifernými číslami.
+							<br>Naprogramuj na tlačítko zarotovanie okraja štvorca v smere hodinových ručičiek
+						<li>Vlož do formulára StringGrid o 8 riadkoch a 8-mich stĺpcoch a vlož do neho na náhodné pozície 8 ovcí (znak O) a potom na náhodné prázdne políčka vlož 
+							3 pastierov (znak P). Zisti či ku každej ovci je poblíž nejaký pastier. (pastier je poblíž ak sa súradnice ovce a pastiera líši max o 2) 	
+						<LI>Vlož do formulára StringGrid o 8 riadkoch a 8-mich stĺpcoch	a naplň ho náhodnými dvojcifernými číslami.
+							<br>Zisti aký najdlhší rastúci úsek v smere zľava doprava resp. zhora nadol možno v tabuľke nájsť.
+						<li>Naprogramuj hľadanie min. cesty v rovine z bodu S do bodu C
+						<pre>
+           ***************************
+           *              * S        *	
+           *              ******     *	
+           **  *****      *          *	
+           *       *                 *	
+           *      C**********        *	
+           *                *        *	
+           *    ********    ******   *	
+           *                         *	
+           ***************************
+						</pre>	 
+							 <br>Nájdenú cestu znázorni bodkami
+							 <br>Plánik "bludiska" si hráč vytvorí v txt súbore
+							 <br>alebo vonkajší plot vytvorí program a polohu startu, cieľa a vnútorných prekážok zadá užívateľ do StringGridu.
+							
+						<li>Naprogramuj tabuľku kombinačných čísel
+							<br> n nad k bude zapísané v n-tom riadku a k-tom stĺpci
+						<li>Naprogramuj vyhodnotenie súťaže skoku do diaľky
+							<br>Každý súťažiaci má 5 pokusov, počet súťažiacich je 12
+							<br>usporiadaj výsledkovú listinu podľa výsledkov 
+							<br>(v prípade rovnosti najdlhšieho skoku rozhoduje dĺžka druhého najdlhšieho)
+							<br>dĺžku skokov zadávaj z klávesnice alebo náhodné čísla (500-800)cm
+						<li>Máme dané pole r x s typu char, v ktorom sú medzery (voľné políčko) a 'X' (obsadené políčko).
+							<br>Zistite aký najväčší štvorec možno v tomto poli vytvoriť, ak má byť len na voľných políčkach
+							<br>Pole realizujte v StrigGride a nájdený štvorec zaplňte hviezdičkami '*'.  	
+						<li>na osi x máme dané rôzne body A,B a medzi nimi je postavených niekoľko múrikov kolmých na os x rôznej dĺžky
+							([x,y1], [x,y2]), kde y1 a y2 môžu mať aj rovnaké znamienko. Nájdite najkratšiu cestu z A do B, 
+							ak žiaden múrik sa nedá preliesť.  	
+		</ul>				  
+</dl>
+</body>
+</html>

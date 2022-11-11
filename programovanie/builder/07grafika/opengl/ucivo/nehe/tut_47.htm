@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 47 - CG vertex shader</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 3</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_47.jpg" class="nehe_maly" alt="Lekce 47" />
+
+<h1>Lekce 47 - CG vertex shader</h1>
+
+<p class="nadpis_clanku">Používání vertex a fragment (pixel) shaderů ke &quot;špinavé práci&quot; při renderingu může mít nespočet výhod. Nejvíce je vidět např. pohyb objektů do teď výhradně závislý na CPU, který neběží na CPU, ale na GPU. Pro psaní velice kvalitních shaderů poskytuje CG (přiměřeně) snadné rozhraní. Tento tutoriál vám ukáže jednoduchý vertex shader, který sice něco dělá, ale nebude předvádět ne nezbytné osvětlení a podobné složitější nadstavby. Tak jako tak je především určen pro začátečníky, kteří už mají nějaké zkušenosti s OpenGL a zajímají se o CG.</p>
+
+<p>Hned na začátku uvedu dvě internetové adresy, které by se vám mohli hodit. Jedná se o <a href="http://developer.nvidia.com/" target="_blank">http://developer.nvidia.com/</a> a <a href="http://www.cgshaders.org/" target="_blank">http://www.cgshaders.org/</a>.</p>
+
+<p>Překl.: Perfektní článek o vertex a pixel shaderech vyšel v časopise CHIP 01/2004: Hardwarový Fotorealismus - Možnosti moderních 3D grafických akcelerátorů (str. 96 - 100).</p>
+
+<p>Poznámka: účelem tohoto tutoriálu není naučit úplně všechno o psaní vertex shaderů používajících CG. Má v úmyslu vysvětlit, jak úspěšně nahrát a spustit vertex shader v OpenGL.</p>
+
+<h3>Nastavení</h3>
+
+<p>První krok spočívá v downloadu CG kompilátoru od nVidie. Protože existují rozdíly mezi verzemi 1.0 a 1.1, dbejte na to, abyste si stáhli ten novější. Kód přeložený pro jeden nemusí pracovat i s druhým. Rozdíly jsou např. v rozdílně pojmenovaných proměnných, nahrazených funkcích a podobně.</p>
+
+<p>Dále musíme nahrát hlavičkové a knihovní soubory CG na místo, kde je může Visual Studio najít. Protože ze zásady nedůvěřuji instalátorům, které povětšinou pracují jinak, než se očekává, osobně dávám přednost ručnímu kopírování knihovních souborů</p>
+
+<p class="src0">z: C:\Program Files\NVIDIA Corporation\Cg\lib</p>
+<p class="src0">do: C:\Program Files\Microsoft Visual Studio\VC98\Lib</p>
+
+<p>a hlavičkových souborů</p>
+
+<p class="src0">z: C:\Program Files\NVIDIA Corporation\Cg\include</p>
+<p class="src0">do: C:\Program Files\Microsoft Visual Studio\VC98\Include</p>
+
+<h3>CG Tutoriál</h3>
+
+<p>Informace o CG uvedené v tomto tutoriálu byly většinou získány z CG uživatelského manuálu (CG Toolkit User's Manual).</p>
+
+<p>Existuje několik podstatných bodů, které byste si měli provždy zapamatovat. První a nejdůležitější je, že se vertex program provede na KAŽDÉM vertexu, který předáte grafické kartě. Jediná možnost, jak ho spustit nad několika zvolenými vertexy je buď ho nahrávat/mazat individuálně pro každý vertex nebo posílat vertexy do proudu, ve kterém budou ovlivněny a do proudu, kde nebudou. Výstup vertex programu je předán fragment (pixel) shaderu. To platí pouze tehdy, pokud je implementován a zapnut. Za poslední si zapamatujte, že se vertex program provede nad vertexy předtím, než se vytvoří primitiva. Fragment shader je na rozdíl od toho vykonán až po rasterizaci.</p>
+
+<p>Pojďme se konečně podívat na tutoriál. Vytvoříme prázdný textový soubor a pojmenujeme ho wave.cg. Do něj budeme psát veškerý CG kód. Nejdříve vytvoříme datové struktury, které budou obsahovat všechny proměnné a informace potřebné pro shader.</p>
+
+<p>Každá ze všech tří proměnných struktury (pozice, barva a hodnota vlny) je následována předdefinovaným jménem (POSITION, COLOR0, COLOR1). Tato předdefinovaná jména se vztahují k sémantice jazyka. Specifikují mapování vstupů do přesně určených hardwarových registrů. Mimochodem, jedinou opravdu požadovanou vstupní proměnnou do vertex programu je position.</p>
+
+<p class="src0">struct appdata</p>
+<p class="src0">{</p>
+<p class="src1">float4 position : POSITION;</p>
+<p class="src1">float4 color: COLOR0;</p>
+<p class="src1">float3 wave: COLOR1;</p>
+<p class="src0">};</p>
+
+<p>Dále vytvoříme strukturu vfconn. Ta bude obsahovat výstup vertex programu, který se po rasterizace předá fragment shaderu. Stejně jako vstupy mají i výstupy předdefinovaná jména. HPos reprezentuje pozici transformovanou do homogenního souřadnicového systému a Col0 určuje barvu vertexu změněnou v programu.</p>
+
+<p class="src0">struct vfconn</p>
+<p class="src0">{</p>
+<p class="src1">float4 HPos: POSITION;</p>
+<p class="src1">float4 Col0: COLOR0;</p>
+<p class="src0">};</p>
+
+<p>Zbývá nám pouze napsat vertex program. Funkce se definuje stejně jako v jazyce C. Má návratový typ (struktura vfconn), jméno (main, ale může jím být i jakékoli jiné) a parametry. V našem příkladě ze vstupu převezmeme strukturu appdata, která obsahuje pozici vertexu, jeho barvu a hodnotu výšky pro vytvoření sinusových vln. Dostaneme také uniformní parametr, kterým je aktuální modelview matice. Potřebujeme ji pro transformaci pozice do homogenního souřadnicového systému.</p>
+
+<p class="src0">vfconn main(appdata IN, uniform float4x4 ModelViewProj)</p>
+<p class="src0">{</p>
+
+<p>Do proměnné OUT uložíme modifikované vstupní parametry a na konci programu ji vrátíme.</p>
+
+<p class="src1">vfconn OUT;<span class="kom">// Výstup z vertex shaderu (posílá se na fragment shader, pokud je dostupný)</span></p>
+
+<p>Vypočítáme pozici na ose y v závislosti na x a z pozici vertexu. X i z vydělíme pěti (respektive čtyřmi), přechody budou jemnější. Změňte hodnoty na 1.0, abyste viděli, co myslím. Proměnná IN.wave specifikovaná hlavním programem obsahuje stále se zvětšující hodnotu, která způsobí, že se sinusová vlna rozpohybuje přes celý mesh. Y pozici spočítáme z pozice v meshi jako sinus hodnoty vlny plus aktuální x nebo z pozice. Aby byla výsledná vlna vyšší, vynásobíme ještě výsledek číslem 2,5.</p>
+
+<p class="src1"><span class="kom">// Změna y pozice v závislosti na sinusové vlně</span></p>
+<p class="src1">IN.position.y = (sin(IN.wave.x + (IN.position.x / 5.0)) + sin(IN.wave.x + (IN.position.z / 4.0))) * 2.5f;</p>
+
+<p>Nastavíme výstupní proměnné našeho vertex programu. Nejdříve transformujeme novou pozici vertexu do homogenního souřadnicového systému a potom přiřadíme výstupní barvě hodnotu vstupní. Pomocí return předáme vše fragment shaderu (pokud je zapnutý).</p>
+
+
+<p class="src1">OUT.HPos = mul(ModelViewProj, IN.position);<span class="kom">// Transformace pozice na homogenní souřadnice</span></p>
+<p class="src1">OUT.Col0.xyz = IN.color.xyz;<span class="kom">// Nastavení barvy</span></p>
+<p></p>
+<p class="src1">return OUT;</p>
+<p class="src0">}</p>
+
+<h3>OpenGL Tutoriál</h3>
+
+<p>V tuto chvíli máme vertex program běžící na grafické kartě hotov. Můžeme se pustit do hlavního programu. Vytvoříme v něm rovinný mesh poskládaný z trojúhelníků (triangle stripů), které budeme posílat na grafickou kartu. Na ní se ovlivní y pozice každého vertexu tak, aby ve výsledku vznikly pohybující se sinusové vlny.</p>
+
+<p>V první řadě inkludujeme hlavičkové soubory, které v OpenGL umožní spustit CG shader. Musíme také říct Visual Studiu, aby přilinkovalo potřebné knihovní soubory.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Windows</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// OpenGL</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// GLU</span></p>
+<p></p>
+<p class="src0">#include &lt;cg\cg.h&gt;<span class="kom">// CG hlavičky</span></p>
+<p class="src0">#include &lt;cg\cggl.h&gt;<span class="kom">// CG hlavičky specifické pro OpenGL</span></p>
+<p></p>
+<p class="src0">#include &quot;NeHeGL.h&quot;<span class="kom">// NeHe OpenGL</span></p>
+<p></p>
+<p class="src0">#pragma comment(lib, &quot;opengl32.lib&quot;)<span class="kom">// Přilinkování OpenGL</span></p>
+<p class="src0">#pragma comment(lib, &quot;glu32.lib&quot;)<span class="kom">// Přilinkování GLU</span></p>
+<p></p>
+<p class="src0">#pragma comment(lib, &quot;cg.lib&quot;)<span class="kom">// Přilinkování CG</span></p>
+<p class="src0">#pragma comment(lib, &quot;cggl.lib&quot;)<span class="kom">// Přilinkování OpenGL CG</span></p>
+<p></p>
+<p class="src0">#define TWO_PI 6.2831853071<span class="kom">// PI * 2</span></p>
+<p></p>
+<p class="src0">GL_Window* g_window;<span class="kom">// Struktura okna</span></p>
+<p class="src0">Keys* g_keys;<span class="kom">// Klávesnice</span></p>
+
+<p>Symbolická konstanta SIZE určuje velikost meshe na osách x a z. Dále vytvoříme proměnnou cg_enable, která bude oznamovat, jestli má být vertex program zapnutý nebo vypnutý. Pole mesh slouží pro uložení dat meshe a wave_movement pro vytvoření sinusové vlny.</p>
+
+<p class="src0">#define SIZE 64<span class="kom">// Velikost meshe</span></p>
+<p></p>
+<p class="src0">bool cg_enable = TRUE, sp;<span class="kom">// Flag spuštění CG</span></p>
+<p class="src0">GLfloat mesh[SIZE][SIZE][3];<span class="kom">// Data meshe</span></p>
+<p class="src0">GLfloat wave_movement = 0.0f;<span class="kom">// Pro vytvoření sinusové vlny</span></p>
+
+<p>Následují proměnné pro CG. CGcontext slouží jako kontejner pro několik CG programů. Obecně stačí pouze jeden CGcontext bez ohledu na počet vertex a fragment programů, které využíváme. Z jednoho kontextu můžete pomocí funkcí cgGetFirstProgram() a cgGetNextProgram() zvolit libovolný program. CG profile definuje profil vertexů. CG parametry zprostředkovávají vazbu mezi hlavním programem a CG programem běžícím na grafické kartě. Každý CG parameter je handle na korespondující proměnnou v shaderu.</p>
+
+<p class="src0">CGcontext cgContext;<span class="kom">// CG kontext</span></p>
+<p class="src0">CGprogram cgProgram;<span class="kom">// CG vertex program</span></p>
+<p class="src0">CGprofile cgVertexProfile;<span class="kom">// CG profil</span></p>
+<p class="src0">CGparameter position, color, modelViewMatrix, wave;<span class="kom">// Parametry pro shader</span></p>
+
+<p>Deklaraci globálních proměnných máme za sebou, pojďme se podívat na inicializační funkci. Po obvyklých nastaveních zapneme vykreslování drátěných modelů. Používáme je z důvodu, že vyplněné polygony nevypadají bez světel dobře. Pomocí dvou vnořených cyklů inicializujeme pole mesh tak, aby se střed roviny nacházel v počátku souřadnicového systému. Pozici na ose y nastavíme u všech bodů na 0.0f, sinusovou deformaci má na starosti CG program.</p>
+
+<p class="src0">BOOL Initialize(GL_Window* window, Keys* keys)<span class="kom">// Inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">g_window = window;<span class="kom">// Okno</span></p>
+<p class="src1">g_keys = keys;<span class="kom">// Klávesnice</span></p>
+<p></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Mazání hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolí testování hloubky</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nastavení perspektivy</span></p>
+<p></p>
+<p class="src1">glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);<span class="kom">// Drátěný model</span></p>
+<p></p>
+<p class="src1">for (int x = 0; x &lt; SIZE; x++)<span class="kom">// Inicializace meshe</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int z = 0; z &lt; SIZE; z++)</p>
+<p class="src2">{</p>
+<p class="src3">mesh[x][z][0] = (float) (SIZE / 2) - x;<span class="kom">// Vycentrování na ose x</span></p>
+<p class="src3">mesh[x][z][1] = 0.0f;<span class="kom">// Plochá rovina</span></p>
+<p class="src3">mesh[x][z][2] = (float) (SIZE / 2) - z;<span class="kom">// Vycentrování na ose z</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Musíme také inicializovat CG, jako první vytvoříme kontext. Pokud funkce vrátí NULL, něco selhalo, chyby většinou nastávají kvůli nepovedené alokaci paměti. Zobrazíme chybovou zprávu a vrátíme false, čímž ukončíme i celý program.</p>
+
+<p class="src1">cgContext = cgCreateContext();<span class="kom">// Vytvoření CG kontextu</span></p>
+<p></p>
+<p class="src1">if (cgContext == NULL)<span class="kom">// OK?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Failed To Create Cg Context&quot;, &quot;Error&quot;, MB_OK);</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+
+<p>Pomocí cgGLGetLatestProfile() určíme minulý profil vertexů, za typ profilu předáme CG_GL_VERTEX. Kdybychom vytvářeli fragment shader, předávali bychom CG_GL_FRAGMENT. Pokud není žádný vhodný profil dostupný, vrátí funkce CG_PROFILE_UNKNOWN. S validním profilem můžeme zavolat cgGLSetOptimalOptions(). Tato funkce se používá pokaždé, když se překládá nový CG program, protože podstatně optimalizuje kompilaci shaderu v závislosti na aktuálním grafickém hardwaru a jeho ovladačích.</p>
+
+<p class="src1">cgVertexProfile = cgGLGetLatestProfile(CG_GL_VERTEX);<span class="kom">// Získání minulého profilu vertexů</span></p>
+<p></p>
+<p class="src1">if (cgVertexProfile == CG_PROFILE_UNKNOWN)<span class="kom">// OK?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Invalid profile type&quot;, &quot;Error&quot;, MB_OK);</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">cgGLSetOptimalOptions(cgVertexProfile);<span class="kom">// Nastavení profilu</span></p>
+
+<p>Zavoláme funkci cgCreateprogramFromFile(), čímž načteme a zkompilujeme CG program. První parametr specifikuje CG kontext, ke kterému bude program připojen. Druhý parametr určuje, že soubor obsahuje zdrojový kód (CG_SOURCE) a ne objektový kód předkompilovaného programu (CG_OBJECT). Jako třetí položka se předává cesta k souboru, čtvrtý je minulým profilem pro konkrétní typ programu (vertex profil pro vertex program, fragment profil pro fragment program). Pátý parametr specifikuje vstupní funkci do programu, její jméno může být libovolné, ne pouze main(). Poslední parametr slouží pro předání přídavných argumentů kompilátoru. Většinou se dává NULL.</p>
+
+<p>Pokud z nějakého důvodu funkce selže, získáme pomocí cgGetError() typ chyby. Do řetězcové podoby ho můžeme převést prostřednictvím cgGetErrorString().</p>
+
+<p class="src1"><span class="kom">// Nahraje a zkompiluje vertex shader</span></p>
+<p class="src1">cgProgram = cgCreateProgramFromFile(cgContext, CG_SOURCE, &quot;CG/Wave.cg&quot;, cgVertexProfile, &quot;main&quot;, 0);</p>
+<p></p>
+<p class="src1">if (cgProgram == NULL)<span class="kom">// OK?</span></p>
+<p class="src1">{</p>
+<p class="src2">CGerror Error = cgGetError();<span class="kom">// Typ chyby</span></p>
+<p></p>
+<p class="src2">MessageBox(NULL, cgGetErrorString(Error), &quot;Error&quot;, MB_OK);</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+
+<p>Nahrajeme zkompilovaný program a připravíme ho pro zvolení (binding).</p>
+
+<p class="src1">cgGLLoadProgram(cgProgram);<span class="kom">// Nahraje program do grafické karty</span></p>
+
+<p>Jako poslední krok inicializace získáme handle na proměnné, se kterými bude CG program manipulovat. Pokud daná proměnná neexistuje, cgGetNamedParameter() vrátí NULL. Neznáme-li jména parametrů, můžeme použít dvojici funkcí cgGetFirstParameter() a cgGetNextParameter().</p>
+
+<p class="src1"><span class="kom">// Handle na proměnné</span></p>
+<p class="src1">position = cgGetNamedParameter(cgProgram, &quot;IN.position&quot;);</p>
+<p class="src1">color = cgGetNamedParameter(cgProgram, &quot;IN.color&quot;);</p>
+<p class="src1">wave = cgGetNamedParameter(cgProgram, &quot;IN.wave&quot;);</p>
+<p class="src1">modelViewMatrix = cgGetNamedParameter(cgProgram, &quot;ModelViewProj&quot;);</p>
+<p></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Pomocí deinicializační funkce po sobě uklidíme. Jednoduše zavoláme cgDestroyContext() pro každý CGcontext proměnnou. Také bychom mohli smazat jednotlivé CG programy, k tomu slouží funkce cgDestroyProgram(), nicméně cgDestroyContext() je smaže automaticky.</p>
+
+<p class="src0">void Deinitialize(void)<span class="kom">// Deinicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">cgDestroyContext(cgContext);<span class="kom">// Smaže CG kontext</span></p>
+<p class="src0">}</p>
+
+<p>Do aktualizační funkce přidáme kód pro ošetření stisku mezerníku, který zapíná/vypíná CG program běžící na grafické kartě.</p>
+
+<p class="src0">void Update(float milliseconds)<span class="kom">// Aktualizace</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_ESCAPE])<span class="kom">// Stisk Esc</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication(g_window);<span class="kom">// Konec programu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_F1])<span class="kom">// Stisk F1</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen(g_window);<span class="kom">// Přepnutí do/z fullscreenu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[' '] &amp;&amp; !sp)<span class="kom">// Stisk mezerníku</span></p>
+<p class="src1">{</p>
+<p class="src2">sp = TRUE;</p>
+<p class="src2">cg_enable = !cg_enable;<span class="kom">// Zapne/vypne CG program</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!g_keys-&gt;keyDown[' '])</p>
+<p class="src1">{</p>
+<p class="src2">sp = FALSE;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>A jako poslední vykreslování. Kamerou se přesuneme o 45 jednotek před počátek souřadnicového systému a nahoru o 25 jednotek.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">gluLookAt(0.0f, 25.0f, -45.0f, 0.0f, 0.0f, 0.0f, 0, 1, 0);<span class="kom">// Pozice kamery</span></p>
+
+<p>Modelview matici vertex shaderu nastavíme na aktuální OpenGL matici. Bez toho bychom nemohli přepočítávat pozici vertexů do homogenních souřadnic.</p>
+
+<p class="src1"><span class="kom">// Nastavení modelview matice v shaderu</span></p>
+<p class="src1">cgGLSetStateMatrixParameter(modelViewMatrix, CG_GL_MODELVIEW_PROJECTION_MATRIX, CG_GL_MATRIX_IDENTITY);</p>
+
+<p>Pokud je flag cg_enable v true, voláním cgGLEnableProfile() aktivujeme předaný profil. Funkce cgGLBindProgram() zvolí náš program a dokud ho nevypneme, provede se nad každým vertexem poslaným na grafickou kartu. Také musíme poslat barvu vertexů.</p>
+
+<p class="src1">if (cg_enable)<span class="kom">// Zapnout CG shader?</span></p>
+<p class="src1">{</p>
+<p class="src2">cgGLEnableProfile(cgVertexProfile);<span class="kom">// Zapne profil</span></p>
+<p class="src2">cgGLBindProgram(cgProgram);<span class="kom">// Zvolí program</span></p>
+<p class="src2">cgGLSetParameter4f(color, 0.5f, 1.0f, 0.5f, 1.0f);<span class="kom">// Nastaví barvu (světle zelená)</span></p>
+<p class="src1">}</p>
+
+<p>Tak teď jsme konečně připraveni na rendering meshe. Pro každou hodnotu souřadnice x v cyklu vykreslíme proužek roviny seskládaný triangle stripem.</p>
+
+<p class="src1">for (int x = 0; x &lt; SIZE - 1; x++)<span class="kom">// Vykreslení meshe</span></p>
+<p class="src1">{</p>
+<p class="src2">glBegin(GL_TRIANGLE_STRIP);<span class="kom">// Každý proužek jedním triangle stripem</span></p>
+<p></p>
+<p class="src2">for (int z = 0; z &lt; SIZE - 1; z++)</p>
+<p class="src2">{</p>
+
+<p>Současně s renderovanými vertexy dynamicky předáme i hodnotu wave parametru, díky kterému bude moci CG program z roviny vygenerovat sinusové vlny. Jakmile grafická karta dostane všechna data, automaticky spustí CG program. Všimněte si, že do triangle stripu posíláme dva body, to má za následek, že se nevykreslí pouze trojúhelník, ale rovnou celý čtverec.</p>
+
+<p class="src3">cgGLSetParameter3f(wave, wave_movement, 1.0f, 1.0f);<span class="kom">// Parametr vlny</span></p>
+<p></p>
+<p class="src3">glVertex3f(mesh[x][z][0], mesh[x][z][1], mesh[x][z][2]);<span class="kom">// Vertex</span></p>
+<p class="src3">glVertex3f(mesh[x+1][z][0], mesh[x+1][z][1], mesh[x+1][z][2]);<span class="kom">// Vertex</span></p>
+<p></p>
+<p class="src3">wave_movement += 0.00001f;<span class="kom">// Inkrementace parametru vlny</span></p>
+<p></p>
+<p class="src3">if (wave_movement &gt; TWO_PI)<span class="kom">// Větší než dvě pí (6,28)?</span></p>
+<p class="src3">{</p>
+<p class="src4">wave_movement = 0.0f;<span class="kom">// Vynulovat</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec triangle stripu</span></p>
+<p class="src1">}</p>
+
+<p>Po dokončení renderingu otestujeme, jestli je cg_enable rovno true a pokud ano, vypneme vertex profil. Dále můžeme kreslit cokoli chceme, aniž by to bylo ovlivněno CG programem.</p>
+
+<p class="src1">if (cg_enable)<span class="kom">// Zapnutý CG shader?</span></p>
+<p class="src1">{</p>
+<p class="src2">cgGLDisableProfile(cgVertexProfile);<span class="kom">// Vypne profil</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glFlush();<span class="kom">// Vyprázdnění renderovací pipeline</span></p>
+<p class="src0">}</p>
+
+<p class="autor">napsal: Owen Bourne <span class="transform_email">&lt;o.bourne (zavináč) griffith.edu.au&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson47.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson47.tar.gz">Linux/GLut</a> kód této lekce. ( <a href="mailto:foxdie@pobox.sk">Gray Fox</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson47.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:r3lik@shaw.ca">Jason Schultz</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson47.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_47_big.jpg" class="nehe_velky" alt="Lekce 47" /></div>
+<p class="okolni_lekce"><a href="tut_46.php">&lt;&lt;&lt; Lekce 46</a> | <a href="tut_48.php">Lekce 48 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MaX</div>
+<div class="d_o_datumcas">24.02.2004 - 21:40:18</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_47.php&j=0">Verze Cg</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">drt 32</div>
+<div class="d_o_datumcas">03.06.2006 - 23:05:45</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_47.php&j=1">Nejde</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_47.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

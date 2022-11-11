@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>PHP - začíname</title>
+</head>
+
+<body>
+<dl><dt>Opakovanie
+	<dd><ul><li>Ako vložiť PHP kód do html kódu
+			<li>html kód (aj s príkazmi javascriptu) je viditelný každému užívateľovi, ako je to s kódom PHP
+			<li>Kam je nasmerovaný výstup PHP kódu
+			<li>Ako vyzerá textová konštanta v PHP kóde
+		</ul>	
+<h2>Premenné</h2>
+Všetky názvy premenných začínajú znakom dolar $ a sú tvorené postupnosťou písmen číslic a podtržníka. 
+Premenné nie je potrebné deklarovať (ako sme zvyknutí z Pascalu),ale premenná vznikne pri prvom použití. 
+Typ premennej je určený hodnotou, ktorá je doňho vkladaná. Typ premennej je možno zmeniť, vložením inej hodnoty do premennej.
+<br>Príklad:
+<br>$a=5; //vznikne celočíselná premenná s hodnotou 5
+<br>$a=$a*$a*$a; //hodnota premennej $a sa zmení na hodnotu 5^3=125
+<br>$a='Ahoj';   //zmení sa typ premennej $a - textová premenná 
+<br>Možné typy premenných:
+<ul><li>textová - hodnota je zapísaná postupnosť znakov (dĺžka nie je prakticky ohraničená)
+	<li>celočíselná - hodnota je zapísaná presne ako celé číslo
+	<li>reálna-desatinná - hodnota je zapísaná s presnosťou na 14-15 miest
+	<li>logická - len dve hodnoty true (pravda), false (nepravda)
+</ul>
+<h2>Výrazy</h2>
+Výrazom nazývame zápis, ktorý sa dá vyhodnotiť a jeho výsledkom je jedna hodnota. Podľa typu výsledku poznáme výrazy - textové, celočíselné, reálne a logické.
+<dl>
+<dt>Číselné výrazy
+<dd>Pri operáciách s číslami používame nasledovné operátory:
+	<ul><li><b>+</b>, <b>-</b>, <b>*</b> typ výsledku je určený podľa operátorov
+			<ul><li>ak sú oba celočíselné je výsledok celočíselný $a=5+7;
+				<li>Ak je jeden s operátorov reálny je výsledok reálny $a=3.14*2; 
+				<li>ak je niektorý z operátorov textový, urobí sa prevod na číselný typ 
+				<li>ak je niektorý z operátorov logický, urobí sa prevod na číselný typ true=1, false=0
+			</ul>
+		<li><b>/</b> operátor delenia - výsledok je reálny
+		<li><b>%</b> operátor celočíselného zvyšku - oba operátory musia byť celočíselné napr. 5 % 3 dáva hodnotu 2
+		<li>++ operátor zväčšenia o 1
+		<li>-- operátor zmenšenia o 1
+	</ul>
+	Existuje veľa matematických funkcií, preberieme v samostatnej kapitole. 		 
+<dt>Textové výrazy
+<dd>Máme jeden operátor bodka, ktorý používame na spájanie dvoch reťazcov.
+	<br>Ak jeden z operátorv nie je textový urobí sa prevod
+	<br>napr. 5.'3' výsledkom bude '53'
+	<br>Na prácu s textom môžme použiť veľa funkcií, ktoré preberieme neskôr.	 
+<dt>Logické výrazy
+<dd>Máme k dispozícii tieto operátory:
+	<ul><li>and, && - oba tieto operátory robia logické and medzi operátormi, rozdiel je len v priorite (&& má väčšiu prioritu ako priradenie and menšiu)
+		<li>or,  || - oba tieto operátory robia logické or medzi operátormi, rozdiel je len v priorite (|| má väčšiu prioritu ako priradenie or menšiu)
+		<li>not, ! - oba tieto operátory znegujú výraz uvedený za nimi
+	</ul>	
+	operátory porovnávania
+	<br>&lt;, &gt;, &lt;=, &gt;=, !=, !==, ==, ===
+	<br>Pozor na nerovná sa, pascalské &lt;&gt; tu nefunguje.  
+<dt>Operátor priradenia =
+<dd>Na rozdiel od pascalu aj priradenie je výraz a výsledná hodnota je rovná hodnote výrazu na pravej strane
+	<br>$a=5 je výraz a jeho hodnota je 5 a teda ho môžme použiť napr. na priradenie $b = $a = 5
+	<br>Treba si uvedomiť, že v prípade viacerých priradení postupujeme zľava doprava.
+	<br>$a=5; 
+	<br>$b=$a++ 5; // najprv vypočíta $a + 5 a zapíše do $b a potom zväčší $a o 1
+	<br>$b=++$a*5; // najprv zväčši $a o 1 a potom ráta výraz  
+<dt>Kombinované operátory priradenia +=, -=, *=, /=, %=
+<dd><ul><li>$a += $b; //vypočíta $a+$b (to je aj návratová hodnota) a výsledok zapíše do $a
+		<li>$a -= $b; //vypočíta $a-$b (to je aj návratová hodnota) a výsledok zapíše do $a
+		<li>$a *= $b; //vypočíta $a*$b (to je aj návratová hodnota) a výsledok zapíše do $a
+		<li>$a /= $b; //vypočíta $a/$b (to je aj návratová hodnota) a výsledok zapíše do $a
+		<li>$a %= $b; //vypočíta $a%$b (to je aj návratová hodnota) a výsledok zapíše do $a
+	</ul>	
+<dt>Operátor ?
+<dd>Tento operátor má podobnú logiku ako príkaz if
+	<br>výraz ? výraz1 : výraz2
+	<Table><tr><td>vyhodnotí sa výraz <td> ak je pravdivý vyhodnotí sa výraz1 - jeho hodnota je návratovou hodnotou</tr>
+			<tr><td>&nbsp;<td>ak nie je pravdivý vyhodnotí sa výraz2 - jeho hodnota je návratovou hodnotou</tr>
+	</table>
+</dl>
+Poznámky:
+<br>Oproti pascalu je pri výrazoch hlavný rozdiel, že výraz (bez volania podprogramu) može meniť aj viac premenných.
+<br>Ďalší rozdiel je v tom, že aj priradenie je výraz.
+<br>Keďže výrazy v PHP môžu byť mohutnejšie ako v pascale, viac vystupuje dopopredia otázka priority operácií,
+ak máme pochybnosti nič nepokazíme ak prioritu určíme zátvorkami
+<br>$b = ($b/($a ? $a : 'error'));  
+<br>Aj keď možnosť vytvárať krkolomné výrazy láka, je často vhodnejšie takýto výraz rozpísať pomocou viacerých 
+	jednoduhších, aby sme po roku pri modifikácií nemali problém pochopiť naše myšlienky.
+</body>
+</html>

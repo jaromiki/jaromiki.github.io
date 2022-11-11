@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 30 - Detekce kolizí</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_30.jpg" class="nehe_maly" alt="Lekce 30" />
+
+<h1>Lekce 30 - Detekce kolizí</h1>
+
+<p class="nadpis_clanku">Na podobný tutoriál jste už jistě netrpělivě čekali. Naučíte se základy o detekcích kolizí, jak na ně reagovat a na fyzice založené modelovací efekty (nárazy, působení gravitace ap.). Tutoriál se více zaměřuje na obecnou funkci kolizí než zdrojovým kódům. Nicméně důležité části kódu jsou také popsány. Neočekávejte, že po prvním přečtení úplně všemu z kolizí porozumíte. Je to komplexní námět, se kterým vám pomohu začít.</p>
+
+<p>Zdrojový kód, na němž tato lekce staví, pochází z mého dřívějšího příspěvku do jedné soutěže (najdete na OGLchallenge.dhs.org). Tématem byly Bláznivé kolize a můj příspěvek (mimochodem, získal první místo :-) se jmenoval Magická místnost.</p>
+
+<p>Detekce kolizí jsou obtížné, dodnes nebylo nalezeno žádné snadné řešení. Samozřejmě existují velice obecné algoritmy, které umí pracovat s jakýmkoli druhem objektů, ale očekávejte od nich také patřičnou cenu. My budeme zkoumat postupy, které jsou velmi rychlé, relativně snadné k pochopení a v rámci mezí celkem flexibilní. Důraz musí být vložen nejen na detekci kolize, ale i na reakci objektů na náraz. Je důležité, aby se vše dělo podle fyzikálních zákonů. Máme mnoho věcí na práci! Pojďme se tedy podívat, co všechno se v této lekci naučíme:</p>
+
+<h3>Detekce kolizí mezi</h3>
+<ul>
+<li>Pohybující se koulí a rovinou</li>
+<li>Pohybující se koulí a válcem</li>
+<li>Dvěma pohybujícími se koulemi</li>
+</ul>
+
+<h3>Fyzikálně založené modelování</h3>
+<ul>
+<li>Reakce na kolize - odrazy</li>
+<li>Pohyb v gravitaci za použití Eulerových rovnic</li>
+</ul>
+
+<h3>Speciální efekty</h3>
+<ul>
+<li>Modelování explozí za použití metody Fin-Tree Billboard</li>
+<li>Zvuky pomocí Windows Multimedia Library (pouze Windows)</li>
+</ul>
+
+<h3>Zdrojový kód se dělí na pět částí</h3>
+
+<ul>
+<li>Lesson30.cpp - Základní kód tutoriálu</li>
+<li>Image.cpp, Image.h - Nahrávání bitmap</li>
+<li>Tmatrix.cpp, Tmatrix.h - Třída pro práci s maticemi</li>
+<li>Tray.cpp, Tray.h - Třída pro práci s polopřímkami</li>
+<li>Tvector.cpp, Tvector.h - Třída pro práci s vektory</li>
+</ul>
+
+<p>Třídy Vektor, Ray a Matrix jsou velmi užitečné. Dají se použít v jakémkoli projektu. Doporučuji je pečlivě prostudovat, třeba se vám budou někdy hodit.</p>
+
+<h2>Detekce kolizí</h2>
+
+<h3>Polopřímka</h3>
+
+<p>Při detekci kolizí využijeme algoritmus, který se většinou používá v trasování polopřímek (ray tracing). Vektorová reprezentace polopřímky je tvořena bodem, který označuje začátek a vektorem (obyčejně normalizovaným) určujícím směr polopřímky. Rovnice polopřímky:</p>
+
+<p class="src0"><span class="kom">bod_na_polopřímce = začátek + t * směr</span></p>
+
+<p>Číslo t nabývá hodnot od nuly do nekonečna. Dosadíme-li nulu získáme počáteční bod. U větších čísel dostaneme odpovídající body na polopřímce. Bod, počátek i směr jsou 3D vektory se složkami x, y, a z. Nyní můžeme použít tuto reprezentaci polopřímky k výpočtu průsečíku s rovinou nebo válcem.</p>
+
+<h3>Průsečík polopřímky a roviny</h3>
+
+<p>Vektorová reprezentace roviny vypadá takto:</p>
+
+<p class="src0"><span class="kom">Xn dot X = d</span></p>
+
+<p>Xn je normála roviny, X je bod na jejím povrchu a d je číslo, které určuje vzdálenost roviny od počátku souřadnicového systému.</p>
+
+<p>Překl.: Pod operací &quot;dot&quot; se skrývá skalární součin dvou vektorů (dot product), který se vypočte součtem násobků jednotlivých x, y a z složek. Nechávám ho v původním znění, protože i ve zdrojových kódech budeme volat metodu dot().</p>
+
+<p class="src0"><span class="kom">Překl.: P dot Q = Px * Qx + Py * Qy + Pz * Qz</span></p>
+
+<p>Abychom definovali rovinu, potřebujeme 3D bod a vektor, který je kolmý k rovině. Pokud vezmeme za 3D bod vektor (0, 0, 0) a pro normálu vektor (0, 1, 0), protíná rovina osy x a z. Pokud známe bod a normálu, dá se chybějící číslo d snadno dopočítat.</p>
+
+<p>Pozn.: Vektorová reprezentace roviny je ekvivalentní více známé formě Ax + By + Cz + D = 0 (obecná rovnice roviny). Pro přepočet dosaďte za A, B, C složky normály a přiřaďte D = -d.</p>
+
+<p>Nyní máme dvě rovnice</p>
+
+<p class="src0"><span class="kom">bod_na_polopřímce = začátek + t * směr</span></p>
+<p class="src0"><span class="kom">Xn dot X = d</span></p>
+
+<p>Pokud polopřímka protne rovinu v nějakém bodě, musí souřadnice průsečíků vyhovovat oběma rovnicím</p>
+
+<p class="src0"><span class="kom">Xn dot bod_na_polopřímce = d</span></p>
+
+<p>Nebo</p>
+
+<p class="src0"><span class="kom">(Xn dot začátek) + t * (Xn dot směr) = d</span></p>
+
+<p>Vyjádříme t</p>
+
+<p class="src0"><span class="kom">t = (d - Xn dot začátek) / (Xn dot směr)</span></p>
+
+<p>Dosadíme d</p>
+
+<p class="src0"><span class="kom">t = (Xn dot bod_na_polopřímce - Xn dot začátek) / (Xn dot směr)</span></p>
+
+<p>Vytkneme Xn</p>
+
+<p class="src0"><span class="kom">t = (Xn dot (bod_na_polopřímce - začátek)) / (Xn dot směr)</span></p>
+
+<p>Číslo t reprezentuje vzdálenost od začátku polopřímky k průsečíku s rovinou ve směru polopřímky (ne na kolmici). Dosazením t do rovnice polopřímky získáme kolizní bod. Existuje několik speciálních situací. Pokud Xn dot směr = 0, budou tyto dva vektory navzájem kolmé. Polopřímka prochází rovnoběžně s rovinou a tudíž neexistuje kolizní bod. Pokud je t záporné, průsečík leží před počátečním bodem. Polopřímka nesměřuje k rovině, ale od ní. Opět žádný průsečík.</p>
+
+<p class="src0">int TestIntersionPlane(const Plane&amp; plane, const TVector&amp; position, const TVector&amp; direction, double&amp; lamda, TVector&amp; pNormal)</p>
+<p class="src0">{</p>
+<p class="src1">double DotProduct = direction.dot(plane._Normal);<span class="kom">// Skalární součin vektorů</span></p>
+<p class="src1">double l2;<span class="kom">// Určuje kolizní bod</span></p>
+<p></p>
+<p class="src1">if ((DotProduct &lt; ZERO) &amp;&amp; (DotProduct &gt; -ZERO))<span class="kom">// Je polopřímka rovnoběžná s rovinou?</span></p>
+<p class="src2">return 0;<span class="kom">// Bez průsečíku</span></p>
+<p></p>
+<p class="src1">l2 = (plane._Normal.dot(plane._Position - position)) / DotProduct;<span class="kom">// Dosazení do vzorce</span></p>
+<p></p>
+<p class="src1">if (l2 &lt; -ZERO)<span class="kom">// Směřuje polopřímka od roviny?</span></p>
+<p class="src2">return 0;<span class="kom">// Bez průsečíku</span></p>
+<p></p>
+<p class="src1">pNormal = plane._Normal;<span class="kom">// Normála roviny</span></p>
+<p class="src1">lamda = l2;<span class="kom">// Kolizní bod</span></p>
+<p></p>
+<p class="src1">return 1;<span class="kom">// Průsečík existuje</span></p>
+<p class="src0">}</p>
+
+<h3>Průsečík polopřímky a válce</h3>
+
+<p>Výpočet průsečíku polopřímky s nekonečně dlouhým válcem je mnohem komplikovanější než vysvětlení toho, proč se tím zde nebudeme zabývat. Na pozadí je příliš mnoho matematiky. Mým primárním záměrem je poskytnout a vysvětlit nástroje bez zabíhání do zbytečných detailů, které by stejně někteří nepochopili. Válec je tvořen polopřímkou, která reprezentuje jeho osu, a poloměrem podstavy. Pro detekci kolize se v tomto tutoriálu používá funkce TestIntersetionCylinder(), která vrací jedničku, pokud byl nalezen průsečík, jinak nulu.</p>
+
+<p class="src0">int TestIntersionCylinder(const Cylinder& cylinder, const TVector& position, const TVector& direction, double& lamda, TVector& pNormal, TVector& newposition)</p>
+
+<p>V parametrech se předává struktura válce, začátek a směrový vektor polopřímky. Kromě návratové hodnoty získáme z funkce vzdálenost od průsečíku (na polopřímce), normálu vycházející z průsečíku a bod průsečíku.</p>
+
+<h3>Kolize mezi dvěma pohybujícími se koulemi</h3>
+
+<p>Koule je v geometrii reprezentována středem a poloměrem. Zjištění, jestli do sebe dvě koule narazily je banální. Vypočteme vzdálenost mezi dvěma středy a porovnáme ji se součtem poloměrů. Jak snadné!</p>
+
+<p>Problémy nastanou při hledání kolizního bodu dvou POHYBUJÍCÍCH se koulí. Na obrázku je příklad, kdy se dvě koule přesunou z jednoho místa do druhého za určitý časový úsek. Jejich dráhy se protínají, ale to není dostatečný důvod k tvrzení, že do sebe opravdu narazí. Mohou se například pohybovat rozdílnou rychlostí. Jedna téměř stojí a druhá je za okamžik úplně někde jinde.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_30_1.gif" width="128" height="128" alt="Dvě pohybující se koule" /></div>
+
+<p>V předchozích metodách jsme řešili rovnice dvou geometrických objektů. Pokud podobná rovnice pro daný objekt neexistuje nebo nemůže být použita (pohyb po složité křivce), používá se jiná metoda. V našem případě známe počáteční i koncové body přesunu, časový krok, rychlost (+směr) a metodu zjištění nárazu statických koulí. Rozkouskujeme časový úsek na malé části. Koule budeme v závislosti na nich postupně posunovat a pokaždé testovat kolizi. Pokud najdeme některý bod, kdy je vzdálenost koulí menší než součet jejich poloměrů, vezmeme minulou pozici a označíme ji jako kolizní bod. Může se ještě začít interpolovat mezi těmito dvěma body na rozhraní, kdy kolize ještě nebyla a už je, abychom našli úplně přesnou pozici, ale většinou to není potřeba.</p>
+
+<p>Čím menší bude časový úsek, tím budou části vzniklé rozsekáním menší a metoda bude více přesná (a více náročná na hardware počítače). Například, pokud bude časový úsek 1 a části 3, budeme zjišťovat kolizi v časech 0, 0,33, 0,66 a 1. V následujícím výpisu kódu hledáme koule, které během následujícího časového kroku narazí do kterékoli z ostatních. Funkce vrátí indexy obou koulí, bod a čas nárazu.</p>
+
+<p class="src0">int FindBallCol(TVector&amp; point, double&amp; TimePoint, double Time2, int&amp; BallNr1, int&amp; BallNr2)</p>
+<p class="src0">{</p>
+<p class="src1">TVector RelativeV;<span class="kom">// Relativní rychlost mezi koulemi</span></p>
+<p class="src1">TRay rays;<span class="kom">// Polopřímka</span></p>
+<p></p>
+<p class="src1">double MyTime = 0.0;<span class="kom">// Hledání přesné pozice nárazu</span></p>
+<p class="src1">double Add = Time2 / 150.0;<span class="kom">// Rozkouskuje časový úsek na 150 částí</span></p>
+<p class="src1">double Timedummy = 10000;<span class="kom">// Čas nárazu</span></p>
+<p></p>
+<p class="src1">TVector posi;<span class="kom">// Pozice na polopřímce</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Test všech koulí proti všem ostatním po 150 krocích</span></p>
+<p class="src1">for (int i = 0; i &lt; NrOfBalls - 1; i++)<span class="kom">// Všechny koule</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int j = i + 1; j &lt; NrOfBalls; j++)<span class="kom">// Všechny zbývající koule</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Výpočet vzdálenosti</span></p>
+<p class="src3">RelativeV = ArrayVel[i] - ArrayVel[j];<span class="kom">// Relativní rychlost mezi koulemi</span></p>
+<p class="src3">rays = TRay(OldPos[i], TVector::unit(RelativeV));<span class="kom">// Polopřímka</span></p>
+<p></p>
+<p class="src3">if ((rays.dist(OldPos[j])) &gt; 40)<span class="kom">// Je vzdálenost větší než 2 poloměry?</span></p>
+<p class="src3">{</p>
+<p class="src4">continue;<span class="kom">// Další</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3"><span class="kom">// Náraz</span></p>
+<p></p>
+<p class="src3">MyTime = 0.0;<span class="kom">// Inicializace před vstupem do cyklu</span></p>
+<p></p>
+<p class="src3">while (MyTime &lt; Time2)<span class="kom">// Přesný bod nárazu</span></p>
+<p class="src3">{</p>
+<p class="src4">MyTime += Add;<span class="kom">// Zvětší čas</span></p>
+<p class="src4">posi = OldPos[i] + RelativeV * MyTime;<span class="kom">//Přesun na další bod (pohyb na polopřímce)</span></p>
+<p></p>
+<p class="src4">if (posi.dist(OldPos[j]) &lt;= 40)<span class="kom">// Náraz</span></p>
+<p class="src4">{</p>
+<p class="src5">point = posi;<span class="kom">// Bod nárazu</span></p>
+<p></p>
+<p class="src5">if (Timedummy &gt; (MyTime - Add))<span class="kom">// Bližší náraz, než který jsme už našli (v čase)?</span></p>
+<p class="src5">{</p>
+<p class="src6">Timedummy = MyTime - Add;<span class="kom">// Přiřadit čas nárazu</span></p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">BallNr1 = i;<span class="kom">// Označení koulí, které narazily</span></p>
+<p class="src5">BallNr2 = j;</p>
+<p class="src5">break;<span class="kom">// Ukončí vnitřní cyklus</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (Timedummy != 10000)<span class="kom">// Našli jsme kolizi?</span></p>
+<p class="src1">{</p>
+<p class="src2">TimePoint = Timedummy;<span class="kom">// Čas nárazu</span></p>
+<p class="src2">return 1;<span class="kom">// Úspěch</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return 0;<span class="kom">// Bez kolize</span></p>
+<p class="src0">}</p>
+
+<h3>Kolize mezi koulí a rovinou nebo válcem</h3>
+
+<p>Nyní už umíme zjistit průsečík polopřímky a roviny/válce. Tyto znalosti použijeme pro hledání kolizí mezi koulí a jedním z těchto objektů. Potřebujeme najít přesný bod nárazu. Převod znalostí z polopřímky na pohybující se kouli je relativně snadný. Podívejte se na levý obrázek, možná, že podstatu pochopíte sami.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_30_2.gif" width="500" height="150" alt="Náraz pohybující se koule do roviny/válce" /></div>
+
+<p>Každá koule sice má poloměr, ale my ji budeme brát jako bezrozměrnou části, která má pouze pozici. K povrchu tělesa přičteme ve směru normálového vektoru offset určený poloměrem koule. Neboli k poloměru válce přičteme průměr koule (2 poloměry; z každé strany jeden). Operací jsme se vrátili k detekci kolize polopřímka - válec. Rovina je ještě jednodušší. Posuneme ji směrem ke kouli o její poloměr. Na obrázku jsou čárkovaně nakresleny &quot;virtuální&quot; objekty pro testy kolizí a plně objekty, které program vykreslí. Kdybychom k objektům při testech nepřipočítávali offset, koule by před odrazem z poloviny pronikaly do objektů (obrázek vpravo).</p>
+
+<p>Máme-li určit místo nárazu, je vhodné nejdříve zjistit, jestli kolize nastane při aktuálním časovém úseku. Protože polopřímka má nekonečnou délku, je vždy možné, že se kolizní bod nachází až někde za novou pozicí koule. Abychom to zjistili, spočítáme novou pozici a určíme vzdálenost mezi počátečním a koncovým bodem. Pokud je tato vzdálenost kratší než vzdálenost, o kterou se objekt posune, tak máme jistotu, že kolize nastane v tomto časovém úseku. Abychom spočítali přesný čas kolize použijeme následující jednoduchou rovnici. Dst představuje vzdálenost mezi počátečním a koncovým bodem, Dsc vzdálenost mezi počátečním a kolizním bodem a časový krok je definován jako T. Řešením získáme čas kolize Tc.</p>
+
+<p class="src0"><span class="kom">Tc = Dsc * T / Dst</span></p>
+
+<p>Výpočet se provede samozřejmě jenom tehdy, když má kolize nastat v tomto časovém kroku. Vrácený čas je zlomkem (částí) celého časového kroku. Pokud bude časový krok 1 s a my nalezneme kolizní bod přesně uprostřed vzdálenosti, čas kolize se bude rovnat 0,5 s. Je interpretován jako: V časovém okamžiku 0,5 sekund po začátku přesunu do sebe objekty narazí. Kolizní bod se vypočte násobením času Tc aktuální rychlostí a přičtením počátečního bodu.</p>
+
+<p class="src0"><span class="kom">bod_kolize = start + rychlost * Tc</span></p>
+
+<p>Tento kolizní bod je však na objektu s offsetem (pomocném). Abychom nalezli bod nárazu na reálném objektu, přičteme k bodu kolize invertovaný normálový vektor z bodu kolize, který má velikost poloměru koule. Normálový vektor získáme z funkce pro kolize. Všimněte si, že funkce pro kolizi s válcem vrací bod nárazu, takže nemusí být znovu počítán.</p>
+
+<h2>Modelování založené na fyzice</h2>
+
+<h3>Reakce na náraz</h3>
+
+<p>Ošetření toho, jak se koule zachová po nárazu je stejně důležité jako samotné nalezení kolizního bodu. Použité algoritmy a funkce popisují přesný bod nárazu, normálový vektor vycházející z objektů v místě nárazu a časový úsek, ve kterém kolize nastala.</p>
+
+<p>Při odrazech nám pomohou fyzikální zákony. Implementujeme poučku: &quot;Úhel dopadu se rovná úhlu odrazu&quot;. Oba úhly se vztahují k normálovému vektoru, který vychází z objektu v kolizním bodě. Následující obrázek ukazuje odraz polopřímky od koule.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_30_3.gif" width="220" height="180" alt="Odraz od koule" /></div>
+
+<p>I je směrový vektor před nárazem, N je normálový vektor v bodě kolize a R je směrový vektor po odrazu, který se vypočte podle následující rovnice:</p>
+
+<p class="src0"><span class="kom">R = 2 * (-I dot N) * N + I</span></p>
+
+<p>Omezení spočívá v tom, že I i N musí být jednotkové vektory. U nás však délka vektoru reprezentuje rychlost a směr koule, a proto nemůže být bez transformace dosazen do rovnice. Potřebujeme z něj vyjmout rychlost. Nalezneme jeho velikost a vydělíme jí jednotlivé x, y, z složky. Získaný jednotkový vektor dosadíme do rovnice a vypočteme R. Jsme skoro u konce. Vektor nyní míří ve směru odražené polopřímky, ale nemá původní délku. Minule jsme dělili, takže teď budeme násobit.</p>
+
+<p>Následující výpis kódu se používá pro výpočet odrazu po kolizi koule s rovinou nebo válcem. Uvedený algoritmus pracuje i s jinými povrchy, nezáleží na jejich tvaru. Pokud nalezneme bod kolize a normálu, je odraz vždy stejný.</p>
+
+<p class="src0">rt2 = ArrayVel[BallNr].mag();<span class="kom">// Uloží délku vektoru</span></p>
+<p class="src0">ArrayVel[BallNr].unit();<span class="kom">// Normalizace vektoru</span></p>
+<p></p>
+<p class="src0"><span class="kom">// Výpočet odrazu</span></p>
+<p class="src0">ArrayVel[BallNr] = TVector::unit((normal * (2 * normal.dot(-ArrayVel[BallNr]))) + ArrayVel[BallNr]);</p>
+<p class="src0">ArrayVel[BallNr] = ArrayVel[BallNr] * rt2;<span class="kom">// Nastavení původní délky</span></p>
+
+<h3>Když se koule srazí s jinou</h3>
+
+<p>Ošetření vzájemného nárazu dvou pohybujících se koulí je mnohem obtížnější. Musí být vyřešeny složité rovnice. Nebudeme nic odvozovat, pouze vysvětlím výsledek. Situace při kolizi dvou koulí vypadá přibližně takto:</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_30_4.gif" width="256" height="180" alt="Srážka dvou koulí" /></div>
+
+<p>Vektory U1 a U2 představují rychlost koulí v čase nárazu. Středy dohromady spojuje osa X_Axis, na které leží vektory U1x a U2x, což jsou vlastně průměty rychlosti. U1y a U2y jsou projekce rychlosti na osu, která je kolmá k X_Axis. K jejich výpočtu postačí jednoduchý skalární součin.</p>
+
+<p>Do následujících rovnic dosazujeme ještě čísla M1 a M2, která vyjadřují hmotnost koulí. Snažíme se vypočítat orientaci vektorů rychlosti U1 a U2 po odrazu. Budou je vyjadřovat nové vektory V1 a V2. Čísla V1x, V1y, V2x, V2y jsou opět průměty.</p>
+
+<p>a) najít X_Axis</p>
+
+<p class="src0"><span class="kom">X_Axis = (střed2 - střed1)</span></p>
+<p class="src0"><span class="kom">Jednotkový vektor, X_Axis.unit();</span></p>
+
+<p>b) najít projekce</p>
+
+<p class="src0"><span class="kom">U1x = X_Axis * (X_Axis dot U1)</span></p>
+<p class="src0"><span class="kom">U1y = U1 - U1x</span></p>
+<p class="src0"><span class="kom">U2x = -X_Axis * (-X_Axis dot U2)</span></p>
+<p class="src0"><span class="kom">U2y = U2 - U2x</span></p>
+
+<p>c) najít nové rychlosti</p>
+
+<p class="src0"><span class="kom">V1x = ((U1x * M1) + (U2x * M2) - (U1x - U2x) * M2) / (M1 + M2)</span></p>
+<p class="src0"><span class="kom">V2x = ((U1x * M1) + (U2x * M2) - (U2x - U1x) * M1) / (M1 + M2)</span></p>
+
+<p>V naší aplikaci nastavujeme jednotkovou hmotnost (M1 = M2 = 1), a proto se výpočet výsledných vektorů velmi zjednoduší.</p>
+
+<p>d) najít konečné rychlosti</p>
+
+<p class="src0"><span class="kom">V1y = U1y</span></p>
+<p class="src0"><span class="kom">V2y = U2y</span></p>
+<p></p>
+<p class="src0"><span class="kom">V1 = V1x + V1y</span></p>
+<p class="src0"><span class="kom">V2 = V2x + V2y</span></p>
+
+<p>Odvození rovnic stálo hodně práce, ale jakmile se nacházejí v této formě, je jejich použití docela snadné. Kód, které vykonává srážky dvou koulí vypadá takto:</p>
+
+<p class="src0">TVector pb1, pb2, xaxis, U1x, U1y, U2x, U2y, V1x, V1y, V2x, V2y;<span class="kom">// Deklarace proměnných</span></p>
+<p class="src0">double a, b;</p>
+<p></p>
+<p class="src0">pb1 = OldPos[BallColNr1] + ArrayVel[BallColNr1] * BallTime;<span class="kom">// Nalezení pozice koule 1</span></p>
+<p class="src0">pb2 = OldPos[BallColNr2] + ArrayVel[BallColNr2] * BallTime;<span class="kom">// Nalezení pozice koule 2</span></p>
+<p></p>
+<p class="src0">xaxis = (pb2 - pb1).unit();<span class="kom">// Nalezení X_Axis</span></p>
+<p></p>
+<p class="src0">a = xaxis.dot(ArrayVel[BallColNr1]);<span class="kom">// Nalezení projekce</span></p>
+<p class="src0">U1x = xaxis * a;<span class="kom">// Nalezení průmětů vektorů</span></p>
+<p class="src0">U1y = ArrayVel[BallColNr1] - U1x;</p>
+<p></p>
+<p class="src0">xaxis = (pb1 - pb2).unit();</p>
+<p></p>
+<p class="src0">b = xaxis.dot(ArrayVel[BallColNr2]);<span class="kom">// To samé pro druhou kouli</span></p>
+<p class="src0">U2x = xaxis * b;</p>
+<p class="src0">U2y = ArrayVel[BallColNr2] - U2x;</p>
+<p></p>
+<p class="src0">V1x = (U1x + U2x - (U1x - U2x)) * 0.5;<span class="kom">// Nalezení nových rychlostí</span></p>
+<p class="src0">V2x = (U1x + U2x - (U2x - U1x)) * 0.5;</p>
+<p class="src0">V1y = U1y;</p>
+<p class="src0">V2y = U2y;</p>
+<p></p>
+<p class="src0">for (j = 0; j < NrOfBalls; j++)<span class="kom">// Posun všech koulí do času nárazu</span></p>
+<p class="src0">{</p>
+<p class="src1">ArrayPos[j] = OldPos[j] + ArrayVel[j] * BallTime;</p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">ArrayVel[BallColNr1] = V1x + V1y;<span class="kom">// Nastavení právě vypočítaných vektorů koulím, které do sebe narazily</span></p>
+<p class="src0">ArrayVel[BallColNr2] = V2x + V2y;</p>
+
+<h3>Pohyb v gravitaci za použití Eulerových rovnic</h3>
+
+<p>Pro simulaci realistických pohybů nejsou nárazy, hledání kolizních bodů a odrazy dostatečné. Musí být přidán ještě pohyb podle fyzikálních zákonů. Asi nejpoužívanější metodou jsou Eulerovy rovnice. Všechny výpočty se vykonávají pro určitý časový úsek. To znamená, že se celá simulace neposouvá vpřed plynule, ale po určitých skocích. Představte si, že máte fotoaparát a každou vteřinu výslednou scénu vyfotíte. Během této vteřiny se provedou všechny pohyby, testy kolizí a odrazy. Výsledný obrázek se zobrazí na monitoru a zůstane tam až do další vteřiny. Opět stejné výpočty a další zobrazení. Takto pracují všechny počítačové animace, ale mnohem rychleji. Oko, stejně jako u filmu, vidí plynulý pohyb. V závislosti na Eulerových rovnicích se rychlost a pozice v každém časovém kroku změní takto:</p>
+
+<p class="src0"><span class="kom">nová_rychlost = stará_rychlost + zrychlení * časový úsek</span></p>
+<p class="src0"><span class="kom">nová_pozice = stará_pozice + nová_rychlost * časový úsek</span></p>
+
+<p>Nyní se objekty pohybují a testují na kolize s použitím nové rychlosti. Zrychlení objektu je získáno vydělením síly, která na něj působí, jeho hmotností.</p>
+
+<p class="src0"><span class="kom">zrychlení = síla / hmotnost</span></p>
+
+<p>V tomto demu je gravitace jediná síla, která působí na objekt. Může být reprezentována vektorem, který udává gravitační zrychlení. U nás se bude tento vektor rovnat (0; -0,5; 0). To znamená, že na začátku každého časového úseku spočítáme novou rychlost koule a s testováním kolizí ji posuneme. Pokud během časového úseku narazí (např. po 0,5 s), posuneme ji na pozici kolize, vypočteme odraz (nový vektor rychlosti) a přesuneme ji o zbývající čas (0,5 s). V něm opět testujeme kolize atd. Opakujeme tak dlouho, dokud zbývá nějaký čas.</p>
+
+<p>Pokud je přítomno více pohybujících se objektů, musí být nejprve testován každý z nich na nárazy do statických objektů. Uloží se časově nejbližší z nich. Potom se provedou testy nárazů mezi pohybujícími se objekty - každý s každým. Vrácený čas je porovnán s časem u testů se statickými objekty a v úvahu je brán nejbližší náraz. Celá simulace se posune do tohoto času. Vypočte se odraz objektu a opět se provedou detekce nárazů do statických objektů atd. atd. atd. - dokud zbývá nějaký čas. Překreslí se scéna a vše se opakuje nanovo.</p>
+
+<h2>Speciální efekty</h2>
+
+<h3>Exploze</h3>
+
+<p>Kdykoli, když se objekty srazí, nastane exploze, která se zobrazí na souřadnicích průsečíku. Velmi jednoduchou cestou je alfablending dvou polygonů, které jsou navzájem kolmé a jejich střed je na souřadnicích kolizního bodu. Oba polygony se postupně zvětšují a zprůhledňují. Alfa hodnota se zmenšuje z počáteční jedničky až na nulu. Díky Z bufferu může spousta alfablendovaných polygonů způsobovat problémy - navzájem se překrývají, a proto si půjčíme techniku používanou při renderingu částic. Abychom vše dělali správně, musíme polygony řadit od zadních po přední podle vzdálenosti od pozorovatele. Také vypneme zápis do Depth bufferu (ne čtení). Všimněte si, že omezujeme počet explozí na maximálně dvacet na jeden snímek. Nastane-li jich najednou více, pole se zaplní a další se nebudou brát v úvahu. Následuje kód, který aktualizuje a renderuje exploze.</p>
+
+<p class="src0">glEnable(GL_BLEND);<span class="kom">// Blending</span></p>
+<p class="src0">glDepthMask(GL_FALSE);<span class="kom">// Vypne zápis do depth bufferu</span></p>
+<p class="src0">glBindTexture(GL_TEXTURE_2D, texture[1]);<span class="kom">// Textura exploze</span></p>
+<p></p>
+<p class="src0">for(i = 0; i < 20; i++)<span class="kom">// Prochází výbuchy</span></p>
+<p class="src0">{</p>
+<p class="src1">if(ExplosionArray[i]._Alpha >= 0)<span class="kom">// Je exploze vidět?</span></p>
+<p class="src1">{</p>
+<p class="src2">glPushMatrix();<span class="kom">// Záloha matice</span></p>
+<p class="src3">ExplosionArray[i]._Alpha -= 0.01f;<span class="kom">// Aktualizace alfa hodnoty</span></p>
+<p class="src3">ExplosionArray[i]._Scale += 0.03f;<span class="kom">// Aktualizace měřítka</span></p>
+<p></p>
+<p class="src3">glColor4f(1, 1, 0, ExplosionArray[i]._Alpha);<span class="kom">// Žlutá barva s průhledností</span></p>	 
+<p class="src3">glScalef(ExplosionArray[i]._Scale, ExplosionArray[i]._Scale, ExplosionArray[i]._Scale);<span class="kom">// Změna měřítka</span></p>
+<p></p>
+<p class="src3">glTranslatef((float)ExplosionArray[i]._Position.X() / ExplosionArray[i]._Scale, (float)ExplosionArray[i]._Position.Y() / explosionArray[i]._Scale, (float)ExplosionArray[i]._Position.Z() / ExplosionArray[i]._Scale);<span class="kom">// Přesun na pozici kolizního bodu, měřítko je offsetem</span></p>
+<p></p>
+<p class="src3">glCallList(dlist);<span class="kom">// Zavolá display list</span></p>
+<p class="src2">glPopMatrix();<span class="kom">// Obnova původní matice</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">glDepthMask(GL_TRUE);<span class="kom">// Obnova původních parametrů OpenGL</span></p>
+<p class="src0">glDisable(GL_BLEND);</p>
+<p class="src0">glDisable(GL_TEXTURE_2D);</p>
+
+<h3>Zvuky</h3>
+
+<p>Pro přehrávání zvuků se používá funkce PlaySound() z multimediální knihovny Windows - rychlá cesta, jak bez problémů přehrát .wav zvuk.</p>
+
+<h2>Vysvětlení kódu</h2>
+
+<p>Gratuluji... pokud stále čtete, úspěšně jste se prokousali dlouhou a náročnou teoretickou sekcí. Předtím, než si začnete hrát s demem, měl by být ještě vysvětlen zdrojový kód. Ze všeho nejdříve se ale půjdeme podívat na globální proměnné.</p>
+
+<p>Vektory dir a pos reprezentují pozici a směr kamery, kterou v programu pohybujeme funkcí gluLookAt(). Pokud scéna není vykreslována v módu &quot;sledování koule&quot;, otáčí se kolem osy y.</p>
+
+<p class="src0">TVector dir;<span class="kom">// Směr kamery</span></p>
+<p class="src0">TVector pos(0, -50, 1000);<span class="kom">// Pozice kamery</span></p>
+<p class="src0">float camera_rotation = 0;<span class="kom">// Rotace scény na ose y</span></p>
+
+<p>Gravitace, která působí na koule.</p>
+
+<p class="src0">TVector accel(0, -0.05, 0);<span class="kom">// Gravitační zrychlení aplikované na koule</span></p>
+
+<p>Pole, která ukládají novou a starou pozici všech koulí a jejich směr. Počet koulí je natvrdo nastaven na deset.</p>
+
+<p class="src0">TVector ArrayVel[10];<span class="kom">// Rychlost koulí</span></p>
+<p class="src0">TVector ArrayPos[10];<span class="kom">// Pozice koulí</span></p>
+<p class="src0">TVector OldPos[10];<span class="kom">// Staré pozice koulí</span></p>
+
+<p>Časový úsek pro simulaci.</p>
+
+<p class="src0">double Time = 0.6;<span class="kom">// Časový krok simulace</span></p>
+
+<p>Pokud je tato proměnná v jedničce, změní se mód kamery tak, aby sledovala pohyby koule. Pro její umístění a nasměrování se použije pozice a směr koule s indexem 1, která tedy bude vždy v záběru.</p>
+
+<p class="src0">int hook_toball1 = 0;<span class="kom">// Sledovat kamerou kouli?</span></p>
+
+<p>Následující struktury se popisují samy svým jménem. Budou ukládat data o rovinách, válcích a explozích.</p>
+
+<p class="src0">struct Plane<span class="kom">// Struktura roviny</span></p>
+<p class="src0">{</p>
+<p class="src1">TVector _Position;</p>
+<p class="src1">TVector _Normal;</p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0">struct Cylinder<span class="kom">// Struktura válce</span></p>
+<p class="src0">{</p>
+<p class="src1">TVector _Position;</p>
+<p class="src1">TVector _Axis;</p>
+<p class="src1">double _Radius;</p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0">struct Explosion<span class="kom">// Struktura exploze</span></p>
+<p class="src0">{</p>
+<p class="src1">TVector _Position;</p>
+<p class="src1">float   _Alpha;</p>
+<p class="src1">float   _Scale;</p>
+<p class="src0">};</p>
+
+<p>Objekty struktur.</p>
+
+<p class="src0">Plane pl1, pl2, pl3, pl4, pl5;<span class="kom">// Pět rovin místnosti (bez stropu)</span></p>
+<p class="src0">Cylinder cyl1, cyl2, cyl3;<span class="kom">// Tři válce</span></p>
+<p class="src0">Explosion ExplosionArray[20];<span class="kom">// Dvacet explozí</span></p>
+
+<p>Textury, display list, quadratic.</p>
+
+<p class="src0">GLuint texture[4];<span class="kom">// Čtyři textury</span></p>
+<p class="src0">GLuint dlist;<span class="kom">// Display list výbuchu</span></p>
+<p class="src0">GLUquadricObj *cylinder_obj;<span class="kom">// Quadratic pro kreslení koulí a válců</span></p>
+
+<p>Funkce pro kolize koulí se statickými objekty a mezi koulemi navzájem.</p>
+
+<p class="src0">int TestIntersionPlane(const Plane& plane, const TVector& position, const TVector& direction, double& lamda, TVector& pNormal);</p>
+<p></p>
+<p class="src0">int TestIntersionCylinder(const Cylinder& cylinder, const TVector& position, const TVector& direction, double& lamda, TVector& pNormal, TVector& newposition);</p>
+<p></p>
+<p class="src0">int FindBallCol(TVector& point, double& TimePoint, double Time2, int& BallNr1, int& BallNr2);</p>
+
+<p>Loading textur, inicializace proměnných, logika simulace, renderování scény a inicializace OpenGL.</p>
+
+<p class="src0">void LoadGLTextures();</p>
+<p class="src0">void InitVars();</p>
+<p class="src0">void idle();</p>
+<p></p>
+<p class="src0">int DrawGLScene(GLvoid);</p>
+<p class="src0">int InitGL(GLvoid)</p>
+
+<p>Pro informace o geometrických třídách vektoru, polopřímky a matice nahlédněte do zdrojových kódů. Jsou velmi užitečné a mohou být bez problémů využity ve vašich vlastních programech.</p>
+
+<p>Nejdůležitější kroky simulace nejprve popíši pseudokódem.</p>
+
+<p class="src0"><span class="kom">while (časový úsek != 0)</span></p>
+<p class="src0"><span class="kom">{</span></p>
+<p class="src1"><span class="kom">for (každá koule)</span></p>
+<p class="src1"><span class="kom">{</span></p>
+<p class="src2"><span class="kom">Výpočet nejbližší kolize s rovinami;</span></p>
+<p class="src2"><span class="kom">Výpočet nejbližší kolize s válci;</span></p>
+<p></p>
+<p class="src2"><span class="kom">Uložit/nahradit &quot;záznam&quot; o kolizi, pokud je to do teď nejbližší kolize v čase;</span></p>
+<p class="src1"><span class="kom">}</span></p>
+<p></p>
+<p class="src1"><span class="kom">Testy kolizí mezi pohybujícími se koulemi;</span></p>
+<p></p>
+<p class="src1"><span class="kom">Uložit/nahradit &quot;záznam&quot; o kolizi, pokud je to do teď nejbližší kolize v čase;</span></p>
+<p></p>
+<p class="src1"><span class="kom">if (nastala kolize?)</span></p>
+<p class="src1"><span class="kom">{</span></p>
+<p class="src2"><span class="kom">Přesun všech koulí do času nejbližší kolize;</span></p>
+<p class="src2"><span class="kom">(Už máme vypočten bod, normálu a čas kolize.)</span></p>
+<p class="src2"><span class="kom">Výpočet odrazu;</span></p>
+<p></p>
+<p class="src2"><span class="kom">časový úsek -= čas kolize;</span></p>
+<p class="src1"><span class="kom">}</span></p>
+<p class="src1"><span class="kom">else</span></p>
+<p class="src1"><span class="kom">{</span></p>
+<p class="src2"><span class="kom">Přesun všech koulí na konec časového úseku;</span></p>
+<p class="src1"><span class="kom">}</span></p>
+<p class="src0"><span class="kom">}</span></p>
+
+<p>Zdrojový kód založený na pseudokódu je na první pohled mnohem více náročný na čtení a hlavně pochopení, nicméně v základu je jeho přesnou implementací.</p>
+
+<p class="src0">void idle()<span class="kom">// Simulační logika - kolize</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Deklarace proměnných</span></p>
+<p class="src1">double rt, rt2, rt4, lamda = 10000;</p>
+<p></p>
+<p class="src1">TVector norm, uveloc;</p>
+<p class="src1">TVector normal, point, time;</p>
+<p></p>
+<p class="src1">double RestTime, BallTime;</p>
+<p></p>
+<p class="src1">TVector Pos2;</p>
+<p></p>
+<p class="src1">int BallNr = 0, dummy = 0, BallColNr1, BallColNr2;</p>
+<p class="src1">TVector Nc;</p>
+<p></p>
+<p class="src1">if (!hook_toball1)<span class="kom">// Pokud kamera nesleduje kouli</span></p>
+<p class="src1">{</p>
+<p class="src2">camera_rotation += 0.1f;<span class="kom">// Pootočení scény</span></p>
+<p></p>
+<p class="src2">if (camera_rotation &gt; 360)<span class="kom">// Ošetření přetečení</span></p>
+<p class="src2">{</p>
+<p class="src3">camera_rotation = 0;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">RestTime = Time;</p>
+<p class="src1">lamda = 1000;</p>
+<p></p>
+<p class="src1"><span class="kom">// Výpočet rychlostí všech koulí pro následující časový úsek (Eulerovy rovnice)</span></p>
+<p class="src1">for (int j = 0; j &lt; NrOfBalls; j++)</p>
+<p class="src1">{</p>
+<p class="src2">ArrayVel[j] += accel * RestTime;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">while (RestTime &gt; ZERO)<span class="kom">// Dokud neskončil časový úsek</span></p>
+<p class="src1">{</p>
+<p class="src2">lamda = 10000;<span class="kom">// Inicializace na velmi vysokou hodnotu</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Kolize všech koulí s rovinami a válci</span></p>
+<p class="src2">for (int i = 0; i &lt; NrOfBalls; i++)<span class="kom">// Všechny koule</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Výpočet nové pozice a vzdálenosti</span></p>
+<p class="src3">OldPos[i] = ArrayPos[i];</p>
+<p class="src3">TVector::unit(ArrayVel[i], uveloc);</p>
+<p class="src3">ArrayPos[i] = ArrayPos[i] + ArrayVel[i] * RestTime;</p>
+<p class="src3">rt2 = OldPos[i].dist(ArrayPos[i]);</p>
+<p></p>
+<p class="src3"><span class="kom">// Kolize koule s rovinou</span></p>
+<p class="src3">if (TestIntersionPlane(pl1, OldPos[i], uveloc, rt, norm))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// Čas nárazu</span></p>
+<p class="src4">rt4 = rt * RestTime / rt2;</p>
+<p></p>
+<p class="src4"><span class="kom">// Pokud je menší než některý z dříve nalezených nahradit ho</span></p>
+<p class="src4">if (rt4 &lt;= lamda)</p>
+<p class="src4">{</p>
+<p class="src5">if (rt4 &lt;= RestTime + ZERO)</p>
+<p class="src5">{</p>
+<p class="src6">if (!((rt &lt;= ZERO) &amp;&amp; (uveloc.dot(norm) &gt; ZERO)))</p>
+<p class="src6">{</p>
+<p class="src7">normal = norm;</p>
+<p class="src7">point = OldPos[i] + uveloc * rt;</p>
+<p class="src7">lamda = rt4;</p>
+<p class="src7">BallNr = i;</p>
+<p class="src6">}</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (TestIntersionPlane(pl2, OldPos[i], uveloc, rt, norm))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// To samé jako minule, ale s jinou rovinou</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (TestIntersionPlane(pl3, OldPos[i], uveloc, rt, norm))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// To samé jako minule, ale s jinou rovinou</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (TestIntersionPlane(pl4, OldPos[i], uveloc, rt, norm))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// To samé jako minule, ale s jinou rovinou</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (TestIntersionPlane(pl5, OldPos[i], uveloc, rt, norm))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// To samé jako minule, ale s jinou rovinou</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3"><span class="kom">// Kolize koule s válcem</span></p>
+<p class="src3">if (TestIntersionCylinder(cyl1, OldPos[i], uveloc, rt, norm, Nc))</p>
+<p class="src3">{</p>
+<p class="src4">rt4 = rt * RestTime / rt2;</p>
+<p></p>
+<p class="src4">if (rt4 &lt;= lamda)</p>
+<p class="src4">{</p>
+<p class="src5">if (rt4 &lt;= RestTime + ZERO)</p>
+<p class="src5">{</p>
+<p class="src6">if (!((rt &lt;= ZERO) &amp;&amp; (uveloc.dot(norm) &gt; ZERO)))</p>
+<p class="src6">{</p>
+<p class="src7">normal = norm;</p>
+<p class="src7">point = Nc;</p>
+<p class="src7">lamda = rt4;</p>
+<p class="src7">BallNr = i;</p>
+<p class="src6">}</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (TestIntersionCylinder(cyl2, OldPos[i], uveloc, rt, norm, Nc))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// To samé jako minule, ale s jiným válcem</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (TestIntersionCylinder(cyl3, OldPos[i], uveloc, rt, norm, Nc))</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// To samé jako minule, ale s jiným válcem</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Kolize mezi koulemi</span></p>
+<p class="src2">if (FindBallCol(Pos2, BallTime, RestTime, BallColNr1, BallColNr2))</p>
+<p class="src2">{</p>
+<p class="src3">if (sounds)<span class="kom">// Jsou zapnuté zvuky?</span></p>
+<p class="src3">{</p>
+<p class="src4">PlaySound(&quot;Data/Explode.wav&quot;, NULL, SND_FILENAME | SND_ASYNC);</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if ((lamda == 10000) || (lamda &gt; BallTime))</p>
+<p class="src3">{</p>
+<p class="src4">RestTime = RestTime - BallTime;</p>
+<p></p>
+<p class="src4">TVector pb1, pb2, xaxis, U1x, U1y, U2x, U2y, V1x, V1y, V2x, V2y;<span class="kom">// Deklarace proměnných</span></p>
+<p class="src4">double a, b;</p>
+<p></p>
+<p class="src4">pb1 = OldPos[BallColNr1] + ArrayVel[BallColNr1] * BallTime;<span class="kom">// Nalezení pozice koule 1</span></p>
+<p class="src4">pb2 = OldPos[BallColNr2] + ArrayVel[BallColNr2] * BallTime;<span class="kom">// Nalezení pozice koule 2</span></p>
+<p></p>
+<p class="src4">xaxis = (pb2 - pb1).unit();<span class="kom">// Nalezení X_Axis</span></p>
+<p></p>
+<p class="src4">a = xaxis.dot(ArrayVel[BallColNr1]);<span class="kom">// Nalezení projekce</span></p>
+<p class="src4">U1x = xaxis * a;<span class="kom">// Nalezení průmětů vektorů</span></p>
+<p class="src4">U1y = ArrayVel[BallColNr1] - U1x;</p>
+<p></p>
+<p class="src4">xaxis = (pb1 - pb2).unit();</p>
+<p></p>
+<p class="src4">b = xaxis.dot(ArrayVel[BallColNr2]);<span class="kom">// To samé pro druhou kouli</span></p>
+<p class="src4">U2x = xaxis * b;</p>
+<p class="src4">U2y = ArrayVel[BallColNr2] - U2x;</p>
+<p></p>
+<p class="src4">V1x = (U1x + U2x - (U1x - U2x)) * 0.5;<span class="kom">// Nalezení nových rychlostí</span></p>
+<p class="src4">V2x = (U1x + U2x - (U2x - U1x)) * 0.5;</p>
+<p class="src4">V1y = U1y;</p>
+<p class="src4">V2y = U2y;</p>
+<p></p>
+<p class="src4">for (j = 0; j &lt; NrOfBalls; j++)<span class="kom">// Aktualizace pozic všech koulí</span></p>
+<p class="src4">{</p>
+<p class="src5">ArrayPos[j] = OldPos[j] + ArrayVel[j] * BallTime;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">ArrayVel[BallColNr1] = V1x + V1y;<span class="kom">// Nastavení právě vypočítaných vektorů koulím, které do sebe narazily</span></p>
+<p class="src4">ArrayVel[BallColNr2] = V2x + V2y;</p>
+<p></p>
+<p></p>
+<p class="src4"><span class="kom">// Aktualizace pole explozí</span></p>
+<p class="src4">for(j = 0; j &lt; 20; j++)<span class="kom">// Všechny exploze</span></p>
+<p class="src4">{</p>
+<p class="src5">if (ExplosionArray[j]._Alpha &lt;= 0)<span class="kom">// Hledá volné místo</span></p>
+<p class="src5">{</p>
+<p class="src6">ExplosionArray[j]._Alpha = 1;<span class="kom">// Neprůhledná</span></p>
+<p class="src6">ExplosionArray[j]._Position = ArrayPos[BallColNr1];<span class="kom">// Pozice</span></p>
+<p class="src6">ExplosionArray[j]._Scale = 1;<span class="kom">// Měřítko</span></p>
+<p></p>
+<p class="src6">break;<span class="kom">// Ukončit prohledávání</span></p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">continue;<span class="kom">// Opakovat cyklus</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Konec testů kolizí</span></p>
+<p class="src2"><span class="kom">// Pokud se prošel celý časový úsek a byly vypočteny reakce koulí, které narazily</span></p>
+<p class="src2">if (lamda != 10000)</p>
+<p class="src2">{</p>
+<p class="src3">RestTime -= lamda;<span class="kom">// Odečtení času kolize od časového úseku</span></p>
+<p></p>
+<p class="src3">for (j = 0; j &lt; NrOfBalls; j++)</p>
+<p class="src3">{</p>
+<p class="src4">ArrayPos[j] = OldPos[j] + ArrayVel[j] * lamda;</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">rt2 = ArrayVel[BallNr].mag();</p>
+<p class="src3">ArrayVel[BallNr].unit();</p>
+<p class="src3">ArrayVel[BallNr] = TVector::unit((normal * (2 * normal.dot(-ArrayVel[BallNr]))) + ArrayVel[BallNr]);</p>
+<p class="src3">ArrayVel[BallNr] = ArrayVel[BallNr] * rt2;</p>
+<p></p>
+<p class="src3"><span class="kom">// Aktualizace pole explozí</span></p>
+<p class="src3">for(j = 0; j &lt; 20; j++)<span class="kom">// Všechny exploze</span></p>
+<p class="src3">{</p>
+<p class="src4">if (ExplosionArray[j]._Alpha &lt;= 0)<span class="kom">// Hledá volné místo</span></p>
+<p class="src4">{</p>
+<p class="src5">ExplosionArray[j]._Alpha = 1;<span class="kom">// Neprůhledná</span></p>
+<p class="src5">ExplosionArray[j]._Position = ArrayPos[BallColNr1];<span class="kom">// Pozice</span></p>
+<p class="src5">ExplosionArray[j]._Scale = 1;<span class="kom">// Měřítko</span></p>
+<p></p>
+<p class="src5">break;<span class="kom">// Ukončit prohledávání</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3">RestTime = 0;<span class="kom">// Ukončení hlavního cyklu a vlastně i funkce</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Jak jsem už napsal na začátku, předmět kolizí je velmi těžký a rozsáhlý, aby se dal popsat jen v jednom tutoriálu, přesto jste se naučili spoustu nových věcí. Můžete začít vytvářet vlastní působivá dema. Nyní, když chápete základy, budete lépe rozumět i cizím zdrojovým kódům, které vás zase posunou o kousek dál. Přeji hodně štěstí.</p>
+
+<p class="autor">napsal: Dimitrios Christopoulos<br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3>Informace o autorovi</h3>
+
+<p>V současné době pracuje jako softwarový inženýr virtuální reality Helénského světa v Aténách/Řecko (www.fhw.gr). Ačkoli se narodil v Německu, studoval řeckou univerzitu Patras na bakaláře přírodních věd v počítačovém inženýrství a informatice. Je také držitelem MSc degree (titul Magistra přírodních věd) z univerzity Hull (Anglie) v počítačové grafice a virtuálním prostředí.</p>
+
+<p>První krůčky s programováním podnikl v jazyce Basic na Commodoru 64. Po začátku studia se přeorientoval na C/C++/Assembler na platformě PC. Během několika minulých let si jako grafické API zvolil OpenGL.</p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson30.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson30_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson30.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson30.zip">Delphi</a> kód této lekce. ( <a href="mailto:another.freak@gmx.de">Felix Hahn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson30.zip">Dev C++</a> kód této lekce. ( <a href="mailto:conrado@buhrer.net">Conrado</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson30.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson30.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:rodolphe.suescun@wanadoo.fr">Rodolphe Suescun</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson30.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson30.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_30_big.jpg" class="nehe_velky" alt="Lekce 30" /></div>
+<p class="okolni_lekce"><a href="tut_29.php">&lt;&lt;&lt; Lekce 29</a> | <a href="tut_31.php">Lekce 31 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Dark KNight</div>
+<div class="d_o_datumcas">30.09.2004 - 18:38:01</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_30.php&j=0">Kolize dvou modelů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">01.10.2004 - 23:57:02</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_30.php&j=1">Re: Kolize dvou modelů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Noob</div>
+<div class="d_o_datumcas">04.03.2006 - 15:56:14</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_30.php&j=2">Kolize s trianglem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">redleader</div>
+<div class="d_o_datumcas">29.03.2006 - 19:27:43</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_30.php&j=3">Re: Kolize s trianglem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">k4r7m3n</div>
+<div class="d_o_datumcas">30.08.2006 - 21:37:56</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_30.php&j=6">Re: Kolize s trianglem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">noob</div>
+<div class="d_o_datumcas">31.08.2006 - 15:12:48</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_30.php&j=7">Re: Kolize s trianglem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">dr.eamer</div>
+<div class="d_o_datumcas">02.05.2006 - 18:49:16</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_30.php&j=4">Rychlost</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">02.05.2006 - 19:50:09</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_30.php&j=5">Re: Rychlost</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Nextex</div>
+<div class="d_o_datumcas">27.09.2006 - 12:59:37</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_30.php&j=8">Asi nechápu.</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">07.10.2006 - 10:16:21</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_30.php&j=9">Ve 2D</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Nextex</div>
+<div class="d_o_datumcas">09.10.2006 - 07:25:38</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_30.php&j=10">Re: Ve 2D</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">09.10.2006 - 07:32:15</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_30.php&j=11">Re: Ve 2D</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_30.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

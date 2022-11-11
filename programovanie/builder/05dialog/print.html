@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Časovač a dialógy</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Dialógové okná - Save</h3>
+Vo Win máme štandartné prostriedky na voľbu niektorých prostriedkov - volajú sa dialógové okná.				 
+<br>Dialógové okná sú prostriedky Windows na prácu s 
+<br><font color="Blue">tlačiarňou</font> - chceme aby užívateľ zvolil tlačiareň, alebo ju nastavil
+<br><font color="Blue">súbormi</font> - chceme aby užívateľ zvolil súbor na načítanie alebo zápis
+<br><font color="Blue">adresármi</font> - chceme aby užívateľ zvolil aktívny disk, adresár
+<br><font color="Blue">farbami</font> - chceme aby užívateľ vyberal aktívnu farbu
+<br><br>Z programov Word, Excel a ďalších poznáme postup ako zvoliť vytlačenie súboru. Tu si ukážeme ako tento spôsob voľby
+tlače pre užívateľa naučiť aj náš program.
+
+<dl>
+	<dt class=main>PrintDialog
+	<dd>Toto dialógové okno použijeme, ak chceme aby užívateľ zvolil tlačiareň, nastavil jej vlastnosti. Tento dialóg ale
+	 nič netlačí, len umožní nám postupom bežným vo Win zvoliť si vlastnosti tlače. Dialógové okno <b>PrintDialog</b> nájdeme
+	  na karte <b>Dialogs</b>, vložíme ho do nášho formulára. Ide o nevizuálny objekt a tak umiestnenie v okne nemá vplyv na
+	   použitie. Po vložení do formulára získame funkciu <b>PrintDialog1.execute</b>, ktorá vytvorí dialógové okno 
+	   na voľbu vlastností tlače: 
+		<ul><li>tlačiareň 
+			<li>nastaviť vlastnosti zvolenej tlačiarne
+			<li>určiť oblasť tlače
+			<li>počet kópií
+		</ul>
+		<br>a v object inspector alebo príkazmi možno pred zavolaním okna nastaviť nejaké vlastnosti
+		<ul>
+			<li>obmedzenie na maximálny a minimálny počet strán textu 
+		</ul>
+	<dt><font color="Green">Execute</font>
+	<dd>- základná funkcia objektu, ktorá vytvorí na obrazovke okno cez ktoré bude
+		komunikovať s užívateľom. V tomto okne sú vstupné polia, kde volíme tlačiareň 
+		nastavujeme jej vlastnosti zadávame rozsah strán, počet kópií a sú tu dve tlačítka <b>OK</b> a <b>Storno</b>.	
+		Funkcia nadobúda logickú hodnotu <b>TRUE</b> - ak užívateľ stlačí <b>OK</b> a <b>FALSE</b> ak stlačí
+		<b>Storno</b> alebo okno len zavrie. 
+		Celú tlač robíme pomocou objektu <b>Printer</b>, kde prenesieme nastavené vlastnosti tlače zadané užívateľom
+</dl>
+<H3>Tlač dokumentu</H3>
+Na prácu s tlačiarňou je potrebné pripojiť knižnicu s potrebnými príkazmi. Takou je mapríklad knižnica <font color="Red"><b>printers</b></font>.
+Po pripojení máme k dispozícii objekt printer pomocou ktorého môžme posielať text na výstup. Otvorenie tlačového portu je príkazom 
+<b>BeginDoc</b>, zatvorenie pomocou príkazu <b>EndDoc</b>.
+<h3>Vlastnosti a metódy objektu printer</h3>
+<dl>	
+	<dt style="color:#009900">BeginDoc
+	<dd>Vytvorí spojenie plochy a tlačiarne, pripraví prázdnu plochu "správnej" veľkosti.
+	<dt style="color:#009900">EndDoc
+	<dd>Odošle plochu do tlačiarne a ukončí spojenie plochy s tlačiarňou.
+	<dt style="color:#009900">NewPage
+	<dd>Odošle plochu do tlačiarne a pripraví ďalšiu prázdnu plochu.
+	<dt style="color:#009900">Orientation
+	<dd>určuje orientáciu papiera. Prípustné sú 2 hodnoty:
+		<br>poPortrait - na výšku	
+		<br>poLandscape- na šírku	
+	<dt style="color:#009900">Copies
+	<dd>počet kópií tlačeného dokumentuntu	
+	<dt style="color:#009900">Canvas
+	<dd>plocha kam môžeme kresliť písať a môže byť odoslané na štandartnú tlačiareň.
+		<br>Najpoužívanejšie príkazy na písanie-kreslenie na Canvas
+		<dl><dt>Font.size, Font.name, Font.color
+			<dd>veľkosť, meno fontu, farba písma
+			<dt>TextOut(x,y,text)
+			<dd>vypíše text na súradnice [x,y]. 
+			<dt>TextRect(rect,x,y,text)
+			<dd>vypíše text do obdĺžnika <font color="Green">rect</font>, text je na súradnici x,y viditelná je len tá časť, ktorá
+				je vnútri obdĺžnika. 
+			<dt>TextWidth(text), TextHeight(text)
+			<dd>šírka, výška textu v pixloch, ponocou týchto hodnôt môžeme zistiť, či sa text zmestí na dané miesto papiera.	
+	<dt>PageHeight, PageWidth
+	<dd>výška, resp. šírka tlačenej plochy. Veľkosť plochy je určená veľkosťou papiera - ktorý je nastavený v tlačiarni - 
+		a tiež počtom pixelov na palec - hustota tlače.
+</dl>
+</dl>
+
+
+</body>
+</html>

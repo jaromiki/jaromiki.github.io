@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Preprocesor jazyka C</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+
+<h1>2 Preprocesor jazyka C</h1>
+
+
+<ul>
+<li><a href="#definicia">Definícia symbolických konštánt a&nbsp;makier</a></li>
+
+<li><a href="#vkladanie">Vkladanie textu</a></li>
+
+<li><a href="#preklad">Podmienený preklad</a></li>
+</ul>
+
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Pod pojmom preprocesor jazyka C rozumieme štandardne zavedenú množinu príkazov, ktoré sú spracované pred vlastnou kompiláciou samotného zdrojového textu. Toto predspracovanie má na starosti tzv. <em>preprocesor</em>. Príkazy preprocesora umožňujú vkladanie a&nbsp; skladanie textu z&nbsp;rôznych súborov, podmienený preklad a&nbsp;definíciu symbolických konštánt a&nbsp;makier. Každý príkaz preprocesora musí byť napísaný na samostatnom riadku a&nbsp;začínať znakom <em>#</em>, za ktorým nasleduje (bez medzery) príkaz a&nbsp; jeho parametre, oddelené medzerami (alebo tabelátormi). Príkazy nie sú ukončené bodkočiarkou (nejde o&nbsp;príkazy jazyka C). Parametre príkazov preprocesora je zvykom písať malými písmenami.</p>
+
+
+<h2><a id="definicia" name="definicia">2.1 Definícia symbolických konštánt a&nbsp;makier</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Príkaz na definíciu symbolických konštánt má tvar</p>
+
+<pre>
+  #define NAME konstantný_výraz
+</pre>
+
+<p align="justify">kde NAME je názov symbolickej konštanty<br />
+konstantný_výraz je hodnota, ktorú symbolická konštanta nadobúda<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Typ konštantného výrazu určuje typ symbolickej konštanty. Použitie tohoto príkazu umožňuje sústrediť (spravidla na začiatku programu) niektoré dôležité konštanty, čo umožňuje v&nbsp;prípade potreby ich modifikáciou zmeniť celý rad príkazov v&nbsp;programe (je to analógia príkazu CONST v&nbsp;jazyku Pascal, s&nbsp;tým rozdielom, že sa musí písať pred každou definíciou). Príkaz sa najčastejšie používa na definíciu rôznych konštánt, napríklad :</p>
+
+<pre>
+  #define MAX 100
+  #define LINE 80
+  #define PI 3.14
+  #define NAME1 Pavel
+  #define NAME2 "Peter"
+</pre>
+
+<p align="justify">respektíve</p>
+
+<pre>
+  #define 4PI 4*PI
+  #define MAXLIN 10 + LINE/2
+</pre>
+
+<p align="justify">Prvé tri sú číselné symbolické konštanty. MAX nadobudne hodnotu 100, LINE hodnotu 80, PI 3,14. NAME1 je znaková konštanta s&nbsp;hodnotou Pavel (všade namiesto NAME1 sa dosadí Pavel), NAME2 je reťazec "Peter".<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Príkaz define môže v&nbsp;rámci konštantného výrazu použiť skôr definovanú symbolickú konštantu (viď posledné dva príklady). Príkaz define sa často používa pre definíciu rozmerov polí, napríklad :</p>
+
+<pre>
+  #define M 10
+  #define N 5
+   ...
+  int a[M];
+  float b[N], c[M][N];
+  char d[M+1];
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Definícia makra spočíva v&nbsp;pridaní jedného či viacerých parametrov k&nbsp;názvu symbolickej konštanty (symbolickú konštantu je možné pokladať za makro bez parametrov) a&nbsp;doplnení výrazu pre jeho výpočet :<br />
+<a href="Zdrojaky/Pr2_1.c.html">príklad</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad p2_1.c</i></font>
+<font color="#0000a0"><i>pouzitie makier pre vypocet objemov telies */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#define PI 3.14159</font>
+<font color="#008000">#define KOCKA(a) (a*a*a)</font>
+<font color="#008000">#define VALEC(v,p) (PI*p*p*v)</font>
+<font color="#008000">#define GULA(r)  (4*PI/3*r*r*r)</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>float</b></font> hr<font color="#800000">=</font><font color="#ff0080">2</font><font color="#800000">,</font>v<font color="#800000">=</font><font color="#ff0080">3</font><font color="#800000">;</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem kocky so stranou %f je %f\n&quot;</font><font color="#800000">,</font>hr<font color="#800000">,</font>KOCKA<font color="#800000">(</font>hr<font color="#800000">));</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem valca (r=%f, v=%f) je %f\n&quot;</font><font color="#800000">,</font>hr<font color="#800000">,</font>v<font color="#800000">,</font>VALEC<font color="#800000">(</font>v<font color="#800000">,</font>hr<font color="#800000">));</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem gule (r=%f) je %f\n&quot;</font><font color="#800000">,</font>hr<font color="#800000">,</font>GULA<font color="#800000">(</font>hr<font color="#800000">));</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Uvedené makrá slúžia pre výpočet objemu príslušných geometrických telies. Identifikátory v&nbsp;hlavičke makra a, v, p, r predstavujú formálne parametre, ktoré sú pri vyvolaní makra textovo nahradené skutočnými. Počet formálnych a&nbsp;skutočných parametrov musí byť rovnaký. Poradie vykonávania jednotlivých operácií v&nbsp;rámci makra možno riadiť zátvorkami.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Ďalší <a href="Zdrojaky/Pr2_2.c.html">príklad</a> ilustruje použitie štandardnej funkcie printf v&nbsp;tele makra. Všimnite si, že je v&nbsp;takom prípade zakončená bodkočiarkou - je to normálny príkaz jazyka C.</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/*  priklad p2_2.c</i></font>
+<font color="#0000a0"><i>pouzitie makra s prikazom tlace */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#008000">#define PM(n) printf(&quot;Parameter makra PM = %d\n&quot;,(n))</font>
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  PM<font color="#800000">(</font><font color="#ff0080">1</font><font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Program vypíše :<br />
+Parameter makra PM = 1<br />
+<br />
+Posledný <a href="Zdrojaky/Pr2_3.c.html">príklad</a> ilustruje možnosť spojovania na textovej úrovni - parametre i, j v&nbsp;makre SP pomocou dvojice znakov ##. Je samozrejme na programátorovi, že objekt vytvorený uvedeným mechanizmom spojenia musí byť v&nbsp;programe deklarovaný. V&nbsp;opačnom prípade kompilátor hlási chybu - nedeklarovanú premennú. Tento príklad súčasne ilustruje možnosť dosadenia hodnoty parametra makra v&nbsp;textovej forme pomocou znaku # (#n v&nbsp;makre PM) :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad p2_3.c</i></font>
+<font color="#0000a0"><i>makro na spojenie plus dosadenie v textovej forme */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#define SP(i,j) (i##j)</font>
+<font color="#008000">#define PM(n) printf(&quot;Hodnota &quot;#n&quot; = %d\n&quot;,(n))</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> i1<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">,</font> i2<font color="#800000">=</font><font color="#ff0080">2</font><font color="#800000">,</font> i3<font color="#800000">=</font><font color="#ff0080">3</font><font color="#800000">;</font>
+  PM<font color="#800000">(</font>SP<font color="#800000">(</font>i<font color="#800000">,</font><font color="#ff0080">2</font><font color="#800000">));</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Program vypíše hodnotu premennej i2 v&nbsp;tvare:</p>
+
+<pre>
+  Hodnota SP(i,2) = 2<br />
+</pre>
+
+<p align="justify">Vykonaním makra SP vznikne premenná i2. Dosadenie parametra makra PM v&nbsp;textovej forme je znázornené textom "SP(i,2)". Symbolickú konštantu možno definovať aj bez hodnoty príkazom #define a&nbsp;zrušiť jej definíciu príkazom #undef (na príslušnom mieste programu)</p>
+
+<pre>
+  #define DEBUG
+   ...
+  #undef DEBUG
+</pre>
+
+<p align="justify">Takéto definovanie, resp. zrušenie definície je možné využívať v&nbsp;ďalších príkazoch preprocesora - pri podmienenom preklade, vetvení, zaradzovaní rôznych (ladiacich) výpisov a&nbsp;pod. (viď kap. 2.3).</p>
+
+<h2><a id="vkladanie" name="vkladanie">2.2 Vkladanie textu</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Príkaz na vkladanie textu <em>#include [meno súboru]</em> spôsobí vloženie obsahu súboru "meno súboru" pred prekladom do zdrojového súboru, v&nbsp;ktorom sa vyššie uvedený príkaz nachádza. To umožňuje vkladanie tak systémových súborov (tzv. hlavičkových súborov, s&nbsp;príponou .h, napr. &lt;stdio.h&gt;), ako aj vlastných užívateľských súborov, čo predstavuje jednu z&nbsp;možností modulárnej výstavby programu.Príkaz na vloženie môže mať dva tvary (v prvom prípade je názov súboru uvedený v&nbsp;lomených zátvorkách, v&nbsp;druhom prípade v&nbsp;dvojitých uvodzovkách):</p>
+
+<pre>
+  #include &lt;file.h&gt;
+  #include "path_file"
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Prvý tvar sa používa pre vkladanie systémových súborov, ktoré sú uložené v&nbsp;príslušnom systémovom podadresári (INCLUDE). Všetky štandardné funkcie, konštanty a&nbsp;makrá v&nbsp;jazyku C sú deklarované v&nbsp;takýchto súboroch. Názov príslušného súboru, resp. súborov je uvedený vždy pri popise príslušnej funkcie. Vloženie príslušného súboru umožňuje prekladaču kontrolu správnosti volania štandardnej funkcie.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Druhý tvar sa používa pre vkladanie užívateľských súborov, pričom sa prehľadáva aktuálny adresár, resp. adresár, uvedený v&nbsp;špecifikácii vkladaného súboru.</p>
+
+<h2><a id="preklad" name="preklad">2.3 Podmienený preklad</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Príkazy pre podmienený preklad majú tvar:</p>
+
+<pre>
+  #if podmienka
+  #ifdef  symb_konštanta
+  #ifndef symb_konštanta
+  #else
+  #endif
+</pre>
+
+<p align="justify">a umožňujú v&nbsp;závislosti na splnení daných podmienok zaradzovať, resp. vynechávať určité časti programu z&nbsp;prekladu. Tieto podmienky sa môžu vzťahovať napr. na ladenie programu, rôzne výpisy, prítomnosť hardware (napr. koprocesor), príp. programového vybavenia. Každý z&nbsp;príkazov <em>#if</em>, <em>#ifdef</em>, resp. <em>#ifndef</em> musí byť ukončený príkazom <em>#endif</em>. Nasledujúci <a href="Zdrojaky/Pr2_4.c.html">príklad</a> je ukážkou možnosti jednoduchého zaradzovania ladiacich výpisov v&nbsp;programe:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/*  priklad p2_4.c ladiace v&#253;pisy */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#define DEB</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> i1<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">,</font> i2<font color="#800000">=</font><font color="#ff0080">2</font><font color="#800000">,</font> i3<font color="#800000">=</font><font color="#ff0080">3</font><font color="#800000">;</font>
+
+  <font color="#008000">#ifdef DEB</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Hodnota i1 (krok 1) = %d\n&quot;</font><font color="#800000">,</font>i1<font color="#800000">);</font>
+  <font color="#008000">#endif</font>
+    i1<font color="#800000">=</font>i2<font color="#800000">*</font>i3<font color="#800000">;</font>
+  <font color="#008000">#ifdef DEB</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Hodnota i1 (krok 2) = %d\n&quot;</font><font color="#800000">,</font>i1<font color="#800000">);</font>
+    i1<font color="#800000">=</font>i1<font color="#800000">*</font>i3<font color="#800000">;</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Hodnota i1 (krok 3) = %d\n&quot;</font><font color="#800000">,</font>i1<font color="#800000">);</font>
+  <font color="#008000">#endif</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Druhá dvojica príkazov <em>#ifdef</em> - <em>#endif</em> obsahuje okrem výpisov aj priradzovací príkaz, čo nemusí byť algoritmicky správne - je potrebné to zvážiť podľa situácie.<br />
+Program vypíše (lebo je definavaná premenná DEB - príkaz <em>#define</em>):</p>
+
+<pre>
+   Hodnota i1 (krok 1) = 1
+   Hodnota i1 (krok 2) = 6
+   Hodnota i1 (krok 3) = 18
+</pre>
+</div>
+
+
+</body>
+
+</html>
+

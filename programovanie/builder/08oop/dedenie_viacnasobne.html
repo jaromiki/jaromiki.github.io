@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3 style="width:450">Viacnásobná dedičnosť</h3>
+Situácia okolo dedenia sa mierne komplilkuje pri viacnásobnej dedičnosti. Násobná dedičnosť môže byť
+<ul><li>do hĺbky - odvodzujeme novú triedu z triedy, ktorá je už odvodená z inej
+	<li>do šírky - trieda je odvodená z viacerých tried
+	<li>kombinácia oboch predošlých
+</ul>	
+<dl><dt class="main">Do hĺbky
+	<dd>Pri dedení do väčšej hĺbky sú konštruktory postupne volané od najzákladnejšej triedy a konštruktory v opačnom poradí.
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>class X
+{  int a;
+   public:
+   int b;
+   void setx(int aa){a=aa};
+   int geta() {return a;}
+   X(int aa) {a=aa;}
+};
+class Y : public X
+{   int c;
+    public:
+	int d;
+	void setc(int cc) {c=cc;}   
+   int getc() {return c;}
+   Y(int aa, int cc): X(aa) {c=cc;} 
+};
+class Z : public Y
+{   int e;
+    public:
+	int f;
+	// tu priamo vidíme premenné: a, b, c, d, e, f
+	void setc(int cc) {c=cc;}   
+   int getc() {return c;}
+   Z(int aa, int cc): Y(aa,cc) {e=1;}
+};
+int main()
+{ Z m; //vytvoril som triedu Z a má meno m
+       //najprv sa vzkonal kon3truktor X(), potom Y() a napokon Z()
+  //cez bodku priamo vidim: f, e, d, b
+}</pre>
+		</tr></table>
+		Pri zakreslovaní grafu dedičnosti používame orientované grafy, pričom šipka smeruje z odvodenej triedy do jej základnej.
+		<br>V našom príklade teda Z -> Y -> X 
+	<dt class="main">Do šírky
+	<dd>Pri dedení do šírky je jedna trieda odvodená z dvoch triede. Konštruktory sú postupne volané podľa poradia uvedenom v dedení zľava doprava.
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>class X
+{  int a;
+   public:
+   int b;
+   void setx(int aa){a=aa};
+   int geta() {return a;}
+   X(int aa) {a=aa;  cout &lt;&lt;"konstr X" &lt;&lt; endl;}
+};
+class Y 
+{   int c;
+    public:
+	int d;
+	void setc(int cc) {c=cc;}   
+   int getc() {return c;}
+   Y(int cc) {c=cc; cout &lt;&lt;"konstr Y" &lt;&lt; endl;} 
+};
+class Z : public X, public Y
+{   int e;
+    public:
+	int f;
+	// tu priamo vidíme premenné: a, b, c, d, e, f
+	void setc(int cc) {c=cc;}   
+   int getc() {return c;}
+   Z(int aa, int cc, int ee): X(aa),Y(cc) {e=ee;  cout &lt;&lt;"konstr Z" &lt;&lt; endl;}
+};
+int main()
+{ Z m; //vytvoril som triedu Z a má meno m
+       //najprv sa vykonal kon3truktor X(), potom Y() a napokon Z()
+  //cez bodku priamo vidim: f, e, d, b
+  return 0;
+}
+//vypíše:
+//konstr X
+//konstr Y
+//konstr Z</pre>
+		</tr></table>
+		<dl><dt>virtuálne základné triedy
+			<dd>Majme nasledovne určenú dedičnosť
+<pre>D3 -> D1 -> base
+   -> D2 -> base</pre>
+				Trieda base je rovnaká základná trieda aj pre triedu D1 aj triedu D2. Pri obyčajnom postupe dedenia, by trieda base bola v triede D3 obsiahnutá
+				dva krát, čo by pri práci s jej objektami viedlo ku nejednoznačnostiam a chybe prekladu. Oprava spočíva v tom, že triedu base budeme dediť ako virtuálnu,
+				čo zabezpečí že bude v konečnej triede len raz. Ešte malý problem je, že v triedach D1 a D2, ktoré sú označené ako virtual nie je možné určiť volanie 
+				konštruktora base s parametrom. Obídeme to tým, že hodnoty v base nastavíme pomocou public funkcií. 
+				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+				<tr><td>
+<pre>class base
+{  int a;
+   public:
+   void seta(int aa) {a=aa;}
+   int geta() {return a;}
+};
+class D1 : virtual public base
+{  int b;
+   public:
+   int getb() {return b;}
+   D1(int aa, int bb) {seta(aa);b=bb;}
+};      
+class D2 : virtual public base
+{  int c;
+   public:
+   int getcc() {return c;}
+   D2(int cc) {c=cc;}
+};
+class D3 : public D1, public D2
+{  int d;
+   public:
+   int getd() {return d;}
+   D3(int aa, int bb, int cc, int dd): D1(aa,bb), D2(cc) {d=dd;}
+   int sucet() {return geta()+getb()+getcc()+d;}
+};     
+int main()
+{  D3 x;
+   cout &lt;&lt; x.sucet() &lt;&lt; endl;
+   return 0;
+}</pre>
+		</tr></table>
+		V pr9pade ak bz sme chceli aby base bolo D3 dvakrát, nepoužijeme virtual ale pri používaní musíme uviesť z ktorej triedy chceme použiť objekt z base.
+		<br>Napr. D1::seta(5), D2::geta()  
+		</dl>
+</dl>		
+
+</body>
+</html>

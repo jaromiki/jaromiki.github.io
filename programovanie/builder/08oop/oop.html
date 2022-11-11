@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	  <script>
+	  var x=0; var y=0; var r=0; var u=0;
+	  function inkart()
+	  {  x= eval(in1.value); y=eval(in2.value);
+	     if (!x && !y) r=u=0;
+		 else
+		 {   r = Math.sqrt(x*x +y*y);
+		     u = 180/Math.PI*Math.atan2(y,x);
+			 if (u<0) u+=360; 
+		 }
+		 x1.value=x.toFixed(4); y1.value=y.toFixed(4);
+		 r1.value=r.toFixed(4); u1.value=u.toFixed(4);
+	  }	 
+	  function inpol()
+	  {  r= eval(in1.value); u=eval(in2.value);
+	     if (!r) r=u=0;
+		 else
+		 {   x = r*Math.cos(u/180*Math.PI);
+		     y = r*Math.sin(u/180*Math.PI);
+		 }
+		 x1.value=x.toFixed(4); y1.value=y.toFixed(4);
+		 r1.value=r.toFixed(4); u1.value=u.toFixed(4);
+	  }	 
+	  function outkart()
+	  {  out1.value = x.toFixed(4);
+	     out2.value = y.toFixed(4);
+	  }	 
+	  function outpol()
+	  {  out1.value = r.toFixed(4);
+	     out2.value = u.toFixed(4);
+	  }	 
+ 	</script>	
+	 <title>Úvod</title>
+</head>
+
+<body>
+<h3 style="width:450"> OOP ... objektovo-orientované programovanie</h3>
+<dl><dt>Pôvod tried v jazyku C
+	<dd>Triedy v jazyku C++ sa vyvinuli zo štruktúr v jazyku C.
+		<table width="60%" bgcolor=#cccccc border="2" bordercolor=#cccccc bordercolordark="#999999" bordercolorlight=ffffff>
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>
+typedef struct {
+char[20] meno;
+char[20] priezvisko;
+int rocnik;
+char trieda;
+} Student;
+. . .
+Student x;
+strcpy(x.meno,"Milan");
+strcpy(x.priezvisko,"Maslák");
+x.rocnik = 1;
+x.trieda = 'C';
+. . .
+Student y = ("Dana", "Petrovova", 2, 'B');
+</pre>
+		</td></tr>
+		</table>
+		Vidíme, že štruktúry obsahujú len dáta a žiadne funkcie na spracovávanie týchto dát. Je výhodné mať funkcie spolu s dátami, kde možno zabezpečiť
+		len korektné narábanie s dátami.
+	<dt>class - trieda
+	<dd>Na triedu môžeme nahliadať ako na šablónu, podľa ktorej budeme vytvárať objekty určitého typu. Skôr, ako budeme môcť použiť triedu na zakladanie objektov, 
+		musíme v zdrojovom kóde jazyka C++ špecifikovať deklaráciu triedy. Triedu deklarujeme pomocou kľúčového slova <b>class</b>, ale podoba so štruktúrami ostala.
+		<table width="60%" bgcolor="#cccccc" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>
+class Student {
+string meno;
+string priezvisko;
+int rocnik;
+char trieda;
+public:
+void Student(string m, string p, int r, char t); &nbsp; &nbsp; //konštruktor
+void zapis(int r);
+. . .
+};
+</pre>
+		</td></tr>
+		</table>
+		Deklarácia triedy sa v jazyku C++ skladá z hlavičky triedy a tela triedy. V hlavičke triedy je vždy uvedené kľúčové slovo <b>class</b>, 
+		ktoré dáva prekladaču jazyka C++ na známosť, že sa chystáme deklarovať novú triedu. Každá trieda má svoj názov, 
+		ktorý sa objavuje v jej hlavičke okamžite za kľúčovým slovom class. 
+		Telo triedy je ohraničené programovým blokom, ktorého dĺžka je vizuálne určená zloženými zátvorkami. V tele triedy sa vyskytujú <b>členy triedy</b>. 
+		Telo triedy môže byť delené do troch sekcii:
+		<ul><li>private: - prístupné jen v metodách danej triedy a v priateľských funkciách (súkromné)
+			<li>public: - prístupné v celom programe (verejné)
+			<li>protected: - prístupné v metódach danej triedy a odvodených triedach a v priateľských funkciách (chránené)
+		</ul>
+		Ak sekcia nie je uvedená imlicitne ide o private (tú teda nemusíme uvádzať - ak je prvá)
+		K členom triedy patria predovšetkým dátové atribúty triedy a metódy triedy. Syntakticky sú dátové atribúty reprezentované premennými, ktorých
+		oblasťou platnosti je telo triedy. Všetky dátové atribúty sa obyčajne nachádzajú v súkromnej sekcii triedy. To znamená, že dátové atribúty sú súkromné, 
+		čo je v poriadku, pretože rešpektujeme jeden zo základných princípov objektovo orientovaného programovania, ktorým je ukrývanie dát. 
+		Objekt (inštancia triedy) teda ukrýva dáta, ktoré obsahuje, čím zabezpečuje ochranu ich integrity. Na druhej strane, metódy sú obyčajne 
+		verejné - zvonku viditeľné.
+		(V prípade potreby možno vytvoriť aj súkromnú metódu - zvonka neviditeľnú, alebo dátovú štruktúru zvonka dostupnú).
+		<br><b>Deklarácia triedy je v jazyku C++ príkazom, a preto je zakončená bodkočiarkou.</b>
+		<br>Metódy sa v triedach len deklarujú (väčšinou, neskôr uvidíme, že môžme deklarovať aj vnútri)– uvádzajú sa len ich hlavičky (deklarácie), 
+		samotné telá fukcie sú uvedené mimo deklarácie tohoto nového typu nasledovne:
+		<table width="60%" bgcolor=#cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>void Student::zapis(int r) 
+{   rocnik = r;
+}
+// konštruktor
+Student::Student(string m, string p, int r, char t); 
+{   meno = m; priezvisko = p;
+    rocnik = r; trieda = t;
+}</pre>
+		</td></tr>
+		</table>
+		Vo verejnej sekcii triedy sa nachádzajú dve metódy. Prvou z nich je konštruktor, ktorý je verejne prístupný a parametrický. 
+	<dt>konštruktor
+	<dd>Konštruktor je špeciálna metóda triedy, 
+		ktorá slúži na inicializáciu inštancie triedy po jej alokácii. Povedané inak, úlohou konštruktora je uviesť alokovanú inštanciu triedy do východiskového, 
+		a teda okamžite použiteľného stavu. Ako „okamžite použiteľný“ označujeme stav, kedy môže inštancia triedy začať poskytovať služby svojim klientom.
+		Z technického hľadiska je konštruktor členskou funkciou triedy, ktorá má rovnaký identifikátor ako trieda, v ktorej tele je konštruktor umiestnený. 
+		Konštruktor môže byť buď implicitný, alebo explicitný. Náš konštruktor je explicitný, pretože sme jeho definíciu sami zapísali do tela triedy. 
+		Ak by sme však do tela triedy nezaviedli definíciu žiadneho konštruktora, prekladač jazyka C++ by automaticky vygeneroval svoj vlastný, tzv. implicitný konštruktor. 
+		(Implicitný konštruktor je bezparametrický a má prázdne telo.) Naopak, ak prekladač zistí, že v tele triedy sa už objavuje explicitný konštruktor, žiaden
+		implicitný konštruktor nebude automaticky vytvárať. Bez ohľadu na to, či je konštruktor implicitný, alebo explicitný, nikdy nepracuje s návratovou hodnotou 
+		(túto skutočnosť vyjadrujeme jednoducho vynechaním typu návratovej hodnoty).
+		Explicitný konštruktor je v našom prípade parametrický. V tele konštruktora sú uvedené priraďovacie príkazy, ktoré vykonávajú inicializáciu dátových atribútov inštancie triedy.
+		<br>V definícii konštruktora možno používať aj inicializované parametre (pozri v časti programujeme->podprogramy). 
+		<br><br>
+		Pri zániku založenej inštancie triedy je vhodné spätne uvoľniť využitú operačnú pamäť. Na to slúži špeciálna členská funkcia triedy nazývaná deštruktor. 
+		K jej aktivácii dochádza tesne pred tým, ako nastane dealokácia inštancie triedy. Zjednodušene povedané, deštruktor je opakom konštruktora.
+		V tele triedy ho spoznáme podľa typickej vlnovky (~), ktorá sa nachádza v jeho hlavičke:
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>// Definícia deštruktora v časti public.
+~Student(); 
+</pre>
+		</td></tr>
+		</table>
+		Deštruktor nevracia návratovú hodnotu a nedefinuje žiadne formálne parametre (je vždy bezparametrický). Nesmie byť ani preťažený, to znamená, že v jednej triede 
+		sa vyskytuje najviac jeden deštruktor.
+		<br>Pozn.
+		<br>Deštruktor používame ak sme objekt nového typu typu class vytvárali dynamicky.
+	<dt>inštaciácia - vytvorenie
+	<dd>V jazyku C++ existujú 3 varianty inštanciácie triedy:
+		<ul><li>Automatická inštanciácia triedy.
+			<li>Statická inštanciácia triedy.
+			<li>Dynamická inštanciácia triedy.
+		</ul>
+		Najviac sa budeme venovať tretiemu spôsobu vytvárania triedy v pamäti, ale v krátkosti popíšem aj predošlé dva
+		<dl>
+		<dt>Automatická inštanciácia triedy
+		<dd>Napr. 
+			<code>
+			<br>Student x; //vytvorí studenta a dáta nie sú inicializované
+			<br>Student x("Ján", "Rychlý", 1, 'D'); //vytvorí studenta a nastaví explicitným konštruktorom poč. hodnoty
+			</code>
+			<br>Pri automatickej inštanciácii triedy sa vytvorí v <b>zásobníku</b> automatická premenná, do ktorej sa uloží vygenerovaná automatická inštancia triedy T. 
+			Inštancia triedy je iniicalizovaná samočinne volaným konštruktorom, ktorý je buď bezparametrický, alebo parametrický.
+			<br>Prístup ku položkám triedy:
+			<br>Samozrejme mimo triedy budeme vidieť len objekty popísané v časti <b>public</b>
+			<br>x.zapis(3); &nbsp; &nbsp; //nastaví studentovi rocnik na hodnotu 3.
+		<dt>Statická inštanciácia triedy
+		<dd>Napr. 
+			<code>
+			<br>static Student x; //vytvorí studenta a dáta nie sú inicializované
+			<br>static Student x("Ján", "Rychlý", 1, 'D'); //vytvorí studenta a nastaví explicitným konštruktorom poč. hodnoty
+			</code>
+			<br>V podstate je to ako predošlý prípad, len nie je v zásobníku a tento objekt "žije" počas celého behu programu.
+		<dt>Dynamická inštanciácia triedy
+		<dd>Napr. 
+			<code>
+			<br>Student *x = new Student; //vytvorí studenta a dáta nie sú inicializované
+			<br>Student *x = new Student("Ján", "Rychlý", 1, 'D'); //vytvorí studenta a nastaví explicitným konštruktorom poč. hodnoty
+			</code>
+			<br>Príkaz vytvorí objekt Student v halde a jeho adresu potom zapíše do premennej x. Premenná bude "živá" pokiaľ ju program príkazom z pamäte neuvoľní.
+			<br><b>Uvoľnenie z pamäte:</b>
+			<br>Napr.
+			<code>
+			<br>delete x; &nbsp; &nbsp; //zruší premennú študent v halde (adresa v x stále ukazuje na tú pamäť, ale tá už nie je chránená)
+			</code>
+			<br>je odporúčané po príkaze delete zapísať do x hodnotu NULL
+			<br><br><b>Prístup ku položkám triedy:</b>
+			<br>Samozrejme mimo triedy budeme vidieť len objekty popísané v časti <b>public</b>
+			<br>x->zapis(3); &nbsp; &nbsp; //nastaví studentovi rocnik na hodnotu 3
+			<br>(*x).zapis(3); &nbsp; &nbsp; //nastaví studentovi rocnik na hodnotu 3
+			
+		</dl>	
+	<dt>Úlohy
+	<dd><ul><li>vytvor triedu bod s položkami
+				<br>x,y ... karteziánske súradnice v rovine
+				<br>r,uhol ... polárne súradnice v rovine (uhol v stupňoch)
+				<br>pričom ak mením karteziánske polárne sa automaticky prerátajú a tiež ak zmením polárne prerátajú sa karteziánske
+				<br>pomôcka: uhol vypočítame 180*atan2(y,x)/pi ... vráti uhol od -180 po 180
+				<br>definuj metody na vypis_polar, vypis_kartez, napln_polar, napln_kartez
+				<br>konštruktor bod(x,y), bod(x,y,'k'), bod(r,uhol,'p'), bod() ... vynuluje vsetky data
+				<br>vytvor dynamickú inštanciu triedy s nasledovnými funkciami:
+					<div style="border-width:3;border-style:outset;width:600px;margin:10px">
+				  	<div align="right" style="background-color:#3366ff; width:600px; padding:0;border-width:0;">
+				  	<img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   					</div>
+					<div style="background-color:silver; width:600px;">
+					<table rules="cols" frame="void">
+					<tr><td>
+					<br><h4 align="center">Práca s triedou bod</h4>
+					<br> 
+					x <input type="Button" value="Vstup karteziánske" onclick="inkart()"> &nbsp; &nbsp;<input type="Button" value="Vstup polárne" onclick="inpol()">
+					<br><input type="text" value="5"    style="width:100px; margin:20px;" id="in1"> 
+					<input type="text" value="5"    style="width:100px; margin:20px;"  id="in2"> 
+					<hr>
+					<h4 align="center">Výstup</h4>
+					<input type="Button" value="Výstup karteziánske" onclick="outkart()"> &nbsp; &nbsp;<input type="Button" value="Výstup polárne" onclick="outpol()">
+					<br><input type="text" value="?"    style="width:100px; margin:20px;" id="out1" readonly> 
+					<input type="text" value="?"    style="width:100px; margin:20px;" id="out2"  readonly> 
+					<td valign="top"><br><h4 align="center">Trieda<br>stav premenných</h4>
+					<br> x: <input type="text" value="0" style="width:100px; margin:5" id="x1">
+					<br> y: <input type="text" value="0" style="width:100px; margin:5" id="y1">
+					<br> r: <input type="text" value="0" style="width:100px; margin:5" id="r1">
+					<br> u: <input type="text" value="0" style="width:100px; margin:5" id="u1">
+					</tr>
+					</table>
+					</div></div>
+				<li>Vytvor triedu <b>stack</b> na úložisko pre celé čísla s členskými funkciami push(), pop(), bool empty() 
+		</ul>	
+	<dt>Poznámka
+	<dd>Je možnosť "krátke" funkcie priamo definovať vnútri triedy (namiesto hlavičky), čo má ten efekt, že sa tieto funkcie chovajú ako makro.			
+</dl>
+</body>
+</html>

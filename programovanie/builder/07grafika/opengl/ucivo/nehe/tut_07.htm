@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_07.jpg" class="nehe_maly" alt="Lekce 7" />
+
+<h1>Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice</h1>
+
+<p class="nadpis_clanku">V tomto dílu se pokusím vysvětlit použití tří odlišných texturových filtrů. Dále pak pohybu objektů pomocí klávesnice a nakonec aplikaci jednoduchých světel v OpenGL. Nebude se jako obvykle navazovat na kód z předchozího dílu, ale začne se pěkně od začátku.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standartdní vstup/výstup</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+
+<p>Přidáme tři booleovské proměnné. Proměnná light sleduje zda je světlo zapnuté. Proměnné lp a fp nám indikují stisk klávesy 'L' nebo 'F'. Proč je potřebujeme se dozvíme dále. Teď stačí vědět, že zabraňují opakování obslužného kódu při delším držení.</p>
+
+<p class="src0">bool light;<span class="kom">// Světlo ON/OFF</span></p>
+<p class="src0">bool lp;<span class="kom">// Stisknuto L?</span></p>
+<p class="src0">bool fp;<span class="kom">// Stisknuto F?</span></p>
+<p></p>
+<p class="src0">GLfloat xrot;<span class="kom">// X Rotace</span></p>
+<p class="src0">GLfloat yrot;<span class="kom">// Y Rotace</span></p>
+<p class="src0">GLfloat xspeed;<span class="kom">// Rychlost x rotace</span></p>
+<p class="src0">GLfloat yspeed;<span class="kom">// Rychlost y rotace</span></p>
+<p class="src0">GLfloat z=-5.0f;<span class="kom">// Hloubka v obrazovce</span></p>
+
+<p>Následují pole pro specifikaci světla. Použijeme dva odlišné typy. První bude okolní (ambient). Okolní světlo nevychází z jednoho bodu, ale jsou jím nasvíceny všechny objekty ve scéně. Druhým typem bude přímé (diffuse). Přímé světlo vychází z nějakého zdroje a odráží se o povrch. Povrchy objektu, na které světlo dopadá přímo, budou velmi jasné a oblasti málo osvětlené budou temné. To vytváří pěkné stínové efekty po stranách krabice. Světlo se vytváří stejným způsobem jako barvy. Je-li první číslo 1.0f a další dvě 0.0f, dostáváme jasnou červenou. Poslední hodnotou je alfa kanál. Ten tentokrát necháme 1.0f. Červená, zelená a modrá nastavené na stejnou hodnotu vždy vytvoří stín z černé (0.0f) do bílé (1.0f). Bez okolního světla by místa bez přímého světla byla příliš tmavá.</p>
+
+<p class="src0">GLfloat LightAmbient[]= { 0.5f, 0.5f, 0.5f, 1.0f };<span class="kom">// Okolní světlo</span></p>
+
+<p>V dalším řádku jsou hodnoty pro přímé světlo. Protože, jsou všechny hodnoty 1.0f, bude to nejjasnější světlo jaké můžeme získat. Pěkně osvítí krabici.</p>
+
+<p class="src0">GLfloat LightDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };<span class="kom">// Přímé světlo</span></p>
+
+<p>Nakonec nastavíme pozici světla. Protože chceme aby světlo svítilo na bednu zpředu, nesmíme pohnout světlem na ose x a y. Třetí parametr nám zaručí, že bedna bude osvětlena zepředu. Světlo bude zářit směrem k divákovi. Zdroj světla neuvidíme, protože je před monitorem, ale uvidíme jeho odraz od bedny. Poslední číslo definujeme na 1.0f. Určuje koordináty pozice světelného zdroje. Více v další lekci.</p>
+
+<p class="src0">GLfloat LightPosition[]= { 0.0f, 0.0f, 2.0f, 1.0f };<span class="kom">// Pozice světla</span></p>
+
+<p>Proměnná filter bude použita při zobrazení textury. První textura je vytvářena použitím GL_NEAREST. Druhá textura bude GL_LINEAR - filtrování pro úplně hladký obrázek. Třetí textura používá mipmapingu, který tvoří hodně dobrý povrch. Proměnná filter tedy bude nabývat hodnot 0, 1 a 2. GLuint texture[3] ukazuje na tři textury.</p>
+
+<p class="src0">GLuint filter;<span class="kom">// Specifikuje používaný texturový filtr</span></p>
+<p class="src0">GLuint texture[3];<span class="kom">// Ukládá tři textury</span></p>
+
+<p>Nahrajeme bitmapu a vytvoříme z ní tři různé textury. Tato lekce používá glaux knihovny k nahrávání bitmap. Vím že Delphi a VC++ mají tuto knihovnu. Co ostatní jazyky, nevím. K tomu už moc říkat nebudu, řádky jsou okomentované a kompletní vysvětlení je v 6 lekci. Nahraje a vytvoří textury z bitmap.</p>
+
+<p class="src0">int LoadGLTextures()<span class="kom">// Loading bitmapy a konverze na texturu</span></p>
+<p class="src0">{</p>
+<p class="src1">int Status=FALSE;<span class="kom">// Indikuje chyby</span></p>
+<p class="src1">AUX_RGBImageRec *TextureImage[1];<span class="kom">// Ukládá bitmapu</span></p>
+<p class="src1">memset(TextureImage,0,sizeof(void *)*1);<span class="kom">// Vynuluje paměť</span></p>
+
+<p>Nyní nahrajeme bitmapu. Když vše proběhne, data obrázku budou uložena v TextureImage[0], status se nastaví na true a začneme sestavovat texturu.</p>
+
+<p class="src1">if (TextureImage[0]=LoadBMP(&quot;Data/Crate.bmp&quot;))<span class="kom">// Nahraje bitmapu a kontroluje vzniklé chyby</span></p>
+<p class="src1">{</p>
+<p class="src2">Status=TRUE;<span class="kom">// Vše je bez problémů</span></p>
+
+<p>Data bitmapy jsou nahrána do TextureImage[0]. Použijeme je k vytvoření tří textur. Následující řádek oznámí, že chceme sestavit 3 textury a chceme je mít v uloženy v texture[0], texture[1] a texture[2].</p>
+
+<p class="src2">glGenTextures(3, &amp;texture[0]);<span class="kom">// Generuje tři textury</span></p>
+
+<p>V šesté lekci jsme použili lineární filtrování, které vyžaduje hodně výkonu, ale vypadá velice pěkně. Pro první texturu použijeme GL_NEAREST. Spotřebuje málo výkonu, ale výsledek je relativně špatný. Když ve hře vidíte čtverečkovanou texturu, používá toto filtrování, nicméně dobře funguje i na slabších počítačích. Všimněte si že jsme použili GL_NEAREST pro MIN i MAG. Můžeme smíchat GL_NEAREST s GL_LINEAR a textury budou vypadat slušně, ale zároveň nevyžadují vysoký výkon. MIN_FILTER se užívá při zmenšování, MAG_FILTER při zvětšování.</p>
+
+<p class="src2"><span class="kom">// Vytvoří nelineárně filtrovanou texturu</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[0]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);</p>
+<p></p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[0]-&gt;sizeX, TextureImage[0]-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]-&gt;data);</p>
+
+<p>Další texturu vytvoříme stejně jako v lekci 6. Lineárně filtrovaná. Jediný rozdíl spočívá v použití texture[1] místo texture[0], protože se jedná o druhou texturu.</p>
+
+<p class="src2"><span class="kom">// Vytvoří lineárně filtrovanou texturu</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[1]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[0]-&gt;sizeX, TextureImage[0]-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]-&gt;data);</p>
+
+<p>Mipmaping ještě neznáte. Používá se při malém obrázku, kdy mnoho detailů mizí z obrazovky. Takto vytvořený povrch vypadá z blízka dost špatně. Když chcete sestavit mipmapovanou texturu, sestaví se více textur odlišné velikosti a vysoké kvality. Když kreslíte takovou texturu na obrazovku vybere se nejlépe vypadající textura. Nakreslí na obrazovku místo toho, aby změnilo rozlišení původního obrázku, které je příčinou ztráty detailů. V šesté lekci jsem se zmínil o stanovených limitech šířky a výšky - 64, 128, 256 atd. Pro mipmapovanou texturu můžeme použít jakoukoli šířku a výšku bitmapy. Automaticky se změní velikost. Protože toto je textura číslo 3, použijeme texture[2]. Nyní máme v texture[0] texturu bez filtru, texture[1] používá lineární filtrování a texture[2] používá mipmaping.</p>
+
+<p class="src2"><span class="kom">// Vytvoří mipmapovanou texturu</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[2]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);</p>
+<p></p>
+<p class="src2">gluBuild2DMipmaps(GL_TEXTURE_2D, 3, TextureImage[0]-&gt;sizeX, TextureImage[0]-&gt;sizeY, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]-&gt;data);</p>
+<p class="src1">}</p>
+
+<p>Můžeme uvolnit všechnu paměť zaplněnou daty bitmapy. Otestujeme zda se data nachází v TextureImage[0]. Když tam budou, tak je smažeme. Nakonec uvolníme strukturu obrázku.</p>
+
+<p class="src1">if (TextureImage[0])<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src1">{</p>
+<p class="src2">if (TextureImage[0]-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src2">{</p>
+<p class="src3">free(TextureImage[0]-&gt;data);<span class="kom">// Uvolní paměť obrázku</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">free(TextureImage[0]);<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return Status;<span class="kom">// Oznámí případné chyby</span></p>
+<p class="src0">}</p>
+
+<p>Nejdůležitější část inicializace spočívá v použití světel.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechno nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Nahraje texturu</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne hloubkové testování</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ hloubkového testování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nejlepší perspektivní korekce</span></p>
+
+<p>Nastavíme světla - konkrétně light1. Na začátku této lekce jsme definovali okolní světlo do LightAmbient. Použijeme hodnoty nastavené v poli.</p>
+
+<p class="src1">glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);<span class="kom">// Nastavení okolního světla</span></p>
+
+<p>Hodnoty přímého světla jsou v LightDiffuse.</p>
+
+<p class="src1">glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);<span class="kom">// Nastavení přímého světla</span></p>
+
+<p>Nyní nastavíme pozici světla. Ta je uložena v LightPosition.</p>
+
+<p class="src1">glLightfv(GL_LIGHT1, GL_POSITION,LightPosition);<span class="kom">// Nastavení pozice světla</span></p>
+
+<p>Nakonec zapneme světlo jedna. Světlo je nastavené, umístěné a zapnuté, jakmile zavoláme glEnable(GL_LIGHTING) rozsvítí se.</p>
+
+<p class="src1">glEnable(GL_LIGHT1);<span class="kom">// Zapne světlo</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace proběhla v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Vykreslíme krychli s texturami. Když nepochopíte co některé řádky dělají, podívejte se do lekce 6.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Vymaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f,0.0f,z);</p>
+<p></p>
+<p class="src1">glRotatef(xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glRotatef(yrot,0.0f,1.0f,0.0f);</p>
+
+<p>Další řádek je podobný řádku v lekci 6, ale namísto texture[0] tu máme texture[filter]. Když stiskneme klávesu F, hodnota ve filter se zvýší. Bude-li větší než 2, nastavíme zase 0. Při startu programu bude filter nastaven na 0. Proměnnou filter tedy určujeme, kterou ze tří textur máme použít.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[filter]);<span class="kom">// Zvolí texturu</span></p>
+
+<p>Při použití světel musíme definovat normálu povrchu. Je to čára vycházející ze středu polygonu v 90 stupňovém úhlu. Řekne jakým směrem je čelo polygonu. Když ji neurčíte, stane se hodně divných věcí. Povrchy které by měly svítit se nerozsvítí, špatná strana polygonu svítit bude, atd. Normála požaduje bod vycházející z polygonu. Pohled na přední povrch ukazuje že normála je kladná na ose z. To znamená že normála ukazuje k divákovi. Na zadní straně normála jde od diváka, do obrazovky. Když bude kostka otočená o 180 stupňů v na ose x nebo y, přední povrch bude ukazovat do obrazovky a zadní uvidí divák. Bez ohledu na to který povrch je vidět divákem, normála tohoto povrchu jde směrem k němu. Když se tak stane, povrch bude osvětlen. U dalších bodů normály směrem k světlu bude povrch také světlý. Když se posunete do středu kostky, bude tmavý. Normála je bod ven, nikoli dovnitř, proto není světlo uvnitř a tak to má být.</p>
+
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2"><span class="kom">// Přední stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f, 1.0f);<span class="kom">// Normála</span></p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f,-1.0f);<span class="kom">// Normála</span></p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2"><span class="kom">// Horní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 1.0f, 0.0f);<span class="kom">// Normála</span></p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2"><span class="kom">// Spodní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f,-1.0f, 0.0f);<span class="kom">// Normála</span></p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">glNormal3f( 1.0f, 0.0f, 0.0f);<span class="kom">// Normála</span></p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">glNormal3f(-1.0f, 0.0f, 0.0f);<span class="kom">// Normála</span></p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">xrot+=xspeed;</p>
+<p class="src1">yrot+=yspeed;</p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Posuneme se dolů k WinMain(). Přidáme kód k zapnutí/vypnutí světla, otáčení, výběr filtru a posun kostky do/z obrazovky. Těsně u konce WinMain() uvidíte příkaz SwapBuffers(hDC). Ihned za tento řádek přidáme kód.</p>
+
+<p>Následující kód zjišťuje, zda je stisknuta klávesa L. Je-li stisknuta ale lp není false, klávesa ještě nebyla uvolněna.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src4">SwapBuffers(hDC);<span class="kom">// Prohození bufferů</span></p>
+<p></p>
+<p class="src4">if (keys['L'] &amp;&amp; !lp)<span class="kom">// Klávesa L - světlo</span></p>
+<p class="src4">{</p>
+
+<p>Když bude lp false, L nebylo stisknuto, nebo bylo uvolněno. Tento trik je použit pro případ, kdy je klávesa držena déle a my chceme, aby se kód vykonal pouze jednou. Při prvním průchodu se lp nastaví na true a proměnná light se invertuje. Při dalším průchodu je už lp true a kód se neprovede až do uvolnění klávesy, které nastaví lp zase na false. Kdyby zde toto nebylo, světlo by při stisku akorát blikalo.</p>
+
+<p class="src5">lp=TRUE;</p>
+<p class="src5">light=!light;</p>
+
+<p>Nyní se podíváme na proměnnou light. Když bude false, vypneme světlo, když ne zapneme ho.</p>
+
+<p class="src5">if (!light)</p>
+<p class="src5">{</p>
+<p class="src6">glDisable(GL_LIGHTING);<span class="kom">// Vypne světlo</span></p>
+<p class="src5">}</p>
+<p class="src5">else</p>
+<p class="src5">{</p>
+<p class="src6">glEnable(GL_LIGHTING);<span class="kom">// Zapne světlo</span></p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+
+<p>Následuje nastavení proměnné lp na false při uvolnění klávesy L.</p>
+
+<p class="src4">if (!keys['L'])</p>
+<p class="src4">{</p>
+<p class="src5">lp=FALSE;</p>
+<p class="src4">}</p>
+
+<p>Nyní ošetříme stisk F. Když se stiskne, dojde ke zvýšení filter. Pokud bude větší než 2, nastavíme ho zpět na 0. K ošetření delšího stisku klávesy použijeme stejný způsob jako u světla.</p>
+
+<p class="src4">if (keys['F'] &amp;&amp; !fp)<span class="kom">// Klávesa F - změna texturového filtru</span></p>
+<p class="src4">{</p>
+<p class="src5">fp=TRUE;</p>
+<p class="src5">filter+=1;</p>
+<p></p>
+<p class="src5">if (filter&gt;2)</p>
+<p class="src5">{</p>
+<p class="src6">filter=0;</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (!keys['F'])<span class="kom">// Uvolnění F</span></p>
+<p class="src4">{</p>
+<p class="src5">fp=FALSE;</p>
+<p class="src4">}</p>
+
+<p>Otestují stisk klávesy Page Up. Když bude stisknuto, snížíme proměnnou z. To způsobí vzdalování kostky v příkazu glTranslatef(0.0f,0.0f,z).</p>
+
+<p class="src4">if (keys[VK_PRIOR])<span class="kom">// Klávesa Page Up - zvýší zanoření do obrazovky</span></p>
+<p class="src4">{</p>
+<p class="src5">z-=0.02f;</p>
+<p class="src4">}</p>
+
+<p>Otestují stisk klávesy Page Down. Když bude stisknuta, zvýšíme proměnnou z. To způsobí přibližování kostky v příkazu glTranslatef(0.0f,0.0f,z).</p>
+
+<p class="src4">if (keys[VK_NEXT])<span class="kom">// Klávesa Page Down - sníží zanoření do obrazovky</span></p>
+<p class="src4">{</p>
+<p class="src5">z+=0.02f;</p>
+<p class="src4">}</p>
+
+<p>Dále zkontrolujeme kurzorové klávesy. Bude-li stisknuto vlevo/vpravo, proměnná xspeed se bude zvyšovat/snižovat. Bude-li stisknuto nahoru/dolů, proměnná yspeed se bude zvyšovat/snižovat. Jestli si vzpomínáte, výše jsem psal, že vysoké hodnoty způsobí rychlou rotaci. Dlouhý stisk nějaké klávesy způsobí právě rychlou rotaci kostky.</p>
+
+<p class="src4">if (keys[VK_UP])<span class="kom">// Šipka nahoru</span></p>
+<p class="src4">{</p>
+<p class="src5">xspeed-=0.01f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_DOWN])<span class="kom">// Šipka dolu</span></p>
+<p class="src4">{</p>
+<p class="src5">xspeed+=0.01f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_RIGHT])<span class="kom">// Šipka vpravo</span></p>
+<p class="src4">{</p>
+<p class="src5">yspeed+=0.01f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_LEFT])<span class="kom">// Šipka vlevo</span></p>
+<p class="src4">{</p>
+<p class="src5">yspeed-=0.01f;</p>
+<p class="src4">}</p>
+
+<p>Nyní byste měli vědět jak vytvořit vysoce kvalitní, realisticky vypadající, texturovaný objekt. Také jsme se něco dozvěděli o třech různých filtrech. Stiskem určitých kláves můžete pohybovat objektem na obrazovce, a nakonec víme jak aplikovat jednoduché světlo. Zkuste experimentovat s jeho pozicí a barvou.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Jiří Rajský - RAJSOFT junior <span class="transform_email">&lt;predator.jr (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson07.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson07_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson07.zip">C#</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson07.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson07.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson07.zip">Delphi</a> kód této lekce. ( <a href="mailto:brad@choate.net">Brad Choate</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson07.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson07.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson07.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/glut/lesson07.zip">GLUT</a> kód této lekce. ( <a href="mailto:lordrustad@hotmail.com">Andy Restad</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson07.zip">Irix</a> kód této lekce. ( <a href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson07.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jedisdl/lesson07.zip">Jedi-SDL</a> kód této lekce. ( <a href="mailto:Dominique@SavageSoftware.com.au">Dominique Louis</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson07.jar">JoGL</a> kód této lekce. ( <a href="mailto:jattier@hotmail.com">Kevin J. Duling</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson07.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson07.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:ulmont@bellsouth.net">Richard Campbell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson07.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson07.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson07.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson07.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson07.zip">MASM</a> kód této lekce. ( <a href="mailto:scalp@bigfoot.com">Nico (Scalp)</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson07.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/pbasic/lesson07.zip">Power Basic</a> kód této lekce. ( <a href="mailto:anguslaw@net.ntl.com">Angus Law</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/solaris/lesson07.zip">Solaris</a> kód této lekce. ( <a href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson07.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:pdetagyos@home.com">Peter De Tagyos</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vfortran/lesson07.zip">Visual Fortran</a> kód této lekce. ( <a href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson07.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_07_big.jpg" class="nehe_velky" alt="Lekce 7" /></div>
+<p class="okolni_lekce"><a href="tut_06.php">&lt;&lt;&lt; Lekce 6</a> | <a href="tut_08.php">Lekce 8 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Shark</div>
+<div class="d_o_datumcas">26.05.2005 - 04:21:39</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=0">Pomoc se světlem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">22.06.2005 - 16:51:50</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=1">Hláška při kompilaci</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">23.07.2005 - 14:48:37</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=2">VK_0 nebo tak?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">30.07.2005 - 16:13:58</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=3">Re: VK_0 nebo tak?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">07.08.2005 - 10:10:06</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=5">Re: VK_0 nebo tak?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">08.08.2005 - 16:14:29</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_07.php&j=9">Re: VK_0 nebo tak?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">06.08.2005 - 20:26:14</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=4">Svetlo + Dotaz</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">07.08.2005 - 14:38:42</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=6">Re: Svetlo   Dotaz</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">08.08.2005 - 08:09:39</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_07.php&j=7">Re: Svetlo   Dotaz</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">08.08.2005 - 09:19:06</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_07.php&j=8">Re: Svetlo   Dotaz</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tod</div>
+<div class="d_o_datumcas">11.02.2007 - 21:43:43</div>
+<div>
+<input type="checkbox" name="id_35" id="id_35" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_07.php&j=35">Re: Svetlo   Dotaz</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">DarkEcho</div>
+<div class="d_o_datumcas">19.01.2006 - 17:13:24</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=10">'Integer' and 'Pointer'</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mato</div>
+<div class="d_o_datumcas">30.04.2006 - 09:54:10</div>
+<div>
+<input type="checkbox" name="id_18" id="id_18" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=18">Re: 'Integer' and 'Pointer'</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mato</div>
+<div class="d_o_datumcas">30.04.2006 - 13:29:18</div>
+<div>
+<input type="checkbox" name="id_19" id="id_19" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=19">Re: 'Integer' and 'Pointer'</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">spec</div>
+<div class="d_o_datumcas">16.02.2006 - 17:04:57</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=11">Odraz z oboch stran?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Franta</div>
+<div class="d_o_datumcas">26.02.2006 - 07:55:35</div>
+<div>
+<input type="checkbox" name="id_12" id="id_12" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=12">Omezený prostor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">26.02.2006 - 20:37:13</div>
+<div>
+<input type="checkbox" name="id_13" id="id_13" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=13">Re: Omezený prostor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Franta</div>
+<div class="d_o_datumcas">26.02.2006 - 21:08:27</div>
+<div>
+<input type="checkbox" name="id_14" id="id_14" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_07.php&j=14">Re: Omezený prostor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">26.02.2006 - 21:17:18</div>
+<div>
+<input type="checkbox" name="id_15" id="id_15" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_07.php&j=15">Re: Omezený prostor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Franta</div>
+<div class="d_o_datumcas">26.02.2006 - 21:44:43</div>
+<div>
+<input type="checkbox" name="id_16" id="id_16" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_07.php&j=16">Re: Omezený prostor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">04.03.2006 - 14:43:36</div>
+<div>
+<input type="checkbox" name="id_17" id="id_17" value="1" />
+<span class="d_o_nadpis" style="margin-left: 100px;"><a href="d_view.php?f=tut_07.php&j=17">Re: Omezený prostor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Yax Balam</div>
+<div class="d_o_datumcas">13.09.2006 - 15:06:45</div>
+<div>
+<input type="checkbox" name="id_20" id="id_20" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=20">objekty bez textury</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">13.09.2006 - 17:32:50</div>
+<div>
+<input type="checkbox" name="id_21" id="id_21" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=21">Re: objekty bez textury</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Yax Balam</div>
+<div class="d_o_datumcas">14.09.2006 - 09:13:41</div>
+<div>
+<input type="checkbox" name="id_22" id="id_22" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_07.php&j=22">Re: objekty bez textury</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">05.10.2006 - 21:43:30</div>
+<div>
+<input type="checkbox" name="id_23" id="id_23" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=23">Jak mám udělat více světel?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Maaken</div>
+<div class="d_o_datumcas">04.12.2006 - 11:17:32</div>
+<div>
+<input type="checkbox" name="id_24" id="id_24" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=24">Osvetlenie Gule</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Maaken</div>
+<div class="d_o_datumcas">06.12.2006 - 12:32:43</div>
+<div>
+<input type="checkbox" name="id_25" id="id_25" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=25">Re: Osvetlenie Gule</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">14.12.2006 - 06:44:39</div>
+<div>
+<input type="checkbox" name="id_26" id="id_26" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=26">Re: Osvetlenie Gule</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">arnir</div>
+<div class="d_o_datumcas">31.12.2006 - 13:27:12</div>
+<div>
+<input type="checkbox" name="id_27" id="id_27" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=27">tlacitko</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">02.01.2007 - 14:00:53</div>
+<div>
+<input type="checkbox" name="id_28" id="id_28" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=28">Re: tlacitko</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">fil</div>
+<div class="d_o_datumcas">16.01.2007 - 16:33:08</div>
+<div>
+<input type="checkbox" name="id_29" id="id_29" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=29">pohyb a svetlo</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">20.01.2007 - 12:40:19</div>
+<div>
+<input type="checkbox" name="id_30" id="id_30" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=30">Re: pohyb a svetlo</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Yetti</div>
+<div class="d_o_datumcas">24.01.2007 - 12:05:19</div>
+<div>
+<input type="checkbox" name="id_31" id="id_31" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=31">problém s texturami</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">25.01.2007 - 18:38:01</div>
+<div>
+<input type="checkbox" name="id_32" id="id_32" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=32">Re: problém s texturami</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Yetti</div>
+<div class="d_o_datumcas">28.01.2007 - 14:16:47</div>
+<div>
+<input type="checkbox" name="id_33" id="id_33" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_07.php&j=33">Re: problém s texturami</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">29.01.2007 - 18:14:37</div>
+<div>
+<input type="checkbox" name="id_34" id="id_34" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_07.php&j=34">Re: problém s texturami</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Bummer</div>
+<div class="d_o_datumcas">28.02.2007 - 19:25:50</div>
+<div>
+<input type="checkbox" name="id_36" id="id_36" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_07.php&j=36">glEnable(GL_LIGHTNING)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Bummer</div>
+<div class="d_o_datumcas">01.03.2007 - 16:04:09</div>
+<div>
+<input type="checkbox" name="id_37" id="id_37" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_07.php&j=37">Re: glEnable(GL_LIGHTNING)</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_07.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

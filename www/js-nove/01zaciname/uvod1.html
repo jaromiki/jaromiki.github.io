@@ -1,0 +1,324 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>JavaScript - úvod</title>
+	<script>
+	function vypis_uloha1()
+	{   alert('hhh');
+ 	    nove=window.open("about:blank","okno","status=no");
+		nove.document.open();
+		nove.document.writeln('&lt;table id="t1" rules=""><br>');
+		nove.document.writeln('&lt;tr><td onmouseover="this.style.color=\'blue\';this.style.background=\'red\';c1.color=\'blue\';c2.color=\'blue\'; t1.border=\'3\'"<br>');
+    	nove.document.writeln('onmouseout ="this.style.color=\'black\';c1.color=\'transparent\';c2.color=\'transparent\'; t1.border=\'0\';this.style.background=\'transparent\'" ><br>');
+  		nove.document.writeln('&lt;hr align="left" width="100" size="5" id="c1"><br>');
+  		nove.document.writeln('Sem príď myšou<br>');
+ 		nove.document.writeln('&lt;hr align="left" width="100" size="5" id="c2"><br>');
+		nove.document.writeln('&lt;/table><br>');
+		nove.document.close;
+	}
+	</script>
+</head>
+
+<body  background="pozadie.bmp">
+<dl>
+	<dt><font size="+1" color="Red">Vlastnosti:</font>
+	<dd><dl><dt style="color:'blue'">interpreter
+			<dd>JavaScript je interpreter, čo prináša výhody i nevýhody. Veľkou výhodou je, že nepotrebujeme žiadny kompilátor,
+				(no prezerač www stránok musí mať interpreter JS príkazov), ďalšou výhodou je možnosť zabehu zadávať príkazy a výrazy JS
+				ktoré budú následne vykonané (bez nutnosti analýzy textu ).
+			<dt style="color:'blue'">nezávislosť na platforme
+			<dd>nakoľko ide o interpret nie je žiadna väzba na typ procesora a ani na prostredie. Ten istý "program" v JS pôjde
+				na každom prezerači www stránok podporujúcom JS.
+			<dt style="color:'blue'">beží na strane klienta
+			<dd>v štruktúre server &lt; - &gt; klient to beží tak, že server pošle príkazy JS spolu so stránkou a tie sa interpretujú
+				až u klienta. Existujú jazyky, ktoré bežia na strane servrera.
+				Toto má obrovské výhody v <B><I>rýchlosti spracovania programu</I></B>. Napríklad pri spracovaní formulárov 
+				pomocou JS napíšeme jednoduchý program, ktorý rýchlo spracuje vstupné hodnoty zadané užívateľom, prípadne zapíše
+				výsledok. Ak formulár spracúva server niektorým z programov cgi-bin ( napríklad CGI, Perl, C++ ), užívateľ čaká 
+				na dvojitý prenos dát po internete ( od užívateľa k serveru a späť ), čo pri priepustnosti liniek nie je zanedbatelné.
+				<dl><dt>Príklad:
+					<dd>Chceme vytvoriť stránku, ktorá ukazuje aktuálny dátum. Máme možnosti:
+						<ol type="a">
+						<li>každý deň budeme manuálne meniť stránku - statické riešenie
+						<li>necháme server, aby dopĺňal-vytváral stránku - dyn. riešenie na strane servera
+						<li>ku klientovi príde kód, ktorý vytvorí na strane klienta požadovanú stránku
+						</ol>
+				</dl>		
+			<dt style="color:'blue'">JavaScript je "slabo" normovaný jazyk
+			<dd>JS je stále vyvíjajúcim sa jazykom (a to najmä f. Microsoft a Netscape) a až v poslednej dobe je výrazná snaha
+				o vytvorenie všeobecne platnej normy. Teraz vznikajú problémy, že tie isté stránky na rôznych prehliadačoch vyzerajú
+				rôzne v najhoršom prípade nepôjdu u konkurencie vôbec. Nakoľko u nás asi zvíťazil Internet Explorer všetky tieto 
+				i ďalšie stránky sú odladené na IE 6.
+			<dt style="color:'blue'">JavaScript je objektovo-orientovaný jazyk
+			<dd>JS celú stránku i všetky tagy chápe ako objekty, práca s týmito objektami je pomocou ich vlastností a metód. Pri viacerých 
+				objektoch máme k dispozícii ošetrenie udalostí (Onclick, onload, onblur,...). Všetky dátové typy sú objektami a sú ku nim
+				pričlenené metódy. Objekty môžme vytvárať, meniť im vlastnosti a zatvárať ak ich už nepotrebijeme. 
+			<dt style="color:'blue'">JavaScript nemá IDE prostredie
+			<dd>Toto bude našim najväčším problémom, že nie je (presnejšie nenašiel som) prostredie ako napr. Delphi, ktoré by pomáhalo
+				písať príkazy JS. Homesite aspoň vie skontrolovať v ktorom riadku nastala chyba a ponúka help ku html príkazom.
+			<dt style="color:'blue'">Stabilita
+			<dd>Interpreter JS príkazov pri objavení chyby v niektorom príkaze sa nezrúti, ale chybný príkaz odignoruje, prípadne ešte dá
+				oznam o vzniklej chybe.	
+		</dl>	
+	<dt><font size="+1" color="Red">Zhrnutie:</font>
+		<dl><dt>Čo JS dokáže:
+			<dd>vytvárať okná, meniť ich vlastnosti, zatvárať okná, pridávať a meniť objekty v dokumente, vytvárať premenné jednoduché i 
+				štruktúrované a vykonávať s nimi povolené operácie.
+			<dt>Čo JS nedokáže:
+			<dd>JS nemá podporu pre grafické príkazy (kreslenie čiar, plôch), vie len zobrazovať hotové obrázky. Tiež nemá podporu pre
+				prácu v sieti a ani pre prácu s lokálnymi súbormi.
+		</dl>		
+	<dt><font size="+1" color="Red">Porovnanie Javascript - Java:</font>
+	<dd><table border="3">
+		<tr><th bgcolor="Silver">JavaScript<th bgcolor="Silver">Java
+		<tr><td>Nevyžaduje kompiláciu<td>Vyžaduje kompiláciu
+		<tr><td>Menší prenos dát<td>Väčší prenos dát
+		<tr><td>Zdrojový kód je viditeľný<td>Zdrojový kód je utajený
+		<tr><td>"Ukradnutie" je jednoduché<td>"Ukradnutie" je obtiažne
+		</table>
+
+	<dt><font size="+1" color="Red">Možnosti použitia JavaScript príkazov v html kóde</font>
+	<dd>Príkazy JS používame na 
+		<br>1. ozvláštnenie html stránok - umožnenie rôznych grafických efektov
+		<br>2. ošetrenie vstupu od užívateľa pred odoslaním na server
+		<br>3. tvorba hier, drobných pomocných nástrojov
+	<dt><font size="+1" color="Red">Možnosti včlenenia JavaScript príkazov do html kódu</font>
+	<dd>	
+		<ul type="square">
+		<li>ošetrovanie udalostí v niektorých objektoch
+		<li>písanie kódu medzi tágy <font color="Blue">&lt;script&gt;</font> ... <font color="Blue">&lt;/script&gt;</font>
+		<li>kombinácia oboch
+		<li>včlenenie do adresy URL pomocou príkazu Javascript (naklepte do vstupného riadku Javascript:alert('Js je OK') )
+		</ul>
+		<br>
+		<hr width="80%" size="3" color="Blue">
+	<dt><font size="+1" color="Red">Ošetrovanie udalostí v niektorých objektoch</font>
+	<dd>Ošetrovanie udalostí sa robí pomocou vlastnosti onmouseover, onmouseclick a pod., ktoré zadávame podobne ako iné parametre tagu. Do úvodzoviek 
+		uvedieme príkaz na zmenu vlastnosti nejakého objektu z našej stránky (napr. nadpisu, odstavca, tabulky, obrázka). Teda môžme meniť vlastnosť
+		iným objektom a samozrejme a tomu objektu v ktorom je ošetrenie udalosti ako parameter zadané.
+		<br>Zoznam ošetrovaných vlastností:
+		<ul  ><li>OnMouseOver - ak je myš nad týmto objektom
+			<li>OnMouseOut - ak myšou opúšťame tento objekt
+			<li>OnMouseDown - stlačili sme tlačitko myši nad týmto objektom
+			<li>OnMouseUp - pustili sme sme tlačítko myši nad týmto objektom
+			<li>OnMouseClick - klikli sme na tento objekt
+			<li>OnMousedblClick - klikli sme dvojklikom na tento objekt
+		</ul>	
+		Už bez väčších znalostí JS, bez použitia premenných, podprogramov, možno pomocou pár JS príkazov vytvoriť zaujímavé efekty. 
+		Čo potrebujeme vedieť, je prístup ku vlastnostiam a vedieť aké vlastnosti daný objekt má.
+		<dl><dt>Ako zmeniť vlastnosť sebe
+			<dd>Už som spomínal, že objekt môže určiť, aby sa pri nejakej udalosti zmenila vlastnosť jemu. Postup ukážem na ošetrení udalosti
+				"myš nad objektom"
+				<br>OnMouseOver = "this.bgColor='blue'"
+				<br>slovíčko this určuje že vlastnosť bgColor sa bude meniť/nastavovať tomu objektu ktorý danú akciu vyvolal (teda ten v ktorom to celé píšeme).
+					Je možné meniť vlastnosti aj cez "univerzálny" parameter style ale o tom až v ďalšej kap. Je pravda, 6e tak7ch objektov, ktorým možno nastavovať
+					vlastnosti-farbu priamo a nie cez style je málo, ja to budem ukazovať na objekte &lt;TD> bunke tabuľky.  
+			<dt>Ako meniť vlastnosti iným objektom
+			<dd>Je možné (a jednoduché) aby sme ošetrovanou udalosťou, ktorá nastala pri objekte A menili vlastnosti objektu B. Je ale podmienka, že meniť vlastnosti 
+				možno takto jednoducho len objektom, ktoré majú meno priradené pomocou parametra id = "meno". Meno každého objektu by malo byť jedinečné. Na tvorbu
+				mena používajte len písmená, číslice a podtržník. Meno nech nezačína číslicou.
+				<br><font color="Blue">Objekt.vlastnost='vyraz'</font>
+				<br>Príklad - tieto dve bunky si navzájom menia farbu podkladu.
+				<table><tr><td bgcolor='transparent' id="N1" onmouseover="N2.bgColor='blue'" onmouseout="N2.bgColor='transparent'">Nadpis1</td>
+					   <tr><td bgcolor='transparent' id="N2" onmouseover="N1.bgColor='blue'" onmouseout="N1.bgColor='transparent'">Nadpis2</td>
+				</table>
+				<br>&lt;table>&lt;tr>&lt;td bgcolor='transparent' id="N1" onmouseover="N2.bgColor='blue'" onmouseout="N2.bgColor='transparent'">Nadpis1&lt;/td>
+				<br>	   &lt;tr>&lt;td bgcolor='transparent' id="N2" onmouseover="N1.bgColor='blue'" onmouseout="N1.bgColor='transparent'">Nadpis2&lt;/td>
+				<br>&lt;/table>
+		</dl>			 
+		<br>Vlastnosťami sú parametre, ktoré zadávame jednotlivým tagom - napr. color, bgcolor, style, ...
+		<br>Pozn. - style je opäť objekt s vlastnosťami color, background, font-size, font-family, font-weight
+		<dl>
+		<dt style="color:'blue'">Zmena farby niektorých objektov
+		<dd>Vložme na www stranku objekty: nadpis, odstavec, čiara. Chceme, aby prechodom myši ponad objekt
+			objekt zmenil farbu. Využijeme udalosť OnMouseOver a OnMouseOut.
+			<br>
+			<table border="3" bgcolor="Silver">
+			<tr><th>Pokusná plocha
+			<tr><td>
+			<h2 style="color:blue" onmouseover="this.style.color='red'" onmouseout="this.style.color='blue'">Nadpis</h2>
+			<P style="background:silver" onmouseover="this.style.background='aqua'" onmouseout="this.style.background='silver'">
+			Tento text po nabehnuti myšou zmení farbu papiera.
+			</P>
+			<hr width="80%" size="5" color="Blue" onmouseover="this.color='aqua'" onmouseout="this.color='blue'" onclick="document.bgColor='#ffcccc'">
+			</table>
+			<br>
+			<table border="3">
+			<tr><th>zdrojový text
+			<tr><td  bgcolor="silver">
+			<code>
+			&lt;h2 style="color:blue" onmouseover="this.style.color='red'" onmouseout="this.style.color='blue'">Nadpis&lt;/h2>
+			<br>&lt;P style="background:silver" onmouseover="this.style.background='aqua'" onmouseout="this.style.background='silver'">
+			<br>Tento text po nabehnuti myšou zmení farbu papiera.
+			<br>&lt;/P>
+			<br>&lt;hr width="80%" size="5" color="Blue" onmouseover="this.color='aqua'" onmouseout="this.color='blue'" onclick="document.bgColor='#ffcccc'">
+			</code>
+			</table>
+			Slovo this označuje aktuálny objekt a pomocou operátora bodka sa dostávame ku vlastnostiam tohto objektu
+			a môžme im nastavovať nové hodnoty.
+			<br>Ak chceme z jedného objektu meniť vlastnosti iného musí byť každý menený objekt jednoznačne určený menom
+			vlastnosť id="meno" (identifikátor - prvé písmeno ďalej písmená a číslice).
+			<br>Vlastnosti celého dokumentu možno meniť pomocou objektu document (pozri objekt document) 
+			<br>Pozn.
+			<br>1. Vnútri úvodzoviek používame namiesto úvodzoviek apostrofy.
+			<br>2. Ak chceme vložiť viac príkazov oddeľujeme ich bodkočiarkami.
+			<br>3. Menili sme vlastnosti objektu style, ktorý patrí objektu HR i P (viac o style v helpe)
+			<br>4. Oboznámili sme sa s objektom <font color="Red">this</font>
+			<dl>
+			<dt style="background:'#ff99ff'">Úloha
+			<dd><table>
+					<tr><td width="50%">1. Upravte túto ukážku tak, aby po nabehnutí myšou nad odstavec sa zmenila farba čiary
+						<td>.
+					<tr><td><br><br>2. Pomocou vlastností tagu table vytvorte nasledovný efekt<br><br>
+						<td>
+						<table id="t1" rules="">
+						<tr><td onmouseover="this.style.color='blue';this.style.background='red';c1.color='blue';c2.color='blue'; t1.border='3'"
+        						onmouseout ="this.style.color='black';c1.color='transparent';c2.color='transparent'; t1.border='0';this.style.background='transparent'" >
+  								<hr align="left" width="100" size="5" id="c1">
+  								Sem príď myšou
+ 								<hr align="left" width="100" size="5" id="c2">
+						</table>
+				</table>
+				<input type="Button" value="Zdroj - výpis" onclick="vypis_uloha1()">
+			</dl>
+			<br>
+		<dt><font color="Blue">Preddefinovaná funkcia alert(" ľub. text")</font>
+		<dd>Na cvičné účely budeme používať funkciu alert(), ktorá zobrazí výstražné okno s uvedeným textom.
+			Používanie ďalších pomocných okien je popísané v kap. <a href="04konstanty-vyrazy.html" target="blank">"Konštanty - výrazy"</a> 
+			<br>Odskúšajte ako funguje nasledovná ukážka:
+			<table bgcolor="Silver" border="3">
+			<tr><th>Pokusná oblasť:
+			<tr><td><p onclick="alert('Tu môže byť ľubovoľný text')" style="cursor:hand"><font color="Red">Klikni na mňa</font></p>  
+			</table>
+			<br>
+			<table bgcolor="Silver" border="3">
+			<tr><th>Zdrojový text
+			<tr><td>&lt;p onclick="alert('Tu môže byť ľubovoľný text')">&lt;font color="Red">Klikni na mňa&lt;/font>&lt;/p>  
+			</table>
+			<br>
+		<dt style="color:'blue'">Výpis do stavového riadku
+		<dd><p onmouseover="window.status='Teraz si prišiel nad text o stavovom riadku'" onmouseout="window.status=' '">
+		Každé win okno má stavový riadok a doňho je možné umiestniť krátky text. Keď prídeš myšou nad tento text pozri na stavový riadok.
+		</p>
+			<table bgcolor="Silver" border="3" >
+			<tr><th>Zdrojový text
+			<tr><td>
+			&lt;p onmouseover="window.status='Teraz si prišiel nad text o stavovom riadku'" onmouseout="window.status=' '">
+			Každé win okno má stavový riadok a doňho je možné umiestniť krátky text. Keď prídeš myšou nad tento text pozri na stavový riadok.
+			&lt;/p>
+			</table>
+			<br>
+		<dt style="color:'blue'">Zmena obrázkov
+		<dd>klikaním na obrázok sa obrázok zmení
+			<table bgcolor="Silver" border="3">
+			<tr><th>Pokusná oblasť:
+			<tr><td><img src="s1.bmp" width="32" height="16" border="0" alt="s1"  style="cursor:hand"
+					  onClick="if (this.alt=='s1') {this.alt='s2'; this.src='s2.bmp'} 
+					           else if (this.alt=='s2'){this.alt='s3'; this.src='s3.bmp'}
+							        else {this.alt='s1'; this.src='s1.bmp'}">  
+			</table>
+			<br>
+			<table bgcolor="Silver" border="3">
+			<tr><th>Zdrojový text
+			<tr><td><code>
+						&lt;img src="s1.bmp" width="32" height="16" border="0" alt="" 
+					<br>onClick="if (this.border=='0') {this.border='1'; this.src='s2.bmp'} 
+					<br>         else {this.border='0'; this.src='s3.bmp'}">  			
+					</code>
+			</table>
+			<br>Na zmenu obrázkov je vhodné už používať premenné, do ktorých si obrázky dopredu načítame
+				inak budú ťahané po sieti až pri zmene, čo môže byť pomalé. Pozri objekt image. 
+		<br><br>	
+		<dt style="background:'#ffccff'"><font color="Blue">Jednoduché úlohy s tlačidlami, vstupnými riadkami</font>
+		<dd>
+			Veľkosť tlačidla môžme ovplyvniť len dĺžkou textu na ňom. Ak chceme mať tlačidlá rovnako veľké
+			treba zvoliť Neproporcionálne písmo (Courier) a rovnaký počet písmen.
+			<dl
+			<dt><font color="Green">Vloženie tlačidla</font>
+			<dd>&lt; input type="button" value="Text na tlačidle"> - nepárový tag
+			<br>
+			<br>zatiaľ sa tlačidlo síce dá stlačiť ale nič sa nevykoná
+			<br>ošetríme udalosť OnClick - určíme príkazy, ktoré sa majú vykonať po kliknutí na tlačidlo.
+			<br>&lt;input type="Button" onclick="alert('Ahoj'">
+			<br> Tento príkaz vloží požadované tlačidlo a po stlačeni sa zavolá preddefinovaná funkcia <font color="Red">alert()</font>
+			<br>Ukážka: <input type="Button" onclick="alert('Ahoj')" value="Stlač ma!" style="cursor:'hand'">
+			<br> - type ... určíme, že chceme tlačidlo (type="Button")
+			<br> - value ... určíme, čo má mať na sebe (Value="text")
+			<br> - OnClick ... určíme, čo sa vykoná po stlačení OnClick="príkazy JS)
+			<dt><font color="Green">Vloženie vstupného riadku</font>
+			<dd>&lt; input type="text" value="Zobrazený text"> - nepárový tag, <input type="text" value="Zobrazený text">
+				<br>má viacero parametrov-vlastností, ktorými ho možno modifikovať, zapamätáme si aspoň:
+				<br> - Size ... dĺžka okienka v znakoch (Size="10")
+				<br> - MaxLength ... max. počet povolených znakov (MaxLength="8")
+				<br> - ReadOnly ... ak uvedené nedovolí z klávesnice meniť, ak neuvedené dovolí meniť (ReadOnly)
+				<br>ešte základné udalosti, ktoré možno ošetriť
+				<br> - OnClick ... ak klikneme (OnClick="príkazy JS")
+				<br> - OnFocus ... ak je na ňom kurzor (OnFocus="príkazy JS")
+				<br> - OnBlur ... pri odchode z riadku - na kontrolu vstupu (OnBlur="príkazy JS")
+				<br>a na záver ešte metódy
+				<br> - focus() ... nastaví kurzor na riadok (použitie - nepustíme preč, ak vstup nevyhovuje) len v príkazoch, prístup cez bodku
+				<br>Nasledovné príkazy vytvoria dva vstupné riadky. Ak "vbehneme" do prvého už nás nepustí
+				preč pokiaľ niečo nenaklepeme. (Ten príkaz if neskôr preberieme)	 
+				<table bgcolor="Silver" border="3">
+  				<tr><th>Zdrojový text
+				<tr><td><code>
+						<br>&lt;input type="Text" value="" id="text1" onblur="if (this.value == '') {alert('Prázdny vstup'); this.focus();}">
+						<br>&lt;input type="Text" value="" id="text2" >
+				</table>
+				<br>
+				
+				<table bgcolor="Silver" border="3">
+  				<tr><th>Ukážka:
+				<tr><td><input type="Text" value="" id="text1" onblur="if (this.value == '') {alert('Prázdny vstup'); this.focus();}">
+						<br><input type="Text" value="" id="text2" >
+				</table>
+				<br>
+						
+		<dt><font color="Green">Preddefinovaná funkcia eval(" ľub. text")</font>
+		<dd>Funkcia eval sa pokúsi vyhodnotiť výraz zapísaný v texte a výsledok zapíše do návratovej hodnoty
+			<br>Úloha:
+			<br>Vytvorme nasledovné riadky a tlačidlo na spustenie výpočtu
+			<br>1.riadok na zadanie výrazu
+			<br>2. riadok kde sa ukáže výsledok
+			<br>tlačidlo na spustenie výpočtu
+			<br>
+			<table bgcolor="Silver" border="3">
+  			<tr><th>Zdrojový text
+			<tr><td><code>
+				<br>Sem zadaj výraz &nbsp;: &lt;input type="Text" id="vstup"> 
+				<br>&lt;br>&lt;input type="Button"  value="Počítaj" OnClick="vystup.value=eval(vstup.value)">
+				<br>&lt;br>Tu bude výsledok: &lt;input type="Text" id="vystup" readonly>
+			</table>
+			<br><br>Ukážka:
+			<br>Sem zadaj výraz &nbsp;: <input type="Text" id="vstup"> &nbsp; <input type="Button"  value="Počítaj" OnClick="vystup.value=eval(vstup.value)">
+			<br>Tu bude výsledok: <input type="Text" id="vystup" readonly>
+ <br><br>Úloha:
+ <br>Naprogramujeme kalkulačku s tlačidlami 0-9,., +,-,*,/,C,CE,=
+<br><br>
+ <table border="3" bgcolor="Silver">
+ <tr><td><input type="Text" id="display">
+ <tr>	<td><input type="Button" style="font-family:Courier" value=" + " onclick="display.value+='+'">
+ 		    <input type="Button" style="font-family:Courier" value=" - " onclick="display.value+='-'">
+ 		   <input type="Button" style="font-family:Courier" value=" * " onclick="display.value+='*'">
+ 		   <input type="Button" style="font-family:Courier" value=" / " onclick="display.value+='/'">
+ <tr>	<td><input type="Button" style="font-family:Courier" value=" 7 " onclick="display.value+='7'">
+ 		   <input type="Button" style="font-family:Courier" value=" 8 " onclick="display.value+='8'">
+ 		   <input type="Button" style="font-family:Courier" value=" 9 " onclick="display.value+='9'">
+ 		   <input type="Button" style="font-family:Courier" value=" C " onclick="display.value=''">
+ <tr>	<td><input type="Button" style="font-family:Courier" value=" 4 " onclick="display.value+='4'">
+ 		   <input type="Button" style="font-family:Courier" value=" 5 " onclick="display.value+='5'">
+ 		   <input type="Button" style="font-family:Courier" value=" 6 " onclick="display.value+='6'">
+ 		   <input type="Button" style="font-family:Courier" value=" CE" onclick="display.value=display.value.substr(0,display.value.length-1)">
+ <tr>	<td><input type="Button" style="font-family:Courier" value=" 1 " onclick="display.value+='1'">
+ 		   <input type="Button" style="font-family:Courier" value=" 2 " onclick="display.value+='2'">
+ 		   <input type="Button" style="font-family:Courier" value=" 3 " onclick="display.value+='3'">
+ 		   <input type="Button" style="font-family:Courier" value=" = " onclick="display.value+='='+eval(display.value)">
+ <tr>	<td><input type="Button" style="font-family:Courier" value=" 0 " onclick="display.value+='0'">
+ 		   <input type="Button" style="font-family:Courier" value=" , " onclick="display.value+='.'">
+			<font face="Bookman Old Style">Miki2003</font>
+ </table>
+	</dl>
+</dl>
+
+</body>
+</html>

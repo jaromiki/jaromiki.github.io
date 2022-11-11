@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Úvod</title>
+
+</head>
+
+<body>
+<h3>Úvod</h3>
+Mojou snahou bolo vytvoriť pomôcku pre žiakov, ktorý chcú začať programovať v jazyku C/C++. Dôvody žiaka prečo chce programovať
+v jazyku C a nie Pascal môžu byť rôzne
+<ul><li>jazyk C je rozšírenejší ako pascal
+	<li>syntax jazyka C je použitá aj v iných jazykoch (PHP, Java, JavaScript, ...)
+	<li>na programátorských súťažiach pre stredné školy sú žiaci programujúci v jazyku pascal handicapovaní
+		(navyše pri troche nadsádzky pôsobia trochu ako mamuti medzi C-čkarmi)
+</ul>
+Škole sa podarilo legálne zohnať multilicenciu vývojového prostredia Builder 6, ktoré je veľmi podobné prostrediu
+Delphi, ktoré sa pri výuke používa a žiaci sa s prostredím zžijú rýchlo.
+<br>Celá táto príručka spája výuku jazyka C++ s výukou prostredia Builderu a tiež popise základných komponentov používaných
+v grafickom prostredí. Trochu sa dotknem aj riešeniu základných algoritmických úloh s ktorými sa programátor
+(a tiež súťažiaci v prog. súťažiach) stretne - sú popísané v časti programujeme->pole. 
+<h3  class="main">Čo je vlastne programovanie</h3>
+Programovanie je nástroj na riešenie nejakého problému pomocou postupnosti príkazov zadaných "počítaču". Problémom
+môže byť napríklad hľadanie riešenia rovnice alebo prvočísel z daného intervalu. Problémom môže byť aj komplexnejšia 
+úloha - napr. spravovanie rôznych databáz (kníh, ľudí a pod.).
+<br>Všetko čo je v počítači zapísané je zapísané pomocou dvoch dát nuly a jednotky. Keď počítače vnikali programátori 
+museli do počítača zadávať príkazy pomocou postupnosti 0 a 1, čo bolo veľmi obtiažne a ľahko mohlo dôjsť k chybe. Neskôr
+vznikali programovacie jazyky, ktoré umožňovali písať programy ako textové súbory a vytvorili si kompilátory, ktoré ten text
+vedia prepísať do do reči počítaču zrozumitelnej (do 0 a 1). Existuje veľké množstvo programovacích jazykov, niektoré
+sú kamarátskejšie ku programátorovi (pascal) ale preložený kód-program môže byť zbytočne dlhý alebo pomalý a iné sú na programátora
+podstatne náročnejšie (assembler), kde sa dá dosiahnuť optimálnosť programu.
+Programovanie je písanie príkazov pre "počítač", ktorým počítač rozumie (vie si ich preložiť do svojej reči). 
+Program je teda návod pre počítač na vyriešenie nejakej úlohy v nejakom programovacom jazyku.
+<br>Základom každého programovacieho jazyka je teda kompilátor, ktorý prekladá príkazy jazyka do kódu pre procesor ale často býva
+doplnený IDE prostredím, ktoré programátorovi značne uľahčuje písanie programu. Býva tu "špeciálny" editor, ktorý vie pomáhať pri 
+zadávaní príkazov, ladiace nástroje - ktoré umožňujú krokovanie (vykonávanie programu po príkazoch) a hlavne help, kde programátor
+nájde syntax, sémantiku príkazov, príklady použitia príkazu, štruktúru používaných objektov a pod. 
+<h3  class="main">Čo je vlastne C++ Builder</h3>
+C++ Builder je programovacie prostredie pre písanie programov pre prostredie windows založené na jazyku C++ s množstvom pripravených objektov, 
+ktoré majú uľahčiť najbežnejšie akcie, tiež C++ Builder ponúka bohaté prostredie - ladiace nástroje, pomoc pre užívateľa. 
+Väčšinu z toho čo sme sa naučili v C využijeme aj v prostredí C++ Builder a získame najmä:
+<ul><li>lepšie grafické možnosti
+	<li>väčší pamäťový priestor pre dáta
+	<li>prístup ku C++ Builder objektom
+	<li>prístup ku windows funkciám (API funkcie)
+</ul>
+Veľkou výhodou C++ Builder oproti C je, že program tvoríme aj vizuálne - vkladaním objektov do okna. Ďalšou výhodou 
+je postupné zbližovanie s objektovým programovaním. Pre programátorov odchovaných na C je prechod na C++ Builder
+jednoduchý, okrem príkazov vstupu a výstupu vlastne všetky svoje vedomosti využijú.  
+<br>Oproti "klasickému" programovaniu pod Win nás delphi nenúti robiť "nutné" akcie ako nižšie prog. jazyky:
+<ul><li>vytvoriť okno aplikácie
+	<li>ošetriť akcie užívateľa, ošetriť výnimky a pod.
+</ul>	
+Nevýhodou je pomerne velký preložený kód, tu je prednosť klasického programovania pod Win jasná (i v C++ Builder sa môžme vzdať
+vytvorených knižníc a vytvoriť kratší kód).
+<h3  class="main">Nastavenie prostredia C++ Builder</h3>
+C++Builder je implicitne nastavený tak aby nepripájal dynamické knižnice ku exe modulu. Takto vyrobené exe je síce malé, 
+ale dá sa spustiť len na PC, kde je C++Builder nainštalovaný. Ak chceme aby <b>exe</b> bolo voľne prenositelné musíme:
+<br>V ponuke <b>Project->Options</b>
+<ul><li>Záložka <b>Linker</b> - odškrtnúť <b>"Use Dynamic RTL"</b> 
+	<li>Záložka <b>Compiler</b> - stlačiť tlačítko <b>Release</b> 
+	<li>Záložka <b>Packages</b> - odškrtnúť <b>"Build with runtime packages"</b> a je to. 
+</ul>
+<h3  class="main">Potrebné súbory</h3>
+Ak si chceme preniesť projekt z domu do školy alebo naopak nemusíme kopírovať všetky súbory, potrebné sú len niektoré.
+Súbory s koncovkami *.cpp a *.h sú textové súbory a obsahujú texty vášho programu v C++. Súbory s koncovkou *.dfm 
+obsahujú informácie o vzhľade formulára a o komponentoch, ktoré ste do formulára poukladali. Súbor *.bpr obsahuje ďalšie 
+informácie, ktoré sú potrebné pri kompilácií programu.
+<img src="subory.png" width="461" height="411" border="0" alt="">
+
+<h3  class="main">Porovnanie s Blocks</h3>
+Pre písanie konzolových aplikácii existujú aj free verzie prostredí podobných prostrediu C++ Builder napr. <b>blocks</b>, 
+ktoré si môžete stiahnuť na stránke http://www.codeblocks.org/
+<br>Asi sa pýtate, prečo používame na škole C++ Builder - dôvody
+<ul><li>blocks nemá help
+	<li>ako všetky programy, ktoré sú zadarmo má svoje "mušky"
+	<li>preklad v Bulderi je podstatne rýchlejší
+</ul>	
+<h3 class="main">Prechod z Delphi</h3>
+C++ Builder je veľmi podobný prostrediu Delphi - používa rovnaké objekty, ich názvy a tiež sú rovnaké aj ich vlastnosti. Tu spomeniem len základné "problémy", 
+ktoré majú programátori odchovaný na pascale.
+<ul><li>Jazyk C rozlišuje malé a veľké písmená
+	<li>Ku vlastnostiam objektov sa dostaneme pomocou dvojznaku <b>-></b> (namiesto bodky v delphi)
+</ul>
+
+<h3>Základná stavba programu</h3>
+V klasickom C (konzolovom) bol celý program v jednom súbore *.cpp a v jednom *.exe. Tu sa program skladá z viacerých súborov, 
+a preto je vhodné na každú aplikáciu mať vytvorený jeden adresár, kde sú len súbory tejto úlohy. Nám teraz stačí vedieť, že
+musíme vytvoriť aspoň jeden súbor-unit *.cpp (každý unit máva na starosti vytvoriť jeden formulár - okno na obrazovke) 
+a program sám vytvorí projektový súbor project1.cpp, v ktorom je zapísaný hlavný program, ktorý bude mimoriadne jednoduchý.
+Obsahuje len riadky s popisom ktoré formuláre (unity) patria projektu a ktoré budú vytvorené pri štarte úlohy. 
+Zatiaľ sem zasahovať nebudeme, ak vytvárame "viac-oknové" aplikácie, treba sem tam spraviť aj tu nejakú korekciu. 
+O ďalších súboroch, ktoré systém vyrobí zatiaľ nebudeme hovoriť. Nakoľko program, ktorý píšeme bude unitom, nie je tu žiadny 
+klasický hlavný program (main) ale len podprogramy. 
+Nakoľko sa program skladá z viacerých súborov je vhodné aby všetky súbory boli v jednom samostatnom adresári. 
+
+<dl>
+<dt class="main">Popis obrazovky-prostredia
+<dd><br><img src="prostredie.png" width="727" height="478" border="0" alt="">
+	<dl><dt>Menu
+		<dd>Budeme používať len niektoré
+			<br>File - New - Application - Na tvorbu nového projektu 
+			<br>File - Open Projekt - na otvorenie uloženého projektu
+			<br>File - Reopen - na otvorenie niektorého z posledných projektov
+			<br>File - Save - zapíše náš unit
+			<br>File - Save as - zapíše pod iným menom
+			<br>File - Save all - keď vytvárame nový projekt, je vhodné použiť túto voľbu
+			<br>(Upozornenie - Názov projektu a unitu nemôžu byť rovnaké, je zvykom názov projektu začínať písmenom P)
+			<br>Edit - Undo - zruší poslednú zmenu
+			<br>Edit - Redo - vráti poslednú zmenu
+			<br>Edit - Size - nastavenie veľkosti vybratému objektu
+			<br>Edit - Allign - nastavenie zarovnávania viacerých vybratých objektov
+			<br>Search - budeme používať na hľadanie - nahrádzanie textu
+			<br>View - Component list - na vkladanie komponentov ak vieme ich názov
+			<br>View - Debug list - pridávanie sledovacieho okna na ladenie programu
+			<br>View - Units - voľba ktorý unit chcem opravovať (najmä pri viacoknových)
+		<dt>Panel nástrojov <dd>- pre rýchlejší prístup ku najčastejším akciám z menu 
+		<dt>Paleta komponentov <dd>- objekty delené podľa funkcie, používame na vkladanie objektov do projektu (formulára) 
+		<dt>Objekt inspektor <dd>- určovanie vlastností objektov použitých v projekte má dve karty:
+			<br><font color="Blue">Properties</font> - vlastnosti - veľkosť, farba, písmo, ...
+			<br><font color="Blue">Udalosti</font> - tu určíme, čo sa má stať ak nastane určitá udalosť - daná udalosť sa prepojí s nejakým podprogramom
+			(tu sa už bez programovania nezaobídeme)  
+		<dt>Formulár 
+		<dd>- má dve podoby - grafickú - tu určujeme výzor formulára a objektov v ňom a textovú v ktorej píšeme podprogramy pre jednotlivé akcie. 
+	</dl>
+<dt class=main>Niektoré dôležité horúce kľúče
+<dd><b>Ctrl F12</b> - možnosť si vybrať ktorý formulár projektu alebo subor projektu chcem opravovať
+	<br><b>F12</b> - prepnutie medzi grafickýn a textovým oknom
+	<br><b>Ctrl F</b> - hľadanie textu
+	<br><b>Ctrl L</b> - hľadanie ďalšieho výskytu textu
+	<br><b>Ctrl F5</b> - pridanie sledovacieho okna na krokovanie, resp. premennej do sled. okna
+	<br><b>F9</b> - spustenie behu programu
+	<br><b>Ctrl F2</b> - zrušenie buhu programu - napr. po jeho páde
+	<br><b>Ctrl medzera</b> - ak sa programu nechce pomáhať nám s objektami
+	<br><b>Ctrl+Shift+ medzera</b> - ak sa okno s pomocou stratilo a chceme ho vidieť
+
+<dt class="main">Písanie programu
+<dd>Pri písaní programu sa editor snaží pomáhať (ponúka ku objektom vlastnosti, akcie) a je dobré tu pomoc využívať. 
+	Na to aby fungovala	je nutné aby príkazy nad kurzorom boli bez chyby (napr. ak píšem for cyklus musí byť premenná cyklu
+	zadefinovaná, inak mi delphi "radiť" nebudú). Pomoc spočíva v tom, že pri volaní podprogramov po zapísaní ľavej
+	zátvorky nás oboznámi s parametrami, pri práci s objektami (niečo ako RECORD) po klepnutí bodky
+	poradí akú vlastnosť-premennú objektu sem môžem dať aby typovo vyhovovala.
+	Na rýchlejšie písanie je ďalšia pomoc - cez Ctrl J môžme zadávať niektoré konštrukcie jazyka (cykly, deklarácie). 
+	Postup - napíšeme skratku príkazu napr. ifeb (znamená if aj s vetvou else a aj so zátvorkami { }) a po stlačení Ctrl J
+	sa skratka nahradí konštrukciou. Ak nevieme skratku zadáme len Ctrl J a vyberieme si zo zoznamu.
+	<br><font color="Blue">Dôležité:</font> Ak chceme z aplikácie vymazať nejakú procedúru vymažeme len jej telo (medzi Begin a End;)
+	Pri preklade (F9) kompilátor všetky "prázdne" podprogramy korektne vyhodí. Ak ich budete vyhadzovať sami môžu nastať problémy. 
+	<br>Poznámka1: Ak chcete z iného programu vložiť do vášho niektoré podprogramy, kopírujte zatiaľ len telá
+	(C++Builder si použité podprogramy zapisuje a kým do systému nevidíme radšej ho neprovokujme)
+	<br>Poznámka2: Ak sa nám podarí C++Builder prostredie zblbnúť, bude pre nás spočiatku lepšie začať odzačiatku do nového adresára,
+	pričom telá hotových podprogramov si nakopírujem zo zblbnutej verzie.
+<dt class="main">Ladenie programu
+<dd>Stlačením Ctrl F5 možno zavolať ladiace okno, kde zadávame premenné, výrazy ktorých hodnotu chceme sledovať.
+    Program sa snaží pomáhať aj rýchlym vyhodnotením - pri prerušení programu prejdeme na skúmaný výraz a za chvíľu
+	sa ukáže vypočítaná hodnota.
+<dt class="main">Spustenie programu
+<dd>Stlačením F9 možno program spustiť (to je zmena oproti pascalu kde to bolo Ctrl F9).
+	<br>Program, v ktorom sme nič neklepli, je už hotový win program, môžme ho preložiť i spustiť (obdoba programu Begin End. v pascale). 
+	Tento program nemá pridelenú žiadnu akciu no i tak toho vie dosť:
+	<br>jeho okno môžme zväčšovať, zmenšovať, presúvať po obrazovke, minimalizovať, maximalizovať a krížikom resp. pomocou Alt+F4 zavrieť. Po "vynadívaní" sa na náš programátorský výsledok je vhodné ho zavrieť krížikom vpravo hore (nepomýliť sa a nezavrieť okno Buildera :-)    ) a až potom meniť niečo v programe. 
+
+<dt class=main>Vkladanie objektov do programu
+<dd>Programátor pri programovaní pracuje s dvomi oknami
+	<ul><li>Form1 - grafické okno, kam vkladáme vizuálne i nevizuálne objekty
+		<li>Unit1.cpp - textové okno kam budeme písať príkazy ako má počítač reagovať na rôzne udalosti, ktoré môžu nastať.
+	</ul>
+	Objekty, ktoré môžme vkladať do Form1 sú poukladané podľa zamerania (na čo slúžia) do kariet v palete komponentov. Najviac
+	používané objekty sú na prvej karte <b>Standart</b>.
+	<ul><li><b>Label</b> - môžme doňho vložiť text a ten bude zobrazený
+		<li><b>Edit</b> - jednoriadkové vstupné políčko, používa sa aby užívateľ mohol zadať dáta a môže sa v ňom aj zobraziť 
+			výsledok výpočtu
+		<li><b>Memo</b> - viacriadkové vstupno-výstupné pole
+		<li><b>Button</b> - tlačidlo, ktorým užívateľ programu aktivuje nejakú činnosť/výpočet
+	</ul>	 
+	Kliknutím na objekt v palete nástrojov sa zvolený prvok "aktivuje" - vyzerá zatlačený - a kliknutím na vnútro okna Form1
+	sa vloží do formulára (výsledok našej práce si môžme hneď aj vyskúšať spustením programu) aktivácia prvku v palete komponentov
+	sa tým zruší a ak potrebujeme vložiť ďalší prvok musíme objekt opätovne zatlačiť. 
+	<br>Na trvalé zatlačenie prvku stláčame so Shiftom
+	<br>Na zrušenie zatlačenia používame stlačenie bielej šipky, ktorá je na každej karte.
+	<br>Každému prvku môžme nastaviť rôzne vlastnosti a spôsoby nastavenia sú tri
+	<ol><li>veľkosť a polohu na okne Form1 môžme meniť myšou
+		<li>veľa ďalších vlastností je zapísaných v Object Inspektor, kde ich môžme pred spustením programu nastaviť
+		<li>každú vlastnosť možno meniť za behu programu pomocou príkazov zadaných v okne Unit1.pas
+	</ol>	
+
+<dt class="main">Prvý program
+<dd>Napíšeme program s jediným tlačítkom Exit, ktoré ukončí program.
+	<ol><li>Klik na objekt Button v palete objektov
+		<li>Klik na plochu formulára, kde chceme mať tlačítko 
+		<li>Tlačítko možno ťahaním presúvať po ploche, tiež mu možno meniť veľkosť
+		<li>V inšpektorovi objektov nájdeme vlastnosť Capture (text na ňom) a zmeníme na Exit (tento text nie pre beh programu dôležitý)
+	</ol>
+	Tento program možno spustiť - ukáže sa okno s jedným tlačítkom, ktoré možno stlačiť, ale
+	nič sa potom nestane. Ešte musíme ošetriť udalosť OnClick tlačítka. Máme v podstate dve možnosti
+	<ol><li>2xklik na button Exit - C++Builder vytvorí prázdny podprogram, sám mu pridelí aj meno, prepne sa do textového režimu, kurzor nastaví medzi {  } tohto podprogramu 
+		<li>Cez Object-inspector zvolíme kartu Evens-udalosti a tam udalosť OnClick, do vstupného políčka naklepeme názov podprogamu a stlačíme Enter
+	</ol>
+	Oba postupy sú rovnocenné, len v druhom môžeme (musíme) zadať podprogramu aj meno.
+	<br>Do podprogramu vložíme len jeden príkaz <font color="Green">Close();</font>, ktorý zabezpečí korektné ukončenie celého programu.
+	Týmto je program hotový, ak ho chceme archivovať zvolíme z menu voľbu Save All a do <b>prázdneho!</b> adresára zapíšeme aj project aj unit. 
+	Po stlačení F9 sa do tohto adresára zapíše aj Project1.exe, ktorý je spustitelný na ľub. win počítači. 
+<dt class=main>Programovanie:
+<dd>Čo teda budeme s týmto programom tvoriť. Úlohou programu je riešiť nejaký problém. Každý problém je popísaný sadou vstupných dát a požiadavkou na výstupné dáta - napr. vstup tvorí niekoľko známok žiaka z jedného predmetu a výstupom má byť výsledná-priemerná známka. 
+Našou úlohou teda bude podľa zadania úlohy:
+<ul><li>načítať vstupné dáta a uložiť ich tak aby sme s nimi mohli pracovať
+	<li>vypočítať výsledné hodnoty
+	<li>zobraziť výsledné dáta v požadovanom tvare
+</ul>	
+Ako neskôr uvidíme, výsledkom snaženia sa programu nemusia byť len číselné hodnoty ale aj texty, obrázky a pod. ale spočiatku
+budeme väčšinou riešiť číselné úlohy.	
+Aby sme tieto činnosti zvládli, musíme sa oboznámiť s nástrojmi na každú spomenutú činnosť, ale to už nájdete v ďalšej kapitole. 
+
+<dt><font size="+1" color="red">Príklady na precvičenie:</font>
+	<dd><table cellspacing="20"><tr><td>
+		<img src="../obr/ktstrofa.png" border="0" alt="" height="50">		
+		<td>
+		<ol>
+		<li>Napíš <a href="pozdrav.exe">program</a> s vloženým textom "Začíname" a s tlačítkami 
+		    "Dobré ráno", "Dobrý deň", "Dobrý večer" a "Exit", kde prvé tri menia nápis a posledné ukončuje program.
+		<li>Napíš program s vloženým textom "Hello word" v strede okna a tlačítkami, ktoré ho vedia
+			presúvať vnútri formulára.<a href="posuvanie.exe">Stiahni</a>
+			<br>Pozn.
+			<br>Veľkosť okna i ďalších objektov je vo vlastnostiach "height" (včítane titulnej lišty) a "width"  
+			<br>Poloha objektu vo formulári je určená vo vlastnostiach "top" a "left".
+		<li>Napíš program s vloženým textom "Hello word" v strede okna a tlačidlom vpravo dole. 
+			Pri zmene veľkosti okna (vlastnosť Resize) zabezpečte, aby text bol stále vycentrovaný
+			a tlačidlo "Exit" bolo stále viditelné vpravo dole.<a href="hello.exe">Stiahni</a>
+		</ol>
+		</tr>
+		</table>	
+</dl>
+</body>
+</html>

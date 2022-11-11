@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_24.jpg" class="nehe_maly" alt="Lekce 24" />
+
+<h1>Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků</h1>
+
+<p class="nadpis_clanku">V této lekci se naučíte, jak zjistit, která OpenGL rozšíření (extensions) podporuje vaše grafická karta. Vypíšeme je do středu okna, se kterým budeme moci po stisku šipek rolovat. Použijeme klasický 2D texturový font s tím rozdílem, že texturu vytvoříme z TGA obrázku. Jeho největšími přednostmi jsou jednoduchá práce a podpora alfa kanálu. Odbouráním bitmap už nebudeme muset inkludovat knihovnu glaux.</p>
+
+<p>Tento tutoriál je daleko od prezentace grafické nádhery, ale naučíte se několik nových věcí. Pár lidí se mě ptalo na OpenGL rozšíření a na to, jak zjistit, které jsou podporovány konkrétním typem grafické karty. Mohu směle říci, že s tímto po dočtení nebudete mít nejmenší problémy. Také se dozvíte, jak rolovat částí scény bez toho, aby se ovlivnilo její okolí. Použijeme ořezávací testy (scissor testing). Dále si ukážeme, jak vykreslovat linky pomocí line strips a co je důležitější, kompletně odbouráme knihovnu glaux, kterou jsme používali kvůli texturám z bitmapových obrázků. Budeme používat Targa (TGA) obrázky, se kterými se snadno pracuje a které podporují alfa kanál.</p>
+
+<p>Začneme programovat. První věcí, které si všimneme u vkládání hlavičkových souborů je, že neinkludujeme knihovnu glaux (glaux.h). Také nepřilikujeme soubor glaux.lib. Už nebudeme pracovat s bitmapami, takže tyto soubory v projektu nepotřebujeme.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;stdarg.h&gt;<span class="kom">// Hlavičkový soubor pro funkce s proměnným počtem parametrů</span></p>
+<p class="src0">#include &lt;string.h&gt;<span class="kom">// Hlavičkový soubor pro práci s řetězci</span></p>
+<p></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+
+<p>Přidáme proměnné. Scroll bude použito pro rolování částí scény nahoru a dolů. Druhá proměnná, maxtokens, bude ukládat záznam kolik rozšíření je podporováno grafickou kartou. Base už tradičně ukazuje na display listy fontu. Do swidth a sheight nagrabujeme aktuální velikost okna, pomohou nám vypočítat koordináty pro ořezání oblasti okna, které umožní rolování.</p>
+
+<p class="src0">int scroll;<span class="kom">// Pro rolování okna</span></p>
+<p class="src0">int maxtokens;<span class="kom">// Počet podporovaných rozšíření</span></p>
+<p></p>
+<p class="src0">GLuint base;<span class="kom">// Základní display list fontu</span></p>
+<p></p>
+<p class="src0">int swidth;<span class="kom">// Šířka ořezané oblasti</span></p>
+<p class="src0">int sheight;<span class="kom">// Výška ořezané oblasti</span></p>
+
+<p>Napíšeme strukturu, která bude ukládat informace o nahrávaném TGA obrázku. Pointer imageData bude ukazovat na data, ze kterých vytvoříme obrázek. Bpp označuje barevnou hloubku (bits per pixel), která může být 24 nebo 32, podle přítomnosti alfa kanálu. Width a height definuje rozměry. Do texID vytvoříme texturu. Celou strukturu nazveme TextureImage.</p>
+
+<p class="src0">typedef struct<span class="kom">// Struktura textury</span></p>
+<p class="src0">{</p>
+<p class="src1">GLubyte *imageData;<span class="kom">// Data obrázku</span></p>
+<p class="src1">GLuint bpp;<span class="kom">// Barevná hloubka obrázku</span></p>
+<p class="src1">GLuint width;<span class="kom">// Šířka obrázku</span></p>
+<p class="src1">GLuint height;<span class="kom">// Výška obrázku</span></p>
+<p></p>
+<p class="src1">GLuint texID;<span class="kom">// Vytvořená textura</span></p>
+<p class="src0">} TextureImage;<span class="kom">// Jméno struktury</span></p>
+
+<p>V tomto programu budeme používat pouze jednu texturu, takže vytvoříme pole textur o velikosti jedna.</p>
+
+<p class="src0">TextureImage textures[1];<span class="kom">// Jedna textura</span></p>
+
+<p>Na řadu přichází asi nejobtížnější část - nahrávání TGA obrázku a jeho konvertování na texturu. Musím ještě poznamenat, že kód následující funkce umožňuje loadovat buď 24 nebo 32 bitové <b>nekomprimované</b> TGA soubory. Zabralo dost času zprovoznit kód, který by pracoval s oběma typy. Nikdy jsem neřekl, že jsem génius. Rád bych poukázal, že úplně všechno není z mé hlavy. Spoustu opravdu dobrých nápadů jsem získal pročítáním internetu. Pokusil jsem se je zkombinovat do funkčního kódu, který pracuje s OpenGL. Nic snadného, nic extrémně složitého!</p>
+
+<p>Funkci předáváme dva parametry. První ukazuje do paměti, kam uložíme texturu. Druhý určuje diskovou cestu k souboru, který chceme nahrát.</p>
+
+<p class="src0">bool LoadTGA(TextureImage *texture, char *filename)<span class="kom">// Do paměti nahraje TGA soubor</span></p>
+<p class="src0">{</p>
+
+<p>Pole TGAheader[] definuje 12 bytů. Porovnáme je s prvními 12 bity, které načteme z TGA souboru - TGAcompare[], abychom se ujistili, že je to opravdu Targa obrázek a ne nějaký jiný.</p>
+
+<p class="src1">GLubyte TGAheader[12] = { 0,0,2,0,0,0,0,0,0,0,0,0 };<span class="kom">// Nekomprimovaná TGA hlavička</span></p>
+<p class="src1">GLubyte TGAcompare[12];<span class="kom">// Pro porovnání TGA hlavičky</span></p>
+
+<p>Header[] ukládá prvních šest DŮLEŽITÝCH bytů z hlavičky souboru (šířka, výška, barevná hloubka).</p>
+
+<p class="src1">GLubyte header[6];<span class="kom">// Prvních 6 užitečných bytů z hlavičky</span></p>
+
+<p>Do bytesPerPixel přiřadíme výsledek operace, kdy vydělíme barevnou hloubku v bitech osmi, abychom získali barevnou hloubku v bytech na pixel. ImageSize definuje počet bytů, které jsou zapotřebí k vytvoření obrázku (šířka*výška*barevná hloubka).</p>
+
+<p class="src1">GLuint bytesPerPixel;<span class="kom">// Počet bytů na pixel použitý v TGA souboru</span></p>
+<p class="src1">GLuint imageSize;<span class="kom">// Ukládá velikost obrázku při alokování RAM</span></p>
+
+<p>Temp umožní prohodit byty dále v programu. A konečně poslední proměnnou použijeme ke zvolení správného parametru při vytváření textury. Bude záviset na tom, zda je TGA 24 nebo 32 bitová. V případě 24 bitů předáme GL_RGB a máme-li 32 bitový obrázek použijeme GL_RGBA. Implicitně předpokládáme, že je obrázek 32 bitový, tudíž do type přiřadíme GL_RGBA.</p>
+
+<p class="src1">GLuint temp;<span class="kom">// Pomocná proměnná</span></p>
+<p class="src1">GLuint type = GL_RGBA;<span class="kom">// Implicitním GL módem je RGBA (32 BPP)</span></p>
+
+<p>Pomocí funkce fopen() otevřeme TGA soubor filename pro čtení v binárním módu (rb). Následuje větvení if, ve kterém děláme hned několik věcí najednou. Nejprve testujeme jestli soubor obsahuje data. Pokud tam žádná nejsou, vrátíme false. Obsahuje-li informace, přečteme prvních dvanáct bytů do TGAcompare. Použijeme funkci fread(), která po jednom bytu načte ze souboru file dvanáct bytů (sizeof(TGAcompare)) a výsledek uloží do TGAcompare. Vrací počet přečtených bytů, které porovnáme se sizeof(TGAcompare). Mělo by jich být, jak tušíte :-), dvanáct. Pokud jsme bez potíží došli až tak daleko, porovnáme funkcí memcmp() pole TGAheader a TGAcompare. Nebudou-li stejné zavřeme soubor a vrátíme false, protože se nejedná o TGA obrázek. Do header nakonec načteme dalších šest bytů. Při chybě opět zavřeme soubor a funkci ukončíme.</p>
+
+<p class="src1">FILE *file = fopen(filename, &quot;rb&quot;);<span class="kom">// Otevře TGA soubor</span></p>
+<p></p>
+<p class="src1">if(file == NULL || <span class="kom">// Existuje soubor?</span></p>
+<p class="src2">fread(TGAcompare,1,sizeof(TGAcompare),file) != sizeof(TGAcompare) ||<span class="kom">// Podařilo se načíst 12 bytů?</span></p>
+<p class="src2">memcmp(TGAheader,TGAcompare,sizeof(TGAheader)) != 0 ||<span class="kom">// Mají potřebné hodnoty?</span></p>
+<p class="src2">fread(header,1,sizeof(header),file) != sizeof(header))<span class="kom">// Pokud ano, načte dalších šest bytů</span></p>
+<p class="src1">{</p>
+<p class="src2">if (file == NULL)<span class="kom">// Existuje soubor?</span></p>
+<p class="src3">return false;<span class="kom">// Konec funkce</span></p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3">fclose(file);<span class="kom">// Zavře soubor</span></p>
+<p class="src3">return false;<span class="kom">// Konec funkce</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Pokud program prošel kódem bez chyby máme dost informací pro definování některých proměnných. První bude šířka obrázku. Problém spočívá v tom, že toto číslo je rozděleno do dvou bytů. Nižší byte může nabývat 256 hodnot (8 bitů), takže vynásobíme vyšší byte 256 a k němu přičteme nižší. Získali jsme šířku obrázku. Stejným postupem dostaneme i výšku, akorát použijeme jiné indexy v poli.</p>
+
+<p class="src1">texture-&gt;width  = header[1] * 256 + header[0];<span class="kom">// Získá šířku obrázku</span></p>
+<p class="src1">texture-&gt;height = header[3] * 256 + header[2];<span class="kom">// Získá výšku obrázku</span></p>
+
+<p>Zkontrolujeme jestli je šířka i výška větší než nula. Pokud ne zavřeme soubor a vrátíme false. Zároveň zkontrolujeme i barevnou hloubku, kterou hledáme v header[4]. Musí být buď 24 nebo 32 bitová.</p>
+
+<p class="src1"> if(texture-&gt;width &lt;= 0 ||<span class="kom">// Platná šířka?</span></p>
+<p class="src2">texture-&gt;height &lt;= 0 ||<span class="kom">// Platná výška?</span></p>
+<p class="src2">(header[4] != 24 &amp;&amp; header[4] != 32))<span class="kom">// Platná barevná hloubka?</span></p>
+<p class="src1">{</p>
+<p class="src2">fclose(file);<span class="kom">// Zavře soubor</span></p>
+<p class="src2">return false;<span class="kom">// Konec funkce</span></p>
+<p class="src1">}</p>
+
+<p>Spočítali a zkontrolovali jsme šířku a výšku, můžeme přejít k barevné hloubce v bitech a bytech a velikosti paměti potřebné k uložení dat obrázku. Už víme, že v header[4] je barevná hloubka v bitech na pixel. Přiřadíme ji do bpp. Jeden byte se skládá z 8 bitů. Z toho plyne, že barevnou hloubku v bytech získáme dělením bpp osmi. Velikost dat obrázku získáme vynásobením šířky, výšky a bytů na pixel.</p>
+
+<p class="src1">texture-&gt;bpp = header[4];<span class="kom">// Bity na pixel (24 nebo 32)</span></p>
+<p></p>
+<p class="src1">bytesPerPixel = texture-&gt;bpp / 8;<span class="kom">// Byty na pixel</span></p>
+<p></p>
+<p class="src1">imageSize = texture-&gt;width * texture-&gt;height * bytesPerPixel;<span class="kom">// Velikost paměti pro data obrázku</span></p>
+
+<p>Potřebujeme alokovat paměť pro data obrázku. Funkci malloc() předáme požadovanou velikost. Měla by vrátit ukazatel na zabrané místo v RAM. Následující if má opět několik úloh. V prvé řadě testuje správnost alokace. Pokud při ní něco nevyšlo, ukazatel má hodnotu NULL. V takovém případě zavřeme soubor a vrátíme false. Nicméně pokud se alokace podařila, tak  pomocí fread() načteme data obrázku a uložíme je do právě alokované paměti. Pokud se data nepodaří zkopírovat, uvolníme paměť, zavřeme soubor a ukončíme funkci.</p>
+
+<p class="src1">texture-&gt;imageData = (GLubyte *)malloc(imageSize);<span class="kom">// Alokace paměti pro data obrázku</span></p>
+<p></p>
+<p class="src1">if(texture-&gt;imageData == NULL ||<span class="kom">// Podařilo se paměť alokovat?</span></p>
+<p class="src2">fread(texture-&gt;imageData, 1, imageSize, file) != imageSize)<span class="kom">// Podařilo se kopírování dat?</span></p>
+<p class="src1">{</p>
+<p class="src2">if(texture-&gt;imageData != NULL)<span class="kom">// Byla data nahrána?</span></p>
+<p class="src3">free(texture-&gt;imageData);<span class="kom">// Uvolní paměť</span></p>
+<p></p>
+<p class="src2">fclose(file);<span class="kom">// Zavře soubor</span></p>
+<p class="src2">return false;<span class="kom">// Konec funkce</span></p>
+<p class="src1">}</p>
+
+<p>Pokud se až doteď nestalo nic, čím bychom ukončovali funkci, máme vyhráno. Stojí před námi, ale ještě jeden úkol. Formát TGA specifikuje pořadí barevných složek BGR (modrá, zelená, červená) narozdíl od OpenGL, které používá RGB. Pokud bychom neprohodili červenou a modrou složku, tak všechno, co má být v obrázku modré by bylo červené a naopak. Deklarujeme cyklus, jehož řídící proměnná i nabývá hodnot od nuly do velikosti obrázky. Každým průchodem se zvětšuje o 3 nebo o 4 v závislosti na barevné hloubce. (24/8=3, 32/8=4). Uvnitř cyklu prohodíme R a B složky. Modrá je na indexu i a červená i+2. Modrá by byla na i+1, ale s tou nic neděláme, protože je umístěná správně.</p>
+
+<p class="src1">for(GLuint i=0; i &lt; int(imageSize); i += bytesPerPixel)<span class="kom">// Prochází data obrázku</span></p>
+<p class="src1">{</p>
+<p class="src2">temp = texture-&gt;imageData[i];<span class="kom">// B uložíme do pomocné proměnné</span></p>
+<p class="src2">texture-&gt;imageData[i] = texture-&gt;imageData[i + 2];<span class="kom">// R je na správném místě</span></p>
+<p class="src2">texture-&gt;imageData[i + 2] = temp;<span class="kom">// B je na správném místě</span></p>
+<p class="src1">}</p>
+
+<p>Po této operaci máme v paměti uložen obrázek TGA ve formátu, který podporuje OpenGL. Nic nám nebrání, abychom zavřeli soubor. Už ho k ničemu nepotřebujeme.</p>
+
+<p class="src1">fclose(file);<span class="kom">// Zavře soubor</span></p>
+
+<p>Můžeme začít vytvářet texturu. Tento postup je v principu úplně stejný, jako ten, který jsme používali v minulých tutoriálech. Požádáme OpenGL o vygenerování jedné textury na adrese texture[0].textID, kterou jsme získali předáním parametru ve funkci InitGL(). Pokud bychom chtěli vytvořit druhou texturu z jiného obrázku TGA, tak se tato funkci vůbec nezmění. V InitGL() bychom provedli volání dvakrát, ale s jinými parametry. Programujeme obecněji...</p>
+
+<p class="src1">glGenTextures(1, &amp;texture[0].texID);<span class="kom">// Generuje texturu</span></p>
+
+<p>Zvolíme právě vytvářenou texturu za aktuální a nastavíme jí lineární filtrování pro zmenšení i zvětšení.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0].texID);<span class="kom">// Zvolí texturu</span></p>
+<p></p>
+<p class="src1">glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+<p class="src1">glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+
+<p>Zkontrolujeme, jestli je textura 24 nebo 32 bitová. V prvním případě nastavíme type na GL_RGB (bez alfa kanálu), jinak ponecháme implicitní hodnotu GL_RGBA (s alfa kanálem). Pokud bychom test neprovedli, program by se s největší pravděpodobností zhroutil.</p>
+
+<p class="src1">if (texture[0].bpp == 24)<span class="kom">// Je obrázek 24 bitový?</span></p>
+<p class="src1">{</p>
+<p class="src2">type = GL_RGB;<span class="kom">// Nastaví typ na GL_RGB</span></p>
+<p class="src1">}</p>
+
+<p>Teď konečně sestavíme texturu. Jako obvykle, tak i tentokrát, použijeme funkci glTexImage2D(). Místo ručního zadání typu textury (GL_RGB, GL_RGBA) předáme hodnotu pomocí proměnné. Jednoduše řečeno: Program sám detekuje, co má předat.</p>
+
+<p class="src1">glTexImage2D(GL_TEXTURE_2D, 0, type, texture[0].width, texture[0].height, 0, type, GL_UNSIGNED_BYTE, texture[0].imageData);<span class="kom">// Vytvoří texturu</span></p>
+<p></p>
+<p class="src1">return true;<span class="kom">// Všechno je v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>ReSizeGLScene() nastavuje pravoúhlou projekci. Souřadnice [0; 1] jsou levým horním rohem okna a [640; 480] pravým dolním. Dostáváme rozlišení 640x480. Na začátku nastavíme globální proměnné swidth a sheight na aktuální rozměry okna. Při každém přesunutí nebo změně velikosti okna se aktualizují. Ostatní kód znáte.</p>
+
+<p class="src0">GLvoid ReSizeGLScene(GLsizei width, GLsizei height)<span class="kom">// Změna velikosti a inicializace OpenGL okna</span></p>
+<p class="src0">{</p>
+<p class="src1">swidth = width;<span class="kom">// Šířka okna</span></p>
+<p class="src1">sheight = height;<span class="kom">// Výška okna</span></p>
+<p></p>
+<p class="src1">if (height == 0)<span class="kom">// Zabezpečení proti dělení nulou</span></p>
+<p class="src1">{</p>
+<p class="src2">height = 1;<span class="kom">// Nastaví výšku na jedna</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glViewport(0,0,width,height);<span class="kom">// Resetuje aktuální nastavení</span></p>
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Zvolí projekční matici</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glOrtho(0.0f,640,480,0.0f,-1.0f,1.0f);<span class="kom">// Pravoúhlá projekce 640x480, [0; 0] vlevo nahoře</span></p>
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Zvolí matici Modelview</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src0">}</p>
+
+<p>Inicializace OpenGL se minimalizovala. Zůstala z ní jenom kostra. Nahrajeme TGA obrázek a vytvoříme z něj texturu. V prvním parametru je určeno, kam ji uložíme a v druhém disková cesta k obrázku. Vrátí-li funkce z jakéhokoli důvodu false, inicializace se přeruší, program zobrazí chybovou zprávu a ukončí se. Pokud byste chtěli nahrát druhou nebo i další textury použijte volání několik. Podmínka se logicky ORuje.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadTGA(&amp;textures[0], &quot;Data/Font.TGA&quot;))<span class="kom">// Nahraje texturu fontu z TGA obrázku</span></p>
+<p class="src1">{</p>
+<p class="src2">return false;<span class="kom">// Při chybě ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Po úspěšném nahrání textury vytvoříme font. Je důležité upozornit, že se BuildFont() musí volat až po funkci LoadTGA(), protože používá jí vytvořenou texturu. Dále nastavíme vyhlazené stínování, černé pozadí, povolíme mazání depth bufferu a zvolíme texturu fontu.</p>
+
+<p class="src1">BuildFont();<span class="kom">// Sestaví font</span></p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Vyhlazené stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, textures[0].texID);<span class="kom">// Zvolí texturu</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Přejdeme k vykreslování. Začneme deklarováním proměnných. O ukazateli token zatím jen tolik, že bude ukládat řetězec jednoho podporovaného rozšíření a cnt je pro zjištění jeho pořadí.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">char* token;<span class="kom">// Ukládá jedno rozšíření</span></p>
+<p class="src1">int cnt = 0;<span class="kom">// Čítač rozšíření</span></p>
+
+<p>Smažeme obrazovku a hloubkový buffer. Potom nastavíme barvu na středně tmavě červenou a do horní části okna vypíšeme slova Renderer (jméno grafické karty), Vendor (její výrobce) a Version (verze). Důvod, proč nejsou všechny umístěny 50 pixelů od okraje na ose x, je ten, že je nezarovnáváme doleva, ale doprava.</p>
+
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p></p>
+<p class="src1">glColor3f(1.0f,0.5f,0.5f);<span class="kom">// Červená barva</span></p>
+<p class="src1">glPrint(50,16,1,&quot;Renderer&quot;);<span class="kom">// Výpis nadpisu pro grafickou kartu</span></p>
+<p class="src1">glPrint(80,48,1,&quot;Vendor&quot;);<span class="kom">// Výpis nadpisu pro výrobce</span></p>
+<p class="src1">glPrint(66,80,1,&quot;Version&quot;);<span class="kom">// Výpis nadpisu pro verzi</span></p>
+
+<p>Změníme červenou barvu na oranžovou a nagrabujeme informace z grafické karty. Použijeme funkci glGetString(), která vrátí požadované řetězce. Kvůli glPrint() přetypujeme výstup funkce na char*. Výsledek vypíšeme doprava od nadpisů.</p>
+
+<p class="src1">glColor3f(1.0f,0.7f,0.4f);<span class="kom">// Oranžová barva</span></p>
+<p class="src1">glPrint(200,16,1,(char *)glGetString(GL_RENDERER));<span class="kom">// Výpis typu grafické karty</span></p>
+<p class="src1">glPrint(200,48,1,(char *)glGetString(GL_VENDOR));<span class="kom">// Výpis výrobce</span></p>
+<p class="src1">glPrint(200,80,1,(char *)glGetString(GL_VERSION));<span class="kom">// Výpis verze</span></p>
+
+<p>Definujeme modrou barvu a dolů na scénu vypíšeme NeHe Productions.</p>
+
+<p class="src1">glColor3f(0.5f,0.5f,1.0f);<span class="kom">// Modrá barva</span></p>
+<p class="src1">glPrint(192,432,1,&quot;NeHe Productions&quot;);<span class="kom">// Výpis NeHe Productions</span></p>
+
+<p>Kolem právě vypsaného textu vykreslíme bílý rámeček. Resetujeme matici, protože v glPrint() se volají funkce, které ji mění. Potom definujeme bílou barvu.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glColor3f(1.0f,1.0f,1.0f);<span class="kom">// Bílá barva</span></p>
+
+<p>Vykreslování linek pomocí GL_LINE_STRIP je velmi jednoduché. První bod definujeme úplně vpravo, 63 pixelů (480-417=63) nad spodním okrajem okna. Druhý vertex umístíme ve stejné výšce, ale vlevo. OpenGL je spojí přímkou. Třetí bod posuneme dolů do levého dolního rohu. OpenGL opět zobrazí linku, tentokrát mezi druhým a třetím bodem. Čtvrtý bod patří do pravého dolního rohu a k pátému projedeme výchozím vertexem nahoru. Ukončíme triangle strip, abychom mohli začít vykreslovat z nové pozice a stejným způsobem vykreslíme druhou část rámečku, ale tentokrát nahoře.</p>
+
+<p>Asi jste pochopili, že pokud vykreslujeme více na sebe navazujících přímek, tak LINE_STRIP ušetří spoustu zbytečného kódu, který vzniká opakovaným definováním vertexů při obyčejném GL_LINES.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_24_line_strip.gif" width="150" height="100" alt="Pořadí zadávání bodů" /></div>
+
+<p class="src1">glBegin(GL_LINE_STRIP);<span class="kom">// Začátek kreslení linek</span></p>
+<p class="src2">glVertex2d(639,417);<span class="kom">// 1</span></p>
+<p class="src2">glVertex2d(0,417);<span class="kom">// 2</span></p>
+<p class="src2">glVertex2d(0,480);<span class="kom">// 3</span></p>
+<p class="src2">glVertex2d(639,480);<span class="kom">// 4</span></p>
+<p class="src2">glVertex2d(639,128);<span class="kom">// 5</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p></p>
+<p class="src1">glBegin(GL_LINE_STRIP);<span class="kom">// Začátek kreslení linek</span></p>
+<p class="src2">glVertex2d(0,128);<span class="kom">// 6</span></p>
+<p class="src2">glVertex2d(639,128);<span class="kom">// 7</span></p>
+<p class="src2">glVertex2d(639,1);<span class="kom">// 8</span></p>
+<p class="src2">glVertex2d(0,1);<span class="kom">// 9</span></p>
+<p class="src2">glVertex2d(0,417);<span class="kom">// 10</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Nám neznámá funkce glScissor(x, y, v, š) vytváří něco, co by se dalo popsat jako okno. Pokud zapneme GL_SCISSOR_TEST, bude se ořezávat okolí této části obrazovky, tudíž se objekty budou moci vykreslovat pouze uvnitř definovaného obdélníku. Určíme ho parametry předanými funkci. V našem případě je to první pixel na ose x ve výšce 13,5% (0,135...f) od spodního okraje. dále bude 638 pixelů široký (swidth-2) a 59,7% (0,597...f) výšky okna vysoký. Druhým řádkem povolíme ořezávací testy. Můžete se pokusit vykreslit obrovský obdélník přes celé okno, ale uvidíte pouze část v neořezané oblasti. zbytek dosud nakreslené scény zůstane nezměněn. Perfektní příkaz!</p>
+
+<p class="src1">glScissor(1, int(0.135416f*sheight), swidth-2, int(0.597916f*sheight));<span class="kom">// Definování ořezávací oblasti</span></p>
+<p class="src1">glEnable(GL_SCISSOR_TEST);<span class="kom">// Povolí ořezávací testy</span></p>
+
+<p>Na řadu přichází asi nejtěžší část této lekce - vypsání podporovaných OpenGL rozšíření. V první fázi je musíme získat. Pomocí funkce malloc() alokujeme buffer pro řetězec znaků text. Předává se jí velikost požadované paměti. Strlen() spočítá počet znaků řetězce vráceného glGetString(GL_EXTENSIONS). Přičteme k němu ještě jeden znak pro '\0', který uzavírá každý c-éčkovský řetězec. Strcpy() zkopíruje řetězec podporovaných rozšíření do proměnné text.</p>
+
+<p class="src1">char* text = (char *)malloc(strlen((char *)glGetString(GL_EXTENSIONS))+1);<span class="kom">// Alokace paměti pro řetězec</span></p>
+<p class="src1">strcpy(text,(char *)glGetString(GL_EXTENSIONS));<span class="kom">// Zkopíruje seznam rozšíření do text</span></p>
+
+<p>Nyní jsme do text nagrabovali z grafické karty řetězec, který vypadá nějak takto: &quot;GL_ARB_multitexture GL_EXT_abgr GL_EXT_bgra&quot;. Pomocí strtok() z něj vyjmeme v pořadí první rozšíření. Funkce pracuje tak, že prochází řetězec a v případě, že najde mezeru zkopíruje příslušnou část z text do token. První hodnota token tedy bude &quot;GL_ARB_multitexture&quot;. Zároveň se však změní i text. První mezera se nahradí oddělovačem. Více dále.</p>
+
+<p class="src1">token = strtok(text, &quot; &quot;);<span class="kom">// Získá první podřetězec</span></p>
+
+<p>Vytvoříme cyklus, který se zastaví tehdy, když v token nezbudou už žádné další informace - bude se rovnat NULL. Každým průchodem inkrementujeme čítač a zkontrolujeme, jestli je jeho hodnota větší než maxtokens. Touto cestou velice snadno získáme maximální hodnotu v čítači, kterou využijeme při rolování po stisku kláves.</p>
+
+<p class="src1">while(token != NULL)<span class="kom">// Prochází podporovaná rozšíření</span></p>
+<p class="src1">{</p>
+<p class="src2">cnt++;<span class="kom">// Inkrementuje čítač</span></p>
+<p></p>
+<p class="src2">if (cnt &gt; maxtokens)<span class="kom">// Je maximum menší než hodnota čítače?</span></p>
+<p class="src2">{</p>
+<p class="src3">maxtokens = cnt;<span class="kom">// Aktualizace maxima</span></p>
+<p class="src2">}</p>
+
+<p>V této chvíli máme v token uložené první rozšíření. Jeho pořadové číslo napíšeme zeleně do levé části okna. Všimněte si, že ho na ose x napíšeme na souřadnici 0. Tím bychom mohli zlikvidovat levý (bílý) rámeček, který jsme už vykreslili, ale protože máme zapnuté ořezávání, pixely na nule nebudou modifikovány. Na ose y začínáme kreslit na 96. Abychom nevykreslovali všechno na sebe, přičítáme pořadí násobené výškou textu (cnt*32). Při vypisování prvního rozšíření se cnt==1 a text se nakreslí na 96+(32*1)=128. U druhého je výsledkem 160. Také odečítáme scroll. Implicitně se rovná nule, ale po stisku šipek se jeho hodnota mění. Umožníme tím rolování ořezaného okna, do kterého se vejde celkem devět řádek (výška okna/výška textu = 288/32 = 9). Změnou scrollu můžeme změnit offset textu a tím ho posunout nahoru nebo dolů. Efekt je podobný filmovému projektoru. Film roluje tak, aby v jednom okamžiku byl vidět vždy jen jeden frame. Nemůžete vidět oblast nad nebo pod ním i když máte větší plátno. Objektiv sehrává stejnou roli jako ořezávací testy.</p>
+
+<p class="src2">glColor3f(0.5f,1.0f,0.5f);<span class="kom">// Zelená barva</span></p>
+<p class="src2">glPrint(0, 96+(cnt*32)-scroll, 0, &quot;%i&quot;, cnt);<span class="kom">// Pořadí aktuálního rozšíření</span></p>
+
+<p>Po vykreslení pořadového čísla zaměníme zelenou barvu za žlutou a konečně vypíšeme text uložený v proměnné token. Vlevo se začne na padesátém pixelu.</p>
+
+<p class="src2">glColor3f(1.0f,1.0f,0.5f);<span class="kom">// Žlutá barva</span></p>
+<p class="src2">glPrint(50,96+(cnt*32)-scroll,0,token);<span class="kom">// Vypíše jedno rozšíření</span></p>
+
+<p>Po zobrazení prvního rozšíření potřebujeme připravit půdu pro další průchod cyklem. Nejprve zjistíme, jestli je v text ještě nějaké další rozšíření. Namísto opětovného volání token = strtok(text, &quot; &quot;), napíšeme token = strtok(NULL, &quot; &quot;); NULL určuje, že se má hledat DALŠÍ podřetězec a ne všechno provádět od znova. V našem příkladě jsem výše napsal, že se mezera nahradí oddělovačem - &quot;GL_ARB_multitextureoddělovačGL_EXT_abgr GL_EXT_bgra&quot;. Najdeme tedy oddělovač a až od něj se bude hledat další mezera. Poté se do token zkopíruje podřetězec mezi oddělovačem a mezerou (GL_EXT_abgr) a text bude modifikován na &quot;GL_ARB_multitextureoddělovačGL_EXT_abgroddělovačGL_EXT_bgra&quot;. Po dosažení konce textu se token nastaví na NULL a cyklus se ukončí.</p>
+
+<p class="src2">token = strtok(NULL, &quot; &quot;);<span class="kom">// Najde další rozšíření</span></p>
+<p class="src1">}</p>
+
+<p>Tím jsme ukončili vykreslování, ale ještě nám zbývá po sobě uklidit. Vypneme ořezávací testy a uvolníme dynamickou paměť - informace získané pomocí glGetString(GL_EXTENSIONS) uložené v RAM. Příště až budeme volat DrawGLScene() se paměť opět alokuje a provedou se znovu všechny rozbory řetězců.</p>
+
+<p class="src1">glDisable(GL_SCISSOR_TEST);<span class="kom">// Vypne ořezávací testy</span></p>
+<p></p>
+<p class="src1">free(text);<span class="kom">// Uvolní dynamickou paměť</span></p>
+
+<p>Příkaz glFlush() není bezpodmínečně nutný, ale myslím, že je dobrý nápad se o něm zmínit. Nejjednodušší vysvětlení je takové, že oznámí OpenGL, aby dokončilo, co právě dělá (některé grafické karty např. používají vyrovnávací paměti, jejichž obsah se tímto pošle na výstup). Pokud si někdy všimnete mihotání nebo blikání polygonů, zkuste přidat na konec všeho vykreslování volání glFlush(). Vyprázdní renderovací pipeline a tím zamezí mihotání, které vzniká tehdy, když program nemá dostatek času, aby dokončil rendering.</p>
+
+<p class="src1">glFlush();<span class="kom">// Vyprázdní renderovací pipeline</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Všechno v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Na konec KillGLWindow() přidáme volání KillFont, které smaže display listy fontu.</p>
+
+<p class="src0"><span class="kom">// Konec KillGLWindow()</span></p>
+<p class="src1">KillFont();<span class="kom">// Smaže font</span></p>
+<p class="src0">}</p>
+
+<p>V programu testujeme stisk šipky nahoru a dolů. V obou případech přičteme nebo odečteme od scroll dvojku, ale pouze tehdy, pokud bychom nerolovali mimo okno. U šipky nahoru je situace jednoduchá - nula je vždy nejnižší možné rolování. Maximum u šipky dolů získáme násobením výšky řádku a počtu rozšíření. Devítku odečítáme, protože se v jednom okamžiku vejde na scénu devět řádků.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src4">if (keys[VK_UP] &amp;&amp; (scroll &gt; 0))<span class="kom">// Šipka nahoru?</span></p>
+<p class="src4">{</p>
+<p class="src5">scroll -= 2;<span class="kom">// Posune text nahoru</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_DOWN] &amp;&amp; (scroll &lt; 32*(maxtokens-9)))<span class="kom">// Šipka dolů?</span></p>
+<p class="src4">{</p>
+<p class="src5">scroll += 2;<span class="kom">// Posune text dolů</span></p>
+<p class="src4">}</p>
+
+<p>Doufám, že byl pro vás tento tutoriál zajímavý. Již víte, jak získat informace o výrobci, jménu a verzi grafické karty a také, která OpenGL rozšíření podporuje. Měli byste vědět, jak použít ořezávací testy a neméně důležitou věcí je nahrávání TGA místo bitmapových obrázků a jejich konverze na textury.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson24.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson24_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson24.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson24.zip">Delphi</a> kód této lekce. ( <a href="mailto:mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson24.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson24.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson24.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson24.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson24.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:jay@remotepoint.com">Jay Groven</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson24.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:scarab@egyptian.net">DarkAlloy</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson24.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson24.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_24_big.jpg" class="nehe_velky" alt="Lekce 24" /></div>
+<p class="okolni_lekce"><a href="tut_23.php">&lt;&lt;&lt; Lekce 23</a> | <a href="tut_25.php">Lekce 25 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">pulcik</div>
+<div class="d_o_datumcas">12.04.2005 - 14:12:42</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_24.php&j=0">Proč ne GL_BGR_EXT ?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">scippio</div>
+<div class="d_o_datumcas">23.12.2005 - 01:13:46</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_24.php&j=1">Re: Proč ne GL_BGR_EXT ?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Zirq</div>
+<div class="d_o_datumcas">22.01.2006 - 11:58:49</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_24.php&j=2">viac ako 256?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">c25</div>
+<div class="d_o_datumcas">17.06.2006 - 13:24:16</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_24.php&j=3">Targa</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Klokotik</div>
+<div class="d_o_datumcas">25.08.2007 - 21:35:41</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_24.php&j=4">Barvy</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Klokotik</div>
+<div class="d_o_datumcas">25.08.2007 - 21:39:23</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_24.php&j=5">Barvy</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_24.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

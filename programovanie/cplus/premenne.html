@@ -1,0 +1,83 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Premenné</title>
+</head>
+
+<body>
+<h2>Jednoduché premenné</h2>
+Rovnako ako v pascale, vsetky premenné musíme pred pouitím deklarova. V klasickom C-èku môeme 
+deklarova na zaèiatku kadého bloku, v C++ môme deklarova premennú hocikde a platnos je po koniec
+bloku v ktorom je deklarovaná.
+Úlohou deklarácie je:
+<ol>
+	<li>priradi premennej meno - je dobrı zvyk všetky premenné oznaèova malımi písmenami
+	<li>urèí miesto kde jej bude vyhradenı priestor
+	<li>urèí ve¾kos vyhradeného priestoru
+	<li>urèí mnoinu prípustnıch operácií s premennou
+	<li>urèí ivotnos premennej
+	<li>urèí viditelnos premennej
+</ol>
+<dl>
+	<dt><font color="Blue">Základné typy</font>
+	<dd>char - dåka 1B,celé èíslo, èíselnı rozsah &lt;-128;127&gt; (ako shortint)
+	<br>int &nbsp;- dåka 2B, celé èíslo, èíselnı rozsah &lt;-32768;32767&gt; (ako integer)
+	<br>float - dåka 4B, reálne èíslo, èíselnı rozsah &lt;-10<sup>38</sup>;+10<sup>38</sup>&gt; presnos asi 6 cifier 
+	<br>double - dåka 8B, reálne èíslo, èíselnı rozsah &lt;-10<sup>308</sup>;+10<sup>308</sup>&gt; presnos asi 12-13 cifier	 
+	<dt><font color="Blue">Všeobecnı tvar deklarácie premennıch</font>
+	<dd><font color="Green">ukladacia_trieda &nbsp;modifikátor_typu &nbsp;deklarátor_typu &nbsp; zoznam_premennıch </font>
+    <dl><dt>zoznam premennıch 
+		<dd>identifikátory oddelené èiarkou a ukonèené bodkoèiarkou, všetky premenné budú rovnakého typu 
+		<dt>deklarátor_typu 
+		<dd>niektorı zo základnıch typov, prípadne nami vytvorenı typ
+		<dt>modifikátor_typu
+		<dd>short - len s typom int (pod DOS nemá iadny efekt, v LINUXe skráti na 2B)
+		<br>long - môe by aj bez deklarátora typu, to isté ako long int
+		<br> &nbsp; &nbsp; &nbsp; - s typom int - dåka 4B, celé èíslo, rozsah &lt;-2<sup>31</sup>;+2<sup>31</sup>&gt; (ako longint)  
+		<br> &nbsp; &nbsp; &nbsp; - s typom float - ako double
+		<br> &nbsp; &nbsp; &nbsp; - s typom double - dåka 10B, rozsah &lt;-10<sup>4932</sup>;+10<sup>4932</sup>&gt;
+		<br>signed - s typom char, int, long urèuje e ide o znamienkovı typ
+		<br>unsigned - s typom char, int, long (s char je rozsah &lt;0; 255&gt;)
+		<dt>ukladacia_trieda
+		<dd>auto - implicitné, ijú len v tom bloku, kde sú deklarované
+		<br>static - ijú aj po opustení bloku, viditelnos len v bloku
+		<br>register - ako auto, ale umiestnenie je v registroch procesora (na urıchlenie)
+	</dl>
+	<dt><font color="Blue">Inicializácia premennıch</font>
+	<dd>Inicializácia znamená nastavenie nejakej hodnoty premennej pri vzniku (napr. int i=5;) .
+	Statické premenné sú automaticky inicializované na 0, ale mono ich nastavi na inú hodnotu.
+	Automatické a registrové premenné majú po vzniku <font color="Green">náhodnú</font> hodnotu,
+	(globálne nevynímajúc) inicializáciou mono zabezpeèi poadovanú hodnotu.
+	<br>Inicializáciu zabezpeèíme priradením, kde na pravej strane môe by vıraz obsahujúci len konštanty
+	alebo u inicializované premenné
+	(kompilátor musí vedie vyhodnoti v C++ je situácia komplikovanejšia)
+	<br>Príklady:
+	<br>auto long int a=20, b, c=11;
+	<br>long ii,k=1e6; //v C-cku mozno realnu hodnotu priradit do celociselnej
+	<br>static unsigned char z='A', zz; 
+	<dt><font color="Blue">Cvièenie</font>
+	<dd>Aby sme mohli robi, èo len najjednoduhšie programy potrebujeme aspoò jednoduchı vstup a vıstup.
+	Pre naše potreby na tejto úrovni nám bude staèi si zapamäta:
+	<br>Vstup z klávesnice
+	<br> &nbsp; - int ...scanf("%i",&amp;prem); &nbsp; //pred premennou musí by operátor &amp;
+	<br> &nbsp; - float ...scanf("%f",&amp;prem); &nbsp; //pred premennou musí by operátor &amp;
+	<br>Vıstup na monitor
+	<br> &nbsp; - int ...printf("%i",celoc_vyraz);
+	<br> &nbsp; - float ...printf("%f",realny_vyraz);
+	<br> &nbsp; - text ...printf("text");
+	<dt><font color="Blue">Úlohy</font>
+	<dd>1. Zadeklaruj globálnu celoèíselnú neznamienkovú premennú <font color="Green">plat </font>
+	<br> &nbsp; - zadeklaruj lokálnu celoèíselnú premennú velkosti 1B <font color="Green">koef</font>, inicializovanú na hodnotu 2
+	<br> &nbsp; - Vypíš oznam:"Sem zadajte vami pozadovany plat:" xxxxx
+	<br> &nbsp; - Naèítaj poadovanı plat (písaním platu by sa mali prepisova znaky xxxxx)
+	<br> &nbsp; - Vynechaj riadok
+	<br> &nbsp; - Vypíš oznam:"Vas plat bude: xxxxx" //kde xxxxx bude nahradene pozadovany plat / koef 
+	<br>
+	<br>2. Napíš program na vıpoèet plochy obdånika, kde a,b budú celé
+	<br>
+	<br>3. Napíš program na vıpoèet plochy kruhu
+</dl> 
+
+</body>
+</html>

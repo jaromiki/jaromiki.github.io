@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+	  <style>
+	  input.t	{padding-left:3;padding-bottom:0;font-family:'monotype';width:16;font-size:6pt}
+	  </style>
+		<script>
+		var i=0; var j=0; var xs=1; var ys=1; var xc=30; var yc=30;
+		var k=0; var n=0;
+		var znak=" ";
+		function z(obj,ii,jj)
+		{ 
+		  if (znak=='Š') { document.getElementById('y'+ys+'x'+xs).value=" "; ys=ii; xs=jj;}
+		  if (znak=='C') { document.getElementById('y'+yc+'x'+xc).value=" "; yc=ii; xc=jj;}
+		  if (obj.value!='Š' &&obj.value!='C') obj.value=znak;
+		  obj.style.color='black';
+		}
+		function cesta()
+		{  var ce = new Array(32);
+		   for (i=0;i<32;i++) ce[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		   var ze = new Array(32);
+		   ze[0]=new Array(32);
+		   for (i=1;i<31;i++) 
+		   {  ze[i]=new Array(32);
+		      for (j=1;j<31;j++) ze[i][j]=document.getElementById('y'+i+'x'+j).value;
+		   }
+		   ze[31]=new Array(32);
+		   for (i=0;i<32;i++) ze[0][i]=ze[31][j]=ze[i][0]=ze[i][31]='X';	  
+		   
+		   k=1; ce[ys][xs]=1;
+		   while (!ce[yc][xc])
+		   { for (i=1;i<31;i++)
+		       for (j=1;j<31;j++)
+			      if(ce[i][j]==k) 
+			      { 
+				     if (ze[i-1][j]!='X' && !ce[i-1][j]) {ce[i-1][j]=k+1;} 
+				     if (ze[i+1][j]!='X' && !ce[i+1][j]) {ce[i+1][j]=k+1;}
+					 if (ze[i][j-1]!='X' && !ce[i][j-1]) {ce[i][j-1]=k+1;}
+					 if (ze[i][j+1]!='X' && !ce[i][j+1]) {ce[i][j+1]=k+1;}
+				  }
+			 k++;
+		   }
+//		   k--;
+		   vysl1.value=k+" ";
+		   var xxc=xc; var yyc=yc;
+		   while (k>1)
+		   {  document.getElementById('y'+yyc+'x'+xxc).value='o';
+		      document.getElementById('y'+yyc+'x'+xxc).style.color='red';
+		      k--;
+		      if (ce[yyc-1][xxc]==k) yyc--;
+			   if (ce[yyc+1][xxc]==k) yyc++;
+			   if (ce[yyc][xxc-1]==k) xxc--;
+			   if (ce[yyc][xxc+1]==k) xxc++;
+			} 
+			document.getElementById('y'+yc+'x'+xc).value='C'; 
+		}
+		function zmaz1()
+		{  for (i=1;i<31;i++) 
+		   for (j=1;j<31;j++) 
+		     if (document.getElementById('y'+i+'x'+j).value=='o') 
+			 {  document.getElementById('y'+i+'x'+j).value=' ';
+			    document.getElementById('y'+i+'x'+j).style.color='black';
+		     }		 
+		} 
+		function zmaz2()
+		{  for (i=1;i<31;i++) 
+		   for (j=1;j<31;j++) 
+		     if (document.getElementById('y'+i+'x'+j).value=='X') document.getElementById('y'+i+'x'+j).value=' ';
+		} 
+		</script>
+</head>
+
+<body>
+<h3 style="width:500">Hľadanie najkratšej cesty v bludisku zadanom tabuľkou. </h3>
+<dl><dt>Riešenie bludiska
+	<dd>Máme zadanú rovinnú úlohu (plošinovka), kde voľné políčka sú reprezentované napr. medzerou a prekážky napr. znakom 'X'. Ďalej je dané miesto štartu a cieľa. Našou úlohou je nájsť
+		nakratšiu cestu pričom sa môžme pohybovať vo 4 smeroch (hore, doprava, dole, doľava) a na políčko s prekážkou nesmieme stúpiť. Väčšinou nám v príkladoch stačí zistiť dĺžku najkratšej
+		cesty (prípadne neexistencia cesty) no v nasledujúcej ukážke sa príslušná cesta aj zobrazí. Použitá je zjednodušená varianta Dijkstrovho algoritmu (pozri v časti Grafy).
+		<br>V ukážke možno označovať políčka za voľné, prekážkové, štartovné alebo cieľové. Tlačítkami si zvoľ aké tlačítka budeš označovať a klikaním do tabuľky/bludiska vytvoríme svoje
+		bludisko a stlačením tlačídka "hľadaj" algoritmus nájde najkratšiu cestu. 
+		<br>Nie je problém povoliť pre blúdiaceho aj šikmý smer.
+	<br>
+	<table bgcolor="silver"><tr><td>
+		<div style="border-width:3;border-style:outset;width:520px;margin:10px;background-color:silver;">
+		   <div align="right" style="background-color:#3366ff; width:520px; padding:0;border-width:0;">
+		   <img src="../../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+		   </div>
+	   <div style="background-color:silver; width:520px;">
+	      <div style="margin:10">
+		  <h4>Hľadanie najkratšej cesty</h4>
+	Bludisko:<br>
+	<script>
+	for (i=1;i<31;i++)
+	{ for (j=1;j<31;j++) document.write ('<input class="t" type="text" readonly onclick="z(this,'+i+','+j+');" value=" " id="y'+i+'x'+j+'" >');
+      document.write('<br>');
+	}  
+	y1x1.value="Š"; y30x30.value="C";
+	</script> 
+<td valign="top" style="padding:20">
+	<div style=" border: thin solid #F8F8FF; padding:10;">
+	Nástroje na editáciu bludiska<br>
+	<input type="Button" value="voľné" onclick="znak=' '" style="width:100">
+	<input type="Button" value="prekážka" onclick="znak='X'" style="width:100">
+	<input type="Button" value="štart" onclick="znak='Š'" style="width:100">
+	<input type="Button" value="cieľ" onclick="znak='C'" style="width:100">
+	<input type="Button" value="zmaž cestu" onclick="zmaz1();" style="width:100">
+	<input type="Button" value="zmaž prekážky" onclick="zmaz2();" style="width:100">	
+	</div>
+	<input type="Button" value=" hľadaj " onclick="cesta();" style="width:120; margin:10;">
+	<br><br>
+	Dĺžka cesty: &nbsp;<input type="Text" value='?' Style="text-align:right; width:55" id="vysl1">
+	</tr></table>
+	</div></div></div>
+</body>
+</html>

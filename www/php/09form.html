@@ -1,0 +1,403 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Formulár</title>
+</head>
+
+<body>
+<h2>Úvod do práce s formulármi</h2>
+Používaním doteraz možno vytvárať pekné scripty, ale čo nám chýba je zadávanie vstupných hodnôt do premenných.
+Veľmi dobrá cesta je spolupráca s html formulármi, ktoré html dokument odošle na server a PHP kód vyberie zo 
+vstupných polí hodnoty a môže ich ďalej spracovávať.
+<br><br>
+<h2>Práca s formulárom</h2>
+Asi ste sa už stretli so stránkou, na ktorej treba vyplniť nejaké údaje a odoslať ich. Spracovanie nami zadaných dát potom prebehne 
+na serveri. Na spracovanie odosielaných dát už jazyk html nestačí, potrebujeme scriptovací jazyk na strane servera - najčastejšie PHP.
+Teraz si popíšeme štruktúru formuláru a základy práce s formulárom.<br><br>
+<b>Čo môže obsahovať formulár:</b>
+<ul>
+<li>formátovaný text, obrázky - tieto slúžia len ako pomôcka pri vypĺňaní formulára - nebudú odoslané
+<li>vstupné objekty (políčka) - ich obsah bude odoslaný na server
+<li>tlačítka<ul><li>všeobecné - akciu zviazanú s kliknutím naň určíme my (napr. JavaScript)
+				<li>odosielacie - jeho stlačením sa dáta odošlú
+				<li>resetovacie - jeho stlačením sa nami zadané dáta vymažú zo vstupných políčok
+			</ul>
+</ul>	
+<p style="background:#dddddd">
+<h3>&lt;Form&gt; ... &lt;/Form&gt;</h3>
+Tento príkaz určuje ktoré vstupné objekty patria do tohoto formulára. Cez parametre je určený spôsob odoslania dát,
+názov programu, ktorý spracuje odoslané dáta.
+<dl><dt>Parametre
+	<dd><ul><li>action = "subor"
+	            <br>ak sa subor nachádza na tom istom serveri zadáme jeho názov alebo názov aj s cestou
+			<li>action = "http://UrlServera/subor"
+				<br>ak sa súbor nachádza na inom serveri 
+			<li>metod = "get"
+				<br>Odosielané dáta sa zapisujú do adresy spracovávajúcej stránky (sú všetky viditeľné)
+				<br>Dĺžka prenášaných dát je limitovaná
+				<br>Nemožno prenášať súbory
+			<li>metod = "post"
+				<br>Odosielané dáta nie sú súčasťou adresy (sú neviditeľné pre užívateľa)
+				<br>spracovávajúca stránka sa nedá obnoviť 
+				<br>dĺžka dát je prakticky ľubovoľná
+		</ul>
+		<br>Pre naše cvičné účely súbor na spracovanie voľte:
+		<br><b>http://www.gympd.sk/jaro/informatika/html/ukaz.php</b> 
+</dl>	
+<h3>&lt;Input type=text&gt; </h3>
+Tento vstupný objekt používame na zadanie jednoriadkového textu. Možno použiť aj na vstup číselných hodnôt.
+<dl><dt>Parametre
+    <dd><ul><li>align =" ..."
+			<br>Význam tohoto parametra je rovnaký ako pri zarvnávaní obrázkov
+			<li>disabled
+			<br>ak je tento parameter zadaný je políčko neaktívne (šedé), nedá sa doň zapisovať
+			<li>readonly
+			<br>Podobne ako disabled, len nie je šedé
+			<li>name=" ... "
+			<br>meno potrebné na identifikáciu odoslaných dát (musí byť jedinečné vo form)
+			<li>value = " ... "
+			<br>Počiatočná hodnota vstupného políčka
+			<li>id = " ..."
+			<br>Meno platné v našej stránke - potrebné napríklad v JavaScripte (tu nepotrebné)
+		</ul>	
+</dl>		
+<h3>&lt;Input type=password&gt; </h3>
+Tento vstupný objekt používame na zadanie jednoriadkového textu, pri písaní sa zobrazuje gulička
+<dl><dt>Parametre
+    <dd><ul><li>align =" ..."
+			<br>Význam tohoto parametra je rovnaký ako pri zarvnávaní obrázkov
+			<li>disabled
+			<br>ak je tento parameter zadaný je políčko neaktívne (šedé), nedá sa doň zapisovať
+			<li>readonly
+			<br>Podobne ako disabled, len nie je šedé
+			<li>name=" ... "
+			<br>meno potrebné na identifikáciu odoslaných dát (musí byť jedinečné vo form)
+			<li>value = " ... "
+			<br>Počiatočná hodnota vstupného políčka
+			<li>id = " ..."
+			<br>Meno platné v našej stránke - potrebné napríklad v JavaScripte (tu nepotrebné)
+		</ul>	
+</dl>	
+<h3>&lt;Input type=submit&gt;</h3>
+Tento objekt-tlačítko slúži na odoslanie údajov programu uvedeného v tagu FORM parameter action. Po jeho stlačení sa automaticky zobrazí stránka
+uvedená v parametri action. Tomuto parametru obyčajne zadávame len parameter Value.
+<dl><dt>Parametre
+    <dd><ul><li>Value =" ..."
+			<br>zadaná hodnota bude napísaná na zobrazenom tlačítku.
+		</ul>	
+</dl>
+<h3>&lt;Input type=reset&gt;</h3>
+Tento objekt-tlačítko slúži na vymazanie zadaných údajov zo vstupných políčok - políčka sa dajú do pôvodnej podoby.
+Tomuto parametru obyčajne zadávame len parameter Value.
+<dl><dt>Parametre
+    <dd><ul><li>Value =" ..."
+			<br>zadaná hodnota bude napísaná na zobrazenom tlačítku.
+		</ul>	
+</dl>
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Ukážka:<br>
+  <br>Meno: <input type="Text" name="meno" value="Sem zadaj meno" onfocus="this.value=''">
+  <br>Heslo: <input type="Password" name="heslo" value="">
+  <br>Škola: <input type="Text" name="skola" value="Sem zadaj školu" onfocus="this.value=''">
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať" name="odoslat">
+  </form>
+  <td style="padding-left:20">
+    &lt;form method="get" action="ukaz.php">
+  <br>Ukážka:&lt;br>
+  <br>&lt;br>Meno: &lt;input type="Text" name="meno" value="Sem zadaj meno" onfocus="this.value=''">
+  <br>&lt;br>Heslo &lt;input type="Password" name="heslo" value="">
+  <br>&lt;br>Škola: &lt;input type="Text" name="skola" value="Sem zadaj školu" onfocus="this.value=''">
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"> &nbsp; &nbsp;	&lt;input type="SubMit" value="Odoslať"  name="odoslat">
+  <br>&lt;/form>
+  </tr>
+</table>  
+ </div> 
+<h3>&lt;Input type=checkbox&gt;</h3>
+Tento objekt (zaškrtávacie políčko) umožňuje jednoduchý výber áno/nie. Užívateľ sa rozhodne označením vstupného políčka alebo ponechaním 
+prázdneho. Zaškrtávacie políčka sú nezávislé a možno ich vybrať aj viac. Odoslané budú len tie políčka, ktoré sú zaškrtnuté a ich hodnota
+bude value políčka. 
+<dl><dt>Parametre
+    <dd><ul><li>Name =" ..."
+			<br>Meno potrebné na identifikáciu odoslaných dát.
+			<li>Value = " ..." 
+			<br>Hodnota odoslaná na  spracovávanie - pri označení políčka
+			<li>checked
+			<br>Ak tento parameter nastavíme, bude políčko na začiatku zaškrtnuté
+		</ul>
+</dl>			
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Urči svoje obľúbené predmety:<br>
+  <br><input type="Checkbox" name="sj" value="Slovenský jazyk">Slovenský jazyk
+  <br><input type="Checkbox" name="aj" value="Anglický jazyk">Anglický jazyk
+  <br><input type="Checkbox" name="nj" value="Nemecký jazyk">Nemecký jazyk
+  <br><input type="Checkbox" name="mat" value="Matematika">Matematika
+  <br><input type="Checkbox" name="fyz" value="Fyzika">Fyzika
+  <br><input type="Checkbox" name="Che" value="Chémia">Chémia
+  <br><input type="Checkbox" name="bio" value="Biológia">Biológia
+  <br><input type="Checkbox" name="inf" value="Informatika" checked>Informatika
+  <br><input type="Checkbox" name="ine" value="Iné" >Iné: <input type="text" name="pred">
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať">
+</form>
+  <td style="padding-left:20">
+  &lt;form method="get" action="ukaz.php">
+  Urči svoje obľúbené predmety:<br>
+  <br>&lt;br>&lt;input type="Checkbox" name="sj" value="Slovenský jazyk">Slovenský jazyk
+  <br>&lt;br>&lt;input type="Checkbox" name="aj" value="Anglický jazyk">Anglický jazyk
+  <br>&lt;br>&lt;input type="Checkbox" name="nj" value="Nemecký jazyk">Nemecký jazyk
+  <br>&lt;br>&lt;input type="Checkbox" name="mat" value="Matematika">Matematika
+  <br>&lt;br>&lt;input type="Checkbox" name="fyz" value="Fyzika">Fyzika
+  <br>&lt;br>&lt;input type="Checkbox" name="Che" value="Chémia">Chémia
+  <br>&lt;br>&lt;input type="Checkbox" name="bio" value="Biológia">Biológia
+  <br>&lt;br>&lt;input type="Checkbox" name="inf" value="Informatika" checked>Informatika
+  <br>&lt;br>&lt;input type="Checkbox" name="ine" value="Iné" >Iné: &lt;input type="text" name="pred">
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"> &nbsp; &nbsp;	&lt;input type="SubMit" value="Odoslať">
+<br>&lt;/form>
+  </tr>
+</table>  
+ </div> 
+Iný spôsob na zasielanie zaškrtnutých políčok je taký, že všetky tieto políčka dostanú rovnaké meno (pole) a zaslané údaje budú zapísané 
+v poli s indexami 0 ... (n-1).
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Urči svoje obľúbené predmety:<br>
+  <br><input type="Checkbox" name="predm[]" value="Slovenský jazyk">Slovenský jazyk
+  <br><input type="Checkbox" name="predm[]" value="Anglický jazyk">Anglický jazyk
+  <br><input type="Checkbox" name="predm[]" value="Nemecký jazyk">Nemecký jazyk
+  <br><input type="Checkbox" name="predm[]" value="Matematika">Matematika
+  <br><input type="Checkbox" name="predm[]" value="Fyzika">Fyzika
+  <br><input type="Checkbox" name="predm[]" value="Chémia">Chémia
+  <br><input type="Checkbox" name="predm[]" value="Biológia">Biológia
+  <br><input type="Checkbox" name="predm[]" value="Informatika" checked>Informatika
+  <br><input type="Checkbox" name="predm[]" value="Iné" >Iné: <input type="text" name="pred">
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať">
+</form>
+  <td style="padding-left:20">
+  &lt;form method="get" action="ukaz.php">
+  Urči svoje obľúbené predmety:<br>
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Slovenský jazyk">Slovenský jazyk
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Anglický jazyk">Anglický jazyk
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Nemecký jazyk">Nemecký jazyk
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Matematika">Matematika
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Fyzika">Fyzika
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Chémia">Chémia
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Biológia">Biológia
+  <br>&lt;br>&lt;input type="Checkbox" name="predm[]" value="Informatika" checked>Informatika
+  <br>&lt;br>&lt;input type="Checkbox" name="ine" value="Iné" >Iné: &lt;input type="text" name="pred">
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"> &nbsp; &nbsp;	&lt;input type="SubMit" value="Odoslať">
+<br>&lt;/form>
+  </tr>
+</table>  
+ </div> 
+
+<h3>&lt;Input type=radio&gt;</h3>
+Tento objekt (prepínač) umožňuje jednoduchý výber - z niekoľkých možností si vyberáme jednu (napr. pohlavie - muž/žena, najvyššie dosiahnuté vzdelanie základné/stredoškolské/vysokoškolské). 
+Užívateľ sa rozhodne označením jedného koliečka, systém zabezpečí, že nemožno vybrať viac ako jednu možnosť.
+<dl><dt>Parametre
+    <dd><ul><li>Name =" ..."
+			<br>Meno potrebné na identifikáciu odoslaných dát. Pre jednu skupinu musí byť rovnaké.
+			<li>Value = " ..." 
+			<br>Hodnota odoslaná na  spracovávanie - pri označení políčka, ak nezadáme zasiela text "on"
+			<li>checked
+			<br>Ak tento parameter nastavíme, bude políčko na začiatku zvolené, v jednej skupine by malo byť max. jedno.
+		</ul>
+</dl>			
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Zadaj svoju poslednú známku z informatiky:<br>
+  <br><input type="Radio" name="inf" value="1" checked>1
+  <br><input type="Radio" name="inf" value="2">2
+  <br><input type="Radio" name="inf" value="3">3
+  <br><input type="Radio" name="inf" value="4">4
+  <br><input type="Radio" name="inf" value="5">5
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať">
+</form>
+  <td style="padding-left:20">
+  &lt;form method="get" action="ukaz.php">
+  <br>Zadaj svoju poslednú známku z informatiky:&lt;br>
+  <br>&lt;br>&lt;input type="Radio" name="inf" value="1" checked>1
+  <br>&lt;br>&lt;input type="Radio" name="inf" value="2">2
+  <br>&lt;br>&lt;input type="Radio" name="inf" value="3">3
+  <br>&lt;br>&lt;input type="Radio" name="inf" value="4">4
+  <br>&lt;br>&lt;input type="Radio" name="inf" value="5">5
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"> &nbsp; &nbsp;	&lt;input type="SubMit" value="Odoslať">
+  <br>&lt;/form>
+  </tr>
+</table>  
+ </div> 
+<h3>&lt;Select&gt; . . . &lt;/Select&gt;</h3>
+Tento objekt má podobnú myšlienku ako zaškrtávacie políčko alebo prepínač ale ponúkané možnosti sú zbalené a až na požiadavku užívateľa sa rozbalia. 
+Select je párový tag, možnosti z ktorých vyberáme zadávame samostatnými tagmi &lt;option>
+<dl><dt>Parametre
+    <dd><ul><li>Name =" ..."
+			<br>Meno potrebné na identifikáciu odoslaných dát. Ak povolíme len jednu hodnotu zvolíme názov premennej, ak povolíme výber viacerých
+			musí byť meno identifikátor poľa - pole[]
+			<li>Size = "počet zobrazených riadkov"  
+			<br>Počet zobrazených riadkov, skutočný počet možností môže byť väčší.
+			<li>multiple
+			<br>Ak tento parameter nastavíme, povolili sme násobný výber
+		</ul>
+	<dt>&lt;option value=" ... "&gt; 
+	<dd>
+</dl>			
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Zadaj svoj vek<br>
+  <br><select  name="vek">
+  <option value="v15">15-17
+  <option value="v18">18-20
+  <option value="v21">21-25
+  <option value="v26">26-35
+  <option value="v36">36-55
+  <option value="v56">56 a viac
+  </select>
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať">
+</form>
+  <td style="padding-left:20">
+  &lt;form method="get" action="ukaz.php">
+  &lt;br>Zadaj svoj vek<br>
+  <br>&lt;select  name="vek">
+  <br>&lt;option value="v15">15-17
+  <br>&lt;br>&lt;option value="v18">18-20
+  <br>&lt;option value="v21">21-25
+  <br>&lt;option value="v26">26-35
+  <br>&lt;option value="v36">36-55
+  <br>&lt;option value="v56">56 a viac
+  <br>&lt;/select>
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"> &nbsp; &nbsp;	&lt;input type="SubMit" value="Odoslať">
+ <br>&lt;/form>
+  </tr>
+</table>  
+ </div> 
+
+<h3>&lt;Select multiple&gt; . . . &lt;/Select&gt;</h3>
+Tento objekt má podobnú myšlienku ako zaškrtávacie políčko alebo prepínač ale ponúkané možnosti sú zbalené a až na požiadavku užívateľa sa rozbalia. 
+Select je párový tag, možnosti z ktorých vyberáme zadávame samostatnými tagmi &lt;option>
+<dl><dt>Parametre
+    <dd><ul><li>Name =" ..."
+			<br>Meno potrebné na identifikáciu odoslaných dát. Ak povolíme len jednu hodnotu zvolíme názov premennej, ak povolíme výber viacerých
+			musí byť meno identifikátor poľa - pole[]
+			<li>Size = "počet zobrazených riadkov"  
+			<br>Počet zobrazených riadkov, skutočný počet možností môže byť väčší.
+		</ul>
+	<dt>&lt;option value=" ... "&gt; 
+	<dd>
+</dl>			
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Zadaj jazyky, ktoré ovládaš<br>
+  <br><select  name="jaz[]" multiple>
+  <option value="sl">slovenčina
+  <option value="ang">angličtina
+  <option value="nem">nemčina
+  <option value="fra">francúzština
+  <option value="spa">španielčina
+  <option value="ine">iné
+  </select>
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať">
+</form>
+  <td style="padding-left:20">
+  &lt;form method="get" action="ukaz.php">
+  &lt;br>Zadaj svoj vek<br>
+  <br>&lt;select  name="vek">
+  <br>&lt;option value="v15">15-17
+  <br>&lt;option value="v18">18-20
+  <br>&lt;option value="v21">21-25
+  <br>&lt;option value="v26">26-35
+  <br>&lt;option value="v36">36-55
+  <br>&lt;option value="v56">56 a viac
+  <br>&lt;/select>
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"><br>&lt;input type="SubMit" value="Odoslať">
+ <br>&lt;/form>
+  </tr>
+</table>  
+ </div> 
+<h3>&lt;textarea&gt; . . . &lt;/textarea&gt;</h3>
+Tento objekt používame na odoslanie dlhšieho textu. Veľkosť ovplyvňujeme parametrami cols, rows
+<dl><dt>Parametre
+    <dd><ul><li>Name =" ..."
+			<br>Meno potrebné na identifikáciu odoslaných dát. 
+			<li>Rows = počet zobrazených riadkov  
+			<br>Cols = Počet zobrazených stĺpcov - pís.
+		</ul>
+		Text medzi začiatkom a koncom je inicializačná hodnota v bunke. Obyčajne nedávame nič.
+</dl>		
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<table rules="cols" border="1" frame="void">
+<tr><td  style="padding-left:5">
+  <form method="get" action="ukaz.php">
+  Sem napíš čo vieš o vírusoch: <br>
+  <br><textarea cols="40" rows="5" name="text-virus">   </textarea>
+  <br><br><input type="Reset" value="Reset"> &nbsp; &nbsp;	<input type="SubMit" value="Odoslať">
+</form>
+  <td style="padding-left:20">
+  &lt;form method="get" action="ukaz.php">
+  <br>Sem napíš čo vieš o vírusoch: <br>
+  <br>&lt;br>&lt;textarea cols="40" rows="5" name="text-virus">   &lt;/textarea>
+  <br>&lt;br>&lt;br>&lt;input type="Reset" value="Reset"> &nbsp; &nbsp;	&lt;input type="SubMit" value="Odoslať">
+ <br>&lt;/form>
+  </tr>
+</table>  
+ </div>
+ <br><br> 
+<h2>Spracovanie formulárov</h2>
+Na vytvorenie formulára a na odoslanie dát na server vystačíme so súborom html, na spracovanie odoslaných dát už musíme siahnuť
+po akčnejšom súbore - napr. php. Samozrejme odosielať dáta z formulára na server má zmysel, len ak tieto dáta zachytávame nejakým programom, 
+ktorý ich následne spracuje.<br> 
+Program, ktorý je vo formulári uvedený ako spracovávajúci sa na serveri spustí automaticky po odslaní dát a my si teraz popíšeme 
+ako sa v tomto programe dostať ku odoslaným dátam.
+<br>Do verzie PHP 4.2.0 bola situácia jednoduchá (ale riskantná z hľadiska bezpečnosti) - v programe sa automaticky vytvorili premenné 
+<b>$meno</b>, kde meno je hodnota zadaná ako parameter name="...". Tieto premenné boli globálne a dali sa používať ako každé iné vo výrazoch a príkazoch.
+<br>Od verzie PHP 4.2.0 ku dátam pristupujeme cez asociatívne polia
+<ul><li>$_POST - pri odoslaní pomocou metódy POST
+	<li>$_GET -  pri odoslaní pomocou metódy GET
+	<li>$_REQUEST - pri ľubovoľnej metóde
+</ul>
+Indexy v tomto poli sú mená odosielaných dát, v hodnotách sú zapísané odoslané hodnoty.<br>
+Príklad na výpis všetkých dát, ktoré prišli metódou post:
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+<pre>
+&lt;html>
+&lt;head>
+    &lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	&lt;?
+$pocetPost = count($_POST); //pocet dat, ktore prisli
+$nazvy  = array_keys($_POST); // nazvy policok, ktore boli odoslane
+	?&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;?
+	echo "Počet dát:".$pocetPost;
+	foreach ($_POST as $i=>$akt) echo "prem:$i, hodnota: $akt";
+	?&gt;
+	// to iste for cyklom
+	// for ($i=0;$i&lt;$pocetPost) {echo "prem:".$nazvy[$i]." hodnota:". $_POST[$nazvy[$i]];}
+&lt;/body>&lt;/html>	
+</pre></div>  
+<br>Naprogramuj:
+<br>
+<div style="width:80%;border-style:'outset'; border-width:3; background:#eeeeee;padding:15">
+	<form method="post" action="plocha.php">
+	a=<input type="Text" name="a" value="5"><br>
+	b=<input type="Text" name="b" value="6"><br>
+	<input type="Submit" value="Výpočet">
+</div>
+alebo v jednom okne: <a href="plocha2.php" target="_blank">výpočet</a>
+</body>
+</html>

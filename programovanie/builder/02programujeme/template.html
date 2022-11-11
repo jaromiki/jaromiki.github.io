@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<center><h3 class=nadpis>Šablóny - Templates</h3></center>
+Šablóny (generické funkcie)nám umožňujú zadefinovať funkcie do ktorých prenesieme typ premennej/premenných. Napríklad triedenie quicksort je rovaké
+pre prvky celočíselné, reálne prípadne aj pre textové. Myšlienka je podobná ako pri preťažovaní funkcií.
+<br>Generické funkcie vytvárame pomocou kľúčového slova <b>template</b>
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>#include <iostream>
+using namespace std;
+
+template &lt;class X>      //X je názov premenného typu
+X vacsi(X a, X b)               //definícia funkcie typu X (bude určený pri volaní)
+{   return a>b?a:b;}
+
+int main()
+{   int i=2, j=3;
+    float x=1.5, y=5;
+    cout &lt;&lt;vacsi(i,j) &lt;&lt; endl;
+    cout &lt;&lt;vacsi(x,y) &lt;&lt; endl;
+    cout &lt;&lt;vacsi(10,x) &lt;&lt; endl;     //nesprávne parametre musia byť rovnakého typu
+	
+    cin.get();
+    return 0;
+}</pre>
+		</tr></table>
+		Funkcia sa pri volaní pozrie aké sú typy parametrov a podľa toho určí typ <b>X</b>. Namiesto kľúčového slova <b>class</b> možno použiť aj <b>typename</b>
+		<br>template &lt; typename X>
+		<br><br>Ak potrebujeme môžme do funkcie doniesť aj dva typy.
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>#include <iostream>
+using namespace std;
+
+template &lt;class X>      //X je názov premenného typu
+void vymen(X &a, X &b)               //parametre rovnakého typu
+{   X c=a; a=b; b=c;
+    return a>b?a:b;}
+template &lt;class X, class Y>      //X je názov premenného typu
+void vymen(X &a, Y &b)               //parametre nerovnakého typu
+{   X c=a; a=b; b=c;
+    return a>b?a:b;}
+
+int main()
+{   int i=2, j=3;
+    float x=1.5, y=5;
+	vymen(i,j);             //zavola vymen s rovnakými parametrami
+    cout &lt;&lt; "i=" &lt;&lt; i &lt;&lt;", j="&lt;&lt;j &lt;&lt;endl;
+    vymen (i,y);            //zavola vymen s nerovnakými parametrami 
+    cout &lt;&lt; "i=" &lt;&lt; i &lt;&lt;", y="&lt;&lt;y &lt;&lt;endl;
+    cin.get();
+    return 0;
+}</pre>
+		</tr></table>
+		<br>Podobne ako vytvárame generické funkcie možno vytvárať aj generické triedy
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>#include <iostream>
+using namespace std;
+
+template &lt;class X>      //X je názov premenného typu
+class zasobnik
+{   X x[100];
+    int n;
+    public:
+	void push(X xx);
+	void pop();
+	X top();
+	zasobnik() { n=0};
+}	</pre>
+		</tr></table>		
+</body>
+</html>

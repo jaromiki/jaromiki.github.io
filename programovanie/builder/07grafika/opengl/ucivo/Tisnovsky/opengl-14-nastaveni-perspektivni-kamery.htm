@@ -1,0 +1,869 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (14): nastavení perspektivní kamery - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="Dnešní díl seriálu o grafické knihovně OpenGL naváže na díl předchozí, ve kterém jsme popisovali nastavení ortografické kamery a použití double-bufferingu. Dnes si popíšeme způsob nastavení perspektivní kamery. Dále si řekneme, jakým způsobem lze povolit, nastavit a používat paměť hloubky (depth buffer, Z-buffer)." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-14-nastaveni-perspektivni-kamery%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-14-nastaveni-perspektivni-kamery%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-14-nastaveni-perspektivni-kamery%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (14): nastavení perspektivní kamery</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 30. 9. 2003 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (14): nastavení perspektivní kamery</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+Dnešní díl seriálu o grafické knihovně OpenGL naváže na díl předchozí, ve kterém jsme popisovali nastavení ortografické kamery a použití double-bufferingu. Dnes si popíšeme způsob nastavení perspektivní kamery. Dále si řekneme, jakým způsobem lze povolit, nastavit a používat paměť hloubky (depth buffer, Z-buffer).
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Zobrazení prostorové scény s perspektivní kamerou, paměť hloubky</h2>
+
+<p>V předchozí části jsme si ukázali, jakým způsobem můžeme pracovat s
+ortogonální kamerou. Pro nastavení ortogonální kamery jsme použili dvojici
+funkcí gluLookAt() a glOrtho() (resp. gluOrtho2D()).
+Vlastní nastavení prostoru, který je promítán na rovinu obrazovky pomocí
+ortogonální kamery, bylo poměrně jednoduché, protože stačilo nastavit šest 
+stěn osově orientovaného kvádru, který představuje promítaný prostor.</p>
+
+<p>Nastavení perspektivní kamery je poněkud složitější, protože prostor
+viditelný touto kamerou nemá obecně tvar hranolu, ale komolého jehlanu. Musíme
+tedy vhodným způsobem specifikovat parametry tohoto jehlanu. Podobně jako u
+kamery nastavené do ortogonálního režimu, i zde se ty části těles, které se
+nachází mimo viditelný prostor, ořezávají.</p>
+
+<h4>Základní funkce pro nastavení kamery v perspektivním režimu</h4>
+
+<p>Základní funkcí pro nastavení perspektivní kamery je funkce
+glFrustum(), pomocí které se nastavují prvky transformační matice
+GL_PROJECTION. Tato funkce má deklaraci:</p>
+
+<div class="urs-pre"><pre>
+void glFrustum(
+    GLdouble left,
+    GLdouble right,
+    GLdouble bottom,
+    GLdouble top,
+    GLdouble near,
+    GLdouble far
+);
+</pre></div>
+
+<p>Při volání této funkce tedy musíme zadat šest parametrů typu
+GLdouble s následujícím významem:</p>
+
+<ol class="urs-decimal"><li>Parametr <i>left</i> udává vzdálenost levé ořezávací roviny od počátku.
+Vzdálenost se udává ve směru osy <i>x</i>.</li>
+
+<li>Parametr <i>right</i> udává vzdálenost pravé ořezávací roviny od počátku.
+Vzdálenost se opět udává ve směru osy <i>x</i>, podobně jako u předchozího
+parametru.</li>
+
+<li>Parametr <i>bottom</i> udává vzdálenost spodní ořezávací roviny od počátku.
+Vzdálenost se udává ve směru osy <i>y</i>.</li>
+
+<li>Parametr <i>top</i> udává vzdálenost horní ořezávací roviny od počátku.
+Vzdálenost je opět zadána ve směru osy <i>y</i>, podobně jako u předchozího
+parametru.</li>
+
+<li>Parametrem <i>near</i> se zadává vzdálenost od kamery k bližší ořezávací
+rovině kolmé na směr promítání. Vzdálenost je tedy zadána ve směru osy
+<i>z</i>.</li>
+
+<li>Parametrem <i>far</i> se zadává vzdálenost od kamery k vzdálenější
+ořezávací rovině kolmé na směr promítání. Stejně jako u předchozího parametru,
+i tato vzdálenost je zadána ve směru osy <i>z</i>.</li>
+
+</ol>
+
+<p>Význam parametrů této funkce je znázorněn i na prvním obrázku. Výsek
+viditelného prostoru ve tvaru komolého jehlanu je zadán rozměry menší podstavy
+(parametry <i>left</i>, <i>right</i>, <i>bottom</i> a <i>top</i>) a vzdáleností
+obou podstav od kamery. Úhel stěn je možné z těchto hodnot dopočítat.</p>
+
+<p>Kromě této funkce (která nastavuje transformační matici
+GL_PROJECTION) lze samozřejmě použít i minule probranou funkci
+
+gluLookAt(), pomocí které se nastaví prvky transformační matice
+MODELVIEW. Pro korektní práci je samozřejmě nutné nejdříve nastavit
+měněnou matici funkcí glMatrixMode() a poté tuto matici nastavit na
+jednotkovou pomocí funkce glLoadIdentity().</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_14_1.gif" alt="Význam parametrů funkce glFrustum()" width="440" height="200" /><br />
+Obrázek 1: Význam parametrů funkce glFrustum()<br />
+<br />
+</p>
+
+<h4>Pokročilejší nastavení kamery v perspektivním režimu</h4>
+
+<p>Pomocí funkce glFrustum() lze sice nastavit projekční transformační
+matici pro kameru v perspektivním režimu, ale zadávání šesti parametrů komolého
+jehlanu není příliš intuitivní. Proto byla do knihovny GLU (což je, jak
+již víme, nadstavba nad knihovnou OpenGL) přidána funkce pro nastavení
+vlastností kamery v perspektivním režimu pomocí parametrů, jejichž význam známe
+z reálného světa (používají se například při popisu vlastností objektivů). Tato
+funkce se jmenuje gluPerspective() a má deklaraci:</p>
+
+<div class="urs-pre"><pre>
+void gluPerspective(
+    GLdouble fovy,
+    GLdouble aspect,
+    GLdouble near,
+    GLdouble far
+);
+
+</pre></div>
+
+<p>kde jednotlivé parametry mají následující význam:</p>
+
+<ol class="urs-decimal"><li>Parametr <i>fovy</i> určuje zorný úhel (Field Of View) kamery. Tento úhel
+je zadán v rovině <i>x-z</i>, která prochází počátkem. Běžně používané zorné
+úhly se pohybují v rozsahu 30-80 stupňů, je však možné zadat i úhly menší
+(teleobjektiv) nebo větší ("rybí oko").</li>
+
+<li>Parametr <i>aspect</i> udává poměr mezi šířkou a výškou zadávaného jehlanu.
+Tento parametr lze použít pro roztažení popř. smrsknutí obrázku ve směru jedné
+ze souřadných os. Hodnotu tohoto parametru můžeme získat podílem šířky a výšky
+podstavy jehlanu. Většinou se tato hodnota zjišťuje z rozměrů okna pro
+kreslení.</li>
+
+<li>Parametrem <i>near</i> se zadává vzdálenost od kamery k bližší ořezávací
+rovině kolmé na směr promítání. Vzdálenost je tedy zadána ve směru osy
+<i>z</i>. Význam tohoto parametru je tedy stejný jako u funkce
+glFrustum().</li>
+
+<li>Parametrem <i>far</i> se zadává vzdálenost od kamery k vzdálenější
+ořezávací rovině kolmé na směr promítání. Stejně jako u předchozího parametru,
+i tato vzdálenost je zadána ve směru osy <i>z</i>. Význam tohoto parametru je
+opět totožný s parametrem funkce glFrustum().</li>
+
+</ol>
+
+<p>Význam jednotlivých parametrů funkce gluPerspective() je vysvětlen
+i na druhém obrázku. Z tohoto obrázku je také patrné, jak jednotlivé parametry
+ovlivňují nastavení kamery. Dvojice parametrů <i>fovy</i> a <i>aspect</i>
+nastavuje tvar menší podstavy komolého jehlanu, zatímco parametry <i>near</i> a
+<i>far</i> nastavují výšku a velikost jehlanu.</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_14_2.gif" alt="Význam parametrů funkce gluPerspective()" width="440" height="200" /><br />
+Obrázek 2: Význam parametrů funkce gluPerspective()<br />
+<br />
+</p>
+
+<h4>Paměť hloubky</h4>
+
+<p>Pokud jste si přeložili a vyzkoušeli příklady 1 a 2 z tohoto dílu (nebo
+všechny příklady z předchozího dílu), pravděpodobně jste zjistili, že se stěny
+tělesa někdy nepřekrývají správně. Je to způsobeno tím, že stěny (tj.
+trojúhelníky a čtyřúhelníky) se vykreslují v tom pořadí, v jakém jsou zadány ve
+zdrojovém souboru. Toto pořadí však neodpovídá reálné viditelnosti jednotlivých
+stěn (mimo jiné i z důvodu různého natočení scény).</p>
+
+<p>Jedno z řešení viditelnosti by mohlo spočívat v ručním seřazení stěn tak, že
+nejdříve by se vykreslily stěny nejvzdálenější a poté by se postupně
+překreslovaly stěny bližší. Toto řešení, které se také nazývá <i>malířův
+algoritmus</i>, je však zdlouhavé (stěny se musí seřadit), nepodporuje proudové
+zpracování dat (znovu řazení) a může vést k nejednoznačnostem při vyhodnocování
+vzdálenosti jednotlivých stěn, například když se tři stěny vzájemně
+překrývají.</p>
+
+<p>OpenGL je určeno pro proudové zpracování dat, proto byla použita jiná
+technika řešení viditelnosti. V této technice je použita takzvaná <i>paměť
+hloubky</i> (<i>depth buffer</i> nebo také <i>Z-buffer</i>). Paměť hloubky
+obsahuje rastrová data, nejsou zde však uloženy barvy jednotlivých fragmentů,
+ale jejich kolmé vzdálenosti od projekční roviny (ve skutečnosti se interně
+ukládají převrácené hodnoty těchto vzdáleností). Před vykreslením barvy
+fragmentu do barvového bufferu se nejdříve provede několik testů, mezi něž
+patří i test na vzdálenost (hloubku) fragmentu. Pokud fragment tímto testem
+projde, může být vykreslen. V opačném případě je z dalšího zpracování vyjmut.
+Testy a operace s fragmenty jsou naznačeny na třetím obrázku, kde je zvýrazněna
+část testu hloubky fragmentu s hodnotou uloženou v paměti hloubky.</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_14_3.gif" alt="Testy a operace s fragmenty" width="450" height="312" /><br />
+Obrázek 3: Testy a operace s fragmenty, test na hloubku fragmentů
+</p>
+
+<p>Aby bylo možno paměť hloubky použít, je zapotřebí provést několik kroků:</p>
+
+<ol class="urs-decimal"><li>Při inicializaci knihovny OpenGL je zapotřebí naalokovat i paměť hloubky.
+Toho dosáhneme tak, že do bitových příznaků předávaných do funkce
+glutInitDisplayMode() přidáme i příznak GLUT_DEPTH. Narozdíl
+od barvových bufferů, kterých může být více, se naalokuje vždy jen jedna paměť
+hloubky, protože víc jich není zapotřebí.</li>
+
+<li>Funkce paměti hloubky (test hloubky fragmentů) se musí povolit příkazem
+glEnable(GL_DEPTH_TEST). Při vykreslování různých částí scény lze
+paměť hloubky nezávisle zapínat a vypínat, čehož se využívá při tvorbě různých
+grafických efektů, například při vykreslování průhledných těles.</li>
+
+<li>Pomocí funkce glClearDepth(depth) se musí specifikovat, na jakou
+hodnotu se bude mazat paměť hloubky mezi snímky. Tato hodnota může být v
+rozsahu 0.0 až 1.0.</li>
+
+<li>Dále je zapotřebí nastavit, jaký test se bude s hloubkou fragmentu
+provádět. Pro nastavení se používá funkce glDepthFunc(func), kde
+parametr <i>func</i> může nabývat hodnot GL_NEVER, GL_LESS,
+
+GL_EQUAL, GL_LEQUAL, GL_GREATER,
+GL_NOTEQUAL, GL_GEQUAL a GL_ALWAYS. Pro běžnou
+funkci paměti hloubky se nastavuje funkce GL_LESS, tj. bližší fragment
+přepíše fragment vzdálenější. Pro speciální grafické efekty však lze logiku
+testovací funkce změnit.</li>
+
+<li>Posledním úkolem je nutnost mazání paměti hloubky před vykreslením každého
+snímku. To lze provést buď samostatně zavoláním funkce
+glClear(GL_DEPTH_BUFFER_BIT), nebo lze smazat současně barvový buffer i
+paměť hloubky zavoláním stejné funkce, ale s více bitovými příznaky:
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT). Současné mazání
+obou bufferů je obecně rychlejší, protože na grafickém akcelerátoru je možné
+provést optimalizace v přístupu do paměti.</li>
+
+</ol>
+
+<h4>Demonstrační příklady</h4>
+
+<p>V <a href="http://i.iinfo.cz/r/photos/opengl/opengl_14_1.c">prvním demonstračním příkladu</a> (<a href="http://i.iinfo.cz/r/photos/opengl/opengl_14_1.html">zde je zdrojový kód se zvýrazněnou syntaxí</a>) je
+ukázána základní práce s perspektivní kamerou, tedy nastavení pozice a
+orientace kamery pomocí funkce gluLookAt() a nastavení režimu kamery
+pomocí funkce gluPerspective(). Na scéně je zobrazeno jednoduché
+těleso ve tvaru domečku, se kterým lze otáčet pomocí myši se stisknutým levým
+tlačítkem. Pomocí pravého tlačítka myši lze objektem pohybovat směrem ke kameře
+a od kamery. Pro zamezení blikání při překreslování scény je použita metoda
+double-bufferingu. Klávesou [F] se lze přepnout do tzv. full-screen režimu, kdy
+je okno aplikace maximalizováno a vykresleno bez okrajů. Klávesou [W] se naopak
+provádí zmenšení okna na běžnou velikost.</p>
+
+<p>Ve <a href="http://i.iinfo.cz/r/photos/opengl/opengl_14_2.c">druhém demonstračním příkladu</a> (opět je k
+dispozici i <a href="http://i.iinfo.cz/r/photos/opengl/opengl_14_2.html">zdrojový kód se zvýrazněnou syntaxí</a>)
+je ukázána práce s hloubkovým bufferem. Tento buffer lze zapínat a vypínat
+pomocí kláves [E]-enable a [D]-disable (ve skutečnosti se nezapíná přímo paměť
+hloubky, ale povoluje resp. zakazuje se funkce pro testování hloubky fragmentu
+oproti hloubce uložené v paměti hloubky). Dále je možné pomocí kláves [,]
+(čárka) a [.] (tečka) měnit zorný úhel kamery. Další funkce (tj. rotace
+objektem a přibližování) jsou totožné s předchozím příkladem.</p>
+
+<p><a href="http://i.iinfo.cz/r/photos/opengl/opengl_14_3.c">Třetí demonstrační příklad</a> (zde se <a href="http://i.iinfo.cz/r/photos/opengl/opengl_14_3.c">zvýrazněnou syntaxí</a>) představuje základ pro příklady
+uvedené v dalších částech tohoto seriálu, proto je zapotřebí všechny jeho části
+důkladně pročíst a pochopit. Pomocí pravého tlačítka myši je možno zvolit
+operaci, která se bude dále provádět. Pomocí levého tlačítka myši a pohybu myší
+se potom tato operace (například posun či otočení) realizuje. V příkladu je
+použito kontextové menu vytvářené pomocí funkcí z knihovny GLUT, jejíž popis
+jsem už na stránkách <a href="http://www.root.cz">Root</a>a zveřejnil.</p>
+
+<p>Pro majitele pomalejších linek je zde k dispozici <a href="http://i.iinfo.cz/r/photos/opengl/opengl_14.zip">celý článek i s přílohami</a>.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-12-vlastnosti-framebufferu/">Grafická knihovna OpenGL (12): vlastnosti framebufferu</a></li>
+			<li><a href="/clanky/opengl-13-double-buffering/">Grafická knihovna OpenGL (13): double-buffering</a></li>
+			<li class="actual">Grafická knihovna OpenGL (14): nastavení perspektivní kamery</li>
+			<li><a href="/clanky/opengl-15-orezani-teles-ve-scene/">Grafická knihovna OpenGL (15): ořezání těles ve scéně</a></li>
+			<li><a href="/clanky/opengl-16-pole-vrcholu-vertex-arrays/">Grafická knihovna OpenGL (16): pole vrcholů (vertex arrays)</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-14-nastaveni-perspektivni-kamery%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-14-nastaveni-perspektivni-kamery%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/">Vlastní</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q2/">2</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q3/">3</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q4/">4</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q5/">5</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q6/">6</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q7/">7</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q8/">8</a>
+<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[24926]" /></td>
+	<th><a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/24926/">read only z-buffer</a></th>
+	<td class="op-au">Mti.</td>
+	<td class="op-dt">30. 9. 2003 13:59	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[24937]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/24937/">Re: read only z-buffer</a></th>
+	<td class="op-au">Razi</td>
+	<td class="op-dt">30. 9. 2003 19:21	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[24959]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/i.gif" align="left" width="9" height="21" alt="&#9474;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/24959/">Re: read only z-buffer</a></th>
+	<td class="op-au">Mti.</td>
+	<td class="op-dt">1. 10. 2003 09:07	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[24948]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/24948/">Re: read only z-buffer</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">1. 10. 2003 07:08	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[25736]" /></td>
+	<th><a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/25736/">Houbka depth bufferu</a></th>
+	<td class="op-au">Zdenek Ceska</td>
+	<td class="op-dt">24. 10. 2003 10:43	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-14-nastaveni-perspektivni-kamery/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D532">TEAM LEADER C++/UNIX (i6349)</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D293">VÝVOJÁŘ J2EE (i6290)</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3790">JAVA, XML DEVELOPER (i3284) / INTERNATIONAL COMPANY / PRAGUE</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D110">TEAM LEADER J2EE (i6273)</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3639">DEVELOPER / KONZULTANT - JAVA, J2EE (i4660) / ZAHRANIČNÍ PROJEKTY / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3283">PROGRAMÁTOR C++ (i6750) / ZAJÍMAVÁ NABÍDKA / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3121">JUNIOR / SENIOR SYSTEM ENGINEER (i6865) / 25-60.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3371">SENIOR TEST ENGINEER (i5158) / LÁKAVÁ NABÍDKA / PRAHA</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

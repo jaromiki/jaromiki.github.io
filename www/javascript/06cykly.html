@@ -1,0 +1,146 @@
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	<title>JavaScript - príkazy - cykly</title>
+	<script language="JScript">
+	function f(x)
+	{ return eval(vstup1.value);}
+	function koren()
+	{  	var rov=vstup1.value, x1=parseFloat(vstup2.value), x2=parseFloat(vstup3.value), eps=parseFloat(vstup4.value)
+		var x,fx,fx1=f(x1),fx2=f(x2);
+		if (fx1*fx2>0) {alert ('V danom intervale asi nie je koreň'); return 0;}
+	   while (Math.abs(x2-x1)>eps) 
+	   {	x=(x2+x1)/2; fx=f(x); 
+	   		if (fx*fx1<0) 	{fx2=fx; x2=x;}
+			else			{fx1=fx; x1=x;}  
+	   }
+		vystup1.value=((x2+x1)/2).toFixed(3);
+	}
+
+	function vypocet()
+	{var c1=parseInt(a.value); 
+	 var c2=parseInt(b.value); 
+	 var c3=c1*c2;
+        while (c1 != c2) {(c1>c2)? c1 -= c2:c2 -= c1;}
+	  NSD.value=c1;
+	  NSN.value=c3/c1;
+	}  
+
+	function vypis(n)
+	{
+			var f=1; 
+			ii.innerText="";
+			ff.innerText="";
+			for (var i=1;i<=n;i++) 
+			{f*=i;
+			ii.innerText+=i+" ";
+			ff.innerText+=f+"      ";
+			}	
+	}
+	function zdroj()
+	{
+ 	    nove=window.open("about:blank","okno","status=no");
+	//	nove.resizeTo(165,30);
+		nove.document.open();
+		nove.document.writeln("<pre>");
+	    nove.document.writeln("&lt;html>");
+	    nove.document.writeln("&lt;/head>");
+		nove.document.writeln("&lt;script>");
+		nove.document.writeln("function vypis(n)");
+		nove.document.writeln("{");
+		nove.document.writeln("	var f=1; ");
+		nove.document.writeln("	ii.innerText='';");
+		nove.document.writeln("	ff.innerText='';");
+		nove.document.writeln("	for (var i=1;i<=n;i++)"); 
+		nove.document.writeln("	{f*=i;"); 
+		nove.document.writeln('	ii.innerText+=i+" ";');
+		nove.document.writeln('	ff.innerText+=f+"      ";');
+		nove.document.writeln("	}");	
+	    nove.document.writeln("}");
+		nove.document.writeln("&lt;script>");
+		nove.document.writeln("&lt;/head>}");
+		nove.document.writeln("&lt;body>");
+		nove.document.writeln('	&lt;br>Zadaj N: &lt;input type="Text" value="5" id="vstup" size="4"> &nbsp; &nbsp; &lt;input type="Button" value="Štart" onclick="vypis(eval(vstup.value))">');
+		nove.document.writeln('	 &nbsp; &nbsp; &lt;input type="Button" value="vypis()" onclick="zdroj()">');
+		nove.document.writeln('	&lt;br>&lt;br>');
+		nove.document.writeln('	&lt;table bgcolor="silver" border="2"  cellpadding="5">');
+		nove.document.writeln('	&lt;tr>&lt;td align="left"> i&lt;td align="left"> i!');
+		nove.document.writeln('	&lt;tr>&lt;td width="18">&lt;code>&lt;div id="ii">&lt;/div>&lt;/code>');
+		nove.document.writeln('		&lt;td width="100">&lt;code>&lt;div id="ff">&lt;/div>&lt;/code>');
+		nove.document.writeln('	&lt;/table>');
+		nove.document.writeln('&lt;/BODY>');
+		nove.document.close();
+	}
+	</script>
+</head>
+
+<body onload="vypis(5)">
+<dl>
+<dt>Cykly
+<dd><dl><dt>for cyklus
+		<dd>Je najmohutnejší cyklus, ak sa dá nahrádzame ho cyklami jednoduchšími.
+			<br>syntax:
+			<br>for( start; podmienka; iter) príkaz
+			<br><b>start</b> - lubovoľný výraz (obyčajne i=1)
+			<br><b>podmienka</b> - logický (celočíselný) výraz (obyčajne i&lt;=N)
+			<br><b>iter</b> - ľubovoľný výraz (obyčajne i++)
+			<br>sémantika:
+			<br>1. start sa vyhodnotí raz 
+			<br>2. vyhodnotí sa podmienka
+			<br>3. ak podmienka je TRUE urobí sa príkaz a potom iter a pokračuje sa na 2.
+			<br> &nbsp; &nbsp; ak podmienka je FALSE cyklus končí
+			<br>Príklad: 
+			<br><code>
+				for (i=1;i&lt;=10;i++) document.write(i*i+'&lt;br>');
+				<br> &nbsp; //vypise v 10-tich riadkoch druhe mocniny
+				</code>
+	    <dt>while cyklus
+		<dd>Cyklus s podmienkou na začiatku
+			<br>syntax:
+			<br>while ( podmienka ) príkaz
+			<br> &nbsp; <b>podmienka</b> - logický (celočíselný) výraz (obyčajne i&lt;=N)
+			<br>sémantika:
+			<br>Príkaz sa vykonáva pokiaľ je podmienka TRUE (!=0)
+		<dt>Úlohy:
+		<dd><ol><li>Vytvorte stránku na výpočet najväčšieho spoločného deliteľa a najväčšieho spoločného násobku
+					<br><br>
+					<table bgcolor="#eeeeff" cellspacing="0" border="1"  cellpadding="3">
+					<tr bgcolor="#ccccff"><th colspan="3">Výpočet NSD a NSN
+					<tr><th>Vstup<th>Akcia<th>Výstup
+					<tr><td>a: <input type="Text" id="a"><br>b: <input type="Text" id="b">
+						<td  valign="middle" align="center" > <input type="Button" OnClick="vypocet()" value="Výpočet">
+					    <td> NSD: <input type="Text" id="NSD" READONLY><br> NSN: <input type="Text" id="NSN" READONLY>
+					</table> 
+					<br><br>
+				<li>Vypíšte tabuľku faktoriálov od 1 po N
+					<br>Zadaj N: <input type="Text" value="5" id="vstup" size="4"> &nbsp; &nbsp; <input type="Button" value="Štart" onclick="vypis(eval(vstup.value))">
+					 &nbsp; &nbsp; <input type="Button" value="vypis()" onclick="zdroj()">
+					<br>
+					<br>
+					<table bgcolor="silver" border="2"  cellpadding="5">
+					<tr><td align="left"> i<td align="left"> i!
+					<tr><td width="18"><code><div id="ii"></div></code>
+						<td width="100"><code><div id="ff"></div></code>
+					</table>
+					<br><br>
+				<li>Vypočítajte koreň rovnice
+					<br><br>
+					<table width="70%" bgcolor="#eeeeff" cellspacing="0" border="1" rules="cols" >
+					<thead>
+					<tr bgcolor="#ccccff"><th colspan="3">H ľ a d a n i e &nbsp; k o r e ň a &nbsp; r o v n i c e
+					<tr><th colspan="2">Vstup <th>Výsledok
+					<tbody >
+					<tr><td> &nbsp; Zadaj rovnicu:<td> <input type="Text" value="x*x - x - 6" id="vstup1" size="14">=0<td> &nbsp; Vypočítaný koreň: &nbsp; <input type="Text" value="5" id="vystup1" size="8">
+					<tr><td> &nbsp; Zadaj dolnú hranicu intervalu:<td> <input type="Text" value="0" id="vstup2" size="5"><td>
+					<tr><td> &nbsp; Zadaj hornú hranicu intervalu:<td> <input type="Text" value="9" id="vstup3" size="5"><td>
+					<tr><td> &nbsp; Zadaj požadovanú presnosť:<td> <input type="Text" value="0.05" id="vstup4" size="5"><td>
+					<tr><td>
+					<tr><td align="center"><button type="button" onclick="koren()">Vypočítaj</button>
+					</table>
+					<br><br>
+			</ol>		
+	</dl>
+</dl>
+</body>
+</html>

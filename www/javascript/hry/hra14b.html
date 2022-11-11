@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>Arkanoid</title>
+	 <STYLE>
+	 	span.zaklad {background:'purple'; border-color:silver; border-width:3;  width:66; height:16; border-style:ridge;position='absolute' }
+		span.pada {background:'#ccccff'; border-color:'#ccccff'; border-width:3;  width:66; height:16; border-style:ridge;position='absolute' }
+		span.padla {background:'silver'; border-color:'silver'; border-width:0;  width:66; height:16; position='absolute' }
+	 </STYLE>
+<script>
+    var hra=0, pocet=0, cislo=0, dx3=2,dx4=-2, xx3=3*70+42,xx4=4*70+42;
+	var tr=0;
+    function stop()
+	{  clearInterval(tr);
+	   window.close();
+	}   
+
+	function start1()
+	{ 
+	  hra=1;
+	  window.tr=setInterval('anim()',5);
+	 } 
+    function pohyb()
+	{  if (hra)
+	   if (event.clientX>49+15 && event.clientX<560-49+30) elipsa.style.left=event.clientX-49+20; }
+	function anim()
+	{
+         xx3+=dx3; xx4+=dx4;
+		 if (xx3<45) dx3=Math.abs(dx3);
+		 if (xx4<45) dx4=Math.abs(dx4);
+		 if (xx3>520) dx3=-Math.abs(dx3);
+		 if (xx4>520) dx4=-Math.abs(dx4);
+  document.all.tags('span')[3].style.left = xx3;
+  document.all.tags('span')[4].style.left = xx4;
+		 x1+=dx1; y1+=dy1;
+		 xx=parseInt(elipsa.style.left);
+		 if (y1>319 && Math.abs(x1-xx-40)<50)
+		 { dx1=parseInt((x1-xx-40)/8);dy1=Math.abs(dx1)-8; }
+		 if (x1<45) dx1=Math.abs(dx1);
+		 if (y1<45) dy1=Math.abs(dy1); 
+		 if (x1>580) dx1=-Math.abs(dx1); 
+		 if (y1>327) {  clearInterval(tr); hra=0; 
+		 				alert('Spadla');
+						x1=xx+10; y1=315;
+						dx1=-5; dy1=-3;
+		                gulicka.style.left=parseInt(elipsa.style.left)+10;
+  						gulicka.style.top=315;
+						b1.focus();return;
+					}
+		 gulicka.style.left=x1;		 
+		 gulicka.style.top=y1;
+		 if (y1<210+15*cislo && y1>138+15*cislo || pocet>21)
+		 for (var i=0;i<24;i++)
+		 {  xx=parseInt(document.all.tags('span')[i].style.left);
+		 	dxx=parseInt(document.all.tags('span')[i].style.width);
+		 	yy=parseInt(document.all.tags('span')[i].style.top);
+			dyy=parseInt(document.all.tags('span')[i].style.height);
+			ff=document.all.tags('span')[i].style.background;
+			if (y1<yy+dyy && y1+5>yy && xx < x1+2 && xx+dxx+2> x1 )
+			    { document.all.tags('span')[i].style.display='none';
+				  document.all.tags('span')[i].style.top=340; 
+				  dy1=-dy1;
+				  pocet+=1; 
+				  if (pocet==24)
+				  { clearInterval(tr);
+				    nova();
+					hra=0; pocet=0; cislo+=1;
+		                x1=parseInt(elipsa.style.left)+10; gulicka.style.left=x1;
+  						y1=315; gulicka.style.top=315;
+						dy1=-3; dx1=-5;
+				    alert('Nova hra');
+					b1.focus();
+				  }	
+				}  
+		 }
+	}
+function nova()
+{  for(var i=0;i<3;i++)
+  { for(var j=0;j<8;j++)  
+    {
+	 document.all.tags('span')[8*i+j].style.background='purple';
+	 document.all.tags('span')[8*i+j].style.height=16;
+	 document.all.tags('span')[8*i+j].style.width=66;
+	 document.all.tags('span')[8*i+j].style.left=j*70+42;
+	 document.all.tags('span')[8*i+j].style.top=i*20+148+15*cislo;
+	 document.all.tags('span')[8*i+j].style.display='inline';
+	} 
+  }	
+  document.all.tags('span')[3].style.top = '55';
+  document.all.tags('span')[4].style.top = '85';
+}	 
+</script>	
+</head>
+
+<body>
+<div style="background:'silver';width:600;" onmousemove="pohyb()">
+  <div style="width:560; height:300; background:'#ccccff'; margin:30" 
+      onmousemove="pohyb()">
+  <script> 
+  for (var i=0;i<24;i++) {
+		   document.writeln('<span class="zaklad" ></span>');}
+  </script>
+  </div>
+  <br>
+  <input type="Button" value=" Štart " style="margin:5 100 5 150" onclick="start1()" id="b1">
+  <input type="Button" value=" Exit " style="margin:5 100 5 150" onclick="stop()">
+</div>
+  
+  <script>
+  nova();
+  </script>
+
+<img src="elipsa.bmp" width="98" height="23" border="0" alt="" style="position:absolute; filter:chroma(color=#ffffff)" id="elipsa"
+    onmousemove="pohyb()">
+<img src="gulicka.gif" width="15" height="15" border="0" alt=""  style="position:absolute" id="gulicka">	
+<script>
+  elipsa.style.left=270;
+  elipsa.style.top=321;
+  gulicka.style.left=280;
+  gulicka.style.top=315;
+  b1.focus();  
+var x1=280, y1=315, dx1=-5, dy1=-3;
+var xx=0, yy=0, dxx=0, dyy=0, ff=' ';
+</script>
+</body>
+</html>

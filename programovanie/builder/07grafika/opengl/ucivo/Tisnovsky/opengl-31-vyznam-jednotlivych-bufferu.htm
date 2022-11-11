@@ -1,0 +1,956 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (31): význam jednotlivých bufferů - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="V dnešním dílu seriálu o grafické knihovně OpenGL si popíšeme význam jednotlivých bufferů (které se mohou nacházet ve framebufferu) a způsob zjišťování aktuální konfigurace framebufferu. Dále si popíšeme pořadí operací a testů, které se s právě vykreslovaným fragmentem provádí před vlastním zápisem do framebufferu." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-31-vyznam-jednotlivych-bufferu%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-31-vyznam-jednotlivych-bufferu%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-31-vyznam-jednotlivych-bufferu%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (31): význam jednotlivých bufferů</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 3. 2. 2004 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (31): význam jednotlivých bufferů</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+V dnešním dílu seriálu o grafické knihovně OpenGL si popíšeme význam jednotlivých bufferů (které se mohou nacházet ve framebufferu) a způsob zjišťování aktuální konfigurace framebufferu. Dále si popíšeme pořadí operací a testů, které se s právě vykreslovaným fragmentem provádí před vlastním zápisem do framebufferu.
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Vykreslovací řetězec a framebuffer</h2>
+
+<h4>Obsah</h4>
+
+<a href="#hrf1">Nastavování a zjišťování konfigurace framebufferu</a><br />
+<p>
+      <a href="#hrf11">Funkce glutInitDisplayMode()</a><br />
+      <a href="#hrf12">Funkce glXGetConfig()</a><br />
+      <a href="#hrf13">Funkce glGetIntegerv()</a><br />
+      <a href="#hrf14">Funkce glutGet()</a><br />
+<a href="#hrf2">Význam a použití bufferů ve framebufferu</a><br />
+      <a href="#hrf21">Barvové buffery (color buffers)</a><br />
+      <a href="#hrf22">Paměť šablony (stencil buffer)</a><br />
+      <a href="#hrf23">Paměť hloubky (depth buffer)</a><br />
+      <a href="#hrf24">Akumulační buffer (accumulation buffer)</a><br />
+<a href="#hrf3">Operace s fragmenty při vykreslování</a><br />
+<a href="#hrf4">Pokračování</a><br />
+<a href="#hrf5">Zkomprimovaný článek i s obrázky pro modemisty</a><br />
+<span id="hrf1"></span>
+</p>
+
+<h4>Nastavování a zjišťování konfigurace framebufferu</h4>
+
+<p>Již v prvních dílech tohoto seriálu jsme si popsali způsob vykreslování scén
+pomocí grafické knihovny OpenGL. Vykreslování probíhá tím způsobem, že se každé
+vykreslované primitivum (bod, úsečka, polygon) podrobí několika transformacím
+(reprezentovaných maticemi) a poté se v obrazové rovině rastruje na dále
+nedělitelné plošky nazývané <i>fragmenty</i>. Tyto fragmenty jsou poté
+podrobeny několika testům a dalším operacím. Po provedení těchto operací mohou
+být zapsány do <i>framebufferu</i>.</p>
+
+<p>Na prvním obrázku je zobrazen vykreslovací řetězec OpenGL. V dnešní části
+nás budou zajímat především bloky <i>Rasterization</i> a <i>Per-fragment
+operations</i>. V bloku <i>Rasterization</i> se provádí rasterizace primitiv,
+tj. převedení primitiv z vektorového popisu na mřížku fragmentů. V bloku
+<i>Per-fragment operations</i> se provádějí operace s nově vytvářenými
+fragmenty.</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_31_1.png" alt="Vykreslovací řetězec OpenGL" width="450" height="275" /><br />Obrázek 1: Vykreslovací řetězec OpenGL
+</p>
+
+<p><i>Framebuffer</i> se může skládat z následujících bufferů:</p>
+
+<ol class="urs-decimal"><li>Buffery pro uložení barev fragmentů (<i>color buffers</i>)</li>
+<li>Paměť hloubky fragmentů (<i>depth buffer, Z-buffer</i>)</li>
+
+<li>Paměť pro šablonu (<i>stencil buffer</i>)</li>
+<li>Akumulační buffer (<i>accumulation buffer</i>)</li>
+</ol>
+
+<p>Podle konkrétní implementace OpenGL na grafickém akcelerátoru je určeno,
+které buffery jsou dostupné a kolik bitů je určeno pro uložení jednoho
+fragmentu v každém bufferu.</p>
+
+<p>Způsob nastavení a následného zjišťování konfigurace framebufferu (zejména
+počtu bitů pro části fragmentů uložených v jednotlivých bufferech) je systémově
+závislý, není tedy řešen na úrovni OpenGL, ale na úrovni operačního
+systému či jeho grafické nadstavby.</p>
+
+<p>Pro nastavení framebufferu se používají systémově závislé funkce, například
+
+<i>glXChooseVisual()</i> v X Window systému nebo <i>ChoosePixelFormat()</i> v
+systémech Microsoft Windows.</p>
+
+<span id="hrf11"></span><h4>Funkce glutInitDisplayMode()</h4>
+
+<p>Nad těmito systémovými funkcemi je postavena knihovna GLUT, která poskytuje
+systémově nezávislé rozhraní, zejména funkci <i>glutInitDisplayMode()</i>.
+Bližší popis této funkce je uveden v článcích popisujících knihovnu GLUT
+[<a href="/clanky/glut-1/" title="Pavel Tišnovský: GLUT (1) (29. 04. 2003 00:00)" class="urs-clanek">I</a>]
+[<a href="/clanky/glut-2-vyhody-a-nevyhody/" title="Pavel Tišnovský: GLUT (2): výhody a nevýhody (06. 05. 2003 00:00)" class="urs-clanek">II</a>]
+[<a href="/clanky/glut-3-prace-s-okny/" title="Pavel Tišnovský: GLUT (3): práce s okny (13. 05. 2003 00:00)" class="urs-clanek">III</a>]
+[<a href="/clanky/glut-4-udalosti/" title="Pavel Tišnovský: GLUT (4): události (20. 05. 2003 00:00)" class="urs-clanek">IV</a>]
+[<a href="/clanky/glut-5-zpusob-prace-s-mysi/" title="Pavel Tišnovský: GLUT (5): způsob práce s myší (27. 05. 2003 00:00)" class="urs-clanek">V</a>]
+[<a href="/clanky/glut-6-tvorba-animaci/" title="Pavel Tišnovský: GLUT (6): tvorba animací (03. 06. 2003 00:00)" class="urs-clanek">VI</a>]
+[<a href="/clanky/glut-7-prvky-pro-tvorbu-gui/" title="Pavel Tišnovský: GLUT (7): prvky pro tvorbu GUI (10. 06. 2003 00:00)" class="urs-clanek">VII</a>]
+[<a href="/clanky/glut-8-rozhrani-pro-vykreslovani-znaku/" title="Pavel Tišnovský: GLUT (8): rozhraní pro vykreslování znaků (17. 06. 2003 00:00)" class="urs-clanek">VIII</a>]
+[<a href="/clanky/glut-9-vykreslovani-trojrozmernych-teles/" title="Pavel Tišnovský: GLUT (9): vykreslování trojrozměrných těles (24. 06. 2003 00:00)" class="urs-clanek">IX</a>],
+které vyšly taktéž na <a href="http://www.root.cz">Rootu</a>.</p>
+
+<span id="hrf12"></span><h4>Funkce glXGetConfig()</h4>
+
+<p>Informace o bufferech, zejména jejich dostupnost a popřípadě i bitovou
+hloubku, lze v X Window systému zjistit pomocí funkce:</p>
+
+<div class="urs-pre"><pre>
+int glXGetConfig(
+    Display     *dpy,
+    XVisualInfo *vis,
+    int         attrib,
+    int         *value
+);
+</pre></div>
+
+<p>jejíž parametry mají následující význam:</p>
+
+<ul><li><i>dpy</i> - struktura s popisem spojení s X serverem.</li>
+<li><i>vis</i> - ukazatel na strukturu typu <i>XVisualInfo</i> naplněnou např. funkcí <i>glXChooseVisual()</i>.</li>
+<li><i>attrib</i> - symbolické jméno atributu framebufferu, který zjišťujeme.</li>
+
+<li><i>value</i> - ukazatel na proměnnou, do které se uloží hodnota atributu.</li>
+</ul>
+
+<p>Symbolická jména atributů framebufferu používaná v parametru <i>attrib</i> a
+význam hodnot vracených v parametru <i>value</i>:</p>
+
+<ul><li><i>GLX_USE_GL</i> - logická jednička, pokud je renderování pomocí OpenGL
+povoleno. V opačném případě se vrací logická nula.</li>
+
+<li><i>GLX_RGBA</i> - v případě použití true color režimu se vrátí logická
+jednička, v případě paletového režimu logická nula.</li>
+<li><i>GLX_DOUBLEBUFFER</i> - v případě, že je alokován přední i zadní barvový
+buffer, vrátí se logická jednička. V opačném případě se vrátí logická
+nula.</li>
+<li><i>GLX_STEREO</i> - pokud je alokován levý a pravý barvový buffer, vrátí
+se logická jednička. Pokud je alokován pouze levý barvový buffer, vrátí se
+logická nula.</li>
+<li><i>GLX_AUX_BUFFERS</i> - vrátí počet přídavných (<i>auxiliary</i>)
+barvových bufferů.</li>
+
+<li><i>GLX_BUFFER_SIZE</i> - celkový počet bitů na část fragmentu uloženou v
+barvovém bufferu. Jedná se o součet hodnot <i>GLX_RED_SIZE</i>,
+<i>GLX_GREEN_SIZE</i>, <i>GLX_BLUE_SIZE</i> a <i>GLX_ALPHA_SIZE</i>. V
+paletovém režimu se vrací počet bitů na index do palety.</li>
+<li><i>GLX_RED_SIZE</i> - počet bitů pro červenou barevnou složku v barvových bufferech.</li>
+
+<li><i>GLX_GREEN_SIZE</i> - počet bitů pro zelenou barevnou složku v barvových bufferech.</li>
+<li><i>GLX_BLUE_SIZE</i> - počet bitů pro modrou barevnou složku v barvových bufferech.</li>
+<li><i>GLX_ALPHA_SIZE</i> - počet bitů na alfa složku v barvových bufferech.</li>
+<li><i>GLX_DEPTH_SIZE</i> - počet bitů pro uložení hloubky fragmentu v paměti hloubky.</li>
+<li><i>GLX_STENCIL_SIZE</i> - počet bitů pro reprezentaci pixelů v paměti šablony.</li>
+
+<li><i>GLX_ACCUM_RED_SIZE</i> - počet bitů pro červenou barevnou složku v akumulačním bufferu.</li>
+<li><i>GLX_ACCUM_GREEN_SIZE</i> - počet bitů pro zelenou barevnou složku v akumulačním bufferu.</li>
+<li><i>GLX_ACCUM_BLUE_SIZE</i> - počet bitů pro modrou barevnou složku v akumulačním bufferu.</li>
+<li><i>GLX_ACCUM_ALPHA_SIZE</i> - počet bitů pro alfa složku v akumulačním bufferu.</li>
+</ul>
+
+<span id="hrf13"></span><h4>Funkce glGetIntegerv()</h4>
+
+<p>I samotná knihovna OpenGL poskytuje funkci pro zjištění základní konfigurace
+framebufferu. Tato funkce má hlavičku:</p>
+
+<div class="urs-pre"><pre>
+void glGetIntegerv(
+    GLenum pname,
+    GLint  *params
+);
+</pre></div>
+
+<p>Do parametru <i>pname</i> se zadává název atributu, který chceme zjistit,
+výsledek se uloží na adresu specifikovanou parametrem <i>params</i>.</p>
+
+<p>Symbolické názvy parametru <i>pname</i> a význam vrácených hodnot:</p>
+
+<ul><li><i>GL_RED_BITS</i> - počet bitů červené barevné složky v barvových bufferech.</li>
+<li><i>GL_GREEN_BITS</i> - počet bitů zelené barevné složky v barvových bufferech.</li>
+<li><i>GL_BLUE_BITS</i> - počet bitů modré barevné složky v barvových bufferech.</li>
+
+<li><i>GL_ALPHA_BITS</i> - počet bitů na alfa kanál uložený v barvových bufferech.</li>
+<li><i>GL_INDEX_BITS</i> - počet bitů na index do palety při použití paletového režimu.</li>
+<li><i>GL_DEPTH_BITS</i> - počet bitů pro uložení hloubky fragmentu v paměti hloubky.</li>
+<li><i>GL_STENCIL_BITS</i> - počet bitů na jeden pixel šablony ve stencil bufferu.</li>
+<li><i>GL_ACCUM_RED_BITS</i> - počet bitů pro červenou barevnou složku v akumulačním bufferu.</li>
+
+<li><i>GL_ACCUM_GREEN_BITS</i> - počet bitů pro zelenou barevnou složku v akumulačním bufferu.</li>
+<li><i>GL_ACCUM_BLUE_BITS</i> - počet bitů pro modrou barevnou složku v akumulačním bufferu.</li>
+<li><i>GL_ACCUM_ALPHA_BITS</i> - počet bitů pro alfa složku v akumulačním bufferu.</li>
+</ul>
+
+<span id="hrf14"></span><h4>Funkce glutGet()</h4>
+
+<p>Podobnou činnost jako funkce <i>glXGetConfig()</i> a <i>glGetIntegerv()</i>
+vykonává i funkce z knihovny GLUT s hlavičkou:</p>
+
+<div class="urs-pre"><pre>
+int glutGet(
+    GLenum state
+);
+</pre></div>
+
+<p>která má pouze jeden parametr <i>state</i>, do něhož se zadává jméno
+atributu, který chceme zjistit. Výsledek je předán jako návratová hodnota této
+funkce. Význam hodnot předávaných v parametru <i>state</i> a korespondujících
+návratových hodnot je uveden v následujícím seznamu.</p>
+
+<ul><li><i>GLUT_WINDOW_RED_SIZE</i> - počet bitů červené barevné složky v barvových bufferech.</li>
+<li><i>GLUT_WINDOW_GREEN_SIZE</i> - počet bitů zelené barevné složky v barvových bufferech.</li>
+<li><i>GLUT_WINDOW_BLUE_SIZE</i> - počet bitů modré barevné složky v barvových bufferech.</li>
+<li><i>GLUT_WINDOW_ALPHA_SIZE</i> - počet bitů na alfa kanál uložený v barvových bufferech.</li>
+
+<li><i>GLUT_WINDOW_BUFFER_SIZE</i> - celkový počet bitů pro uložení barvy fragmentu.</li>
+<li><i>GLUT_WINDOW_STENCIL_SIZE</i> - počet bitů na jeden pixel šablony ve stencil bufferu.</li>
+<li><i>GLUT_WINDOW_DEPTH_SIZE</i> - počet bitů pro uložení hloubky fragmentu v paměti hloubky.</li>
+<li><i>GLUT_WINDOW_ACCUM_RED_SIZE</i> - počet bitů pro červenou barevnou složku v akumulačním bufferu.</li>
+<li><i>GLUT_WINDOW_ACCUM_GREEN_SIZE</i> - počet bitů pro zelenou barevnou složku v akumulačním bufferu.</li>
+
+<li><i>GLUT_WINDOW_ACCUM_BLUE_SIZE</i> - počet bitů pro modrou barevnou složku v akumulačním bufferu.</li>
+<li><i>GLUT_WINDOW_ACCUM_ALPHA_SIZE</i> - počet bitů pro alfa složku v akumulačním bufferu.</li>
+<li><i>GLUT_WINDOW_DOUBLEBUFFER</i> - logická hodnota nastavená na jedničku, pokud je alokován přední i zadní barvový buffer.</li>
+<li><i>GLUT_WINDOW_STEREO</i> - logická hodnota nastavená na jedničku, pokud je alokován levý i pravý barvový buffer.</li>
+<li><i>GLUT_WINDOW_RGBA</i> - logická hodnota nastavená na jedničku, pokud jsou barvové režimy nastaveny na true color.</li>
+
+<li><i>GLUT_DISPLAY_MODE_POSSIBLE</i> - příznak, zda je vybraná konfigurace framebufferu podporována.</li>
+<li><i>GLUT_INIT_DISPLAY_MODE</i> - bitové příznaky nastavené konfigurace framebufferu.</li>
+</ul>
+
+<span id="hrf2"></span><h4>Význam a použití bufferů ve framebufferu</h4>
+
+<p>V následujících odstavcích bude stručně vysvětlen význam jednotlivých
+bufferů, které se ve framebufferu mohou nacházet. Další informace byly uvedeny
+už v <a href="/clanky/opengl-12-vlastnosti-framebufferu/" title="Pavel Tišnovský: Grafická knihovna OpenGL (12): vlastnosti framebufferu (16. 09. 2003 00:00)" class="urs-clanek">dvanáctém dílu</a> tohoto
+seriálu.</p>
+
+<span id="hrf21"></span><h4>Barvové buffery (color buffers)</h4>
+
+<p>V barvových bufferech je uložena barevná informace jednotlivých fragmentů.
+Vždy do jednoho z těchto bufferů se provádí vykreslování, to znamená, že alespoň
+jeden barvový buffer musí být vždy vytvořen.</p>
+
+<p>Každá implementace OpenGL, která podporuje stereoskopické pohledy, musí
+obsahovat minimálně dva barvové buffery, které jsou nazývány levý a pravý.
+Implementace OpenGL, jenž podporuje double-buffering, musí také obsahovat
+minimálně dva barvové buffery nazývané přední a zadní.</p>
+
+<p>Je samozřejmě možné kombinovat stereoskopický pohled s double-bufferingem.
+Pro tuto kombinaci je nutné alokovat minimálně čtyři barvové buffery: přední
+levý, přední pravý, zadní levý a zadní pravý.</p>
+
+<p>Konkrétní implementace OpenGL však může podporovat i další přídavné barvové
+buffery, jejichž funkce může být libovolná.</p>
+
+<p>Na vytvoření barvových bufferů pro stereoskopický pohled je zapotřebí
+inicializovat framebuffer pomocí funkce <i>glutInitDisplayMode()</i> s
+nastaveným příznakem (bitovou hodnotou) <i>GLUT_STEREO</i>. Pro vytvoření
+předního a zadního barvového bufferu se musí použít příznak <i>GLUT_DOUBLE</i>.
+V opačném případě by se použil pouze jeden (přední) barvový buffer.</p>
+
+<p>Získání informací o podpoře stereoskopického pohledu lze získat pomocí
+funkce <i>glGetBooleanv(GL_STEREO, &amp;result)</i>. Informace o podpoře
+double-bufferingu se získají po zavolání funkce
+<i>glGetBooleanv(GL_DOUBLEBUFFER, &amp;result)</i>.</p>
+
+<span id="hrf22"></span><h4>Paměť šablony (stencil buffer)</h4>
+
+<p>Paměť šablony slouží k maskování vytvářených fragmentů, tj. k určení, které
+fragmenty se mají vykreslit a které se mají z vykreslovacího řetězce vyloučit.
+Do zamaskovaných částí framebufferu se vykreslování (tj. zápis) nebude
+provádět.</p>
+
+<p>Paměť šablony má odlišnou funkci od nám již známého ořezávání. Při ořezávání
+se odstraňují vrcholy grafických primitiv, ale při použití paměti šablony se
+pracuje přímo s jednotlivými fragmenty (tj. obrazovými elementy).</p>
+
+<p>Funkci, která je pro test fragmentů používaná, lze programově změnit, což se
+také často děje, například při vytváření těles pomocí CSG či používání stínových
+těles při vykreslování stínů.</p>
+
+<p>Paměť šablony nachází své uplatnění také při tvorbě grafického uživatelského
+rozhraní nebo při vytváření speciálních efektů, jakým je například zrcadlení
+nebo simulace stereopohledů bez alokace stereo barvových bufferů.</p>
+
+<p>Pro vytvoření paměti šablony ve framebufferu je zapotřebí při inicializaci
+volat funkci <i>glutInitDisplayMode()</i> s nastaveným bitovým příznakem
+<i>GLUT_STENCIL</i>.</p>
+
+<span id="hrf23"></span><h4>Paměť hloubky (depth buffer)</h4>
+
+<p>V tomto bufferu jsou uloženy informace o hloubce fragmentu, tj. o vzdálenosti
+fragmentu od projekční roviny. Tyto vzdálenosti nejsou většinou ukládány ve své
+původní podobě, spíše se používá převrácená hodnota vzdálenosti (tj. se
+zvyšující se vzdáleností fragmentu směrem k nekonečnu klesá ukládaná hodnota
+směrem k nule).</p>
+
+<p>Při běžném použití přepíše fragment s menší vzdáleností již dříve uložený
+fragment s větší vzdáleností od promítací roviny. Tato vlastnost paměti hloubky
+je však programově změnitelná, takže pro speciální účely je možné vykreslovat
+například jen odlehlé části těles apod. Bližší informace budou uvedeny v
+následující části tohoto seriálu.</p>
+
+<p>Ve většině implementací OpenGL se používá pouze jedna paměť hloubky, jejich
+větší počet postrádá pro značnou část vykreslovacích postupů smysl.</p>
+
+<p>Pro vytvoření paměti hloubky ve framebufferu je zapotřebí při inicializaci
+volat funkci <i>glutInitDisplayMode()</i> s nastaveným bitovým příznakem
+<i>GLUT_DEPTH</i>.</p>
+
+<span id="hrf24"></span><h4>Akumulační buffer (accumulation buffer)</h4>
+
+<p>Akumulační buffer se používá pro sloučení více scén nebo více pohledů na
+jednu scénu do výsledného obrazu. V tomto bufferu jsou uloženy barevné složky
+fragmentů, většinou ve formátu RGBA, podobně jako u barvových bufferů. V
+paletovém (indexovém) režimu nelze akumulační buffer použít, protože zde ztrácí
+svůj význam (nemá cenu sčítat a průměrovat indexy do barevné palety).</p>
+
+<p>Pomocí akumulačního bufferu lze vykreslovat i antialiasovanou scénu. V tomto
+případě se do akumulačního bufferu renderuje scéna s jakoby vyšším rozlišením,
+než je rozlišení barvového bufferu, a následně se provede průměrování barev
+sousedních fragmentů (ve skutečnosti se scéna může několikrát renderovat v
+původním rozlišení s posunutou kamerou). Dalším často aplikovaným efektem je
+například vykreslování těles, které jsou rozmazány pohybem (<i>motion blur</i>)
+nebo rozmazání příliš blízkých nebo naopak vzdálených těles - viz druhý
+obrázek.</p>
+
+<p>Do akumulačního bufferu se většinou přímo nezapisuje. Používá se technika
+vykreslení (renderingu) do barvového bufferu s následným přenosem barev
+fragmentů do akumulačního bufferu - viz nám již známé funkce
+<i>glDrawPixels()</i>, <i>glReadPixels()</i> a <i>glCopyPixels()</i>. Přenos
+fragmentů se však musí vždy provádět pouze v obdélníkové oblasti, což je pro
+některé grafické efekty omezující.</p>
+
+<p>Pro vytvoření akumulačního bufferu ve framebufferu je zapotřebí při
+inicializaci volat funkci <i>glutInitDisplayMode()</i> s nastaveným bitovým
+příznakem <i>GLUT_ACCUM</i>.</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_31_2.png" alt="Rozmazání blízkých a  vzdálených částí těles pomocí akumulačního bufferu" width="450" height="400" /><br />Obrázek 2: Rozmazání blízkých a vzdálených částí těles pomocí akumulačního bufferu
+</p>
+
+<span id="hrf3"></span><h4>Operace s fragmenty při vykreslování</h4>
+
+<p>Na třetím obrázku je zobrazeno pořadí operací, které se mohou provádět s
+vykreslovanými fragmenty. Šipky naznačují směr pohybu dat. Například v bloku
+<i>Depth buffer test</i> se přečte hloubka již zapsaného fragmentu a v případě
+úspěšného porovnání se do framebufferu zapíše hloubka nová - šipka je tedy
+obousměrná. Naopak, při provádění blendingu se hodnoty z framebufferu pouze
+čtou, neboť zápis se provede až po dalších operacích s vykreslovaným fragmentem
+- šipka je jednosměrná.</p>
+
+<p>Význam jednotlivých operací si podrobněji popíšeme v další části.</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_31_3.png" alt="Pořadí operací a testů s vykreslovanými fragmenty" width="450" height="280" /><br />Obrázek 3: Pořadí operací a testů s vykreslovanými fragmenty
+</p>
+
+<span id="hrf4"></span><h4>Pokračování</h4>
+
+<p>V další, předposlední části, si podrobněji popíšeme jednotlivé operace,
+které jsou s fragmentem prováděny před zápisem do framebufferu. V
+demonstračních příkladech bude ukázka práce se stencil bufferem, ořezáním
+nůžkami a s akumulačním bufferem.</p>
+
+<span id="hrf5"></span><h4>Zkomprimovaný článek i s obrázky pro modemisty</h4>
+
+<p>Pro majitele pomalejšího připojení k internetu je zde k dispozici celý
+článek i s obrázky zabalený do jednoho <a href="http://i.iinfo.cz/r/photos/opengl/opengl_31.zip">zip
+souboru</a>.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-29-modulace-textur/">Grafická knihovna OpenGL (29): modulace textur</a></li>
+			<li><a href="/clanky/opengl-30-automaticke-generovani-texturovacich-souradnic/">Grafická knihovna OpenGL (30): automatické generování texturovacích souřadnic</a></li>
+			<li class="actual">Grafická knihovna OpenGL (31): význam jednotlivých bufferů</li>
+			<li><a href="/clanky/opengl-32-operace-s-fragmenty/">Grafická knihovna OpenGL (32): operace s fragmenty </a></li>
+			<li><a href="/clanky/opengl-33-souhrn-temat/">Grafická knihovna OpenGL (33): souhrn témat</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-31-vyznam-jednotlivych-bufferu%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-31-vyznam-jednotlivych-bufferu%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/">Vlastní</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q2/">2</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q3/">3</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q4/">4</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q5/">5</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q6/">6</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q7/">7</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q8/">8</a>
+<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[30339]" /></td>
+	<th><a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/30339/">Hezke :)</a></th>
+	<td class="op-au">Martin Kysela</td>
+	<td class="op-dt">3. 2. 2004 09:26	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[30342]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/30342/">Re: Hezke :)</a></th>
+	<td class="op-au">Johanka</td>
+	<td class="op-dt">3. 2. 2004 10:00	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3919">ADMINISTRÁTOR ZÁKAZNICKÝCH SYSTÉMŮ (i7170) / 35-45.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3799">PROGRAMÁTOR ASP.NET - WEBFORMS (i5216) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D2961">DEVELOPER JAVA (i4993) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3594">IT ANALYTIK / KONZULTANT (i1613) / až 65.000,- / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3720">JUNIOR/SENIOR PROGRAMÁTOR C++ WINDOWS (i6973) / 25-55.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4102">ANALYTIK TESTŮ SW APLIKACÍ (i3234) / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3759">KONZULTANT (i4567) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D1987">SENIOR TESTER (i6212)</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

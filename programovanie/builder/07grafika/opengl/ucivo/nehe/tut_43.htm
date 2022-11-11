@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 43 - FreeType Fonty v OpenGL</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_43.jpg" class="nehe_maly" alt="Lekce 43" />
+
+<h1>Lekce 43 - FreeType Fonty v OpenGL</h1>
+
+<p class="nadpis_clanku">Použitím knihovny FreeType Font rendering library můžete snadno vypisovat vyhlazené znaky, které vypadají mnohem lépe než písmena u bitmapových fontů z lekce 13. Náš text bude mít ale i jiné výhody - bezproblémová rotace, dobrá spolupráce s OpenGL vybíracími (picking) funkcemi a víceřádkové řetězce.</p>
+
+<p class="netisk"><a href="tut_43_sk.php">Verze ve slovenštině...</a></p>
+
+<p>Motivace: Tady máte ukázky bitmapového fontu vytvořeného pomocí WGL a FreeType fontu. Oba jsou Arial Black Kurzíva.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_43_foo_foo.gif" width="158" height="37" alt="FreeType font a WGL font" /></div>
+
+<p>Základní problém s použitím bitmapových fontů je, že OpenGL bitmapy jsou binárními obrázky. To znamená, že si OpenGL pamatuje pouze 1 bit na 1 pixel. Zoomujeme-li na text vytvořený pomocí WGL, výsledek vypadá přibližně takto:</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_43_wgl.gif" width="185" height="85" alt="Zvětšený WGL font" /></div>
+
+<p>Protože jsou bitmapy binární obrázky, nejsou okolo nich šedé pixely a to znamená, že vypadají hůř. Naštěstí je velmi jednoduché pomocí GNU FreeType knihovny vytvořit dobře vypadající fonty. Tuto knihovnu používá i Blizzard ve svých hrách, takže musí být opravdu dobrá :-))). Opět ukázka zvětšeného textu, tentokrát s knihovnou FreeType:</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_43_free.gif" width="196" height="85" alt="Zvětšený FreeType font" /></div>
+
+<p>Jak můžeme vidět, okolo okrajů se nachází spousta šedých pixelů, které jsou typické pro vyhlazené (anti-aliasované) fonty. Šedé pixely vylepšují znaky při pohledu z dálky.</p>
+
+<p>Knihovnu GNU FreeType si můžete stáhnout na adrese <a href="http://gnuwin32.sourceforge.net/packages/freetype.htm" target="_blank">http://gnuwin32.sourceforge.net/packages/freetype.htm</a>. Konkrétně se jedná o binární a vývojářské soubory. Při instalaci si určitě všimnete licenční podmínky. Hovoří se v ní, že při použití ve vlastních programech, musíte někde v dokumentaci uvést kredit.</p>
+
+<p>Po instalaci potřebujeme nastavit MSVC, aby umělo používat FreeType. V menu Project - Settings - Link se ujistěte, že jste spolu s opengl32.lib, glu32.lib, glaux.lib a podobnými přidali do Object/libraries i libfreetype.lib.</p>
+
+<p>Dále potřebujeme v Tools - Options - Directories přidat cesty k hlavičkových souborům. Pod Show Directories for vybereme Include Files a poklikáme na prázdný řádek dole v seznamu. Objeví se tlačítko se třemi tečkami, které použijeme pro výběr adresáře. Takto přidáme:</p>
+
+<p class="src0">C:\PROGRAM FILES\GNUWIN32\INCLUDE\FREETYPE32</p>
+
+<p>a</p>
+
+<p class="src0">C:\PROGRAM FILES\GNUWIN\INCLUDE</p>
+
+<p>Pod Show Directories For vybereme Library Files a přidáme</p>
+
+<p class="src0">C:\PROGRAM FILES\GNUWIN32\LIB</p>
+
+<p>Na tomto místě bychom měli být schopni kompilovat programy, které používají FreeType, ale nepůjdou spustit bez dynamické knihovny freetype-6.dll. Kopii tohoto souboru naleznete v GNUWIN32\BIN. Je třeba ji umístit do adresáře, ve kterém systém při spouštění programů knihovny hledá (např. C:\PROGRAM FILES\MICROSOFT\VISUAL STUDIO\VC98\BIN nebo C:\WINDOWS\SYSTEM pro WIN9x, C:\WINNT\SYSTEM32 pro WIN NT/2000/XP). Překl.: Osobně doporučuji podobné DLL knihovny výhradně vkládat do adresáře, ve kterém se nachází spoustěný exe soubor, protože až budete váš program někomu kopírovat, nikdy na ně nezapomenete (Tak ten tvůj program mi nešel spustit!).</p>
+
+<p>OK, tak teď už konečně můžeme začít programovat. Jako základ vezmeme lekci 13. Zkopírujeme soubor lesson13.cpp a přidáme ho do projektu. Stejně tak zkopírujeme dva nové soubory freetype.h a freetype.cpp, do kterých budeme přidávat všechen FreeTypový kód. Až skončíme, budeme mít jednoduchou FreeType knihovnu, kterou budeme moci využít i v jiných OpenGL programech.</p>
+
+<p>Začneme vytvářením freetype.h. Samozřejmě musíme nadefinovat hlavičky FreeType a OpenGL. Také přidáme pár užitečných částí ze Standard Template Library (STL). Konkrétně se jedná o třídy vyjímek, které nám zjednoduší vytváření pěkných debugových zpráv. Použití STL zvyšuje šanci, že někdo jiný, kdo používá náš kód, úspěšně zachytí všechny poslané vyjímky.</p>
+
+<p class="src0">#ifndef FREE_NEHE_H</p>
+<p class="src0">#define FREE_NEHE_H</p>
+<p></p>
+<p class="src0">#include &lt;windows.h&gt;</p>
+<p></p>
+<p class="src0"><span class="kom">// FreeType hlavičky</span></p>
+<p class="src0">#include &lt;ft2build.h&gt;</p>
+<p class="src0">#include &lt;freetype/freetype.h&gt;</p>
+<p class="src0">#include &lt;freetype/ftglyph.h&gt;</p>
+<p class="src0">#include &lt;freetype/ftoutln.h&gt;</p>
+<p class="src0">#include &lt;freetype/fttrigon.h&gt;</p>
+<p></p>
+<p class="src0"><span class="kom">// OpenGL hlavičky</span></p>
+<p class="src0">#include &lt;GL/gl.h&gt;</p>
+<p class="src0">#include &lt;GL/glu.h&gt;</p>
+<p></p>
+<p class="src0"><span class="kom">// STL hlavičky</span></p>
+<p class="src0">#include &lt;vector&gt;</p>
+<p class="src0">#include &lt;string&gt;</p>
+<p></p>
+<p class="src0"><span class="kom">// STL vyjímky</span></p>
+<p class="src0">#include &lt;stdexcept&gt;</p>
+
+<p>Následující pragma MSVC zabrání, aby oznamovalo zbytečná varování o vektorech řetězců.</p>
+
+<p class="src0">#pragma warning(disable: 4786)</p>
+
+<p>Všechny informace, které každý font potřebuje, dáme do jedné struktury (toto ulehčí práci s více písmy). Jak jsme se naučili v lekci 13, když WGL vytváří font, generuje sadu display listů s postupně se zvyšujícím ID. To je šikovné, protože díky tomu můžeme pro vypsání celého řetězce použít jediný příkaz glCallLists(). V naší knihovně nastavíme všechno úplně stejně, což znamená, že pole list_base bude ukládat prvních 128 display listů jednotlivých znaků. Protože se chystáme pro vykreslování použít textury, potřebujeme také uložit 128 asociovaných textur. Poslední, co uděláme, je deklarování proměnné označující výšku vytvářeného fontu v pixelech, která nám umožní vypisovat i zalomení řádků označené \n v řetězci.</p>
+
+<p class="src0">namespace freetype<span class="kom">// Proti vícenásobnému použití stejných identifikátorů</span></p>
+<p class="src0">{</p>
+<p class="src1">using std::vector;<span class="kom">// Možnost psát jen vector namísto std::vector</span></p>
+<p class="src1">using std::string;<span class="kom">// To samé pro string</span></p>
+<p></p>
+<p class="src1">struct font_data<span class="kom">// Zapouzdření všeho do struktury</span></p>
+<p class="src1">{</p>
+<p class="src2">float h;<span class="kom">// Výška fontu</span></p>
+<p class="src2">GLuint* textures;<span class="kom">// ID textur</span></p>
+<p class="src2">GLuint list_base;<span class="kom">// ID prvního display listu</span></p>
+<p></p>
+<p class="src2">void init(const char* fname, unsigned int h);<span class="kom">// Vytvoření písma s výškou h ze souboru fname</span></p>
+<p class="src2">void clean();<span class="kom">// Uvolnění všech prostředků spojených s fontem</span></p>
+<p class="src1">};</p>
+
+<p>Funkce print() vykreslí zadaný text na souřadnicích x, y. Modelview matice bude také aplikovaná na text.</p>
+
+<p class="src1">void print(const font_data &amp;ft_font, float x, float y, const char *fmt, ...);<span class="kom">// Vykreslí text</span></p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">#endif</p>
+
+<p>To je konec hlavičkového souboru freetype.h, teď otevřeme freetype.cpp.</p>
+
+<p class="src0">#include &quot;freetype.h&quot;<span class="kom">// Vloží freetype.h</span></p>
+<p></p>
+<p class="src0">namespace freetype</p>
+<p class="src0">{</p>
+
+<p>Pro vykreslení znaků budeme používat textury, které musí samozřejmě mít rozměry mocniny čísla 2. Následující funkce vrátí první mocninu dvojky, která se rovná nebo je větší než předané číslo.</p>
+
+<p class="src1">inline int next_p2(int a)<span class="kom">// Vrátí následující mocninu čísla 2</span></p>
+<p class="src1">{</p>
+<p class="src2">int rval = 1;<span class="kom">// Nastaví bit vpravo do jedničky</span></p>
+<p></p>
+<p class="src2">while(rval &lt; a)<span class="kom">// Dokud je nalezená mocnina menší než minimum</span></p>
+<p class="src2">{</p>
+<p class="src3">rval &lt;&lt;= 1;<span class="kom">// Získání další mocniny (rotace bitů doleva, rychlejší způsob, jak napsat rval *= 2)</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">return rval;<span class="kom">// Vrácení výsledku</span></p>
+<p class="src1">}</p>
+
+<p>Další funkce, kterou budeme potřebovat, je srdcem tohoto kódu. Make_dlist() vytvoří display list podle poslaného znaku, parametr FT_Face představuje objekt, který FreeType používá pro uchování informací o fontu. Funkci se dále předává ID základního display listu a ukazatel na texturu.</p>
+
+<p class="src1">void make_dlist(FT_Face face, char ch, GLuint list_base, GLuint* tex_base)<span class="kom">// Vytvoří display list pro daný znak</span></p>
+<p class="src1">{</p>
+
+<p>Na začátku požádáme FreeType o vykreslení daného znaku do bitmapy.</p>
+
+<p class="src2">if(FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT))<span class="kom">// Načte glyph znaku</span></p>
+<p class="src2">{</p>
+<p class="src3">throw std::runtime_error(&quot;FT_Load_Glyph failed&quot;);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">FT_Glyph glyph;<span class="kom">// Glyph objekt</span></p>
+<p></p>
+<p class="src2">if(FT_Get_Glyph(face-&gt;glyph, &amp;glyph))<span class="kom">// Přesun glyphu do glyph objektu</span></p>
+<p class="src2">{</p>
+<p class="src3">throw std::runtime_error(&quot;FT_Get_Glyph failed&quot;);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">FT_Glyph_To_Bitmap(&amp;glyph, ft_render_mode_normal, 0, 1);<span class="kom">// Konvertování glyphu na bitmapu</span></p>
+<p class="src2">FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;</p>
+<p></p>
+<p class="src2">FT_Bitmap&amp; bitmap = bitmap_glyph-&gt;bitmap;<span class="kom">// Reference ulehčí přístup k bitmapě</span></p>
+
+<p>Teď, když máme pomocí FreeType vytvořenu bitmapu, potřebujeme do ní doplnit prázdné pixely, abychom ji mohli použít v OpenGL. Je důležité zapamatovat si, že zatímco OpenGL používá termín bitmapa k označení binárních obrázků, ve FreeType bitmapa ukládá 8 bitů informace na pixel, takže může ukládat i šedé složky, které jsou potřebné pro vyhlazený text.</p>
+
+<p class="src2">int width = next_p2(bitmap.width);<span class="kom">// Velikost textury - mocnina čísla 2</span></p>
+<p class="src2">int height = next_p2(bitmap.rows);</p>
+<p></p>
+<p class="src2">GLubyte* expanded_data = new GLubyte[2 * width * height];<span class="kom">// Alokace paměti</span></p>
+
+<p>Všimněte si, že používáme dvoukanálovou bitmapu, první kanál pro zářivost a druhý pro alfu. Oba přiřadíme hodnotě, kterou jsme nalezli ve FreeType bitmapě. Ternální operátor ? : použijeme pro určení nulové hodnoty, pokud se nacházíme v okrajové zóně (zvětšení pro mocninu 2), v ostatních případech platí hodnota převzatá z FreeType bitmapy.</p>
+
+<p class="src2">for(int j = 0; j &lt; height; j++)</p>
+<p class="src2">{</p>
+<p class="src3">for(int i = 0; i &lt; width; i++)</p>
+<p class="src3">{</p>
+<p class="src4">expanded_data[2 * (i + j*width)] = expanded_data[2 * (i + j*width) + 1] = (i &gt;= bitmap.width || j &gt;= bitmap.rows) ? 0 : bitmap.buffer[i + bitmap.width*j];</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p>Jsme hotovi, takže se můžeme pustit do vytváření OpenGL textury. Protože zahrneme alfa kanál, černé části bitapy budou vždy průhledné a okraje textu budou plynule průsvitné. Text by měl vypadat správně na jakémkoli podkladě. Jak už jsem napsal, texturu vytváříme ze složek luminance a alfa.</p>
+
+<p class="src2"><span class="kom">// Nastavení parametrů textury</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, tex_base[ch]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</p>
+<p></p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, expanded_data);</p>
+<p></p>
+<p class="src2">delete [] expanded_data;<span class="kom">// Uvolnění paměti bitmapy</span></p>
+
+<p>Na vykreslení znaku použijeme otexturované čtyřúhelníky. To znamená, že bude jednoduché otáčet, zvětšovat i zmenšovat text a dokonce bude od OpenGL dědit barvu.</p>
+
+<p class="src2">glNewList(list_base + ch, GL_COMPILE);<span class="kom">// Vytvoření display listu</span></p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, tex_base[ch]);</p>
+
+<p>Nejdřív pohneme kamerou trochu doprava, aby byl znak vycentrovaný mezi minulým a následujícím. Uložíme matici a pokud pracujeme se znakem typu g nebo y, posuneme se trochu dolů.</p>
+
+<p class="src3">glTranslatef(bitmap_glyph-&gt;left, 0, 0);<span class="kom">// Vycentrování znaku mezi minulým a následujícím</span></p>
+<p></p>
+<p class="src3">glPushMatrix();</p>
+<p class="src4">glTranslatef(0, bitmap_glyph-&gt;top - bitmap.rows, 0);<span class="kom">// Posun o trochu dolů</span></p>
+
+<p>Musíme počítat s faktem, že mnoho textur je na okraji vyplněných prázdným místem. Zjistíme, jaká část textury je znakem používána a tuto hodnotu uložíme do pomocných proměnných x a y, kterou před kreslením předáme funkci glTexCoord2d().</p>
+
+<p class="src4">float x = (float)bitmap.width / (float)width;</p>
+<p class="src4">float y = (float)bitmap.rows / (float)height;</p>
+
+<p>Na tomto místě vykreslíme otexturovaný obdélník. Bitmapa, kterou jsme získali pomocí FreeType není orientovaná přesně tak, jak by měla, ale to nám nevadí, protože můžeme explicitně určit polohu pro správné zarovnání.</p>
+
+<p class="src4">glBegin(GL_QUADS);<span class="kom">// Vykreslení znaku</span></p>
+<p class="src5">glTexCoord2d(0, 0); glVertex2f(0, bitmap.rows);</p>
+<p class="src5">glTexCoord2d(0, y); glVertex2f(0, 0);</p>
+<p class="src5">glTexCoord2d(x, y); glVertex2f(bitmap.width, 0);</p>
+<p class="src5">glTexCoord2d(x, 0); glVertex2f(bitmap.width, bitmap.rows);</p>
+<p class="src4">glEnd();</p>
+<p class="src3">glPopMatrix();</p>
+<p></p>
+<p class="src3">glTranslatef(face-&gt;glyph-&gt;advance.x &gt;&gt; 6, 0, 0);</p>
+
+<p>Inkrementujeme pozici v rastru stejně, jako bychom pracovali s bitmapovým fontem. To je nutné pouze, pokud bychom chtěli spočítat aktuální délku textu. Proto jsem řádek zakomentoval.</p>
+
+<p class="src3"><span class="kom">// glBitmap(0, 0, 0, 0, face->glyph->advance.x &gt;&gt; 6, 0, NULL);</span></p>
+<p></p>
+<p class="src2">glEndList();<span class="kom">// Ukončíme display list</span></p>
+<p class="src1">}</p>
+
+<p>Další funkce, kterou se chystáme vytvořit, bude používat make_dlist() pro vytvoření množiny display listů odpovídajících danému souboru s fontem a výšce v pixelech. FreeType používá truetype fonty, takže budeme potřebovat nějaký .ttf soubor s fontem. Truetypová písma jsou velmi běžná, existuje spousta míst na internetu, kde si je můžete stáhnout. Jednodušší bude ale podívat se do adresáře windows/fonts.</p>
+
+<p class="src1">void font_data::init(const char * fname, unsigned int h)<span class="kom">// Vytvoření fontu</span></p>
+<p class="src1">{</p>
+<p class="src2">textures = new GLuint[128];<span class="kom">// Paměť pro ID textur</span></p>
+<p></p>
+<p class="src2">this-&gt;h = h;</p>
+<p></p>
+<p class="src2">FT_Library library;<span class="kom">// Vytvoření FreeType</span></p>
+<p></p>
+<p class="src2">if (FT_Init_FreeType(&amp;library))<span class="kom">// Inicializace FreeType</span></p>
+<p class="src2">{</p>
+<p class="src3">throw std::runtime_error(&quot;FT_Init_FreeType failed&quot;);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">FT_Face face;<span class="kom">// Objekt pro informace o fontu</span></p>
+
+<p>Na tomto místě se pokusíme načíst ze souboru data fontu. Ze všech míst, kde se kód může zaseknout je právě toto nejčastější, protože soubor např. nemusí existovat nebo může být nějakým způsobem poškozen.</p>
+
+<p class="src2">if (FT_New_Face(library, fname, 0, &amp;face))<span class="kom">// Načtení fontu ze souboru</span></p>
+<p class="src2">{</p>
+<p class="src3">throw std::runtime_error(&quot;FT_New_Face failed (there is probably a problem with your font file)&quot;);</p>
+<p class="src2">}</p>
+
+<p>Z nějakým nevysvětlitelných důvodů měří FreeType velikost písma v 1/64-nách pixelů. Proto, abychom měli font vysoký h pixelů, musíme předávat velikost násobenou číslem 64. H &lt;&lt; 6 je jen rychlejší způsob psaní této operace.</p>
+
+<p class="src2">FT_Set_Char_Size(face, h &lt;&lt; 6, h &lt;&lt; 6, 96, 96);</p>
+
+<p>Překl.: Anglické znakové sadě stačí pouze 128 znaků, ale čeština obsahuje navíc háčky a čárky, takže pokud je chcete používat, musíte upravit kód.</p>
+
+<p class="src2">list_base = glGenLists(128);<span class="kom">// 128 display listů a textur</span></p>
+<p class="src2">glGenTextures(128, textures);</p>
+<p></p>
+<p class="src2">for(unsigned char i = 0; i &lt; 128; i++)<span class="kom">// Vytvoření display listů znaků</span></p>
+<p class="src2">{</p>
+<p class="src3">make_dlist(face, i, list_base, textures);</p>
+<p class="src2">}</p>
+
+<p>Protože všechna data máme uložena v display listech a texturách, můžeme uvolnit použité zdroje FreeType.</p>
+
+<p class="src2">FT_Done_Face(face);<span class="kom">// Uvolnění zdrojů</span></p>
+<p class="src2">FT_Done_FreeType(library);</p>
+<p class="src1">}</p>
+
+<p>Vytvoříme clean() funkci, která uvolní všechny prostředky spojené s display listy a texturami.</p>
+
+<p class="src1">void font_data::clean()</p>
+<p class="src1">{</p>
+<p class="src2">glDeleteLists(list_base, 128);</p>
+<p class="src2">glDeleteTextures(128, textures);</p>
+<p class="src2">delete [] textures;</p>
+<p class="src1">}</p>
+
+<p>Následují dvě pomocné funkce pro print(), která bude chtít operovat ne v OpenGL jednotkách, ale v pixelových souřadnicích okna. Nula se bude nacházet v levém horním rohu.</p>
+
+<p class="src1">inline void pushScreenCoordinateMatrix()<span class="kom">// Přepne do pravoúhlé projekce</span></p>
+<p class="src1">{</p>
+<p class="src2">glPushAttrib(GL_TRANSFORM_BIT);</p>
+<p class="src2">GLint viewport[4];</p>
+<p class="src2">glGetIntegerv(GL_VIEWPORT, viewport);</p>
+<p class="src2">glMatrixMode(GL_PROJECTION);</p>
+<p class="src2">glPushMatrix();</p>
+<p class="src2">glLoadIdentity();</p>
+<p class="src2">gluOrtho2D(viewport[0], viewport[2], viewport[1], viewport[3]);</p>
+<p class="src2">glPopAttrib();</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">inline void pop_projection_matrix()<span class="kom">// Obnoví perspektivu</span></p>
+<p class="src1">{</p>
+<p class="src2">glPushAttrib(GL_TRANSFORM_BIT);</p>
+<p class="src2">glMatrixMode(GL_PROJECTION);</p>
+<p class="src2">glPopMatrix();</p>
+<p class="src2">glPopAttrib();</p>
+<p class="src1">}</p>
+
+<p>Nová funkce print() vypadá velmi podobně jako ta z lekce 13, ale je tu pár rozdílů. Nastavíme jiné OpenGL flagy, protože používáme pouze dvoukanálové textury namísto bitmap. Abychom zajistili přechody na nové řádky, přidáme několik extra výpočtů a samozřejmě nesmíme zapomenout na zajištění toho, aby všechna nastavení byla po výstupu z funkce ve stejné stavu jako před vstupem.</p>
+
+<p class="src1">void print(const font_data &amp;ft_font, float x, float y, const char *fmt, ...)<span class="kom">// Rendering textu</span></p>
+<p class="src1">{</p>
+<p class="src2">pushScreenCoordinateMatrix();<span class="kom">// Souřadná soustava v pixelech</span></p>
+<p class="src2"></p>
+<p class="src2">GLuint font = ft_font.list_base;</p>
+<p class="src2">float h = ft_font.h / 0.63f;<span class="kom">// Větší mezera mezi řádky</span></p>
+<p class="src2"></p>
+<p class="src2">char text[256];<span class="kom">// Výsledný řetězec</span></p>
+<p class="src2">va_list ap;<span class="kom">// Ukazatel na argumenty funkce</span></p>
+<p></p>
+<p class="src2">if (fmt == NULL)<span class="kom">// Byl předán text?</span></p>
+<p class="src2">{</p>
+<p class="src3">*text = 0;<span class="kom">// Nic nedělat</span></p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3">va_start(ap, fmt);<span class="kom">// Analýza řetězce na proměnné</span></p>
+<p class="src4">vsprintf(text, fmt, ap);<span class="kom">// Konvertování symbolů na čísla</span></p>
+<p class="src3">va_end(ap);<span class="kom">// Výsledky jsou uloženy do text</span></p>
+<p class="src2">}</p>
+
+<p>Následující kód rozdělí daný text na sadu řádků. Velmi jednoduše by se to dalo provést pomocí regulárních výrazů, jedna taková knihovna je dostupná např. na boost.org, ale my nic takového používat nebudeme - jednoduše se snažím udržet kód bez zbytečných závislostí na méně nutných knihovnách.</p>
+
+<p class="src2"><span class="kom">// Rozdělení řetězce na jednotlivé řádky</span></p>
+<p class="src2">const char *start_line = text;</p>
+<p class="src2">vector&lt;string&gt; lines;</p>
+<p></p>
+<p class="src2">for(const char *c = text; *c; c++)</p>
+<p class="src2">{</p>
+<p class="src3">if(*c == '\n')</p>
+<p class="src3">{</p>
+<p class="src4">string line;</p>
+<p></p>
+<p class="src4">for(const char *n = start_line; n &lt; c; n++)</p>
+<p class="src4">{</p>
+<p class="src5">line.append(1, *n);</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">lines.push_back(line);</p>
+<p class="src4">start_line = c + 1;</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">if(start_line)</p>
+<p class="src2">{</p>
+<p class="src3">string line;</p>
+<p class="src3">for(const char *n = start_line; n &lt; c; n++)</p>
+<p class="src3">{</p>
+<p class="src4">line.append(1, *n);</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">lines.push_back(line);</p>
+<p class="src2">}</p>
+
+<p>Zálohujeme všechny OpenGL parametry a potom je nastavíme na nutné hodnoty.</p>
+
+<p class="src2">glPushAttrib(GL_LIST_BIT | GL_CURRENT_BIT  | GL_ENABLE_BIT | GL_TRANSFORM_BIT);</p>
+<p></p>
+<p class="src2">glMatrixMode(GL_MODELVIEW);</p>
+<p class="src2">glDisable(GL_LIGHTING);</p>
+<p class="src2">glEnable(GL_TEXTURE_2D);</p>
+<p class="src2">glDisable(GL_DEPTH_TEST);</p>
+<p class="src2">glEnable(GL_BLEND);</p>
+<p class="src2">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);</p>
+<p></p>
+<p class="src2">glListBase(font);</p>
+
+<p>Všechny transformace, které provedeme na modelview matici před voláním této funkce, se projeví i na textu samotném. To znamená, že při výpisu textu máme možnost rotovat nebo měnit jeho velikost. Nejpřirozenější cestou by bylo ponechat původní matici, tak jak byla, ale to nebude pracovat, protože chceme mít kontrolu nad pozicí textu. Další možností by bylo vytvořit kopii matice a mezi glTranslatef() a glCallLists() ji aplikovat, nicméně měřítko projekční matice teď už není v OpenGL jednotkách, ale v pixelech, takže bychom získali trošku odlišný efekt, než by někdo mohl očekávat. Přes toto bychom se také mohli dostat neresetován projekční matice uvnitř print(). To je v některých situacích docela dobrý nápad, ale pokud to budete zkoušet, zajistěte, že fonty budou mít odpovídající velikost (jsou nastaveny na 32x32, ale vy pravděpodobně budete potřebovat něco kolem 0,01x0,01). Zkuste uhodnout, kterou cestou jdeme my :-)</p>
+
+<p class="src2">float modelview_matrix[16];</p>
+<p class="src2">glGetFloatv(GL_MODELVIEW_MATRIX, modelview_matrix);</p>
+
+<p>Zobrazování textu se děje právě na tomto místě. Pro každý řádek resetujeme matici, aby začínal na správné pozici. Všimněte si, že místo posunu dolů o výšku h, ji raději rovnou resetujeme. To proto, že se při vykreslení každého znaku posouváme doprava na pozici znaku za ním.</p>
+
+<p class="src2">for(int i = 0; i &lt; lines.size(); i++)<span class="kom">// Prochází jednotlivé řádky textu</span></p>
+<p class="src2">{</p>
+<p class="src3">glPushMatrix();<span class="kom">// Záloha matice</span></p>
+<p class="src3">glLoadIdentity();<span class="kom">// Resetování matice</span></p>
+<p class="src3">glTranslatef(x, y - h*i, 0);<span class="kom">// Přesun na odpovídající pozici</span></p>
+<p class="src3">glMultMatrixf(modelview_matrix);</p>
+
+<p>Pokud byste potřebovali zjistit délku textu, který vytváříte odkomentujete následující řádky. Pokud se tak rozhodnete, musíte odkomentovat i příkaz glBitmap() v make_dlist().</p>
+
+<p class="src3"><span class="kom">// glRasterPos2f(0, 0);</span></p>
+<p></p>
+<p class="src3">glCallLists(lines[i].length(), GL_UNSIGNED_BYTE, lines[i].c_str());<span class="kom">// Vykreslí řádek textu</span></p>
+<p></p>
+<p class="src3"><span class="kom">// float rpos[4];</span></p>
+<p class="src3"><span class="kom">// glGetFloatv(GL_CURRENT_RASTER_POSITION, rpos);</span></p>
+<p class="src3"><span class="kom">// float len = x - rpos[0];</span></p>
+<p></p>
+<p class="src3">glPopMatrix();<span class="kom">// Obnovení matice</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">glPopAttrib();<span class="kom">// Obnovení OpenGL flagů</span></p>
+<p></p>
+<p class="src2">pop_projection_matrix();<span class="kom">// Obnovení perspektivy</span></p>
+<p class="src1">}</p>
+<p class="src0">}<span class="kom">// Konec namespace</span></p>
+
+<p>Knihovna je teď kompletní. Abychom mohli vidět výsledek, otevřeme soubor lesson13.cpp a provedeme v něm několik menších změn. Za includování hlavičkových souborů vložte i freetype.h.</p>
+
+<p class="src0">#include &quot;freetype.h&quot;<span class="kom">// Vložení freetype</span></p>
+
+<p>A když už jsme tu, deklarujeme i globální objekt font_data.</p>
+
+<p class="src0">freetype::font_data our_font;<span class="kom">// Informace pro vytvářený font</span></p>
+
+<p>Dále potřebujeme font inicializovat...</p>
+
+<p class="src0"><span class="kom">// InitGL()</span></p>
+<p class="src1">our_font.init(&quot;test.TTF&quot;, 16);<span class="kom">// Vytvoření fontu</span></p>
+
+<p>... a při skončení programu odstranit.</p>
+
+<p class="src0"><span class="kom">// KillGLWindow()</span></p>
+<p class="src1">our_font.clean();</p>
+
+<p>Do funkce DrawGLScene() doplníme výpis FreeType fontu, který bude navíc rotovat a měnit svou velikost.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Všechno vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smazání bufferů</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -1.0f);<span class="kom">// Posun o jednotku do obrazovky</span></p>
+<p class="src1">glColor3ub(0, 0, 0xff);<span class="kom">// Modrý text</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vykreslení WGL textu</span></p>
+<p class="src1">glRasterPos2f(-0.40f, 0.35f);</p>
+<p class="src1">glPrint(&quot;Active WGL Bitmap Text With NeHe - %7.2f&quot;, cnt1);</p>
+<p></p>
+<p class="src1"><span class="kom">// Vykreslení FreeType fontu</span></p>
+<p></p>
+<p class="src1">glColor3ub(0xff,0,0);<span class="kom">// Červený text</span></p>
+<p></p>
+<p class="src1">glPushMatrix();</p>
+<p class="src1">glLoadIdentity();</p>
+<p class="src1">glRotatef(cnt1, 0, 0, 1);</p>
+<p class="src1">glScalef(1, 0.8 + 0.3 * cos(cnt1 / 5), 1);</p>
+<p class="src1">glTranslatef(-180, 0, 0);</p>
+<p></p>
+<p class="src1">freetype::print(our_font, 320, 240, &quot;Active FreeType Text - %7.2f&quot;, cnt1);</p>
+<p></p>
+<p class="src1">glPopMatrix();</p>
+
+<p>Chcete-li otestovat i přechody na nové řádky, odstraňte komentář.</p>
+
+<p class="src1"><span class="kom">// freetype::print(our_font, 320, 200, &quot;Here\nthere\nbe\n\nnewlines\n.&quot;, cnt1);</span></p>
+<p></p>
+<p class="src1">cnt1 += 0.051f;<span class="kom">// Zvětšení hodnot v čítačích</span></p>
+<p class="src1">cnt2 += 0.005f;</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše OK</span></p>
+<p class="src0">}</p>
+
+<p>Nakonec musíme přidat kód pro odchytávání vyjímek. Přejdeme do WinMain() a na začátku vyhledáme sekci try { }.</p>
+
+<p class="src0"><span class="kom">// WinMain()</span></p>
+<p class="src1">MSG msg;<span class="kom">// Struktura zprávy</span></p>
+<p class="src1">BOOL done = FALSE;<span class="kom">// Proměnná pro ukončení cyklu</span></p>
+<p></p>
+<p class="src1">try<span class="kom">// Sekce, ve které se budou zachytávat vyjímky</span></p>
+<p class="src1">{</p>
+
+<p>Konec funkce modifikujeme přidáním catch { }, které vypíše text vyjímky.</p>
+
+<p class="src2">KillGLWindow();<span class="kom">// Zrušení okna</span></p>
+<p class="src1">}</p>
+<p class="src1">catch (std::exception &amp;e)<span class="kom">// Ošetření vyjímek</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, e.what(), &quot;CAUGHT AN EXCEPTION&quot;, MB_OK | MB_ICONINFORMATION);</p>
+<p class="src1">}</p>
+
+<p>Tak a teď, když v programu nastane vyjímka, se zobrazí text oznamující uživateli, co se stalo. Pozor, tento kód může zpomalit váš program, takže se možná při kompilování konečné verze bude hodit vypnutí odchytávání vyjímek (Project-&gt;Settings-&gt;C/C++, &quot;C++ Language&quot;).</p>
+
+<p>Zkompilujte program. Po spuštění byste měli vidět pěkný text renderovaný pomocí FreeType, který se pohybuje okolo originálního textu z lekce 13.</p>
+
+<h3>Obecné poznámky</h3>
+
+<p>Pravděpodobně budete chtít právě vytvořenou FreeType knihovnu ještě dále vylepšit. Konkrétně se může jednat např. o zarovnávání textu na střed. K tomu budete potřebovat nějakým způsobem zjistit jeho délku. Jedním způsobem může být vložení příkazu glBitmap() do display listu, který bude modifikovat pozici v rastru. Prakticky všechno už je v kódu připraveno, stačí odkomentářovat příslušné příkazy.</p>
+
+<p>FreeType fonty zabírají také mnohem více místa než obyčejný WGL bitmapový font. Pokud z nějakého důvodu potřebujete šetřit texturovací paměť, zkuste vytvořit jednu texturu, která bude obsahovat matici všech znaků, stejnou jaká je v lekci 13.</p>
+
+<p>Na rozdíl od bitmap obdélníky s namapovanou texturou reprezentující text dobře spolupracují s OpenGL picking funkcemi (lekce 32), což velmi usnadňuje zjištění, jestli někdo na text klikl myší nebo přes něj přejel.</p>
+
+<p>Nakonec uvádím odkazy na několik knihoven fontů pro OpenGL. Záleží pouze na vás, jestli je budete chtít použít místo tohoto kódu.</p>
+
+<ul>
+<li><a href="http://www.opengl.org/developers/faqs/technical/fonts.htm" target="_blank" title="http://www.opengl.org/developers/faqs/technical/fonts.htm">GLTT</a> - tato knihovna je už relativně stará. Je založena na FreeType1. Předpokládám, že pro kompilaci v MSVC6 budete potřebovat nalézt kopii staré distribuce FreeType1.</li>
+<li><a href="http://oglft.sourceforge.net/" target="_blank" title="http://oglft.sourceforge.net/">OGLFT</a> - je založeno na FreeType2, kompilace pod MSVC dá možná trochu práce, protože byla zaměřena především pro Linux...</li>
+<li><a href="http://homepages.paradise.net.nz/henryj/code/#FTGL" target="_blank" title="http://homepages.paradise.net.nz/henryj/code/#FTGL">FTGL</a> - třetí knihovna založená na FreeType, vyvíjena pro OS X.</li>
+<li><a href="http://plib.sourceforge.net/fnt" target="_blank" title="http://plib.sourceforge.net/fnt">FNT</a> - knihovna, která není založena na FreeType, je částí PLIB, má hezký interface, používá vlastní formát fontů, kompilace pod MSVC6 s minimem potíží...</li>
+</ul>
+
+<p class="autor">napsal: Sven Olsen <span class="transform_email">&lt;sven (zavináč) sccs.swarthmore.edu&gt;</span><br />
+do slovenštiny přeložil: Pavel Hradský - PcMaster<span class="transform_email">&lt;pcmaster (zavináč) stonline.sk&gt;</span><br />
+do češtiny přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson43.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson43.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson43.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:agraves@bu.edu">Aaron Graves</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson43.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_43_big.jpg" class="nehe_velky" alt="Lekce 43" /></div>
+<p class="okolni_lekce"><a href="tut_42.php">&lt;&lt;&lt; Lekce 42</a> | <a href="tut_44.php">Lekce 44 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Ondra</div>
+<div class="d_o_datumcas">10.08.2005 - 12:32:18</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_43.php&j=0">Čeština</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.09.2005 - 22:31:06</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_43.php&j=1">Re: Čeština</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_43.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

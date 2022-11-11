@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 23 - Mapování textur na kulové quadratiky</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_23.jpg" class="nehe_maly" alt="Lekce 23" />
+
+<h1>Lekce 23 - Mapování textur na kulové kvadriky</h1>
+
+<p class="nadpis_clanku">Tento tutoriál je napsán na bázi lekce 18. V lekci 15 (Mapování textur na fonty) jsem psal o automatickém mapování textur. Vysvětlil jsem jak můžeme poprosit OpenGL o automatické generování texturových koordinátů, ale protože lekce 15 byla celkem skromná, rozhodl jsem se přidat mnohem více detailů o této technice.</p>
+
+<p>Mapování kulového prostředí (Sphere Environment Mapping) je rychlá cesta pro přidání zrcadlení na kovové nebo zrcadlové objekty. Třebaže není tak přesná jako skutečné zrcadlení nebo jako krychlová mapa prostředí (cube environment map) je o hodně rychlejší. Jako základ použijeme kód z lekce 18, ale nepoužijeme žádnou z předchozích textur. Použijeme jednu kulovou mapu (sphere map) a jeden obrázek pro pozadí.</p>
+
+<p>Než začneme... Red Book definuje kulovou mapu jako obraz scény na kovové kouli z nekonečné vzdálenosti a nekonečného ohniskového bodu. To je idální a ve skutečném životě nemožné. Nejlepší způsob, bez použití čoček rybího oka (fish eye lens), který jsem našel je použití programu Adobe Photoshop:</p>
+
+<p>Nejdříve budeme potřebovat obrázek prostředí, které chceme namapovat na kouli. Otevřeme obrázek v Adobe Photoshopu a vybereme celý obrázek. Zkopírujeme obrázek a vytvoříme nový obrázek PSD (Photoshop formát). Nový obrázek by měl být stejné velikosti jako obrázek který jsme právě zkopírovali. Vložíme kopii původního obrázku do nového. Důvodem proč děláme kopii je, že tak může Photoshop aplikovat své filtry. Namísto kopírování obrázku můžeme vybrat mód z lokálního menu (na kliknutí pravého tlačítka myši) a zvolit mód RGB. Poté budou dostupné všechny filtry.</p>
+
+<p>Dále potřebujeme změnit velikost obrázku tak že bude mocninou dvou. Pamatujte, že abyste mohli použít obrázek jako texturu musí mít rozměry 128x128, 256x256 atd. V menu image tedy vybereme image size, odškrtneme constraint proportions (zachovat poměr stran) a změníme velikost obrázku na platnou velikost textury. Pokud má váš obrázek velikost 100x90 je lepší vytvořit texturu o velikosti 128x128 než 64x64. Vytvářením menšího obrázku ztratíte hodně detailů.</p>
+
+<p>Jako poslední vybereme menu filter (filtry) a v něm distort (zdeformovat) a použijte spherize modifier (modifikátor koule). Můžeme vidět, že střed obrázku je nafouklý jako balón. V normálním kulovém mapování by byla vnější plocha černá, ale to nemá skutečný vliv. Uložíme obrázek jako BMP a jsme připraveni k programování.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_23_bg.jpg" width="256" height="256" alt="Textura pozadí" />
+<img src="images/nehe_tut/tut_23_reflect.jpg" width="256" height="256" alt="Pozadí zdeformované koulí" />
+</div>
+
+<p>V této lekci nebudeme přidávat žádné nové globální proměnné, ale pouze upravíme index pole pro uložení šesti textur.</p>
+
+<p class="src0">GLuint texture[6];<span class="kom">// Šest textur</span></p>
+
+<p>Dále modifikujeme funkci LoadGLTextures(), abychom mohli nahrát 2 textury a aplikovat 3 filtry. Jednoduše dvakrát projdeme cyklem a v každém průchodu vytvoříme 3 textury pokaždé s jiným filtrovacím módem. Skoro celý tento kód je nový nebo modifikovaný.</p>
+
+<p class="src0">int LoadGLTextures()<span class="kom">// Loading bitmap a konverze na textury</span></p>
+<p class="src0">{</p>
+<p class="src1">int Status=FALSE;<span class="kom">// Indikuje chyby</span></p>
+<p></p>
+<p class="src1">AUX_RGBImageRec *TextureImage[2];<span class="kom">// Ukládá dvě bitmapy</span></p>
+<p></p>
+<p class="src1">memset(TextureImage,0,sizeof(void *)*2);<span class="kom">// Vynuluje paměť</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Nahraje bitmapy a kontroluje vzniklé chyby</span></p>
+<p class="src1">if ((TextureImage[0]=LoadBMP(&quot;Data/BG.bmp&quot;)) &amp;&amp;<span class="kom">// Textura pozadí</span></p>
+<p class="src1">(TextureImage[1]=LoadBMP(&quot;Data/Reflect.bmp&quot;)))<span class="kom">// Textura kulové mapy (sphere map)</span></p>
+<p class="src1">{</p>
+<p class="src2">Status=TRUE;<span class="kom">// Vše je bez problémů</span></p>
+<p></p>
+<p class="src2">glGenTextures(6, &amp;texture[0]);<span class="kom">// Generuje šest textur</span></p>
+<p></p>
+<p class="src2">for (int loop=0; loop&lt;=1; loop++)</p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Vytvoří nelineárně filtrovanou texturu</span></p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, texture[loop]);<span class="kom">// Textury 0 a 1</span></p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);</p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);</p>
+<p></p>
+<p class="src3">glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[loop]-&gt;sizeX, TextureImage[loop]-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[loop]-&gt;data);</p>
+<p></p>
+<p class="src3"><span class="kom">// Vytvoří lineárně filtrovanou texturu</span></p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, texture[loop+2]);<span class="kom">// Textury 2 a 3</span></p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);</p>
+<p></p>
+<p class="src3">glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[loop]-&gt;sizeX, TextureImage[loop]-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[loop]-&gt;data);</p>
+<p></p>
+<p class="src3"><span class="kom">// Vytvoří mipmapovanou texturu</span></p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, texture[loop+4]);<span class="kom">// Textury 2 a 3</span></p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);</p>
+<p></p>
+<p class="src3">gluBuild2DMipmaps(GL_TEXTURE_2D, 3, TextureImage[loop]-&gt;sizeX, TextureImage[loop]-&gt;sizeY, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[loop]-&gt;data);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">for (loop=0; loop&lt;=1; loop++)</p>
+<p class="src2">{</p>
+<p class="src3">if (TextureImage[loop])<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src3">{</p>
+<p class="src4">if (TextureImage[loop]-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src4">{</p>
+<p class="src5">free(TextureImage[loop]-&gt;data);<span class="kom">// Uvolní paměť obrázku</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">free(TextureImage[loop]);<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return Status;<span class="kom">// Oznámí případné chyby</span></p>
+<p class="src0">}</p>
+
+<p>Trochu upravíme kód kreslení krychle. Namísto použití hodnot 1.0 a -1.0 pro normály, použijeme 0.5 a -0.5. Změnou hodnot normál můžeme měnit velikost odrazové mapy dovnitř a ven. Pokud je hodnota normály velká, odražený obrázek je větší a mohl by se zobrazovat čtverečkovaně. Snížením hodnoty normál na 0.5 a -0.5 je obrázek trochu zmenšen, takže obrázek odrážený na krychli nevypadá tak čtverečkovaně. Nastavením příliš malých hodnot získáme nežádoucí výsledky.</p>
+
+<p class="src0">GLvoid glDrawCube()</p>
+<p class="src0">{</p>
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2"><span class="kom">// Přední stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f, 0.5f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f,-0.5f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2"><span class="kom">// Vrchní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.5f, 0.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2"><span class="kom">// Spodní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f,-0.5f, 0.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">glNormal3f( 0.5f, 0.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">glNormal3f(-0.5f, 0.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src1">glEnd();</p>
+<p class="src0">}</p>
+
+<p>Do InitGL přidáme volání dvou nových funkcí. Tyto dvě volání nastaví mód generování textur na S a T pro kulové mapování (sphere mapping). Texturové koordináty S, T, R a Q souvisí s koordináty objektu x, y, z a w. Pokud používáte jednorozměrnou (1D) texturu, použijete souřadnici S. Pokud použijete dvourozměrnou texturu použijete souřadnice S a T.</p>
+
+<p>Takže následující kód říká OpenGL jak automaticky generovat S a T koordináty na kulově mapovaném (sphere-mapping) vzorci. Koordináty R a Q jsou obvykle ignorovány. Koordinát Q může být použit pro pokročilé techniky mapování textur a koordinát R může být užitečný až bude do OpenGL přidáno mapování 3D textur. Ale pro teď budeme koordináty R a Q ignorovat. Koordinát S běží horizontálně přes čelo našeho polygonu a T zase vertikálně.</p>
+
+<p class="src0"><span class="kom">// Funkce InitGL()</span></p>
+<p class="src1"><span class="kom">// Nastavení módu generování textur pro S koordináty pro kulové mapování</span></p>
+<p class="src1">glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);</p>
+<p class="src1"><span class="kom">// Nastavení módu generování textur pro T koordináty pro kulové mapování</span></p>
+<p class="src1">glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);</p>
+
+<p>Máme téměř hotovo. Vše co musíme ještě udělat je nastavit vykreslování. Odstranil jsem několik typů quadratiků, protože nepracovali dobře s mapováním prostředí (environment mapping). Zaprvé potřebujeme  povolit generování textur. Potom vybereme odrazovou texturu (kulovou mapu - sphere map) a vykreslíme náš objekt. Před vykreslením pozadí vypneme kulové mapování. Všimněte si, že příkaz glBindTexture() může vypadat docela složitě. Vše co děláme je výběr filtru pro kreslení naší kulové mapy nebo obrázku pozadí.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Všechno kreslení</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f,0.0f,z);</p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_GEN_S);<span class="kom">// Povolí generování texturových koordinátů S</span></p>
+<p class="src1">glEnable(GL_TEXTURE_GEN_T);<span class="kom">// Povolí generování texturových koordinátů T</span></p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[filter+(filter+1)]); <span class="kom">// Zvolí texturu kulové mapy</span></p>
+<p class="src1">glPushMatrix();</p>
+<p class="src1">glRotatef(xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glRotatef(yrot,0.0f,1.0f,0.0f);</p>
+<p></p>
+<p class="src1">switch(object)<span class="kom">// Vybere, co se bude kreslit</span></p>
+<p class="src1">{</p>
+<p class="src2">case 0:</p>
+<p class="src3">glDrawCube();<span class="kom">// Krychle</span></p>
+<p class="src3">break;</p>
+<p></p>
+<p class="src2">case 1:</p>
+<p class="src3">glTranslatef(0.0f,0.0f,-1.5f);<span class="kom">// Vycentrování</span></p>
+<p class="src3">gluCylinder(quadratic,1.0f,1.0f,3.0f,32,32);<span class="kom">// Válec</span></p>
+<p class="src3">break;</p>
+<p></p>
+<p class="src2">case 2:</p>
+<p class="src3">gluSphere(quadratic,1.3f,32,32);<span class="kom">// Koule</span></p>
+<p class="src3">break;</p>
+<p></p>
+<p class="src2">case 3:</p>
+<p class="src3">glTranslatef(0.0f,0.0f,-1.5f);<span class="kom">// Vycentrování</span></p>
+<p class="src3">gluCylinder(quadratic,1.0f,0.0f,3.0f,32,32);<span class="kom">// Kužel</span></p>
+<p class="src2">break;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glPopMatrix();</p>
+<p class="src1">glDisable(GL_TEXTURE_GEN_S);<span class="kom">// Vypne automatické generování koordinátů S</span></p>
+<p class="src1">glDisable(GL_TEXTURE_GEN_T);<span class="kom">// Vypne automatické generování koordinátů T</span></p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[filter*2]);<span class="kom">// Zvolí texturu pozadí</span></p>
+<p class="src1">glPushMatrix();</p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -24.0f);</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2">glNormal3f( 0.0f, 0.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-13.3f, -10.0f,  10.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 13.3f, -10.0f,  10.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 13.3f,  10.0f,  10.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-13.3f,  10.0f,  10.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">glPopMatrix();</p>
+<p></p>
+<p class="src1">xrot+=xspeed;</p>
+<p class="src1">yrot+=yspeed;</p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Poslední věc, kterou v této lekci uděláme je upravení kódu kontrolujícího stisk mezerníku - odstranili jsme disky.</p>
+
+<p class="src4">if (keys[' '] &amp;&amp; !sp)</p>
+<p class="src4">{</p>
+<p class="src5">sp=TRUE;</p>
+<p class="src5">object++;</p>
+<p></p>
+<p class="src5">if(object&gt;3)</p>
+<p class="src6">object=0;</p>
+<p class="src4">}</p>
+
+<p>A máme hotovo. Umíme vytvářet skutečně působivé efekty s použitím zrcadlení okolí na objektu - například téměř přesného odrazu pokoje. Původně jsem chtěl také ukázat, jak vytvářet krychlové mapování prostředí, ale moje aktuální videokarta ho nepodporuje. Možná za měsíc nebo tak nějak, až si koupím GeForce2 :-]. Mapování okolí jsem se naučil sám (hlavně proto, že jsem o tom nemohl najít téměř žádné informace), takže pokud je v tomto tutoriálu něco nepřesné, pošlete mi email nebo uvědomte NeHe-ho. Díky a hodně štěstí.</p>
+
+<p class="autor">napsal: <a href="http://www.tiptup.com/" target="_blank" title="http://www.tiptup.com/">GB Schmick - TipTup</a><br />
+přeložil: Milan Turek <span class="transform_email">&lt;nalim.kerut (zavináč) email.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson23.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson23.zip">Delphi</a> kód této lekce. ( <a href="mailto:Alexandre.Hirzel@nat.unibe.ch">Alexandre Hirzel</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson23.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson23.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson23.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson23.zip">Game GLUT</a> kód této lekce. ( <a href="">Anonymous</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson23.zip">Java</a> kód této lekce. ( <a href="mailto:chris@interdictor.org">Chris Veenboer</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson23.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson23.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:arkadi@it.lv">Arkadi Shishlov</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosx/lesson23.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson23.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson23.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_23_big.jpg" class="nehe_velky" alt="Lekce 23" /></div>
+<p class="okolni_lekce"><a href="tut_22.php">&lt;&lt;&lt; Lekce 22</a> | <a href="tut_24.php">Lekce 24 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tomas</div>
+<div class="d_o_datumcas">20.04.2005 - 19:26:38</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_23.php&j=0">Nechapu jak to funguje</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">20.04.2005 - 20:42:59</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_23.php&j=1">Re: Nechapu jak to funguje</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">CHIP</div>
+<div class="d_o_datumcas">14.10.2006 - 22:45:24</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_23.php&j=2">Re: Nechapu jak to funguje</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_23.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	 <meta name="autor" content="RNDr. Jaroslav Mikuláš">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Dynamické polia</h3>
+Dynamické polia sú také, ktoré užívateľ vytvára až za behu programu, mení jeho veľkosť a odstraňuje ho keď ho už nepotrebuje.
+<br>Pozn. 
+<br>Pokročilejšie objekty, ktoré možno používať ako pole možno nájsť v kap. knižnica STL 
+<dl><dt>Deklarácia
+	<dd><code>typ *nazov; &nbsp; &nbsp; &nbsp;//napr. int *pole</code>
+		<br>Do takto vytvorenej premennej možno zapisovať adresu nejakého objektu v pamäti počítača, my v tejto časti budeme v pamäti vytvárať polia
+		a ich adresu budeme mať odpamätanú v takejto premennej. 
+		<br>V takto vytvorenej premennej bude odložená adresa začiatku poľa. Zadeklarovaním premennej ešte pole neexistuje a teda ho nemôžeme ešte používať 
+		(musíme ho najprv vytvoriť) 
+	<dt>Vytvorenie poľa
+	<dd>Dynamické polia možno v pamäti vytvoriť starším spôsobom pomocou príkazov:
+		<br>(nachádzajú sa v knižnici stdlib.h, resp. cstdlib)  
+		<ul><li>void * malloc(int size)
+				<br>funkcia v halde alokuje predpísaný počet bajtov a adresu na daný objekt vráti ako návratovú hodnotu.
+					<code><br>int *p;
+						<br>p=(int *) malloc(10*sizeof(int));  &nbsp; &nbsp;//vytvori v pamäti priestor pre 10 integer premenných a adresu prvého zapíše do prem. p
+					</code>
+					<br>Dôležité 
+					<li>návratovú adresu, ktorú nám vracia funkcia malloc musíme vždy pretypovať podľa toho na aký typ ukazuje
+					<li>veľkosť priestoru musíme vždy vypočítať }počet_prvkov * sizeof(typ)
+					<li>takto vytvorené pole má neznáme hodnoty
+		 	<li>void * calloc(int pocet, int size)		
+				<br>funkcia v halde alokuje predpísaný počet objektov - <b>pocet</b> - pričom každý objekt má dĺžku <b>size</b>, 
+				celková dĺžka alokovanéko priestoru bude: pocet * size, adresu na daný objekt vráti ako svoju návratovú hodnotu. 
+				Na rozdiel od funkcie malloc sú všetky položky inicializované na hodnotu 0, preto táto funkcia je pomalšia.
+				<code><br>int *p;
+				<br>p=(int *) calloc(10,sizeof(int)); 
+				</code>
+				<br>vytvori priestor pre 10 integer premenných a adresu prvého zapíše do prem. p
+			<li><code>void* realloc (prem_pointer, int size)</code>
+				<br>Táto funkcia premennej <b>prem_pointer</b> zmení veľkosť patriaceho poľa. Zmena môže byť smerom nahor (pole sa zväčší) ale aj nadol.
+				V prípade potreby bude pole presunuté na nové miesto v pamäti (pole musí byť v pam. súvislé), funkcia vráti adresu tohoto miesta.
+				<br>Pri zväčšovaní poľa sa chová ako calloc().
+			<li><code>void  free(void * prem)</code>
+				<br>Uvolnenie premennej z haldy, pamäť premennej prem sa týmto uvolní (hodnota/adresa zapísaná v prem. sa nemení - stále ukazuje na rovnakú pamäť, ale pamäť je už voľná pre systém)
+ 				<br>Ak by v premennej bol NULL pointer, tak funkcia nerobí nič.  	
+
+		</ul>
+	<dt>Vytvorenie poľa	- novší spôsob
+	<dd>Novší spôsob je vytváranie poľa pomocou operátora new (volanie operátora je rýchlejšie ako volanie podprogramu a je to aj užívateľsky priateľskejšie)
+		<br>Popíšem použitie na príklade
+		<br><code>int *p1, *p2; 
+		<ul><li><code>p1 = new int[100]; &nbsp; &nbsp;//vytvori pole 100 intov
+				<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//v pripade neuspechu vyvola vynimku
+			<li>p2 = new (std::nothrow)int[50]; &nbsp; &nbsp;//vytvori pole 50 intov 
+				<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//v pripade neuspechu nevyvola vynimku ale vrati NULL pointer
+				<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//aby slovo <b>nothrow</b> potrebujeme pripnut niektoru kniznicu STL (napr. #include &lt;new &gt;)
+			<li>delete[] p1; &nbsp; &nbsp;//zrusi pole
+		</ul>
+		Nemáme nástroje na resize poľa, ak chceme pole zväčšovať alebo zmenšovať musíme si to naprogramovať sami (lepšie je použiť objekt vector namiesto poľa - pozri STL).
+				
+
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (17.) - Lightmapping - úvod</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="Lightmapping je zdaleka nejpopulárnější způsob jak pracovat se světly. Ve článku nastíním, o co se jedná a jak to pracuje. Také se naučíme něco o OpenGL extensions."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/lightmapping-v-opengl&amp;title=OpenGL (17.) - Lightmapping - úvod" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (17.) - Lightmapping - úvod</h1><i>Lightmapping je zdaleka nejpopulárnější způsob jak pracovat se světly. Ve článku nastíním, o co se jedná a jak to pracuje. Také se naučíme něco o OpenGL extensions.</i><br/><hr/><br/><P>Lightmapping není nic víc, než důmyslná forma mapování textur. Místo vykreslení polygonu s běžnou texturou jsou polygony vykresleny se dvěma texturama. První je normální textura, druhá se nazývá lightmapa. Lightmapa není nic jiného než jiná textura, která reprezentuje intenzitu světla na povrchu polygonu. Podívejte se na příklad:</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/gllightmapping/lightmapping.jpg" BORDER=0></TD></TR><TR><TD colspan=2>Kombinace textury a lighmapy.</TD></TR></TABLE></CENTER>
+
+<P>Obrázek ukazuje jak dokáže kombinace lightmapy a normální textury vytvořit napůl osvětlený polygon. Lightmapping umožňuje mnohem komplexnější a realističtější stínování, než které standardně nabízí OpenGL. Navíc počet světel ve scéně není omezen (narozdíl od omezení OpenGL osmi světel).</P>
+
+
+<P>Nyní už víte, co to lightmapping je, vše co potřebujete znát je vykreslení polygonu se dvěmi texturami. Existují dvě schůdné možnosti: multitexturing nebo multipass rendering (vícenásobné renderování).</P>
+
+<P>Multitexturing používá k aplikaci dvou textur na jeden polygon multiplicative (vícenásobný) blending. Multipass rendering kreslí polygon dvakrát s jinými texturami. Protože OpenGL nepodporuje multiplicative alpha blending(s alfa kanálem), tak výsledek vypadá mírně odlišně.</P>
+
+<P>Zde jsou dva důvody pro použití multitexturingu místo vícenásobného renderování: Je rychlejší - Polygon není vykreslován dvakrát a většina 3D karet je optimalizována pro multitexturing. Některé karty dokáží aplikovat až čtyři textury naráz, a Vypadá lépe - Srovnejte tyto dva obrázky ze hry Quake2</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/gllightmapping/q2_sub.jpg" BORDER=0></TD></TR><TR><TD><IMG SRC="articles/gllightmapping/q2_multi.jpg" BORDER=0></TD></TR><TR><TD colspan=2>Substractive blending (nahoře) a Multiplicative blending.</TD></TR></TABLE></CENTER>
+
+<P>Horní obrázek byl sejmut na Rivě 128. Spodní je vyňat z Voodoo2. Rozdíl je zřejmý - Výstup z Rivy 128 je mnohem tmavší. Můžu si jedině myslet, že Voodoo2 podporuje multitexturing a Riva 128 subtractive alpha blending</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/gllightmapping/multisub.jpg" BORDER=0></TD></TR><TR><TD colspan=2>Subtractive blending (odečítací) a Multiplicative blending(násobící).</TD></TR></TABLE></CENTER>
+
+<P>Na obrázku nahoře je rozdíl zřejmý. Obrázek vlevo využil invertované lighmtmapy, kterou odečetl od normální textury, zatímco obrázek vpravo jsme získaly vynásobením lightmapy s normální texturou.</P>
+
+<P>A teď jedna špatná zpráva: OpenGL nepodporuje multitexturing. Multitexturing je dostupné pouze jako rozšíření (extension) OpenGL a to znamená, že jej nemusí podporovat všechny grafické karty. V dnešní době již většina karet multitexturing podporuje, ale je třeba si to ohlídat. Je to ale další důvod pro majitele starších karet aby si koupili novou...</P>
+
+<P>Nyní předpokládám, že se chcete dozvědět, jak používat rozšíření OpenGL. Nejdřív navštivte <A href="http://www.opengl.org">www.opengl.org</A> a stáhněte si specifikace OpenGL extensions. V nich se dozvíte, jaké konstanty a funkce musíte deklarovat k jejich používání. Ty můžete přidat buď přímo do vaší aplikace nebo do hlavičkového souboru opengl.pas. Např. pro multitextury přidejte mimo jiné konstantu GL_MAX_TEXTURE_UNITS_ARB a funkci glMultiTexCoord1fARB(). Také byste měli zkontrolovat, jestli OpenGL podporuje extension, které hodláte používat:</P>
+
+<PRE><B>type</B>
+  PFNGLMULTITEXCOORD1FARBPROC = procedure(target: TGLenum; s,t : TGLfloat); stdcall;
+
+<B>var</B>
+  glMultiTexCoord1fARB : PFNGLMULTITEXCOORD1FARBPROC = nil;
+
+<B>begin</B>
+  glMultiTexCoord1fARB:= wglGetProcAddress('glMultiTexCoord1fARB');</PRE>
+
+<P>Vše je popsáno ve specifikacích OpenGL (ke stáhnutí na <A HREF="http://www.opengl.org"><B>www.opengl.org</B></A>). Teď už můžete používat extensions stejně jako ostatní funkce OpenGL. Pokud máte zkušenosti s použitím klasických textur, tak pro vás určitě nebude používání multitextur příliš složité. Nejdůležitější funkce je glActiveTextureARB(). Tato funkce rozliší, na kterou texturu (normální nebo lightmapa) se budou následující příkazy OpenGL vztahovat. Má jediný parametr GL_TEXTUREx_ARB, kde x označuje o kterou texturu se jedná. Po nastavení jedné textuty jí můžete přiřadit texturové koordinace, změnit parametry atd.</P>
+
+<P>Teď už víte, co to lightmapping je, proč je tak používaný a jak ho můžeme jednoduše vytvořit s použitím rozšíření OpenGL. Velmi důležitou věcí je zapamatovat si, že ne každá grafárna podporuje používání multitextur. To znamená že když se je rozhodnete používat, měli byste mít alternativu i pro ty, kteří nemají multitexturing nemají (třeba vykreslovat všechny trojúhelníky jen s jednou texturou). Ještě jsem nepsal o jedné věci: jak lightmapy vypočítat. Jedná se o rozsálé téma o kterém budu psát v některém z příštích článků.</P><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="fading">OpenGL (16.) - Fading</a></li><li><a href="3d-engine-glscene-delphi">Herní grafické enginy (3.) - GLScene</a></li><li><a href="3d-engine-pythian-project">Herní grafické enginy (2.) - Pythian Project</a></li><li><a href="uceleny-casticovy-system-v-opengl">OpenGL (15.) - Ucelený částicový systém - pokračování</a></li><li><a href="casticovy-system-v-opengl">OpenGL (14.) - Ucelený částicový systém</a></li><li><a href="nastaveni-opengl-v-c">OpenGL (13.) - Nastavení OpenGL v jazyce C/C++</a></li><li><a href="3d-studio-max-modifikacni-funkce">3D Studio MAX (13.) - Popis modifikačních funkcí ve 3D Studiu MAX</a></li><li><a href="knihovna-fmod-zvuky-direct-sound-eax">Delphi (10.) - knihovna FMOD</a></li><li><a href="3d-engine-mengine">Herní grafické enginy (1.) - MEngine od Mister Group</a></li><li><a href="vizualizacni-plugin-pro-winamp">OpenGL (12.) - visualizační plugin pro WinAMP</a></li><li><a href="download-manager-2">Delphi (9.) - Download 2</a></li><li><a href="download-manager-1">Delphi (8.) - Download</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne2">3D Studio MAX (12.) - Tvorba realistické jeskyně 2</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne">3D Studio MAX (11.) - Tvorba realistické jeskyně</a></li><li><a href="jak-na-programovani-her">Jak na tvorbu her - Na co máme myslet při programování hry?</a></li><li><a href="3d-studio-max-izometricky-pohled">3D Studio MAX (10.) - Izometrický pohled ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-tutorial-chromovy-text">Adobe Photoshop (4.) - Chromový text</a></li><li><a href="export-do-pdf">Zoner Callisto (2.) - Export do PDF</a></li><li><a href="detekce-kolizi-ve-3d">OpenGL (11.) - Nová detekce kolizí</a></li><li><a href="matematicka-knihovna-geometry-pas-delphi">OpenGL (10.) - Nová knihovna geometry.pas</a></li><li><a href="generovani-textur-terenu-a-far-clip">OpenGL (9.) - Generování textur a vylepšení FarClip Distance</a></li><li><a href="export-do-gif">Zoner Callisto (1.) - Export do GIFu</a></li><li><a href="3d-studio-max-odlesky-na-vodni-hladine">3D Studio MAX (9.) - Vytváření odlesků vodní hladiny</a></li><li><a href="slovnik-pojmu-opengl">OpenGL (8.) - Slovníček pojmů v OpenGL</a></li><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=6&amp;url=%2Flightmapping-v-opengl" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.227682017px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12653 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

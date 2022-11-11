@@ -1,0 +1,256 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C+?=
+	=?windows-1250?Q?+_=284.=29?=
+Date: Thu, 12 Jul 2007 10:02:51 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=681
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (4.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (4.)</H2>
+<H4>V=FDb=ECr n=ECkolika z=E1kladn=EDch zpr=E1v pro spr=E1vu oken</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>V minul=E9m d=EDle tohoto tutori=E1lku jsme si uk=E1zali jak =
+jednodu=9Ae vytvo=F8it=20
+proceduru okna, kter=E1 donut=ED okno zav=F8=EDt a ostatn=ED parametry =
+p=F8epo=9Ale funkc=ED=20
+DefWindowProc standardn=ED obsluze oken. Pokud v=9Aak budete cht=EDt =
+naprogramovat=20
+n=ECjakou slo=9Eit=ECj=9A=ED aplikaci, nap=F8: Word :-), pro komunikaci =
+mezi okny, li=9Atami=20
+n=E1stroj=F9 a spoustami dal=9A=EDch element=F9 va=9A=ED aplikace, =
+rozhodn=EC si se standardn=ED=20
+obsluhou okna nevysta=E8=EDte.=20
+<P>Zpr=E1vy multitaskingu Windows jsou dvoj=EDho druhu, klasick=E9 a =
+diagnostick=E9.=20
+Diagnostick=E9 zpr=E1vy nemaj=ED u v=ECt=9Ainy kompil=E1tor=F9 definici =
+a program=E1tor by je=20
+m=ECl zpracov=E1vat a=9E v p=F8=EDpad=EC nejvy=9A=9A=ED nouze. =
+Klasick=FDch zpr=E1v pou=9E=EDvan=FDch=20
+Windows je velmi mnoho. Pro z=E1kladn=ED programov=E1n=ED v=E1m bude =
+sta=E8it zn=E1t jich jen=20
+n=ECkolik des=EDtek a v=9Aechny je mo=9En=E9 nal=E9zt v referenc=EDch k =
+Windows.=20
+<P>Windows berou jako okna i jednotliv=E9 prvky jak hlavn=EDho okna tak =
+dialog=F9, z=20
+toho vypl=FDv=E1, =9Ee je mo=9En=E9 pos=EDlat zpr=E1vy i t=ECmto =
+objekt=F9m. K =FA=E8el=F9m interakce=20
+mezi procesy jsou =E8asto vyu=9Eity i parametry zpr=E1v lParam a wParam. =
+
+<P>Zpr=E1vy m=F9=9Eete rozes=EDlat pou=9Eit=EDm funkce SendMessage s =
+parametry: handle okna,=20
+kter=E9 zpr=E1vu m=E1 obdr=9Eet, zpr=E1vu, kter=E1 se bude pos=EDlat, a =
+wParam a lParam t=E9to=20
+zpr=E1vy. K odesl=E1n=ED zpr=E1vy prvku dialogov=E9ho okna (jak s nimi =
+pracovat, si=20
+uk=E1=9Eeme v n=ECkter=E9m z p=F8=ED=9At=EDch d=EDl=F9) pou=9Eijte =
+funkci SendDlgItemMessage s=20
+parametry: handle dialogov=E9ho okna, kter=E9 zpr=E1vu m=E1 obdr=9Eet, =
+ID prvku=20
+dialogov=E9ho okna, zpr=E1vu, kter=E1 se bude pos=EDlat a wParam a =
+lParam t=E9to zpr=E1vy,=20
+v=9Ae v uveden=E9m po=F8ad=ED.=20
+<P>V=FDb=ECr n=ECkter=FDch z=E1kladn=EDch zpr=E1v: <BR>&nbsp;=20
+<CENTER>
+<TABLE cellSpacing=3D6 cols=3D3 cellPadding=3D0 width=3D"98%" =
+border=3D0>
+  <TBODY>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2><B>Zpr=E1vy pro spr=E1vu =
+oken</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_CLOSE&nbsp;</TD>
+    <TD>Je posl=E1na v=9Edy, kdy=9E m=E1 b=FDt okno zav=F8eno. Pokud je =
+p=F8ed=E1na procedu=F8e=20
+      DefWindowProc, ta zavol=E1 DestroyWindows.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_CREATE</TD>
+    <TD>Touto zpr=E1vou je okno informov=E1no o otev=F8en=ED a o tom, =
+=9Ee je mo=9En=E9=20
+      prov=E9st inicializa=E8n=ED operace. <BR>Jako parametr je v lParam =
+ukazatel na=20
+      strukturu CREATESTRUCT, kter=E1 obsahuje kopie parametr=F9 =
+p=F8edan=FDch funkc=ED=20
+      CreateWindow p=F8i tvorb=EC okna.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_DESTROY</TD>
+    <TD>Je posl=E1na procedu=F8e okna pot=E9, co bylo okno odstran=ECno =
+z=20
+  obrazovky.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_KILLFOCUS</TD>
+    <TD>Je posl=E1no oknu, jakmile ztrat=ED fokus, tzn. p=F8estane b=FDt =
+aktivn=ED.=20
+      wParam obsahuje handle okna, kter=E9 fokus z=EDskalo (m=F9=9Ee =
+b=FDt NULL)</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_MENUSELECT&nbsp;</TD>
+    <TD>Oznamuje oknu, =9Ee u=9Eivatel zvolil n=ECkterou polo=9Eku z =
+jeho menu. wParam=20
+      obsahuje ID zvolen=E9 polo=9Eky, lParam obsahuje kombinaci vlajek =
+s=20
+      informacemi o polo=9Ece. <BR>Pokud lParam obsahuje -1 a wParam =
+nulu, znamen=E1=20
+      to, =9Ee u=9Eivatel ukon=E8il menu bez vybr=E1n=ED n=ECjak=E9 =
+polo=9Eky.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_MOVE</TD>
+    <TD>Posl=E1no, jakmile je okno p=F8esunuto. lParam obsahuje novou =
+pozici okna=20
+      - LOWORD =3D x-ov=E1 sou=F8adnice, HIWORD =3D y-ov=E1 =
+sou=F8adnice.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_QUIT</TD>
+    <TD>Indikuje po=9Eadavek k ukon=E8en=ED b=EChu aplikace. wParam =
+obsahuje k=F3d=20
+      vr=E1cen=FD Windows=F9m.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_SETFOCUS</TD>
+    <TD>Je posl=E1no oknu, jakmile dostane fokus, tzn. =9Ee je nyn=ED =
+aktivn=ED.=20
+      wParam obsahuje handle okna, kter=E9 fokus ztratilo (m=F9=9Ee =
+b=FDt NULL)</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_SETTEXT</TD>
+    <TD>Nastav=ED n=E1zev objektu. U oken je to titulek, u nap=F8. =
+tla=E8=EDtka je to=20
+      jeho n=E1zev. lParam obsahuje ukazatel na textov=FD =
+=F8et=ECzec.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_SIZE</TD>
+    <TD>Tato zpr=E1va je posl=E1na oknu, jakmile u=9Eivatel zm=ECn=ED =
+jeho velikost.=20
+      lParam obsahuje v LOWORDu =9A=ED=F8ku a v HIWORDu v=FD=9Aku okna =
+po zm=ECn=EC velikosti.=20
+      <BR>wParam m=F9=9Ee obsahovat SIZEFULLSCREEN pokud bylo okno =
+maximalizov=E1no,=20
+      SIZEICONIC pokud bylo okno minimalizov=E1no (poz=F9statek =
+WfW3.11), SIZENORMAL=20
+      pokud se velikost okna zm=ECnila, ale nen=ED ani maximalizovan=E9, =
+ani=20
+      minimalizovan=E9.</TD></TR>
+  <TR>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2><B>Vstupn=ED zpr=E1vy</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_CHAR</TD>
+    <TD>Zpr=E1va je vyhodnocena, pokud jsou zpracov=E1ny zpr=E1vy =
+WM_KEYUP a=20
+      WM_KEYDOWN. <BR>wParam obsahuje hodnotu kl=E1vesy, lParam obsahuje =
+v LOWORDu=20
+      po=E8et opakov=E1n=ED kl=E1vesy, v LOBYTE HIWORDu nalezneme scan =
+k=F3d kl=E1vesy, bity=20
+      25-28 jsou intern=EC vyu=9E=EDv=E1ny Windows, bit 29 obsahuje stav =
+kl=E1vesy ALT,=20
+      bit 30 je p=F8edchoz=ED stav a bit 31 obsahuje p=F8echodn=FD =
+stav</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_COMMAND</TD>
+    <TD>Asi nejd=F9le=9Eit=ECj=9A=ED zpr=E1va !!! <BR>Je odesl=E1na, =
+kdy=9E u=9Eivatel zvol=ED=20
+      polo=9Eku z menu, klikne na tla=E8=EDtko, stiskne akceler=E1tor =
+apod. wParam=20
+      specifikuje ID zvolen=E9ho objektu,&nbsp;</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_LBUTTONDBLCLK&nbsp;</TD>
+    <TD>Zpr=E1va se objev=ED, pokud u=9Eivatel dvojkliknul v r=E1mci =
+na=9A=ED aplikace.=20
+      wParam obsahuje kombinaci vlajek: MK_CONTROL, pokud je z=E1rove=F2 =
+stisknuta=20
+      kl=E1vesa Ctrl, MK_SHIFT pokud je stisknuta kl=E1vesa Shift, =
+MK_LBUTTON, pokud=20
+      je stisknuto lev=E9 tla=E8=EDtko my=9Ai (podobn=E9 jako MK_RBUTTON =
+a MK_MBUTTON ).=20
+      lParam obsahuje v LOWORDu x-ovou sou=F8adnici ukazatele my=9Ai a v =
+HIWORDu=20
+      y-ovou sou=F8adnici.</TD></TR>
+  <TR>
+    <TD>WM_RBUTTONDBLCLK</TD>
+    <TD>Podobn=E9 jako viz v=FD=9Ae.</TD></TR>
+  <TR>
+    <TD>WM_MBUTTONDBLCLK</TD>
+    <TD>Podobn=E9 jako viz v=FD=9Ae.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_LBUTTONDOWN&nbsp;</TD>
+    <TD>Objev=ED se, pokud je stisknuto lev=E9 tla=E8=EDtko my=9Ai. =
+wParam obsahuje=20
+      vlajky jako u WM_LBUTTONDBLCLK mimo MK_LBUTTON.&nbsp; lParam =
+obsahuje v=20
+      LOWORDu x-ovou sou=F8adnici ukazatele my=9Ai a v HIWORDu y-ovou=20
+  sou=F8adnici.</TD></TR>
+  <TR>
+    <TD>WM_RBUTTONDOWN</TD>
+    <TD>Podobn=E9 jako viz v=FD=9Ae.</TD></TR>
+  <TR>
+    <TD>WM_MBUTTONDOWN</TD>
+    <TD>Podobn=E9 jako viz v=FD=9Ae.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_HSCROLL&nbsp;</TD>
+    <TD>Je odesl=E1na, pokud u=9Eivatel pou=9Eil horizont=E1ln=ED =
+posuvn=EDk.&nbsp;=20
+      <BR>wParam m=F9=9Ee b=FDt jedna z n=E1sleduj=EDc=EDch hodnot: =
+<BR>SB_BOTTOM - posun=20
+      =FApln=EC vpravo nebo dol=F9 <BR>SB_TOP - posun =FApln=EC vlevo =
+nebo nahoru=20
+      <BR>SB_LINEDOWN - jeden =F8=E1dek dol=F9 <BR>SB_LINEUP - jeden =
+=F8=E1dek nahoru=20
+      <BR>SB_PAGEDOWN - str=E1nka dol=F9 <BR>SB_PAGEUP - str=E1nka =
+nahoru=20
+      <BR>(p=F8edchoz=ED =E8ty=F8i plat=ED i horizont=E1ln=EC) =
+<BR>SB_THUMBPOSITION - posun na=20
+      absolutn=ED pozici, ta je v LOWORDu lParam <BR>SB_THUMBTRACK - =
+posuvn=EDk je=20
+      pr=E1v=EC posouv=E1n, LOWORD lParamu obsahuje pozici.</TD></TR>
+  <TR>
+    <TD>WM_VSCROLL&nbsp;</TD>
+    <TD>Podobn=E9 jako WM_HSCROLL.</TD></TR></TBODY></TABLE></CENTER>
+<P>Z=E1kladn=ED zpr=E1vy pro spr=E1vu okna a pro anal=FDzu vstup=F9 =
+bychom m=ECli probr=E1ny.=20
+Nejsou to v=9Aak zdaleka v=9Aechny zpr=E1vy, kter=E9 je mo=9En=E9 pro =
+tyto akce vyu=9E=EDt.=20
+Bli=9E=9A=ED informace o jednotliv=FDch zpr=E1v=E1ch je mo=9En=E9 =
+nal=E9zt r=F9zn=EC na internetu a v=20
+dokumentac=EDch ke kompil=E1tor=F9m.=20
+<P>V p=F8=ED=9At=EDm d=EDle tohoto tutori=E1lku se pod=EDv=E1me na =
+zpr=E1vy pro interakci s prvky=20
+dialogov=FDch oken a jejich notifika=E8n=ED k=F3dy a v dal=9A=ED =
+=E8=E1sti na n=ECkter=E9 ze=20
+syst=E9mov=FDch zpr=E1v, zpr=E1v pro pr=E1ci s MDI okny.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:02:38 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

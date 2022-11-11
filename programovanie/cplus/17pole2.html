@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Dvojrozmerné pole</title>
+</head>
+
+<body>
+<h3>Dvojrozmerné pole</h3>
+V praxi je častý príklad, že spracovávané čísla sú usporiadané v tabuľkách, kde každé číslo je určené 
+svojou polohou - číslom riadka a číslom stĺpca. Podobne ako v pascale mozno definovať aj tu dvojrozmerné 
+pole.
+<dl><dt>Deklarácia statického poľa:
+	<dd><i>typ meno [pocet_riadkov][pocet_stlpcov] </i>
+		<br>typ ......... identifikátor typu položiek poľa
+		<br>meno ........ identifikátor poľa
+		<br>pocet_riadkov, pocet_stlpcov ....... celočíselná konštanta
+	<dt>Inicializácia
+	<dd>Podobne ako pri jednoduchých premenných možno v deklarácii určiť počiatočné hodnoty 
+		<br>Možnosti:
+		<ul><li>uvedieme počet a daný počet prvkov aj uvedieme int a[5][2]=({1,2},{3,4),{5,5},{3,4),{5,5}}
+			<li>uvedieme počet a menší počet prvkov aj uvedieme int a[5][2]={{1,2}} //...zvyšné sú nulové/nenastavené
+			<li>neuvedieme počet a nejaký počet prvkov uvedieme int a[][]=({1,2},{3,4),{5,5},{3,4),{5,5}}  // vytvorí pole 5 prvkov
+		</ul>
+</dl>
+Práca s takýmto poľom je úplne analogická ako ju poznáme z programu pascal. Pole má pevný počet riadkov a stĺpcov a je celé v dátovom segmente
+resp. zásobníku ak ide o lokálne pole. Len nemožno pole priradiť polu a teda výmena riadkov v tabulke musí byť robené cez cyklus.
+<dl><dt>Úlohy:
+	<dd><ul><li>Zadeklaruj pole 10x10 a naplň ho náhodnými číslami, vypíš do riadkov 1-10
+				<br>vymen 1. riadok s desiatym a 1. stĺpec a vypíš 
+</dl>
+<dl><dt>Deklarácia poľa, kde pocet stĺpcov je pevný:
+	<dd>Tento prípad nastáva napr. pri zadávaní súradníc bodov v priestore, ked pocet bodov dopredu nevieme, ale pocet súradníc každého bodu je rovnaký.
+		<br>int (*a)[3] 
+		<br>čítame:
+		<br>a je pointer na pole 3 intov
+		<br>Počet prvkov sa určí pri alokovaní napr. cez malloc
+		<br>a = (int (*)[3]) malloc(2*3*sizeof(int)); // budu 2 riadky
+		<br><br>Častejšie sa najprv zadeklaruje nový typ pole (podobne ako v pascale)
+		<br><table bgcolor="Silver"><tr><td>
+<code><pre>typedef int pole [3];
+pole *a;    // vytvorí ukazovateľ na 3-prvkové pole
+</pre></code></table>
+	<dt>Deklarácia poľa, kde počet riadkov je pevný:
+	<dd>Tento prípad nastane ak potrebujeme aby matica mala v každom riadku variabilný počet prvkov.
+		<br>int *a[3];
+		<br>čítame:
+		<br>a je pole 3 ukazovateľov na int
+		<br>Počet prvkov v riadku sa určí pri volaní napr. cez malloc(), každá položka poľa je smerník na niekoľko intov a polia vytvoríme napr. takto
+		<br><code>for (int i=0;i<3;i++) a[i]= (int *)malloc((i+2)*sizeof(int));</code>
+	<dt>Deklarácia poľa, riadky i stĺpce neznámy počet
+	<dd>int **a;
+		<br>počet riadkov určíme prvým volaním funkcie malloc()
+		<br>a = (int **) malloc(3*sizeof(int *));   // určí 3 riadky ukazovateľov (počet prvkov v riadku je ešte neznámy
+		<br>a[0] = (int *) malloc(2*sizeof(int));   // 0-ty riadok ma 2 prvky		
+		<br>a[1] = (int *) malloc(3*sizeof(int));   // 1-vý riadok ma 3 prvky		
+		<br>a[2] = (int *) malloc(4*sizeof(int));   // 2-hý riadok ma 4 prvky		
+		<br>Jak počet riadkov tak aj počet prvkov v riadkoch môžme hocikedy zmeniť
+	<hr>
+	<br>
+    <dt class=second>Poznámky
+	<dd><ul><li>pole nemožno priďovať do iného poľa
+	        <li>Prechod cez pole možno robiť pomocou indexov, pomocou smerníkov, pričom tieto prístupy možno kombinovať
+		</ul>			
+    <dt class=second>Prechod poľa<br>
+	<dd>Na prechod poľa potrebujeme dva cykly vnorené
+	<table bgcolor="#9999ff" border="1">
+	<tr bgcolor="#dddddd"><th>prechod poľa</tr>
+	<tr><td>
+	<pre>...
+int a[100][3];
+int (*b) [3];
+int **c; 
+for (i=0;i&lt;100;i++)
+ &nbsp;for(j=0;j&lt;3;j++) a[i][j]=...
+ //
+ b=a[0]; &nbsp; &nbsp;//b ukazuje na nulty riadok
+for (i=0;i&lt;100;i++,b++) &nbsp; &nbsp;//b bude ukayovat na i-ty riadok
+ &nbsp;for(j=0;j&lt;3;j++) b[j]=...
+ //
+c=a; 
+for (i=0;i&lt;100;i++,c++)
+{ &nbsp;for(j=0;j&lt;3;j++,(*c)++) **c=...
+</pre></tr>
+</table>	
+	<dt class=second>Pole ako parameter
+	<dd>Podobne ako jednorozmerné pole aj dvojrozmerné pole môže byť parametrom v podprograme. Ale pocet stlpcov aj ked je rovnaky pre všetky riadky musíme v parametri zadať
+		<br>(inak by sme sa nevedeli smernikom presunúť do ďalšieho riadka)
+		<br>Príklad:
+	<table bgcolor="#9999ff" border="1">
+	<tr bgcolor="#dddddd"><th>Pole ako parameter</tr>
+	<tr><td>
+	<pre>...
+void NaplnPole(int r, int pole[][3])
+{ &nbsp;for(i= 0;i&lt;r;i++) 
+ &nbsp; &nbsp; for(j=0;j&lt;3;j++) pole[i][j]=random(10);
+}
+</pre></tr>
+</table>		
+	<dt class=main>Úlohy na riešenie
+	<dd><ul type="square"><li>Naplň pole 10x8 hodnotami
+								<br> 1  1  1  1 ...
+								<br> 2  2  2  2 ...
+								<br>. . . 
+								<br>10 10 10 10 ...
+								<br>a vypíš ho do mema
+						  <li>Naplň pole 10x8 hodnotami	
+								<br> 1  2  3  4 ...
+								<br> 1  2  3  4 ...
+								<br>. . . 
+								<br> 1  2  3  4 ...
+								<br>a vypíš ho do mema
+						  <li>Napíš podprogram na výmenu dvoch riadkov bez použitia cyklu
+						  (čísla riadkov sú parametrami)	
+						  <li>Napíš podprogram na výmenu dvoch stĺpcov 
+						  (čísla stĺpcov sú parametrami)	
+						  <li>Naprogramuj hru life
+						  	<br>hracie pole 20x40
+							<br>bunka hynie ak má menej ako 2 susedov
+							<br>bunka hynie ak má viac ako 3 susedov
+							<br>bunka sa narodi ak prázdna má 3 susedov
+							<br>program si vypýta počiatočný stav (n, x1,z1, ... xn,yn)
+						<li>Naprogramuj tabuľku kombinačných čísel
+							<br> n nad k bude zapísané v n-tom riadku a k-tom stĺpci
+						<li>Naprogramuj vyhodnotenie súťaže skoku do diaľky
+							<br>Každý súťažiaci má 5 pokusov, počet súťažiacich je 12
+							<br>usporiadaj výsledkovú listinu podľa výsledkov 
+							<br>(v prípade rovnosti najdlhšieho skoku rozhoduje dĺžka druhého najdlhšieho)
+							<br>dĺžku skokov zadávaj z klávesnice alebo náhodné čísla (500-800)cm
+		</ul>				  
+
+</dl>
+</body>
+</html>

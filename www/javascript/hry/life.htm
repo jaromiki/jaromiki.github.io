@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0051)http://www.gjar-po.sk/import/javascriptsk/t148.html -->
+<HTML><HEAD><TITLE>JavaScript DESTINATION - T148</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1250">
+<META content="MSHTML 6.00.2800.1264" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff>
+<H2 align=center><FONT color=#004000>LIFE</FONT></H2>
+<DIV align=center>
+<CENTER>
+<TABLE border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <H4><FONT color=#800000>ID<BR>Nazov / Name:<BR>Popis / 
+      Description:<BR>Dlzka / Length:<BR>Testovane pod / Tested 
+      under:</FONT></H4></TD>
+    <TD width=5>&nbsp;</TD>
+    <TD vAlign=top>
+      <H4>148<BR><A 
+      href="http://www.gjar-po.sk/import/javascriptsk/p148.html">p148.html</A> / 
+      <A 
+      href="http://www.gjar-po.sk/import/javascriptsk/download/p148.zip">p148.zip</A><BR>Simulacia 
+      hry LIFE<BR>1465b<BR>NN 4.04</H4></TD></TR></TBODY></TABLE></CENTER></DIV>
+<H4 align=center><A 
+href="http://www.gjar-po.sk/import/javascriptsk/p148.html">UKAZKA / CLICK 
+HERE</A></H4>
+<H4 align=center>Zdrojovy tvar / Source code:</H4>
+<DIV align=center>
+<CENTER>
+<TABLE cellSpacing=0 cellPadding=5 border=1>
+  <TBODY>
+  <TR>
+    <TD><XMP><html>
+<BODY BGCOLOR="#FFFFFF">
+<form>
+Podla potreby porozsvecujte gulicky a potom stlacte <input type=button value="START" onClick="if (active == 0) nextgen(1)">
+</form>
+
+<script language=javascript>
+<!-- 
+var cell = new Array(451); 
+var index;
+var row;
+var col;
+var active = 0;
+function toggle(r, c)
+{
+        index = 24 * ((r / 25) - 1) + (c - 1);
+        if (cell[r+c] == 0)
+        {
+                cell[r+c] = 1;
+                window.document.images[index].src = "images/reddot.gif";
+        }
+        else
+        {
+                cell[r+c] = 0;
+                window.document.images[index].src = "images/nodot.gif";
+        }
+}
+function redisplay()
+{
+        var lifeVal;
+        index = 0;
+        for (row = 25; row < 425; row += 25)
+                for (col = 1; col <= 24; col++)
+                {
+                        lifeVal = cell[row+col];
+                        if (lifeVal == 0)
+                                window.document.images[index].src = "images/nodot.gif";
+                        else if (lifeVal == 1)
+                        {
+                                window.document.images[index].src = "images/reddot.gif";
+                                cell[row+col] = 2;
+                        }
+                        else if (lifeVal < 30000)
+                                window.document.images[index].src = "images/bluedot.gif";
+                        else
+                        {
+                                window.document.images[index].src = "images/nodot.gif";
+                                cell[row+col] = 0;
+                        }
+                        index++;
+                }
+}
+function nextgen(change)
+{
+        var neighbors;
+        active = 1;
+        for (row = 25; row < 425; row += 25)
+                for (col = 1; col <= 24; col++)
+                {
+                        index = row + col;
+                        neighbors = 0;
+                        if (cell[index-26] >= 2) neighbors++;
+                        if (cell[index-25] >= 2) neighbors++;
+                        if (cell[index-24] >= 2) neighbors++;
+                        if (cell[index-1] >= 2) neighbors++;
+                        if (cell[index+1] >= 2) neighbors++;
+                        if (cell[index+24] >= 2) neighbors++;
+                        if (cell[index+25] >= 2) neighbors++;
+                        if (cell[index+26] >= 2) neighbors++;
+                        if (neighbors == 3)
+                        {
+                                if (cell[index] == 0) change = 1; 
+                                cell[index]++; 
+                        }
+                        else if (neighbors == 2)
+                        {
+                                if (cell[index] > 1) cell[index]++; 
+                        }
+                        else if (cell[index] > 1)
+                        {
+                                change = 1;
+                                cell[index] = 30000; 
+                        }
+                }
+        redisplay();
+        if (change == 1)
+                setTimeout("nextgen(0)", 500);
+        else
+        {
+                alert("Pattern is stable");
+                active = 0;
+        }
+}
+for (index = 0; index < 451; index++)
+        cell[index] = 0;
+cell[212] = 1;
+cell[213] = 1;
+cell[236] = 1;
+cell[237] = 1;
+cell[262] = 1;
+if (top.frames.length > 1)
+{
+        window.document.fgColor=top.frames[1].document.fgColor;
+        window.document.linkColor=top.frames[1].document.linkColor;
+        window.document.vlinkColor=top.frames[1].document.vlinkColor;
+        window.document.bgColor=top.frames[1].document.bgColor;
+}
+for (row = 25; row < 425; row += 25)
+{
+        for (col = 1; col <= 24; col++)
+        {
+                window.document.write("<a href=javascript:toggle("+row+","+col+")>");
+                if (cell[row+col] == 1)
+                        window.document.write("<img src=images/reddot.gif border=0></a>");
+                else
+                        window.document.write("<img src=images/nodot.gif border=0></a>");
+        }
+        window.document.writeln("<br>");
+}
+// -->
+</script>
+</body>
+</HTML>
+        </XMP></TD></TR></TBODY></TABLE></CENTER></DIV>
+<H5 align=center>[ <A 
+href="http://www.gjar-po.sk/import/javascriptsk/priklady.html">Navrat</A> / <A 
+href="http://www.gjar-po.sk/import/javascriptsk/priklady-english.html">BACK</A> 
+]</H5></BODY></HTML>

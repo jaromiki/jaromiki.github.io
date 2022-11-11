@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<html>
+<head>
+	 <title>Klávesnica</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl><dt class="main">Ošetrenie vstupu
+	<dd>Pri zadávaní vstupu do textových polí (Edit, prípadne memo) často potrebujeme užívateľovi znemožniť zadávať 
+	do vstupných políčok "hlúposti", čím možno zabrániť padnutiu programu. Postup býva najčastejšie taký, že umožníme
+	naklepať užívateľovi čokoľvek a po opustení políčka (napr. udalosť OnExit nášho Editu) skontrolujeme korektnosť zadaných údajov
+	a v prípade nekorektného vstupu vrátime kurzor naspäť do Editu (Edit1->SetFokus). 
+	<br>Tento pokus si ukážeme na nasledovnom príklade - vytvoríme nasledovný formulár:
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1
+   </div>
+   <div style="background-color:#dddddd; width:450px;" align="center">
+   <h4 align="center">Zadávanie a kontrola rodného čísla žiaka</h4>
+   žiak : <input type="Text" value="Róbert Dokonalý" READONLY >
+	<BR><br>rodné číslo: <input type="Text" value="?" size="11" >
+   	<br><br>
+   	<input type="Button" value="Zapíš"> &nbsp; &nbsp; <input type="Button" value="Next"><br>
+   </div>
+</div>	
+Pre aktívneho žiaka chceme umožniť zadať rodné číslo v tvare xxxxxx/xxxx, kontrolovať budeme len dĺžku vstupu 
+(11 znakov) ďalej či 7-my znak je lomítko a či obe hodnoty sú číselné. V prípade nesúladu nás pri pokuse zapísať
+údaje systém oboznámi s chybou a vráti nás na rodné číslo.
+Ošetrovať budeme udalosť OnClick tlačídka, ktoré odosiela údaje napr. takto
+<div style="border-width:3;border-style:outset;width:750px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:750px; padding:0;border-width:0;color:white">Unit1.cpp
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+  Edit1->SetFocus;
+  If (Length(Edit1->Text)!=11) { ShowMessage("Chybna dlzka rodneho cisla");Exit;}
+  If (Edit1.Text[7]!='/') { ShowMessage("Chybna struktura rodneho cisla");exit;}
+  s1 = copy(Edit1.Text,1,6); s2 = copy(Edit1.Text,8,11);
+  val(s1,x,xx); val(s2,x,xxx);
+  If xx+xxx>0 then Begin ShowMessage("rodne cislo obsahuje nepovolene znaky");exit;End;
+  ShowMessage("rodne cislo zapisane do databazy");
+  ...
+
+}
+</pre>  
+</div></div>
+</div>
+Iný spôsob kontroly spočíva v tom, že užívateľovi navyše nedovolíme zadávať iné ako povolené znaky.
+v našom prípade povolíme zadať len znaky '/' '0'..'9'
+(nebol by problém povoliť znak / len ako 7-my znak, prípadne by ho program mohol klepnúť aj za užívateľa)
+Aby sme mohli takéto "fintičky" robiť naučíme sa používať obsluhu klávesnice.
+<H3>Klávesnica</H3>
+<P>S klávesnicou pracujeme pomocou troch udalostí: </P>
+<UL>
+   <LI><B>onKeyDown</B> - práve bol zatlačený nejaký kláves 
+   <LI><B>onKeyUp</B> - práve bol pustený nejaký kláves 
+   <LI><B>onKeyPress</B> - stlačili sme "obyčajný" kláves (ktorý má svoj ASCII kód) 
+</UL>
+
+<P>prvé dve udalosti oznámia nie ASCII kód klávesu ale "virtuálny kód" (nižšie si pozrite identifikátory konštánt) 
+	a tiež v parametri Shift zistíme, či bol pri tom zatlačený napr. Shift alebo Ctrl (podobne ako pri udalostiach pri práci s myšou) </P>
+<code>
+<Table>
+<tr align="left"><th>Virtual Key Code<th>Corresponding key
+<tr><td>
+<tr><td>VK_LBUTTON<td>Left mouse button
+<tr><td>VK_RBUTTON<td>Right mouse button
+<tr><td>VK_CANCEL<td>Control+Break
+<tr><td>VK_MBUTTON<td>Middle mouse button
+<tr><td>VK_BACK<td>	Backspace key
+<tr><td>VK_TAB<td>Tab key
+<tr><td>VK_CLEAR<td>Clear key
+<tr><td>VK_RETURN<td>Enter key
+<tr><td>VK_SHIFT<td>Shift key
+<tr><td>VK_CONTROL<td>Ctrl key
+<tr><td>VK_MENU<td>	Alt key
+<tr><td>VK_PAUSE<td>Pause key
+<tr><td>VK_CAPITAL<td>Caps Lock key
+<tr><td>VK_KANA<td>Used with IME
+<tr><td>VK_HANGUL<td>Used with IME
+<tr><td>VK_JUNJA<td>Used with IME
+<tr><td>VK_FINAL<td>Used with IME
+<tr><td>VK_HANJA<td>Used with IME
+<tr><td>VK_KANJI<td>Used with IME
+<tr><td>VK_CONVERT<td>Used with IME
+<tr><td><td>
+<tr><td>VK_NONCONVERT<td>Used with IME
+<tr><td>VK_ACCEPT<td>Used with IME
+<tr><td>VK_MODECHANGE<td>Used with IME
+<tr><td>VK_ESCAPE<td>Esc key
+<tr><td>VK_SPACE<td>Space bar
+<tr><td>VK_PRIOR<td>Page Up key
+<tr><td>VK_NEXT<td>Page Down key
+<tr><td>VK_END<td>End key
+<tr><td>VK_HOME<td>Home key
+<tr><td>VK_LEFT<td>Left Arrow key
+<tr><td>VK_UP<td>Up Arrow key
+<tr><td>VK_RIGHT<td>Right Arrow key
+<tr><td>VK_DOWN<td>Down Arrow key
+<tr><td>VK_SELECT<td>Select key
+<tr><td>VK_PRINT<td>Print key (keyboard-specific)
+<tr><td>VK_EXECUTE<td>Execute key
+<tr><td>VK_SNAPSHOT<td>Print Screen key
+<tr><td>VK_INSERT<td>Insert key
+<tr><td>VK_DELETE<td>Delete key
+<tr><td>VK_HELP<td>Help key
+<tr><td><td>
+<tr><td>VK_LWIN<td>Left Windows key (Microsoft keyboard)
+<tr><td>VK_RWIN<td>Right Windows key (Microsoft keyboard)
+<tr><td>VK_APPS<td>Applications key (Microsoft keyboard)
+<tr><td>VK_NUMPAD0<td>0 key (numeric keypad)
+<tr><td>VK_NUMPAD1<td>1 key (numeric keypad)
+<tr><td>VK_NUMPAD2<td>2 key (numeric keypad)
+<tr><td>VK_NUMPAD3<td>3 key (numeric keypad)
+<tr><td>VK_NUMPAD4<td>4 key (numeric keypad)
+<tr><td>VK_NUMPAD5<td>5 key (numeric keypad)
+<tr><td>VK_NUMPAD6<td>6 key (numeric keypad)
+<tr><td>VK_NUMPAD7<td>7 key (numeric keypad)
+<tr><td>VK_NUMPAD8<td>8 key (numeric keypad)
+<tr><td>VK_NUMPAD9<td>9 key (numeric keypad)
+<tr><td><td>
+<tr><td>VK_MULTIPLY<td>Multiply key (numeric keypad)
+<tr><td>VK_ADD<td>Add key (numeric keypad)
+<tr><td>VK_SEPARATOR<td>Separator key (numeric keypad)
+<tr><td>VK_SUBTRACT<td>Subtract key (numeric keypad)
+<tr><td>VK_DECIMAL<td>Decimal key (numeric keypad)
+<tr><td>VK_DIVIDE<td>Divide key (numeric keypad)
+<tr><td>VK_F1<td>F1 key
+<tr><td>VK_F2<td>F2 key
+<tr><td>VK_F3<td>F3 key
+<tr><td>VK_F4<td>F4 key
+<tr><td>VK_F5<td>F5 key
+<tr><td>VK_F6<td>F6 key
+<tr><td>VK_F7<td>F7 key
+<tr><td>VK_F8<td>F8 key
+<tr><td>VK_F9<td>F9 key
+<tr><td>VK_F10<td>F10 key
+<tr><td>VK_F11<td>F11 key
+<tr><td>VK_F12<td>F12 key
+<tr><td>VK_F13<td>F13 key
+<tr><td>VK_F14<td>F14 key
+<tr><td>VK_F15<td>F15 key
+<tr><td><td>
+<tr><td>VK_F16<td>F16 key
+<tr><td>VK_F17<td>F17 key
+<tr><td>VK_F18<td>F18 key
+<tr><td>VK_F19<td>F19 key
+<tr><td>VK_F20<td>F20 key
+<tr><td>VK_F21<td>F21 key
+<tr><td>VK_F22<td>F22 key
+<tr><td>VK_F23<td>F23 key
+<tr><td>VK_F24<td>F24 key
+<tr><td>VK_NUMLOCK<td>Num Lock key
+<tr><td>VK_SCROLL<td>Scroll Lock key
+<tr><td>VK_LSHIFT<td>Left Shift key (only used with GetAsyncKeyState and GetKeyState)
+<tr><td>VK_RSHIFT<td>Right Shift key (only used with GetAsyncKeyState and GetKeyState)
+<tr><td>VK_LCONTROL<td>Left Ctrl key (only used with GetAsyncKeyState and GetKeyState)
+<tr><td>VK_RCONTROL<td>Right Ctrl key (only used with GetAsyncKeyState and GetKeyState)
+<tr><td><td>
+<tr><td>VK_LMENU<td>Left Alt key (only used with GetAsyncKeyState and GetKeyState)
+<tr><td>VK_RMENU<td>Right Alt key (only used with GetAsyncKeyState and GetKeyState)
+<tr><td>VK_PROCESSKEY<td>Process key
+<tr><td>VK_ATTN<td>Attn key
+<tr><td>VK_CRSEL<td>CrSel key
+<tr><td>VK_EXSEL<td>ExSel key
+<tr><td>VK_EREOF<td>Erase EOF key
+<tr><td>VK_PLAY<td>Play key
+<tr><td>VK_ZOOM<td>Zoom key
+<tr><td>VK_NONAME<td>Reserved for future use
+<tr><td>VK_PA1<td>PA1 key
+<tr><td>VK_OEM_CLEAR<td>Clear key
+</table>
+</code>
+<p>Ukážeme si použitie udalosti OnKeyPress
+   <br> 
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.cpp
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>
+void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
+{ if ( Key<'0' || Key>'9') Key = '\0'; 
+}
+</pre>  
+</div></div>
+</div>
+<br><br>Celá táto procedúra sa vykoná po pustení klávesy na klávesnici ešte pred zápisom stlačeného klávesu do vstupného políčka. Ak je klávesa číslica alebo lomítko, nerobíme nič (príkaz bodkočiarka), ak sme stlačiliu niečo iné tak to zlikvidujeme, aby sa to nedostalo do Editu.
+</p>
+
+<P>Udalosti OnKeyDown, OnKeyUp používame ak chceme umožniť súčasné stlačenie a evidovanie viacerých kláves naraz (napr. dvaja hráči hrajú proti sebe na tej istej klávesnici.
+<br>Nasledujúci program ukáže príklad takéhoto použitia klávesnice. Do formulára umiestnime komponenty Label1 a Timer1 (nastavíme mu nejaký krátky 
+   Interval) - teraz môžeme na klávesnici súčasne tlačiť aj viac šípok a tým riadiť pohyb textu po ploche formulára: </P>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TBODY><TR><TD vAlign=" top" bgColor=#99cccc>
+           <P><I>pohyb textu vo formulári:</I> </P>
+       <TR><TD vAlign=top>
+<PRE>var
+  dx,dy:integer;    <I><FONT color=navy>// môžeme predpokladať, že sú inicializované na 0</FONT></I>
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  with Label1 do begin
+    Left:=Left+dx;
+          <I><FONT color=navy>// nedá sa urobiť inc(Left,dx); lebo Left nie je premenná</FONT></I>
+    Top:=Top+dy;
+  end;
+end;
+
+procedure TForm1.<B>FormKeyDown</B>(Sender:TObject; var <B>Key:Word</B>;
+          Shift:TShiftState);
+begin
+  case Key of
+    vk_left:   dx:=-1;
+    vk_right:  dx:=1;
+    vk_up:     dy:=-1;
+    vk_down:   dy:=1;
+    vk_escape: Close;
+  end;
+end;
+
+procedure TForm1.<B>FormKeyUp</B>(Sender:TObject; var <B>Key:Word</B>;
+          Shift:TShiftState);
+begin
+  case Key of
+    vk_left,
+    vk_right: dx:=0;
+    vk_up,
+    vk_down:  dy:=0;
+  end;
+end;</PRE>
+</TBODY></TABLE>
+
+<UL>
+   <LI>pri práci s klávesnicou si treba dávať pozor na iné komponenty, ktoré "kradnú" informácie z klávesnice (napr. Memo, 
+       Button, Edit a pod.) - najjednoduchšie riešenie v prípade, že chceme pracovať s klávesnicou, je ich nepoužívať, alebo 
+       spracovávať vstup z klávesnice na týchto komponentoch...
+</UL>
+
+<H3>Príklad</H3>
+<UL>
+  <LI>text zadávaný z klávesnice vypisujeme do grafickej plochy Image1, Enter posunie kurzor o riadok nižšie - príklad ilustruje 
+      použitie onKeyPress
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TBODY><TR><TD class=namo-th vAlign=" top" bgColor=#99cccc>
+           <P><I>prvá jednoduchá verzia:</I> </P>
+       <TR><TD vAlign=top>
+<PRE>var
+  x,y:integer;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  x:=20; y:=20;
+  with Image1.Canvas.Font do begin
+    Name:='Arial'; Height:=50; Style:=[fsBold];
+  end;
+end;
+
+procedure TForm1.<B>FormKeyPress</B>(Sender: TObject; var <B>Key: Char</B>);
+begin
+  if Key&gt;=' ' then begin
+    Image1.Canvas.TextOut(x,y,Key);
+    inc(x,20);
+  end
+  else if Key=#13 then begin
+    x:=20; inc(y,50);
+  end;
+end;</PRE></code>
+</TBODY></TABLE>
+
+<UL type=disc>
+   <LI>druhá verzia ukazuje, ako môžeme zobrazovať textový kurzor, zároveň používa metódu <B>TextExtend</B>, pomocou ktorej zistí 
+       šírku a výšku vypisovaného znaku
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TBODY><TR><TD vAlign=" top" bgColor=#99cccc>
+           <P><I>druhá verzia - proporčné písmo a kurzor:</I> </P>
+       <TR><TD vAlign=top>
+<code><PRE>var
+  x,y:integer;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  DoubleBuffered:=true;
+  x:=20; y:=20;
+  <B>with Image1.Canvas, Font do </B>begin
+    Name:='Arial'; Height:=50; Style:=[fsBold];
+    MoveTo(x,y); LineTo(x,y+Height);
+  end;
+end;
+
+procedure TForm1.FormKeyPress(Sender: TObject; var Key: Char);
+var
+  s:TSize;
+begin
+  with Image1.Canvas do begin       <I><FONT color=navy>// zmaže kurzor</FONT></I>
+    Pen.Color:=clWhite;
+    MoveTo(x,y); LineTo(x,y+Font.Height);
+  end;
+  if Key&gt;=' ' then with Image1.Canvas do begin
+    TextOut(x,y,Key);
+    s:=TextExtent(Key); inc(x,s.cx);
+    if x&gt;Image1.Width-20 then Key:=#13;
+  end;
+  if Key=#13 then begin
+    s:=Image1.Canvas.TextExtent('M');
+    x:=20; inc(y,s.cy);
+  end;
+  with Image1.Canvas do begin        <I><FONT color=navy>// nakreslí kurzor</FONT></I>
+    Pen.Color:=clBlack;
+    MoveTo(x,y); LineTo(x,y+Font.Height);
+  end;
+end;</PRE>
+</TBODY></TABLE>
+
+<H3>NDÚ</H3>
+<UL type=disc>
+   <LI>zrealizujte kláves Backspace -&nbsp;treba si pamätať každý zapísaný znak (v niečom podobnom&nbsp;ako zásobník) - aby sme ho 
+       mohli zmazať, treba vedieť jeho pozíciu a buď jeho hodnotu alebo veľkosť 
+</UL>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3 class="second">Výrazy</h3>
+Čo je výraz je asi každému intuitívne jasné - zápis ktorý sa dá vyhodnotiť a nadobudnúť nejakú hodnotu. 
+  Výraz neobsahuje príkazy, naopak príkaz môže obsahovať jeden alebo viac výrazov.
+  Ešte treba pre pascalistov poznamenať, že C-čko nemá typ boolean a namiesto nich používa celočíselné premenné,
+  kde všetky nenulové hodnoty označujú pravdu a nula označuje nepravdu.
+<dl><dt>Jednoduché výrazy - sú to "základné kamene" všetkých výrazov 
+	<dd>- identifikátor premennej
+	<br>- identikátor funkcie
+	<br>- prvok poľa
+	<br>- prvok štruktúry - zaznamu
+	<br>- konštanta (hodnota)
+	<br>(pre nás v tejto chvíli budú jednoduchými výrazmi len hodnoty - číselné ... 5, -1.54, znakové ... 'A', textové ..."dobrý deň") 
+    <dl><dt>hodnoty zapísané v programe poznáme:
+		<dd><ul><li>číselné - celočíselné
+			<br>Písanie celočíselných konštánt <b>5, 1000, -18, 0xff, 077</b>
+				<li>číselné - desatinné
+					<br>Písanie desatinných konštánt: 5., 0.15, -800.25, 1e2, 15e-3 (píšeme desatinnú bodku!)
+				<li>znakové
+					<br>Písanie znakových konštánt 'A', ''', '&lt;', '\0osmičkové_číslo','\n'
+					<br>(znaky sú zapísané medzi apostrofy)
+					<br>znak '\n' používame na zalomenie riadku pri výpise textu (kurzor presunie na ďalší riadok)
+					<br>znaky zadané pomocou osmičkového čísla použijeme, ak vieme poradové číslo znaku v ASCII tabuľke a tento znak napríklad nemá "obrázok" (napr. znak back space má číslo 8 ...'\10'
+				<li>textové
+					<br>Písanie textových konštánt "", "A", "Ahoj", "dobry\nden"
+					<br>
+			</ul>	 
+	</dl>
+	
+    <dt>Zložené výrazy 
+	<dd>vytvárame pomocou jednoduchých výrazov, ktoré spájame pomocou operátorov, kde postup
+		výpočtu podľa potreby určujeme pomocou okrúhlych zátvoriek (). Podľa počtu operandov
+		delíme operácie na 
+		<br>unárne - len jeden operand
+		<br>binárne - dva operandy
+		<br>trojargumentové
+		<dl><dt>Unárne
+			<dd>*výraz - výsledkom je hodnota z aresy určenej hodnotou výrazu (ako ^ v pascale)
+			<br>&amp;prem - výsledkom je adresa premennej
+			<br>-výraz ... opačný výraz
+			<br>!výraz ... logická negácia výrazu 0-&gt;1, nenula-&gt;0
+			<br>~výraz ... bitový komplement (zneguje všetky bity)
+			<br>++prem ... zväčší prem o 1 a zväčšená hodnota je výsledkom
+			<br>--prem ... zmenší prem o 1 a zmenšená hodnota je výsledkom
+			<br>prem++ ... zväčší prem o 1 a nezväčšená hodnota je výsledkom
+			<br>prem-- ... zmenší prem o 1 a nezmenšená hodnota je výsledkom
+			<br>(typ)výraz ... pretypuje výraz na požadovaný výraz (v C++ možno aj prirodzenejšie typ(výraz))
+			<br>sizeof výraz ... výsledkom je dĺžka typu výrazu
+			<br>sizeof(typ) ...  výsledkom je dĺžka typu
+			<br><br>Príklad
+			<code><br>{ int a=1,b=4, c=2; unsigned char d=100;
+				  <br> &nbsp; b=c++ +a;
+				  <br> &nbsp; a=b+++++c;
+				  <br> &nbsp; c=!(c-4);
+				  <br> &nbsp; d=~d;
+				  <br>}		
+			</code>
+			<dt>Binárne
+			<dd>Binárny operátor máj dva operandy a býva umiestnený medzi nimi
+			<br>Nech V1 a V2 sú ľubovoľné výrazy, P je premenná
+			<br>P=V1 ... vyráta V1, výsledok zapíše do P a výsledkom je hodnota P
+			<br>V1*V2 ... vyráta V1 potom V2 potom to vynásobí
+			<br>V1/V2 ... vyráta V1 potom V2 potom to vydelí
+			<br>V1%V2 ... vyráta V1 potom V2 potom zistí V1 mod V2 (oba výrazy sú celočíselné)
+			<br>V1+V2 ... vyráta V1 potom V2 potom to spočíta
+			<br>V1&lt;V2, V1&lt;=V2, V1&gt;V2, V1&gt;=V2, V1==V2, V1!=V2 ... porovnávacie oper.
+			<br>V1&amp;V2 ... bitové AND (1&amp;2=0)
+			<br>V1|V2 ... bitové OR
+			<br>V1^V2 ... bitové XOR
+			<br>V1&amp;&amp;V2 ... logické AND (1&amp;&amp;2=1)
+			<br>V1 || V2 ... logické OR (2 || 0=1)
+			<br>V1,V2 ... výsledkom je hodnota V2
+			<br><br>Poznámky:
+			<br>operátor / sa používa aj na reálne aj na celočíselné delenie, výsledok je daný argumentami
+			<br>je potrebné si zapamätať = je priradenie == je rovná sa != je nerovná sa
+			<br>zvláštne vyzerá operátor čiarka, používame ho ak niekde potrebujeme urobiť dve priradenia
+				napr. v cykle for, ale pre pascalistov je najzvláštnejšie, že priradenie je výraz, čiže jedným výrazom sa môže
+				zmeniť veľké množstvo premenných, čo robí výrazy veľmi silnými ale sťažuje to čítanie programu.
+				priklad: a= !(b=a+c++) tento výraz zmení hodnoty premenných a,b,c
+			<br>a= (b=1, ++b) //priradí do a hodnotu 2 	
+			<br>Nakoľko priradenie je veľmi častý úkon existujú pre urýchlenie v C-čku nasledovné operátory
+				priradenia:
+				<br>P=V1 ... štandartné priradenie
+				<br>P+=V1 ... hodnota P sa zväčší o hodnotu V1
+				<br>P-=V1 ... hodnota P sa zmenší o hodnotu V1
+				<br>P*=V1 ... hodnota P sa vynásobí s hodnotou V1
+				<br>P/=V1 ... hodnota P sa vydelí s hodnotou V1
+				<br>P%=V1 ... P=P % V1
+				<br>P&amp;=V1 ... P=P &amp; V1
+				<br>P|=V1 ... P=P | V1
+				<br>P^=V1 ... P=P ^ V1
+				<br><br>Narozdiel od pascalu je možné priradiť reálnu hodnotu do celočíselnej premennej,
+				vykoná sa konverzia na int odtrhnutím des. časti.
+			<dt>Trojargumentové
+			<dd>Je iba jeden trojargumentový operátor - operátor ?, jeho funkcia je podobná príkazu IF.
+			<br>Syntax: V1 ? V2 : V3
+			<br>Sémantika:
+			<ol>
+			<li>Vypočíta sa hodnota V1
+			<li>ak V1 !=0 tak sa vyhodnotí V2 a táto hodnota je výsledkom celého výrazu
+			<li>ak V1 = 0 tak sa vyhodnotí V3 a táto hodnota je výsledkom celého výrazu
+			</ol>
+			<br><br>Príklad: 
+			<br>Nech a,b,c sú rovné 1
+			<br>a= b-- ? b+c++ : 2*c-- //tento výraz zmení hodnotu prem a (priradenie) a prem. b,c
+			<br>Určite ich hodnoty 
+</dl>
+    <dt>Vyhodnocovanie výrazov - priorita
+	<dd><table width="60%"> <tr><th align="left">operátor<th align="left">smer vyhodnocovania</tr>
+				<tr><td>zátvorky<td>doprava</tr>
+				<tr><td>! ~ - ++ -- &amp; * sizeof <td>doľava</tr>
+				<tr><td>* / %<td>doprava</tr>
+				<tr><td>+ - <td>doprava</tr>
+				<tr><td>&lt; &gt; &lt;= &gt;=<td>doprava</tr>
+				<tr><td>== !=<td>doprava</tr>
+				<tr><td> &amp; <td>doprava </tr>
+				<tr><td> ^ <td>doprava </tr>
+				<tr><td> | <td>doprava </tr>
+				<tr><td>&amp;&amp;<td>doprava</tr> 
+				<tr><td> || <td>doprava</tr>
+				<tr><td> ?: <td>doľava</tr>
+				<tr><td> = += ... <td>doľava</tr>
+				<tr><td> , <td>doprava </tr>
+		</table>
+	    Príklady: Nech a,b,c,d sú celočíselné premenné s hodnotou 1
+		<br>d = a = b == c + 1 == --d+!b 
+		<br>Hodnota d bude 
+		<br>a) 0
+		<br>b) 1
+		<br>c) 2
+		<br>d) iná hodnota
+		<br>e) chybný výraz
+		<br><br>d = a = b+1 ? c + 1 == d-- +!b:!d 
+		<br>a) 0
+		<br>b) 1
+		<br>c) 2
+		<br>d) iná hodnota
+		<br>e) chybný výraz
+    <dt>Určenie typu výsledku aritmetických výrazov
+	<dd>V pascale tiež existujú pravidlá na určenie typu výsledku výrazu no výrazy sú jednoduhšie a ich detailná znalosť 
+		nie taká potrebná ako v C++.
+	<br>1. pravidlo - vo výraze sú <b>pred výpočtom</b> všetky char a short pretypované na int
+	<br>2. pravidlo - vo výraze sú <b>pred výpočtom</b> všetky float pretypované na double
+	<br>3. pravidlo - ak je jeden operátor double je výsledok double
+	<br>4. pravidlo - ak sa neuplatní pravidlo 3 a jeden operátor je long (long long) výsledok je long (long long)
+	<br>5. pravidlo - ak sa neuplatni 4. ani 5. a jeden operátor je unsigned je výsledok unsigned
+	<br>6. pravidlo - ak sa neuplatni 4., 5.,6. pravidlo je výsledok typu int
+		
+	<dt><font color="Blue">Úlohy</font>
+	<dd>
+		<dl><dt>1. Nech sú zadeklarované nasledovné premenné
+			<dd>char z='A';  unsigned int u=2; int i=25; float f=u-4;
+			<br>Určte zobrazený výsledok príkazov: 
+			<br>a. &nbsp; label1->Caption= format("%i, %i",ARRAYOFCONST((sizeof(z),sizeof(1*z)))); 
+			<br>b. &nbsp; label1->Caption=format("%0.1f, %i, %i",ARRAYOFCONST((f,u=u-4,u)));
+			<br>c. &nbsp; label1->Caption=format("%i, %0.0f",ARRAYOFCONST((3/2,3.0/2))); 
+			<br>e. &nbsp; label1->Caption=format("%i, ",ARRAYOFCONST((z= (--u?++i%10:--i%10)==i%10)));
+			<dt>2. Naprogramujte výpočet našetrených korún po 1.,2.,3.,4.,5.-tom roku 
+			<dd>ak jednorázovo vložíme <font color="Green">suma</font> korún pri ročnom úroku <font color="Green">urok</font>
+			<br>Vypíšte každý rok na samostatný riadok do Label1  
+			<dt>3. Načítajte celé čísla a,b,c 
+			<dd>vypíšte aritmetický, geometrický (funkcia pow()) a harmonický priemer  
+			<dt>4. Načítajte znak do prem. z 
+			<dd>ak je znak malé písmeno - vypíšte jeho velké písmeno, inak vypíšte ten znak
+			<dt>5. Upravte program 4, tak aby 
+			<dd>pri inom znaku ako písmeno napísal ERROR 
+			<dt>6. Načítajte celé čísla a,b,c 
+			<dd>vypíšte najväčšie z nich
+			<dt>7. Načítajte celé čísla a,b,c 
+			<dd>vypíšte ich medián (strednú hodnotu)
+			<dt>8. Načítajte celé čísla a,b,c 
+			<dd>vypíšte či sú to strany trojuholníka
+		</dl>
+</dl>
+
+
+
+</body>
+</html>

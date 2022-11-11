@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <STYLE type="text/css">
+		input {height:100; width:100;background:#eeeeee;border-width:2; border-style:'solid'; border-color:#999999; margin: 5pt; font-size:52; padding:15 1 18 20;font-family:'monospace'}
+
+	</STYLE>
+
+	<title>Ukladaná</title>
+    <script type="text/javascript">
+	var pr=16 ;
+	    p = new Array();     
+	function miesaj()
+	{  
+    for(i=1;i<17;i++) 
+	{ j=1+Math.floor(15*Math.random());
+	  	  vymen(i,j); 
+    } 
+	}
+	function vymen(i,j)
+	{var k=0; 
+//		alert(""+i+","+document.all[i].innerText);
+	 k=p[i].value;
+	 p[i].value=p[j].value;
+	 p[j].value=k;
+	 k=p[i].style.visibility;
+	 p[i].style.visibility=p[j].style.visibility;
+	 p[j].style.visibility=k;
+	 if (i==pr) pr=j;
+	 else if(j==pr) pr=i;
+	} 
+	function tahaj(i)
+	{
+	 if (i+1==pr && (i)%4) 
+	 { p[pr].value=p[i].value;
+	   p[pr].style.visibility='visible';
+	   p[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i-1==pr && (i-1)%4) 
+	 { p[pr].value=p[i].value;
+	   p[pr].style.visibility='visible';
+       p[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i+4==pr) 
+	 { p[pr].value=p[i].value;
+	   p[pr].style.visibility='visible';
+	   p[i].style.visibility='hidden';
+	   pr=i;// alert(document.all[i].innerText+i);
+	}
+	 if (i-4==pr) 
+	 { p[pr].value=p[i].value;
+	   p[pr].style.visibility='visible';
+   p[i].style.visibility='hidden';
+	   pr=i;
+	}
+	}
+	</script>
+</head>
+<body>
+<div style="width:500; background:#dddddd; border-width:2; border-style:'solid'; border-color:#999999; padding:5" id="M1">
+<h2 align="center"> Hra 15</h2>
+		<input type="Text" value="1"  onclick="tahaj(1)" id="c1"> 
+		<input type="Text" value="2"  onclick="tahaj(2)" id="c2"> 
+		<input type="Text" value="3"  onclick="tahaj(3)" id="c3"> 
+		<input type="Text" value="4"  onclick="tahaj(4)" id="c4"> 
+	<br><input type="Text" value="5"  onclick="tahaj(5)" id="c5"> 
+		<input type="Text" value="6"  onclick="tahaj(6)" id="c6"> 
+		<input type="Text" value="7"  onclick="tahaj(7)" id="c7"> 
+		<input type="Text" value="8"  onclick="tahaj(8)" id="c8"> 
+	<br><input type="Text" value="9"  onclick="tahaj(9)" id="c9"> 
+		<input type="Text" value="A"  onclick="tahaj(10)" id="ca">
+		<input type="Text" value="B"  onclick="tahaj(11)" id="cb">
+		<input type="Text" value="C"  onclick="tahaj(12)" id="cc">
+	<br><input type="Text" value="D"  onclick="tahaj(13)" id="cd">
+		<input type="Text" value="E"  onclick="tahaj(14)" id="ce">
+		<input type="Text" value="F"  onclick="tahaj(15)" id="cf">
+		<input type="Text" value="X"   style="visibility:hidden" onclick="tahaj(16)" id="cx" >
+</div>
+
+<input type="Button" value="Zamiešaj" onclick="miesaj()" style="margin:20;width:300">
+
+</body>
+<script  type="text/javascript">
+ p[1] = c1;p[2] =   c2;p[3] =  c3;p[4] = c4;
+ p[5] = c5;p[6] =   c6;p[7] =  c7;p[8] = c8;
+ p[9] = c9;p[10] =  ca;p[11] = cb;p[12] = cc;
+ p[13] = cd;p[14] = ce;p[15] = cf;p[16] = cx;
+
+
+</script>
+
+</html>
+

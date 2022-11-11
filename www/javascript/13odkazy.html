@@ -1,0 +1,77 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Hodnoty a odkazy</title>
+	 <STYLE>
+		h3.main {background:#ddddff; color:#0000cc; border-color:silver; border-width:3;  width:330; height:30; border-style:ridge; padding:5}
+		dt.main {background:#ddddff; color:#0000cc; width:330; height:30; padding:5; margin:20 0 0 0}
+		h3.second {color: blue}
+		dt.second {color: blue}
+	</STYLE>
+</head>
+
+<body bgcolor="#ffffdd">
+<h3 class=main>Hodnoty a odkazy</h3>
+V Javascripte /ako aj v iných programovacích jazykoch) existujú 3 základné manipulácie s premennými
+<ul><li>priradenie premennej do premennej
+	<li>premenná ako parameter
+	<li>porovnávanie dvoch premenných (hodnôt)
+</ul>
+Každá takáto akcia sa môže vykonávať <b>hodnotou</b> alebo <b>odkazom</b>.
+<dl><dt class=main>Hodnotou
+	<dd>Pri práci s hodnotou sú originál i hodnota dve nezávislé hodnoty. Používa sa pri primitívnych dátových typoch - číslo, logické hodnoty.
+		<ul><li>priradenie - vytvorí sa kópia originálu a zapíše sa na adresu premennej z pravej strany
+			<li>parameter - zmena hodnoty parametra v podprograme nemá vplyv na skutočný parameter.
+			<li>porovnávanie - ak dve premenné majú rovnaké hodnoty test na rovnosť vráti true.
+		</ul>	  
+	<dt class=main>Odkazom 
+	<dd>Pri práci s odkazom sa presúvajú/porovnávajú len adresy a nie hodnoty. Používa sa pri štruktúrovaných dátových typoch
+		- polia, objekty, funkcie.
+		<ul><li>priradenie - adresa hodnoty sa priradí do premennej vľavo
+			<li>parameter - zmena hodnoty parametra v podprograme zmení aj skutočný parameter.
+			<li>porovnávanie - ak dve premenné majú rovnaké hodnoty test na rovnosť nemusí vrátiť true.
+		</ul>
+	<dt class=main>Príklady
+	<dd><div><code><pre>
+	// *********************  Hodnota  *****************************
+		var n = 1; 		// premenna n obsahuje hodnotu 1
+		var m = n;		// kopirovanie hodnotou, v m je ina hodnota 1
+		
+		function pripocitaj(spolu, x)
+		{ spolu += x; }
+		
+		// volanie funkcie
+		pripocitaj (n,m);		// premenne n,m sa nezmenia, funkcia vlastne nerobi nic
+		alert(n == m);			// vypíše true
+		
+	// *********************  Odkaz  *****************************
+		var vianoce = new Date(2001, 11, 24);
+		var slnovrat = vianoce; 		// obe premenne su na tej istej adrese
+		
+		slnovrat.setDate(21); 			// zmeni den v premennej slnovrat
+		alert(vianoce.getDate();		// vypise hodnotu 21
+		
+		var pole = new Array[1,2,3];
+		var x = 4;
+		function pridaj(p,a)
+		{ p[0] += x; p[1] += x; p[2] += x;}
+		// volanie podprogramu
+		pridaj(pole,x);
+		alert(pole.join());				// vypise hodnoty 5,6,7
+		
+		var vianoce = new Date(2001, 11, 24);
+		var slnovrat = new Date(2001, 11, 24); 		// obe premenne majú rovnakú hodnotu
+		alert(vianoce == slnovrat)					// vypíše false
+		
+		</pre></code>
+		</div>
+	<dt class=main>Reťazce
+	<dd>Otázka, čo sa deje pri priradení reťazca do reťazcovej premennej nie je dôležitá, lebo reťazce v JS sú nemenné.
+		Nemáme žiadne nástroje, aby sme reťazec zmenili a teda či sa priradí do premennej adresa reťazca alebo hodnota
+		je jedno.
+		<br>Pri parametroch typu string tiež pri ich zmene v podprograme nenastane mimo podprogramu žiadna zmena.
+		<br>Pri porovnávaní dvoch reťazcov sa porovnáva hodnota a nie adresa.
+		
+
+</body>
+</html>

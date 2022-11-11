@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+int x[1000], s[1000],p[1000][1000];
+int i,j,n;
+
+//---------------------------------------------------------------------------
+
+#pragma argsused
+int main(int argc, char* argv[])
+{ cin >> n;
+  for (i=0; i<n; i++)
+  {  cout << (x[i]=p[i][i]=1+random(9))<<' ';
+     if (!i) s[i]=x[i];
+     else s[i]=s[i-1]+x[i];
+  }
+  cout <<endl<<"sucet= "<< s[n-1]<<endl;
+  for (i=1;i<n;i++)
+    for (j=0; j<n-i+1; j++)
+    {  p[j][j+i]=s[j+i]-s[j]+x[j]-min(p[j+1][j+i],p[j][j+i-1]);
+    }
+ cout <<endl<<p[0][n-1]<<endl;
+  cin.get();cin.get();
+  return 0;
+}
+//---------------------------------------------------------------------------
+ 

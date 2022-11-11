@@ -1,0 +1,601 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Premenne</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+
+<h1>3 Premenné</h1>
+
+
+<ul>
+<li><a href="#identifikatory">Identifikátory premenných</a></li>
+<li><a href="#deklaracia">Deklarácia premenných</a></li>
+<li><a href="#typy">Typy premenných</a></li>
+</ul>
+
+
+
+<h2><a id="identifikatory" name="identifikatory">3.1 Identifikátory premenných</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Identifikátory označujú jednotlivé objekty jazyka C - konštanty, premenné, funkcie, typy, selektory položiek štruktúrovaných typov, parametre funkcií a&nbsp;pod. Identifikátor je postupnosť písmen a&nbsp;číslic (a niektorých špeciálnych znakov, napr. '_'), ktorá sa začína písmenom, resp znakom '_'. Viacslovný identifikátor nie je prípustný a&nbsp;preto sa do jedného celku zvykne spájať práve uvedeným znakom '_', ktorý zvyšuje čitateľnosť zdrojového textu programu (napr. to_je_premenna). Prípustné sú iba znaky ASCII kódu. Dĺžka identifikátora je daná typom kompilátora, ANSI norma doporučuje maximálne 31 znakov. Jazyk C rozlišuje veľké a&nbsp;malé písmená, preto identifikátory Suma a&nbsp;suma sú rozdielne identifikátory (pozor na to !).<br />
+Ako identifikátory nie je možné používať tzv. kľúčové slová jazyka C:</p>
+
+<pre>
+        auto        enum        short
+        break       extern      sizeof
+        case        float       static
+        char        for         struct
+        continue    goto        switch
+        default     if          typedef
+        do          int         union
+        double      long        unsigned
+        else        register    void
+        entry       return      while
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; ANSI norma vynecháva z&nbsp;tohoto zoznamu kľúčové slovo "entry" a&nbsp;doplňuje kľúčové slová "const", "signed" a&nbsp;"volatile". V&nbsp; literatúre sa niekedy doporučuje pre odlíšenie používať pre konštanty a&nbsp; užívateľom definované typy veľké písmená, pre všetky ostatné objekty malé písmená (premenné, funkcie).</p>
+
+
+<h2><a id="deklaracia" name="deklaracia">3.2 Deklarácia premenných</a></h2>
+
+
+<p align="justify">Obecný tvar deklarácie premenných v&nbsp;jazyku C má tvar:</p>
+
+<pre>
+  popis typu   deklarované objekty  [=počiatočné hodnoty]
+</pre>
+
+<p>Popis typu môže pozostávať z&nbsp;dvoch častí:</p>
+
+<ol>
+<li>definícia pamäťovej triedy</li>
+
+<li>definícia typu premennej</li>
+</ol>
+
+<br />
+<b>Pamäťové triedy</b>
+
+<p align="justify">Definícia pamäťovej triedy (storage class) určuje požadovaný, resp. doporučený spôsob uloženia premennej. Jazyk C rozlišuje štyri možnosti: extern, auto, register, static.</p>
+
+<br />
+<b>Trieda extern</b>
+
+<p align="justify">Ako sme už spomenuli v&nbsp;úvode, jazyk C má blokovú štruktúru. To znamená, že deklarácia uvedená vo vnútri bloku je lokálna v&nbsp;tomto bloku a&nbsp;zvonku (mimo bloku) nie je prístupná. Premenné deklarované mimo funkcie sú globálne a&nbsp; prístupné zo všetkých funkcií. Lokálna deklarácia "zatieňuje" globálnu deklaráciu, t.j. má pred ňou prednosť, ako to ilustruje aj nasledujúci <a href="Zdrojaky/Pr3_1.c.html">príklad</a>:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/*  priklad pr3_1.c prekr&#253;vanie (tienenie) deklar&#225;ci */</i></font>
+
+<font color="#800000"><b>int</b></font> z <font color="#800000">=</font> <font color="#ff0080">1</font><font color="#800000">;</font>       <font color="#0000a0"><i>/* glob&#225;lna premenn&#225;  */</i></font>
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> z <font color="#800000">=</font><font color="#ff0080">2</font><font color="#800000">;</font>      <font color="#0000a0"><i>/* lok&#225;lna premenn&#225;   */</i></font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;z=%d\n&quot;</font><font color="#800000">,</font>z<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="left">Program vytlačí hodnotu z=2.</p>
+
+<p align="justify">Pre referencovanie globálnych premenných v&nbsp;jednotlivých funkciách či moduloch (modulom rozumieme súbor funkcií a&nbsp;deklarácií globálnych objektov, spravidla súvisiacich) sa využíva pamäťová trieda extern. Použitie tejto triedy v&nbsp;tvare, ktorý umožňuje aj separátnu kompiláciu, ilustruje <a href="Zdrojaky/Pr3_2.c.html">príklad</a>:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr3_2.c použitie externej deklar&#225;cie */</i></font>
+
+<font color="#800000"><b>int</b></font> z<font color="#800000">;</font>            <font color="#0000a0"><i>/* glob&#225;lna premenn&#225;  */</i></font>
+
+<font color="#800000"><b>int</b></font> fncia<font color="#800000">(<b>void</b>);</font>
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>extern int</b></font> z<font color="#800000">;</font>   <font color="#0000a0"><i>/* referencia glob. premennej */</i></font>
+
+  z<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;z=%d\n&quot;</font><font color="#800000">,</font>fncia<font color="#800000">());</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> fncia<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>extern int</b></font> z<font color="#800000">;</font>   <font color="#0000a0"><i>/* referencia glob. premennej */</i></font>
+
+  <font color="#800000"><b>return</b>(</font>z<font color="#800000">+</font><font color="#ff0080">1</font><font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p>Program vytlačí hodnotu z=1.</p>
+
+<br />
+<b>Trieda auto</b>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Všetky lokálne premenné sú implicitne považované za tzv. automatické premenné, t.j. premenné pamäťovej triedy auto. To znamená, že pamäťovú triedu auto nie je potrebné pri deklarácii premenných vôbec uvádzať. Premenné tejto pamäťovej triedy vznikajú automaticky v&nbsp;okamihu potreby, teda pri vstupe do bloku, v&nbsp;ktorom sú deklarované. Mimo tohoto bloku neexistujú. V&nbsp;okamihu opustenia daného bloku uvedené premenné automaticky zanikajú. Automatické premenné sú realizované prostredníctvom zásobníka (stack) pri aktivácii bloku, pri výstupe z&nbsp;bloku sa zásobník uvoľňuje. Automatické premenné základných typov (char, int, float, double) je možné inicializovať (priradiť počiatočné hodnoty). U iných typov premenných, resp. u základných, ak sme inicializáciu nepredpísali, hodnota premennej v&nbsp;okamihu vzniku nie je definovaná a&nbsp;musí byť programovo ošetrená. Preto <a href="Zdrojaky/Pr3_3.c.html">príklad</a>:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr3_3.c inicializ&#225;cia premennej v bloku */</i></font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> z<font color="#800000">;</font>
+
+  <font color="#800000">{</font>
+    <font color="#800000"><b>int</b></font> z<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;z=%d\n&quot;</font><font color="#800000">,</font>z<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">môže vytlačiť ľubovoľnú hodnotu (premenná z&nbsp;je inicializovaná len v&nbsp;rámci vnútorného bloku, v&nbsp;rámci funkcie main jej hodnota nie je definovaná).</p>
+
+<br />
+<b>Trieda register</b>
+
+<p align="justify">Používa sa pri veľmi častom využívaní niektorej automatickej premennej za účelom urýchlenia výpočtu. Použitie tejto triedy umožní priradiť danej premennej určitý register procesora. Ak takýto register nie je k&nbsp;dispozícii, premenná je spracovávaná ako automatická.</p>
+
+<br />
+<b>Trieda static</b>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Používa sa v&nbsp;prípadoch, keď potrebujeme uchovať hodnotu premennej aj po opustení bloku. Statická premenná je lokálna v&nbsp;bloku, v&nbsp;ktorom je deklarovaná s&nbsp;tým, že má trvale pridelenú pamäť (nie je realizovaná pomocou zásobníka, ale ako pamäťová bunka). Inicializáciu statickej premennej vykonáva prekladač počas kompilácie zdrojového textu programu. Program teda začne pracovať s&nbsp;nastavenou počiatočnou hodnotou a&nbsp;k&nbsp; inicializácii sa už viacej nevracia. Ak inicializáciu nepredpíšeme, vykoná prekladač implicitné vynulovanie premenných (premenné typu char znakom '\0', premenné typu int hodnotou 0, premenné typu float hodnotou 0.0 a&nbsp;premenné typu double hodnotou 0.0L).<br />
+Pretože statické premenné zaberajú trvalé miesto v&nbsp;pamäti, je potrebné ich použitie dobre zvážiť a&nbsp;podľa možnosti obmedziť na minimum.</p>
+
+
+<h2><a id="typy" name="typy">3.3 Typy premenných</a></h2>
+
+
+<p align="justify">Definícia typu premenných môže obsahovať:</p>
+
+<ol>
+<li>základný preddefinovaný typ (char, int, float, double)</li>
+
+<li>odvodený typ (smerník, pole, struct, union)</li>
+
+<li>vymenovaný typ (enum)</li>
+
+<li>užívateľom definovaný typ (typedef)</li>
+
+<li>prázdny typ (void)</li>
+</ol>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Základné typy môžu byť modifikované klasifikátorom (short, long, unsigned), ktorý vyjadruje použitú podmnožinu alebo rozšírenie daného typu.</p>
+
+<br />
+<b><i>Základné typy</i></b> <br />
+<i>&nbsp;&nbsp;-typ <b>int</b>:</i>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Používa sa pre špecifikáciu celých čísel. Oborom hodnôt typu int je súvislá množina celých číse v&nbsp;intervale <em>-2**(N-2) až 2**(N-2)</em>, kde <em>N</em> je počet bitov slova pre celé číslo. Obvykle sa pre celé čísla využíva 16 bitové slovo, čomu zodpovedá rozsah -32768 až 32767. Rozsah pre daný kompilátor je uvedený v&nbsp;tvare symbolických konštánt INT_MIN, INT_MAX (hlavička limits.h).<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Pre zadávanie celých čísel v&nbsp;programe je možné využiť dekadickú, oktálovú i&nbsp; hexadecimálnu sústavu. Dekadické číslo je zadané v&nbsp;bežnom tvare, napríklad:</p>
+
+<pre>
+  int dek=1500;
+</pre>
+
+<p align="justify">Oktálové čísla sa začínajú číslicou 0 (môže nasledovať 0 až 7), napríklad:</p>
+
+<pre>
+  int okt=010;      (dekadicky 8)
+  int okt1=0377;    (dekadicky 255)
+</pre>
+
+<p align="justify">Hexadecimálne čísla sa začínajú dvojicou 0x, resp. 0X (môže nasledovať 0 až F), napríklad:</p>
+
+<pre>
+  int hex=0xA;      (dekadicky 10)
+</pre>
+
+<p align="justify">Typy short int, long int majú rovnaké vlastnosti ako základný typ int. Môžu mať iný rozsah oboru hodnôt, ktorý je uvedený v&nbsp;tvare symbolických konštánt SHRT_MIN, SHRT_MAX pre typ short a&nbsp;LONG_MIN, LONG_MAX pre typ long. Použitím typu unsigned int sa presúva "int" rozsah do kladných hodnôt 0 až 65535.</p>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>char</b>:</i>
+
+<p align="justify">Používa sa pre špecifikáciu znakových premenných. Obvyklá dĺžka typu je 1 byt (8 bitov), z&nbsp;čoho vyplýva dekadický rozsah 0 až 255. Umožňuje pracovať so všetkými znakmi ASCII tabuľky. Zadávanie znakových konštánt sa zapisuje pomocou apostrofov, napr. char z='a'; Existuje niekoľko tzv. zmenových postupností s&nbsp;týmto významom a&nbsp;spôsobom zápisu:</p>
+
+<pre>
+        \a      alert            zvuk (beep)
+        \b      backspace        posuv o 1 znak späť
+        \f      formfeed         nová strana
+        \n      newline          nový riadok
+        \r      carriage return  návrat vozíka - nový riadok
+        \t      hor. tabelator   tabelátor
+        \v      vert. tabelator  tabelátor zvislý
+        \\      backslash        zobrazí opačné lomítko
+        \'      single quote     zobrazí apostrof
+        \"      double quote     zobrazí uvodzovky
+        \?      question mark    zobrazí otáznik
+        \ddd                     bitový obrazec
+</pre>
+
+<p align="justify">Zmenová postupnosť \ddd pozostáva z&nbsp;opačného lomítka, za ktorým následuje jedna, dve alebo tri osmičkové číslice, udávajúce hodnotu požadovaného znaku. Špeciálnym prípadom tejto konštrukcie je <em>\0</em> (bez ďalších číslic), ktorá reprezentuje prázdny znak (používa sa na označenie ukončenia reťazca - poľa znakov). Ak za opačným lomítkom nenasleduje jeden z&nbsp;uvedených znakov, opačné lomítko sa ignoruje.</p>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>float a&nbsp; double</b>:</i>
+
+<p align="justify">Používa sa pre špecifikáciu reálnych čísel v&nbsp;pohyblivej rádovej čiarke. Konštanty sa zapisujú obvyklým spôsobom s&nbsp;desatinnou bodkou, resp. v&nbsp;semilogaritmickom tvare (mantisa plus exponent), napráklad</p>
+
+<pre>
+  float f=12.76, ff=12.76e-3;
+</pre>
+
+<br />
+<b><i>Odvodené typy</i></b><br />
+<i>&nbsp;&nbsp;-typ <b>smerník</b>:</i>
+
+<p align="justify">Používa sa pre špecifikáciu adresy dátového objektu. Formálne sa označuje znakom * (operátor dereferencie). Smerník obsahuje vždy dve základné informácie o&nbsp;objekte - jeho adresu a&nbsp;jeho dĺžku (vyplýva z&nbsp;typu objektu). V&nbsp; zápise int *si; označuje si smerník na typ int, *si znamená hodnotu objektu, na ktorú smerník si ukazuje.</p>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>pole</b>:</i>
+
+<p align="justify">Používa sa pre špecifikáciu homogénnej dátovej štruktúry daného typu. Pole je v&nbsp;jazyku C jednorozmerné, indexované od 0. Viacrozmerné pole vzniká ako pole jednorozmerných polí , napr.</p>
+
+<pre>
+  float p1[3],p2[2][4];
+</pre>
+
+<p align="justify">Názov poľa predstavuje smerník na jeho začiatok, takže zápis *(p1+2) má rovnaký význam ako tradičné p1[2].</p>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>struct</b>:</i>
+
+<p align="justify">Používa sa pre špecifikáciu nehomogénnej dátovej štruktúry (obdoba dátového typu záznam z&nbsp;jazyka Pascal), napr. zápis</p>
+
+<pre>
+  struct clen
+  {
+    char  meno[25];
+    int   vek;
+    float vaha;
+  }
+</pre>
+
+<p align="justify">špecifikuje typ štruktúry clen (údaj o&nbsp;mene, veku a&nbsp;hmotnosti). Deklarácia premenných typu struct má tvar</p>
+
+<pre>
+   struct clen pr1, pr2[5], *pr3;
+</pre>
+
+<p align="justify">Táto deklarácia vytvára premennú pr1 typu clen, pole štruktúr pr2 s&nbsp;piatimi prvkami a&nbsp;smerník pr3 na štruktúru clen. Štruktúra môže obsahovať aj smerník sama na seba, čo sa využíva pri vytváraní zoznamov (viď kap. 9.1), napr.</p>
+
+<pre>
+  struct clen
+  {
+    char        meno[25];
+    int         vek;
+    float       vaha;
+    struct clen *dalsi;
+  }
+</pre>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>union</b>:</i>
+
+<p align="justify">Vzniká analogicky ako štruktúra s&nbsp;tým, že namiesto kľúčového slova struct sa použije kľúčové slovo union. Rozdiel medzi nimi spočíva v&nbsp;spôsobe uloženia položiek struct a&nbsp;union v&nbsp;pamäti. Kým položky objektu struct sú uložené všetky za sebou v&nbsp;pamäti, objektu union (zjednotenie) je pridelená iba pamäť, potrebná pre najdlhšiu položku. Jednotlivé položky unionu sa prekrývajú, preto v&nbsp;unione môže byť v&nbsp;jednom okamihu iba jedna položka. Použitie unionu je pomerne zriedkavé. Syntax ako aj prístup k&nbsp;položkám unionu je analogický ako v&nbsp;prípade štruktúry</p>
+
+<pre>
+  typedef union
+  {
+    char  meno[25];
+    int   vek;
+    float vaha;
+  } typun;
+
+  typun a, *sa = &amp;a;
+
+  a.vek = 15;
+  sa-&gt;vaha = 75.5;
+</pre>
+
+<p align="justify">Praktické použitie unionu ilustruje <a href="Zdrojaky/Pr3_4.c.html">príklad pr3_4.c</a> na ukážke výpočtu objemov geometrických telies.</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* pr3_4.c pouzitie unie a pristup k jej zlozkam */</i></font>
+<font color="#0000a0"><i>/* program bol kompilovany pod Borland C v3.0*/</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;stdlib.h&gt;</font>
+<font color="#008000">#include &lt;conio.h&gt;</font>
+<font color="#008000">#include &lt;math.h&gt;</font>
+
+<font color="#800000"><b>typedef enum</b> {</font>NIC<font color="#800000">,</font> GULA<font color="#800000">,</font> VALEC<font color="#800000">,</font> KOCKA<font color="#800000">,</font> KVADER<font color="#800000">}</font> T<font color="#800000">;</font>
+
+<font color="#800000"><b>struct</b></font> kvader<font color="#800000">{</font>
+   <font color="#800000"><b>double</b></font> dlzka<font color="#800000">;</font>
+   <font color="#800000"><b>double</b></font> sirka<font color="#800000">;</font>
+   <font color="#800000"><b>double</b></font> vyska<font color="#800000">;</font>
+   <font color="#800000">};</font>
+<font color="#800000"><b>struct</b></font> valec<font color="#800000">{</font>
+   <font color="#800000"><b>double</b></font> polomer<font color="#800000">;</font>
+   <font color="#800000"><b>double</b></font> vyska<font color="#800000">;</font>
+   <font color="#800000">};</font>
+<font color="#800000"><b>union</b></font> teleso<font color="#800000">{</font>
+   <font color="#800000"><b>double</b></font> rozmer<font color="#800000">;</font>
+   <font color="#800000"><b>struct</b></font> kvader a<font color="#800000">;</font>
+   <font color="#800000"><b>struct</b></font> valec b<font color="#800000">;</font>
+   <font color="#800000">};</font>
+<font color="#800000"><b>union</b></font> teleso t<font color="#800000">, *</font>pt<font color="#800000">=&amp;</font>t<font color="#800000">;</font>
+T typ<font color="#800000">;</font>
+<font color="#800000"><b>double</b></font> objem<font color="#800000">;</font>
+<font color="#800000"><b>char</b></font> c<font color="#800000">;</font>
+
+<font color="#800000"><b>void</b></font> vstup<font color="#800000">(<b>void</b>);</font>
+<font color="#800000"><b>void</b></font> vypocet<font color="#800000">(<b>void</b>);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>do</b></font>
+  <font color="#800000">{</font>
+    clrscr<font color="#800000">();</font>
+    puts<font color="#800000">(</font><font color="#0080c0">&quot;Vypocet objemu telesa&quot;</font><font color="#800000">);</font>
+    vstup<font color="#800000">();</font>
+    vypocet<font color="#800000">();</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Pokracovanie (A/N) :&quot;</font><font color="#800000">);</font>
+    c <font color="#800000">=</font> toupper<font color="#800000">(</font>getche<font color="#800000">());</font>
+  <font color="#800000">} <b>while</b>(</font>c <font color="#800000">==</font> <font color="#ff8080">'A'</font><font color="#800000">);</font>
+  <font color="#800000"><b>return</b></font> <font color="#ff0080">0</font><font color="#800000">;</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>void</b></font> vstup<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;gula...0 kocka...1 kvader...2 valec...3 &quot;</font><font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;\nteleso: &quot;</font><font color="#800000">);</font>
+  c<font color="#800000">=</font>getche<font color="#800000">();</font>
+  <font color="#800000"><b>switch</b> (</font>c<font color="#800000">)</font>
+  <font color="#800000">{</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff8080">'0'</font> <font color="#800000">:</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;\npolomer gule : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>t<font color="#800000">.</font>rozmer<font color="#800000">));</font>
+      typ <font color="#800000">=</font> GULA<font color="#800000">;</font>
+      <font color="#800000"><b>break</b>;</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff8080">'1'</font> <font color="#800000">:</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;\nstrana kocky : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>pt<font color="#800000">-&gt;</font>rozmer<font color="#800000">));</font>
+      typ <font color="#800000">=</font> KOCKA<font color="#800000">;</font>
+      <font color="#800000"><b>break</b>;</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff8080">'2'</font> <font color="#800000">:</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;\ndlzka kvadra : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>t<font color="#800000">.</font>a<font color="#800000">.</font>dlzka<font color="#800000">));</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;sirka kvadra : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>t<font color="#800000">.</font>a<font color="#800000">.</font>sirka<font color="#800000">));</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;vyska kvadra : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>t<font color="#800000">.</font>a<font color="#800000">.</font>vyska<font color="#800000">));</font>
+      typ <font color="#800000">=</font> KVADER<font color="#800000">;</font>
+      <font color="#800000"><b>break</b>;</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff8080">'3'</font> <font color="#800000">:</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;\npolomer valca : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>pt<font color="#800000">-&gt;</font>b<font color="#800000">.</font>polomer<font color="#800000">));</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;2vyska valca : &quot;</font><font color="#800000">);</font>
+      scanf<font color="#800000">(</font><font color="#0080c0">&quot;%lf&quot;</font><font color="#800000">,&amp;(</font>t<font color="#800000">.</font>b<font color="#800000">.</font>vyska<font color="#800000">));</font>
+      typ <font color="#800000">=</font> VALEC<font color="#800000">;</font>
+      <font color="#800000"><b>break</b>;</font>
+  <font color="#800000"><b>default</b> :</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot; Nezname teleso \a\n&quot;</font><font color="#800000">);</font>
+      typ <font color="#800000">=</font> NIC<font color="#800000">;</font>
+      <font color="#800000"><b>break</b>;</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>void</b></font> vypocet<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>if</b> (</font>typ <font color="#800000">==</font> GULA<font color="#800000">)</font>
+  <font color="#800000">{</font>
+    objem <font color="#800000">=</font> <font color="#ff0080">4.</font><font color="#800000">/</font><font color="#ff0080">3</font><font color="#800000">*</font>M_PI<font color="#800000">*</font>pow<font color="#800000">(</font>t<font color="#800000">.</font>rozmer<font color="#800000">,</font><font color="#ff0080">3</font><font color="#800000">);</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem gule: %10.2f \n&quot;</font><font color="#800000">,</font>objem<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>else if</b> (</font>typ <font color="#800000">==</font> KOCKA<font color="#800000">)</font>
+  <font color="#800000">{</font>
+    objem <font color="#800000">=</font> pow<font color="#800000">(</font>t<font color="#800000">.</font>rozmer<font color="#800000">,</font><font color="#ff0080">3</font><font color="#800000">);</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem kocky: %10.2f \n&quot;</font><font color="#800000">,</font>objem<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>else if</b> (</font>typ <font color="#800000">==</font> KVADER<font color="#800000">)</font>
+  <font color="#800000">{</font>
+    objem <font color="#800000">=</font> t<font color="#800000">.</font>a<font color="#800000">.</font>dlzka<font color="#800000">*</font>t<font color="#800000">.</font>a<font color="#800000">.</font>sirka<font color="#800000">*</font>t<font color="#800000">.</font>a<font color="#800000">.</font>vyska<font color="#800000">;</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem kvadra: %10.2f \n&quot;</font><font color="#800000">,</font>objem<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>else if</b> (</font>typ <font color="#800000">==</font> VALEC<font color="#800000">)</font>
+  <font color="#800000">{</font>
+    objem <font color="#800000">=</font> M_PI<font color="#800000">*</font>pow<font color="#800000">(</font>t<font color="#800000">.</font>b<font color="#800000">.</font>polomer<font color="#800000">,</font><font color="#ff0080">2</font><font color="#800000">)*</font>t<font color="#800000">.</font>b<font color="#800000">.</font>vyska<font color="#800000">;</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Objem valca: %10.2f \n&quot;</font><font color="#800000">,</font>objem<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>enum</b> (vymenovaný typ):</i>
+
+<p align="justify">Používa sa pre špecifikáciu užívateľom vymenovaných hodnôt (obdobne ako v&nbsp;Pascale), ktoré sú reprezentované podmnožinou oboru hodnôt typu int. Jednotlivým položkám vymenovaného typu sú priradzované celé čísla od nuly a&nbsp; zväčšujúce sa o&nbsp;jedna, pokiaľ nie je predpísané inak, napr.</p>
+
+<pre>
+  enum ZNAK {pismeno, cislica, ine};
+  enum ZNAK p1;
+</pre>
+
+<p align="justify">bude mať obor hodnôt [0,1,2]. S&nbsp;položkami vymenovanéh typu pracujeme pri priradzovaní i&nbsp;pri inicializácii, napr.</p>
+
+<pre>
+   enum FARBA {biela, modra, cervena} f = biela;
+   ...
+   f = modra;
+</pre>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>typedef</b> (Užívateľom definovaný typ):</i>
+
+<p align="justify">Používa sa pre špecifikáciu užívateľom vytvorených typov, ktoré sa v&nbsp;ďalšom používajú presne tak, ako typy jazyka C. Názvy vytvorených typov sa píšu spravidla (pre odlíšenie) veľkými písmenami, napr.</p>
+
+<pre>
+   typedef char *STRING;
+
+   STRING s;
+</pre>
+
+<p align="justify">Premenná s&nbsp;je pokladaná za premennú typu char *.</p>
+
+<br />
+<i>&nbsp;&nbsp;-typ <b>void</b> (Prázdny typ):</i>
+
+<p align="justify">Používa sa pre špecifikáciu skutočnosti, že prenášaný typ je prázdny, najčastejšie v&nbsp;spojitosti s&nbsp;funkciou, napr. zápis</p>
+
+<pre>
+   void f(void)
+</pre>
+
+<p align="justify">označuje funkciu f, ktorá nemá žiadne parametre ani nevracia žiadnu hodnotu.<br />
+Môže sa však použiť aj pri smerníkoch - smerník na nezámy (všeobecný typ).</p>
+
+<br />
+<b><i>Typové modifikátory</i></b>
+
+<p align="justify">Ľubovoľná premenná určitej pamäťovej triedy a&nbsp;dátového typu môže byť modifikovaná tzv. typovým modifikátorom, ktorým môže byť const a&nbsp; volatile.</p>
+
+<br />
+<i>&nbsp;&nbsp;-modifikátor <b>const</b>:</i>
+
+<p align="justify">Udáva, že daná premenná nesmie po jej inicializácii meniť svoju hodnotu. Nie je možné využiť ju pri definovaní hraníc poľa (ako symbolickú konštantu), ale často sa využíva pri definícii formálnych parametrov funkcií, kedy takto označený parameter je spracovaný iba ako vstupný parameter (jeho hodnota sa v&nbsp;rámci funkcie nezmení).</p>
+
+<br />
+<i>&nbsp;&nbsp;-modifikátor <b>volatile</b>:</i>
+
+<p align="justify">Udáva, že daná premenná môže byť modifikovaná bližšie nešpecifikovanou asynchronnou udalosťou (i mimo programu, napr. prerušením). Kompilátor nemôže urobiť žiadny záver o&nbsp;konštantnosti alebo možnosti zmeny takejto premennej. Použitie takto modifikovaných premenných je veľmi zriedkavé.</p>
+
+<br />
+<b><i>Prideľovanie pamäte</i></b>
+
+<p align="justify">Všetky používané dátové štruktúry (premenné) môžeme podľa doby ich trvania rozdeliť na statické a&nbsp;dynamické. Statické vznikajú vyhradením miesta kompilátorom počas prekladu a&nbsp;trvajú po celý čas vykonávania programu. Dynamické vznikajú a&nbsp;zanikajú podľa potreby počas vykonávania programu. Dynamická premenná vzniká alokáciou pamäte, zaniká uvoľnením tejto pamäte. Na to sa využívajú štandardné knižničné funkcie malloc a&nbsp;free. Funkcia malloc má jeden parameter typu unsigned int, ktorý udáva požadované množstvo dynamicky pridelenej pamäte. Vracia smerník na pridelenú pamäť (typu char *, resp. void *), cez ktorý program komunikuje s&nbsp;takto vytvorenou dynamickou premennou. Táto pamäť je až do jej uvoľnenia rezervovaná. Uvoľnenie pamäte sa vykoná pomocou funkcie free, ktorej zadáme smerník na už nepotrebnú pamäť. Nasledujúci <a href="Zdrojaky/Pr3_5.c.html">príklad</a> ilustruje vytvorenie, naplnenie aj zrušenie takejto dynamickej premennej d:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/*  priklad pr3_5.c pr&#225;ca s dynamickou premennou */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;string.h&gt;</font>
+<font color="#008000">#include &lt;malloc.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> sr[50]<font color="#800000">, *</font>s=sr<font color="#800000">,*</font>d<font color="#800000">;</font>
+
+  strcpy<font color="#800000">(</font>s<font color="#800000">,</font><font color="#0080c0">&quot;retazec&quot;</font><font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Obsah statickej premennej: %s\n&quot;</font><font color="#800000">,</font>s<font color="#800000">);</font>
+  d<font color="#800000">=(<b>char</b>*)</font>malloc<font color="#800000">(</font>strlen<font color="#800000">(</font>s<font color="#800000">)+</font><font color="#ff0080">1</font><font color="#800000">);</font>
+  strcpy<font color="#800000">(</font>d<font color="#800000">,</font>s<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Obsah dynamickej premennej: %s\n&quot;</font><font color="#800000">,</font>d<font color="#800000">);</font>
+  free<font color="#800000">(</font>d<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<br />
+<b><i>Bitové polia</i></b>
+
+<p align="justify">Vymenovaný typ sa používa pre špecifikáciu užívateľom vymenovaných hodnôt (obdobne ako v&nbsp;Pascale), ktoré sú reprezentované podmnožinou oboru hodnôt typu int. Bitové pole sa používa podobne ako vymenovaný typ s&nbsp;tým, že umožnuje úspornejšiu reprezentáciu zložiek vo forme daného počtu bitov, ktoré sa umiestňujú v&nbsp;rámci jedného, resp. niekoľkých celých čísel. Bitové pole môže byť položkou štruktúry. Deklarácia bitového poľa má tvar</p>
+
+<pre>
+  unsigned nazov : počet_bitov
+
+
+  typedef unsigned int UInt;
+
+  typedef struct twobytes
+  {
+    UInt a : 4;
+    UInt b : 3;
+    UInt c : 7;
+    UInt d : 2;
+  }
+  /*sucet musi byt n nasobok 16 (velkost int)*/
+</pre>
+
+<p align="justify"><a href="Zdrojaky/Pr3_6.c.html">Príklad pr3_6.c</a> uvádza možnosť použitia bitového poľa s&nbsp;úsporou dvoch položiek typu int. Prvá položka pohl zaberá 1 bit, položka stav 2 bity (číselne 0 až 3), položka vek 5 bitov (umožňuje zadávať vek 0 až 31). Posledná položka no sa nepoužíva, jej uvedenie nuluje príslušné bity. Ak ju neuvedieme, bity sú nastavené na 1. Všeobecne sa doporučuje túto položku udávať a&nbsp;to kôly prenositeľnosti (niektorý kompilátor môže vyžadovať, aby bol súčet násobkom veľkosti použitého typu).</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/*  priklad pr3_6.c použitie bitov&#233;ho poľa */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#define m 1</font>
+<font color="#008000">#define z 0</font>
+
+<font color="#800000"><b>struct</b></font> ziak
+<font color="#800000">{</font>
+  <font color="#800000"><b>unsigned</b></font> pohl <font color="#800000">:</font> <font color="#ff0080">1</font><font color="#800000">;</font> <font color="#0000a0"><i>/* pohlavie */</i></font>
+  <font color="#800000"><b>unsigned</b></font> stav <font color="#800000">:</font> <font color="#ff0080">2</font><font color="#800000">;</font> <font color="#0000a0"><i>/* slob, žen, rozv, vdov */</i></font>
+  <font color="#800000"><b>unsigned</b></font> vek  <font color="#800000">:</font> <font color="#ff0080">5</font><font color="#800000">;</font> <font color="#0000a0"><i>/* vek do 32 rokov */</i></font>
+  <font color="#800000"><b>unsigned</b></font> no   <font color="#800000">:</font> <font color="#ff0080">8</font><font color="#800000">;</font> <font color="#0000a0"><i>/* nepouzite - do poctu (16) */</i></font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>struct</b></font> ziak x<font color="#800000">;</font>
+
+  x<font color="#800000">.</font>pohl <font color="#800000">=</font> m<font color="#800000">;</font>
+  x<font color="#800000">.</font>stav <font color="#800000">=</font> <font color="#ff0080">3</font><font color="#800000">;</font>
+  x<font color="#800000">.</font>vek <font color="#800000">=</font> <font color="#ff0080">12</font><font color="#800000">;</font>
+  <font color="#0000a0"><i>/*...*/</i></font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;pohl=%d x=%o\n&quot;</font><font color="#800000">,</font> x<font color="#800000">.</font>pohl<font color="#800000">,</font> x<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p align="justify">Taktiež je možné, že nie každý kompilátor podporuje prenášanie bitov, príklad:</p>
+
+<pre>
+  typedef struct fourbytes
+  {
+    unsigned a : 15;
+    unsigned b : 2; /*nesmie byt*/
+    unsigned c : 15;
+  }
+</pre>
+</div>
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+
+</head>
+
+<body>
+<h3 style="width:450"> vlastnosti objektovo-orientovaného programovania</h3>
+Pre správne pochopenie objektovo orientovaného programovania sú kľúčové nasledujúce základné
+princípy: zapuzdrenie (encapsulation), dedičnosť (inheritance) a polymorfizmus (polymorphism).
+Som si vedomý, že pochopiť tieto pojmy bude na tomto mieste bude asi nereálne, tu je to len na vysvetlenie načo to OOP vlastne je.
+Keď urobíme zopár programov s použitím tried bude táto časť jasnejšia. 
+<dl><dt>Zapúzdrenie 
+	<dd>Zvyšuje prehľadnosť zdrojového kódu objektovo orientovaného programu, ale tiež umožňuje 
+		chrániť dáta pred ich možným zneužitím prostredníctvom techniky ukrývania dát.
+		Zapúzdrenie zamedzuje priamy prístup k interným dátovým atribútom a členským funkciám objektu.
+		Používateľ teda môže manipulovať s objektmi triedy bez toho, aby poznal ich vnútorné dátové zloženie a internú funkcionalitu.
+	<dt>Dedičnosť
+	<dd>je mechanizmus umožňujúci opätovne použiť existujúci zdrojový kód programu. Proces dedičnosti prebieha 
+		vytvorením odvodenej triedy z bázovej triedy, pričom nová trieda dedí všetky charakteristiky pôvodnej triedy. 
+		Bázová trieda sa zvykne označovať aj ako rodič, nadtrieda alebo materská trieda a z nej odvodená trieda sa 
+		najčastejšie definuje ako dcérska trieda, podtrieda alebo potomok.
+		<br>Odvodená trieda pôsobí vždy ako špeciálny prípad bázovej triedy. Podtrieda nám umožňuje pridávať 
+		k zdedeným dátovým atribútom a metódám bázovej triedy aj ďalšie nové dátové atribúty a metódy.
+		Rozširuje sa tým pôvodne zdedená funkcionalita, ktorú sme získali z bázovej triedy. Okrem toho môže
+		odvodená trieda prekrývať (override) požadované zdedené metódy bázovej triedy. To znamená, že podtrieda smie 
+		definovať metódy s rovnakými názvami, signatúrami a dátovými typmi návratových hodnôt, akými disponovala materská trieda. 
+		Tieto novo definované, a teda prekrývajúce metódy odvodenej triedy, sú vybavené odlišnou funkcionalitou, 
+		než akú mali rovnomenné metódy bázovej triedy.
+		V jazyku C++ máme k dispozícii dva druhy dedičnosti:
+		<ul><li>jednoduchá dedičnosť
+			<li>viacnásobná dedičnosť
+		</ul>
+		Model jednoduchej dedičnosti (trieda A je základná/bázická, trieda B je dcérska)
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>// Deklarácia bázovej triedy.
+class A
+{
+// Telo bázovej triedy.
+};
+// Deklarácia odvodenej triedy.
+class B : [modifikátor] A
+{
+// Telo odvodenej triedy.
+};</pre>
+		</tr></table>
+		Modifikátor určuje typ jednoduchej dedičnosti.
+		<ul><li>private – súkromná jednoduchá dedičnosť.
+			<li>protected – chránená jednoduchá dedičnosť.
+			<li>public – verejná jednoduchá dedičnosť.	
+			<li>neuvedené - implicitne sa dosadí private
+		</ul>
+		Všimnime si, že hneď po mene triedy B nasleduje <b>dvojbodka</b> za ktorou je uvedený modifikátor prístupu a potom bázová trieda z ktorej budeme <b>dediť</b>prvky.		
+		<br>Modifikátor určuje, ako budú chránené prvky základnej triedy v triede dcérskej. Ak zvolíme modifikátor public tak si dedené členy 
+		ponechajú svoje prístupové práva také, aké majú v bázovej triede. 
+		<br>Nateray budeme pou69va5 modifikátor len public.
+
+		<table border="1">
+		<tr><td>&nbsp;<th colspan="3">typ dedičnosti</tr>
+		<tr><td> práva <th bgcolor="Olive" style="color:'white'">private<th bgcolor="Olive" style="color:'white'">protected<th bgcolor="Olive" style="color:'white'">public</tr>
+ 		<tr><th bgcolor="Olive" style="color:'white'">private<td>súkromné<td>súkromné<td>súkromné</tr>
+		<tr><th bgcolor="Olive" style="color:'white'">protected<td>súkromné<td>chránené<td>chránené</tr>
+		<tr><th bgcolor="Olive" style="color:'white'">public<td>súkromné<td>chránené<td>verejné</tr>
+		</table>
+		<br>Model násobnej dedičnosti umožňuje dediť objekty od viacerých tried 
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>// prvá bázová trieda		
+		class A {
+public:
+virtual int aaa();
+};
+// druhá bázová trieda
+class B {
+public:
+virtual void bbb(int i);
+};
+// dcérska trieda
+class M : public A, public B {
+. . .
+public:
+virtual int aaa();
+virtual void bbb(int i);
+. . .
+};</pre>
+		</tr></table>
+		Ukážka príkladu na jednoduchú dedičnosť
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>// Deklarácia bázovej triedy.
+class B
+{   int i;
+    public:
+	void set_i(int ii);
+	int get_i();
+};
+// dcérska trieda
+class D : public B
+{   int j;
+ 	public:
+	void set_j(int jj);
+	int mul();
+};	
+//definícia členských funkcií bázovej triedy 		
+	void B::set_i(int ii)
+	{ i = ii; }
+	int B::get_i()
+	{ return i; }
+//defin9cia členských funkcií dcérskej triedy
+	void D::set_j(int jj)
+	{ j = jj; }
+	int D::mul()
+	{ return j*get_i(); //i nevidime priamo}
+//hlavný program
+	int main()
+	{  D abc; //vztvorí objekt triedy D
+	   abc.set_i(5); &nbsp; &nbsp;//v bazovej triede nastavi hodnotu 5 do i
+	   abc.set_j(6); &nbsp; &nbsp;//v dc0rskej triede nastavi hodnotu 6 do j
+	   cout &lt;&lt;abc.mul();
+	   return 0;
+	}  
+</pre>
+		</tr></table>
+		Treba si všimnúť hlavne definíciu funkcie <b>mul</b>, volá get_i(), ktorá je členom triedy bázovej triedy B.
+		Je to možné vďaka tomu, že verejné členy triedy B sa stali verejnými členmi D a privátne/súkromné členy triedy B
+		nie sú v triede viditeľné a preto premennú <b>i</b> vo funkcii nevidíme a nemôžeme ju používať.
+		<dl><dt>Úlohy
+			<dd><ul><li>Vytvor bázovú triedu <b>clovek</b> s atribútmi meno, priezvisko, rok_nar
+						<br>Vytvor dcérsku triedu <b>student</b> s ďalšími atribútmi rocnik, trieda
+				</ul>
+		</dl>		
+	<dt>
+</body>
+</html>

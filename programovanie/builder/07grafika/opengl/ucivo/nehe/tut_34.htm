@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 34 - Generování terénů a krajin za použití výškového mapování textur</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_34.jpg" class="nehe_maly" alt="Lekce 34" />
+
+<h1>Lekce 34 - Generování terénů a krajin za použití výškového mapování textur</h1>
+
+<p class="nadpis_clanku">Chtěli byste vytvořit věrnou simulaci krajiny, ale nevíte, jak na to? Bude nám stačit obyčejný 2D obrázek ve stupních šedi, pomocí kterého deformujeme rovinu do třetího rozměru. Na první pohled těžko řešitelné problémy bývají častokrát velice jednoduché.</p>
+
+<p>Nyní byste už měli být opravdovými experty na OpenGL, ale možná nevíte, co to je výškové mapování (height mapping). Představte si rovinu, vytlačenou podle nějaké formy do 3D prostoru. Této formě se říká výšková mapa, kterou může být defakto jakýkoli typ dat. Obrázky, textové soubory nebo třeba datový proud zvuku - záleží jen na vás. My budeme používat .RAW obrázek ve stupních šedi.</p>
+
+<p>Definujeme tři opravdu důležité symbolické konstanty. MAP_SIZE představuje rozměr mapy, v našem případě se jedná o šířku/výšku obrázku (1024x1024). Konstanta STEP_SIZE určuje velikost kroků při grabování hodnot z obrázku. V současné chvíli bereme v úvahu každý šestnáctý pixel. Zmenšením čísla přidáváme do výsledného povrchu polygony, takže vypadá méně hranatě, ale zároveň zvyšujeme náročnost na rendering. HEIGHT_RATIO slouží jako měřítko výšky na ose y. Malé číslo zredukuje vysoké hory s údolími na plochou rovinu.</p>
+
+<p class="src0">#define MAP_SIZE 1024<span class="kom">// Velikost .RAW obrázku výškové mapy</span></p>
+<p class="src0">#define STEP_SIZE 16<span class="kom">// Hustota grabování pixelů</span></p>
+<p class="src0">#define HEIGHT_RATIO 1.5f<span class="kom">// Zoom výšky terénu na ose y</span></p>
+
+<p>Proměnná bRender představuje přepínač mezi pevnými polygony a drátěným modelem, scaleValue určuje zoom scény na všech třech osách.</p>
+
+<p class="src0">bool bRender = TRUE;<span class="kom">// Polygony - true, drátěný model - false</span></p>
+<p class="src0">float scaleValue = 0.15f;<span class="kom">// Měřítko velikosti terénu (všechny osy)</span></p>
+
+<p>Deklarujeme jednorozměrné pole pro uložení všech dat výškové mapy. Používaný .RAW obrázek neobsahuje RGB složky barvy, ale každý pixel je tvořen jedním bytem, který specifikuje jeho odstín. Nicméně o barvu se starat nebudeme, jde nám především o hodnoty. Číslo 255 bude představovat nejvyšší možný bod povrchu a nula nejnižší.</p>
+
+<p class="src0">BYTE g_HeightMap[MAP_SIZE * MAP_SIZE];<span class="kom">// Ukládá data výškové mapy</span></p>
+
+<p>Funkce LoadRawFile() nahrává RAW soubor s obrázkem. Nic komplexního! V parametrech se jí předává řetězec diskové cesty, velikost dat obrázku a ukazatel na paměť, do které se ukládá. Otevřeme soubor pro čtení v binárním módu a ošetříme situaci, kdy neexistuje.</p>
+
+<p class="src0">void LoadRawFile(LPSTR strName, int nSize, BYTE* pHeightMap)<span class="kom">// Nahraje .RAW soubor</span></p>
+<p class="src0">{</p>
+<p class="src1">FILE *pFile = NULL;<span class="kom">// Handle souboru</span></p>
+<p></p>
+<p class="src1">pFile = fopen(strName, &quot;rb&quot;);<span class="kom">// Otevření souboru pro čtení v binárním módu</span></p>
+<p></p>
+<p class="src1">if (pFile == NULL)<span class="kom">// Otevření v pořádku?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Can't Find The Height Map!&quot;, &quot;Error&quot;, MB_OK);</p>
+<p class="src2">return;</p>
+<p class="src1">}</p>
+
+<p>Pomocí fread() načteme po jednom bytu ze souboru pFile data o velikosti nSize a uložíme je do paměti na lokaci pHeightMap. Vyskytne-li se chyba, vypíšeme varovnou zprávu.</p>
+
+<p class="src1">fread(pHeightMap, 1, nSize, pFile);<span class="kom">// Načte soubor do paměti</span></p>
+<p></p>
+<p class="src1">int result = ferror(pFile);<span class="kom">// Výsledek načítání dat</span></p>
+<p></p>
+<p class="src1">if (result)<span class="kom">// Nastala chyba?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Failed To Get Data!&quot;, &quot;Error&quot;, MB_OK);</p>
+<p class="src1">}</p>
+
+<p>Na konci zbývá už jenom zavřít soubor.</p>
+
+<p class="src1">fclose(pFile);<span class="kom">// Zavření souboru</span></p>
+<p class="src0">}</p>
+
+<p>Kód pro inicializaci OpenGL byste měli bez problémů pochopit sami.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Inicializace OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Perspektivní korekce</span></p>
+
+<p>Před vrácením true ještě do g_HeightMap nahrajeme .RAW obrázek.</p>
+
+<p class="src1">LoadRawFile(&quot;Data/Terrain.raw&quot;, MAP_SIZE * MAP_SIZE, g_HeightMap);<span class="kom">// Načtení dat výškové mapy</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Máme zde jeden problém - uložili jsme dvourozměrný obrázek do jednorozměrného pole. Co s tím? Funkce Height() provede výpočet pro transformaci x, y souřadnic na index do tohoto pole a vrátí hodnotu, která je na něm uložená. Při práci s poli bychom se vždy měli start o možnost přetečení paměti. Jednoduchým trikem zmenšíme vysoké hodnoty tak, aby byly vždy platné. Pokud některá z hodnot přesáhne daný index, zbytek po dělení ji zmenší do rozmezí, které můžeme bez obav použít. Dále otestujeme, jestli se v poli opravdu nacházejí data.</p>
+
+<p class="src0">int Height(BYTE *pHeightMap, int X, int Y)<span class="kom">// Přepočítá 2D souřadnice na 1D a vrátí uloženou hodnotu</span></p>
+<p class="src0">{</p>
+<p class="src1">int x = X % MAP_SIZE;<span class="kom">// Proti přetečení paměti</span></p>
+<p class="src1">int y = Y % MAP_SIZE;</p>
+<p></p>
+<p class="src1">if(!pHeightMap)<span class="kom">// Obsahuje paměť data?</span></p>
+<p class="src1">{</p>
+<p class="src2">return 0;</p>
+<p class="src1">}</p>
+
+<p>Aby se jednorozměrné pole chovalo jako dvojrozměrné, musíme zapojit trochu matematiky. Index do 1D pole na 2D souřadnicích získáme tak, že vynásobíme řádek (y) jeho šířkou (MAP_SIZE) a přičteme konkrétní pozici na řádku (x).</p>
+
+<p class="src1">return pHeightMap[(y * MAP_SIZE) + x];<span class="kom">// Vrátí hodnotu z pole</span></p>
+<p class="src0">}</p>
+
+<p>Na tomto místě nastavujeme barvu vertexu podle aktuální výšky nad height mapou. Získáme hodnotu na indexu pole a dělením 256.0f ji zmenšíme do rozmezí 0.0f až 1.0f. Abychom ji ještě trochu ztmavili, odečteme -0.15f. Výsledek předáme funkci glColor3f() jako modrou složku barvy.</p>
+
+<p class="src0">void SetVertexColor(BYTE *pHeightMap, int x, int y)<span class="kom">// Získá barvu v závislosti na výšce</span></p>
+<p class="src0">{</p>
+<p class="src1">if(!pHeightMap)<span class="kom">// Obsahuje paměť data?</span></p>
+<p class="src1">{</p>
+<p class="src2">return;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1"><span class="kom">// Získání hodnoty, přepočet do rozmezí 0.0f až 1.0f, ztmavení</span></p>
+<p class="src1">float fColor = (Height(pHeightMap, x, y) / 256.0f) - 0.15f;</p>
+<p></p>
+<p class="src1">glColor3f(0, 0, fColor);<span class="kom">// Odstíny modré barvy</span></p>
+<p class="src0">}</p>
+
+<p>Dostáváme se k nejpodstatnější části celého tutoriálu - renderování terénu. Proměnné X, Y slouží k procházejí výškové mapy a x, y, z jsou 3D souřadnicemi vertexu.</p>
+
+<p class="src0">void RenderHeightMap(BYTE pHeightMap[])<span class="kom">// Renderuje terén</span></p>
+<p class="src0">{</p>
+<p class="src1">int X = 0, Y = 0;<span class="kom">// Pro procházení polem</span></p>
+<p class="src1">int x, y, z;<span class="kom">// Souřadnice vertexů</span></p>
+<p></p>
+<p class="src1">if(!pHeightMap)<span class="kom">// Obsahuje paměť data?</span></p>
+<p class="src1">{</p>
+<p class="src2">return;</p>
+<p class="src1">}</p>
+
+<p>Podle logické hodnoty bRender připínáme mezi vykreslováním obdélníků a linek.</p>
+
+<p class="src1">if(bRender)<span class="kom">// Co chce uživatel renderovat?</span></p>
+<p class="src1">{</p>
+<p class="src2">glBegin(GL_QUADS);<span class="kom">// Polygony</span></p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src1">{</p>
+<p class="src2">glBegin(GL_LINES);<span class="kom">// Drátěný model</span></p>
+<p class="src1">}</p>
+
+<p>Založíme dva vnořené cykly, které procházejí jednotlivé pixely výškové mapy. Vnější se stará o osu x a vnitřní o osu y, z čehož plyne, že vykreslujeme po sloupcích a ne po řádcích. Všimněte si, že po každém průchodu nezvětšujeme řídící proměnnou o jeden pixel, ale hned o několik najednou. Sice výsledný terén nebude tak hladký a přesný, ale díky menšímu počtu polygonů se rendering urychlí. Pokud by se STEP_SIZE rovnalo jedné, každému pixelu by se přiřadil jeden polygon. Myslím, že číslo šestnáct bude vyhovující, ale pokud zapnete světla, které zvýrazňují hranatost povrchu, měli byste ho snížit.</p>
+
+<p>Překl.: Úplně nejlepší by bylo, kdyby se velikost kroku určovala před vstupem do cyklů podle aktuálního FPS. Následující ukázkový kód zavádí zpětnovazební regulační smyčku.</p>
+
+<p class="src1"><span class="kom">// Překl.: Regulace počtu polygonů</span></p>
+<p class="src1"><span class="kom">// if(FPS &lt; 30)// Nižší hodnoty =&gt; viditelné trhání pohybů animace</span></p>
+<p class="src1"><span class="kom">// {</span></p>
+<p class="src2"><span class="kom">// if(STEP_SIZE &gt; 1)// Dolní mez (1 pixel)</span></p>
+<p class="src2"><span class="kom">// {</span></p>
+<p class="src3"><span class="kom">// STEP_SIZE--;// Musí být proměnnou a ne symbolickou konstantou</span></p>
+<p class="src2"><span class="kom">// }</span></p>
+<p class="src1"><span class="kom">// }</span></p>
+<p class="src1"><span class="kom">// else</span></p>
+<p class="src1"><span class="kom">// {</span></p>
+<p class="src2"><span class="kom">// if(STEP_SIZE &lt; MAP_SIZE-1)// Horní mez (velikost výškové mapy)</span></p>
+<p class="src2"><span class="kom">// {</span></p>
+<p class="src3"><span class="kom">// STEP_SIZE++;// Musí být proměnnou a ne symbolickou konstantou</span></p>
+<p class="src2"><span class="kom">// }</span></p>
+<p class="src1"><span class="kom">// }</span></p>
+<p></p>
+<p class="src1">for (X = 0; X &lt; MAP_SIZE; X += STEP_SIZE)<span class="kom">// Řádky výškové mapy</span></p>
+<p class="src1">{</p>
+<p class="src2">for (Y = 0; Y &lt; MAP_SIZE; Y += STEP_SIZE)<span class="kom">// Sloupce výškové mapy</span></p>
+<p class="src2">{</p>
+
+<p>Přepokládám, že to, jak určit pozici vertexu, jste už dávno vytušili. Hodnota na ose x odpovídá x-ové souřadnici výškové mapy a na ose z y-ové. Získali jsme umístění bodu na rovině, potřebujeme ho ještě vyzdvihnout do výšky, které v OpenGL odpovídá osa y. Tato výška je definována hodnotou uloženou na daném prvku pole (světlostí obrázku). Opravdu nic složitého...</p>
+
+<p class="src3"><span class="kom">// Souřadnice levého dolního vertexu</span></p>
+<p class="src3">x = X;</p>
+<p class="src3">y = Height(pHeightMap, X, Y );</p>
+<p class="src3">z = Y;</p>
+
+<p>Určíme barvu bodu podle výšky nad rovinou. Čím výše se nachází, tím bude světlejší. Potom pomocí funkce glVertex3i() předáme OpenGL souřadnice vertexu.</p>
+
+<p class="src3">SetVertexColor(pHeightMap, x, z);<span class="kom">// Barva vertexu</span></p>
+<p class="src3">glVertex3i(x, y, z);<span class="kom">// Definování vertexu</span></p>
+
+<p>Druhý vertex určíme přičtením STEP_SIZE k ose z. Na tomto místě se budeme nacházet při příštím průchodu cyklem, takže se mezi jednotlivými polygony nebudou vyskytovat mezery. Analogicky získáme i další dva body obdélníku. Nyní mi už věříte, když jsem na začátku tutoriálu psal, že složitě vypadající věci bývají často velice jednoduché?</p>
+
+<p class="src3"><span class="kom">// Souřadnice levého horního vertexu</span></p>
+<p class="src3">x = X;</p>
+<p class="src3">y = Height(pHeightMap, X, Y + STEP_SIZE );  </p>
+<p class="src3">z = Y + STEP_SIZE ;</p>
+<p></p>
+<p class="src3">SetVertexColor(pHeightMap, x, z);<span class="kom">// Barva vertexu</span></p>
+<p class="src3">glVertex3i(x, y, z);<span class="kom">// Definování vertexu</span></p>
+<p></p>
+<p class="src3"><span class="kom">// Souřadnice pravého horního vertexu</span></p>
+<p class="src3">x = X + STEP_SIZE; </p>
+<p class="src3">y = Height(pHeightMap, X + STEP_SIZE, Y + STEP_SIZE ); </p>
+<p class="src3">z = Y + STEP_SIZE ;</p>
+<p></p>
+<p class="src3">SetVertexColor(pHeightMap, x, z);<span class="kom">// Barva vertexu</span></p>
+<p class="src3">glVertex3i(x, y, z);<span class="kom">// Definování vertexu</span></p>
+<p></p>
+<p class="src3"><span class="kom">// Souřadnice pravého dolního vertexu</span></p>
+<p class="src3">x = X + STEP_SIZE; </p>
+<p class="src3">y = Height(pHeightMap, X + STEP_SIZE, Y ); </p>
+<p class="src3">z = Y;</p>
+<p></p>
+<p class="src3">SetVertexColor(pHeightMap, x, z);<span class="kom">// Barva vertexu</span></p>
+<p class="src3">glVertex3i(x, y, z);<span class="kom">// Definování vertexu</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Po vykreslení terénu reinicializujeme barvu na bílou, abychom neměli starosti s barvou ostatních objektů ve scéně (netýká se tohoto dema).</p>
+
+<p class="src1">glColor4f(1.0f, 1.0f, 1.0f, 1.0f);<span class="kom">// Reset barvy</span></p>
+<p class="src0">}</p>
+
+<p>Na začátku DrawGLScene() začneme klasicky smazáním bufferů a resetem matice.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslení OpenGL scény</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Vymaže buffery</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>Pomocí funkce gluLookAt() umístíme a natočíme kameru tak, aby byl renderovaný terén v záběru. První tři parametry určují její pozici vzhledem k počátku souřadnicového systému, další tři body reprezentují místo, kam je natočená a poslední tři představují vektor vzhůru. V našem případě se nacházíme nad sledovaným terénem a díváme se na něj trochu dolů (55 je menší než 60) spíše doleva (186 je menší než 212). Hodnota 171 představuje vzdálenost od kamery na ose z. Protože se hory zvedají od zdola nahoru, nastavíme u vektoru vzhůru jedničku na ose y. Ostatní dvě hodnoty zůstanou na nule.</p>
+
+<p>Při prvním použití může být gluLookAt() trochu odstrašující, asi jste zmateni. Nejlepší radou je pohrát si se všemi hodnotami, abyste viděli, jak se pohled na scénu postupně mění. Pokud byste například přepsal pozici z 60 na 120, viděli byste terén spíše seshora než z boku, protože se stále díváte na souřadnice 55.</p>
+
+<p>Praktický příklad: Řekněme, že jste vysoký kolem 1,8 m. Oči, které reprezentují kameru, jsou trochu níže - 1,7 m. Stojíte před stěnou, která je vysoká pouze 1 m, takže bez problémů vidíte její horní stranu. Pokud ale zedníci dostaví stěnu do výšky tří metrů, budete se muset dívat VZHŮRU, ale její vrch už NEUVIDÍTE. Výhled se změnil podle toho, jestli se díváte dolů nebo vzhůru (respektive jestli jste nad nebo pod objektem).</p>
+
+<p class="src1"><span class="kom">// Umístění a natočení kamery</span></p>
+<p class="src1">gluLookAt(212,60,194, 186,55,171, 0,1,0);<span class="kom">// Pozice, směr, vektor vzhůru</span></p>
+
+<p>Aby byl výsledný terén poněkud menší, změníme měřítko souřadnicových os. Protože navíc násobíme y-ovou hodnotu, budou se hory jevit vyšší. Mohli bychom také použít translace a rotace, ale to už nechám na vás.</p>
+
+<p class="src1">glScalef(scaleValue, scaleValue * HEIGHT_RATIO, scaleValue);<span class="kom">// Zoom terénu</span></p>
+
+<p>Pomocí dříve napsané funkce vyrenderujeme terén.</p>
+
+<p class="src1">RenderHeightMap(g_HeightMap);<span class="kom">// Renderování terénu</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Kliknutím levého tlačítka myši může uživatel přepnout mezi renderováním polygonů a linek (drátěný model).</p>
+
+<p class="src0"><span class="kom">// Funkce WndProc()</span></p>
+<p class="src2">case WM_LBUTTONDOWN:<span class="kom">// Levé tlačítko myši</span></p>
+<p class="src2">{</p>
+<p class="src3">bRender = !bRender;<span class="kom">// Přepne mezi polygony a drátěným modelem</span></p>
+<p class="src3">return 0;<span class="kom">// Konec funkce</span></p>
+<p class="src2">}</p>
+
+<p>Šipkami nahoru a dolů zvětšujeme/zmenšujeme měřítko scény a tím i velikost terénu.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src3">if (keys[VK_UP])<span class="kom">// Šipka nahoru</span></p>
+<p class="src3">{</p>
+<p class="src4">scaleValue += 0.001f;<span class="kom">// Vyvýší hory</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (keys[VK_DOWN])<span class="kom">// Šipka dolů</span></p>
+<p class="src3">{</p>
+<p class="src4">scaleValue -= 0.001f;<span class="kom">// Sníží hory</span></p>
+<p class="src3">}</p>
+
+<p>Tak to je všechno, výškovým mapováním textur jsme naprogramovali nádherou krajinu, která je ale zabarvená do modra. Zkuste si nakreslit texturu (letecký pohled), která reprezentuje zasněžené vrcholy hor, louky, jezera a podobně a namapujte ji na terén. Texturovací koordináty získáte vydělením pozice na rovině rozměrem obrázku (zmenšení hodnot do rozsahu 0.0f až 1.0f). Plazmovými efekty a rolováním se může krajina dynamicky měnit. Déšť a sníh zajistí částicové systémy, které už také znáte. Vložíte-li krajinu do skyboxu, nikdo nepozná, že se jedná o počítačový model a ne o video animaci.</p>
+
+<p>Nebo můžete vytvořit mořskou hladinu s vlnami, na kterých se pohupuje uplavaný míč (výšku nad mořským dnem přece znáte - hodnota na indexu v poli). Nechte uživatele, ať ho může ovládat. Možnosti jsou bez hranic...</p>
+
+<p class="autor">napsal: Ben Humphrey - DigiBen<br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson34.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson34_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson34.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson34.zip">Delphi</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde (aka Marilyn)</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson34.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson34.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson34.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson34.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Schubert_P@Yahoo.de">Patrick Schubert</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson34.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson34.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_34_big.jpg" class="nehe_velky" alt="Lekce 34" /></div>
+<p class="okolni_lekce"><a href="tut_33.php">&lt;&lt;&lt; Lekce 33</a> | <a href="tut_35.php">Lekce 35 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tomáš</div>
+<div class="d_o_datumcas">21.11.2004 - 18:43:51</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_34.php&j=0">Jaký editor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.11.2004 - 19:30:50</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_34.php&j=1">Re: Jaký editor?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">06.07.2005 - 09:39:36</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_34.php&j=2">Kolize?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">08.07.2005 - 14:42:40</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_34.php&j=3">Re: Kolize?</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_34.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

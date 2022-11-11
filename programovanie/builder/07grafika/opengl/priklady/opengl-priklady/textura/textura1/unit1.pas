@@ -1,0 +1,179 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, opengl, StdCtrls, ComCtrls;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    Label5: TLabel;
+    UpDown1: TUpDown;
+    UpDown2: TUpDown;
+    UpDown3: TUpDown;
+    UpDown4: TUpDown;
+    UpDown5: TUpDown;
+    UpDown6: TUpDown;
+    UpDown7: TUpDown;
+    UpDown8: TUpDown;
+    Edit9: TEdit;
+    Edit10: TEdit;
+    Edit11: TEdit;
+    Edit12: TEdit;
+    Edit13: TEdit;
+    Edit14: TEdit;
+    Edit15: TEdit;
+    Edit16: TEdit;
+    Label1: TLabel;
+    UpDown9: TUpDown;
+    UpDown10: TUpDown;
+    UpDown11: TUpDown;
+    UpDown12: TUpDown;
+    UpDown13: TUpDown;
+    UpDown14: TUpDown;
+    UpDown15: TUpDown;
+    UpDown16: TUpDown;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure zmena(Sender: TObject);
+    procedure dole(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure hore(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pohyb(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+var
+  RC: HGLRC=0;
+  DC: HDC=0;
+  bmp: array[0..255,0..255] of record r, g, b: byte;
+                                                  end;
+  uholx,uholy,mx,my:real;
+  stlacene:Boolean;
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  PFD: TPixelFormatDescriptor;
+  PF: Integer;
+  x,y,r,g,b: byte;
+begin
+//  uholx:=0; uhol
+  // Nastavenie Device Contextu:
+  DC:=GetDC(Handle);
+  FillChar(PFD, SizeOf(TPixelFormatDescriptor), 0);
+  PFD.nSize:=SizeOf(TPixelFormatDescriptor);
+  PFD.nVersion:=1;
+  PFD.dwFlags:=PFD_DRAW_TO_WINDOW or PFD_SUPPORT_OPENGL or PFD_DOUBLEBUFFER;
+  PFD.iPixelType:=PFD_TYPE_RGBA;
+  PFD.cColorBits:=24;
+  PFD.cDepthBits:=32;
+  PFD.iLayerType:=PFD_MAIN_PLANE;
+  PF:=ChoosePixelFormat(DC, @PFD);
+  if PF=0 then Exit;
+  SetPixelFormat(DC, PF, @PFD);
+  // Vytvorenie Rendering Contextu:
+  RC:=wglCreateContext(DC);
+  wglMakeCurrent(DC, RC);
+  glClearColor(0, 0, 0, 0);
+  glClearDepth(1);
+  glEnable(GL_DEPTH_TEST);
+  // Nastavenie zobrazovania:
+  glViewport(0, 0, ClientWidth, ClientHeight);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity;
+//  glOrtho(-ClientWidth DIV 2, ClientWidth  DIV 2, -ClientHeight  DIV 2, ClientHeight  DIV 2, -10, 10);
+  gluPerspective(60, ClientWidth/ClientHeight, 1, 1000);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  glClearColor(0.0, 0.0, 0.0, 0.0);       // barva pozadi
+  GLCLEAR(GL_COLOR_BUFFER_BIT);
+//    glPixelStorei(GL_UNPACK_SWAP_BYTES, 1);      // mod ulozeni pixelu
+   for y:=0 to 255 do           // pro vsechny radky pixmapy
+        for x:=0 to 255 do        // pro vsechny pixely na radku
+        if ((y div 32) +(x div 32)) mod 2 =0 then
+        begin
+            with bmp[y,x] do
+            begin r:= x ;g:=y;b:=0; end;
+        end
+        else
+        begin
+            with bmp[y,x] do
+            begin r:= 0 ;g:=0;b:=0; end;
+        end;
+  glEnable(GL_TEXTURE_2D);
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameter(GL_TEXTURE_2D, GL_Texture_WRAP_T, GL_REPEAT);
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2d(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, @bmp);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity;
+ glTranslate(0, 0, -1);
+  glRotate(uholy, 1, 0, 0);
+  glRotate(Uholx, 0, 1, 0);
+    glBegin(GL_QUADS);
+        glTexCoord(StrToInt(Edit1.Text)/10, StrToInt(Edit2.Text)/10);
+        glVertex3f(StrToInt(Edit9.Text)/10, StrToInt(Edit10.Text)/10, -1);
+        glTexCoord(StrToInt(Edit3.Text)/10, StrToInt(Edit4.Text)/10);
+        glVertex3f(StrToInt(Edit11.Text)/10, StrToInt(Edit12.Text)/10, -1);
+        glTexCoord(StrToInt(Edit5.Text)/10, StrToInt(Edit6.Text)/10);
+        glVertex3f(StrToInt(Edit13.Text)/10, StrToInt(Edit14.Text)/10, -1);
+        glTexCoord(StrToInt(Edit7.Text)/10, StrToInt(Edit8.Text)/10);
+        glVertex3f(StrToInt(Edit15.Text)/10, StrToInt(Edit16.Text)/10, -1);
+    glEnd();
+    SwapBuffers(DC);
+end;
+
+procedure TForm1.zmena(Sender: TObject);
+begin
+  Button1Click(form1);
+end;
+
+procedure TForm1.dole(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  stlacene:= TRUE;
+  mx:= uholx+x div 4; my:= uholy+y div 4;
+end;
+
+procedure TForm1.hore(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  stlacene:= FALSE;
+
+end;
+
+procedure TForm1.pohyb(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  if stlacene then
+  Begin
+    uholx:= mx-x div 4;uholy:= my-y div 4;
+    Button1Click(Form1);
+  End;
+end;
+
+end.

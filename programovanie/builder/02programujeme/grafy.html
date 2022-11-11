@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+<LINK href="../css/style.css" type="text/css" rel=stylesheet>	
+</head>
+
+<body>
+<h3 class=main>Grafy</h3>
+Nech je daná množina A. Každú reláciu H:A->A budeme nazývať graf. Prvky množiny A nazývame <font color="Red">vrcholy</font>
+a usporiadanú dvojicu [x,y] patriacu do H nazývame <font color="Red">hrana</font>.
+<h3 class=main>Pojmy</h3>
+<dl>
+	<dt><font color="Red">Grafická reprezentácia grafu</font>
+	<dd>Graf môžeme znázorniť pomocou množiny bodov v rovine - znázornené ako kružnice - pospájaných úsečkami.
+	<img src="obr-grafy/obr1.bmp" border="0" alt=""  align="bottom" hspace="220" vspace="5"><br>
+	<dt class=second>Orientovaný graf
+	<dd>Graf H nazveme neorientovaný práve vtedy keď, pre všetky [x,y] z H plati: [y,x] je tiež z R
+	inak ho nazývame orientovaný. Orientovaný graf zakresľujeme pomocou orientovaných úsečiek.
+	<img src="obr-grafy/obr2.bmp" border="0" alt=""  align="bottom" hspace="220" vspace="5"><br>
+	<dt class=second>Cesta z vrcholu a<sub>1</sub> do vrcholu b<sub>1</sub>
+	<dd>Hovoríme, že v grafe H existuje cesta z a1 do b1 práve vtedy keď, existuje postupnosť hrán z H:
+		h1=[a<sub>1</sub>,a<sub>2</sub>], h2=[a<sub>2</sub>,a<sub>3</sub>], h3=[a<sub>3</sub>,a<sub>4</sub>]
+		, ...hn=[a<sub>n</sub>,b<sub>1</sub>]</dd>
+	<dt class=second>Súvislý graf
+	<dd>Graf H nazveme súvislý práve vtedy keď, sa z každého vrcholu existuje cesta do každého vrcholu grafu.
+	<dt class=second>Stupeň vrchola
+	<dd>Počet hrán vychádzajúcich z vrchola nazývame stupeň vrchola</dd>
+	<dt class=second>Kružnica
+	<dd>Neorientovaný súvislý graf nazveme kružnicou práve vtedy, keď stupeň každého vrcholu grafu je 2.</dd>	
+	<dt class=second>Kostra
+	<dd>Súvislý graf, ktorý neobsahuje kružnicu nazývame kostra grafu. 
+		<br>Z každého súvislého grafu možno vybrať kostru - vynechaním niekoľkých hrán</dd>	
+	<dt class=second>Ohodnotený graf
+	<dd>Nech hrana grafu je trojica [a1,a2,r], kde a1,a2 patrí do A a r je kladné reálne číslo.</dd>	
+		Takto určený graf nazývame ohodnotený graf a číslo r nazývame hodnota hrany.
+	<dt class=second>Minimálna kostra
+	<dd>Minimálnou kostrou grafu bude kostra grafu s najmenším súčtom hodnôt hrán.</dd>	
+</dl>
+<h3 class=main>Reprezentácia grafu v počítači</h3>
+<dl>
+	<dt class=second>Údaje na disku
+	<dd>Najčastejšie býva nasledovná štruktúra:
+		<table border="1">
+		<tr><td>pu</td><td colspan="2">pocet uzlov</td></tr>
+		<tr><td>x1 y1</td><td>súradnice prvého uzla</td><td rowspan="4" width="30%">slúži len na vykreslenie grafu</td></tr>
+		<tr><td>x2 y2</td><td>súradnice druhého uzla</td>
+		<tr><td>...</td><td>...</td></tr>
+		<tr><td>xpu ypu</td><td>súradnice posledného uzla</td></tr>
+		<tr><td>ph</td><td colspan="2">počet hrán</td></tr>
+		<tr><td>a1 b1 r1</td><td rowspan="4" width="30%">ČísloUzlaOdkade<br>ČísloUzlaKam<br>Hodnota</td>
+       		<td rowspan="4">vrcholy sú určené poradovými číslami zo zoznamu vrcholou
+	<tr><td>a2 b2 r2<td>
+	<tr><td>...</td></tr>
+	<tr><td>aph bph rph</td></tr>
+	</table>
+Prvý stĺpec tabuľky určuje čísla v textovom súbore
+<pre><code>
+Pr.
+12
+25 100
+50 75
+125 75
+115 65
+135 65
+160 100
+135 125
+150 140
+120 140
+50 125
+65 140
+35 140
+13
+1 2 1
+2 3 2
+3 4 4
+3 5 1
+3 6 2
+6 7 4
+3 7 1
+7 8 2
+7 9 4
+1 10 1
+10 11 2
+10 12 4
+2 12 2</code></pre>
+Načítajte a vykreslite tento graf.
+</dd>
+<dt class=main>Hľadanie minimálnej kostry
+<dd>Je zrejmé, že ku každému grafu možno nájsť minimálne jeden podgraf, ktorý je kostrou.
+	Dá sa pomerne ľahko dokázať, že na hľadanie minimálnej kostry možno použiť nasledovné intuitívne postupy:
+	<ol>
+	<li>Z grafu budeme vynechávať hrany s najväčším ohodnotením ale len tie, ktorých vynechaním sa neporuší súvislosť. Keď sa už žiadna hrana nedá vynechať je tvorba min. kostry ukončená.
+	<li>Zoradíme si hrany grafu vzostupne. Prejdeme cyklom tento zoradený zoznam a pri každej hrane rozhodneme, či ju berieme do nového grafu - kostry. Hranu zoberieme ak nevytvára s už vybranými kružnicu.
+	<li>Táto metóda je modifikáciou 2. metódy. Do kostry vyberieme minimálnu hranu grafu. Zo všetkých hrán grafu,
+	ktoré majú vlastnosť, že jeden vrchol majú už vo vytváranej kostre a druhý nie, nájdem minimálnu a pridám do kostry. Postup
+	opakujem pokiaľ nie sú všetky uzly už v kostre zahrnuté. Tento postup sa dá použiť len na súvislé grafy. 
+	</ol>
+	Ďalej sa budeme venovať len postupu 3. 
+	<br>Nech v pu je zapísaný počet uzlov
+	<br>Majme vytvorenú maticu susednosti Graf[1..pu,1..pu] celých čísel
+	<br>Kostru vytvárajme v matici susednosti Kostra[1..pu, 1..pu] 
+	<br>Či je vrchol už v kostre bude v poli Kuzly[1..pu] 0=uzol nie je v kostre, 1=uzol je v kostre
+	<br>Celý algoritmus možno schématicky zapísať takto:
+	<ul type="circle">
+	<li>Nájdi minimálnu hranu a zapíš ju do kostry
+	<li>Oba vrcholy označ 1 - sú v kostre
+	<li>Opakuj (pu-2) krát <ul type="disc">
+	                        <li>nájdi minimálnu hranu s jedným vrcholom v kostre
+							<li>pridaj ju do kostry
+							<li>oba vrcholy oznac jednotkou - sú v kostre
+                           </ul> 
+	</ul>
+	<dl>
+	<dt>Úloha<dd>Pre graf daný textovým súborom vytvor kostru a vykresli ju inou farbou cez graf.
+	</dl>
+	
+	<dt class=main>Test súvislosti grafu
+	<dd>V praxi sa často stretávame s úlohou zistiť, či graf je súvislý. Tu sa obmedzíme len na neorientované
+		grafy, ale postup možno aplikovať aj na orientované.
+		<br>Pre neorientované grafy platí: Graf je súvislý &lt;=&gt; keď sa z uzla 1 dá dostať do všetkých ostatných vrcholov grafu.
+		<br>Postup ako prešetríme, či existuje cesta z uzla 1 do všetkých ostatných.
+		<br>Budeme k tomu potrebovať
+		<ul><li>maticu susednosti Graf[1..pu,1..pu]
+		<li>pole Pom[1..pu], kde každá položka môže byť
+			<ul>
+				<li>0 ...na uzol so ešte nenarazil
+				<li>1 ...do uzla vedie nejaká cesta, ale ešte treba vybaviť jeho susedov
+				<li>2 ...do uzla vedie cesta a aj jeho susedov som už vybavil
+			</ul>
+		<li>Pole Zoznam[1..pu], kde budú za sebou napísané tie uzly, ktoré majú v Pom čislo 1.
+		<li>Premenná pocet1, kde budem mať zapísaný počet uzlov, ktoré majú v Pom číslo 1.
+		</ul>
+		<br>Inicializačné hodnoty v poli Pom budú všade 0, len v položke 1 bude 1.
+		<br>Inicializačné hodnoty v poli Zoznam budú v položke 1 bude zapísaná 1, iné nás nezaujíma
+		<br>Inicializačná hodnota v premennej Pocet1 bude 1
+		<br><br>Opakuj pokiaľ Pocet1&gt;0
+		<ul>
+		<li>Uzol Zoznam[Pocet1] vyhodíme zo zoznamu - tak, že Pocet1 zmenšíme o 1 a tomuto uzlu v Pom zapíšeme 2 
+		<li>Namiesto vyhodeného uzla do zoznamu pripíšeme priamych susedov tohto uzla (z matice susednosti), ktorí
+			v Pom majú zatiaľ 0. Všetkým došlým uzlom v Pom zapíšeme 1.
+		</ul>
+		Nakoniec skontrolujeme pole Pom či v ňom ostali ešte nejaké nuly, ak nie je graf súvislý.
+		<br>V prípade ak sme natenko s pamäťou môžme pole Zoznam vynechať, ale zaplatíme väčším časom výpočtu, musíme v poli Pom tých jednotkárov hľadať .
+
+<dt class=main>Zistenie minimálnej cesty v grafe
+<dd>Táto úloha zo všetkých tých, ktoré sme doteraz spomínali, má v praxi najväčšie praktické využitie.
+	<br>Máme dané:
+	<br>maticu susednosti Graf[1..pu,1..pu]	
+	<br>štartový uzol cesty Uzol1 a konečný uzol cesty Uzol2
+	<br>Existuje veľa metód na hľadanie minimálnej cesty ale ku najrýchlejším metódam patrí
+	tkz. Dijkstrov algoritmus, ktorý si teraz povieme.
+	<br>Budeme ešte potrebovať:
+	<br>pole Pom[1..pu], kde každá položka môže byť
+	<ol  start="0">
+	<li>na uzol so ešte nenarazil
+	<li>do uzla vedie nejaká cesta, ale ešte neviem, či je minimálna
+	<li>údaj, ktorý je v poli dĺžka u tohto uzla je definitívny - minimálny
+	</ol>
+	<br>pole Dlzka[1..pu] kde bude pre každý uzol zapísaná zatiaľ nájdená minimálna cesta z uzla Uzol1
+	<br>pole Odkade[1..pu], kde bude zapísané z ktorého uzla som sem prišiel pri tejto nájdenej dĺžke cesty.
+	<br>Inicializačné hodnoty v poli Pom budú všade 0, len v položke Uzol1 bude 1. 
+	<br>Inicializačné hodnoty v poli Dĺžka budú všade "nekonečno" len v riadku Uzol1 bude 1
+	<br>Opakuj pokiaľ v Pom v riadku Uzol2 je číslo rôzne od 2
+	<ul type="disc">
+	<li>nájdi zo všetkých jednotkových uzlov ten ktorý má najmenšiu vzdialenosť od Uzol1 - U1. Tento zmeníme na d
+	<li>Tento zmeníme na dvojkový a všetkých jeho nedvojkových susedov označíme za jednotkových a upravíme im
+	dĺžky - vzdialenosti - Dlzka[u]:=min(Dlzka[u],dlzka[U1]+vzd(u,U1)). Ak sa uzlu mení jeho dĺžka 
+	zapíšeme do poľa Odkade v riadku toho uzla uzol U1
+	</ul>
+	Je jasné, že v každom behu cyklu pribúda jedna dvojka. Program môže skončiť tým, že v Pom[Uzol2] sa 
+	objaví 2 alebo sa "minú" jednotky v poli Pom, čo značí, že neexistuje cesta z Uzol1 do Uzol2.
+	Týmto sme vytvorili vzdialenosti uzlov od UZOL1. Navyše v každom uzle vieme ako sme sa doňho dostali
+	- pomocou poľa Odkade. Teraz môžme začať cestu "odzadu" vypisovať Uzol2,...Uzol1.
+	<br>Pre neorientované grafy je teda výhodné hľadať radšej cestu opačnú - z Uzol2 do Uzol1 aby sme
+	ju potom vypisovali pekne odpredu.   
+<dt class=main>Kreslenie jedným ťahom
+<dd>Tento problém sa tiež volá problém cestujúceho, ktorý chce prejsť všetky trasy grafu ale práve raz.
+	Určite ste sa stretli s problémom, nakresliť nasledovný domček jedným ťahom.
+	<img src="obr-grafy/obr3.bmp" width="186" height="130" border="0" title="Spomienka na materskú školu" alt=""> 
+	<br>Najprv niekoľko tvrdení:
+	<ul>
+	<li>Každý graf má párny počet vrcholov s nepárnym stupňom
+	<li>Graf sa dá nakresliť jedným ťahom &lt;=&gt; počet vrcholov s nepárnym stupňom je maximálne 2
+	<li>Ak graf nemá vrcholy s nepárnym stupňom môžeme začať v ľubovoľnom vrchole a ľubovoľnou hranou
+	<li>Ak graf nemá vrcholy s nepárnym stupňom kreslenie skončí vždy v tom istom uzle z ktorého
+		sme začali kreslenie
+	<li>Ak graf má vrcholy s nepárnym stupňom, musíme kreslenie začať vo vrchole s nepárnym stupňom
+	<li>Ak graf má vrcholy s nepárnym stupňom kreslenie skončí vždy v tom druhom uzle, ktorý má 
+		nepárny stupeň
+	<li>Po "prvom" pokuse nakresliť graf jedným ťahom, môžu nastať prípady
+	    <ul>
+	    <li>graf je komplet nakreslený
+		<li>zvyšné hrany s uzlami tvoria grafy už len s párnymi vrcholmi
+        </ul>
+	</ul>
+	Čitateľ s matematickými záľubami si iste tieto tvrdenia ľahko dokáže, pre ostatných sú pokusy s kreslením
+	"domčeka", ľahko sa presvedčíme, že k úspechu vedie len začiatok vo vrchole 4 resp. 5. 
+	<br>Hrubá schéma algoritmu:
+	<ol>
+	<li>Zistíme koľko vrcholov je nepárneho stupňa a ak isú dva zapamätáme si jeden z nich 
+	<li>Ak je nepárny vrchol začneme v ňom, inak začneme napr. v uzle 1
+	<li>V každom vrchole si zvolíme náhodný smer a kreslíme pokiaľ nevojdeme do uzla z ktorého
+		už cesta nevedie.
+	<li>Opätovným prechodom po nájdenej ceste hľadáme vrcholy z ktorých ešte vychádzajú nejaké 
+		cesty, ktoré sme ešte neprešli - teda vrcholy kde sme mali odbočiť ale neurobili sme to.
+	<li>Ak taký vrchol nájdeme (označme ho u1), vyrazíme z neho po tejto ceste. Po prejdení niekoľko vrcholov sa opäť
+		musíme vrátiť do tohto uzla (porozmýšľajte prečo). Celú túto "novú" trasu popísanú postupnosťou 
+		vrcholov "vsunieme" do "starej" cesty za vrchol u1. Teraz môžeme pokračovať v kontrole našej cesty.
+	<li>Po kontrole celej cesty je graf komplet prejdený. 
+	</ol>
+</dl>	
+</body>
+</html>

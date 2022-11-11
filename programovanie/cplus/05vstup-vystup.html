@@ -1,0 +1,381 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Výstup na štandartné výstupné zariadenie</title>
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+	<dt>Opakovanie
+	<dd>1. Čo je výrazový príkaz?
+	<br>2. V čom je rozdiel zloženého príkazu v pascale a c++ ?
+	<br>3. Ako môžme ukončiť beh programu?
+</dl>
+
+V každom OS je určené štandartné vstupné zariadenie <font color="Green">stdin</font> (implicitne klávesnica)
+a štandartné výstupné zariadenie <font color="Green">stdout</font> (implicitne systémová konzola), ešte existuje
+štandartné chybové zariadenie na chybové hlásenia <font color="Green">stderr</font>. 
+<br> premerovanie do súboru urobíme pomocou znaku &gt;
+<br> premerovanie na pripísanie na koniec súboru pomocou dvojice znakov &gt;&gt;
+<dl><dt>Štandartné výstupné zariadenie v OS DOS
+	<dd>- zadajme v DOSe prikaz dir, tento príkaz vypíše obsah aktuálneho adresára na stdout
+	<br> &nbsp; teraz zadajme <font color="Green">dir &gt; subor.txt</font> celý výpis je presmerovaný do súboru.  
+<dt>Štandartné výstupné zariadenie v OS Unix
+	<dd>- zadajme v Unixe prikaz ls, tento príkaz vypíše obsah aktuálneho adresára na stdout
+	<br> &nbsp; teraz zadajme <font color="Green">ls 1&gt; subor.txt</font> celý výpis je presmerovaný do súboru.  
+	<br> &nbsp; obdobne <font color="Green">ls 2&gt; err.txt</font>prípadné chybové hlášky zapíše do súboru.
+	<br> &nbsp; presmerovanie možno aj kombinovať možno <font color="Green">ls 1&gt; subor.txt 2&gt; err.txt</font>
+</dl>
+Pomocou systémových príkazov možno systémový vstup i výstup presmerovať napr. do súboru, resp. nejaké rozhranie.
+<hr> 
+<h3 style="width:500px">Štandartné prúdy - knižnica iostream.h, sstream.h, fstream.h</h3>
+Táto knižnica je novším spôsobom ako zabezpečiť vstup a výstup dát. Príkazy a celá myšlienka práce je úplne odlišná
+od staršieho postupu popísaného nižšie.
+Štandardné prúdy sú v informatike implicitne otvorené deskriptory, které slúžia procesu (programu) ku styku s jeho okolím. 
+Ak chceme čítať a zapisovať na štandartné i/o zariadenia použijeme knižnicu <b>iostream</b>, 
+<br>ak chceme čítať a zapisovať do stringu použijeme knižnicu <b>sstream</b>, 
+<br>ak chceme čítať a zapisovať do súboru použijeme knižnicu <b>fstream</b>.
+<br>Práca s prúdmi je vo všetkých týchto troch knižniciach rovnaká - sú rovnaké príkazy, rovnaká je aj činnosť.
+<dl><dt>Knižnica iostream
+	<dd>Pripájanie nových knižníc (ktoré už nemajú koncovku <b>.h</b>) prebieha novým spôsobom. Zjednodušene povedané, 
+		existujú rôzne pomenované zoznamy slov, ktoré program má akceptovať. Knižnica iostream zapíše nové pojmy do zoznamu
+		nazvaného <b>std</b>. Všetky pojmy z knižnice <b>iostream</b> môžme používať s "predponou" <b>std::</b>
+		(napr. std::cin). Ak sa chceme tejto predpone vyhnúť vložíme na začiatok príkaz
+		<br><b>using namespace std;</b> 
+		<br>Tento riadok možno vložiť aj pred riadok int main().
+	<dt>Výstup na štandartný výstup
+	<dd><dl><dt>cout
+			<dd>cout je objekt triedy ostream (výstupný prúd, rúra). Pre tento objekt sú definované
+				<ul><li>operátor &lt;&lt; ... pomocou neho možno do prúdu zapisovať hodnoty číselných, znakových a textových výrazov 
+						<br>(priamo možno teda vypísať celé i desatinné čísla, znaky, pole charov, výraz typu string)
+						<br>(ak chceme vypisovať štruktúrované premenné, musíme to program "naučiť" - pozri nižšie)
+					<li>funkcie ... pomocou nich možno nastavovať vlastnosti výstupu a zapisovať znaky/texty
+				</ul>	
+				<br>cout &lt;&lt; výraz
+				<br>&lt;&lt; ... operátor, ktorý dáta sprava pošle cieľu uvedenému vľavo (na štandartný výstup = obrazovka)
+				<br>výraz ... povolené typy výrazov sú znaky, texty (podporuje aj moderný typ string z STL), celé čísla a reálne čísla
+				<br>cout &lt;&lt; výraz  bez bodkočiarky je výrazom a výsledkom tohoto výrazu je opäť cout (štandartný výstup) 
+					a preto operátory &lt;&lt; možno reťaziť (tiež môžme použiť všade tam, kde je zadanie výrazu možné)
+				<br>cout &lt;&lt; a &lt;&lt; b &lt;&lt;c;
+				<br>na výstup sa odošle obsah <b>a</b> potom <b>b</b> a nakoniec <b>c</b>
+				<br>Pozn.
+				<br>Ak sa pozriete v kapitole výrazy na prioritu operátora <b>&lt;&lt;</b>, tak výrazy obsahujúce operátory
+				<br>+ | - | * | / | % | ++ | -- | ! |
+				<br>fungujú správne aj bez uzátvorkovania
+				<br>pri použití operátorov
+				<br><b>= | += | -= | /= | %= | += | ?: | a všetkých porovnávajúcich operátorov musíme výraz dať do zátvoriek</b>
+				<br>cout &lt;&lt; a*b; &nbsp; &nbsp;//vypíše výsledok násobenia
+				<br>cout &lt;&lt; c=a*b; &nbsp; &nbsp;//zahlási chybu
+				<br>cout &lt;&lt; (c=a*b); &nbsp; &nbsp;//vypíše výsledok násobenia
+			<dt>Manipulátory - formátovače výstupu
+			<dd>Manipulátory používame na formátovanie výstupu (ak niektoré manipulátory nebude prekladač poznať, pripnite ešte
+				knižnicu <b>iomanip</b>
+				<br>(pre manipulátory, ktoré majú za svojim menom zátvorky je potrebné pripnúť knižnicu <b>iomanip</b>)
+				<br>(manipulátory, ktoré majú za svojim menom zátvorky je možné nahradiť funkciou a potom nemusíme pripájať iostream, 
+				<br>manipulátory, ktoré nemajú zátvorky platia až do svojho zrušenia)
+				<br>#include &lt;iomanip&gt;
+			<br><b>dec</b> ... nastaví výstup celých čísel v dekadickej sústave
+			<br><b>hex</b> ... nastaví výstup celých čísel v hexa sústave
+			<br><b>oct</b> ... nastaví výstup celých čísel v osmičkovej sústave
+			<br><b>showbase</b> ... pri nastavení hex pridá pred číslo 0x, pri oct pridá nulu
+			<br><b>noshowbase</b> ... zruší showbase
+			<br><b>fixed</b> ... nastaví výstup desatinných čísel v desatinnom tvare
+			<br><b>scientific</b> ... nastaví výstup desatinných čísel vo vedeckom (exponenciálnom) tvare
+			<br><b>left</b> ... výstup zarovná zľava - výplňové znaky dá sprava
+			<br><b>right</b> ... výstup zarovná sprava - výplňové znaky dá zľava
+			<br><b>setw(int n)</b> ... nastaví počet políčok do ktorých sa urobí výstup (platí len pre jeden výstup)
+			<br><b>setprecision(int n)</b> ... nastaví presnosť pri reálnych číslach (platí do odvolania)
+			<br><b>setfill(char z)</b> ... štandartne sú nezapísané políčka zaplnené medzerou, ale môžme to zmeniť (platí do odvolania)
+			<br><b>setbase(int n)</b> ... všetky celočíselné údaje budú zapísané v sústave so základom n (povolene sú len 8,10,16)
+			<br><b>uppercase</b> ... všetky malé písmená anglickej abecedy budú prekonvertované na veľké (včítane hexa číslic) 
+			<br><b>nouppercase</b> ... zruší prekonvertovanie na veľké 
+			<br><b>endl</b> ... pridá znak ukončenia riadku
+			<dt>Funkcie objektu cout
+			<dd><ul>
+					<li><b>cout.put(char)</b> - položí na výstup znak (znak možno zadať aj celočíselnou hodnotou - int nemusíme pretzpovať na char)
+					<li><b>cout.fill(char)</b> - ako manipulátor setfill()
+					<li><b>cout.fill()</b> - vráti aktuálny výplňový znak
+					<li><b>cout.precision(int)</b> - ako manipulátor setprecision
+					<li><b>cout.width(int)</b> - ako manipulátor setw
+				</ul>	
+			Pri výpise reálnych čísel možno presnosť nastaviť:
+			<ul><li>počtom platných cifier vo výpise
+					<pre>cout &lt;&lt;setprecision(n);
+	cout &lt;&lt;setprecision(3)&lt;&lt;1.23456;       //vypíše 1.23  (tri cifry)
+	cout &lt;&lt;setprecision(3)&lt;&lt;123.456;       //vypíše 123  (tri cifry)
+	cout &lt;&lt;setprecision(3)&lt;&lt;0.0123456;       //vypíše 0.0123  (tri cifry)
+	cout &lt;&lt;setprecision(3)&lt;&lt;1234.56;       //vypíše číslo vo vedeckom tvare - nedá sa splniť
+resp.   cout.precision(n);</pre>
+				<li>počtom desatinných čísel
+					<pre>cout &lt;&lt;fixed &lt;&lt; setprecision(n);
+	cout &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;1.23456;       //vypíše 1.235  (tri cifry za bodkou)
+	cout &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;1234.56;       //vypíše 1234.560  (tri cifry za bodkou)
+	cout &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;10.0;       //vypíše 10.000  (tri cifry za bodkou)
+	cout &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;10;       //vypíše 10  (na celé čísla to neplatí)
+resp.   cout &lt;&lt;fixed; cout.precision(n);</pre>
+			</ul>					
+			fixed zabezpečí navyše aj písanie koncových núl (číslo 1.4 pri výpise na tri desatinné bude 1.400).
+			<br>Pri výpise znaku je niekedy nutné vložiť zátvorky (nech char z='a' )
+			<br>napr. cout &lt;&lt;z; // vypíše a
+			<br>cout &lt;&lt; z+1; //vypíše 97, lebo z+1 je už typu int
+			<br>cout &lt;&lt; char(z+1); // vypíše b
+			<br>cout.put(z+1); // vypíše b
+			<dt>Úlohy
+			<dd><ul><li>vypíšte pod seba nasledovnú tabuľku
+<code>						<br>...n....n!
+						<br>...1.....1
+						<br>...2.....2
+						<br>...3.....6
+						<br>...4....24
+						<br>...5...120
+</code>						<br>
+					<li>Načítajte celé číslo n vypíšte do riadku n hviezdičiek (bez použitia cyklu)
+					<li>Načítaj dve celé čísla oddelené medzerou a do ďalšieho riadku ich vypíš usporiadané.
+        		</ul>
+			<dt>Preťažovanie operátora &lt;&lt;
+			<dd>Operátor &lt;&lt;, ktorý má dva parametre (1.-kam pošleme dáta, 2. hodnotu) možno naučiť vypisovať napr. aj štruktúry
+			<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Pretazovanie operatora &lt;&lt;</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<pre>
+#include &lt;iostream>
+using namespace std;
+typedef struct {int cit,men;} Tzlomok;
+Tzlomok zlomok={3,4};
+ostream& operator << (ostream& stream, Tzlomok z)
+{ stream &lt&lt; z.cit &lt;&lt; '/' &lt;&lt; z.men;}
+int main()
+{  cout &lt;&lt; "Zlomok" &lt;&lt;endl;
+   cout &lt;&lt; zlomok &lt;&lt;endl;
+   cin.get();
+}
+		</pre></tr>
+		</table>
+	
+</dl>
+		Podobne možno robiť aj výstup na štandartné error zariadenie <b>cerr</b>
+		<br>cerr::cout &lt;&lt;"chyba pri výstupe";.
+		<br>Treba si všimnúť, že pri práci s prúdmi nepotrebujeme vedieť aký typ premennej ide na výstup, systém to sám rozpozná a prekonvertuje na string.
+		
+	<dt>Vstup zo štandartného vstupu
+	<dd><dl><dt>cin
+			<dd>cin je objekt triedy ostream (vstupný prúd, rúra). Pre tento objekt sú definované
+				<ul><li>operátor <b>&gt;&gt;</b> ... pomocou neho možno z prúdu čítať hodnoty <b>číselných</b>, <b>znakových</b> a <b>textových</b> hodnôt
+						a zapisovať ich do premenných 
+						<br>Na oddeľovanie údajov (z ktorých čítame) používame biele znaky (Enter, tab, medzera), ktoré pomocou operátora <b>&lt;&lt;</b> nemožno načítať
+						<br>(teda ani do znakovej alebo textovej premennej - najmä že do char premennej nejde načítať medzeru je pre pascalistu prekvapivé)
+					<li>funkcie ... pomocou nich možno nastavovať vlastnosti vstupu 
+				</ul>	
+				<dl><dt>operátor <b>&gt;&gt;</b>
+					<dd>cin &gt;&gt; premenná
+			     		cin ... zdroj dátového toku
+						<br><b>&gt;&gt;</b> ... operátor, ktorý dáta zľava pošle cielu uvedenému vpravo
+						<br>prem ... povolené typy premenných sú znaky, texty, celé čísla a reálne čísla
+						<br><br>Pozn.
+						<br>operátor môžme aj zreťaziť - cin &gt;&gt; a &gt;&gt; b &gt;&gt;c;
+						<br>načíta sa <b>a</b> potom <b>b</b> a nakoniec <b>c</b>
+						<br><b>Načítanie char:</b>
+						<br>cin &lt;&lt; char; &nbsp; &nbsp;//zastane a čaká na zadanie znaku/textu, ak príde medzera, tab, enter ignoruje a čaká ďalej
+						<br> &nbsp; &nbsp; &nbsp; //ak príde text zoberie prvý znak textu do prem. char a na vstupe nechá zvyšný text a enter
+						<br> &nbsp; &nbsp; &nbsp; //ak chceme načítavať aj biele znaky použijeme funkciu <b>cin.get()</b>
+						<br> &nbsp; &nbsp; &nbsp; //alebo manipulátor <b>noskipws</b> napr. cin &gt;&gt; noskipws &gt;&gt; c; vie načítať aj biele znaky
+						<br><b>Načítanie textov:</b>
+						<br>ak načítame premennú typu pole znakov tak načítanie prebieha po prvý biely znak (teda aj medzeru)
+						a týmto spôsobom nie je možné načítavať texty obsahujúce medzery. Na načítanie textu s medzerami treba použiť funkciu <b>getline()</b>.
+						<br><b>Načítanie čísel:</b>
+						<br>príkaz číta číslo až pokiaľ má na vstupe číselné hodnoty, po prečítaní nečíselného znaku ho vráti späť do prúdu.
+						<br>Ak je za číslom EOF číslo načíta ale nastaví príznak eof(), príznak fail() ele ostáva záporný 
+					<dt>Funkcie objektu cin
+					<dd><ul><li><b>int cin.get()</b> - načíta zo vstupu 1 znak a vráti jeho poradové číslo ako návratovú hodnotu (alebo vráti EOF) 
+								<br> &nbsp; &nbsp; &nbsp; (vie načítať aj medzeru tab enter)
+					<li><b>cin.get(char prem)</b> - načíta zo vstupu 1 znak a zapíše ho do parametra
+					<li><b>cin.get(char *prem,int n)</b> - načíta zo vstupu text až po enter a zapíše ho do prem.
+						<br>Premenná prem môže byť napr. pole charov - nepoužívajte tu premennú string z STL
+						<br>  &nbsp; &nbsp; &nbsp; (na vstup textu do stringu používame getline z knižnice string z STL)
+						<br>Enter zostane na vstupe (teda funguje ako pascalské read), ak chceme aby znak '\n' neostal na vstupe
+							použijeme radšej getline()
+						<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+						<ul><li>narazili sme na enter
+							<li>načítali sme už (n-1) znakov
+							<li>narazili sme na EOF
+						</ul>	
+				<li><b>cin.get(char *,int ,char)</b> - načíta zo vstupu text a zapíše ho do prem (pole charov). 
+					<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+					<ul><li>narazili sme na znak 3. parameter - znak z zostáva na vstupe
+						<li>načítali sme už (n-1) znakov (druhý parameter)
+						<li>narazili sme na EOF
+					</ul>	
+				<li><b>cin.getline(char *,int )</b> - načíta zo vstupu text až po enter a zapíše ho do prem. 
+					<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+					<ul><li>narazili sme na enter (nezostane na vstupe)
+						<li>načítali sme už (n-1) znakov
+						<li>narazili sme na EOF
+					</ul>	
+				<li><b>cin.getline(char *,int,char)</b> - načíta zo vstupu text a zapíše ho do prem. 
+					<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+					<ul><li>narazili sme na znak z (ukončovací znak) - znak z nezostáva na vstupe
+						<li>načítali sme už (n-1) znakov
+						<li>narazili sme na EOF
+					</ul>	
+				<li><b>cin.ignore(int n, char c)</b> - načíta zo vstupu text a zahodí ho.
+					<br>čítanie je ukončené ak sme načítali n znakov
+					<br>čítanie je ukončené ak sme načítali ukončovací znak c
+					<br>čítanie je ukončené ak sme načítali EOF
+					<br>používa sa na vyprázdnenie vstupnej fronty - ukončovací znak dáme '\n'
+				<li><b>cin.unget()</b> - vráti posledne načítaný char nazad do prúdu
+					<pre>
+c = cin.get();
+if ( (c >= '0') && (c <= '9') )
+{  cin.unget();
+   cin >> n;
+   cout << "Zadal si číslo: " << n << endl;
+}</pre>
+				</ul>
+		<dt>Ošetrenie chýb
+		<dd>Pri zápise na obrazovku pod win nie je "časté" aby nastala chyba, ale pri čítaní dát z klávesnice/súboru môže nastať chyba:
+			<ol><li>pokus o čítanie za EOF
+				<li>nekorektné dáta na vstupe (čakáme číslo a príde text)
+			</ol>
+			Na ošetrenie chýb používame:
+			<ul><li><b>cin.fail()</b> - funkcia, ktorá vráti TRUE ak sa posledné čítanie nepodarilo
+				<li><b>cin.eof()</b> - vráti TRUE, ak je nastavený eofbit
+				<li><b>cin.clear()</b> - funkcia, ktorá vymaže príznak chyby (bez vymazania sa už nedá urobiť žiaden vstup)
+			</ul>		
+			Je trochu komplikovanejšie zisťovať či sme na konci riadku alebo súboru. 
+			<br>Ak čítame pomocou operátora &gt;&gt; - nastaví nám eofbit až po prvom neúspešnom čítaní (nevieme pred čítaním, či sa čítanie podarí)
+			<br>Ak čítame pomocou get()  - možno testovať vrátenú hodnotu na konštantu EOF.
+		</dl>
+		<dt>Úlohy
+		<dd><ul>
+			<li>Načítaj číslo v desiatkovej a vypíš ho v 16-kovej a osmičkovej sústave
+			<li>Načítaj prirodzené číslo n a vypíš pod ním n hviezdičiek
+			<li>Načítaj text aj s medzerami a vypíš ho veľkými písmenami
+			<li>Na vstupe je meno a priezvisko oddelené medzerou  načítaj a výpíš ich pod sebou 
+			<li>Na vstupe je matematický zápis príkladu 
+				<br>x&plusmn;y=
+				<br>kde x a z sú celočíselné kladné hodnoty, program vypíše zadanú úlohu a za rovnása zapíše výsledok 
+			<li>Napíš program, ktorý sám o sebe zistí koľko bajtov je dlhý a tiež z koľkých viet sa skladá.
+			<li>Na vstupe sú čísla vo viacerých riadkoch - zisti súčet čísel v prvom riadku	
+			<li>Na vstupe je text v ktorom je jedno číslo, zisti, či toto číslo je deliteľné 7	(je vhodné použiť unget() )
+			<li>Na vstupe je text v ktorom je niekoľko čísel, zisti ich súčet	
+			<li>Na vstupe je text, zisti dĺžku najdlhšieho slova (slovo je postupnosť písmen a číslic oddelená iným znakom	
+			</ul>
+</dl>			
+<hr> 
+<h3>Standartné príkazy - knižnica stdio.h</h3>
+<dl><dt>Výstup na štandartný výstup
+	<dd><dl><dt>int printf( form_ret, zoznam_vyr)
+			<dd><dl><dt>form_ret
+					<dd>ľubovolný text, ktorý môže obsahovať formátovacie špecifikácie začínajúce znakom %
+					<br>tiež môže obsahovať špeciálne znaky (\n, \r, \b, \\, \", %%)
+					<br>form. špecifikácia môže mať nasledovný tvar:
+					<br>- ... (mínus) ak je prvý znak mínus bude reťazec zarovnávaný zľava
+					<br>+ ... ak je uvedené bude kladné číslo so znam. +
+					<br>dlzka ... číslo učujúce počet znakov na obrazovke pre premennú
+					<br>.des  ... za bodkou číslo určujúce pri reálnych číslach počet desatinných
+					<br>modifikátor ...malé l na výpis premenných long, veľké L na výpis prem. long long, h na výpis short int
+					<br>typ ... d,i desiatkový integer
+					<br> &nbsp; &nbsp; &nbsp;... o (malé o) osmičkový integer
+					<br> &nbsp; &nbsp; &nbsp;... x,X integer v tvare hexa
+					<br> &nbsp; &nbsp; &nbsp;... u neznamienkový integer
+					<br> &nbsp; &nbsp; &nbsp;... u neznamienkový integer
+					<br> &nbsp; &nbsp; &nbsp;... c na výpis znaku
+					<br> &nbsp; &nbsp; &nbsp;... s na výpis stringu
+					<br> &nbsp; &nbsp; &nbsp;... f reálne desiatkové číslo
+					<br> &nbsp; &nbsp; &nbsp;... e,E reálne desiatkové číslo vo vedeckom tvare
+					<dt>zoznam_vyr
+					<dd>výrazy oddelené čiarkou
+					<br>počet výrazov musí byť rovnaký ako je form. špecifikácií
+					<dt>návratová hodnota
+					<dd>nakoľko ide o funkciu, vracia celočíselnú hodnotu
+					<br>ak sa výstup podaril vráti počet bajtov zaslaných na št. výstup
+					<br>ak sa výstup nepodaril vráti preddefinovanú konštantu EOF 
+					<dt>Poznámka
+					<dd>Pri výpise reálnych čísel nezaokrúhľuje, ale odsekáva
+				</dl>
+				Zosumarizovanie výpisu celých čísel
+				<ul><li>%i, %d - výpis hodnoty typu int (funguje aj pre typ char lebo ho zmeni na int)
+					<li>%li %ld - na výpis hodnoty typu long int (na 32-bit je int=long int)
+					<li>%Li %Ld - na výpis hodnoty typu long long (64-bitová celočíselná premenná)
+				</ul>
+				Reálne čísla	
+				<ul><li>%f %lf- hodnota typu float alebo double
+				</ul> 
+	        <dt>int fprintf(zar, form_ret, zoznam_vyr)
+			<dd>je rovnaké ako printf, ale môžme určiť kam chceme výstup zaslať
+			<br>zar ... stdout, stderr, subor
+			<dt>int putchar(int c) ... makro
+			<dt>int fputchar(int c) ...funkcia
+			<dd>Na miesto kurzora sa zapíše požadovaný znak.
+			<br>Návratová hodnota ... ak je výstup OK vráti zapisovaný znak, inak vráti EOF
+			<dt>int puts (text) 
+			<dd>Vypíše reťazec a odriadkuje. Návratová hodnota:
+			<br>ak OK je hodnota &gt; 0
+			<br>ak sa nepodarí je výstupná hodnota EOF
+			
+		</dl>
+	<dt>Vstup zo štandartného vstupu
+	<dd>
+		<dl><dt>int scanf( form_ret, zoznam_adr)
+			<dd><dl><dt>zoznam_adr
+					<dd>Sú to premenné s operátorom &amp; oddelené čiarkou
+					<dt>form_ret
+					<dd>ľubovolný text, ktorý môže obsahovať formátovacie špecifikácie začínajúce znakom %. Podobne 
+						ako pascal implicitne očakáva, že dáta budú oddelené bielymi znakmi (medzera, TAB, Enter),
+						ale tu možno určiť aké oddeľovače budú očakávané. Tiež možno načítať aj čísla, ktoré nie sú 
+						vôbec oddelené zadaním dĺžky.
+						<br>napr. scanf("%i,%i",a,b); umožní zadať vstup, kde čísla budú oddelené čiarkou (12,5)
+						<br>napr. scanf("%2,%2i",a,b); umožní zadať čísla neoddelené (125) ale aj oddelené (1,55)
+						<br>napr. scanf("%2pondelok%2i",a,b);umožní zadať čísla oddelené slovom pondelok (medzery sú dovolené)
+						<br>form. špecifikácia môže mať nasledovný tvar:
+						<br>dlzka ... číslo učujúce počet znakov na obrazovke pre premennú
+						<br>modifikátor ...malé l na načítanie premenných long, veľké L na načítanie prem. long long, h na načítanie premennej typu short
+						<br>typ ... d,i desiatkový integer
+						<br> &nbsp; &nbsp; &nbsp;... o (malé o) osmičkový integer
+						<br> &nbsp; &nbsp; &nbsp;... O (veľké O) osmičkový long
+						<br> &nbsp; &nbsp; &nbsp;... x int v tvare hexa
+						<br> &nbsp; &nbsp; &nbsp;... X long v tvare hexa
+						<br> &nbsp; &nbsp; &nbsp;... u neznamienkový int
+						<br> &nbsp; &nbsp; &nbsp;... U neznamienkový long
+						<br> &nbsp; &nbsp; &nbsp;... c na vstup znaku
+						<br> &nbsp; &nbsp; &nbsp;... s na vstup stringu
+						<br> &nbsp; &nbsp; &nbsp;... f,F,e,E reálne desiatkové číslo
+						<br><br>Na načítanie číselnej hodnoty do premennej typu char som "fintu" nenasiel
+						<br>Pri načítaní hodnôt musí naozaj sedieť dĺžka typu určeného za znakom % s dĺžkou tzpu premennej
+						<dt>Návratová hodnota
+						<dd>ak OK vráti počet naplnených premenných, ak narazí na koniec súboru vráti EOF
+						<dt>Sémantika
+						<dd>program zastane a číta vstup pokiaľ nenaplní všetky premenné, alebo nepríde znak konca súboru
+							pod DOSom to je CTRL Z, a pod UNIXom to je CTRL D
+				</dl>
+	        <dt>int getchar( void)
+	        <dt>int fgetchar( void)
+			<dd>zo vstupného reťazca ukončeného Enterom zoberie prvý (ľubovoľný okrem konca súboru). Výstupná 
+				hodnota je načítaný znak
+			<dt>char * get(char *)
+			<dd>načíta text a zapíše ho do textovej premennej v zátvorke a zároveň tvorí aj výstupnú hodnotu
+		</dl>
+ 	<dt>Príklady:
+	<dd><ol>
+	<li> vytvorte v UNIXe subor pokus.txt a zrušte v ňom právo zápisu
+		<br>vytvorte program, ktorý píše na št. zar. pozdrav "AHOJ"
+		<br>ak sa výpis nepodarí vypíšte na chybové zar. oznam: "ERROR pri pokuse o výstup na štandartné zar."
+		<br>spustite program s premerovaním št. zar. do suboru pokus.txt
+		<br>spustite program s premerovaním št. zar. do suboru pokus.txt a chybového hlásenia do súboru pokus.err
+	<li>Napíš program pod DOS, ktorý vypíše 'A', ak sa nepodarí vzpíše na chybové oznam: Chyba
+	<li>Načítaj znak a vypíš znak pred i za ním 
+	<li>Načítaj veľké písmeno a napíš nasledovníka, nasledovník 'Z' nech je 'A' 
+	<li>Na vstupe je výraz: cislo1 cislo2=, načítaj ho a vypočítaj, výsledok vypíš
+	<li>Načítaj písmeno, ak je malé vypíš veľké a naopak (bez pomocných premenných)
+	<li>Načítaj dve reálne čísla a vypíš ich usporiadané
+	<li>Riaditeľka školy sa rozhodla každému maturantovi so samými 1 udeliť diplom. Načítajte štyri maturitné známky a podla ich hodnoty napíšte
+		<br>Prospel s diplomom
+		<br>Prospel
+		<br>Neprospel
+</ol>	
+</dl>
+	
+</body>
+</html>

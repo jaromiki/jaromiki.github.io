@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+Keďže v jazyku C typ string priamo nemáme je nahradený poľom znakov. Dĺžka reťazca je určená polohou znaku \0, ktorý reťazec ukončuje.
+<br>Pre tých, ktorí z pascalu poznajú string (ale nielen pre nich) je v knižnici typ string s ktorým sa pracuje pohodlnejšie)
+<dl><dt>Deklarácia
+	<dd>char pole1[10]; //rezervuje 10 políčok na reť. (používame teda 9 a 10. je \0)
+		<br>char pole2[]="abcdef"; //rezervuje 7 políčok na reť. a inicializuje všetky hodnoty  
+		<br>char pole3[10]="abcdef"; //rezervuje 10 políčok na reť. a inicializuje prvých 7 políčok
+		<br>char pole4[]={'a','b','c','d','e','f'}; //to isté ako pole2, len chýba \0
+		<br>char *pole5="abcdef"; //adresu konštanty zapíše do smerníka pole5
+		<br>char *pole6={'a','b','c','d','e','f'}; //zahlási chybu
+	<dt>Vstup
+	<dd>Načítať reťazec možno napr. pomocou funkcií 
+		<br>(znak &amp; pred premennú nedávame lebo ide o smerník)
+		<ul><li>gets(s); // načítava až po enter a ten nahradí znakom '\0'
+			<li>scanf("%s",s); //pozor načítava len po biely znak medzera, tab, enter (ukončí ynakom '\n') 
+			<li>cscanf("%s",s);
+			<li>cin >> s;
+			<li>cin.getline(s,n ) - načíta zo vstupu text až po enter a zapíše ho do prem.
+				<br> &nbsp; &nbsp;vstup končí načítaním n znakov, narazením na Enter alebo EOF
+			<li>cin.getline(char *,int,char) - načíta zo vstupu text a zapíše ho do prem.	 
+				<br> &nbsp; &nbsp;vstup končí načítaním n znakov, narazením na znak char alebo EOF
+		</ul>		
+	<dt>Výstup
+	<dd>vypísať reťazec možno napr. pomocou funkcií 
+		<ul><li>puts(s); //vypíše až po \0 a ten nahradí znakom \n
+			<li>printf("%s",s)
+			<li>cprintf("%s",s)
+			<li>cout &lt;&lt; s
+		</ul>		
+	<dt>Funkcie pre prácu s reťazcami
+	<dd>Tieto funkcie sú v knižnici <b>string.h</b>
+		<ul><li><b>char * strcat(char *, char *)</b> - spojenie dvoch reť. do výsledného (druhý pridá do prvého)
+			<br>prvý parameter sa predĺži o druhý, druhý sa nezmení
+			<br>návratová hodnota je prvý parameter
+			<li><b>int strlen(char *)</b> - vráti aktuálnu dĺžku textu
+			<li>
+			<li><b>strcmp()</b> - porovná dva reťazce vráti &lt;0,=0, &gt;0
+			<li>
+			<li><b>strtod()</b> - prevod reť. na reálne číslo
+			<li><b>strtol()</b> - prevod reť. na celé číslo
+			<li>
+			<li><b>char * strcpy(char *, char *)</b> - priradí druhý reť. prvému (priradenie reť. nefunguje)
+			<li><b>char * strncpy(char *, char *,n)</b> - priradí časť druhého reť. prvému (priradenie reť. nefunguje)
+			<li>
+			<li><b>char * strchr(char *, char)</b> - hľadá znak odpredu a vráti ukazovateľ na prvý výskyt
+				<br> ak nenájde vráti NULL
+			<li><b>char * strrchr(char *, char)</b> - hľadá znak odzadu
+			<li><b>int strcspn(char *, char *)</b> - vráti dĺžku prvého, ktorá neobsahuje nič z druhého
+			<li><b>int strspn(char *, char *)</b> - vráti dĺžku prvého, ktorá obsahuje znaky z druhého
+			<li><b>char * strstr(char *, char *)</b> - vráti ukazovateľ na prvý výskyt textu2 v texte 1
+				<br> ak nenájde vráti NULL
+			<li>tieto na builderi idú ale nie sú v štandarte
+
+			<li><b>char * strlwr(char *)</b> - zmení v parametri všetky veľké na malé, výsledok je aj návratová hodnota
+			<li><b>char * strupr(char *)</b> - zmení všetky malé na veľké
+			<li><b>strset()</b> - zmení všetky znaky na rovnaké
+			<li><b>strnset()</b> - zmení prvých n znakov na rovnaké
+ 			<li><b>strrev()</b> - otočí reťazec
+
+		</ul>
+	<dt>Príkl.
+	<dd><ul><li>Vytvorte štruktúru na odloženie údajov o knihách
+		<ul><li>autor
+			<li>názov
+			<li>cena
+		</ul>
+		pre asi 30 kníh.
+		<br>Naplnte 20 náhodných kníh (všetko malé písmená)
+		<br>Ponukový program 
+		<ul><li>Pridaj knihu
+			<li>Zruš knihu
+			<li>Vypíš knihu
+			<li>Oprav názvy - prvé písmeno veľké druhé malé
+			<li>Prvá podľa autora
+			<li>Prvá podľa názvu
+			<li>Prvá podľa ceny
+		</ul>	
+		<li>Načítaj text a urob funkciu naj(char[], int n), ktorá vráti najviac sa vyskytujúci znak.
+		</ul> 
+</dl>					
+
+</body>
+</html>

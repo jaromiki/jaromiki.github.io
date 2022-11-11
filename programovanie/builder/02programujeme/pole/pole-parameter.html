@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	 <meta name="autor" content="RNDr. Jaroslav Mikuláš">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+<body>
+<h3>Pole ako parameter</h3>
+Niekedy potrebujeme preniesť pole do nášho podprogramu/funkcie a najlepšia cesta ako to urobiť je cez parametre. Keďže premenná typu pole je vlastne ukazovateľ
+tak pole sa prenáša referenciou (možno meniť jeho položky, čím sa budú meniť aj položky poľa v hlavnom programe. Tým, že sa vlastne do podprogramu prenesie len smerník
+na prvú položku poľa nemá podprogram ako vedieť koľko položiek pole vlastne má. Preto je zvykom pole prenášať dvomi položkami 
+<ul><li>adresa nultej položky poľa
+	<li>počet prvkov poľa
+</ul>
+Pole môžme zapísať ako parameter dvoma spôsobmi
+<ul><li>typ prem[] ... napríklad: int a[], počet prvkov do zátvorky nezadávame
+	<li>typ  *prem ... je rovnocenné predošlému
+</ul>
+Parameter pole môžme v podprograme používať pomocou indexov ale aj smerníkovou aritmetikou.	 
+<dl><dt>Ukážka
+	<dd><br><TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Prenos poľa do podprogramu</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<pre>
+#include &lt;iostream>
+using namespace std;
+int pole[10]={5,8,10,9,7,5,11,1,6,2} ;
+
+int polemax(int *a,int n)    //pole je prenesené do a, počet je donesený do n
+{ int mm=a[0];
+  for (int i=1;i&lt;n; i++) if (mm&lt;a[i]) mm=a[i];
+  return mm;
+}
+int main()
+{  cout &lt;&lt; "Maximálne číslo v poli:";
+   for (int i=0;i&lt;10; i++) cout &lt;&lt;pole[i] &lt;&lt;' ';
+   cout &lt;&lt; endl&lt;&lt;polemax(pole,10);
+   cin.get();
+}
+		</pre></tr>
+		</table>
+<hr>
+	Keby sme v podprograme polemax() menili položky poľa a[], tak by sa menili aj položky poľa pole[], lebo bývajú na tej istej adrese. Samozrejme, že ak by sme do premennej a zapísali
+	inú adresu (pole a by bývalo na iných adresách), tak táto zmena by sa netýkala poľa pole[].
+</dl>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>Herní grafické enginy (3.) - GLScene</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="Když mluvím o 3D enginech vyvíjených pro hry nebo jiné aplikace, rozhodně bych neměl zapomenout na nejznámější open-source projekt pro Delphi založený na OpenGL a nazvaný GLScene. Jedná se o sadu visuálních komponent umožňující snadný návrh a rendering 3D scény."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/3d-engine-glscene-delphi&amp;title=Herní grafické enginy (3.) - GLScene" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>Herní grafické enginy (3.) - GLScene</h1><i>Když mluvím o 3D enginech vyvíjených pro hry nebo jiné aplikace, rozhodně bych neměl zapomenout na nejznámější open-source projekt pro Delphi založený na OpenGL a nazvaný GLScene. Jedná se o sadu visuálních komponent umožňující snadný návrh a rendering 3D scény.</i><br/><hr/><br/><H2>Popis</H2>
+<P>Engine byl od začátku navrhován jako všeobecně použitelný 3D engin. Jeho největší výhodou pro začátečníky je rychlý vývoj založený na RAD (Rapid Application Development - rychlý vývoj aplikací, zkrátka uchopit komponentu a umístit ji na formulář :-)). Ke zvládnutí 3D grafiky ani nemusíte ovládat žádné spletitosti OpenGL, Direct3D, ani 3D algebru!!! K samotnému enginu je přibaleno několik desítek demíček, které by měly pomoci zvládnout používání GLScene.</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glscene/thorfx.jpg" BORDER=0></TD><TD><IMG SRC="articles/glscene/skel.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<H2>Vlastnosti</H2>
+<P>Kdybych zde měl vypisovat úplně všechny vlastnosti, určitě by se mi na jednu průměrně dlouhou stránku nevešly,proto vyberu z výpisu jen to nejdůležitější:</P>
+
+<P><B>Scéna:</B> Hierarchická struktura objektů, snadný pohyb a rotace, předdefinované objekty (od krychle až po čajovou konvici),  HUD objekty, pomocné objekty (šipky, skydome,...), speciální efekty (před i po renderování scény, snadno rozšiřitelné), částicové systémy, import souborů z formátů 3D studia, OBJ, MD2, STL, TIN a PLY</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glscene/moon.jpg" BORDER=0></TD><TD><IMG SRC="articles/glscene/kareo2.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<P><B>Materiály:</B> Snadné použití, knihovna materiálů pro opětovné používání materiálů, podpora ambient, diffuse, emission, specular a shininess, automatické generování alpha-kanálu, podpora texturových formátů OpenGL včetně komprese DXT a S3TC, více jak 150 předdefinovaných barev jako clrLightBlue nebo clrCoolCopper, snadné přesouvání textur, podpora 32-bitových bitmap.<P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glscene/scene.jpg" BORDER=0></TD><TD><IMG SRC="articles/glscene/octree.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<P><B>Rendering:</B> Automatické použití hardwarové OpenGL akcelerace, pokud možno, vícenásobné renderování jedné nebo více scén, snadná změna kamery, rendering do souboru, bitmapy nebo na tiskárnu, podpora full-screen módu, odrazy a zrcadlení, stíny.</P>
+
+<P><B>Zvuky:</B> Vestavěná 3D podpora pro zdroj i posluchače, automatická aktualizace pozice, rychlosti i orientace posluchače, knihovna zvukových samplů, zvukové managery pro WaveOut, Bass a FMOD.</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glscene/editor.jpg" BORDER=0></TD><TD><IMG SRC="articles/glscene/antiterr.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<H2>Není nad jednoduchost</H2>
+
+<UL><B>První kroky</B><BR>
+  <LI>Vytvořte novou aplikaci s formulářem</LI>
+  <LI>Na formulář umístěte komponentu GLScene</LI>
+  <LI>také GLSceneViewer s parametry: 
+    <OL>align: alnone</OL>
+    <OL>backgroundcolor: clbtnface</OL></LI>
+  <LI>do GLSceneEditoru
+    <OL>přidejte kameru (GLCamera1): Pozice.z := 10</OL>
+    <OL>přidejte cube (Cube1), showaxes := true</OL></LI>
+  <LI>v GLSceneViewer nastavte
+    <OL>camera := GLCamera1;</OL>
+    <OL>lighting := false</OL></LI>
+  <LI>v GLSceneEditoru nastavte
+    <OL>cube1.texture.image := obrazek.bmp nebo .jpg</OL>
+    <OL>cube1.texture.disabled := false</OL>
+  <LI>na formulář
+    <OL>přidejte TrackBar, 50..500, frequenc := 50, position := 50, name := focal</OL>
+    <OL>TrackBar.OnChange: GLCamera1.focallength := focal.position</OL></UL>
+
+<UL><B>Další kroky</B><BR>
+  <LI>Přidejte TrackBar, 0..360, frequency := 10, position := 0, name := XAxisRot</LI>
+    <OL>TrackBar.OnChange: cube1.pitchangle := XAxisRot.position</OL>
+  <LI>Přidejte TrackBar, 0..360, frequency := 10, position := 0, name := YAxisRot</LI>
+    <OL>TrackBar.OnChange: cube1.pitchangle := YAxisRot.position</OL>
+  <LI>Přidejte TrackBar, 0..360, frequency := 10, position := 0, name := ZAxisRot</LI>
+    <OL>TrackBar.OnChange: cube1.pitchangle := ZAxisRot.position</OL></UL>
+
+
+<UL><B>Výsledek</B><BR>
+  <LI>Rotace kolem souřadnic objektu</LI>
+  <LI>S nastavenými souřadnicemi</LI>
+    <OL>TrackBar.OnChange: cube1.pitchangle := YAxisRot.position</OL>
+  <LI>Přidejte TrackBar, 0..360, frequency := 10, position := 0, name := ZAxisRot</LI>
+    <OL>TrackBar.OnChange: cube1.pitchangle := ZAxisRot.position</OL></UL>
+
+
+<P>Zatím jsem jen opisoval pochvalné věci z domovské stránky GLScene, nyní ke věcem horším: To, že je engin tak universální je na úkor snížení rychlosti - nedoporučoval bych ho na nějakou náročnou hru. Perfektně se hodí tam, kde se nechceme se učit OpenGL nebo Direct3D (a to bysme při programování hry měli znát...) Mám na mysli třeba jednodušší hry, editory scén atd. (jeden kvalitní editor od českého autora se jmenuje SizeMAX - už, neznám přesnou adresu ale zkuste hledat...) Autoři sice tvrdí, že i podpora RAD není na úkor výkonu procesoru, já si ale myslím pravý opak - program s jedním MD2 objektem neběhá zas tak svižně, natož aby těch objektů bylo víc :-).</P><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="3d-engine-pythian-project">Herní grafické enginy (2.) - Pythian Project</a></li><li><a href="uceleny-casticovy-system-v-opengl">OpenGL (15.) - Ucelený částicový systém - pokračování</a></li><li><a href="casticovy-system-v-opengl">OpenGL (14.) - Ucelený částicový systém</a></li><li><a href="nastaveni-opengl-v-c">OpenGL (13.) - Nastavení OpenGL v jazyce C/C++</a></li><li><a href="3d-studio-max-modifikacni-funkce">3D Studio MAX (13.) - Popis modifikačních funkcí ve 3D Studiu MAX</a></li><li><a href="knihovna-fmod-zvuky-direct-sound-eax">Delphi (10.) - knihovna FMOD</a></li><li><a href="vizualizacni-plugin-pro-winamp">OpenGL (12.) - visualizační plugin pro WinAMP</a></li><li><a href="3d-engine-mengine">Herní grafické enginy (1.) - MEngine od Mister Group</a></li><li><a href="download-manager-2">Delphi (9.) - Download 2</a></li><li><a href="download-manager-1">Delphi (8.) - Download</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne2">3D Studio MAX (12.) - Tvorba realistické jeskyně 2</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne">3D Studio MAX (11.) - Tvorba realistické jeskyně</a></li><li><a href="jak-na-programovani-her">Jak na tvorbu her - Na co máme myslet při programování hry?</a></li><li><a href="3d-studio-max-izometricky-pohled">3D Studio MAX (10.) - Izometrický pohled ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-tutorial-chromovy-text">Adobe Photoshop (4.) - Chromový text</a></li><li><a href="export-do-pdf">Zoner Callisto (2.) - Export do PDF</a></li><li><a href="detekce-kolizi-ve-3d">OpenGL (11.) - Nová detekce kolizí</a></li><li><a href="matematicka-knihovna-geometry-pas-delphi">OpenGL (10.) - Nová knihovna geometry.pas</a></li><li><a href="generovani-textur-terenu-a-far-clip">OpenGL (9.) - Generování textur a vylepšení FarClip Distance</a></li><li><a href="export-do-gif">Zoner Callisto (1.) - Export do GIFu</a></li><li><a href="3d-studio-max-odlesky-na-vodni-hladine">3D Studio MAX (9.) - Vytváření odlesků vodní hladiny</a></li><li><a href="slovnik-pojmu-opengl">OpenGL (8.) - Slovníček pojmů v OpenGL</a></li><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li><li><a href="co-je-to-minigl">OpenGL (6.) - Co je to MiniGL</a></li><li><a href="opengl-vertex-array-gldrawelements">OpenGL (5.) - Urychlení pomocí glDrawElements</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=35&amp;url=%2F3d-engine-glscene-delphi" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.227682017px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12653 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

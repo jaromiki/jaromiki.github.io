@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 27 - Stíny</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_27.jpg" class="nehe_maly" alt="Lekce 27" />
+
+<h1>Lekce 27 - Stíny</h1>
+
+<p class="nadpis_clanku">Představuje se vám velmi komplexní tutoriál na vrhání stínů. Efekt je doslova neuvěřitelný. Stíny se roztahují, ohýbají a zahalují i ostatní objekty ve scéně. Realisticky se pokroutí na stěnách nebo podlaze. Se vším lze pomocí klávesnice pohybovat ve 3D prostoru. Pokud ještě nejste se stencil bufferem a matematikou jako jedna rodina, nemáte nejmenší šanci.</p>
+
+<p>Tento tutoriál má trochu jiný přístup - sumarizuje všechny vaše znalosti o OpenGL a přidává spoustu dalších. Každopádně byste měli stoprocentně chápat nastavování a práci se stencil bufferem. Pokud máte pocit, že v něčem existují mezery, zkuste se vrátit ke čtení dřívějších lekcí. Mimo jiné byste také měli mít alespoň malé znalosti o analytické geometrii (vektory, rovnice přímek a rovin, násobení matic...) - určitě mějte po ruce nějakou knihu. Já osobně používám zápisky z matematiky prvního semestru na univerzitě. Vždy jsem věděl, že se někdy budou hodit.</p>
+
+<p>Nyní už ale ke kódu. Aby byl program přehledný, definujeme několik struktur. První z nich, sPoint, vyjadřuje bod nebo vektor v prostoru. Ukládá jeho x, y, z souřadnice.</p>
+
+<p class="src0">struct sPoint<span class="kom">// Souřadnice bodu nebo vektoru</span></p>
+<p class="src0">{</p>
+<p class="src1">float x, y, z;</p>
+<p class="src0">};</p>
+
+<p>Struktura sPlaneEq ukládá hodnoty a, b, c, d obecné rovnice roviny, která je definována vzorcem ax + by + cz + d = 0.</p>
+
+<p class="src0">struct sPlaneEq<span class="kom">// Rovnice roviny</span></p>
+<p class="src0">{</p>
+<p class="src1">float a, b, c, d;<span class="kom">// Ve tvaru ax + by + cz + d = 0</span></p>
+<p class="src0">};</p>
+
+<p>Struktura sPlane obsahuje všechny informace potřebné k popsání trojúhelníku, který vrhá stín. Instance těchto struktur budou reprezentovat facy (čelo, stěna - nebudu překládat, protože je tento termín hodně používaný i v češtině) trojúhelníků. Facem se rozumí stěna trojúhelníku, která je přivrácená nebo odvrácená od pozorovatele. Jeden trojúhelník má vždy dva facy.</p>
+
+<p>Pole p[3] definuje tři indexy v poli vertexů objektu, které dohromady tvoří tento trojúhelník. Druhé trojrozměrné pole, normals[3], zastupuje normálový vektor každého rohu. Třetí pole specifikuje indexy sousedních faců. PlaneEq určuje rovnici roviny, ve které leží tento face a parametr visible oznamuje, jestli je face přivrácený (viditelný) ke zdroji světla nebo ne.</p>
+
+<p class="src0">struct sPlane<span class="kom">// Popisuje jeden face objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">unsigned int p[3];<span class="kom">// Indexy 3 vertexů v objektu, které vytvářejí tento face</span></p>
+<p class="src1">sPoint normals[3];<span class="kom">// Normálové vektory každého vertexu</span></p>
+<p class="src1">unsigned int neigh[3];<span class="kom">// Indexy sousedních faců</span></p>
+<p></p>
+<p class="src1">sPlaneEq PlaneEq;<span class="kom">// Rovnice roviny facu</span></p>
+<p class="src1">bool visible;<span class="kom">// Je face viditelný (přivrácený ke světlu)?</span></p>
+<p class="src0">};</p>
+
+<p>Poslední struktura, glObject, je mezi právě definovanými strukturami na nejvyšší úrovni. Proměnné nPoints a nPlanes určují počet prvků, které používáme v polích points a planes.</p>
+
+<p class="src0">struct glObject<span class="kom">// Struktura objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">GLuint nPoints;<span class="kom">// Počet vertexů</span></p>
+<p class="src1">sPoint points[100];<span class="kom">// Pole vertexů</span></p>
+<p></p>
+<p class="src1">GLuint nPlanes;<span class="kom">// Počet faců</span></p>
+<p class="src1">sPlane planes[200];<span class="kom">// Pole faců</span></p>
+<p class="src0">};</p>
+
+<p>GLvector4f a GLmatrix16f jsou pomocné datové typy, které definujeme pro snadnější předávání parametrů funkci VMatMult(). Více později.</p>
+
+<p class="src0">typedef float GLvector4f[4];<span class="kom">// Nový datový typ</span></p>
+<p class="src0">typedef float GLmatrix16f[16];<span class="kom">// Nový datový typ</span></p>
+
+<p>Nadefinujeme proměnné. Obj je objektem, který vrhá stín. Pole ObjPos[] definuje jeho polohu, roty jsou úhlem natočení na osách x, y a speedy jsou rychlosti otáčení.</p>
+
+<p class="src0">glObject obj;<span class="kom">// Objekt, který vrhá stín</span></p>
+<p></p>
+<p class="src0">float ObjPos[] = { -2.0f, -2.0f, -5.0f };<span class="kom">// Pozice objektu</span></p>
+<p></p>
+<p class="src0">GLfloat xrot = 0, xspeed = 0;<span class="kom">// X rotace a x rychlost rotace objektu</span></p>
+<p class="src0">GLfloat yrot = 0, yspeed = 0;<span class="kom">// Y rotace a y rychlost rotace objektu</span></p>
+
+<p>Následující čtyři pole definují světlo a další čtyři pole materiál. Použijeme je především v InitGL() při inicializaci scény.</p>
+
+<p class="src0">float LightPos[] = { 0.0f, 5.0f,-4.0f, 1.0f };<span class="kom">// Pozice světla</span></p>
+<p class="src0">float LightAmb[] = { 0.2f, 0.2f, 0.2f, 1.0f };<span class="kom">// Ambient světlo</span></p>
+<p class="src0">float LightDif[] = { 0.6f, 0.6f, 0.6f, 1.0f };<span class="kom">// Diffuse světlo</span></p>
+<p class="src0">float LightSpc[] = { -0.2f, -0.2f, -0.2f, 1.0f };<span class="kom">// Specular světlo</span></p>
+<p></p>
+<p class="src0">float MatAmb[] = { 0.4f, 0.4f, 0.4f, 1.0f };<span class="kom">// Materiál - Ambient hodnoty (prostředí, atmosféra)</span></p>
+<p class="src0">float MatDif[] = { 0.2f, 0.6f, 0.9f, 1.0f };<span class="kom">// Materiál - Diffuse hodnoty (rozptylování světla)</span></p>
+<p class="src0">float MatSpc[] = { 0.0f, 0.0f, 0.0f, 1.0f };<span class="kom">// Materiál - Specular hodnoty (zrcadlivost)</span></p>
+<p class="src0">float MatShn[] = { 0.0f };<span class="kom">// Materiál - Shininess hodnoty (lesk)</span></p>
+
+<p>Poslední dvě proměnné jsou pro kouli, na kterou dopadá stín objektu.</p>
+
+<p class="src0">GLUquadricObj *q;<span class="kom">// Quadratic pro kreslení koule</span></p>
+<p class="src0">float SpherePos[] = { -4.0f, -5.0f, -6.0f };<span class="kom">// Pozice koule</span></p>
+
+<p>Struktura datového souboru, který používáme pro definici objektu, není až tak složitá, jak na první pohled vypadá. Soubor se dělí do dvou částí: jedna část pro vertexy a  druhá pro facy. První číslo první části určuje počet vertexů a po něm následují jejich definice. Druhá část začíná specifikací počtu faců. Na každém dalším řádku je celkem dvanáct čísel. První tři představují indexy do pole vertexů (každý face má tři vrcholy) a zbylých devět hodnot určuje tři normálové vektory (pro každý vrchol jeden). To je vše. Abych nezapomněl v adresáři Data můžete najít ještě tři podobné soubory.</p>
+
+<p class="src0"><span class="kom">24</span></p>
+<p class="src0"><span class="kom">-2  0.2 -0.2</span></p>
+<p class="src0"><span class="kom">2  0.2 -0.2</span></p>
+<p class="src0"><span class="kom">2  0.2  0.2</span></p>
+<p class="src0"><span class="kom">-2  0.2  0.2</span></p>
+<p class="src0"><span class="kom">-2 -0.2 -0.2</span></p>
+<p class="src0"><span class="kom">2 -0.2 -0.2</span></p>
+<p class="src0"><span class="kom">2 -0.2  0.2</span></p>
+<p class="src0"><span class="kom">-2 -0.2  0.2</span></p>
+<p></p>
+<p class="src0"><span class="kom">-0.2  2 -0.2</span></p>
+<p class="src0"><span class="kom">0.2  2 -0.2</span></p>
+<p class="src0"><span class="kom">0.2  2  0.2</span></p>
+<p class="src0"><span class="kom">0.2  2  0.2</span></p>
+<p class="src0"><span class="kom">-0.2 -2 -0.2</span></p>
+<p class="src0"><span class="kom">0.2 -2 -0.2</span></p>
+<p class="src0"><span class="kom">0.2 -2  0.2</span></p>
+<p class="src0"><span class="kom">-0.2 -2  0.2</span></p>
+<p></p>
+<p class="src0"><span class="kom">-0.2  0.2 -2</span></p>
+<p class="src0"><span class="kom">0.2  0.2 -2</span></p>
+<p class="src0"><span class="kom">0.2  0.2  2</span></p>
+<p class="src0"><span class="kom">-0.2  0.2  2</span></p>
+<p class="src0"><span class="kom">-0.2 -0.2 -2</span></p>
+<p class="src0"><span class="kom">0.2 -0.2 -2</span></p>
+<p class="src0"><span class="kom">0.2 -0.2  2</span></p>
+<p class="src0"><span class="kom">-0.2 -0.2  2</span></p>
+<p></p>
+<p class="src0"><span class="kom">36</span></p>
+<p class="src0"><span class="kom">1 3 2 0 1 0 0 1 0 0 1 0</span></p>
+<p class="src0"><span class="kom">1 4 3 0 1 0 0 1 0 0 1 0</span></p>
+<p class="src0"><span class="kom">5 6 7 0 -1 0 0 -1 0 0 -1 0</span></p>
+<p class="src0"><span class="kom">5 7 8 0 -1 0 0 -1 0 0 -1 0</span></p>
+<p class="src0"><span class="kom">5 4 1 -1 0 0 -1 0 0 -1 0 0</span></p>
+<p class="src0"><span class="kom">5 8 4 -1 0 0 -1 0 0 -1 0 0</span></p>
+<p class="src0"><span class="kom">3 6 2 1 0 0 1 0 0 1 0 0</span></p>
+<p class="src0"><span class="kom">3 7 6 1 0 0 1 0 0 1 0 0</span></p>
+<p class="src0"><span class="kom">5 1 2 0 0 -1 0 0 -1 0 0 -1</span></p>
+<p class="src0"><span class="kom">5 2 6 0 0 -1 0 0 -1 0 0 -1</span></p>
+<p class="src0"><span class="kom">3 4 8 0 0 1 0 0 1 0 0 1</span></p>
+<p class="src0"><span class="kom">3 8 7 0 0 1 0 0 1 0 0 1</span></p>
+<p></p>
+<p class="src0"><span class="kom">9 11 10 0 1 0 0 1 0 0 1 0</span></p>
+<p class="src0"><span class="kom">9 12 11 0 1 0 0 1 0 0 1 0</span></p>
+<p class="src0"><span class="kom">13 14 15 0 -1 0 0 -1 0 0 -1 0</span></p>
+<p class="src0"><span class="kom">13 15 16 0 -1 0 0 -1 0 0 -1 0</span></p>
+<p class="src0"><span class="kom">13 12 9 -1 0 0 -1 0 0 -1 0 0</span></p>
+<p class="src0"><span class="kom">13 16 12 -1 0 0 -1 0 0 -1 0 0</span></p>
+<p class="src0"><span class="kom">11 14 10 1 0 0 1 0 0 1 0 0</span></p>
+<p class="src0"><span class="kom">11 15 14 1 0 0 1 0 0 1 0 0</span></p>
+<p class="src0"><span class="kom">13 9 10 0 0 -1 0 0 -1 0 0 -1</span></p>
+<p class="src0"><span class="kom">13 10 14 0 0 -1 0 0 -1 0 0 -1</span></p>
+<p class="src0"><span class="kom">11 12 16 0 0 1 0 0 1 0 0 1</span></p>
+<p class="src0"><span class="kom">11 16 15 0 0 1 0 0 1 0 0 1</span></p>
+<p></p>
+<p class="src0"><span class="kom">17 19 18 0 1 0 0 1 0 0 1 0</span></p>
+<p class="src0"><span class="kom">17 20 19 0 1 0 0 1 0 0 1 0</span></p>
+<p class="src0"><span class="kom">21 22 23 0 -1 0 0 -1 0 0 -1 0</span></p>
+<p class="src0"><span class="kom">21 23 24 0 -1 0 0 -1 0 0 -1 0</span></p>
+<p class="src0"><span class="kom">21 20 17 -1 0 0 -1 0 0 -1 0 0</span></p>
+<p class="src0"><span class="kom">21 24 20 -1 0 0 -1 0 0 -1 0 0</span></p>
+<p class="src0"><span class="kom">19 22 18 1 0 0 1 0 0 1 0 0</span></p>
+<p class="src0"><span class="kom">19 23 22 1 0 0 1 0 0 1 0 0</span></p>
+<p class="src0"><span class="kom">21 17 18 0 0 -1 0 0 -1 0 0 -1</span></p>
+<p class="src0"><span class="kom">21 18 22 0 0 -1 0 0 -1 0 0 -1</span></p>
+<p class="src0"><span class="kom">19 20 24 0 0 1 0 0 1 0 0 1</span></p>
+<p class="src0"><span class="kom">19 24 23 0 0 1 0 0 1 0 0 1</span></p>
+
+<p>Právě představený soubor nahrává funkce ReadObject(). Pro pochopení podstaty by měly stačit komentáře.</p>
+
+<p class="src0">inline int ReadObject(char *st, glObject *o)<span class="kom">// Nahraje objekt</span></p>
+<p class="src0">{</p>
+<p class="src1">FILE *file;<span class="kom">// Handle souboru</span></p>
+<p class="src1">unsigned int i;<span class="kom">// Řídící proměnná cyklů</span></p>
+<p></p>
+<p class="src1">file = fopen(st, &quot;r&quot;);<span class="kom">// Otevře soubor pro čtení</span></p>
+<p></p>
+<p class="src1">if (!file)<span class="kom">// Podařilo se ho otevřít?</span></p>
+<p class="src2">return FALSE;<span class="kom">// Pokud ne - konec funkce</span></p>
+<p></p>
+<p class="src1">fscanf(file, &quot;%d&quot;, &amp;(o-&gt;nPoints));<span class="kom">// Načtení počtu vertexů</span></p>
+<p></p>
+<p class="src1">for (i = 1; i &lt;= o-&gt;nPoints; i++)<span class="kom">// Načítá vertexy</span></p>
+<p class="src1">{</p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;points[i].x));<span class="kom">// Jednotlivé x, y, z složky</span></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;points[i].y));</p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;points[i].z));</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">fscanf(file, &quot;%d&quot;, &amp;(o-&gt;nPlanes));<span class="kom">// Načtení počtu faců</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; o-&gt;nPlanes; i++)<span class="kom">// Načítá facy</span></p>
+<p class="src1">{</p>
+<p class="src2">fscanf(file, &quot;%d&quot;, &amp;(o-&gt;planes[i].p[0]));<span class="kom">// Načtení indexů vertexů</span></p>
+<p class="src2">fscanf(file, &quot;%d&quot;, &amp;(o-&gt;planes[i].p[1]));</p>
+<p class="src2">fscanf(file, &quot;%d&quot;, &amp;(o-&gt;planes[i].p[2]));</p>
+<p></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[0].x));<span class="kom">// Normálové vektory prvního vertexu</span></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[0].y));</p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[0].z));</p>
+<p></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[1].x));<span class="kom">// Normálové vektory druhého vertexu</span></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[1].y));</p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[1].z));</p>
+<p></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[2].x));<span class="kom">// Normálové vektory třetího vertexu</span></p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[2].y));</p>
+<p class="src2">fscanf(file, &quot;%f&quot;, &amp;(o-&gt;planes[i].normals[2].z));</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Díky funkci SetConnectivity() začínají být věci zajímavé :-) Hledáme v ní ke každému facu tři sousední facy, se kterými má společnou hranu. Protože je zdrojový kód, abych tak řekl, trochu hůře pochopitelný, přidávám i pseudo kód, který by mohl situaci maličko objasnit.</p>
+
+<p class="src0"><span class="kom">Začátek funkce</span></p>
+<p class="src0"><span class="kom">{</span></p>
+<p class="src1"><span class="kom">Postupně se prochází každý face (A) v objektu</span></p>
+<p class="src1"><span class="kom">{</span></p>
+<p class="src2"><span class="kom">V každém průchodu se znovu prochází všechny facy (B) objektu (zjišťuje se sousedství A s B)</span></p>
+<p class="src2"><span class="kom">{</span></p>
+<p class="src3"><span class="kom">Dále se projdou všechny hrany facu A</span></p>
+<p class="src3"><span class="kom">{</span></p>
+<p class="src4"><span class="kom">Pokud aktuální hrana ještě nemá přiřazeného souseda</span></p>
+<p class="src4"><span class="kom">{</span></p>
+<p class="src5"><span class="kom">Projdou se všechny hrany facu B</span></p>
+<p class="src5"><span class="kom">{</span></p>
+<p class="src6"><span class="kom">Provedou se výpočty, kterými se zjistí, jestli je okraj A stejný jako okraj B</span></p>
+<p class="src6"><span class="kom">Pokud ano</span></p>
+<p class="src6"><span class="kom">{</span></p>
+<p class="src7"><span class="kom">Nastaví se soused v A</span></p>
+<p class="src7"><span class="kom">Nastaví se soused v B</span></p>
+<p class="src6"><span class="kom">}</span></p>
+<p class="src5"><span class="kom">}</span></p>
+<p class="src4"><span class="kom">}</span></p>
+<p class="src3"><span class="kom">}</span></p>
+<p class="src2"><span class="kom">}</span></p>
+<p class="src1"><span class="kom">}</span></p>
+<p class="src0"><span class="kom">}</span></p>
+<p class="src0"><span class="kom">Konec funkce</span></p>
+
+<p>Už chápete?</p>
+
+<p class="src0">inline void SetConnectivity(glObject *o)<span class="kom">// Nastavení sousedů jednotlivých faců</span></p>
+<p class="src0">{</p>
+<p class="src1">unsigned int p1i, p2i, p1j, p2j;<span class="kom">// Pomocné proměnné</span></p>
+<p class="src1">unsigned int P1i, P2i, P1j, P2j;<span class="kom">// Pomocné proměnné</span></p>
+<p class="src1">unsigned int i, j, ki, kj;<span class="kom">// Řídící proměnné cyklů</span></p>
+<p></p>
+<p class="src1">for(i = 0; i &lt; o-&gt;nPlanes-1; i++)<span class="kom">// Každý face objektu (A)</span></p>
+<p class="src1">{</p>
+<p class="src2">for(j = i+1; j &lt; o-&gt;nPlanes; j++)<span class="kom">// Každý face objektu (B)</span></p>
+<p class="src2">{</p>
+<p class="src3">for(ki = 0; ki &lt; 3; ki++)<span class="kom">// Každý okraj facu (A)</span></p>
+<p class="src3">{</p>
+<p class="src4">if(!o-&gt;planes[i].neigh[ki])<span class="kom">// Okraj ještě nemá souseda?</span></p>
+<p class="src4">{</p>
+<p class="src5">for(kj = 0; kj &lt; 3; kj++)<span class="kom">// Každý okraj facu (B)</span></p>
+<p class="src5">{</p>
+
+<p>Nalezením dvou vertexů, které označují konce hrany a jejich porovnáním můžeme zjistit, jestli mají společný okraj. Část (kj+1) % 3 označuje vertex umístěný vedle toho, o kterém uvažujeme. Ověříme, jestli jsou vertexy stejné. Protože může být jejich pořadí rozdílné musíme testovat obě možnosti.</p>
+
+<p class="src6"><span class="kom">// Výpočty pro zjištění sousedství</span></p>
+<p class="src6">p1i = ki;</p>
+<p class="src6">p1j = kj;</p>
+<p></p>
+<p class="src6">p2i = (ki+1) % 3;</p>
+<p class="src6">p2j = (kj+1) % 3;</p>
+<p></p>
+<p class="src6">p1i = o-&gt;planes[i].p[p1i];</p>
+<p class="src6">p2i = o-&gt;planes[i].p[p2i];</p>
+<p class="src6">p1j = o-&gt;planes[j].p[p1j];</p>
+<p class="src6">p2j = o-&gt;planes[j].p[p2j];</p>
+<p></p>
+<p class="src6">P1i = ((p1i+p2i) - abs(p1i-p2i)) / 2;</p>
+<p class="src6">P2i = ((p1i+p2i) + abs(p1i-p2i)) / 2;</p>
+<p class="src6">P1j = ((p1j+p2j) - abs(p1j-p2j)) / 2;</p>
+<p class="src6">P2j = ((p1j+p2j) + abs(p1j-p2j)) / 2;</p>
+<p></p>
+<p class="src6">if((P1i == P1j) &amp;&amp; (P2i == P2j))<span class="kom">// Jsou sousedé?</span></p>
+<p class="src6">{</p>
+<p class="src7">o-&gt;planes[i].neigh[ki] = j+1;</p>
+<p class="src7">o-&gt;planes[j].neigh[kj] = i+1;</p>
+<p class="src6">}</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Abychom se mohli alespoň trochu nadechnout :-) vypíši kód funkce DrawGLObject(), který je na první pohled maličko jednodušší. Jak už z názvu vyplývá, vykresluje objekt.</p>
+
+<p class="src0">void DrawGLObject(glObject o)<span class="kom">// Vykreslení objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">unsigned int i, j;<span class="kom">// Řídící proměnné cyklů</span></p>
+<p></p>
+<p class="src1">glBegin(GL_TRIANGLES);<span class="kom">// Kreslení trojúhelníků</span></p>
+<p class="src2">for (i = 0; i &lt; o.nPlanes; i++)<span class="kom">// Projde všechny facy</span></p>
+<p class="src2">{</p>
+<p class="src3">for (j = 0; j &lt; 3; j++)<span class="kom">// Trojúhelník má tři rohy</span></p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// Normálový vektor a umístění bodu</span></p>
+<p class="src4">glNormal3f(o.planes[i].normals[j].x, o.planes[i].normals[j].y, o.planes[i].normals[j].z);</p>
+<p class="src4">glVertex3f(o.points[o.planes[i].p[j]].x, o.points[o.planes[i].p[j]].y, o.points[o.planes[i].p[j]].z);</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">glEnd();</p>
+<p class="src0">}</p>
+
+<p>Výpočet rovnice roviny vypadá pro ne-matematika sice hodně složitě, ale je to pouze implementace matematického vzorce, který se, když je potřeba, najde v tabulkách nebo knížce.</p>
+
+<p>Překl.: Maličká chybička. Pole v[] má rozsah čtyři prvky, ale používají se jenom tři. Index 0 se nikdy nepoužije.</p>
+
+<p class="src0">inline void CalcPlane(glObject o, sPlane *plane)<span class="kom">// Rovnice roviny ze tří bodů</span></p>
+<p class="src0">{</p>
+<p class="src1">sPoint v[4];<span class="kom">// Pomocné hodnoty</span></p>
+<p class="src1">int i;<span class="kom">// Řídící proměnná cyklů</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; 3; i++)<span class="kom">// Pro zkrácení zápisu</span></p>
+<p class="src1">{</p>
+<p class="src2">v[i+1].x = o.points[plane-&gt;p[i]].x;<span class="kom">// Uloží hodnoty do pomocných proměnných</span></p>
+<p class="src2">v[i+1].y = o.points[plane-&gt;p[i]].y;</p>
+<p class="src2">v[i+1].z = o.points[plane-&gt;p[i]].z;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">plane-&gt;PlaneEq.a = v[1].y*(v[2].z-v[3].z) + v[2].y*(v[3].z-v[1].z) + v[3].y*(v[1].z-v[2].z);</p>
+<p class="src1">plane-&gt;PlaneEq.b = v[1].z*(v[2].x-v[3].x) + v[2].z*(v[3].x-v[1].x) + v[3].z*(v[1].x-v[2].x);</p>
+<p class="src1">plane-&gt;PlaneEq.c = v[1].x*(v[2].y-v[3].y) + v[2].x*(v[3].y-v[1].y) + v[3].x*(v[1].y-v[2].y);</p>
+<p class="src1">plane-&gt;PlaneEq.d = -( v[1].x*(v[2].y*v[3].z - v[3].y*v[2].z) + v[2].x*(v[3].y*v[1].z - v[1].y*v[3].z) + v[3].x*(v[1].y*v[2].z - v[2].y*v[1].z) );</p>
+<p class="src0">}</p>
+
+<p>Funkce, které jsme právě napsali se volají ve funkci InitGLObjects(). Neexistuje-li požadovaný soubor, vrátíme false. Pokud ale existuje, funkcí ReadObject() ho nahrajeme do paměti, pomocí SetConnectivity() najdeme sousedící facy a potom se v cyklu spočítáme rovnici roviny každého facu.</p>
+
+<p class="src0">int InitGLObjects()<span class="kom">// Inicializuje objekty</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!ReadObject(&quot;Data/Object2.txt&quot;, &amp;obj))<span class="kom">// Nahraje objekt</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Při chybě konec</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">SetConnectivity(&amp;obj);<span class="kom">// Pospojuje facy (najde sousedy)</span></p>
+<p></p>
+<p class="src1">for (unsigned int i = 0; i &lt; obj.nPlanes; i++)<span class="kom">// Prochází facy</span></p>
+<p class="src2">CalcPlane(obj, &amp;(obj.planes[i]));<span class="kom">// Spočítá rovnici roviny facu</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Nyní přichází funkce, která renderuje stín. Na začátku nastavíme všechny potřebné parametry OpenGL a poté, ne na obrazovku, ale do stencil bufferu, vyrenderujeme stín. Dále vykreslíme vepředu před scénu velký šedý obdélník. Tam, kde byl stencil buffer modifikován se zobrazí šedé plochy - stín.</p>
+
+<p class="src0">void CastShadow(glObject *o, float *lp)<span class="kom">// Vržení stínu</span></p>
+<p class="src0">{</p>
+<p class="src1">unsigned int i, j, k, jj;<span class="kom">// Pomocné</span></p>
+<p class="src1">unsigned int p1, p2;<span class="kom">// Dva body okraje vertexu, které vrhají stín</span></p>
+<p class="src1">sPoint v1, v2;<span class="kom">// Vektor mezi světlem a předchozími body</span></p>
+
+<p>Nejprve určíme, které povrchy jsou přivrácené ke světlu a to tak, že zjistíme, která strana facu je osvětlená. Provedeme to velice jednoduše: máme rovnici roviny (ax + by + cz + d = 0) i polohu světla, takže dosadíme x, y, z koordináty světla do rovnice. Nezajímá nás hodnota, ale znaménko výsledku. Pokud bude výsledek větší než nula, míří normálový vektor roviny na stranu ke světlu a rovina je osvětlená. Při záporném čísle míří vektor od světla, rovina je od něj odvrácená. Vyšel-li by výsledek nula, bude světlo ležet v rovině facu, ale tím se nebudeme zabývat.</p>
+
+<p class="src1">float side;<span class="kom">// Pomocná proměnná</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; o-&gt;nPlanes; i++)<span class="kom">// Projde všechny facy objektu</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Rozhodne jestli je face přivrácený nebo odvrácený od světla</span></p>
+<p class="src2">side = o-&gt;planes[i].PlaneEq.a * lp[0] + o-&gt;planes[i].PlaneEq.b * lp[1] + o-&gt;planes[i].PlaneEq.c * lp[2] + o-&gt;planes[i].PlaneEq.d * lp[3];</p>
+<p></p>
+<p class="src2">if (side &gt; 0)<span class="kom">// Je přivrácený?</span></p>
+<p class="src2">{</p>
+<p class="src3">o-&gt;planes[i].visible = TRUE;</p>
+<p class="src2">}</p>
+<p class="src2">else<span class="kom">// Není</span></p>
+<p class="src2">{</p>
+<p class="src3">o-&gt;planes[i].visible = FALSE;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Nastavíme parametry OpenGL, které jsou nutné pro vržení stínu. Vypneme světla, protože nebudeme renderovat do color bufferu (výstup na obrazovku), ale pouze do stencil bufferu. Ze stejného důvodu zakážeme pomocí glColorMask() vykreslování na obrazovku. Ačkoli je testování hloubky stále zapnuté, nechceme, aby stíny byly v depth bufferu reprezentovány pevnými objekty. Jako prevenci tedy nastavíme masku hloubky na GL_FALSE. Nakonec nastavíme stencil buffer tak, aby na místa v něm označená mohly být vykresleny stíny.</p>
+
+<p class="src1">glDisable(GL_LIGHTING);<span class="kom">// Vypne světla</span></p>
+<p class="src1">glDepthMask(GL_FALSE);<span class="kom">// Vypne zápis do depth bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Funkce depth bufferu</span></p>
+<p></p>
+<p class="src1">glEnable(GL_STENCIL_TEST);<span class="kom">// Zapne stencilové testy</span></p>
+<p class="src1">glColorMask(0, 0, 0, 0);<span class="kom">// Nekreslit na obrazovky</span></p>
+<p class="src1">glStencilFunc(GL_ALWAYS, 1, 0xffffffff);<span class="kom">// Funkce stencilu</span></p>
+
+<p>Protože máme zapnuté ořezávání zadních stran trojúhelníků (viz. InitGL()), specifikujeme, které strany jsou přední. Také nastavíme stencil buffer tak, aby se v něm při kreslení zvětšovaly hodnoty.</p>
+
+<p class="src1">glFrontFace(GL_CCW);<span class="kom">// Čelní stěna proti směru hodinových ručiček</span></p>
+<p class="src1">glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);<span class="kom">// Zvyšování hodnoty stencilu</span></p>
+
+<p>V cyklu projdeme každý face a pokud je označen jako viditelný (přivrácený ke světlu), zkontrolujeme všechny jeho okraje. Pokud vedle něj není žádný sousední face nebo sice má souseda, který ale není viditelný, našli jsme okraj objektu, který vrhá stín. Pokud se nad těmito dvěma podmínkami zamyslíte, zjistíte, že jsou pravdivé. Získali jsme první dvě souřadnice čtyřúhelníku, který je stěnou stínu. V tomto případě si představte stín jako oblast, který je ohraničena na jedné straně objektem bránícím průchodu světelných paprsků, z druhé strany promítací rovinou (stěna místnosti) a na okrajích čtyřúhelníky, které se právě snažíme vykreslit. Už je to trochu jasnější?</p>
+
+<p class="src1">for (i = 0; i &lt; o-&gt;nPlanes; i++)<span class="kom">// Každý face objektu</span></p>
+<p class="src1">{</p>
+<p class="src2">if (o-&gt;planes[i].visible)<span class="kom">// Je přivrácený ke světlu</span></p>
+<p class="src2">{</p>
+<p class="src3">for (j = 0; j &lt; 3; j++)<span class="kom">// Každý okraj facu</span></p>
+<p class="src3">{</p>
+<p class="src4">k = o-&gt;planes[i].neigh[j];<span class="kom">// Index souseda (pomocný)</span></p>
+
+<p>Nyní zjistíme, jestli je vedle aktuálního okraje face, který buď není viditelný nebo vůbec neexistuje (nemá souseda). Pokud podmínka platí, našli jsme okraj objektu, který vrhá stín.</p>
+
+<p class="src4"><span class="kom">// Pokud nemá souseda, který je přivrácený ke světlu</span></p>
+<p class="src4">if ((!k) || (!o-&gt;planes[k-1].visible))</p>
+<p class="src4">{</p>
+
+<p>Rohy hrany právě ověřovaného trojúhelníku udávají první dva body stínu. Další dva získáme spočítáním směrového vektoru, který vychází ze světla, prochází bodem p1 popř. p2 a díky násobení stem pokračuje ve stejném směru někam do hlubin scény. Násobení stem bychom si mohli představit jako měřítko pro prodloužení vektoru a tudíž i polygonu, aby dosáhl až k promítací rovině a neskončil někde před ní.</p>
+
+<p>Kreslení stínu hrubou silou použité zde, není zrovna nejvhodnější, protože má velmi velké nároky na grafickou kartu. Nekreslíme totiž pouze k promítací rovině, ale až za ni kód této lekce. ( * 100). Pro větší účinnost by bylo vhodné modifikovat tento algoritmus tak, aby se polygony stínu ořezaly objektem, na který dopadá. Tento postup by ovšem byl mnohem náročnější na vymyšlení a asi by byl problematický sám o sobě.</p>
+
+<p class="src5"><span class="kom">// Našli jsme okraj objektu, který vrhá stín - nakreslíme polygon</span></p>
+<p class="src5">p1 = o-&gt;planes[i].p[j];<span class="kom">// První bod okraje</span></p>
+<p class="src5">jj = (j+1) % 3;<span class="kom">// Pro získání druhého okraje</span></p>
+<p class="src5">p2 = o-&gt;planes[i].p[jj];<span class="kom">// Druhý bod okraje</span></p>
+<p></p>
+<p class="src5"><span class="kom">// Délka vektoru</span></p>
+<p class="src5">v1.x = (o-&gt;points[p1].x - lp[0]) * 100;</p>
+<p class="src5">v1.y = (o-&gt;points[p1].y - lp[1]) * 100;</p>
+<p class="src5">v1.z = (o-&gt;points[p1].z - lp[2]) * 100;</p>
+<p></p>
+<p class="src5">v2.x = (o-&gt;points[p2].x - lp[0]) * 100;</p>
+<p class="src5">v2.y = (o-&gt;points[p2].y - lp[1]) * 100;</p>
+<p class="src5">v2.z = (o-&gt;points[p2].z - lp[2]) * 100;</p>
+
+<p>Zbytek už je celkem snadný. Máme dva body s délkou a tak vykreslíme čtyřúhelník - jeden z mnoha okrajů stínu.</p>
+
+<p class="src5">glBegin(GL_TRIANGLE_STRIP);<span class="kom">// Nakreslí okrajový polygon stínu</span></p>
+<p class="src6">glVertex3f(o-&gt;points[p1].x, o-&gt;points[p1].y, o-&gt;points[p1].z);</p>
+<p class="src6">glVertex3f(o-&gt;points[p1].x + v1.x, o-&gt;points[p1].y + v1.y, o-&gt;points[p1].z + v1.z);</p>
+<p class="src6">glVertex3f(o-&gt;points[p2].x, o-&gt;points[p2].y, o-&gt;points[p2].z);</p>
+<p class="src6">glVertex3f(o-&gt;points[p2].x + v2.x, o-&gt;points[p2].y + v2.y, o-&gt;points[p2].z + v2.z);</p>
+<p class="src5">glEnd();</p>
+
+<p>V cyklech zůstaneme tak dlouho, dokud nenajdeme a nevykreslíme všechny okraje stínu.</p>
+
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Nejjednodušší a nejpochopitelnější vysvětlení toho, proč vykreslujeme to samé ještě jednou, je obrázek - stíny budou pouze tam, kde být mají. Při vykreslování se nyní budou hodnoty ve stencil bufferu snižovat. Také si všimněte, že funkcí glFrontFace() budeme ořezávat opačné strany trojúhelníků.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_27_1.jpg" width="200" height="150" alt="Bez druhého kreslení" />
+<img src="images/nehe_tut/tut_27_2.jpg" width="200" height="150" alt="Se druhým kreslením" />
+</div>
+
+<p class="src1">glFrontFace(GL_CW);<span class="kom">// Čelní stěna po směru hodinových ručiček</span></p>
+<p class="src1">glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);<span class="kom">// Snižování hodnoty stencilu</span></p>
+<p></p>
+<p class="src1">for (i=0; i &lt; o-&gt;nPlanes; i++)<span class="kom">// Každý face objektu</span></p>
+<p class="src1">{</p>
+<p class="src2">if (o-&gt;planes[i].visible)<span class="kom">// Je přivrácený ke světlu</span></p>
+<p class="src2">{</p>
+<p class="src3">for (j = 0; j &lt; 3; j++)<span class="kom">// Každý okraj facu</span></p>
+<p class="src3">{</p>
+<p class="src4">k = o-&gt;planes[i].neigh[j];<span class="kom">// Index souseda (pomocný)</span></p>
+<p></p>
+<p class="src4"><span class="kom">// Pokud nemá souseda, který je přivrácený ke světlu</span></p>
+<p class="src4">if ((!k) || (!o-&gt;planes[k-1].visible))</p>
+<p class="src4">{</p>
+<p class="src5"><span class="kom">// Našli jsme okraj objektu, který vrhá stín - nakreslíme polygon</span></p>
+<p class="src5">p1 = o-&gt;planes[i].p[j];<span class="kom">// První bod okraje</span></p>
+<p class="src5">jj = (j+1) % 3;<span class="kom">// Pro získání druhého okraje</span></p>
+<p class="src5">p2 = o-&gt;planes[i].p[jj];<span class="kom">// Druhý bod okraje</span></p>
+<p></p>
+<p class="src5"><span class="kom">// Délka vektoru</span></p>
+<p class="src5">v1.x = (o-&gt;points[p1].x - lp[0])*100;</p>
+<p class="src5">v1.y = (o-&gt;points[p1].y - lp[1])*100;</p>
+<p class="src5">v1.z = (o-&gt;points[p1].z - lp[2])*100;</p>
+<p></p>
+<p class="src5">v2.x = (o-&gt;points[p2].x - lp[0])*100;</p>
+<p class="src5">v2.y = (o-&gt;points[p2].y - lp[1])*100;</p>
+<p class="src5">v2.z = (o-&gt;points[p2].z - lp[2])*100;</p>
+<p></p>
+<p class="src5">glBegin(GL_TRIANGLE_STRIP);<span class="kom">// Nakreslí okrajový polygon stínu</span></p>
+<p class="src6">glVertex3f(o-&gt;points[p1].x, o-&gt;points[p1].y, o-&gt;points[p1].z);</p>
+<p class="src6">glVertex3f(o-&gt;points[p1].x + v1.x, o-&gt;points[p1].y + v1.y, o-&gt;points[p1].z + v1.z);</p>
+<p class="src6">glVertex3f(o-&gt;points[p2].x, o-&gt;points[p2].y, o-&gt;points[p2].z);</p>
+<p class="src6">glVertex3f(o-&gt;points[p2].x + v2.x, o-&gt;points[p2].y + v2.y, o-&gt;points[p2].z + v2.z);</p>
+<p class="src5">glEnd();</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p class="src1">}</p>
+
+<p>Až teď opravdu zobrazíme na scénu stíny. Na úrovni roviny obrazovky vykreslíme velký, šedý, poloprůhledný obdélník. Zobrazí se pouze ty pixely, které byly právě označeny ve stencil bufferu (na pozici stínu). Čím bude obdélník tmavší, tím tmavší bude i stín. Můžete zkusit jinou průhlednost nebo dokonce i barvu. Jak by se vám líbil červený, zelený nebo modrý stín? Žádný problém!</p>
+
+<p class="src1">glFrontFace(GL_CCW);<span class="kom">// Čelní stěna proti směru hodinových ručiček</span></p>
+<p class="src1">glColorMask(1, 1, 1, 1);<span class="kom">// Vykreslovat na obrazovku</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vykreslení obdélníku přes celou scénu</span></p>
+<p class="src1">glColor4f(0.0f, 0.0f, 0.0f, 0.4f);<span class="kom">// Černá, 40% průhledná</span></p>
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapne blending</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);<span class="kom">// Typ blendingu</span></p>
+<p></p>
+<p class="src1">glStencilFunc(GL_NOTEQUAL, 0, 0xffffffff);<span class="kom">// Nastavení stencilu</span></p>
+<p class="src1">glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);<span class="kom">// Neměnit hodnotu stencilu</span></p>
+<p></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uloží matici</span></p>
+<p class="src2">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src2">glBegin(GL_TRIANGLE_STRIP);<span class="kom">// Černý obdélník</span></p>
+<p class="src3">glVertex3f(-0.1f, 0.1f,-0.10f);</p>
+<p class="src3">glVertex3f(-0.1f,-0.1f,-0.10f);</p>
+<p class="src3">glVertex3f( 0.1f, 0.1f,-0.10f);</p>
+<p class="src3">glVertex3f( 0.1f,-0.1f,-0.10f);</p>
+<p class="src2">glEnd();</p>
+<p></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnoví matici</span></p>
+
+<p>Nakonec obnovíme změněné parametry OpenGL na výchozí hodnoty.</p>
+
+<p class="src1"><span class="kom">// Obnoví změněné parametry OpenGL</span></p>
+<p class="src1">glDisable(GL_BLEND);</p>
+<p class="src1">glDepthFunc(GL_LEQUAL);</p>
+<p class="src1">glDepthMask(GL_TRUE);</p>
+<p class="src1">glEnable(GL_LIGHTING);</p>
+<p class="src1">glDisable(GL_STENCIL_TEST);</p>
+<p class="src1">glShadeModel(GL_SMOOTH);</p>
+<p class="src0">}</p>
+
+<p>DrawGLScene(), ostatně jako vždycky, zajišťuje všechno vykreslování. Proměnná Minv bude reprezentovat OpenGL matici, wlp budou lokální koordináty a lp pomocná pozice světla.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Hlavní vykreslovací funkce</span></p>
+<p class="src0">{</p>
+<p class="src1">GLmatrix16f Minv;<span class="kom">// OpenGL matice</span></p>
+<p class="src1">GLvector4f wlp, lp;<span class="kom">// Relativní pozice světla</span></p>
+
+<p>Smažeme obrazovkový, hloubkový i stencil buffer. Resetujeme matici a přesuneme se o dvacet jednotek do obrazovky. Umístíme světlo, provedeme translaci na pozici koule a pomocí quadraticu ji vykreslíme.</p>
+
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);<span class="kom">// Smaže buffery</span></p>
+<p></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -20.0f);<span class="kom">// Přesun 20 jednotek do hloubky</span></p>
+<p></p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_POSITION, LightPos);<span class="kom">// Umístění světla</span></p>
+<p></p>
+<p class="src1">glTranslatef(SpherePos[0], SpherePos[1], SpherePos[2]);<span class="kom">// Umístění koule</span></p>
+<p class="src1">gluSphere(q, 1.5f, 32, 16);<span class="kom">// Vykreslení koule</span></p>
+
+<p>Spočítáme relativní pozici světla vzhledem k lokálnímu souřadnicovému systému objektu, který vrhá stín. Do proměnné Min uložíme transformační matici objektu, ale obrácenou (vše se zápornými čísly a zadávané opačným pořadím), takže se stane invertovanou transformační maticí. Z lp vytvoříme kopii pozice světla a poté ho vynásobíme právě získanou OpenGL maticí. Jednoduše řečeno: na konci bude lp pozicí světla v souřadnicovém systému objektu.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glRotatef(-yrot, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace na ose y</span></p>
+<p class="src1">glRotatef(-xrot, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace na ose x</span></p>
+<p></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX, Minv);<span class="kom">// Uložení ModelView matice do Minv</span></p>
+<p></p>
+<p class="src1">lp[0] = LightPos[0];<span class="kom">// Uložení pozice světla</span></p>
+<p class="src1">lp[1] = LightPos[1];</p>
+<p class="src1">lp[2] = LightPos[2];</p>
+<p class="src1">lp[3] = LightPos[3];</p>
+<p></p>
+<p class="src1">VMatMult(Minv, lp);<span class="kom">// Vynásobení pozice světla OpenGL maticí</span></p>
+<p></p>
+<p class="src1">glTranslatef(-ObjPos[0], -ObjPos[1], -ObjPos[2]);<span class="kom">// Posun záporně o pozici objektu</span></p>
+<p></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX, Minv);<span class="kom">// Uložení ModelView matice do Minv</span></p>
+<p></p>
+<p class="src1">wlp[0] = 0.0f;<span class="kom">// Globální koordináty na nulu</span></p>
+<p class="src1">wlp[1] = 0.0f;</p>
+<p class="src1">wlp[2] = 0.0f;</p>
+<p class="src1">wlp[3] = 1.0f;</p>
+<p></p>
+<p class="src1">VMatMult(Minv, wlp);<span class="kom">// Originální globální souřadnicový systém relativně k lokálnímu </span></p>
+<p></p>
+<p class="src1">lp[0] += wlp[0];<span class="kom">// Pozice světla je relativní k lokálnímu souřadnicovému systému objektu</span></p>
+<p class="src1">lp[1] += wlp[1];</p>
+<p class="src1">lp[2] += wlp[2];</p>
+
+<p>Vykreslíme místnost s objektem a potom zavoláme funkci CastShadow(), která vykreslí stín objektu. Předáváme jí referenci na objekt spolu s pozicí světla, která je nyní ve stejném souřadnicovém systému jako objekt.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -20.0f);<span class="kom">// Přesun 20 jednotek do hloubky</span></p>
+<p></p>
+<p class="src1">DrawGLRoom();<span class="kom">// Vykreslení místnosti</span></p>
+<p></p>
+<p class="src1">glTranslatef(ObjPos[0], ObjPos[1], ObjPos[2]);<span class="kom">// Umístění objektu</span></p>
+<p class="src1">glRotatef(xrot, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace na ose x</span></p>
+<p class="src1">glRotatef(yrot, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace na ose y</span></p>
+<p></p>
+<p class="src1">DrawGLObject(obj);<span class="kom">// Vykreslení objektu</span></p>
+<p></p>
+<p class="src1">CastShadow(&amp;obj, lp);<span class="kom">// Vržení stínu založené na siluetě</span></p>
+
+<p>Abychom po spuštění dema viděli, kde se právě nachází světlo, vykreslíme na jeho pozici malý oranžový kruh (respektive kouli).</p>
+
+<p class="src1">glColor4f(0.7f, 0.4f, 0.0f, 1.0f);<span class="kom">// Oranžová barva</span></p>
+<p></p>
+<p class="src1">glDisable(GL_LIGHTING);<span class="kom">// Vypne světlo</span></p>
+<p class="src1">glDepthMask(GL_FALSE);<span class="kom">// Vypne masku hloubky</span></p>
+<p></p>
+<p class="src1">glTranslatef(lp[0], lp[1], lp[2]);<span class="kom">// Translace na pozici světla</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Pořád jsme v lokálním souřadnicovém systému objektu</span></p>
+<p class="src1">gluSphere(q, 0.2f, 16, 8);<span class="kom">// Vykreslení malé koule (reprezentuje světlo)</span></p>
+<p></p>
+<p class="src1">glEnable(GL_LIGHTING);<span class="kom">// Zapne světlo</span></p>
+<p class="src1">glDepthMask(GL_TRUE);<span class="kom">// Zapne masku hloubky</span></p>
+
+<p>Aktualizujeme rotaci objektu a ukončíme funkci.</p>
+
+<p class="src1">xrot += xspeed;<span class="kom">// Zvětšení úhlu rotace objektu</span></p>
+<p class="src1">yrot += yspeed;</p>
+<p></p>
+<p class="src1">glFlush();</p>
+<p class="src1">return TRUE;<span class="kom">// Všechno v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Dále napíšeme speciální funkci DrawGLRoom(), která vykreslí místnost. Je jí obyčejná krychle.</p>
+
+<p class="src0">void DrawGLRoom()<span class="kom">// Vykreslí místnost (krychli)</span></p>
+<p class="src0">{</p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Začátek kreslení obdélníků</span></p>
+<p class="src2"><span class="kom">// Podlaha</span></p>
+<p class="src2">glNormal3f(0.0f, 1.0f, 0.0f);<span class="kom">// Normála směřuje nahoru</span></p>
+<p class="src2">glVertex3f(-10.0f,-10.0f,-20.0f);<span class="kom">// Levý zadní</span></p>
+<p class="src2">glVertex3f(-10.0f,-10.0f, 20.0f);<span class="kom">// Levý přední</span></p>
+<p class="src2">glVertex3f( 10.0f,-10.0f, 20.0f);<span class="kom">// Pravý přední</span></p>
+<p class="src2">glVertex3f( 10.0f,-10.0f,-20.0f);<span class="kom">// Pravý zadní</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Strop</span></p>
+<p class="src2">glNormal3f(0.0f,-1.0f, 0.0f);<span class="kom">// Normála směřuje dolů</span></p>
+<p class="src2">glVertex3f(-10.0f, 10.0f, 20.0f);<span class="kom">// Levý přední</span></p>
+<p class="src2">glVertex3f(-10.0f, 10.0f,-20.0f);<span class="kom">// Levý zadní</span></p>
+<p class="src2">glVertex3f( 10.0f, 10.0f,-20.0f);<span class="kom">// Pravý zadní</span></p>
+<p class="src2">glVertex3f( 10.0f, 10.0f, 20.0f);<span class="kom">// Pravý přední</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Čelní stěna</span></p>
+<p class="src2">glNormal3f(0.0f, 0.0f, 1.0f);<span class="kom">// Normála směřuje do hloubky</span></p>
+<p class="src2">glVertex3f(-10.0f, 10.0f,-20.0f);<span class="kom">// Levý horní</span></p>
+<p class="src2">glVertex3f(-10.0f,-10.0f,-20.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glVertex3f( 10.0f,-10.0f,-20.0f);<span class="kom">// Pravý dolní</span></p>
+<p class="src2">glVertex3f( 10.0f, 10.0f,-20.0f);<span class="kom">// Pravý horní</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">glNormal3f(0.0f, 0.0f,-1.0f);<span class="kom">// Normála směřuje k obrazovce</span></p>
+<p class="src2">glVertex3f( 10.0f, 10.0f, 20.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glVertex3f( 10.0f,-10.0f, 20.0f);<span class="kom">// Pravý spodní</span></p>
+<p class="src2">glVertex3f(-10.0f,-10.0f, 20.0f);<span class="kom">// Levý spodní</span></p>
+<p class="src2">glVertex3f(-10.0f, 10.0f, 20.0f);<span class="kom">// Levý zadní</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">glNormal3f(1.0f, 0.0f, 0.0f);<span class="kom">// Normála směřuje doprava</span></p>
+<p class="src2">glVertex3f(-10.0f, 10.0f, 20.0f);<span class="kom">// Přední horní</span></p>
+<p class="src2">glVertex3f(-10.0f,-10.0f, 20.0f);<span class="kom">// Přední dolní</span></p>
+<p class="src2">glVertex3f(-10.0f,-10.0f,-20.0f);<span class="kom">// Zadní dolní</span></p>
+<p class="src2">glVertex3f(-10.0f, 10.0f,-20.0f);<span class="kom">// Zadní horní</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">glNormal3f(-1.0f, 0.0f, 0.0f);<span class="kom">// Normála směřuje doleva</span></p>
+<p class="src2">glVertex3f( 10.0f, 10.0f,-20.0f);<span class="kom">// Zadní horní</span></p>
+<p class="src2">glVertex3f( 10.0f,-10.0f,-20.0f);<span class="kom">// Zadní dolní</span></p>
+<p class="src2">glVertex3f( 10.0f,-10.0f, 20.0f);<span class="kom">// Přední dolní</span></p>
+<p class="src2">glVertex3f( 10.0f, 10.0f, 20.0f);<span class="kom">// Přední horní</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src0">}</p>
+
+<p>Předtím než zapomenu... v DrawGLScene() jsme použili funkci VMatMult(), která násobí vektor maticí. Opět se jedná o implementaci vzorce z knížky o matematice.</p>
+
+<p class="src0">void VMatMult(GLmatrix16f M, GLvector4f v)</p>
+<p class="src0">{</p>
+<p class="src1">GLfloat res[4];<span class="kom">// Ukládá výsledky</span></p>
+<p></p>
+<p class="src1">res[0] = M[ 0]*v[0] + M[ 4]*v[1] + M[ 8]*v[2] + M[12]*v[3];</p>
+<p class="src1">res[1] = M[ 1]*v[0] + M[ 5]*v[1] + M[ 9]*v[2] + M[13]*v[3];</p>
+<p class="src1">res[2] = M[ 2]*v[0] + M[ 6]*v[1] + M[10]*v[2] + M[14]*v[3];</p>
+<p class="src1">res[3] = M[ 3]*v[0] + M[ 7]*v[1] + M[11]*v[2] + M[15]*v[3];</p>
+<p></p>
+<p class="src1">v[0] = res[0];<span class="kom">// Výsledek uloží zpět do v</span></p>
+<p class="src1">v[1] = res[1];</p>
+<p class="src1">v[2] = res[2];</p>
+<p class="src1">v[3] = res[3];<span class="kom">// Homogenní souřadnice</span></p>
+<p class="src0">}</p>
+
+<p>V Inicializaci OpenGL nejsou téměř žádné novinky. Na začátku nahrajeme a inicializujeme objekt, který vrhá stín, potom nastavíme obvyklé parametry a světla.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!InitGLObjects())<span class="kom">// Nahraje objekt</span></p>
+<p class="src2">return FALSE;</p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glClearStencil(0);<span class="kom">// Nastavení stencil bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolí testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Perspektivní korekce</span></p>
+<p></p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_POSITION, LightPos);<span class="kom">// Pozice světla</span></p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmb);<span class="kom">// Ambient světlo</span></p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDif);<span class="kom">// Diffuse světlo</span></p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpc);<span class="kom">// Specular světlo</span></p>
+<p></p>
+<p class="src1">glEnable(GL_LIGHT1);<span class="kom">// Zapne světlo 1</span></p>
+<p class="src1">glEnable(GL_LIGHTING);<span class="kom">// Zapne světla</span></p>
+
+<p>Materiály, které určují jak vypadají polygony při dopadu světla, jsou, myslím, novinkou. Nemusíme vepisovat žádné hodnoty, protože předávané pole jsou definovány na začátku tutoriálu. Materiály mimo jiné určují i barvu povrchu, takže při zapnutém světle nebude mít změna barvy pomocí glColor() žádný vliv (Překl. To jsem zjistil úplně náhodou. Nevím, jestli je to pravda obecně, ale minimálně v tomto demu ano.).</p>
+
+<p class="src1">glMaterialfv(GL_FRONT, GL_AMBIENT, MatAmb);<span class="kom">// Prostředí, atmosféra</span></p>
+<p class="src1">glMaterialfv(GL_FRONT, GL_DIFFUSE, MatDif);<span class="kom">// Rozptylování světla</span></p>
+<p class="src1">glMaterialfv(GL_FRONT, GL_SPECULAR, MatSpc);<span class="kom">// Zrcadlivost</span></p>
+<p class="src1">glMaterialfv(GL_FRONT, GL_SHININESS, MatShn);<span class="kom">// Lesk</span></p>
+
+<p>Abychom alespoň trochu zrychlili vykreslování, zapneme culling, takže se zadní strany trojúhelníků nebudou vykreslovat. Která strana je odvrácená se určí podle pořadí zadávání vrcholů polygonů (po/proti směru hodinových ručiček).</p>
+
+<p class="src1">glCullFace(GL_BACK);<span class="kom">// Ořezávání zadních stran</span></p>
+<p class="src1">glEnable(GL_CULL_FACE);<span class="kom">// Zapne ořezávání</span></p>
+
+<p>Budeme vykreslovat i nějaké koule, takže vytvoříme a inicializujeme quadratic.</p>
+
+<p class="src1">q = gluNewQuadric();<span class="kom">// Nový quadratic</span></p>
+<p class="src1">gluQuadricNormals(q, GL_SMOOTH);<span class="kom">// Generování normálových vektorů pro světlo</span></p>
+<p class="src1">gluQuadricTexture(q, GL_FALSE);<span class="kom">// Nepotřebujeme texturovací koordináty</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// V pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Poslední funkcí tohoto tutoriálu je ProcessKeyboard(). Stejně jako vykreslování, tak i ona, se volá v každém průchodu hlavní smyčky programu. Ošetřuje uživatelské příkazy při stisku kláves. Jak se program zachová, popisují komentáře.</p>
+
+<p class="src0">void ProcessKeyboard()<span class="kom">// Ošetření klávesnice</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Rotace objektu</span></p>
+<p class="src1">if (keys[VK_LEFT]) yspeed -= 0.1f;<span class="kom">// Šipka vlevo - snižuje y rychlost</span></p>
+<p class="src1">if (keys[VK_RIGHT]) yspeed += 0.1f;<span class="kom">// Šipka vpravo - zvyšuje y rychlost</span></p>
+<p class="src1">if (keys[VK_UP]) xspeed -= 0.1f;<span class="kom">// Šipka nahoru - snižuje x rychlost</span></p>
+<p class="src1">if (keys[VK_DOWN]) xspeed += 0.1f;<span class="kom">// Šipka dolů - zvyšuje x rychlost</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Pozice objektu</span></p>
+<p class="src1">if (keys[VK_NUMPAD6]) ObjPos[0] += 0.05f;<span class="kom">// '6' - pohybuje objektem doprava</span></p>
+<p class="src1">if (keys[VK_NUMPAD4]) ObjPos[0] -= 0.05f;<span class="kom">// '4' - pohybuje objektem doleva</span></p>
+<p></p>
+<p class="src1">if (keys[VK_NUMPAD8]) ObjPos[1] += 0.05f;<span class="kom">// '8' - pohybuje objektem nahoru</span></p>
+<p class="src1">if (keys[VK_NUMPAD5]) ObjPos[1] -= 0.05f;<span class="kom">// '5' - pohybuje objektem dolů</span></p>
+<p></p>
+<p class="src1">if (keys[VK_NUMPAD9]) ObjPos[2] += 0.05f;<span class="kom">// '9' - přibližuje objekt</span></p>
+<p class="src1">if (keys[VK_NUMPAD7]) ObjPos[2] -= 0.05f;<span class="kom">// '7' oddaluje objekt</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Pozice světla</span></p>
+<p class="src1">if (keys['L']) LightPos[0] += 0.05f;<span class="kom">// 'L' - pohybuje světlem doprava</span></p>
+<p class="src1">if (keys['J']) LightPos[0] -= 0.05f;<span class="kom">// 'J'  - pohybuje světlem doleva</span></p>
+<p></p>
+<p class="src1">if (keys['I']) LightPos[1] += 0.05f;<span class="kom">// 'I' - pohybuje světlem nahoru</span></p>
+<p class="src1">if (keys['K']) LightPos[1] -= 0.05f;<span class="kom">// 'K' - pohybuje světlem dolů</span></p>
+<p></p>
+<p class="src1">if (keys['O']) LightPos[2] += 0.05f;<span class="kom">// 'O' - přibližuje světlo</span></p>
+<p class="src1">if (keys['U']) LightPos[2] -= 0.05f;<span class="kom">// 'U' - oddaluje světlo</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Pozice koule</span></p>
+<p class="src1">if (keys['D']) SpherePos[0] += 0.05f;<span class="kom">// 'D' - pohybuje koulí doprava</span></p>
+<p class="src1">if (keys['A']) SpherePos[0] -= 0.05f;<span class="kom">// 'A' - pohybuje koulí doleva</span></p>
+<p></p>
+<p class="src1">if (keys['W']) SpherePos[1] += 0.05f;<span class="kom">// 'W' - pohybuje koulí nahoru</span></p>
+<p class="src1">if (keys['S']) SpherePos[1] -= 0.05f;<span class="kom">// 'S'- pohybuje koulí dolů</span></p>
+<p></p>
+<p class="src1">if (keys['E']) SpherePos[2] += 0.05f;<span class="kom">// 'E' - přibližuje kouli</span></p>
+<p class="src1">if (keys['Q']) SpherePos[2] -= 0.05f;<span class="kom">// 'Q' - oddaluje kouli</span></p>
+<p class="src0">}</p>
+<p></p>
+
+<h3>Několik poznámek ohledně tutoriálu</h3>
+<p>Na první pohled vypadá demo hyperefektně :-), ale má také své mouchy. Tak například koule nezastavuje projekci stínu na stěnu. V reálném prostředí by také vrhala stín, takže by se nic moc nestalo. Nicméně je zde pouze na ukázku toho, co se se stínem stane na zakřiveném povrchu.</p>
+
+<p>Pokud program běží extrémně pomalu, zkuste přepnout do fullscreenu nebo změnit barevnou hloubku na 32 bitů. Arseny L. napsal: &quot;Pokud máte problémy s TNT2 v okenním módu, ujistěte se, že nemáte nastavenu 16bitovou barevnou hloubku. V tomto barevném módu je stencil buffer emulovaný, což ve výsledku znamená malý výkon. V 32bitovém módu je vše bez problémů.&quot;</p>
+
+<p class="autor">napsal: Banu Cosmin - Choko &amp; Brett Porter <span class="transform_email">&lt;brettporter (zavináč) yahoo.com&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson27.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson27_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson27.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson27.zip">Delphi</a> kód této lekce. ( <a href="mailto:another.freak@gmx.de">Felix Hahn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson27.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson27.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/kde/lesson27.tar.gz">KDE/QT</a> kód této lekce. ( <a href="mailto:zhajdu@socal.rr.com">Zsolt Hajdu</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson27.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:jay@remotepoint.com">Jay Groven</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson27.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson27.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_27_big.jpg" class="nehe_velky" alt="Lekce 27" /></div>
+<p class="okolni_lekce"><a href="tut_26.php">&lt;&lt;&lt; Lekce 26</a> | <a href="tut_28.php">Lekce 28 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jan Hrneček</div>
+<div class="d_o_datumcas">05.10.2006 - 13:08:09</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_27.php&j=0">Visual Basic 2003 .net</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_27.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

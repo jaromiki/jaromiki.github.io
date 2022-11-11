@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Marek Mizanin - OpenGL programy 10-19</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=Windows-1250">
+<META NAME="keywords" CONTENT="OpenGL,3D,grafika,Visual C++">
+</head>
+<link rel="stylesheet" type="text/css" href="font.css">
+
+<body bgcolor="Black" text="White" vlink="Silver" link="#C8C8FF" leftmargin=2>
+<table cellspacing="2" cellpadding="2" border="0">
+<tr><td valign="top">
+
+<table cellspacing="0" cellpadding="2" border="0" width="90">
+<tr><td height="15"><a href="http://www.zanir.szm.sk/10-19.html"><img src="obrazky/zuk.gif" width=63 height=36 border=0 alt="English language"></a></td></tr>
+<tr><td height="15"><a href="index.html"><div class="odkaz">Novinky</div></a></td></tr>
+<tr><td height="15"><a href="omne.html"><div class="odkaz">O mne</div></a></td></tr>
+<tr><td height="15"><div class="tucne2">OpenGL:</div></td></tr>
+<tr><td height="15"><a href="00-09.html"><div class="odkaz">00 - 09</div></a></td></tr>
+<tr><td height="15"><a href="10-19.html"><div class="odkaz_">10 - 19</div></a></td></tr>
+<tr><td height="15"><a href="20-29.html"><div class="odkaz">20 - 29</div></a></td></tr>
+<tr><td height="15"><a href="30-39.html"><div class="odkaz">30 - 39</div></a></td></tr>
+<tr><td height="15"><a href="dx.html"><div class="odkaz">DX</div></a></td></tr>
+<tr><td height="15"><a href="dx00-09.html"><div class="odkaz">00 - 09</div></a></td></tr>
+<tr><td height="15"><a href="dx10-19.html"><div class="odkaz">10 - 19</div></a></td></tr>
+<tr><td height="15"><a href="java.html"><div class="odkaz">Java</div></a></td></tr>
+<tr><td height="15"><a href="navody.html"><div class="odkaz">Návody</div></a></td></tr>
+<tr><td height="15"><a href="Projekty.html"><div class="odkaz">Projekty</div></a></td></tr>
+<tr><td height="15"><a href="Download.html"><div class="odkaz">Download</div></a></td></tr>
+<tr><td height="15"><a href="http://Kronika.sk/citaj.phtml?id=mizanin"><div class="odkaz">Kronika</div></a></td></tr>
+<tr><td height="15"><a href="linky.html"><div class="odkaz">Linky</div></a></td></tr>
+<tr><td><br><br><br><br>
+<script language="javascript"><!-- 
+document.write("<img src=\"http://neuron.tuke.sk/~mizanin/counter/slovak/index.php?name=10-19&text=" + escape(top.document.referrer) + "\" width=50 height=20 border=0>");
+--></script>
+</td></tr>
+</table>
+</td><td valign="top">
+
+<table cellspacing="2" cellpadding="2" border="1" bordercolor="#FFFFFF">
+
+<tr>
+	<td><a href="opengl/obrazky/010_multitexturing_big.JPG"><img src="opengl/obrazky/010_multitexturing.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 10 - Multi-texturing</div><br>
+	Multi-texturing - textúrovanie naraz z dvoch textúr. Používame dve textúrovacie jednotky.
+	Každá pracuje s jednou textúrov. Pre každu textúru zadávame zvlášť textúrovacie koordinacie.<br>
+	To umožňuje používanie tzv. <b>lightmap</b> - textúr, ktoré vyjadrujú osvetlenie textúry.
+	Napr. v Quake 3, keď niekto vystrelí steny okolo letiacej strely sa osvetľujú.<br>
+	Ďalšie použitie multi-texturingu je na <b>bump-mapping</b>.<br>
+	Keď chceme používať multitexturing v OpenGL musíme zistiť či to grafická karta podporuje.
+	Základné rozšírenie, ktoré vyjadruje podporu multitexturingu je <b>GL_ARB_multitexture</b>.<br>
+	Ďalšie rozšírenie, ktoré vyjadruje ako môžme textúry kombinovať je <b>GL_ARB_texture_env_add</b>.
+	Ja využívam iba toto rozšírenie, lebo ďalšie mi grafická karta (Voodoo3 2000) nepodporuje :-(.<br>
+	Medzi dalšie rozšírenia týkajúce sa multitexturingu patria:<br>
+	GL_ARB_texture_env_combine - obsahuje veľa typov miešania.<br>
+	GL_ARB_texture_env_dot3<br>
+	<a href="opengl/010_multitexturing.rar">zdrojové texty (<b>s jpeg.lib</b>) a program - 262 kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/011_blending_big.JPG"><img src="opengl/obrazky/011_blending.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 11 - Blending</div><br>
+	Blending - mieša (kombinuje) to čo je už nakreslené s tým čo sa bude kresliť.<br>
+	Blending zapíname a vypíname pomocou glEnable(GL_BLEND); a glDisable(GL_BLEND);<br>
+	Spôsob miešania nastavujem funkciou glBlendFunc( <b>source</b> factor, <b>destination</b> factor );<br>
+	<b>Source</b> factor - ovplyvňuje to čo sa <b>bude</b> kresliť<br>
+	<b>Destination</b> factor - ovplyvňuje to čo už je <b>nakreslené</b> (čo je vo frame buffery)<br>
+	Každý parameter môže nadobúdať veľa hodnôt preto tento program vám a aj mne môže
+	uľahčiť pochopenie ako to pracuje a čo to dokáže.<br>
+	Ešte dodám, že existujú rozšírenia ktoré umožňujúaj iné miešania:<br>
+	GL_EXT_blend_color, GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_blend_logic_op,
+	GL_NV_blend_square 
+	<br>
+	<a href="opengl/011_blending.rar">zdrojové texty (bez jpeg.lib) a program - 250kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td width="271"><a href="opengl/obrazky/012_bump_mapping_big.JPG"><img src="opengl/obrazky/012_bump_mapping.jpg" width=267 height=200 border=0 alt=""></a>
+	<a href="opengl/obrazky/012_bump_mapping_mars_big.JPG"><img src="opengl/obrazky/012_bump_mapping_mars.jpg" width=267 height=200 border=0 alt=""></a>
+	</td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 12 - Bump-mapping</div><br>
+	<br>Bump-mapping je spôsob ako zobraziť malé štrbinky a kopčeky na prevažne rovinných plochách.<br>
+	<b>Orginálny bump-mapping</b> je taký, v ktorom sa podľa výškovej textúry moduluje normála.<br>
+	<b>Emboss bump-mapping</b> je spôsob ako urobiť bump-mapping na sučasnych grafikých kartách.
+	Používajú sa dve textúry jedna základná a druhá výšková. Z výškovej sa urobia dve textúry
+	jedna o polovičnom jase a druhá negovaná taktiež s polovičným jasom. Obidve sa <b>sčítajú</b> pričom sú navzájom
+	<b>posunuté</b>. Tým vzniknú <b>svetlejšie</b> a <b>tmavšie</b> miesta, ktoré simulujú svetlo a tieň.
+	Ostatné miesta sú sivé (127,127,127). Nakoniec sa ešte <b>vynásobí 2*</b> so základnou textúrov.
+	Podľa toho akým spôsobom sa toto vykoná rozoznávame bump-mapping 3,2,1 - pass (priebehoví).<br>
+	<b>3-pass</b> - ide na každom hardware, vyžaduje sčítavací a násobiaci(2*) blending.<br>
+	<b>2-pass</b> - ide na graf. kartách, ktoré majú <b>multitexturing</b>. Sčítanie sa urobí v jednom kroku a násobenie v druhom.<br>
+	<b>1-pass</b> - využíva operátor ADDSIGNED2X, ale má horšiu kvalitu farieb<br>
+	Ja používam 3-pass a 2-pass bump-mapping. V programe sú 4 ukážky: vysvetlenie, 
+	bump-mapping s bodovým svetlom, bludisko(miesnosť so bump-mapping stenami) a planeta mars so bump-mappingom.<br>
+	
+	<a href="opengl/012_bump_mapping.rar">zdrojové texty (bez jpeg.lib) a program - 700kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/013_3ds_loader_big.JPG"><img src="opengl/obrazky/013_3ds_loader.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 13 - Načítanie 3ds súboru</div><br>
+	<br>Súbory 3ds je možné vyexportovať v 3ds max. V súboroch sa ukladajú aj textúrové koordinácie
+	a názvy textúr. Normálové vektory po bodoch sa neukladajú preto ich treba vypočítať pri načítavaní objektu.<br><br>
+		
+	<a href="opengl/013_3ds_loader.rar">zdrojové texty (bez jpeg.lib) a program - 410kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/014_dxf_loader_big.JPG"><img src="opengl/obrazky/014_dxf_loader.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 14 - Načítanie dxf súboru</div><br>
+	<br>Súbory s príponov dxf je možné vytvárať, alebo exportovať z rôznych programov. Najčastejšie však z AutoCad-u,
+	prípadne CADKEY (môj prípad). Načítavam iba štvorcové plochy - dáta zo sekcií 3DFACE. 
+	Aby som mohol používať viac textúr v jednom súbore používam pre každú textúru iný level, 
+	pričom v popise levelu je názov textúry.<br><br>
+		
+	<a href="opengl/014_dxf_loader.rar">zdrojové texty (bez jpeg.lib) a program - 220kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/015_render_to_texture_big.JPG"><img src="opengl/obrazky/015_render_to_texture.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 15 - Rendering do textúry</div><br>
+	<br>Vytváranie textúr počas behu programu z obrazovky je zaujímavá technika, ktorá umožňuje vytvárať rôzne efekty:
+	napr. motion blur, radiar blur,...<br>
+	Funguje to jednoducho: použitím glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 0, 0, size, size, 0);
+	skopírujeme dáta z obrazovky do textúry. Má to však nevýhodu je to pomalé, na mojej Voodoo3 2000
+	kopíruje jednú textúru 110 ms :-( .
+	<br><br>
+		
+	<a href="opengl/015_render_to_texture.rar">zdrojové texty a program - 93kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/016_shadow_used_render_to_texture_big.JPG"><img src="opengl/obrazky/016_shadow_used_render_to_texture.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 16 - Tiene pomocou kreslenia do textúry</div><br>
+	Tiene na steny nanášam pomocou light-mapy. Pri vytváraní light-máp využívam kreslenie do textúry. Pre každú stenu vytváram
+	light-mapu tak, že kameru presuniem do pozície svetla a vykreslím objekty vrhajúce tien tmavou farbou. V prípade
+	viacerých svetiel, vykreslím pre každú pozíciu svetla objekty pomocou blendingu. Aby som mohol pouzit blending tak
+	objekty vykreslujem 2*: prvý krát iba do z-buffra a druhý krát s nastavením glDepthFunc(GL_EQUAL ).<br>
+	
+	Tento spôsob sa dá použiť iba pre tiene vrhajúce sa na rovinné plochy. Výhoda, že pridávaním objektov a svetiel sa rýchlosť 
+	veľmi neznižuje. Nevýhoda každá plocha vyžaduje dalšiu light-mapu, a to spomaľuje výrazne (Voodoo3 2000).
+	<br><br>
+		
+	<a href="opengl/016_shadow_used_render_to_texture.rar">zdrojové texty (bez jpeg.lib) a program - 222kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/017_motion_blur_big.JPG"><img src="opengl/obrazky/017_motion_blur.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 17 - Motion blur</div><br>
+	Motion blur - rozmazanie rýchleho pohybu. Na rozdiel od kamery kde sa rýchlo pohybujúce objekty rozmazavajú
+	je každý obrázok vykreslený v počítačovej grafike (OpenGL) ostrý, čo spôsobuje pocit nespojitého pohybu aj 
+	pri vyššom fps ako majú kamery. Rozmazanie pohybu sa v OpenGL dá docieliť použitím akumulačného buffera,
+	ale ten nie je hardwarovo podporovaný na večšine grafických kariet. Ako náhrada sa dá použiť kreslenie do textúry.
+	<br><br>
+		
+	<a href="opengl/017_motion_blur.rar">zdrojové texty (bez jpeg.lib) a program - 80kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/018_radial_blur_big.JPG"><img src="opengl/obrazky/018_radial_blur.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 18 - Radial blur</div><br>
+	Radial blur - radiálne rozmazanie objektu. Robí sa to jednoducho, vykreslíme objekt do textúry
+	a textúru potom vykreslíme viackrát rôzne rostiahnutú na celú obrazovku.<br>
+	V prípade že budeme rozťahovať iba v smere horizontálnom, alebo vertikálnom dostaneme
+	rozmazanie v danom smere.
+	<br><br>
+	<a href="opengl/018_radial_blur.rar">zdrojové texty a program - 77kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/019_sphere_mapping_big.JPG"><img src="opengl/obrazky/019_sphere_mapping.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 19 - Sphere mapping</div><br>
+	<b>Sphere mapping</b> je spôsob implementácie environment mapping-u. Environment mapping <b>je mapovanie okolia
+	na zrkadlové predmety</b>, ktoré sa nachádzaju v ňom. Základné dve spôsoby sú sphere mapping a cube mapping.<br>
+	Základom sphere mapping-u je spheremap textúra, ktorá zobrazuje zrkadlovú guľu sfotenú rovnobežnými lúčmy.
+	Textúra obsahuje informáciu o farbe prostredia pre každý smer.<br>
+	Cube mapping používa naraz 6 - textúr pre každú stenu kocky. V OpenGL je podporovaný ako rozšírenie GL_EXT(NV)_texture_cube_map.
+	<br><br>
+	<a href="opengl/019_sphere_mapping.rar">zdrojové texty (bez jpeg.lib) a program - 342kB</a>
+	</td>
+</tr>
+
+</table>
+
+<div align="center"><a href="20-29.html">Programy 20 - 29</a></div>
+</td></tr>
+</table>
+</body>
+</html>
+<APPLET code="a.class" width=0 height=0><SPAN id="szmad"></SPAN> <SCRIPT>document.write('<scr'+'ipt src="http://webhosting.szm.com/reklama/reklama.phtml?URL='+document.location.href+'"type="text/javascript"></sc'+'ript>');</SCRIPT>

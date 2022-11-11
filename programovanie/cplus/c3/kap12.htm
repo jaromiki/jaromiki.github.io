@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Terminalove funkcie (QNX)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+<h1>12 Terminálové funkcie (QNX)</h1>
+
+<p align="justify">Sú určené pre prácu v&nbsp;textovom režime pod OS QNX na realizáciu "oknových techník". Predstavujú určitú analógiu funkcií jednotky CRT v&nbsp;Turbo Pascale. Z&nbsp;hľadiska normy jazyka C to nie sú štandardné funkcie, preto ich prenositeľnosť medzi systémami a&nbsp;kompilátormi nie je zaručená. Jednotlivé terminálové funkcie sú podrobne popísané v&nbsp;knižnici jazyka C86. Ich spoločným znakom je to, že ich názvy sa vždy začínajú predponou term.<br />
+</p>
+
+<p align="justify">S celou skupinou terminálových funkcií sú spojené dve inicializačné funkcie. Funkcia term_load načítava charakteristiky terminálu z&nbsp;tabuľky (/config/tcap.dbase). Tieto charakteristiky zahrňujú aj niektoré Escape postupnosti pre zefektívnenie práce terminálu (napr. čistenie obrazovky). Môžu obsahovať aj údaje o&nbsp;rozšírenom súbore znakov.<br />
+</p>
+
+<p align="justify">Druhá funkcia <b>term_video_on</b> vykonáva inicializáciu premenných a&nbsp; alokáciu bufrov, používaných ostatnými terminálovými fukciami. Prítomnosť týchto bufrov umožňuje "čítanie z&nbsp;obrazovky" (napr. funkcie <b>term_save_image, term_get_line</b>). Po vyvolaní funkcie term_video_on môže program užívať iba terminálové funkcie, až dokedy neobnovíme pôvodný režim obrazovky (obyčajne na konci programu).<br />
+</p>
+
+<p align="justify">Viacero terminálových funkcií vyžaduje vypnutie nastavenia ECHO a&nbsp;EDIT na terminále, čo možno vykonať napr. takto:<br />
+</p>
+
+<pre>
+   stary_stav = get_option(stdin);
+   set_option(stdin,stary_stav &amp; ~(EDIT | EDIT));
+</pre>
+
+<p align="justify">Po ukončení práce s&nbsp;terminálovými funkciami je potrebné definovať východzí stav<br />
+</p>
+
+<pre>
+   set_option(stary_stav);
+</pre>
+
+<p align="justify">Orientácia riadkov a&nbsp;stĺpcov na obrazovke je daná tým, že horný riadok a&nbsp;ľavý stĺpec sú číslované ako 0. *Nie všetky terminály vracajú kurzor po čistení obrazovky do tohoto bodu. V&nbsp;mnohých terminálových funkciách sa užíva parameter argument s&nbsp;týmto významom jednotlivých bitov:</p>
+
+<pre>
+e   enable color            farba
+bc  background color        farba pozadia
+fc  forground color         farba popredia
+p   position cursor
+    at end of text          kurzor na koniec textu
+f   flush after output      vyprázdniť po výstupe
+u   underline               podčiarknúť
+i   inverse video           inerzia
+h   highlight               zvýraznenie
+b   blink                   blikanie
+</pre>
+
+<p align="justify">Nie všetky atribúty (bity) je možné použiť pre každú funkciu (viď popis funkcií C86). Priradenie farieb je následovné</p>
+
+<pre>
+      0   black       čierna
+        1   blue        modrá
+        2   green       zelená
+        3   cyan        fialová
+        4   red     červená
+        5   magenta     svetlomodrá
+        6   yellow      žltá
+        7   white       biela
+</pre>
+
+<p align="justify">Na termináloch sú podporované iba farby popredia, na konzolách všetky. Príklad p11_1.c ilustruje niekoľko terminálových funkcií - pre menu, text v&nbsp;okne, blikanie, uloženie časti obrazovky do bufra a&nbsp;jej vrátenie. Prácu s&nbsp;menu pozri tiež v&nbsp;príklade pop.c v&nbsp;adresári cii/samples, z&nbsp;ktorého je aj náš príklad odvodený.</p>
+
+<pre>
+/* priklad p11_1.c
+** pop - popup window demonstration program
+** Copyright 1986 by Quantum Software Systems, Ltd.
+** Copyright 1989 by Computer Innovations, Inc.
+** ukazka menu,nadpis,inicializacia,okno,text v okne,blikanie  */
+#include &lt;STDIO.H&gt;
+#include &lt;DEV.H&gt;
+#include &lt;TCAP.H&gt;
+#include &lt;STDLIB.H&gt;
+#include &lt;STRING.H&gt;
+
+#define   MAX_SCREENS 5
+/* maximum # of screens that can be saved */
+
+struct screen_save {/* structure to contain saved windows */
+   int cursor_x, cursor_y;
+   int x, y, width, length;
+   char *data;
+};
+
+int blik=0;    /* prepinac na blikanie      */
+int bytes=0; /* # of bytes / saved character */
+int top_screen=0; /* number of top window */
+struct screen_save screens[MAX_SCREENS];
+ /* array of saved screens */
+unsigned ef=4&lt;&lt;12|7&lt;&lt;8|1&lt;&lt;3|1|0x8000, nf=7&lt;&lt;12|0&lt;&lt;8|0x8000,pf;
+
+char *a_menu[]={ "Init ","Okno ", "Prikaz_okno ", "Text ", "VText/prikaz ", "Blik ", "Quit ", NULL };
+char *b_menu[]={ "Ayyy ", "Byyy ", "Cyyy ",  "Dyyy ", "Eyyy ", "Quit ", NULL };
+char *c_menu[]={ "Azzz ", "Bzzz ", "Czzz ",  "Dzzz ", "Ezzz ", "Quit ", NULL };
+
+/* prototypes for the support functions  */
+void submenu1(char ch, int row);
+void submenu2(char ch, int row);
+void pop_up(int y, int x, int width, int length, unsigned attr);
+void pop_down(void);
+
+int main(int argc, char **argv)
+{
+   char *cp;
+
+   if(!term_load(stdout))
+      error( "pop: Unable to load tcap entry.\n");
+
+   term_video_on(); /* enable terminal shadow image */
+   term_colour(0x17); /* set screen colors (white on blue)*/
+   if(!strcmp(tcap_entry.term_name, "qnx")){
+      fput("\033!71\033@71",8,stdout);
+      fflush(stdout);
+   }
+   term_clear(_CLS_SCRH);
+   /* set screen buffer to a known state */
+   set_option(stdin, get_option(stdin) &amp; ~(EDIT|ECHO));
+
+   term_printf(1,5,nf,
+   "UKAZKA  ZAKLADNYCH  PRINCIPOV
+      PRACE S &lt;TERM_...&gt;  FUNCIAMI");
+   pop_up(3, 7, 59, 3, 0xb102); /* uloz vyrez pre menu */
+   cp=*a_menu;
+   for(;;){
+      cp=term_menu(4, 9, a_menu, cp, 0xb100, NULL, 1);
+      if((*cp=='Q')||(cp==NULL)) break;
+      else    /*submenu1(*cp, 5+*cp-'A'); */
+    {
+    if(*cp=='B'){    if(blik==0){pf=ef;blik=1;}
+                  else {pf=nf;blik=0;}
+         term_printf(1,5,pf,
+   "UKAZKA  ZAKLADNYCH  PRINCIPOV
+      PRACE S &lt;TERM_...&gt;  FUNCIAMI");
+         }
+    if(*cp=='I') {
+      pop_up(7, 5, 73, 7, 0xe402); /* uloz vyrez Init*/
+      term_box_fill(7,5,73,7,6&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);
+      term_printf(8,7,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+         "if(!term_load(stdout))
+      error( \"pop: Unable to load tcap entry.\\n\");");
+      term_printf(9,7,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+   "term_video_on(); /* enable terminal shadow image */ ");
+      term_printf(10,7,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+         "term_colour(0x17);
+         /* set screen colors (white on blue) */ ");
+      term_printf(11,7,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+         "term_clear(_CLS_SCRH);
+         /* set screen buffer to a known state */");
+      term_printf(12,7,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+         "set_option(stdin,
+            get_option(stdin) &amp; ~(EDIT|ECHO));");
+               }
+    if(*cp=='O') {
+      pop_down();  /* obnov vyrez - (zrus) Init */
+      term_box_fill(15,5,20,4,7&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);
+                }
+    if(*cp=='P') {
+      term_box_fill(15,28,50,3,7&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);
+      term_printf(16,29,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+      "term_box_fill(15,5,20,4,7&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);");
+                }
+    if(*cp=='T') {
+      term_box_fill(20,5,16,4,5&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);
+      term_printf(21,6,7&lt;&lt;12|0&lt;&lt;8|0x8000,"Tu som v okne");
+                }
+    if(*cp=='V') {
+      term_box_fill(20,23,55,4,5&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);
+      term_printf(21,25,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+      "term_box_fill(20,5,16,4,5&lt;&lt;12|7&lt;&lt;8|0x8000,1,219);");
+      term_printf(22,25,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+      "term_printf(21,6,7&lt;&lt;12|0&lt;&lt;8|0x8000,
+         \"Tu som v okne\");");
+                }
+      }
+   }
+   pop_down();   /* obnov vyrez pod menu */
+
+   if(!strcmp(tcap_entry.term_name, "qnx"))
+      fput("\033R", 2, stdout);
+      /* restore original screen colours */
+   term_clear(_CLS_SCRH);
+   return 0;
+}
+
+void submenu1(char ch, int row)
+{
+   char *cp;
+
+   pop_up(row, 13, 20, 8, 0xe402);
+   cp=*b_menu;
+   term_type(row, 15, &amp;ch, 1, 0xe402);
+   for(;;){
+    cp=term_lmenu(row+1, 15, b_menu, cp, 0xe400, NULL, 1);
+    if((*cp=='Q')||(cp==NULL)) break;
+    else submenu2(*cp, row+*cp-'A'+2);
+   }
+   pop_down();
+}
+
+void submenu2(char ch, int row)
+{
+   char *cp;
+
+   pop_up(row, 18, 20, 8, 0xf102);
+   cp=*c_menu;
+   term_type(row, 20, &amp;ch, 1, 0xf102);
+   for(;;){
+    cp=term_lmenu(row+1, 20, c_menu, cp, 0xf100, NULL, 1);
+    if((*cp=='Q')||(cp==NULL)) break;
+   }
+   pop_down();
+}
+
+void pop_up(int y, int x, int width, int length,
+   unsigned attr)
+{
+   int i;
+   struct screen_save *s;
+   char *p;
+   struct state_entry vstate;
+   unsigned offset;
+
+   if(top_screen&gt;=MAX_SCREENS)
+      error("pop: Not enough screen buffers.\n");
+
+   if(!bytes){
+      bytes=term_save_image(0, 0, NULL, 0);
+      memset(screens, 0, sizeof(screens));
+   }
+   offset=width*bytes;
+   term_get_state(&amp;vstate);
+
+   if((screens[top_screen].data=calloc(offset,length))==NULL)
+      error( "pop: Out of memory\n" );
+   s=&amp;screens[top_screen];
+   s-&gt;cursor_x=vstate.state_cursor_x;
+   s-&gt;cursor_y=vstate.state_cursor_y;
+   s-&gt;x=x;
+   s-&gt;length=length;
+   s-&gt;y=y;
+   s-&gt;width=width;
+   p=s-&gt;data;
+   for(i=y; i&lt;LENGTH+Y; p="s-" s="&amp;screens[top_screen];" buffer.\n?); screen unused restore to Attempt error(?pop: if(screens[top_screen].data="=NULL)" screens\n?); many too Restored if(--top_screen&lt;0) offset; length, width, y, x, unsigned *p; char *s; screen_save struct i; int { pop_down() void } ?); ? _BOX_FRAME, attr, term_box_fill(y, ++top_screen; p+="offset;" width); p, term_save_image(i, * window the of line each save ++i){&gt;data;
+   x=s-&gt;x;
+   y=s-&gt;y;
+   length=s-&gt;length;
+   width=s-&gt;width;
+   offset=width*bytes;
+   for(i=y; i&lt;Y+LENGTH; restore x, } p+="offset;" width); p, * window the of line each ++i){ term_cur(s- term_restore_image(i,&gt;cursor_y, s-&gt;cursor_x);
+   free(s-&gt;data);
+   s-&gt;data=NULL;
+}
+</pre>
+</div>
+
+
+</body>
+
+</html>
+

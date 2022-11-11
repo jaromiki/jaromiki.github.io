@@ -1,0 +1,501 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+ <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Podprogramy-Funkcie</title>
+</head>
+
+<body>
+<h3>Podprogramy</h3>
+Každý C-program sa skladá z niekoľkých podprogramov (každý program obsahuje funkciu main() ), preto je dôležité naučiť sa ich správne používať.
+Podprogramy musíme zadefinovať (väčšinou nad funkciou main() ), co obsahuje
+<br>hlavičku - typ nazov (parameter) .
+<br>telo - blok - v strapatých zátvorkách postupnosť príkazov, môžu tu byť definované aj premenné platné len v tomto bloku.
+Podprogramy možno rozdeliť na:
+<ul><li>procedury - sada príkazov dostane nejake pomenovanie (vznikne nový príkaz s týmto menom). Procedury nemajú návratovú hodnoty, 
+        ich úlohou je niečo vykonať napr. na obrazovke, prípadne nastaviť/zmeniť viaceré globálne premenné.
+        <br>(takýto príkaz potom voláme zapísaním jeho názvu, kde v zátvorke môžu byť parametre
+        <br>napistrikratA();  //program odskočí do popisu podprogramu, kde nájde sadu príkazov, ktoré vykoná a vráti sa späť kde bol volaný.)
+        <br>Vytvoriť "čistú" procedúru možno určením jej typu ako <font color="Red">void</font>.
+    <li>funkcie - majú návratovú hodnotu, ich úlohou je teda túto hodnotu vypočítať a zapísať do výrazu, kde je funkcia volaná.
+        <br>(napr. y=sin(x)+1; //výraz na pravej strane obsahuje volanie funkcie sin(), program si odskočí do podprogramu kde z parametra x
+          postupnosťou príkazov vypočíta hodnotu sínusu a táto vypočítaná hodnota nahradí text sin(x) vo výraze.)
+        <br>Aj funkciu teda možno chápať ako výraz a teda aj možno vytvoriť výrazový príkaz pripísaním bodkočiarky
+        <br>(napr. sin(x); //co v pripade fun. sinus moc vyznam nema)
+</ul>
+Každý nami vytvorený podprogram možno volať/použiť z funkcie main() a tiež v každom podprograme môže byť zavolaný iný podprogram. V jazyku C
+platí, že pri čítaní programu zhora dole, ak narazíme na volanie podprogramu [napr. aa()] musí byť daný podprogram [v tomto prípade aa()] už zadefinovaný, inak kompilátor zahlási chybu lebo danému pojmu nerozumie. Často stačí určiť správne poradie definícií podprogramov aby tento problémik nenastal, no pri väčšom počte podprogramov by to mohlo byť dosť obtiažne. Je tu riešenie v tzv. vymenovaní hlavičiek všetkých podprogramov, ktoré v programe používame.
+Toto voláme deklarácia podprogramu, v deklarácii na poradí hlavičiek nezáleží. Deklaráciu umiestnime nad popis/definíciu podprogramov a program, keď 
+objaví volanie nejakého podprogramu, tak nezačne robiť paniku, lebo vie, že ide o vlastný podprogram a bude veriť, že jeho celé telo sa dozvie pri ďaľšom čítaní programu.
+<dl><dt class=main>Deklarácia
+	<dd>V C-čku je rozdiel medzi deklaráciou (len sa určí typ funkcie a typ parametrov) a definíciou (kde je už aj telo).
+	Zaujímavou skutočnosťou je, že viaceré funkcie môžu mať rovnaké meno - v tomto prípade sa musia líšiť v typoch alebo počte parametrov
+        <br>(Viac pozri prekrývanie funkcií)
+		<dl><dt>Syntax:
+			<dd><b>typ</b> názov<b>(param);</b>
+			<br><b>- typ</b> - všetky jednoduché typy, štruktúry, smerník. Ak je typ vynechaný je chápaný ako int. Na procedúry použijeme typ void.
+			<br><b>- (param)</b> - v okrúhlych zátvorkách po jednom zadefinované parametre, no stačí zoznam typov formálnych parametrov
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- tiež je dovolený typ struc, pole
+			<br>Pozn:
+			<br><b>Deklarácia je teda len hlavička funkcie a musí byť ukončená bodkočiarkou!</b>
+			<br>Príklad:
+			<br>int sucet(int, int);
+                        <br>void vypis();
+                        <br>float maxim(float a[], int n); 
+		</dl>
+    <dt class=main>Definícia
+	<dd>Tu je popis názvu podprogramu, parametrov a tiež postupnosť príkazov, ktoré sa majú vykonať pri volaní.
+		<dl><dt>Syntax:
+			<dd><b>typ</b> názov<b>(deklar_param)</b>
+			<br><b>blok</b>
+			<hr align="left">
+			<br><b>- typ</b> - všetky jednoduché typy, štruktúry, smerník. Ak je typ vynechaný je chápaný ako int. Na procedúry použijeme typ void.
+
+			<br><b>- deklar_param</b> - parametre sú pojednom zadeklarované (oddelené čiarkou). 
+                        <br>Niektoré parametre slúžia nato aby len priniesli do podprogramu hodnotu - takéto parametre 
+                            voláme <b>vstupné</b> alebo <b>parametre prenášané hodnotou</b>. 
+                            Niektoré parametre slúžia na prenos údajov do podprogramu a zároveň na prenos údajov z podprogramu 
+                            - takéto voláme <b>vstupno-výstupné</b> alebo <b>parametre prenášané adresou.</b>
+                        <br>Štandartne sú parametre prenášané hodnotou (sú len vstupné), ak je parameter pole, tak je prenesený adresou.
+			<br><b>- blok</b> - V bloku je postupnosť príkazov. Ak typ funkcie je rôzny od void tak v každej vetve 
+                            podprogramu sa musí nachádzať príkaz return s návratovou hodnotou. 
+                            Príkaz return ukončí vykonávanie podprogramu a výsledok
+                            výrazu uvedeného za slovom return je návratovou hodnotou. 
+                        <br>Ak je typ podprogramu void, tak príkaz return môže byť vynechaný a podprogram je ukončený 
+                            ak nájde poslednú strapatú ukončovaciu zátvorku.
+                        <br>Ak je typ podprogramu void, tak príkaz return bez návratovej hodnoty môžme použiť na ukončenie podprogramu.   
+			<br><b>Pozn:</b>
+			<br><b>Hlavička funkcie a nesmie byť ukončená bodkočiarkou!</b>
+		</dl>
+			<br>Príklad:
+<pre><code>
+int sucet(int a, int b)  //oba parametre sú vstupné, vzniknú pri zavolaní tohoto podprogramu
+                         //hodnotu dostanu podla uvedenych parametroch pri volani
+                         //po skončeni podprogramu tieto premenne zaniknu
+                         //ich pripadna zmena v podprograme nema vplyv na ziadnu globalnu premennu
+{ return a+b;}</code></pre>
+		    <dt>Volanie:
+			<dd>Všetky funkcie možno volať aj ako samostatný výrazový príkaz.
+			<br>Nevoidové funkcie možno používať vo výrazoch
+			<br>Skutočné a formálne parametre musia byť kompatibilné na priradenie.
+			<br>Príklad:
+<pre><code>int main()
+{ int b=1,c=2;
+  cout &lt;&lt; sucet(b,c) &lt;&lt; endl;               // vypise 3
+  cout &lt;&lt; "b=" &lt;&lt; b &lt;&lt;"   c=" &lt;&lt; c &lt;&lt; endl; // volanie podprogramu nema vplyv na premenne b,c
+}</code></pre>
+		</dl>
+    <dt class=main>Príkaz return
+	<dd>Návratová hodnota je určená výrazom za kľúčovým slovom return.
+		<dl><dt>Syntax:
+			<dd><font color="Red">return</font> hodnota
+			<dt>Sémantika:
+			<dd><b>ukončí podprogram</b> a hodnotu získa identifikátor funkcie.
+			<br>voidovú funkciu možno ukončiť príkazom return bez hodnoty.
+		</dl>
+		Funkciu, ktorá nemá návratovú hodnotu možno ukončiť príkazom:
+		<br>return ; // teda bez zátvoriek a bez zadanej hodnoty
+		<br>alebo možno aj celý príkaz return vynechať - vykonávanie funkcie je ukončené nájdením ukončovacej zátvorky }
+		<br><br>Volanie takejto funkcie je volanie príkazu - pozri nasledovný príklad.  
+	<dt class=main>Funkcie bez parametra
+	<dd>Procedúra - 
+<pre><code>void vypis() //aj ked funkcia nema param. musí mať zátvorky
+{puts("Ahojte všetci");}
+</code></pre>
+		Takto zadeklarovaný podprogram možno zavolať ako samostatný príkaz:<pre><code>vypis();   
+//aj tu musíme použiť zátvorky (vynechanie zátvoriek nespôsobí syntax error, ale funkcia sa nevykoná)
+</code></pre>
+	<br>Funkcia - 
+<pre><code>int hod_kockou()
+{ return 1+random(6); }
+</code></pre>
+	Takto zadeklarovaný podprogram možno zavolať ako hocijaký iný výraz
+<pre><code>n= hod_kockou()+hod_kockou();
+</code></pre>
+	<dt class=main>Funkcie so vstupnými param.
+	<dd><p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+		<br>using namespace std;
+		<br> int maxint(int a,int b)
+		<br> { return (a>b?a:b); }
+		<br> // funkcia vypočíta maximum z dvoch celých čísel
+		<br> void main()
+		<br> {  cout &lt;&lt; "max. z cisel 15 20 je:" &lt;&lt; maxint(15,20);
+		<br> &nbsp; &nbsp; cin.get();}
+		</p>
+		skutočné parametre môžu byť aj výrazy , ak je skutočný parameter premenná, tak jej hodnota sa zavolaním funkcie 
+		nemôže zmeniť.
+	<dt class=main>Parametre
+	<dd><ul>
+		<li><b>predávané hodnotou</b> - klasické vstupné parametre, pri volaní sa vytvoria plnohodnotné premenné 
+			s inicializáciou poč. hodnoty.
+			<br>Napr. 
+			<br>int sucet(int a,int b,int c)
+			<br>{ return a+b+c; }
+		<li><b>predávané menom</b> - vstupno-výstupné parametre, uvedené znakom <b>&amp;</b>. Tu žiadna nová premenná 
+		     nevzniká, len premenná zapísaná vo volaní dostala ďalšie meno.
+			<br>Napr. 
+			<br>int vymena(int &amp;a,int &amp;b)
+			<br>{ int c; c=a;a=b;b=c; }
+		<li><b>predávané adresou</b> - vstupno-výstupné parametre, uvedené znakom <b>*</b>. Prenáša sa teda hodnota=adrese dát.
+			<br>Napr. 
+			<br>int vymena(int *a,int *b)
+			<br>{ int c; c=*a;*a=*b;*b=c; }
+		<li><b>parametre s default hodnotami</b>
+			<br>Niekoľko posledných parametrov môže mať predpísané "zástupné" hodnoty, ktoré sa použijú ak parameter 
+			pri volaní nie je zadaný  
+			<br>
+			<br>int sucet(int a,int b=0,int c=0,int d=0)
+			<br>{ return a+b+c+d; }
+			<br>//takýto podprogram možno volať s jedným až štyrmi celočíselnými parametrami.
+		</ul>
+		
+	<dt class=main>parametre s default hodnotami
+	<dd>Funkcia môže predpísať parametrom default hodnoty pre niektoré parametre, ktoré sa použijú ak ich neuvedieme pri volaní
+		<p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+		<br>#include &lt;climits> //tu su zapisane konstanty INT_MIN 
+		<br>using namespace std;
+		<br> int maxint(int a,int b=INT_MIN,int c=INT_MIN,int d=INT_MIN)
+		<br> { a = (a&gt;b?a:b); b = (c&gt;d?c:d);
+		<br>  return (a>b?a:b); }
+		<br> // funkcia vypočíta maximum z dvoch až 4 celých čísel
+		<br> void main()
+		<br>{ cout &lt;&lt; "max. z cisel 15 20 je:" &lt;&lt; maxint(15,20); 
+		<br> &nbsp; cout &lt;&lt; "max. z cisel 15 20 -5 je:" &lt;&lt; maxint(15,20,-5);
+		<br> &nbsp; cout &lt;&lt; "max. z cisel -100 15 20 -5 je:" &lt;&lt; maxint(-100,15,20,-5);
+		<br> &nbsp; cout &lt;&lt; "max. z cisel 15 je:" &lt;&lt; maxint(15);
+		<br> &nbsp; cout &lt;&lt; "max. z cisel je:" &lt;&lt; maxint(); // zahlasi chybu
+		<br> }
+		<br> 
+		}
+		</p>
+	<dt class=main>Funkcie s neurčeným počtom parametrov
+	<dd>Funkciu možno napísať tak, že neurčíme počet parametrov. Môžme určiť niekoľko pevných parametrov 
+		(obyčajne tu uvedieme parameter v ktorom je zapísaný počet ďalších param.)
+		<p style="background:silver; color:black; padding:6"> #include &lt;stdio.h>
+		<br> #include &lt;stdarg.h>
+		<br> int sucet(int poc ...)
+		<br> va_list zoz; // tu budu nejak zapisane "utajene" arg
+		<br> int s=0; // v s bude sucet cisel, 
+		<br>
+		<br> va_start(zoz,poc); va_start inicialiyuje zoznam par, druhy param mozme zadat :hocico, ale dava sa pevny parameter   
+		<br> for (int i=0;i&lt;poc;i++)
+		<br> &nbsp; s += va_arg(zoz, int); // vyberie "utajeny" argument a nastavim kurzor na dalsi
+		<br> va_end(zoz); // ukonci spracovanie parametrov 
+		<br> { return (s); }
+		<br> // funkcia vypočíta maximum z dvoch až 4 celých čísel
+		<br> void main()
+		<br> {printf("sucet z cisel %i, %i, %i je: %i",1,2,3,sucet(3,1,2,3)); 
+		<br> }
+		<br> 
+		</p>
+	<dt>Úlohy:
+	<dd><dl>
+		<dt>Procedúra bez parametrov
+		<dd>Napíšeme podprogram 
+		    <br>- riadok50A(), ktorý vie napísať 50 znakov A za sebou
+		    <br>- tabulka5x50A(), ktorý vytvorí tabuľku 5 riadkov po 50-tich znakov A
+		    <br>- v main() len zavoláme tabulka3x50A()
+		    <br>Riešenie:
+
+<pre><code><p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+ using namespace std;
+ void riadok50A()
+ { for (int i=0; i&lt;50; i++) cout &lt;&lt;'A'; }
+
+ void tabulka5x50A()
+ { for (int i=0; i&lt;5; i++) {riadok50A(); cout &lt;&lt;endl;}
+ }
+
+ int main()
+ { tabulka5x50A();
+   system("pause");
+   return 0;
+ }
+</p></code></pre>
+Výsledok by vyzeral asi takto:
+<pre><code><p style="background:black; color:silver; padding:6"> AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+ Press any key
+</p></code></pre>
+<br>
+		<dt>Procedúra s parametrami
+		<dd>Takýto podprogram (riadok50A) je málo použiteľný v inom programe, vie nakresliť len obdĺžnik pevného rozmeru
+		    a vnútro je tvorené pevným znakom. Teraz napíšeme podprogram, kde počet riadkov, stĺpcov a tiež
+		    vypisovaný znak bude určené pomocou parametrov.
+<pre><code><p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+ using namespace std;
+ void riadok(int n, char c)
+ { for (int i=0; i&lt;n; i++) cout &lt;&lt;c; }
+
+ void tabulka(int PocRiadkov, int PocStlpcov, char c)
+ { for (int i=0; i&lt;PocRiadkov; i++) {riadok(PocStlpcov,c); cout &lt;&lt;endl;}
+ }
+
+ int main()
+ { tabulka(5,10,*);
+   system("pause");
+   return 0;
+ }
+</p></code></pre>
+Výsledok by vyzeral asi takto:
+<pre><code><p style="background:black; color:silver; padding:6"> **********
+ **********
+ **********
+ **********
+ **********
+ Press any key
+</p></code></pre>
+<br>
+		<dl><dt>Domáca úloha 1:
+		<dd>Napíšte podprogram na kresbu pravouholných trojuholníkov nasledovného tvaru:
+			<br>(samozrejme môžete použiť podprogram riadok())
+		    <br>*
+		    <br>**
+		    <br>***
+		    <br>****
+
+		    <br>kde výška a zároveň aj šírka trojuholníka bude prvý parameter a znak bude druhý parameter
+		    <br>volanie v main() bude teda nasledovné: <b>trojuholnik(4,'*');</b>	
+<form id="Submit" action="add1.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/cplus/zoznam1.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form>         </dl>
+
+		<dt>Funkcia s jednoduchými parametrami
+  		<dd>Funkcie používame ak chceme aby podprogram vypočítal jednu hodnotu a tú nám vrátil na miesto kde bol zavolaný.
+			<br>(najčastejšie niekam do výrazu)
+			<br>Napíšeme podprogram/funkciu <b>median3()</b> na nájdenie mediánu z troch celých čísel (stredné číslo)
+<pre><code><p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+ using namespace std;
+ int median3(int x,int y,int z)
+ { if (x>y) 
+   {   if (y>z) return y; 
+	if (z>x) return x;
+	else     return z;
+   } 
+   else
+   {   if (x>z) return x; 
+	if (z>y) return y;
+	else     return z;
+   } 
+
+}
+ int main()
+ { int a=random(10),b=random(10),c=random(10) ,d=1;
+   cout &lt;&lt;a&lt;&lt;"  "&lt;&lt;b&lt;&lt;"  "&lt;&lt;c&lt;&lt;"  median= "&lt;&lt;median3(a,b,c)&lt;&lt;endl;
+   while(cout &lt;&lt;"pokracovat 1/0 :", cin >>d, d)
+   {  a=random(10),b=random(10),c=random(10);
+      cout &lt;&lt;a&lt;&lt;"  "&lt;&lt;b&lt;&lt;"  "&lt;&lt;c&lt;&lt;"  median= "&lt;&lt;median3(a,b,c)&lt;&lt;endl;
+   }
+   return 0;
+ }
+</p></code></pre>
+		<dl><dt>Domáca úloha 2 na týždeň 11.5. - 17.5.2020:
+		<dd>Napíšte podprogram na výpočet citerného súčtu kladného celého čísla
+                    <br>main() bude teda nasledovné: 
+                    <br>int main()
+                    <br>{ cout &lt;&lt;"zadaj cislo: "; cin >> c;
+                    <br>  cout &lt;&lt;"ciferny sucet: "&lt;&lt; CifSucet(c)&lt;&lt;endl;
+                    <br>  system("pause");
+		    <br> return 0;
+                    <br> }
+<form id="Submit" action="add2.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/cplus/zoznam2.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form> </dl>
+
+		<dt>Funkcia s parametrami typu pole
+		<dd>Použitie poľa ako parametra je spojené s niektorými odlišnosťami
+			<ul><li>Pri definovaní parametra typu pole neuvádzame počet prvkov
+				<br>{napr int max_pola(int pole[]) }
+			<li>podprogram nevie zistiť koľko prvkov pole=parameter vlastne má a je zvykom pri použití
+				poľa ako parametra vytvoriť ešte jeden int parameter cez ktorý sa podprogramu oznámi,
+				koľko prvkov to pole vlastne má.
+				<br>{napr. int max_pola(int pole[],int n) }
+			<li>Pri volaní podprogramu s parametrom typu pole musí byť skutočným parametrom opäť pole
+				a malo by byť rovnakého typu (jednoduchý parameter môže byť pri volaní zastúpený aj výrazom 
+				- nemusí tam byť premenná)
+			<li>Ak v podprograme zmeníme prvok poľa, zmení sa zároveň aj pole, ktoré je uvedené ako parameter pri volaní 
+				<br>( zmena jednoduchého parametra v podprograme nemá vplyv na parametre uvedené pri volani podprogramu)
+			</ul>
+		<br>Napíšeme podprogram/funkciu <b>max_pola()</b> na nájdenie maximu celočíselného poľa ktoré bude ako parameter podprogramu
+<pre><code><p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+ using namespace std; 
+int a[100] , p=20;
+//spravny podprogram nepouziva globalne premenne, ak premennu potrebuje tak si ju vytvori
+int max_pola(int pole[],int n)
+{  int m=pole[0];
+   for (int i=1;i&lt;n; i++) if (pole[i]>m) m=pole[i];
+   n=0; //to len aby sme vo volaní videli, že premenná p sa nezmení
+   pole[0]=1; //to len aby sme videli, ze pole pouzite pri volani sa zmeni (teda prvok na adrese 0) 	
+   return m; 
+}
+
+int main()
+{  for (int i=0; i&lt;p; i++) cout &lt;&lt; (a[i]=10+random(90)) &lt;&lt;"  ";   //naplnenie+vypis
+   cout &lt;&lt;endl&lt;&lt;"maximum: "&lt;&lt; max_pola(a, p)&lt;&lt;endl;
+   cout &lt;&lt;"premenna p= "&lt;&lt;p&lt;&lt;endl;
+   cout &lt;&lt;"a[0]= "&lt;&lt;a[0]&lt;&lt;endl;
+   system ("pause");
+   return 0;
+ }
+</p></code></pre>
+ Pri volaní som podprogram trochu oklamal, že pole má len 20 prvkov (v skutočnosti má prvkov 100), ale to je OK.
+Opacne by to však mohlo robiť problémy.
+<br>Výstup bude nasledovny:
+<pre><code><p style="background:black; color:silver; padding:6">29  34  96  74  22  43  66  64  16  31  41  24  20  42  93  19  83  38  86  85
+maximum: 96
+premenna p= 20
+a[0]= 1
+Press any key to continue . . .
+</p></code></pre>
+
+		<dt>Procedúra s parametrami typu pole
+		<dd>Procedúra nemá návratovú hodnotu, úlohou podprogramu bude teda nejak zmeniť pole, ktoré bude poslané do podprogramu
+			cez parameter.
+			<br>Naprogramujeme podprogram <b>vpravo()</b>, ktorý posunie všetky prvky na číslo izby o jedno číslo väčšie a posledný
+			prvok presunie do izby číslo nula.
+			<br>Riešenie:
+<pre><code><p style="background:silver; color:black; padding:6"> #include &lt;iostream>
+ using namespace std;
+ int a[100],  n=30;
+ void vpravo(int pole[],int n)
+ { int p=pole[n-1];
+   for (int i=n-1; i>0; i--) pole[i]=pole[i-1]; 
+   pole[0]=p; 
+ }
+ int main()
+ { for (int i=0; i&lt;n; i++) cout &lt;&lt; (a[i]=10+random(90)) &lt;&lt;"  ";   //naplnenie+vypis
+   vpravo(a,n);
+   for (int i=0; i&lt;n; i++) cout &lt;&lt; a[i] &lt;&lt;"  ";   //vypis
+   system("pause");
+   return 0;
+ }
+</p></code></pre>
+
+		<dl><dt>Domáca úloha 3 na týždeň 18.5. - 24.5.2020:
+		<dd>Napíšte podprogram1 <b>vyskyt()</b> na výpočet počtu výskytov čísla v poli (číslo aj pole budú parametre)
+			a zároveň napíšte podprogram2 <b>vlavo()</b>, ktorý pole posunie doľava (každý sa posunie na číslo izby o jedna menšiu,
+			prvok z izby 0 pôjde do uvoľnenej poslednej izby )
+                    <br>main() bude teda nasledovné: 
+		    <br>int c,a[100], p=30;
+                    <br>int main()
+                    <br>{ for (int i=0; i&lt;p; i++) cout &lt;&lt; (a[i]=10+random(10)) &lt;&lt;"  ";   //naplnenie+vypis
+                    <br>&nbsp; cout &lt;&lt;"zadaj cislo: "; cin >> c;
+                    <br>&nbsp;  cout &lt;&lt;"pocet vyskytov: "&lt;&lt; vyskyt(c, a, p)&lt;&lt;endl;
+		    <br>&nbsp;  vlavo(a,p);
+		    <br>&nbsp; for (int i=0; i&lt;p; i++) cout &lt;&lt; a[i] &lt;&lt;"  ";   //vypis
+                    <br>&nbsp;  system("pause");
+		    <br>&nbsp; return 0;
+                    <br>}
+<form id="Submit" action="add3.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/cplus/zoznam3.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form> </dl>
+		<dt>Podprogramy s viacerými výsledkami
+		<dd>Môžeme písať aj podprogram s viacerými výsledkami. Keďže výsledkov je viac musíme výsledky zapísať do niektorých
+			parametrov. Parametre, ktoré majú aj "vyniesť" výsledok musia byť "špeciálne" zadefinované (sú označené tak,
+			že pred meno majú pridaný znak &). Ukážem to na príklade podprogramu 
+			<br>utried3(), ktorá utriedi 3 premenné, ktoré tvoria vstupné pamametre.
+			<br>void utried3(int &a, int &b, int &c)
+			<br>{ int d;
+			<br>&nbsp; if (a>b) {d=a; a=b; b=d;}
+			<br>&nbsp; if (b>c) {d=b; b=c; c=d;}
+			<br>&nbsp; if (a>b) {d=a; a=b; b=d;}
+			<br>}
+			<br>int main()
+			<br>{ int a=7,aa=5,aaa=6;
+			<br>&nbsp; cout &lt;&lt;a&lt;&lt;' '&lt;&lt;aa&lt;&lt;' '&lt;&lt;aaa&lt;&lt;endl; // 7 5 6
+			<br>&nbsp; utried3(a,aa,aaa);
+			<br>&nbsp; cout &lt;&lt;a&lt;&lt;' '&lt;&lt;aa&lt;&lt;' '&lt;&lt;aaa&lt;&lt;endl; // 5 6 7
+			<br>&nbsp; system("pause");
+			<br>&nbsp; return 0;
+			<br>}
+		<hr>
+		<br>Parametre a,b,c sú aj vstupné (prinesú hodnoty do podprogramu), aj výstupné (odovzdajú výsledok do premenných do miesta, 
+		kde bol volaný). Takéto parametre voláme vstupno-výstupné. Niekedy je vhodné použiť na vstup vstupné parametre a na výsledky
+		parametre výstupné.
+		<br>Napíšeme podprogram na zistenia min a max z troch premenných minmax()
+			<br>void minmax(int a, int b, int c,int &min, int &max)
+			<br>{ min = a&lt;b?a:b;
+			<br>&nbsp; if (min>c) min=c;
+			<br>&nbsp; max = a>b?a:b;
+			<br>&nbsp; if (max&lt;c) max=c;
+			<br>}
+			<br>int main()
+			<br>{ int a=7,aa=5,aaa=6,b,c;
+ 			<br>minmax(a,aa,aaa,b,c);
+			<br>&nbsp; cout &lt;&lt;"min=" &lt;&lt;b&lt;&lt;endl; // 5
+			<br>&nbsp; &lt;&lt;cout "max=" &lt;&lt;c&lt;&lt;endl; // 7
+			<br>&nbsp; system("pause");
+			<br>&nbsp; return 0;
+			<br>}
+		
+		<dl><dt>Domáca úloha 4 na týždeň 25.5. - 31.5.2020:
+		<dd>Napíšte podprogram <b>podnad()</b> na výpočet počtu výskytov čísel v poli menších ako zadaná hodnota 
+			(pod) a výpočet čísel v poli väčších ako zadaná hodnota (nad).
+                    <br>main() bude teda nasledovné: 
+		    <br>int c,a[100], p=30,pod,nad;
+                    <br>int main()
+                    <br>{ for (int i=0; i&lt;p; i++) cout &lt;&lt; (a[i]=10+random(10)) &lt;&lt;"  ";   //naplnenie+vypis
+                    <br>&nbsp; cout &lt;&lt;"zadaj cislo: "; cin >> c;
+		    <br>&nbsp; podnad(a,c,pod,nad);
+                    <br>&nbsp;  cout &lt;&lt;"pocet cisel &lt; "&lt;&lt; c &lt;&lt;" ="&lt;&lt;pod&lt;&lt;endl;
+                    <br>&nbsp;  cout &lt;&lt;"pocet cisel &gt; "&lt;&lt; c &lt;&lt;" ="&lt;&lt;nad&lt;&lt;endl;
+                    <br>&nbsp;  system("pause");
+		    <br>&nbsp; return 0;
+                    <br>}
+<form id="Submit" action="add4.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/cplus/zoznam4.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form> </dl>
+
+</dl> 
+</body>
+</html>

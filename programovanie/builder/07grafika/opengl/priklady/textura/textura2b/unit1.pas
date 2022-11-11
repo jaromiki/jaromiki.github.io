@@ -1,0 +1,184 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, opengl, StdCtrls, ExtCtrls, ComCtrls;
+
+type
+  TForm1 = class(TForm)
+    Timer1: TTimer;
+    TrackBar1: TTrackBar;
+    procedure FormCreate(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure dole(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure hore(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pohyb(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+var
+  RC: HGLRC=0;
+  DC: HDC=0;
+  bmp: array[0..255,0..255] of record r, g, b: byte;
+                                                  end;
+  uhol,uholx,uholy,mx,my:real;
+  stlacene : Boolean;
+{$R *.dfm}
+
+Procedure kresli;
+Begin
+
+End;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  PFD: TPixelFormatDescriptor;
+  PF: Integer;
+  x,y,r,g,b: byte;
+begin
+  uhol:=0;
+  // Nastavenie Device Contextu:
+  DC:=GetDC(Handle);
+  FillChar(PFD, SizeOf(TPixelFormatDescriptor), 0);
+  PFD.nSize:=SizeOf(TPixelFormatDescriptor);
+  PFD.nVersion:=1;
+  PFD.dwFlags:=PFD_DRAW_TO_WINDOW or PFD_SUPPORT_OPENGL or PFD_DOUBLEBUFFER;
+  PFD.iPixelType:=PFD_TYPE_RGBA;
+  PFD.cColorBits:=24;
+  PFD.cDepthBits:=32;
+  PFD.iLayerType:=PFD_MAIN_PLANE;
+  PF:=ChoosePixelFormat(DC, @PFD);
+  if PF=0 then Exit;
+  SetPixelFormat(DC, PF, @PFD);
+  // Vytvorenie Rendering Contextu:
+  RC:=wglCreateContext(DC);
+  wglMakeCurrent(DC, RC);
+  glClearColor(0, 0, 0, 0);
+  glClearDepth(1);
+  glEnable(GL_DEPTH_TEST);
+  // Nastavenie zobrazovania:
+  glViewport(0, 0, ClientWidth, ClientHeight);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity;
+//  glOrtho(-ClientWidth DIV 2, ClientWidth  DIV 2, -ClientHeight  DIV 2, ClientHeight  DIV 2, -10, 10);
+  gluPerspective(60, ClientWidth/ClientHeight, 1, 1000);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  glClearColor(0.0, 0.0, 0.0, 0.0);       // barva pozadi
+  GLCLEAR(GL_COLOR_BUFFER_BIT);
+//    glPixelStorei(GL_UNPACK_SWAP_BYTES, 1);      // mod ulozeni pixelu
+   for y:=0 to 255 do           // pro vsechny radky pixmapy
+        for x:=0 to 255 do        // pro vsechny pixely na radku
+        if ((y div 32) +(x div 32)) mod 2 =0 then
+        begin
+            with bmp[y,x] do
+            begin r:= x ;g:=y;b:=0; end;
+        end
+        else
+        begin
+            with bmp[y,x] do
+            begin r:= 0 ;g:=0;b:=0; end;
+        end;
+  glEnable(GL_TEXTURE_2D);
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameter(GL_TEXTURE_2D, GL_Texture_WRAP_T, GL_REPEAT);
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2d(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, @bmp);
+
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity;
+  glTranslate(0, 0, trackBar1.Position/10);
+  glRotate(-uholy, 1, 0, 0);
+  glRotate(-Uholx, 0, 1, 0);
+    glBegin(GL_POLYGON);
+        glTexCoord(0.0, 0.0); glVertex3f(-1, -1, -1);
+        glTexCoord(0.0, 1.0); glVertex3f(+1, -1, -1);
+        glTexCoord(1.0, 1.0); glVertex3f(+1, +1, -1);
+        glTexCoord(1.0, 0.0); glVertex3f(-1, +1, -1);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glTexCoord(0.0, 0.0); glVertex3f(-1, -1, -1);
+        glTexCoord(0.0, 1.0); glVertex3f(+1, -1, -1);
+        glTexCoord(1.0, 1.0); glVertex3f(+1, -1, +1);
+        glTexCoord(1.0, 0.0); glVertex3f(-1, -1, +1);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glTexCoord(1.0, 0.0); glVertex3f(-1, +1, -1);
+        glTexCoord(1.0, 1.0); glVertex3f(+1, +1, -1);
+        glTexCoord(0.5, 1.0); glVertex3f(+1, +1, +0);
+        glTexCoord(0.0, 0.0); glVertex3f(-1, +1, +1);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glTexCoord(1.0, 0.0); glVertex3f(-1, -1, +1);
+        glTexCoord(1.0, 1.0); glVertex3f(+1, -1, +1);
+        glTexCoord(0.0, 1.0); glVertex3f(+1, +1, +1);
+        glTexCoord(0.0, 0.0); glVertex3f(-1, +1, +1);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glTexCoord(0.0, 0.0); glVertex3f(-1.5, -0.5, -0.5);
+        glTexCoord(0.0, 1.0); glVertex3f(+1.5, -0.5, -0.5);
+        glTexCoord(1.0, 1.0); glVertex3f(+1.5, +0.5, -0.5);
+        glTexCoord(1.0, 0.0); glVertex3f(-1.5, +0.5, -0.5);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glTexCoord(0.0, 0.0); glVertex3f(-1.5, -0.5, -0.5);
+        glTexCoord(0.0, 1.0); glVertex3f(+1.5, -0.5, -0.5);
+        glTexCoord(1.0, 1.0); glVertex3f(+1.5, -0.5, +0.5);
+        glTexCoord(1.0, 0.0); glVertex3f(-1.5, -0.5, +0.5);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glTexCoord(1.0, 0.0); glVertex3f(-1.5, +0.5, -0.5);
+        glTexCoord(1.0, 1.0); glVertex3f(+1.5, +0.5, -0.5);
+        glTexCoord(0.5, 1.0); glVertex3f(+1.5, +0.5, +0);
+        glTexCoord(0.0, 0.0); glVertex3f(-1.5, +0.5, +0.5);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glTexCoord(1.0, 0.0); glVertex3f(-1.5, -0.5, +0.5);
+        glTexCoord(1.0, 1.0); glVertex3f(+1.5, -0.5, +0.5);
+        glTexCoord(0.0, 1.0); glVertex3f(+1.5, +0.5, +0.5);
+        glTexCoord(0.0, 0.0); glVertex3f(-1.5, +0.5, +0.5);
+    glEnd();
+    SwapBuffers(DC);                          // a prohozeni predniho a zadniho bufferu
+    uhol:=uhol+1;
+end;
+
+procedure TForm1.dole(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  stlacene:=TRUE;
+  mx:=uholx+x div 4; my:=uholy+y div 4;
+end;
+
+procedure TForm1.hore(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  stlacene:=FALSE;
+end;
+
+procedure TForm1.pohyb(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  if stlacene then
+  BEGIN
+    Uholx := mx - x div 4;
+    Uholy := my - y div 4;
+  END;
+end;
+
+end.

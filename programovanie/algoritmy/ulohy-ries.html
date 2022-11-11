@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	<meta name="Content-language" content="sk">
+	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+
+	<title>Zaujímavé úlohy na programovanie</title>
+</head>
+
+<body>
+<dl><dt>Hrátky s postupnosťami
+	<dd><ul>
+                <li>úloha o postavení max. pyramídy 
+		<li>Úloha o 7 trpazlíkoch
+			<br>Na vstupe (N-1) rôznych celých čísel z intervalu 1-N (teda jedno chýba)
+			<br>Bez použitia poľa zisti ktoré chýba.
+			<br><font color="Green">Rieš: Urobíme súčet čísel</font>
+		<li>Úloha o 7 trpazlíkoch II
+			<br>Na vstupe je 
+			<ol><li>N ... počet všetkých trpazlíkov
+				<li>V<sub>1</sub> ... V<sub>n</sub> &nbsp; &nbsp; N-čísel (váha trpazlikov-môžu byť aj rovnaké)
+				<li>M ... početnosť podskupiny trpazlíkov  a V ... súčet váh tejto podskupiny
+			<br>Zisti - ktorý trp. je isto doma, kto isto chýba a o kom nevieme rozhodnuť
+			<br><font color="Green">Rieš:
+			<br>Označme S súčet váh všetkých trpazlíkov 
+			<br>Vytvorme pole B[0..N,0..S] of integer; ... na začiatku naplnené 0
+			<br>RiadokB[0] je zaplnený nulami len v B[0,0] je jednotka
+			<br>i-ty riadok matice B vytvárame pomocou predošlého riadka
+			<div style="margin-left:20">
+			for j:=0 to S do
+			<br>  if b[i-1,j]>0 then b[i,j+v[i]]:=b[i-1,j+v[i]]+1;
+			</div>
+			<br>Opakuj
+			<br>Po vzplnen9 tabuľky pozrieme prvok B[N,V]
+			<br>Ak B[N,V]=0 tak nastala nejaka chyba - taka váha sa nedá dosiahnuť
+			<br>Ak B[N,V]>0 spätným chodom budeme trpazlíkov zaradovať do skupin 
+			<br>(ak B[N-1,V]=B[N,V] tak N-ty trpazlik nie je zarátaný v súčte -> nie je doma)
+			<table style="color:green"><tr>
+			<td>(ak B[N-1,V]&lt;B[N,V]) <td> ak B[N,V]>1 then N-tý je v kat. <b>nevieme</b></tr>
+			<tr><td>&nbsp;<td>ak B[N,V]=1 tak N-tý je v kat.<b> je doma</b> 
+			</table>
+			v:=V-V[N];
+			<br>until V=0;
+			</font>
+		<li>Na vstupe je postupnosť N celých čísel. 
+<dl>		
+<dt>- Nájdite max. súvislú rastúcu postupnosť 	
+			<dd><font color="Green">Rieš:
+			<br>for i:=2 to n do 
+			<br>Begin
+			<br> if a[i]&lt;a[i-1] then rp:=0;
+			<br> rp:=rp+1;
+			<br> mrp=max(rp,mrp);
+			<br>End;</font>
+<dt>- Najdite max. súčet súvislej oblasti
+			<dd><font color="Green">Rieš:
+			<br>for i:=2 to n do 
+			<br>Begin 
+			<br> sp:=sp+a[i];
+			<br> msp=max(sp,msp);
+			<br>End;</font>
+<dt>- Nájdite min. (ohľadom počtu, súčtu) súvislú oblasť tak aby súčet bol >= S (dané)
+			<dd><font color="Green">Rieš:
+			<br>j:=1;sp:=0;for i:=2 to n do 
+			<br>Begin 
+			<br> sp:=sp+a[i];
+			<br>if sp>S then while sp-a[j]>S do j:=j+1; 
+			<br> mdl=max(i-j+1,mdl);
+			<br>End;</font>
+<dt>- Nájdite najdlhšiu vybranú rastúcu podpostupnosť
+			<dd><font color="Green">Rieš:
+			<br>Pre každý ai i=1..m-1 si odpamätám dĺžku postupnosti v ňom ukončenej bi
+			<br>Pre am určím bm ako maximum {bi; i<m and ai<am}   O(n^2)
+			<br>Existuje aj O(n*log n)
+			<br>spravím si pole, kam budem písať do i-teho chlievika akým číslom taká postupnosť končí
+			<br>lema: takéto pole bude stále utriedené
+			<br>lema: hladanie prvého vacsieho zabere (log n) a potom zmenším
+			<br>môžem si celé zaplniť nekonečnom aby som vždy našiel
+			</font>
+<dt>- Nájdite najdlhšiu vybranú podpostupnosť z dvoch postupnosti
+<dd><dd><font color="Green">Rieš:
+    <br>for i:=1 to N do
+	<br>for j:=1 to M do
+	<br>if a[i]=b[j] then v[i,j]:=v[i-1,j-1]+1 else v[i,j]=max(v[i,j-1],v[i-1.j])
+	</font>
+</dl>
+		</ul>	
+	<dt>Špeciálne postupnosti
+	<dd><ul>
+		<li>Koľko postupností tvorených len 0 a 1 a nemajúcich za sebou 2 (k) núl môžme vytvoriť
+		<table border="1"><tr><td>i<td>počet postupností<td>končí 1<td>končí 0</tr>
+				<tr><td>1<td>p1=2<td>a=1<td>b=1</tr>
+				<tr><td>2<td>p2=p1+a<td>p1<td>a</tr>
+				<tr><td>3<td>p3=p2+p1<td>p2<td>p1</tr>
+		</table>	
+		Počet postupností vypočítam tak, že prvý sčítanec je za koľkých možno zapísať 1 (za všetkých minulých)
+		<br>a druhý sčítanec je za koľkých možno pripísať 0 (za všetkých minulých čo končili 1)
+		riešením je teda Fibbonacci postupnosť
+		Pozn. Ak zakážeme 3 nuly obdobne získame postupnosť kde každý člen je tvorený súčtom 3 predošlých	
+		<li>Na vstupe sú kladné čísla x1 - xn. Vyber nesúvislú postupnosť s maximálnym súčtom ak 
+		max. vybratá súvislá oblasť je 2 (k).
+		<li>Máme danú postupnosť {1,3,9,27, ...}
+		<br>Každé číslo možno vybrať max. raz buď so znamienkom + alebo - tak aby		
+		<br>A=suma pi, kde A je dané ľubovoľné.
+		</ul>
+	<dt>Úloha na palindróm
+	<dd><ul>
+		<li>Daná je mriežka a v každom uzle je znak. Začiatok cesty môže byť v ľubovoľnom bode. Počet krokov je L.
+			<br>Z každého vrchola ide 8 ciest. Koľko palidromických ciest možno vytvoriť?
+		<li>Máme daný text, min. koľko písmen treba pridať aby vznikol palindróm?
+	<dt>Ďalšie úlohy
+	<dd><ul>
+		<li>Nech body A, B ležia na osi x. Nech je daná postupnosť prekážok daných trojicou xi, y1i, y2i 
+			<br>(čo predstavuje múr výšky y2-y1 na súradnici x). Nájdi minimálnu cestu z bodu A do B.
+		<li>Problém batohu
+			<br>Do batohu o objeme V chceme zobrať veci z výberu N vecí, o objeme Vi a cene Ci.
+			<br>Čo poradíte aby náklad bol čo najdrahší
+			<br><font color="Green">Rieš:
+			<br>Nech C[i,j] je max. cena pri batohu velkosti j a vzberaní y vecí 1-i
+			<br>Riešime postupným vytváraním tabuľky, keď určujeme každý prvok C[i,j] môžu nastať dva prípady
+			<ul><li>nový prvok zoberieme
+				<li>nezoberieme
+			</ul>
+			Ak prvok neberieme je riešením C[i-1,j]
+			<br>Ak berieme - C[i,j]:=C[i-1,j-V[j]]+C[i]  
+			</font>
+		<li>Problém domina
+			<br>Dominá majú dve čísla horné Hi a dolné Di a sú pokladané za sebou. Rozdiel súčtu horných a dolných 
+			označme R. Koľko minimálne domín treba otočiť aby 
+			<br>- rozdiel bol minimálny
+			<br>- rozdiel bol =K (dané)
+			<br><font color="Green">Rieš:
+			<br>Označme x[i]=H[i]-D[i], hľadáme min počet otočení aby sučet xi bol min, 
+			<br>Označme maxx = sum(max(hi-di)) a minx = sum(min(hi-di)), súčet xi sa teda "hýbe" v maxx-minx.
+			<br>Označme O[i,j] počet otočení domin, pri dosiahnutí súčtu j a možností otáčať dominá 1-i
+			<br>Vytvoríme tabuľku  
+			</font>
+	
+		<li>Problém politika
+			<br>Je daný neorientovaný graf s ocenenými hranami (čas na prejdenie). My sa nachádzame vo vrchole 1.
+			<br>V každom vrchole je určené na ktorú hodinu je dohodnutý míting (len zakývame rukou-strata času 0)
+			<br>chceme prejsť čo najviac miest. Zisti koľko je maximum.
+		<li>Triangulácia n-uholníka
+			<br>Banto sa nedávno opäť vybral do krčmy vo Vyšnej Klondike. Aké bolo Santovo prekvapenie,keď sa ani nie o dve hodiny vrátil triezvy, 
+			ale o to smutnejší. V krčme sa totiž dozvedel, že vyšlo nové nariadenie, ktoré by mohlo ohroziť ich parcelu.
+			Santo s Bantom vlastnia parcelu tvaru konvexného n-uholníka. V každom jeho vrchole je zatlčený kolík. 
+			Nie je to bohvieaká parcela, ale za tie roky, čo na nej strávili ryľovaním zlata, im prirástla k srdcu. 
+			Nové nariadenie hovorí toto:
+			<br>0. Ruší sa staré vymedzenie parciel.
+			<br>1. Každá nová parcela musí mať tvar trojuholníka.
+			<br>2. Hranice parcely sa vyznačujú špagátom. špagát môže viesť medzi ľubovoľnou dvojicou kolíkov.
+			<br>3. Nie je dovolené zatĺkať nové kolíky za účelom vyznačenia hranice parcely.
+			<br>4. Špagáty vyznačujúce hranice parciel sa nesmú nikde kriľovať.
+			<br>5. Koncom týždňa budú všetky parcely, ktoré nebudú mať tvar trojuholníka, prevedené pod správu šerifského úradu.
+			<br>Santa napadlo, že by mohli kúpiť špagát a pokúsiť sa ho natiahnuť medzi kolíky tak, aby rozdelili parcelu na trojuholníky. 
+			Tak by sa mohli vyhnúť tomu, aby bola ich parcela zhabaná v prospech šerifského úradu. 
+			Skôr ako pošle Banta do obchodu by rád vedel, ako vlastne má špagáty naťahovať, aby minul čo najmenej ąpagátu a koľko špagátu vlastne
+			potrebuje. A tak, kým Banto smutne sedí na pelasti a čumí do steny, Santo sedí nad nákresom parcely a snaží sa zistiť, 
+			ako najvýhodnejšie natiahnuť ąpagáty. 
+			<br>Úloha: Na vstupe je dané číslo n a súradnice n vrcholov (x1; y1), (x2; y2), : : : , (xn; yn)
+			<br>parcely vymenovaných proti smeru hodinových ručičiek. Napíšte program, ktorý poradí Santovi, medzi ktorými dvojicami kolíkov 
+			má viesť špagát, aby ho minul najmenej, ako aj celkovú dĺžku potrebného ąpagátu (ąpagát možno aj nastrihať).
+			<br>Napríklad pre n = 5 a vrcholy so súradnicami (0.0, 2.0), (2.0, 0.0), (6.0, 2.0), (4.0, 5.0), (3.0, 5.0) 
+			<br>treba ąpagát natiahnuť medzi kolíkmi (2,5), (3,5), (1,2), (2,3), (3,4), (4,5) a (5,1).
+			<br>Dĺžka ąpagátu je spolu 25.490.	 	
+		<li>Máme n kníh so stranami s1, ... sn a k pisárov, ktorý každý dokáže opísať 1 stranu opísať za 1 hodinu.
+			<br>Jednu knihu bude celú opisovať jeden pisár. Zisti minimálny počet počet hodín potrebný na opísanie kníh
+		<li>Bratislavská MHD zaviedla kumulatívne lístky, kde jeden lístok pokryje niekoľko dospelých, niekoľko detí a niekoľko psov.
+			Nás je a-dospelých, b-detí a c-psov.
+			Dostupných je n lístkov, ktoré majú takéto parametre
+			<table border="1"><tr><th>dosp.<th>detí<th>psov<th>cena
+					<tr align="center"><td>a1<td>b1<td>c1<td>z1
+					<tr align="center"><td colspan="4"> ...
+			</table>
+		<li>Zber jabĺk
+			<br>Majme danú rovinu a my sme v bode [0,0]. Náš pohyb má rýchlosť v. Na vstupe je postupnosť dopadu jabĺk usporiadaná podľa
+			času: ti,xi yi.
+			<br>Určite Maximálny počet jabĺk ktoré chytíme.
+		<li>Kompóty
+			<br>Kompóty sú usporiadané v obdĺžniku axb, každý ma cenu ci. Z každej štvorice možno zobrať max. 1 kompót.
+			<br>Zisti max. cenu. 	
+		<li>Papier
+		<li>Papier má dĺžku L a v mieste {xi} sa môže/nemusí prehnúť. Urči minimálnu dĺžku na ktorú sa dá poprehýbať
+			<br>(hrúbka papiera je 0)	
+		</ul>	
+	<dt>Iné úlohy
+	<dd><ul>		
+		<li>Na osi x rastú jablone. {xi}. 
+			<br>Na vstupe máme súradnice jabĺk {jxi} a môžme rýchlo vypisovať z ktorej jablone je.
+		<li>Na osi X sú pumpy {xi}. Yisti počet dvojíc pre ktoré:|xi-xj|&lt;K
+		<li> 
+		</ul>		
+</dl>
+
+</body>
+</html>

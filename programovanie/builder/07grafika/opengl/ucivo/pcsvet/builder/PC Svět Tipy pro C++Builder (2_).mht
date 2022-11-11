@@ -1,0 +1,136 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Tipy_pro_C++Builder_=282.=29?=
+Date: Thu, 12 Jul 2007 10:13:52 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=4318
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Tipy pro C++Builder (2.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Tipy pro C++Builder (2.)</H2>
+<H4>Po del=9A=ED dob=EC tu je druh=E1 sada p=F8=EDkaz=F9 a tip=F9 pro =
+C++Builder. Cht=ECli byste=20
+v=ECd=ECt, jak si "vyfotit" obrazovku a pak ji ulo=9Eit do Image? =
+Nechcete, aby se ve=20
+va=9Aem progr=E1mku zobrazoval kurzor? To plus dal=9A=ED t=F8i tipy =
+v=E1m nab=EDz=ED tento=20
+=E8l=E1nek.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<H3>Vyfocen=ED obrazovky</H3>
+<P>P=F8=EDkazy, kter=E9 uvedu n=ED=9Ee, v=E1m obsah obrazovky vyfot=ED a =
+ulo=9E=ED do komponenty=20
+Image. Vytvo=F8te si obr=E1zek, ponechte implicitn=ED pojmenov=E1n=ED =
+Image1 a t=F8eba do=20
+ud=E1losti OnCreate vlo=9Ete n=E1sleduj=EDc=ED k=F3d: <BR>&nbsp;
+<DIV class=3Dkod>Image1-&gt;Width =3D =
+Screen-&gt;Width;<BR>Image1-&gt;Height =3D=20
+Screen-&gt;Height;<BR>HWND Handle =3D GetDesktopWindow();<BR>HDC Dc =3D=20
+GetDC(Handle);<BR>BitBlt(Image1-&gt;Canvas-&gt;Handle,0,0,Screen-&gt;Widt=
+h,Screen-&gt;Height,Dc,0,0,SRCCOPY);=20
+</DIV><BR>P=F8ed minul=FD k=F3d vlo=9Ete n=E1sleduj=EDc=ED a =
+vyzkou=9Aejte, co se stane:<BR><BR>
+<DIV class=3Dkod>Image1-&gt;Top =3D 0;<BR>Image1-&gt;Left =3D=20
+0;<BR>Form1-&gt;BorderStyle =3D bsNone;<BR>Form1-&gt;WindowState =3D=20
+wsMaximized;<BR></DIV>
+<P></P>
+<H3>Pr=E1ce s kl=E1vesnic=ED</H3>
+<P>Chcete, aby v=E1=9A program reagoval na stisk n=ECjak=E9 =
+speci=E1ln=ED kl=E1vesy? M=F9=9Eeme si=20
+t=F8eba uk=E1zat, jak zav=F8=EDt program stiskem kl=E1vesy Esc: =
+<BR>&nbsp;
+<DIV class=3Dkod>void __fastcall TForm1::FormKeyDown(TObject *Sender, =
+WORD=20
+&amp;Key, TShiftState Shift) //procedura (Event)=20
+OnKeyDown<BR>{<BR>switch(Key)<BR>{<BR>case VK_ESCAPE: //n=E1zev=20
+kl=E1vesy<BR>Application-&gt;Terminate(); //co se stane po stisku=20
+kl=E1vesy<BR>break;<BR>}<BR>} </DIV><BR>=D8et=ECzec za "VK_" ud=E1v=E1 =
+n=E1zev kl=E1vesy. Zde=20
+je seznam z=E1kladn=EDch tla=E8=EDtek a jejich n=E1zv=F9 pro C++Builder: =
+UP (=9Aipka n=E1horu),=20
+DOWN (=9Aipka dol=F9), LEFT (=9Aipka doleva), RIGHT (=9Aipka doprava), =
+SPACE (mezern=EDk),=20
+LMENU (lev=FD alt), RMENU (prav=FD alt), LCONTROL (lev=FD control), =
+RCONTROL (prav=FD=20
+control), LSHIFT (lev=FD shift), RSHIFT (prav=FD shift), RETURN (enter), =
+TAB=20
+(tabul=E1tor), F1-F12 (F1-F12) a kone=E8n=EC ESCAPE (escape).=20
+<P></P>
+<H3>Zji=9At=ECn=ED n=E1zvu souboru a cesty k n=ECmu</H3>
+<P>Jak zjistit n=E1zev spou=9At=ECn=E9ho souboru nebo slo=9Eky, v =
+kter=E9 je um=EDst=ECn? Jako=20
+pokus si vytvo=F8te formul=E1=F8 (Form) s =9Aesti popisky (Label) a do =
+ud=E1losti OnCreate=20
+vlo=9Ete n=E1sleduj=EDc=ED k=F3d: <BR>&nbsp;
+<DIV=20
+class=3Dkod>Label1-&gt;Caption=3DApplication-&gt;ExeName;<BR>Label2-&gt;C=
+aption=3DExtractFileDrive(Application-&gt;ExeName);=20
+<BR>Label3-&gt;Caption=3DExtractFileExt(Application-&gt;ExeName);=20
+<BR>Label4-&gt;Caption=3DExtractFileDir(Application-&gt;ExeName);=20
+<BR>Label5-&gt;Caption=3DExtractFilePath(Application-&gt;ExeName);<BR>Lab=
+el6-&gt;Caption=3DExtractFileName(Application-&gt;ExeName);=20
+</DIV><BR>Nejprve (v Label1) se zobraz=ED =FApln=E1 cesta k souboru, =
+v=E8etn=EC jeho n=E1zvu=20
+(nap=F8=EDklad C:\Programy\Pokusy\Project1.exe). ExtractFileDrive =
+uk=E1=9Ee pouze=20
+p=EDsmeno disku s dvojte=E8kou (C:). Pokud v=E1s zaj=EDm=E1 pouze =
+p=F8=EDpona aplikace s=20
+te=E8kou (.exe), pou=9Eijte ExtractFileExt. Ve =E8tvrt=E9m popisku =
+uvid=EDme cestu ke=20
+slo=9Ece (C:\Programy\Pokusy). D=E1le pak adres=E1=F8ovou cestu =
+v=E8etn=EC kone=E8n=E9ho=20
+obr=E1cen=E9ho lom=EDtka (C:\Programy\Pokusy\). Funkce ExtractFileName =
+vyt=E1hne n=E1zev=20
+souboru i s p=F8=EDponou.=20
+<P></P>
+<H3>Zmizen=ED kurzoru</H3>
+<P>P=F8=EDkaz ShowCursor um=ED skr=FDt a zobrazit kurzor my=9Ai. Jen si =
+vyzkou=9Aejte tyto=20
+dva p=F8=EDkazy (m=F9=9Eete je nap=F8=EDklad p=F8i=F8adit dv=ECma =
+r=F9zn=FDm tla=E8=EDtk=E1m - Button).=20
+<BR>&nbsp;
+<DIV class=3Dkod>ShowCursor(false); //skryje =
+kurzor<BR><BR>ShowCursor(true);=20
+//zobraz=ED kurzor </DIV>
+<P></P>
+<H3>Skryt=ED aplikace na li=9At=EC</H3>
+<P>ShowWindow skryje program na doln=ED li=9At=EC. : <BR>&nbsp;
+<DIV class=3Dkod>ShowWindow(Application-&gt;Handle, SW_HIDE);=20
+//skryje<BR><BR>ShowWindow(Application-&gt;Handle, SW_SHOW); //zobraz=ED =
+</DIV>
+<P></P>
+<P>Snad v=E1m t=ECchto p=E1r tip=F9 je k n=EC=E8emu a pom=F9=9Ee to =
+va=9Aim project=F9m. </P>
+<HR SIZE=3D1>
+Autor: <B>Ond=F8ej Kubera</B>, <A=20
+href=3D"mailto:kubera@seznam.cz">kubera@seznam.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:13:27 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<H3>Inicializovanie</H3>
+<P>Ako sme sa dočítali knižnica OpenGl nemá nástroje na prácu s oknom, poskytuje viaceré možnosti ako zobraziť tú
+	istú scénu a teda na začiatku bude našou povinnosťou vykonať korektnú inicializáciu prostredia OpenGl a tiež nastaviť
+	niektoré parametre zobrazenia. Týchto príkazov je viac a ich vysvetlovaním a popisom iných možností by som
+	pravdepodobne mnohých už tu odradil od experimentov a tak spočiatku tieto riadky berte ako nutné zaklínadlo,
+	kde musíme vytvoriť niekoľko potrebných premenných a tiež musíme nakopírovať niekoľko riadkov do FormCreate.
+Pre inicializovanie použijeme nasledujúcu šablónu:</P>
+<a href="file://priklady/zaklad.zip"></a>
+<br>
+Tento súbor rozbalte a upravte Builder aby sme ho mohli voliť ako nový projekt nasledovne:
+<ul><li>Načítajte stiahnutý projekt do programu Builder
+	<li>Z Menu si zvolte: Project->Add to Repository...  
+		<br>Objaví sa nasledovné okno
+		<img src="obr/repository.png" width="386" height="287" border="0" alt="">
+		<br>ktoré vypíšte podľa návodu a uložte.
+		<br>Ikona je tiež v stiahnutom projekte
+	<li>Teraz už budete môcť vybrať cez File->Nový->Other->Projects->Opengl zvoliť tento project
+		<br>(program sa ešte bude pýtať kam sa má zapísať - ak nemáte pripravený prázdny priečinok zadajte hlavný priečinok
+		     disku d: resp e:)
+</ul>
+Tu je už urobená inicializácia výstupného okna do okna Formulara a zadané aj nejaké príkazy na nakreslenie nejakých čiar.
+OpenGl obsadí/pokryje celý formulár, neskôr si ukážeme ako urobiť aby zabral len časť alebo ako urobiť aby bežal v celoobrazovkovom režime
+<br>Inicializácia okna OpenGl sa urobí hneď - nevolí ju užívateľ, zapínanie a vypínanie grafiky OpenGl budeme robiť nesôr.
+<br><br>Zmenil som súbory 
+<ul><li>Unit1.cpp - do ktorého bežne píšeme
+	<li>Unit1.h - v ktorom je popísaný objekt Form1  
+</ul>	
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.h
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>//---------------------------------------------------------------------------
+#ifndef Unit1H
+#define Unit1H
+//---------------------------------------------------------------------------
+#include &lt;Classes.hpp>
+#include &lt;Controls.hpp>
+#include &lt;StdCtrls.hpp>
+#include &lt;Forms.hpp>
+//---------------------------------------------------------------------------
+class TForm1 : public TForm
+{
+__published:	// IDE-managed Components
+        void __fastcall destroy(TObject *Sender);  //ošetrenie udalosti OnDestroy
+        void __fastcall resize(TObject *Sender);   //ošetrenie udalosti OnResize
+private:	// User declarations
+public:		// User declarations
+  __fastcall TForm1(TComponent* Owner);
+    HDC     hdc;            // device context (nová premenná)
+    HGLRC   hrc;            // rendering context (nová premenná)
+    int  ogl_inicialized;   // táto premenná vie, či bola grafika inicializovaná
+    int  ogl_init();        // tento podprogram inicializuje grafiku
+    void ogl_exit();        // tento podprogram korektne ukončí OpenGl
+    void ogl_draw();        // v tomto podprograme budeme kresliť - pozri Unit1.cpp
+    void ogl_resize();      // tento podprogram zabezpečí natiahnutie OpenGl cez celý Form pri zmene veľkosti
+    void FormDestroy();
+};
+// inicializáciu grafiky som dal sem (mohla by byť aj v Unit1.cpp) ale je dosť dlhá a komplikovala by žiakovi prehľad
+    int TForm1::ogl_init()
+    {
+    if (ogl_inicialized) return 1;
+    hdc=0;
+    hdc = GetDC(Handle);             // get device context
+    PIXELFORMATDESCRIPTOR pfd;
+    ZeroMemory( &pfd, sizeof( pfd ) );      // set the pixel format for the DC
+    pfd.nSize = sizeof( pfd );
+    pfd.nVersion = 1;
+    pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+    pfd.iPixelType = PFD_TYPE_RGBA;
+    pfd.cColorBits = 24;
+    pfd.cDepthBits = 24;
+    pfd.iLayerType = PFD_MAIN_PLANE;
+    SetPixelFormat(hdc,ChoosePixelFormat(hdc, &pfd),&pfd);
+    hrc=0;
+    hrc = wglCreateContext(hdc);            // create current rendering context
+    if(hrc == NULL)
+            {
+            ShowMessage("Could not initialize OpenGL Rendering context !!!");
+            ogl_inicialized=0;
+            return 0;
+            }
+    if(wglMakeCurrent(hdc, hrc) == false)
+            {
+            ShowMessage("Could not make current OpenGL Rendering context !!!");
+            wglDeleteContext(hrc);          // destroy rendering context
+            ogl_inicialized=0;
+            return 0;
+            }
+    ogl_resize();
+    glEnable(GL_DEPTH_TEST);                // Zbuf
+    glDisable(GL_CULL_FACE);                // vynechavaj odvratene steny
+    glDisable(GL_TEXTURE_2D);               // pouzivaj textury, farbu pouzivaj z textury
+    glEnable(GL_BLEND);                    // priehladnost
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glShadeModel(GL_SMOOTH);                // gourard shading
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);   // background color
+    ogl_inicialized=1;
+    return 1;
+    }
+//---------------------------------------------------------------------------
+void TForm1::ogl_exit()
+    {
+    if (!ogl_inicialized) return;
+    wglMakeCurrent(NULL, NULL);     // release current rendering context
+    wglDeleteContext(hrc);          // destroy rendering context
+    ogl_inicialized=0;
+    }
+//---------------------------------------------------------------------------
+void TForm1::ogl_resize()
+    {
+    if (Width&lt;=0) Width = 100;                  // Prevent a divide by zero
+    if (Height&lt;=0) Height = 100;
+    if (!ogl_inicialized) return;
+    glViewport(0,0,Width,Height);              // Set Viewport to window dimensions
+    glMatrixMode(GL_PROJECTION);        // operacie s projekcnou maticou
+    glLoadIdentity();                   // jednotkova matica projekcie
+  glOrtho(-10,+10,-10,+10,-10,+10);     kolmá projekcia (zobrazí všetko v kocke o rozmere 20, ostatné odreže) 
+ //   gluPerspective(40,float(xs)/float(ys),0.1,100.0); // matica=perspektiva,120 stupnov premieta z viewsize do 0.1
+    glMatrixMode(GL_TEXTURE);           // operacie s texturovou maticou
+    glLoadIdentity();                   // jednotkova matica textury
+    glMatrixMode(GL_MODELVIEW);         // operacie s modelovou maticou
+    glLoadIdentity();                   // jednotkova matica modelu (objektu)
+    ogl_draw();
+    }
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+extern PACKAGE TForm1 *Form1;
+//---------------------------------------------------------------------------
+#endif
+</pre></div></div></div>
+
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.h
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+
+#include &lt;vcl.h>
+#pragma hdrstop
+#include &lt;gl\gl.h>// Hlavičkový soubor pro OpenGL32 knihovnu
+#include &lt;gl\glu.h>// Hlavičkový soubor pro Glu32 knihovnu
+#include &lt;gl\glaux.h>// Hlavičkový soubor pro Glaux knihovnu
+
+#include "Unit1.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+        : TForm(Owner)
+{    ogl_inicialized=0;
+     ogl_init();
+}
+void TForm1::ogl_draw()
+{ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//tu zadávame príkazy na kreslenie napríklad:
+  <font color="Blue">
+  glColor4f(1.0f, 1.0f, 1.0f,1.0f);
+  glBegin(GL_LINES);
+  glVertex3i(0,0,0);glVertex3i(7,0,0);
+  glVertex3i(0,0,0);glVertex3i(0,7,0);
+  glVertex3i(0,0,0);glVertex3i(0,0,7);
+  glEnd();
+</font>   
+glFlush();
+SwapBuffers(hdc);
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::destroy(TObject *Sender)
+{
+  ogl_exit();        
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::resize(TObject *Sender)
+{
+ogl_resize();
+}
+//---------------------------------------------------------------------------
+</pre></div></div></div>
+
+<P>Vidíme, že knižnica OpenGL je neobjektová. Funkcie knižnice OpenGL začínajú 
+prefixom<FONT color=#0044ff><SPAN class=program> gl</SPAN></FONT>... a pomocné 
+funkcie prefixom<FONT color=#0044ff><SPAN class=program> glu</SPAN></FONT>... Do 
+takéhoto programu budeme postupne dopĺňať kód.</P>
+<dl><dt>Súradná sústava
+	<dd>Na zobrazovanom okne sú súradnice
+		<br>x - vodorovná os, narastá smerom doprava
+		<br>y - zvislá os, narastá smerom <font color="Blue" size="+1">hore</font>
+		<br>z - smeruje/narastá k nám
+		<br>bod [0;0] je v strede formulára
+	<dt>Priemet 3D-&gt;2D
+	<dd>Aby sme openGl dokazali používať, musíme pochopiť myšlienku ako program premieta 3D priestor do 2D priestoru.
+		Obraz sa premieta do celého okna formuláru (zotrie sa nám celý formulár), my si ale môžme nastaviť orezanie zobrazovaných objektov pomocou príkazu
+		<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glViewport (x1,y1,x2,y2);</font>
+		<br>kde nastavíme súradnice ľavého dolného a pravého horného rohu obdĺžnika mimo ktorého je obraz odrezaný. Prechod z 3 súradníc
+		na dve je jednoduchý - všetky zobrazované objekty premietneme do roviny xy (súradnicu <font color="#cc0000" style="font-weight:bold">z</font> smerujúcu k nám berieme do úvahy len pri otázke viditeľnosti.
+		<br>Fyzické <font color="#cc0000" style="font-weight:bold">x</font> sa premietne do <font color="#cc0000" style="font-weight:bold">x</font> na obrazovke a podobne os <font color="#cc0000" style="font-weight:bold">y</font>.
+		<br>Celé tajomstvo projekcie (spôsobe zobrazenia objektov na daných súradniciach) je skryté v transformačných maticiach (tabuľkách), ktoré možno nastavovať 
+		číslo po čísle alebo (čo bude pre nás jednoduchšie) volaním procedúr, ktoré to urobia za nás a my sa ani nebudeme starať ako tie matice vyzerajú.
+	<dt>Nastavenie projekčnej matice
+	<dd>Tu zvolíme model zobrazenia. Máme k dispozícii 2 modely
+		<ul><li>rovnobežné premietanie - tí čo majú deskriptívu vedia o čom to je
+			<br>napr. slnečné svetlo premieta telesá na papier, vzdialenosť telesa od papiera nehrá žiadnu úlohu)
+			<li>perspektíva - komplikovanejšie ale reálnejšie	
+			<br>napr. svetlo žiarovky premieta telesá na papier, vzdialenosť telesa od papiera má úlohu
+		</ul>	
+		Že ideme pracovať s projekčnou maticou dáme najavo príkazmi"
+		<br><code><font color="#cc0000" style="font-weight:bold">glMatrixMode(GL_PROJECTION);<br>glLoadIdentity;</font></code>
+		<br>a za ním uvedieme príkaz na voľbu projekcie. Ako už vieme máme dve voľby:
+		<dl><dt style="width:600"><font color="Red" style="font-family:'Courier'">gluPerspective(poc_otoc, x/y, rezná_rovina1, rezná_rovina2);</font>
+			<dd>
+			<br><img src="obr/gluperspective.png" width="440" height="200" border="0" alt="">
+			<br><b>fovy </b>... zorný uhol pozorovateľa (zadávame od 30 po 80, čím určuje ostrosť perspektívy) 
+			<br><b>w/h</b>... pomer šírka výstupu ku výške (nemeniť), zadávame šírku okna deleno výškou
+			<br><b>near (rezná_rovina1) </b>... zadaná hodnota určuje, ktoré hodnoty z (hĺbka) budú zobrazované (menšie nezobrazí) volíme 1
+			<br><b>far (rezná_rovina1) </b>... body kde z je väčšie ako táto hodnota sa nezobrazia volíme napr. 1000
+			<br>Pri voľbe polohy ohraničujúcich rovín je doležité aby súradnice našich objektov boli medzi týmito rovinami inak nebudú zobrazené
+			<br>Odporúčam v kreslených obrázkoch s perspektívou počítať s interaktívnou možnosťou zmeny mierky, lebo je ťažko odhadnúť aký veľký bude zobrazený objekt.
+			<dt><font color="Red">glOrtho(x1,x2,y1,y2,z1,z2:real);</font>
+			<dd>Týmto príkazom sme určili veľkosť priestoru, ktorý chceme zobrazovať.
+			<br>x1 .. x2 - interval zobrazovaných x hodnôt
+			<br>y1 .. y2 - interval zobrazovaných y hodnôt
+			<br>z1 .. z2 - interval zobrazovaných z hodnôt
+			<br>Kreslenie bez perspektívy je jednoduchšie, systém vie zabezpečiť aby sa objekty zobrazili presne do našeho výstupného okna. Toto budeme spočiatku aj používať.
+		</dl>	
+<dt>Voľba zotieracej farby
+<dd>Farbu na yotretie okna nastavíme príkazom:
+	<br><font color="Red" style="font-family:'Courier'">glClearColor(r, g, b, p);</font>,
+	<br>kde všetky parametre sú z intervalu &lt;0ô1&gt; a parametre r,g,b sú farebné zložky a p určuje priesvitnosť.
+	 Štandartne volíme všetky farebné parametre rovné 0 a priesvitnosť 1 (žiadna).
+	<br>Na zotretie okna je príkaz:
+	<br><font color="Red" style="font-family:'Courier'">glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);</font>,
+	<br>ktorý nastaví všetky pixle obrazovky na predvolenú zotieraciu farbu.asi sa vám parameter v zátvorke zdá "čudný" ale presne ho odpíšte aby to fungovalo. 
+ 
+</dl>		
+</body>
+</html>

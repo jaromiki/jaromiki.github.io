@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 39 - Úvod do fyzikálních simulací</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_39.jpg" class="nehe_maly" alt="Lekce 39" />
+
+<h1>Lekce 39 - Úvod do fyzikálních simulací</h1>
+
+<p class="nadpis_clanku">V gravitačním poli se pokusíme rozpohybovat hmotný bod s konstantní rychlostí, hmotný bod připojený k pružině a hmotný bod, na který působí gravitační síla - vše podle fyzikálních zákonů. Kód je založen na nejnovějším NeHeGL kódu.</p>
+
+<p>Pokud zvládáte fyziku a chcete používat kód pro fyzikální simulaci, tak Vám tento tutoriál může pomoci. Abyste ale mohli něco vytěžit, měli byste vědět něco o počítání s vektory v trojrozměrném prostoru a fyzikálních veličinách, jako je síla nebo rychlost. Tutoriál obsahuje popis velmi jednoduchého fyzikálního simulátoru.</p>
+
+<h2>Třída Vector3D</h2>
+
+<p>Návrh fyzikálního simulačního enginu není vždy jednoduchý. Ale je zde jednoduchá posloupnost závislostí - aplikace potřebuje simulační část a ta potřebuje matematické knihovny. Tady tuto závislost uplatníme. Naším cílem je získat zásobník na simulaci pohybu objektů v prostoru. Simulační část bude obsahovat třídy Mass a Simulation. Třída Simulation bude naším zásobníkem. Pokud vytvoříme třídu Simulation budeme schopni vyvíjet aplikace, které ji využívají. Ale předtím potřebujeme matematickou knihovnu. Knihovna obsahuje pouze jednu třídu Vector3D, která pro nás bude představovat body, vektory, pozice, rychlost a sílu ve 3D prostoru.</p>
+
+<p>Vector3D tedy bude jediným členem naší matematické knihovny. Obsahuje souřadnice x, y, z v přesnosti float a zavádí operátory pro počítání s vektory ve 3D. Abychom byli konkrétní, přetížíme operátory sčítání, odčítání, násobení a dělení. Protože se tento tutoriál zaměřuje na fyziku a ne matematiku, nebudu podrobně vysvětlovat Vector3D. Podíváte-li se na jeho zdrojový kód, myslím si, že nebudete mít problémy porozumět.</p>
+
+<h2>Síla a pohyb</h2>
+
+<p>Abychom mohli implementovat fyzikální simulaci, měli bychom vědět, jak bude vypadat náš objekt. Bude mít polohu a rychlost. Pokud je umístěn na Zemi, Měsíci, Marsu nebo na jakémkoliv místě, kde je gravitace musí mít také hmotnost, která se liší podle velikosti působící gravitační síly. Vezměme si třeba knihu. Na Zemi váží 1 kg, ale na Měsíci pouze 0,17 kg, protože Měsíc na ni působí menší gravitační silou. My budeme uvažovat hmotnost na Zemi.</p>
+
+<p>Poté, když jsme pochopili, co pro nás znamená hmotnost, měli bychom se přesunout k síle a pohybu. Objekt s nenulovou rychlostí se pohybuje ve směru rychlosti. Proto je jeden z důvodů změny polohy v prostoru rychlost. Ač se to nezdá, je další působící veličinou čas. Posunutí předmětu tedy závisí na tom, jak rychle se pohybuje, a na tom kolik času uplynulo od počátku pohybu. Pokud vám vztah mezi polohou, rychlostí a časem není jasný, tak asi nemá cenu pokračovat. Doporučuji si vzít učebnici fyziky a najít si kapitolu zabývající se Newtonovy zákony.</p>
+
+<p>Rychlost objektu se mění, pokud na objekt působí nějaká síla. Její vektor je kombinací směru (počáteční a koncový bod) a velikosti. Velikost působení je přímo úměrná působící síle a nepřímo úměrná hmotnosti objektu. Změna rychlosti za jednotku času se nazývá zrychlení. Čím větší síla působí na objekt, tím více zrychluje. Čím má, ale větší hmotnost, tím je menší zrychlení.</p>
+
+<p class="src0">zrychlení = síla / hmotnost</p>
+
+<p>Odsud jednoduše vyjádříme sílu:</p>
+
+<p class="src0">síla = hmotnost * zrychlení</p>
+
+<p>Při přípravě prostředí simulace si musíte dávat pozor na to, jaké podmínky v tomto prostředí panují. Prostředí v tomto tutoriálu bude prázdný prostor čekající na zaplnění objekty, které vytvoříme. Nejdříve se rozhodneme, jaké jednotky použijeme pro hmotnost, čas a délku. Rozhodl jsem se použít kilogram pro hmotnost, sekundu pro čas a metr pro délku. Takže jednotky rychlosti budou m/s a jednotky zrychlení budou m/s^2 (metr za sekundu na druhou).</p>
+
+<p>Abychom toto všechno využili v praxi, musíme napsat třídu, která bude reprezentovat objekt a bude obsahovat jeho hmotnost, polohu, rychlost a sílu, která na něho působí.</p>
+
+<p class="src0">class Mass</p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">float m;<span class="kom">// Hmotnost</span></p>
+<p></p>
+<p class="src1">Vector3D pos;<span class="kom">// Pozice v prostoru</span></p>
+<p class="src1">Vector3D vel;<span class="kom">// Rychlosti a směr pohybu</span></p>
+<p class="src1">Vector3D force;<span class="kom">// Síla působící na objekt</span></p>
+
+<p>V konstruktoru inicializujeme pouze hmotnost, která se jako jediná nebude měnit. Pozice, rychlost i působící síly se určitě měnit budou.</p>
+
+<p class="src1">Mass(float m)<span class="kom">// Konstruktor</span></p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;m = m;</p>
+<p class="src1">}</p>
+
+<p>Aplikujeme silové působení. Objekt může současně ovlivňovat několik zdrojů. Vektor v parametru je součet všech sil působících na objekt. Před jeho aplikací bychom měli stávající sílu vynulovat. K tomu slouží druhá funkce.</p>
+
+<p class="src1">void applyForce(Vector3D force)</p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;force += force;<span class="kom">// Vnější síla je přičtena</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">void init()</p>
+<p class="src1">{</p>
+<p class="src2">force.x = 0;</p>
+<p class="src2">force.y = 0;</p>
+<p class="src2">force.z = 0;</p>
+<p class="src1">}</p>
+
+<p>Zde je stručný seznam toho, co při simulaci musíme provést:</p>
+
+<ol>
+<li>Vynulovat sílu - metoda init()</li>
+<li>Vypočítat znovu působící sílu</li>
+<li>Přizpůsobit pohyb posunu v čase</li>
+</ol>
+
+<p>Pro práci s časem použijeme Eulerovu metodu, kterou využívá většina her. Existují mnohem sofistikovanější metody, ale tahle postačí. Velmi jednoduše se vypočítá rychlost a poloha pro další časový úsek s ohledem na působící sílu a uplynulý čas. Ke stávající rychlosti přičteme její změnu, která je závislá na zrychlení (síla/m) a uplynulém čase (dt). V dalším kroku přizpůsobíme polohu - opět v závislosti na čase.</p>
+
+<p class="src1">void simulate(float dt)</p>
+<p class="src1">{</p>
+<p class="src2">vel += (force / m) * dt;<span class="kom">// Změna rychlosti je přičtena k aktuální rychlosti</span></p>
+<p class="src2">pos += vel * dt;<span class="kom">// Změna polohy je přičtena k aktuální poloze</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src0">};</p>
+
+<h2>Jak by měla simulace pracovat</h2>
+
+<p>Při fyzikální simulaci se během každého posunu opakuje totéž. Síly jsou vynulovány, potom znovu spočítány. V závislosti na nich se určují rychlosti a polohy předmětů. Tento postup se opakuje tolikrát, kolikrát chceme. Je zajišťován třídou Simulation. Jejím úkolem je vytvářet, ukládat a mazat objekty a starat se o běh simulace.</p>
+
+<p class="src0">class Simulation</p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">int numOfMasses;<span class="kom">// Počet objektů v zásobníku</span></p>
+<p class="src1">Mass** masses;<span class="kom">// Objekty jsou uchovávány v jednorozměrném poli ukazatelů na objekty</span></p>
+<p></p>
+
+<p class="src1">Simulation(int numOfMasses, float m)<span class="kom">// Konstruktor vytvoří objekty s danou hmotností</span></p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;numOfMasses = numOfMasses;<span class="kom">// Inicializace počtu</span></p>
+<p class="src2">masses = new Mass*[numOfMasses];<span class="kom">// Alokace dynamické paměti pro pole ukazatelů</span></p>
+<p></p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)<span class="kom">// Projdeme všechny ukazatele na objekty</span></p>
+<p class="src3">masses[a] = new Mass(m);<span class="kom">// Vytvoříme objekt a umístíme ho na místo v poli</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">~Simulation()<span class="kom">// Smaže vytvořené objekty</span></p>
+<p class="src1">{</p>
+<p class="src2">release();</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">virtual void release()<span class="kom">// Uvolní dynamickou paměť</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)<span class="kom">// Smaže všechny vytvořené objekty</span></p>
+<p class="src2">{</p>
+<p class="src3">delete(masses[a]);<span class="kom">// Uvolní dynamickou paměť objektů</span></p>
+<p class="src3">masses[a] = NULL;<span class="kom">// Nastaví ukazatele na NULL</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">delete(masses);<span class="kom">// Uvolní dynamickou paměť ukazatelů na objekty</span></p>
+<p class="src2">masses = NULL;<span class="kom">// Nastaví ukazatel na NULL</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">Mass* getMass(int index)<span class="kom">// Získání objektu s určitým indexem</span></p>
+<p class="src1">{</p>
+<p class="src2">if (index &lt; 0 || index &gt;= numOfMasses)<span class="kom">// Pokud index není v rozsahu pole</span></p>
+<p class="src3">return NULL;<span class="kom">// Vrátí NULL</span></p>
+<p></p>
+<p class="src2">return masses[index];<span class="kom">// Vrátí objekt s daným indexem</span></p>
+<p class="src1">}</p>
+
+<p>Proces simulace se skládá ze tří kroků:</p>
+
+<ol>
+<li>Init() nastaví síly na nulu</li>
+<li>Solve() znovu aplikuje síly</li>
+<li>Simulate(float dt) posune objekty v závislosti na čase</li>
+</ol>
+
+<p class="src1">virtual void init()<span class="kom">// Tato metoda zavolá init() metodu každého objektu</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)<span class="kom">// Prochází objekty</span></p>
+<p class="src3">masses[a]-&gt;init();<span class="kom">// Zavolání init() daného objektu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">virtual void solve()</p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Bez implementace, protože nechceme v základním zásobníku žádné síly</span></p>
+<p class="src2"><span class="kom">// Ve vylepšených zásobnících, bude tato metoda nahrazena, aby na objekty působila nějaká síla</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">virtual void simulate(float dt)<span class="kom">// Výpočet v závislosti na čase</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)<span class="kom">// Projdeme všechny objekty</span></p>
+<p class="src3">masses[a]-&gt;simulate(dt);<span class="kom">// Výpočet nové polohy a rychlosti objektu</span></p>
+<p class="src1">}</p>
+
+<p>Všechny tyto metody jsou volány v následující funkci.</p>
+
+<p class="src1">virtual void operate(float dt)<span class="kom">// Kompletní simulační metoda</span></p>
+<p class="src1">{</p>
+<p class="src2">init();<span class="kom">// Krok 1: vynulování sil</span></p>
+<p class="src2">solve();<span class="kom">// Krok 2: aplikace sil</span></p>
+<p class="src2">simulate(dt);<span class="kom">// Krok 3: vypočítání polohy a rychlosti objektů v závislosti na čase</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src0">};</p>
+
+<p>Nyní máme jednoduchý simulační engine. Je založený na matematické knihovně. Obsahuje třídy Mass a Simulation. Používá běžnou Eulerovu metodu na výpočet simulace. Teď jsme připraveni na vývoj aplikací. Aplikace, kterou budeme vyvíjet využívá:</p>
+
+<ol>
+<li>Objekty s konstantní hmotností</li>
+<li>Objekty v gravitačním poli</li>
+<li>Objekty spojené pružinou s nějakým bodem</li>
+</ol>
+
+<h2>Ovládání simulace aplikací</h2>
+
+<p>Předtím než napíšeme nějakou simulaci, měli bychom vědět, jak se třídami zacházet. V tomto tutoriálu jsou simulační a aplikační části odděleny do dvou samostatných souborů. V souboru s aplikační částí je funkce Update(), která se volá opakovaně při každém novém framu.</p>
+
+<p class="src0">void Update (DWORD milliseconds)<span class="kom">// Aktualizace pohybu</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Ošetření vstupu z klávesnice</span></p>
+<p class="src1">if (g_keys->keyDown [VK_ESCAPE] == TRUE)</p>
+<p class="src2">TerminateApplication (g_window);</p>
+<p></p>
+<p class="src1">if (g_keys->keyDown [VK_F1] == TRUE)</p>
+<p class="src2">ToggleFullscreen (g_window);</p>
+<p></p>
+<p class="src1">if (g_keys->keyDown [VK_F2] == TRUE)</p>
+<p class="src2">slowMotionRatio = 1.0f;</p>
+<p></p>
+<p class="src1">if (g_keys->keyDown [VK_F3] == TRUE)</p>
+<p class="src2">slowMotionRatio = 10.0f;</p>
+
+<p>DWORD milliseconds je čas, který uplynul od předchozího volání funkce. Budeme počítat čas při simulacích na milisekundy. Pokud bude simulace sledovat tento čas, půjde stejně rychle jako v reálném čase. K provedení simulace jednoduše zavoláme funkci operate(float dt). Předtím než ji zavoláme musíme znát hodnotu dt. Protože ve třídě Simulation nepoužíváme milisekundy, ale sekundy, převedeme proměnnou milliseconds na sekundy. Potom použijeme proměnnou slowMotionRatio, která udává, jak má být simulace zpomalená vzhledem k reálnému času. Touto proměnnou dělíme dt a dostaneme nové dt. Přidáme dt k proměnné timeElapsed, která udává kolik času simulace už uběhlo (neudává tedy reálný čas).</p>
+
+<p class="src1">float dt = milliseconds / 1000.0f;<span class="kom">// Přepočítá milisekundy na sekundy</span></p>
+<p></p>
+<p class="src1">dt /= slowMotionRatio;<span class="kom">// Dělení dt zpomalovací proměnnou</span></p>
+<p></p>
+<p class="src1">timeElapsed += dt;<span class="kom">// Zvětšení uplynulého času</span></p>
+
+<p>Teď už je dt skoro připraveno na použití v simulaci. Ale! je tu jedna důležitá věc, kterou bychom měli vědět: čím menší je dt, tím reálnější je simulace. Pokud nebude dt dostatečně malé, naše simulace se nebude chovat realisticky, protože pohyb nebude spočítán dostatečně precizně. Analýza stability se užívá při fyzikálních simulacích, aby zajistila maximální přijatelnou hodnotu dt. V tomto tutoriálu se nebudeme pouštět do detailů. Pokud vyvíjíte hru a ne specializovanou aplikaci, tato metoda bohatě stačí na to, abyste se vyhnuli chybám.</p>
+
+<p>Například v automobilovém simulátoru je vhodné, aby se dt pohybovalo mezi 2 až 5 milisekundami pro běžné auto a mezi 1 a 3 milisekundami pro formuli. Při arkádovém simulátoru je možné použít dt v rozsahu od 10 do 200 milisekund. Čím nižší je dt, tím silnější procesor potřebujeme, abychom stíhali simulovat v reálném čase. To je důvod proč se u starších her nepoužívají fyzikální simulace.</p>
+
+<p>V následujícím kódu nastavíme maximální hodnotu dt na 0.1 sekundy (100 milisekund). S touto hodnotou spočítáme kolikrát cyklus simulace při každém projití funkce zopakujeme. To řeší následující vzorec:</p>
+
+<p>int numOfIterations = (int)(dt / maxPossible_dt) + 1;</p>
+
+<p>NumOfIterations je počet cyklů, které při simulaci provedeme. Dejme tomu, že aplikace běží 20 framů za sekundu. Z toho plyne, že dt=0.05. numOfIterations tedy bude 1. Simulace se provede jednou po 0.05 sekundách. Pokud by dt bylo 0.12 sekund, pak numOfIterations bude 2. Pod v kódu uvedeným vzorcem můžete vidět, že dt počítáme ještě jednou. Podělíme ho počtem cyklů a bude dt = 0.12 / 2 = 0.06. dt bylo původně vyšší než maximální možná hodnota 0.1. Teď se tedy rovná 0.06. My ale provedeme dva cykly simulace, takže v simulaci uběhne čas 0.12 sekund. Prozkoumejte následující kód a ujistěte se, že všemu rozumíte.</p>
+
+<p class="src1"><span class="kom">// Abychom nepřekročili hranici kdy už se simulace nechová reálně</span></p>
+<p class="src1">float maxPossible_dt = 0.1f;<span class="kom">// Nastavení maximální hodnoty dt na 0.1 sekund</span></p>
+<p></p>
+<p class="src1">int numOfIterations = (int)(dt / maxPossible_dt) + 1;<span class="kom">// Výpočet počtu opakování simulace v závislosti na dt a maximální možné hodnotě dt</span></p>
+<p></p>
+<p class="src1">if (numOfIterations != 0)<span class="kom">// Vyhneme se dělení nulou</span></p>
+<p class="src2">dt = dt / numOfIterations;<span class="kom">// dt by se měla aktualizovat pomocí numOfIterations</span></p>
+<p></p>
+<p class="src1">for (int a = 0; a &lt; numOfIterations; ++a)<span class="kom">// Simulaci potřebujeme opakovat numOfIterations-krát</span></p>
+<p class="src1">{</p>
+<p class="src2">constantVelocity.operate(dt);<span class="kom">// Provedení simulace konstantní rychlosti za dt sekund</span></p>
+<p class="src2">motionUnderGravitation.operate(dt);<span class="kom">// Provedení simulace pohybu v gravitaci za dt sekund</span></p>
+<p class="src2">massConnectedWithSpring.operate(dt);<span class="kom">// Provedení  simulace pružiny za dt sekund
+</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src0">}</p>
+
+<h2>1. Objekt s konstantní rychlostí</h2>
+
+<p>Objekt s konstantní rychlostí nepotřebuje působení externí síly. Pouze vytvoříme objekt a nastavíme jeho rychlost na (1.0f, 0.0f, 0.0f), takže se bude pohybovat po ose x rychlostí 1 m/s. Třídu ConstantVelocity odvodíme od třídy Simulation.</p>
+
+<p class="src0">class ConstantVelocity : public Simulation</p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1"><span class="kom">// Konstruktor nejdříve použije konstruktor nadřazené třídy, aby vytvořil objekt o hmotnosti 1 kg</span></p>
+<p class="src1">ConstantVelocity() : Simulation(1, 1.0f)</p>
+<p class="src1">{</p>
+<p class="src2">masses[0]-&gt;pos = Vector3D(0.0f, 0.0f, 0.0f);<span class="kom">// Nastavíme polohu objektu na počátek</span></p>
+<p class="src2">masses[0]-&gt;vel = Vector3D(1.0f, 0.0f, 0.0f);<span class="kom">// Nastavíme rychlost objektu na (1.0f, 0.0f, 0.0f) m/s</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src0">};</p>
+
+<p>Když je volána metoda operate(float dt) třídy ConstantVelocity, vypočítá se nová polohu objektu. Tato metoda je volána hlavní aplikací před každým překreslením okna. Dejme tomu, že aplikace běží 10 framů za sekundu. To znamená, že při každém novém výpočtu bude dt 0.1 sekundy. Když se potom zavolá funkce simulate(float dt) daného objektu, k jeho pozici se přičte rychlost*dt, které se rovná:</p>
+
+<p>Vector3D(1.0f, 0.0f, 0.0f) * 0.1 = Vector3D(0.1f, 0.0f, 0.0f)</p>
+
+<p>Při každé frame se objekt pohne o 0.1 metru doprava. Po 10 framech to bude právě 1 metr. Rychlost byla 1.0 m/s. Takže to bude fungovat celkem slušně.</p>
+
+<p>Když spustíte aplikaci, uvidíte objekt pohybující se konstantní rychlostí po ose x. Aplikace nabízí dvě rychlosti plynutí času. Stisknutím F2 poběží stejně rychle jako reálný čas. Stisknutím F3 poběží 10krát pomaleji. Na obrazovce uvidíte přímky znázorňující souřadnicovou plochu. Mezery mezi přimkami jsou 1 metr. Díky těmto přímkám uvidíte, že se objekt pohybuje 1 metr za sekundu v reálném čase a 1 metr za 10 sekund ve zpomaleném čase. Výše popsaná technika je způsob, jak udělat simulaci tak, aby běžela v reálném čase. Abyste ji mohli použít musíte se pevně rozhodnout, v jakých jednotkách simulace poběží.</p>
+
+<h2>Aplikace síly</h2>
+
+<p>Při simulacích s konstantní rychlostí jsme nepoužili sílu působící na objekt, protože víme, že pokud síla působí na objekt, tak mění jeho rychlost. Pokud chceme pohyb s proměnlivou rychlostí použijeme vnější sílu. Nejdříve musíme všechny působící síly sečíst, abychom dostali výslednou sílu, kterou v simulační fázi aplikujeme na objekt.</p>
+
+<p>Dejme tomu, že chcete použít na objekt sílu 1 N ve směru x. Pak do solve() napíšete:</p>
+
+<p>mass-&gt;applyForce(Vector3D(1.0f, 0.0f, 0.0f));</p>
+
+<p>Pokud chcete navíc přidat sílu 2 N ve směru y, napíšete:</p>
+
+<p>mass->applyForce(Vector3D(1.0f, 0.0f, 0.0f));<br />
+mass->applyForce(Vector3D(0.0f, 2.0f, 0.0f));</p>
+
+<p>Na objekt můžete použít libovolné množství sil, libovolných směrů, abyste ovlivnili pohyb. V následující části použijeme jednoduchou sílu.</p>
+
+<h2>2. Pohyb v gravitaci</h2>
+
+<p>MotionUnderGravitation vytvoří objekt a nechá na něj působit sílu. Touto silou bude právě gravitace, která se vypočítá vynásobením hmotnosti objektu a gravitačního zrychlení:</p>
+
+<p>F = m * g</p>
+
+<p>Gravitační zrychlení na Zemi odpovídá 9.81 m/s^2. To znamená, že objekt při volném pádu zrychlí každou sekundu o 9.81 m/s dokud na něho nepůsobí žádná jiná síla než gravitace. Může jí být odpor vzduchu, který působí vždycky, ale to sem nepatří.</p>
+
+<p class="src0">class MotionUnderGravitation : public Simulation</p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">Vector3D gravitation;<span class="kom">// Gravitační zrychlení</span></p>
+
+<p>Konstruktor přijímá Vector3D, který udává sílu a orientaci gravitace.</p>
+
+<p class="src1"><span class="kom">// Konstruktor nejdříve použije konstruktor nadřazené třídy, aby vytvořil 1 objekt o hmotnosti 1kg</span></p>
+<p class="src1">MotionUnderGravitation(Vector3D gravitation) : Simulation(1, 1.0f)</p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;gravitation = gravitation;<span class="kom">// Nastavení gravitace</span></p>
+<p class="src2">masses[0]-&gt;pos = Vector3D(-10.0f, 0.0f, 0.0f);<span class="kom">// Nastavení polohy objektu</span></p>
+<p class="src2">masses[0]-&gt;vel = Vector3D(10.0f, 15.0f, 0.0f);<span class="kom">// Nastavení rychlosti objektu</span></p>
+<p class="src1">}</p>
+
+<p class="src1">virtual void solve()<span class="kom">// Aplikace gravitace na všechny objekty, na které má působit</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Použijeme gravitaci na všechny objekty (zatím máme jenom jeden, ale to se může do budoucna změnit)</span></p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)</p>
+<p class="src3">masses[a]-&gt;applyForce(gravitation * masses[a]-&gt;m);<span class="kom">// Síla gravitace se spočítá F = m * g</span></p>
+<p class="src1">}</p>
+
+<p>V kódu nahoře si můžete všimnout vzorce F = m * g. Pro reálné působení gravitace byste měli předat konstruktoru Vectror3D(0.0f, -9.81f, 0.0f). -9.81 znamená, že má gravitace působit proti směru y, což způsobuje, že objekt padá směrem dolů. Můžete zkusit zadat kladné číslo a určitě poznáte rozdíl.</p>
+
+<h2>3. Objekt spojený pružinou s bodem</h2>
+
+<p>V tomto příkladě chceme spojit objekt se statickým bodem. Pružina by měla objekt přitahovat k bodu upevnění a tak způsobovat oscilaci objektu. V konstruktoru nastavíme bod upevnění a pozici objektu.</p>
+
+<p class="src0">class MassConnectedWithSpring : public Simulation</p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">float springConstant;<span class="kom">// Čím vyšší bude tato konstanta, tím tužší bude pružina</span></p>
+<p class="src1">Vector3D connectionPos;<span class="kom">// Bod ke kterému bude objekt připojen</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Konstruktor nejdříve použije konstruktor nadřazené třídy, aby vytvořil 1 objekt o hmotnosti 1kg</span></p>
+<p class="src1">MassConnectedWithSpring(float springConstant) : Simulation(1, 1.0f)</p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;springConstant = springConstant;<span class="kom">// Nastavení tuhosti pružiny</span></p>
+<p></p>
+<p class="src2">connectionPos = Vector3D(0.0f, -5.0f, 0.0f);<span class="kom">// Nastavení pozice upevňovacího bodu</span></p>
+<p></p>
+<p class="src2">masses[0]-&gt;pos = connectionPos + Vector3D(10.0f, 0.0f, 0.0f);<span class="kom">// Nastavení pozice objektu na 10 metrů napravo od bodu, ke kterému je uchycen</span></p>
+<p class="src2">masses[0]-&gt;vel = Vector3D(0.0f, 0.0f, 0.0f);<span class="kom">// Nastavení rychlosti objektu na nulu</span></p>
+<p class="src1">}</p>
+
+<p>Rychlost objektu je nula a jeho pozice je 10 metrů napravo od úchytu, takže se bude pohybovat ze začátku směrem doleva. Síla pružiny se dá zapsat jako</p>
+
+<p>F = -k * x</p>
+
+<p>k je tuhost pružiny a x je vzdálenost od úchytu. Záporná hodnota u k značí, že jde o přitažlivou sílu. Kdyby bylo k kladné, tak by pružina objekt odpuzovala, což zcela jistě neodpovídá skutečnému chování.</p>
+
+<p class="src1">virtual void solve()<span class="kom">// Užití síly pružiny</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Použijeme sílu na všechny objekty (zatím máme jenom jeden, ale to se může do budoucna změnit)</span></p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)</p>
+<p class="src2">{</p>
+<p class="src3">Vector3D springVector = masses[a]-&gt;pos - connectionPos;<span class="kom">// Nalezení vektoru od pozice objektu k úchytu</span></p>
+<p class="src3">masses[a]-&gt;applyForce(-springVector * springConstant);<span class="kom">// Použití síly podle uvedeného vzorce</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">};</p>
+
+<p>Výpočet síly v kódu nahoře odpovídá vzorci, který jsme si uvedli (F = -k * x). Jenom je zde místo x trojrozměrný vektor a místo k je zde springConstant. Čím vyšší je springConstant, tím rychleji objekt osciluje.</p>
+
+<p>V tomto tutoriálu jsem se snažil předvést základní prvky pro tvorbu fyzikálních simulací. Pokud vás zajímá fyzika, nebude pro vás těžké vytvořit vlastní simulace. Můžete zkoušet složitější interakce a vytvořit tak zajímavá dema a hry. Další v pořadí by měli být simulace pevných objektů, jednoduché mechaniky a pokročilé simulační metody.</p>
+
+<p class="autor">napsal: Erkin Tunca <span class="transform_email">&lt;erkintunca (zavináč) icqmail.com&gt;</span><br />
+přeložil: Václav Slováček - Wessan <span class="transform_email">&lt;horizont (zavináč) host.sk&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson39.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson39_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson39.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson39.zip">Dev C++</a> kód této lekce. ( <a href="mailto:zealouselixir@mchsi.com">Warren Moore</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson39.tar.gz">Linux/GLut</a> kód této lekce. ( <a href="mailto:laks@imag.fr">Laks Raghupathi</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson39.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_39_big.jpg" class="nehe_velky" alt="Lekce 39" /></div>
+<p class="okolni_lekce"><a href="tut_38.php">&lt;&lt;&lt; Lekce 38</a> | <a href="tut_40.php">Lekce 40 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Josef Kafka</div>
+<div class="d_o_datumcas">27.11.2004 - 00:03:40</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_39.php&j=0">porusovani fyz. zakonu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">01.12.2004 - 14:50:22</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_39.php&j=1">Re: porusovani fyz. zakonu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Josef Kafka</div>
+<div class="d_o_datumcas">09.12.2004 - 12:16:14</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_39.php&j=2">Re: porusovani fyz. zakonu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Redhat</div>
+<div class="d_o_datumcas">06.03.2007 - 20:13:19</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_39.php&j=3">Re: porusovani fyz. zakonu</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_39.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

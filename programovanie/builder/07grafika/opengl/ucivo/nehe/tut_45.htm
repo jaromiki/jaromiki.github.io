@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 45 - Vertex Buffer Object (VBO)</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_45.jpg" class="nehe_maly" alt="Lekce 45" />
+
+<h1>Lekce 45 - Vertex Buffer Object (VBO)</h1>
+
+<p class="nadpis_clanku">Jeden z největších problémů jakékoli 3D aplikace je zajištění její rychlosti. Vždy byste měli limitovat množství aktuálně renderovaných polygonů buď řazením, cullingem nebo nějakým algoritmem na snižování detailů. Když nic z toho nepomáhá, můžete zkusit například vertex arrays. Moderní grafické karty nabízejí rozšíření nazvané vertex buffer object, které pracuje podobně jako vertex arrays kromě toho, že nahrává data do vysoce výkonné paměti grafické karty, a tak podstatně snižuje čas potřebný pro rendering. Samozřejmě ne všechny karty tato nová rozšíření podporují, takže musíme implementovat i verzi založenou na vertex arrays.</p>
+
+<div>V tomto tutoriálu budeme</div>
+<ul>
+<li>nahrávat data výškové mapy</li>
+<li>používat vertex arrays k efektivnímu posílání dat vertexů do OpenGL</li>
+<li>prostřednictvím VBO nahrávat data do paměti grafické karty</li>
+</ul>
+
+<p>Jako vždy nejdříve nadefinujeme parametry aplikace. První dvě symbolické konstanty představují rozlišení výškové mapy a měřítko pro vertikální roztáhnutí (viz. tutoriál 34 o výškových mapách). Když nadefinujete třetí konstantu, v programu se vypne používání VBO... abyste snadno mohli porovnat rychlostní rozdíl.</p>
+
+<p class="src0"><span class="kom">// Parametry výškové mapy</span></p>
+<p class="src0">#define MESH_RESOLUTION 4.0f<span class="kom">// Počet pixelů na vertex</span></p>
+<p class="src0">#define MESH_HEIGHTSCALE 1.0f<span class="kom">// Měřítko vyvýšení</span></p>
+<p class="src0"><span class="kom">//#define NO_VBOS// Vypíná VBO</span></p>
+
+<p>K definicím také musíme přidat konstanty, datové typy a ukazatele na funkce pro VBO rozšíření. Zahrnul jsem jen parametry nutné pro toto demo. Pokud potřebujete více funkcionality, doporučuji z <a href="http://www.opengl.org/" target="_blank">http://www.opengl.org/</a> stáhnout nejnovější glext.h a použít definice obsažené v něm. Pro kód to jistě bude čistější metoda.</p>
+
+<p class="src0"><span class="kom">// Rozšíření VBO z glext.h</span></p>
+<p class="src0">#define GL_ARRAY_BUFFER_ARB 0x8892</p>
+<p class="src0">#define GL_STATIC_DRAW_ARB 0x88E4</p>
+<p class="src0">typedef void (APIENTRY * PFNGLBINDBUFFERARBPROC) (GLenum target, GLuint buffer);</p>
+<p class="src0">typedef void (APIENTRY * PFNGLDELETEBUFFERSARBPROC) (GLsizei n, const GLuint *buffers);</p>
+<p class="src0">typedef void (APIENTRY * PFNGLGENBUFFERSARBPROC) (GLsizei n, GLuint *buffers);</p>
+<p class="src0">typedef void (APIENTRY * PFNGLBUFFERDATAARBPROC) (GLenum target, int size, const GLvoid *data, GLenum usage);</p>
+<p></p>
+<p class="src0"><span class="kom">// Ukazatele na funkce pro VBO</span></p>
+<p class="src0">PFNGLGENBUFFERSARBPROC glGenBuffersARB = NULL;<span class="kom">// Generování VBO jména</span></p>
+<p class="src0">PFNGLBINDBUFFERARBPROC glBindBufferARB = NULL;<span class="kom">// Zvolení VBO bufferu</span></p>
+<p class="src0">PFNGLBUFFERDATAARBPROC glBufferDataARB = NULL;<span class="kom">// Nahrávání dat VBO</span></p>
+<p class="src0">PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB = NULL;<span class="kom">// Mazání VBO</span></p>
+
+<p>Deklarujeme jednoduché třídy vertexu a texturových koordinátů. CMesh je kompletní třídou, která může zapouzdřit základní data meshe. V našem případě se jedná o výškovou mapu. Kód vysvětluje sám sebe, všimněte si akorát, že data vertexů jsou oddělená od texturových koordinátů do vlastního pole. Jak bude vysvětleno dále, není to úplně nutné.</p>
+
+<p class="src0">class CVert<span class="kom">// Třída vertexu</span></p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">float x;</p>
+<p class="src1">float y;</p>
+<p class="src1">float z;</p>
+<p class="src0">};</p>
+<p class="src0">typedef CVert CVec;<span class="kom">// Definice jsou synonymní</span></p>
+<p></p>
+<p class="src0">class CTexCoord<span class="kom">// Třída texturových koordinátů</span></p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">float u;</p>
+<p class="src1">float v;</p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0">class CMesh<span class="kom">// Třída meshe (výškové mapy)</span></p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">int m_nVertexCount;<span class="kom">// Počet vertexů</span></p>
+<p class="src1">CVert* m_pVertices;<span class="kom">// Souřadnice vertexů</span></p>
+<p class="src1">CTexCoord* m_pTexCoords;<span class="kom">// Texturové koordináty</span></p>
+<p class="src1">unsigned int m_nTextureId;<span class="kom">// ID textury</span></p>
+<p></p>
+<p class="src1">unsigned int m_nVBOVertices;<span class="kom">// Jméno (ID) VBO pro vertexy</span></p>
+<p class="src1">unsigned int m_nVBOTexCoords;<span class="kom">// Jméno (ID) VBO pro texturové koordináty</span></p>
+<p></p>
+<p class="src1">AUX_RGBImageRec* m_pTextureImage;<span class="kom">// Data výškové mapy</span></p>
+<p></p>
+<p class="src0">public:</p>
+<p class="src1">CMesh();<span class="kom">// Konstruktor</span></p>
+<p class="src1">~CMesh();<span class="kom">// Destruktor</span></p>
+<p></p>
+<p class="src1">bool LoadHeightmap(char* szPath, float flHeightScale, float flResolution);<span class="kom">// Loading výškové mapy</span></p>
+<p class="src1">float PtHeight(int nX, int nY);<span class="kom">// Hodnota na indexu výškové mapy</span></p>
+<p class="src1">void BuildVBOs();<span class="kom">// Vytvoření VBO</span></p>
+<p class="src0">};</p>
+
+<p>Globální proměnná g_bVBOSupported indikuje podporu VBO ze strany grafické karty. Nastavíme ji v inicializačním kódu. G_pMesh bude ukládat data výškové mapy a g_flYRot určuje úhel natočení scény. Proměnná g_nFPS bude obsahovat počet snímků za sekundu a g_nFrames je čítač jednotlivých snímků. Poslední proměnná ukládá čas minulého výpočtu FPS.</p>
+
+<p class="src0">bool g_fVBOSupported = false;<span class="kom">// Flag podpory VBO</span></p>
+<p class="src0">CMesh* g_pMesh = NULL;<span class="kom">// Data meshe</span></p>
+<p class="src0">float g_flYRot = 0.0f;<span class="kom">// Rotace</span></p>
+<p class="src0">int g_nFPS = 0, g_nFrames = 0;<span class="kom">// FPS a čítač pro FPS</span></p>
+<p class="src0">DWORD g_dwLastFPS = 0;<span class="kom">// Čas minulého testu FPS</span></p>
+
+<p>Funkce Loadheightmap() nahrává data výškové mapy. Pro ty z vás, kteří o ničem takovém ještě neslyšeli (Překl.: v originále - kdo žijete pod skálou :-). Výšková mapa je dvou dimenzionální sada dat, většinou obrázek, který hodnotami jednotlivých pixelů specifikuje vertikální výšku dané části terénu. Existuje mnoho různých způsobů, jak ji vytvořit. Moje implementace načítá tří kanálovou RGB bitmapu a ke zjištění výšky používá výpočet luminance. Výsledná hodnota bude díky tomu stejná pro barevný i černobílý obrázek. Osobně doporučuji čtyřkanálový formát vstupních dat, jako je například targa (.TGA) obrázek, u kterého alfa kanál může specifikovat výšku. Nicméně pro účely tohoto tutoriálu bude dostačovat obyčejná bitmapa.</p>
+
+<p>Ujistíme se, že soubor obrázku existuje a pokud ano, loadujeme ho pomocí knihovny glaux. Vím, existují mnohem lepší cesty nahrávání obrázků...</p>
+
+<p class="src0">bool CMesh::LoadHeightmap(char* szPath, float flHeightScale, float flResolution)</p>
+<p class="src0">{</p>
+<p class="src1">FILE* fTest = fopen(szPath, &quot;r&quot;);<span class="kom">// Otevření pro čtení</span></p>
+<p></p>
+<p class="src1">if (!fTest)</p>
+<p class="src1">{</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">fclose(fTest);<span class="kom">// Uvolní handle</span></p>
+<p></p>
+<p class="src1">m_pTextureImage = auxDIBImageLoad(szPath);<span class="kom">// Nahraje obrázek</span></p>
+
+<p>Věci začínají být trochu zajímavější. Ze všeho nejdříve bych chtěl poukázat, že pro každý trojúhelník generuji tři vertexy - jednotlivé body nejsou sdílené. Měli byste to vědět už před načítáním.</p>
+
+<p>Abychom mohli alokovat paměť pro data, potřebujeme znát její velikost. Výpočet je celkem jednoduchý ((šířka terénu / rozlišení) * (délka terénu / rozlišení) * 3 vertexy na trojúhelník * 2 trojúhelníky na čtverec). alokujeme paměť pro vertexy i texturové koordináty, deklarujeme pomocné proměnné a ve třech vnořených cyklech nastavíme obě pole.</p>
+
+<p class="src1"><span class="kom">// Generování pole vertexů</span></p>
+<p class="src1">m_nVertexCount = (int)(m_pTextureImage-&gt;sizeX * m_pTextureImage-&gt;sizeY * 6 / (flResolution * flResolution));</p>
+<p></p>
+<p class="src1">m_pVertices = new CVec[m_nVertexCount];<span class="kom">// Alokace paměti</span></p>
+<p class="src1">m_pTexCoords = new CTexCoord[m_nVertexCount];</p>
+<p></p>
+<p class="src1">int nX, nZ, nTri, nIndex = 0;<span class="kom">// Pomocné</span></p>
+<p class="src1">float flX, flZ;</p>
+<p></p>
+<p class="src1">for (nZ = 0; nZ &lt; m_pTextureImage-&gt;sizeY; nZ += (int)flResolution)</p>
+<p class="src1">{</p>
+<p class="src2">for (nX = 0; nX &lt; m_pTextureImage-&gt;sizeX; nX += (int)flResolution)</p>
+<p class="src2">{</p>
+<p class="src3">for (nTri = 0; nTri &lt; 6; nTri++)</p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// Výpočet x a z pozice bodu</span></p>
+<p class="src4">flX = (float)nX + ((nTri == 1 || nTri == 2 || nTri == 5) ? flResolution : 0.0f);</p>
+<p class="src4">flZ = (float)nZ + ((nTri == 2 || nTri == 4 || nTri == 5) ? flResolution : 0.0f);</p>
+<p></p>
+<p class="src4"><span class="kom">// Nastavení vertexu v poli</span></p>
+<p class="src4">m_pVertices[nIndex].x = flX - (m_pTextureImage-&gt;sizeX / 2);</p>
+<p class="src4">m_pVertices[nIndex].y = PtHeight((int)flX, (int)flZ) * flHeightScale;</p>
+<p class="src4">m_pVertices[nIndex].z = flZ - (m_pTextureImage-&gt;sizeY / 2);</p>
+<p></p>
+<p class="src4"><span class="kom">// Nastavení texturových koordinátů v poli</span></p>
+<p class="src4">m_pTexCoords[nIndex].u = flX / m_pTextureImage-&gt;sizeX;</p>
+<p class="src4">m_pTexCoords[nIndex].v = flZ / m_pTextureImage-&gt;sizeY;</p>
+<p></p>
+<p class="src4">nIndex++;<span class="kom">// Inkrementace indexu</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Z obrázku výškové mapy vytvoříme OpenGL texturu a potom uvolníme jeho paměť.</p>
+
+<p class="src1">glGenTextures(1, &amp;m_nTextureId);<span class="kom">// OpenGL ID</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, m_nTextureId);<span class="kom">// Zvolí texturu</span></p>
+<p class="src1">glTexImage2D(GL_TEXTURE_2D, 0, 3, m_pTextureImage-&gt;sizeX, m_pTextureImage-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, m_pTextureImage-&gt;data);<span class="kom">// Nahraje texturu do OpenGL</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p></p>
+<p class="src1">if (m_pTextureImage)<span class="kom">// Uvolnění paměti</span></p>
+<p class="src1">{</p>
+<p class="src2">if (m_pTextureImage-&gt;data)</p>
+<p class="src2">{</p>
+<p class="src3">free(m_pTextureImage-&gt;data);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">free(m_pTextureImage);</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return true;</p>
+<p class="src0">}</p>
+
+<p>Funkce PtHeight() vypočítá index do pole s daty, přitom ošetří přístup do nealokované paměti a vrátí výšku na daném indexu. Aby mohl být obrázek barevný i černobílý, použijeme vzorec pro luminanci. Opravdu nic složitého.</p>
+
+<p class="src0">float CMesh::PtHeight(int nX, int nY)<span class="kom">// Výška na indexu</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Výpočet pozice v poli, ošetření přetečení</span></p>
+<p class="src1">int nPos = ((nX % m_pTextureImage-&gt;sizeX) + ((nY % m_pTextureImage-&gt;sizeY) * m_pTextureImage-&gt;sizeX)) * 3;</p>
+<p></p>
+<p class="src1">float flR = (float)m_pTextureImage-&gt;data[nPos];<span class="kom">// Grabování složek barvy</span></p>
+<p class="src1">float flG = (float)m_pTextureImage-&gt;data[nPos + 1];</p>
+<p class="src1">float flB = (float)m_pTextureImage-&gt;data[nPos + 2];</p>
+<p></p>
+<p class="src1">return (0.299f * flR + 0.587f * flG + 0.114f * flB);<span class="kom">// Výpočet luminance</span></p>
+<p class="src0">}</p>
+
+<p>V následující funkci začneme konečně pracovat s vertex arrays a VBO. Takže, co to jsou pole vertexů? V základu je to systém, díky kterému můžeme ukázat OpenGL na pole geometrických dat a potom je několika málo příkazy vykreslit. Výsledkem je, že odpadají spousty výskytů funkcí typu glVertex3f() a jiných, které svým mnohonásobným voláním zbytečně zpomalují rendering. Systém vertex buffer object (VBO) jde ještě dále, namísto standardní paměti aplikace alokované v RAM používá vysoce výkonnou paměť grafické karty. Čas renderingu se zkracuje také proto, že data nemusí putovat &quot;po celém počítači&quot;, ale jsou uložena přímo na zařízení, kde se používají.</p>
+
+<p>Takže teď se chystáme vytvořit Vertex Buffer Object. Pro tuto operaci existuje několik možných způsobů realizace, jeden z nich se nazývá &quot;mapování&quot; paměti. Myslím, že na tomto místě bude nejlepší jít tou nejsnadnější cestou. Nejprve pomocí glGenBuffersARB() získáme validní jméno VBO. Je to vlastně číslo ID, které OpenGL asociuje s našimi daty. Dále, podobně jako u textur, musíme VBO nastavit jako aktivní, čili říct OpenGL, že s ním chceme pracovat. K tomu slouží funkce glBindBufferARB(). Nakonec nahrajeme data do grafické karty. Funkci se předává velikost dat v bytech a ukazatel na ně. Protože už po této operaci nebudou potřeba, můžeme je smazat z RAM.</p>
+
+<p class="src0">void CMesh::BuildVBOs()<span class="kom">// Vytvoření VBO</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// VBO pro vertexy</span></p>
+<p class="src1">glGenBuffersARB(1, &amp;m_nVBOVertices);<span class="kom">// Získání jména (ID)</span></p>
+<p class="src1">glBindBufferARB(GL_ARRAY_BUFFER_ARB, m_nVBOVertices);<span class="kom">// Zvolení bufferu</span></p>
+<p class="src1">glBufferDataARB(GL_ARRAY_BUFFER_ARB, m_nVertexCount * 3 * sizeof(float), m_pVertices, GL_STATIC_DRAW_ARB);</p>
+<p></p>
+<p class="src1"><span class="kom">// VBO pro texturové koordináty</span></p>
+<p class="src1">glGenBuffersARB(1, &amp;m_nVBOTexCoords);<span class="kom">// Získání jména (ID)</span></p>
+<p class="src1">glBindBufferARB(GL_ARRAY_BUFFER_ARB, m_nVBOTexCoords);<span class="kom">// Zvolení bufferu</span></p>
+<p class="src1">glBufferDataARB(GL_ARRAY_BUFFER_ARB, m_nVertexCount * 2 * sizeof(float), m_pTexCoords, GL_STATIC_DRAW_ARB);</p>
+<p></p>
+<p class="src1"><span class="kom">// Data v RAM už jsou zbytečná</span></p>
+<p class="src1">delete [] m_pVertices;</p>
+<p class="src1">delete [] m_pTexCoords;</p>
+<p class="src1">m_pVertices = NULL;</p>
+<p class="src1">m_pTexCoords = NULL;</p>
+<p class="src0">}</p>
+
+<p>Tak to bychom měli, teď je čas na inicializaci. Vytvoříme dynamický objekt výškové mapy a pokusíme se ji vygenerovat ze souboru terrain.bmp. Není-li nadefinovaná symbolická konstanta NO_VBOS, zjistíme, jestli grafická karta podporuje rozšíření GL_ARB_vertex_buffer_object. Pokud ano, pomocí wglGetProcAddress() nagrabujeme ukazatele na potřebné funkce a vytvoříme VBO. Všimněte si, že se ve funkci BuildVBOs() mažou data výškové mapy, která se volá pouze, pokud je VBO podporováno.</p>
+
+<p class="src0">BOOL Initialize(GL_Window* window, Keys* keys)<span class="kom">// Inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">g_window = window;</p>
+<p class="src1">g_keys = keys;</p>
+<p></p>
+<p class="src1">g_pMesh = new CMesh();<span class="kom">// Instance výškové mapy</span></p>
+<p></p>
+<p class="src1">if(!g_pMesh-&gt;LoadHeightmap(&quot;terrain.bmp&quot;, MESH_HEIGHTSCALE, MESH_RESOLUTION))<span class="kom">// Nahrání</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Error Loading Heightmap&quot;, &quot;Error&quot;, MB_OK);</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src0">#ifndef NO_VBOS</p>
+<p class="src1">g_fVBOSupported = IsExtensionSupported(&quot;GL_ARB_vertex_buffer_object&quot;);<span class="kom">// Test podpory VBO</span></p>
+<p></p>
+<p class="src1">if(g_fVBOSupported)<span class="kom">// Je rozšíření podporováno?</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Ukazatele na GL funkce</span></p>
+<p class="src2">glGenBuffersARB = (PFNGLGENBUFFERSARBPROC) wglGetProcAddress(&quot;glGenBuffersARB&quot;);</p>
+<p class="src2">glBindBufferARB = (PFNGLBINDBUFFERARBPROC) wglGetProcAddress(&quot;glBindBufferARB&quot;);</p>
+<p class="src2">glBufferDataARB = (PFNGLBUFFERDATAARBPROC) wglGetProcAddress(&quot;glBufferDataARB&quot;);</p>
+<p class="src2">glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC) wglGetProcAddress(&quot;glDeleteBuffersARB&quot;);</p>
+<p></p>
+<p class="src2">g_pMesh-&gt;BuildVBOs();<span class="kom">// Poslat data vertexů do paměti grafické karty</span></p>
+<p class="src1">}</p>
+<p class="src0">#else</p>
+<p class="src1">g_fVBOSupported = false;<span class="kom">// Bez VBO</span></p>
+<p class="src0">#endif</p>
+<p></p>
+<p class="src1"><span class="kom">// Klasické nastavení OpenGL</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);</p>
+<p class="src1">glClearDepth(1.0f);</p>
+<p class="src1">glDepthFunc(GL_LEQUAL);</p>
+<p class="src1">glEnable(GL_DEPTH_TEST);</p>
+<p class="src1">glShadeModel(GL_SMOOTH);</p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);</p>
+<p class="src1">glEnable(GL_TEXTURE_2D);</p>
+<p class="src1">glColor4f(1.0f, 1.0f, 1.0f, 1.0f);</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace úspěšná</span></p>
+<p class="src0">}</p>
+
+<p>Funkci IsExtensionSupported(), která zjišťuje podporu rozšíření, můžete získat na OpenGL.org, ale moje varianta je o trochu čistší. Někteří lidé sice pomocí strstr() hledají pouze přítomnost podřetězce v řetězci, nicméně zdá se, že OpenGL.org moc nedůvěřuje konzistentnosti řetězce s rozšířeními.</p>
+
+<p class="src0">bool IsExtensionSupported(char* szTargetExtension)<span class="kom">// Je rozšíření podporováno?</span></p>
+<p class="src0">{</p>
+<p class="src1">const unsigned char *pszExtensions = NULL;</p>
+<p class="src1">const unsigned char *pszStart;</p>
+<p class="src1">unsigned char *pszWhere, *pszTerminator;</p>
+<p></p>
+<p class="src1"><span class="kom">// Jméno by nemělo mít mezery</span></p>
+<p class="src1">pszWhere = (unsigned char *)strchr(szTargetExtension, ' ');</p>
+<p></p>
+<p class="src1">if (pszWhere || *szTargetExtension == '\0')</p>
+<p class="src1">{</p>
+<p class="src2">return false;<span class="kom">// Nepodporováno</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">pszExtensions = glGetString(GL_EXTENSIONS);<span class="kom">// Řetězec s názvy rozšíření</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vyhledávání podřetězce se jménem rozšíření</span></p>
+<p class="src1">pszStart = pszExtensions;</p>
+<p></p>
+<p class="src1">for (;;)</p>
+<p class="src1">{</p>
+<p class="src2">pszWhere = (unsigned char *) strstr((const char *) pszStart, szTargetExtension);</p>
+<p></p>
+<p class="src2">if (!pszWhere)</p>
+<p class="src2">{</p>
+<p class="src3">break;</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">pszTerminator = pszWhere + strlen(szTargetExtension);</p>
+<p></p>
+<p class="src2">if (pszWhere == pszStart || *(pszWhere - 1) == ' ')</p>
+<p class="src2">{</p>
+<p class="src3">if (*pszTerminator == ' ' || *pszTerminator == '\0')</p>
+<p class="src3">{</p>
+<p class="src4">return true;<span class="kom">// Podporováno</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">pszStart = pszTerminator;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return false;<span class="kom">// Nepodporováno</span></p>
+<p class="src0">}</p>
+
+<p>Většina věcí je už hotová, zbývá vykreslování.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</p>
+<p class="src1">glLoadIdentity();</p>
+
+<p>Existuje několik možností, jak získat FPS. Asi nejjednodušší je čítat po dobu jedné sekundy průchody vykreslovací funkcí.</p>
+
+<p class="src1"><span class="kom">// Získání FPS</span></p>
+<p class="src1">if(GetTickCount() - g_dwLastFPS &gt;= 1000)<span class="kom">// Uběhla sekunda?</span></p>
+<p class="src1">{</p>
+<p class="src2">g_dwLastFPS = GetTickCount();<span class="kom">// Aktualizace času pro další měření</span></p>
+<p class="src2">g_nFPS = g_nFrames;<span class="kom">// Uložení FPS</span></p>
+<p class="src2">g_nFrames = 0;<span class="kom">// Reset čítače</span></p>
+<p></p>
+<p class="src2">char szTitle[256] = {0};<span class="kom">// Řetězec titulku okna</span></p>
+<p class="src2">sprintf(szTitle, &quot;Lesson 45: NeHe &amp; Paul Frazee's VBO Tut - %d Triangles, %d FPS&quot;, g_pMesh-&gt;m_nVertexCount / 3, g_nFPS);</p>
+<p></p>
+<p class="src2">if(g_fVBOSupported)<span class="kom">// Používá/nepoužívá VBO</span></p>
+<p class="src2">{</p>
+<p class="src3">strcat(szTitle, &quot;, Using VBOs&quot;);</p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3">strcat(szTitle, &quot;, Not Using VBOs&quot;);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">SetWindowText(g_window-&gt;hWnd, szTitle);<span class="kom">// Nastaví titulek</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">g_nFrames++;<span class="kom">// Inkrementace čítače FPS</span></p>
+
+<p>Přesuneme kameru nad terén a natočíme scénu okolo osy y. Proměnnou g_flYRot inkrementujeme ve funkci Update().</p>
+
+<p class="src1">glTranslatef(0.0f, -220.0f, 0.0f);<span class="kom">// Přesun nad terén</span></p>
+<p class="src1">glRotatef(10.0f, 1.0f, 0.0f, 0.0f);<span class="kom">// Naklonění kamery</span></p>
+<p class="src1">glRotatef(g_flYRot, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace kamery</span></p>
+
+<p>Abychom mohli pracovat s vertex arrays (a také VBO), musíme zapnout GL_VERTEX_ARRAY a GL_TEXTURE_COORD_ARRAY. Protože máme pouze jednu výškovou mapu, nemuseli bychom to dělat po každé, ale bývá to dobrým zvykem.</p>
+
+<p class="src1">glEnableClientState(GL_VERTEX_ARRAY);<span class="kom">// Zapne vertex arrays</span></p>
+<p class="src1">glEnableClientState(GL_TEXTURE_COORD_ARRAY);<span class="kom">// Zapne texture coord arrays</span></p>
+
+<p>Dále musíme specifikovat pole, ve kterých má OpenGL hledat data. Začnu nejprve vertex arrays (část else), protože jsou jednodušší. Vše, co potřebujeme udělat, je zavolání funkce glVertexPointer(), které se předává počet prvků na jeden vertex (2, 3 nebo 4), typ dat, prokládání (v případě, že nejsou vertexy v samostatné struktuře) a ukazatel na pole. To samé platí i pro texturové koordináty, ale mají svoji vlastní funkci. Také bychom mohli uložit všechna data do jednoho velkého paměťového bufferu a použít glInterleavedArrays(), ale necháme je oddělené, abyste viděli, jak použít více VBO najednou.</p>
+
+<p>Jediný rozdíl mezi vertex arrays a VBO je na tomto místě pouze v tom, že u VBO zavoláme glBindBufferARB() a do gl*Pointer() předáme místo ukazatele hodnotu NULL.</p>
+
+<p class="src1">if(g_fVBOSupported)<span class="kom">// Podporuje grafická karta VBO?</span></p>
+<p class="src1">{</p>
+<p class="src2">glBindBufferARB(GL_ARRAY_BUFFER_ARB, g_pMesh-&gt;m_nVBOVertices);</p>
+<p class="src2">glVertexPointer(3, GL_FLOAT, 0, (char *) NULL);<span class="kom">// Předat NULL</span></p>
+<p class="src2">glBindBufferARB(GL_ARRAY_BUFFER_ARB, g_pMesh-&gt;m_nVBOTexCoords);</p>
+<p class="src2">glTexCoordPointer(2, GL_FLOAT, 0, (char *) NULL);<span class="kom">// Předat NULL</span></p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Obyčejné vertex arrays</span></p>
+<p class="src1">{</p>
+<p class="src2">glVertexPointer(3, GL_FLOAT, 0, g_pMesh-&gt;m_pVertices);<span class="kom">// Ukazatel na data vertexů</span></p>
+<p class="src2">glTexCoordPointer(2, GL_FLOAT, 0, g_pMesh-&gt;m_pTexCoords);<span class="kom">// Ukazatel na texturové koordináty</span></p>
+<p class="src1">}</p>
+
+<p>Samotný rendering je ještě snazší. Pomocí glDrawArrays() řekneme OpenGL, aby vykreslil trojúhelníky ve formátu GL_TRIANGLES. Jako počáteční index v poli předáme nulu, celkový počet vertexů by měl být jasný. Funkce pomocí client state sama detekuje, co všechno má při renderingu použít (textury, světlo...). Existuje mnohem více způsobů, jak poslat data OpenGL. Jako příklad uvedu glArrayElement(), ale naše verze je ze všech nejrychlejší. Všimněte si také, že nespecifikujeme žádné glBegin() a glEnd(). Zde nejsou nutné.</p>
+
+<p>Funkce glDrawArrays() je také důvodem, proč jsem zvolil nesdílet jeden vertex mezi několika trojúhelníky - není to možné. co vím, nejlepší cestou, jak optimalizovat paměťové nároky, je použít triangle strip. V případě světel byste měli zajistit, aby měl k sobě každý vertex odpovídající normálový vektor. Je to sice nutnost, bez které by tato funkce nefungovala, na druhou stranu se však obrovsky zlepší vzhled renderovaného objektu.</p>
+
+<p class="src1">glDrawArrays(GL_TRIANGLES, 0, g_pMesh-&gt;m_nVertexCount);<span class="kom">// Vykreslení vertexů</span></p>
+
+<p>Zbývá vypnout client state a máme hotovo.</p>
+
+<p class="src1">glDisableClientState(GL_VERTEX_ARRAY);<span class="kom">// Vypne vertex arrays</span></p>
+<p class="src1">glDisableClientState(GL_TEXTURE_COORD_ARRAY);<span class="kom">// Vypne texture coord arrays</span></p>
+<p class="src0">}</p>
+
+<p>Pokud byste chtěli získat více informací o vertex buffer object, doporučuji prostudovat si dokumentaci ve SGI registru rozšíření (SGI's extensions registry) na <a href="http://oss.sgi.com/projects/ogl-sample/registry/" target="_blank">http://oss.sgi.com/projects/ogl-sample/registry/</a>. Je to sice trochu těžší čtení než tento tutoriál, ale budete znát mnohem více možností implementace a detailů.</p>
+
+<p class="autor">napsal: Paul Frazee <span class="transform_email">&lt;paulfrazee (zavináč) cox.net&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson45.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson45_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson45.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson45.zip">Dev C++</a> kód této lekce. ( <a href="mailto:gery.buchgraber@gmx.de">Gerald Buchgraber</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson45.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_45_big.jpg" class="nehe_velky" alt="Lekce 45" /></div>
+<p class="okolni_lekce"><a href="tut_44.php">&lt;&lt;&lt; Lekce 44</a> | <a href="tut_46.php">Lekce 46 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Andy</div>
+<div class="d_o_datumcas">23.03.2005 - 21:49:41</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_45.php&j=0">Pouziti drawarrays()</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mantharis</div>
+<div class="d_o_datumcas">25.06.2005 - 17:00:25</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_45.php&j=1">Otazka</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Andy</div>
+<div class="d_o_datumcas">25.06.2005 - 19:06:56</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_45.php&j=2">Re: Otazka</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Michal</div>
+<div class="d_o_datumcas">15.03.2007 - 11:37:15</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_45.php&j=3">Kombinace textur</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_45.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klady_programov=E1n=ED_pro_Windows_v_C+?=
+	=?windows-1250?Q?+_=2820.=29_-_Pr=E1ce_se_soubory_=281.=29?=
+Date: Thu, 12 Jul 2007 10:10:25 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2294
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klady programov=E1n=ED pro =
+Windows v C++ (20.) - Pr=E1ce se soubory (1.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klady programov=E1n=ED pro Windows v C++ (20.) - Pr=E1ce se =
+soubory (1.)</H2>
+<H4>Jak vyu=9E=EDt funkce Win32API k rychl=E9 pr=E1ci se soubory.</H4>
+<HR color=3D#777777 SIZE=3D1>
+Pro pr=E1ci se soubory m=F9=9Eeme samoz=F8ejm=EC vyu=9E=EDt =
+standardizovan=FDch funkc=ED knihoven=20
+C/C++, av=9Aak v p=F8=EDpad=EC programov=E1n=ED pro Windows jsou jak =
+funkce implementuj=EDc=ED=20
+soubory jako proudy dat (fopen, fgetc,...) knihovny stdio.h, tak funkce =
+pro=20
+pr=E1ci se soubory na z=E1klad=EC handle (open, write, ...) knihovny =
+io.h stejn=EC pouze=20
+bloky k=F3du odvol=E1v=E1j=EDc=EDmi se na Win32 API. Takto je sice =
+dosa=9Eeno vysok=E9=20
+p=F8enositelnosti, ale v z=E1vislosti s t=EDm pou=9Eit=EDm t=ECchto =
+funkc=ED z=EDsk=E1me ur=E8it=E9=20
+zpo=9Ed=ECn=ED a celkov=E9 zpomalen=ED pr=E1ce. P=F8enositelnost =
+zdrojov=FDch k=F3d=F9 mezi r=F9zn=FDmi=20
+syst=E9my je sice v=ECc p=ECkn=E1, ale v komer=E8n=ED praxi pro =
+u=9Eivatelnost a intuitivitu=20
+v=FDsledn=FDch program=F9 naprosto nepou=9Eiteln=E1.
+<P>Win32API funkce podporuj=ED souborov=E9 syst=E9my FAT, HPFS a NTFS =
+bez nutnosti=20
+upravovat k=F3d pro ur=E8it=FD typ. Pokud jsou zde rozd=EDly, budou =
+pops=E1ny n=ED=9Ee u ka=9Ed=E9=20
+funkce.<BR>N=E1zvy souboru pro v=9Aechny v=FD=9Ae uveden=E9 syst=E9my se =
+=F8=EDd=ED n=E1sleduj=EDc=EDmi=20
+pravidly:<BR></P>
+<UL>
+  <LI>Je mo=9En=E9 pou=9E=EDt v=9Aechny znaky mimo separ=E1tor=F9 =
+komponent a znak=F9 v rozsahu=20
+  0 a=9E 31 v=E8etn=EC. D=E1le nen=ED mo=9En=E9 pou=9E=EDt n=ED=9Ee =
+uveden=E9 znaky pro dan=FD syst=E9m.=20
+  <LI>Jako separ=E1tor komponent je mo=9En=E9 pou=9E=EDt znaky =
+zp=ECtn=E9 lom=EDtko (\) a b=EC=9En=E9=20
+  lom=EDtko (/). =8E=E1dn=FD dal=9A=ED znak nen=ED p=F8=EDpustn=FD.=20
+  <LI>Pou=9Eit=ED te=E8ky (.) jako adres=E1=F8ov=E9 komponenty =
+reprezentuje aktu=E1ln=ED=20
+  adres=E1=F8.=20
+  <LI>Pou=9Eit=ED dvou te=E8ek (..) jako adres=E1=F8ov=E9 komponenty =
+reprezentuje rodi=E8ovsk=FD=20
+  adres=E1=F8 adres=E1=F8e aktu=E1ln=EDho.=20
+  <LI>Znaky &lt;, &gt;, :, ", /, \ a | jsou vyhrazeny pro opera=E8n=ED =
+syst=E9m a=20
+  nemohou b=FDt pou=9Eity jako n=E1zev komponenty.=20
+  <LI>Rezerovan=E1 slova (aux, con, prn) nemohou b=FDt pou=9Eita jako =
+n=E1zev adres=E1=F8ov=E9=20
+  nebo souborov=E9 komponenty.=20
+  <LI>=D8et=ECzec obsahuj=EDc=ED cestu je form=E1tu ASCIIZ (ukon=E8en =
+znakem p ascii hodnot=EC=20
+  0) a maxim=E1ln=ED d=E9lka je d=E1na definic=ED MAX_PATH. =
+Maxim=E1ln=ED d=E9lku je mo=9En=E9=20
+  p=F8ekro=E8it v p=F8=EDpad=EC pou=9Eit=ED Unicode a UNC form=E1tu)=20
+  <LI>N=E1zvy komponent mohou obsahovat velk=E1 i mal=E1 p=EDsmena, ale =
+adres=E1=F8 nem=F9=9Ee=20
+  obsahovat adres=E1=F8e =E8i soubory se stejn=FDmi nebo velikost=ED =
+p=EDsmen odli=9An=FDmi=20
+  n=E1zvy. </LI></UL>Windows API, stejn=EC jako pro t=E9m=EC=F8 v=9Ae, =
+pou=9E=EDv=E1 pro pr=E1ci se=20
+soubory handly. Jeden handle si pro zjednodu=9Aen=ED m=F9=9Eeme =
+p=F8edstavit jako =E8=EDslo,=20
+pod kter=FDm si Windows uvnit=F8 nahledaj=ED pot=F8ebn=E9 informace. V =
+p=F8=EDpad=EC selh=E1n=ED=20
+libovoln=E9 funkce je mo=9En=E9 volat GetLastError a z=EDskat tak =
+p=F8esn=FD popis nastal=E9=20
+chyby.<BR><BR>Prvn=ED funkc=ED, kterou je nutno pou=9E=EDt, je funkce =
+CreateFile.=20
+P=F8esto=9Ee Windows u=9E od sv=FDch prvn=EDch verz=ED obsahuj=ED i =
+funkci OpenFile nen=ED=20
+vhodn=E9 ji pou=9E=EDt proto=9Ee m=E1 mnoho omezen=ED. Funkce CreateFile =
+m=E1 n=E1sleduj=EDc=ED=20
+prototyp. <BR><FONT color=3D#000077><PRE>HANDLE CreateFile(
+  LPCTSTR  lpFileName,	     // nn=E1zev souboru
+  DWORD  dwDesiredAccess,    // po=9Eadovan=FD p=F8=EDstup k souboru
+  DWORD  dwShareMode,        // re=9Eim sd=EDlen=ED
+  // bezpe=E8nostn=ED deskriptor souboru
+  LPSECURITY_ATTRIBUTES  lpSecurityAttributes,
+  DWORD  dwCreationDistribution,   // vlajky pro tvorbu souboru
+  DWORD  dwFlagsAndAttributes,	   // atributy souboru
+  // handle na soubor, jeho=9E atributy pou=9E=EDt=20
+  HANDLE  hTemplateFile
+);
+</PRE></FONT><BR>Parametrem dwDesiredAccess specifikujeme po=9Eadovan=FD =
+p=F8=EDstup k=20
+souboru. P=F8edat funkci m=F9=9Eeme p=F8eddefinovanou hodnotu =
+GENERIC_READ, pokud budeme=20
+cht=EDt ze souboru =E8=EDst, nebo GENERIC_WRITE, pokud budeme cht=EDt do =
+souboru=20
+zapisovat. Pro sou=E8asn=E9 =E8ten=ED i z=E1pis pou=9Eijeme ob=EC =
+hodnoty, neuvedeme-li ani=20
+jednu z t=ECchto hodnot, nez=EDsk=E1me =9E=E1dn=FD p=F8=EDstup.
+<P>Parametr dwShareMode m=F9=9Eeme specifikovat, pokud chceme, aby k =
+souboru m=ECly=20
+p=F8=EDstup i ostatn=ED aplikace. Aby jej bylo mo=9En=E9 =E8=EDst, =
+specifikujeme=20
+FILE_SHARE_READ, pro z=E1pis FILE_SHARE_WRITE. Neuvedeme-li =9E=E1dnou z =
+t=ECchto=20
+hodnot, zamez=EDme jak=E9mukoliv p=F8=EDstupu k souboru do doby =
+vol=E1n=ED CloseHandle.</P>
+<P>Pokud opera=E8n=ED syst=E9m podporuje zabezpe=E8en=ED soubor=F9, =
+m=F9=9Eeme parametrem=20
+lpSecurityAttributes p=F8edat ukazatel na vlastn=ED strukturu =
+SECURITY_ATTRIBUTES.=20
+Uveden=EDm NULL z=EDsk=E1 soubor implicitn=ED vlastnosti.</P>
+<P>Nejv=ECt=9A=ED pozornost bychom m=ECli v=ECnovat parametru =
+dwCreationDistribution.=20
+T=EDmto definujeme z=E1kladn=ED chov=E1n=ED funkce. Tento parametr =
+mus=ED b=FDt jedna z=20
+n=E1sleduj=EDc=EDch hodnot: </P>
+<UL>
+  <LI>CREATE_NEW - Vytvo=F8=ED nov=FD soubor. V p=F8=EDpad=EC, =9Ee =
+soubor ji=9E existuje,=20
+  funkce vr=E1t=ED INVALID_HANDLE_VALUE.=20
+  <LI>CREATE_ALWAYS - Vytvo=F8=ED nov=FD soubor. V p=F8=EDpad=EC, =9Ee =
+soubor ji=9E existuje,=20
+  p=F8ep=ED=9Ae jej.=20
+  <LI>OPEN_EXISTING - Otev=F8e soubor. V p=F8=EDpad=EC =9Ee neexistuje, =
+vr=E1t=ED=20
+  INVALID_HANDLE_VALUE.=20
+  <LI>OPEN_ALWAYS - Otev=F8e soubor. Pokud neexistuje, chov=E1 se jako =
+kdyby bylo=20
+  specifikov=E1no CREATE_NEW.=20
+  <LI>TRUNCATE_EXISTING - Otev=F8e soubor a zm=ECn=ED jeho d=E9lku na 0. =
+V p=F8=EDpad=EC, =9Ee=20
+  soubor neexistuje, vr=E1t=ED INVALID_HANDLE_VALUE. =
+</LI></UL>Dal=9A=EDm parametrem je=20
+dwFlagsAndAttributes a definuje atributy souboru. Zde definujeme, jak=E9 =
+atributy=20
+z=EDsk=E1 nov=EC vytvo=F8en=FD soubor nebo otev=F8en=FD soubor po =
+uzav=F8en=ED. Definovat m=F9=9Eeme=20
+libovolnou kombinaci n=E1sleduj=EDc=EDch hodnot:=20
+<UL>
+  <LI>FILE_ATTRIBUTE_ARCHIVE - soubor je archivn=ED=20
+  <LI>FILE_ATTRIBUTE_COMPRESSED - data uvnit=F8 souboru jsou =
+komprimovan=E1=20
+  <LI>FILE_ATTRIBUTE_NORMAL - =9E=E1dn=E9 atributy nejsou nastaveny =
+(hodnota je platn=E1=20
+  pouze pokud je pou=9Eita sama)=20
+  <LI>FILE_ATTRIBUTE_HIDDEN - soubor je skryt=FD=20
+  <LI>FILE_ATTRIBUTE_READONLY - soubor je pouze pro =E8ten=ED=20
+  <LI>FILE_ATTRIBUTE_SYSTEM - soubor je syst=E9mov=FD </LI></UL>Zde je =
+mo=9En=E9 uv=E9st i=20
+dal=9A=ED parametry, pomoc=ED nich=9E specifikujeme chov=E1n=ED =
+syst=E9mu p=F8i pr=E1ci se=20
+souborem:=20
+<UL>
+  <LI>FILE_FLAG_WRITE_THROUGH - Je doporu=E8en=EDm opera=E8n=EDmu =
+syst=E9mu, aby pou=9E=EDval=20
+  cache pro z=E1pis jen minim=E1ln=EC a data zapisoval na disk co =
+nejd=F8=EDve.=20
+  <LI>FILE_FLAG_OVERLAPPED - povol=ED pou=9Eit=ED handle na soubor =
+sou=E8asn=EC i=20
+  v=EDcekr=E1t. Funkce pro z=E1pis a =E8ten=ED souboru mus=ED =
+pou=9E=EDvat strukturu OVERLAPPED.=20
+
+  <LI>FILE_FLAG_NO_BUFFERING - cache pro =E8ten=ED i z=E1pis soubor =
+nen=ED pou=9Eita. Z=20
+  t=ECchto d=F9vod=F9 mus=ED b=FDt =E8teno nebo zapisov=E1no v=9Edy =
+n=E1sobek velikosti sektor=20
+  dat.=20
+  <LI>FILE_FLAG_RANDOM_ACCESS - je doporu=E8en=ED syst=E9mu, aby =
+pou=9Eil jin=FD syst=E9m=20
+  cachov=E1n=ED souboru a to pro n=E1hodn=FD p=F8=EDstup.=20
+  <LI>FILE_FLAG_SEQUENTIAL_SCAN - je doporu=E8en=ED syst=E9mu, aby =
+pou=9Eil jin=FD syst=E9m=20
+  cachov=E1n=ED souboru a to pro =E8ten=ED nebo z=E1pis od za=E8=E1tku =
+ke konci.=20
+  <LI>FILE_FLAG_DELETE_ON_CLOSE - soubor bude smaz=E1n hned v okam=9Eiku =
+pou=9Eit=ED=20
+  CloseHandle.=20
+  <LI>FILE_FLAG_BACKUP_SEMANTICS - Pouze Windows NT - indikuje =
+syst=E9mu, =9Ee se=20
+  souborem jsou prov=E1d=ECny z=E1lohovac=ED operace. Syst=E9m se mus=ED =
+ujistit, =9Ee=20
+  volaj=EDc=ED proces m=E1 povolen=ED SE_BACKUP_NAME nebo =
+SE_RESTORE_NAME.=20
+  <LI>FILE_FLAG_POSIX_SEMANTICS - specifikuje, =9Ee soubor je =
+pou=9E=EDv=E1n v r=E1mci=20
+  pravidel POSIX. Takto vytvo=F8en=FD soubor nemus=ED b=FDt =
+p=F8=EDstupn=FD ze syst=E9m=F9 MS-DOS,=20
+  Windows 3,11 nebo Windows NT </LI></UL>P=F8ed=E1n=EDm souboru =
+parametrem hTemplateFile=20
+jsou nov=EC vytv=E1=F8en=E9mu soboru p=F8ed=E1ny jeho roz=9A=ED=F8en=E9 =
+atributy.<BR><BR>Funkce=20
+CreateFile se pro syst=E9my Windows zdaleka neomezuje jen na pr=E1ci s =
+diskov=FDmi=20
+soubory. Specifikov=E1n=EDm n=E1zvu souboru CONIN$ nebo CONOUT$ =
+m=F9=9Eeme m=EDsto souboru=20
+pou=9E=EDt vstup =E8i v=FDstup z konzole. Pod syst=E9my NT, 2k a XP je =
+mo=9En=E9 pou=9Eit=EDm=20
+n=E1zvu soubor \\.\PHYSICALDRIVE0 z=EDskat p=F8=EDstup k prvn=ED =
+fyzick=E9 diskov=E9 jednotce=20
+v po=E8=EDta=E8i a analogicky i k dal=9A=EDm.<BR><BR>Pro uzav=F8en=ED =
+soubor=F9 otev=F8en=FDch=20
+pomoc=ED CreateFile a uvoln=ECn=ED pam=ECti pro dan=FD handle na soubor =
+je nutn=E9 pou=9E=EDt=20
+funkci CloseHandle, kter=E1 m=E1 jedin=FD parametr a to handle =
+vr=E1cen=E9 funkc=ED=20
+CreateFile.<BR><BR>Jak ze souboru na=E8=EDst pomoc=ED Win32API nebo do =
+n=ECj zapsat si=20
+pov=EDme v p=F8=ED=9At=EDm d=EDle.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:10:13 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

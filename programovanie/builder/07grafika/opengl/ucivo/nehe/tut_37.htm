@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 37 - Cel-Shading</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_37.jpg" class="nehe_maly" alt="Lekce 37" />
+
+<h1>Lekce 37 - Cel-Shading</h1>
+
+<p class="nadpis_clanku">Cel-Shading je druh vykreslování, při kterém výsledné modely vypadají jako ručně kreslené karikatury z komiksů (cartoons). Rozličné efekty mohou být dosaženy miniaturní modifikací zdrojového kódu. Cel-Shading je velmi úspěšným druhem renderingu, který dokáže kompletně změnit duch hry. Ne ale vždy... musí se umět a použít s rozmyslem.</p>
+
+<p>Článek o teorii Cel-Shadingu napsal Sami &quot;MENTAL&quot; Hamlaoui a umístil ho na <a href="http://www.gamedev.net/reference/programming/features/celshading" target="_blank" title="http://www.gamedev.net/reference/programming/features/celshading">GameDev.net</a>. Poté, co byl jeho článek publikován, zavalili čtenáři Samiho emaily, ve kterých se dotazovali po zdrojovém kódu. Napsal tedy další článek, tentokrát pro NeHe, který už ale popisuje pouze zdrojový kód. Tato česká verze je složena z obou článků - teoretického i praktického.</p>
+
+<h2>Teoretická část</h2>
+
+<p>Předtím než půjdete dál, měli byste mít dostatečné znalosti z následujících oblastí:</p>
+
+<ul>
+<li>Mapování 1D textur</li>
+<li>Texturovací koordináty</li>
+<li>Softwarové osvětlení</li>
+<li>Vektorová matematika</li>
+</ul>
+
+<p>Pokud něčemu z těchto čtyř položek nerozumíte, neznamená to, že byste nutně neporozuměli Cel-Shadingu, ale určitě budete mít obrovské potíže s psaním vlastních programů.</p>
+
+<h3>Základní rendering</h3>
+
+<p>Začneme opravdu jednoduchými věcmi. Žádná světla, žádné obrysy, pouze ploché cartoon modely. Budeme potřebovat jenom dva druhy dat - pozici a barvu každého vertexu. Před kreslením vždy vypneme osvětlení a blending. Co by se stalo? Při zapnutých světlech by objekty vypadaly normálně. Nedosáhli bychom plochého cartoon efektu. Blending vypínáme, aby se jednotlivé vertexy nesmíchaly s ostatními.</p>
+
+<h4>Shrnuto</h4>
+
+<ul>
+<li>Vypnout světla</li>
+<li>Vypnout blending</li>
+<li>Vykreslit obarvené body</li>
+</ul>
+
+<h3>Základní osvětlení (směrové)</h3>
+
+<p>Každý vertex bude potřebovat i další data. Kromě původní pozice a barvy budeme používat i normálový vektor a intenzitu osvětlení (jedna float hodnota). Tyto nové proměnné použijeme pro renderování se základním osvětlením.</p>
+
+<h4>Světelné mapy (lighting maps)</h4>
+
+<p>Nechci vás poplést, pod lightmapami si nepředstavujte simulaci světel na objektech typu Quake 1 a Quake 2. Podívejte se na stěny, abyste pochopili, co mám na mysli. Nepředstavujte si oblasti, které jsou osvětleny/ztmaveny specifickými místy map. To, co budeme používat zde, je kompletně novou formou lightmap - 1D textury.</p>
+
+<p>Zkuste si najít nějakou animaci (Cartoon Network je vždy dobrým zdrojem) a podívejte se na osvětlení postav. Všimli jste si, že nejsou hladké jako v reálném životě? Světlo se rozděluje do jednotlivých plošek. Nikdy jsem neslyšel žádný termín nebo pojmenování pro tento efekt, takže mu budeme říkat Sharp lighting. Abychom ho vytvořili potřebujeme definovat 1D texturu, která bude ukládat požadované hodnoty.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_37_texmap.gif" width="257" height="18" alt="1D textura" /></div>
+
+<p>Toto je textura 1x16 pixelů (velmi zvětšená). Používáme hodnoty stupňů šedi, protože budou zkombinovány s barvou vertexu. Můžete si všimnout, že v lightmapě jsou pouze 3 barvy, které mají podobnou intenzitu, jaká se používá v animovaných filmech. Díky tomu, že používáme velikost právě 16 pixelů, můžeme snadno modifikovat hodnoty, abychom vytvořili rozličné efekty. Pokud chcete, můžete také použít obyčejnou černobílou texturu, ale nedoporučuje se to. Nikdy byste neměli použít 100% černou, protože tato barva vytváří vyzdvižení a okraje, které vypadají dost špatně.</p>
+
+<p>Jakmile máte vytvořenu svou texturu, nahrajte ji do API, které používáte (OpenGL, DX, software). Vrátíme se k ní za chvíli.</p>
+
+<h4>Počítání osvětlení</h4>
+
+<p>Teď přijdou vhod znalosti ohledně softwarového osvětlení. Pokusím se vše vysvětlit jednoduchým jazykem. Vždy se ujistěte, že máte normalizovaný směrový vektor světla! Vše, co potřebujeme udělat, je spočítání skalárního součinu vektoru světla s normálou vertexu.</p>
+
+<p>Skalární součin je matematická funkce, která spočítá úhel mezi dvěma vektory a vrátí ho jako kosinus úhlu. Invertujeme-li kosinus získáme úhel. Namísto kosinu však považujte číslo za texturovací koordinátu. Texturovací koordináty jsou čísla od nuly do jedné. Kosinus je sice v rozmezí -1 až 1, ale pokud bude číslo záporné můžeme mu přiřadit nulu. Skalární součin vektoru světla a normály vertexu můžeme tedy považovat za texturovací koordináty!</p>
+
+<h4>Rendering objektu</h4>
+
+<p>Nyní máme texturovací koordináty každého vertexu, je čas vykreslit objekt. Stejně jako minule vypneme světla i blending, ale zapneme 1D texturování. Vykreslíme objekt stejně jako minule, ale před tím, než umístíme vertex, specifikujeme texturové koordináty (simulace světla).</p>
+
+<h4>Shrnuto</h4>
+
+<ul>
+<li>Vytvořit Sharp lighting mapu</li>
+<li>Spočítat a uložit skalární součin mezi normálou vertexu a směrovým vektorem světla</li>
+<li>Vypnout světla a blending</li>
+<li>Zapnout texturování</li>
+<li>Zvolit texturu lightmapy</li>
+<li>Vykreslit polygony určené texturovacími koordináty, barvou a pozicí vertexů</li>
+</ul>
+
+<h3>Umístitelná světla</h3>
+
+<p>Tato metoda je pouhou modifikací minulého postupu. Umístitelné světlo nabízí mnohem více flexibility než směrové osvětlení, protože může být libovolně posunováno po scéně. Dynamicky osvětlované polygony jsou více realistické, ale použitá matematika je delší. Ne komplikovanější, pouze delší.</p>
+
+<h4>Spočítání Sharp koordinátů světla</h4>
+
+<p>U směrového osvětlení jsme potřebovali získat skalární součin směrového vektoru světla s normálou vertexu. Nyní, protože umístitelná světla nemají směrový vektor (emitují světlo do všech směrů), bude mít každý vertex svůj paprsek, který září skrz něj. Nejdříve potřebujeme určit vektor směřující z pozice světelného zdroje k pozici vertexu. Normalizujeme ho, takže bude mít jednotkovou délku. tím jsme získali směr světla k vertexu. Vypočítáme skalární součin mezi vektorem světla a normálou vertexu. Vše opakujeme pro každý vertex ve scéně. Těmito nadbytečnými výpočty se však sníží FPS. Pojďme se podívat na rychlejší metodu, která redukuje celkový počet osvětlených vertexů.</p>
+
+<h4>Testování vzdálenosti od světla</h4>
+
+<p>Ke snížení počtu osvětlených vertexů přiřadíme každému světlu poloměr kam paprsky dosahují. Před počítáním hodnot osvětlení (viz. výše) zkontrolujeme, jestli je vertex v kouli, určené poloměrem světla. Pokud ano, aplikujeme na něj světla. Je to základní detekce kolizí s koulí, na kterou existují spousty článků a tutoriálů.</p>
+
+<h4>Rendering</h4>
+
+<p>Objekt vykreslíme stejně jako u směrového osvětlení. Specifikujeme barvu, texturovací koordináty a pozici.</p>
+
+<h4>Shrnuto</h4>
+
+<ul>
+<li>Vytvořit Sharp lighting mapu</li>
+<li>Při použití poloměru světla zjistit, jestli je bod uvnitř</li>
+<li>Získat a normalizovat vektor od světla k vertexu</li>
+<li>Vypočítat skalární součin vektoru s normálou vertexu</li>
+<li>Zopakovat 2-4x pro každý vertex (Překl.: ???)</li>
+<li>Renderovat jako minule</li>
+</ul>
+
+<h3>Obrysy a zvýraznění</h3>
+
+<p>Obrysy a zvýraznění jsou tenké černé linky reprezentující tahy tužkou, které zdůrazňují okraje. Můžou znepokojit, ale jejich vytvoření je mnohem jednodušší než si myslíte.</p>
+
+<h4>Výpočet kde zvýrazňovat</h4>
+
+<p>Pravidlo je jednoduché: vykreslit linku na okraji, který má jeden přivrácený a jeden odvrácený polygon. Zní to hloupě, ale zkuste se podívat například na klávesnici. Všimli jste si, že nemůžete vidět zadní části kláves? To proto, že jsou odvrácené. Na rozhraní vykreslíme čáru, abychom zvýraznili, že tam je okraj.</p>
+
+<p>Možná, že si to ani neuvědomujete, ale nikde jsem se nezmínil o našem vlastním cullingu polygonů. To proto, že vše za nás udělá API, ve kterém programujeme.</p>
+
+<h4>Rendering zvýraznění</h4>
+
+<p>Klasicky vykreslíme objekt a pak nastavíme šířku čáry na dva až tři pixely. Můžeme také zapnout antialiasing. Změníme mód cullingu, aby odstraňoval přivrácené polygony. Přepneme do drátěného modelu, takže se budou vykreslovat pouze okrajové hrany polygonů. Vykreslíme je, ale nepotřebujeme specifikovat barvu a texturovací koordináty. Tím vykreslíme drátěný model objektu z relativně širokých linek. Nicméně... cullingem jsou linky přivrácených polygonů odstraněny a depth bufferem se vyřadí všechny linky, které jsou hlouběji než přivrácené (tedy ty zadní). Zdálo by se, že tedy nevykreslíme nic. Ale díky šířce čáry zasahují linky okrajových polygonů až za okraje objektu. Právě ty se vykreslí. Z toho plyne, že tato metoda nebude pracovat při tloušťce čáry nastavené na jeden pixel.</p>
+
+<h4>Shrnuto</h4>
+
+<ul>
+<li>Vykreslit objekt jako normálně</li>
+<li>Přepnout orientaci faců</li>
+<li>Nastavit 100% černou barvu</li>
+<li>Změnit mód polygonů na drátěný model</li>
+<li>Vykreslit objekt znovu, ale specifikovat pouze pozice vertexů</li>
+<li>Obnovit originální nastavení</li>
+</ul>
+
+<p>To je z teorie asi všechno. Nyní se ji pokusíme převést do praxe.</p>
+
+<h2>Praktická část</h2>
+
+<p>Na začátku bych se chtěl omluvit za volbu použitého modelu, ale v poslední době si hodně hraji s Quake 2...</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">#include &lt;math.h&gt;<span class="kom">// Hlavičkový soubor pro matematickou knihovnu</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p></p>
+<p class="src0">#include &quot;NeHeGL.h&quot;<span class="kom">// Hlavičkový soubor pro NeHeGL</span></p>
+
+<p>Nadefinujeme pár struktur, které nám pomohou při ukládání dat. První z těchto struktur je tagMATRIX. Pokud se na ni podíváte, zjistíte, že ukládá matici jako jednorozměrné pole 16ti floatů místo toho, aby to bylo dvourozměrné pole 4x4. To je proto, že OpenGL pracuje taky s jednorozměrným polem. Pokud bychom použili 4x4, hodnoty by byly ve špatném pořadí.</p>
+
+<p class="src0">typedef struct tagMATRIX<span class="kom">// Ukládá OpenGL matici</span></p>
+<p class="src0">{</p>
+<p class="src1">float Data[16];<span class="kom">// Matice ve formátu OpenGL</span></p>
+<p class="src0">}</p>
+<p class="src0">MATRIX;</p>
+
+<p>Další strukturou je vektor, který ukládá jednotlivé x, y, z složky na osách.</p>
+
+<p class="src0">typedef struct tagVECTOR<span class="kom">// Struktura vektoru</span></p>
+<p class="src0">{</p>
+<p class="src1">float X, Y, Z;<span class="kom">// Složky vektoru</span></p>
+<p class="src0">}</p>
+<p class="src0">VECTOR;</p>
+
+<p>Třetí je vertexová struktura. Každý vertex se bude skládat z pozice a normály (žádné texturovací koordináty). Složky struktury musí být v uvedeném pořadí, jinak se při loadování stane něco OPRAVDU strašného (sám jsem kvůli tomu rozsekal celý tento kód, abych našel chybu).</p>
+
+<p class="src0">typedef struct tagVERTEX<span class="kom">// Struktura vertexu</span></p>
+<p class="src0">{</p>
+<p class="src1">VECTOR Nor;<span class="kom">// Normála vertexu</span></p>
+<p class="src1">VECTOR Pos;<span class="kom">// Pozice vertexu</span></p>
+<p class="src0">}</p>
+<p class="src0">VERTEX;</p>
+
+<p>Nakonec struktura polygonu. Vím, že toto není nejlepší způsob, jak ukládat vertexy, ale pro jednoduchost to stačí. Normálně bych použil pole vertexů a pole polygonů obsahujících indexy vertexů tvořících polygon, ale my to uděláme jinak - vše pro jednoduchost.</p>
+
+<p class="src0">typedef struct tagPOLYGON<span class="kom">// Struktura polygonu</span></p>
+<p class="src0">{</p>
+<p class="src1">VERTEX Verts[3];<span class="kom">// Pole tří vertexů</span></p>
+<p class="src0">}</p>
+<p class="src0">POLYGON;</p>
+
+<p>Nádherně jednoduchá část kódu. Přečtěte si komentář ke každé proměnné a budete vědět, proč jsme ji deklarovali.</p>
+
+<p class="src0">bool outlineDraw = true;<span class="kom">// Flag pro vykreslování obrysu</span></p>
+<p class="src0">bool outlineSmooth = false;<span class="kom">// Flag pro vyhlazování čar</span></p>
+<p class="src0">float outlineColor[3] = { 0.0f, 0.0f, 0.0f };<span class="kom">// Barva čar</span></p>
+<p class="src0">float outlineWidth = 3.0f;<span class="kom">// Tloušťka čar</span></p>
+<p></p>
+<p class="src0">VECTOR lightAngle;<span class="kom">// Směr světla</span></p>
+<p class="src0">bool lightRotate = false;<span class="kom">// Flag oznamující zda rotujeme světlem</span></p>
+<p></p>
+<p class="src0">float modelAngle = 0.0f;<span class="kom">// Úhel natočení objektu na ose y</span></p>
+<p class="src0">bool modelRotate = false;<span class="kom">// Flag na otáčení modelem</span></p>
+<p></p>
+<p class="src0">POLYGON* polyData = NULL;<span class="kom">// Data polygonů</span></p>
+<p class="src0">int polyNum = 0;<span class="kom">// Počet polygonů</span></p>
+<p></p>
+<p class="src0">GLuint shaderTexture[1];<span class="kom">// Místo pro jednu texturu</span></p>
+
+<p>Model je uložen úplně nejjednodušším způsobem. Prvních pár bajtů obsahuje počet polygonů tvořících objekt a zbytek souboru je pole tagPOLYGON struktur. Proto může následující funkce data přímo načíst bez jakéhokoliv dalšího upravování.</p>
+
+<p class="src0">BOOL ReadMesh()<span class="kom">// Načte obsah souboru model.txt</span></p>
+<p class="src0">{</p>
+<p class="src1">FILE *In = fopen(&quot;Data\\model.txt&quot;, &quot;rb&quot;);<span class="kom">// Otevře soubor</span></p>
+<p></p>
+<p class="src1">if (!In)<span class="kom">// Kontrola chyby otevření</span></p>
+<p class="src2">return FALSE;</p>
+<p></p>
+<p class="src1">fread(&amp;polyNum, sizeof(int), 1, In);<span class="kom">// Načte hlavičku souboru (počet vertexů)</span></p>
+<p></p>
+<p class="src1">polyData = new POLYGON[polyNum];<span class="kom">// Alokace paměti</span></p>
+<p class="src1">fread(&amp;polyData[0], sizeof(POLYGON) * polyNum, 1, In);<span class="kom">// Načte všechna data</span></p>
+<p></p>
+<p class="src1">fclose(In);<span class="kom">// Zavře soubor</span></p>
+<p class="src1">return TRUE;<span class="kom">// Loading objektu úspěšný</span></p>
+<p class="src0">}</p>
+
+<p>Funkce DotProduct() spočítá úhel mezi dvěma vektory nebo rovinami. Funkce Magnitude() spočítá délku vektoru a funkce Normalize() upraví vektor na jednotkovou délku.</p>
+
+<p class="src0">inline float DotProduct(VECTOR &amp;V1, VECTOR &amp;V2)<span class="kom">// Spočítá odchylku dvou vektorů</span></p>
+<p class="src0">{</p>
+<p class="src1">return V1.X * V2.X + V1.Y * V2.Y + V1.Z * V2.Z;<span class="kom">// Vrátí úhel</span></p>
+<p class="src0">}</p>
+<p></p>
+
+<p class="src0">inline float Magnitude(VECTOR &amp;V)<span class="kom">// Spočítá délku vektoru</span></p>
+<p class="src0">{</p>
+<p class="src1">return sqrtf(V.X * V.X + V.Y * V.Y + V.Z * V.Z);<span class="kom">// Vrátí délku vektoru</span></p>
+<p class="src0">}</p>
+<p></p>
+
+<p class="src0">void Normalize(VECTOR &amp;V)<span class="kom">// Vytvoří jednotkový vektor</span></p>
+<p class="src0">{</p>
+<p class="src1">float M = Magnitude(V);<span class="kom">// Spočítá aktuální délku vektoru</span></p>
+<p></p>
+<p class="src1">if (M != 0.0f)<span class="kom">// Proti dělení nulou</span></p>
+<p class="src1">{</p>
+<p class="src2">V.X /= M;<span class="kom">// Normalizování jednotlivých složek</span></p>
+<p class="src2">V.Y /= M;</p>
+<p class="src2">V.Z /= M;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Funkce RotateVector() pootočí vektor podle zadané matice. Všimněte si, že vektor pouze otočí, ale už nic nedělá s jeho pozicí. Funkce se používá pro otáčení normál, aby zajistila, že normály budou při počítání osvětlení ukazovat správným směrem.</p>
+
+<p class="src0">void RotateVector(MATRIX &amp;M, VECTOR &amp;V, VECTOR &amp;D)<span class="kom">// Rotace vektoru podle zadané matice</span></p>
+<p class="src0">{</p>
+<p class="src1">D.X = (M.Data[0] * V.X) + (M.Data[4] * V.Y) + (M.Data[8]  * V.Z);<span class="kom">// Otočení na x</span></p>
+<p class="src1">D.Y = (M.Data[1] * V.X) + (M.Data[5] * V.Y) + (M.Data[9]  * V.Z);<span class="kom">// Otočení na y</span></p>
+<p class="src1">D.Z = (M.Data[2] * V.X) + (M.Data[6] * V.Y) + (M.Data[10] * V.Z);<span class="kom">// Otočení na z</span></p>
+<p class="src0">}</p>
+
+<p>První významnější funkcí tohoto enginu je Initialize(), která provádí to, co je z jejího názvu zjevné - inicializaci.</p>
+
+<p class="src0">BOOL Initialize (GL_Window* window, Keys* keys)<span class="kom">// Uživatelská a OpenGL inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">int i;<span class="kom">// Řídící proměnná cyklů</span></p>
+
+<p>Následující 3 proměnné jsou použity pro načtení shader souboru. Line obsahuje jeden řádek řetězce a pole shaderData ukládá hodnoty pro shading. Používáme 96 hodnot namísto 32, protože potřebujeme převést stupně šedi na hodnoty RGB, aby s nimi mohlo OpenGL pracovat. Můžeme sice hodnoty uložit jako stupně šedi, ale bude jednodušší když při nahrávání textury použijeme stejné hodnoty pro jednotlivé složky RGB.</p>
+
+<p class="src1">char Line[255];<span class="kom">// Pole 255 znaků</span></p>
+<p class="src1">float shaderData[32][3];<span class="kom">// Pole 96 shader hodnot</span></p>
+<p></p>
+<p class="src1">FILE *In = NULL;<span class="kom">// Ukazatel na soubor</span></p>
+
+<p>Klasické nastavení enginu a OpenGL...</p>
+
+<p class="src1">g_window = window;</p>
+<p class="src1">g_keys = keys;</p>
+<p></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Perspektivní korekce</span></p>
+<p></p>
+<p class="src1">glClearColor(0.7f, 0.7f, 0.7f, 0.0f);<span class="kom">// Světle šedé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LESS);<span class="kom">// Typ testování hloubky</span></p>
+
+<p>Při vykreslování čar chceme, aby byly pěkně vyhlazené. Implicitně je tato funkce vypnuta, ale stiskem klávesy 2 ji můžeme zapínat a vypínat podle libosti.</p>
+
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glDisable(GL_LINE_SMOOTH);<span class="kom">// Vypne vyhlazování čar</span></p>
+
+<p>Zapneme ořezávání vnitřních stěn objektu, které stejně nejsou vidět a vypneme OpenGL světla, protože potřebné výpočty provedeme po svém.</p>
+
+<p class="src1">glEnable(GL_CULL_FACE);<span class="kom">// Zapne face culling (ořezávání stěn)</span></p>
+<p class="src1">glDisable(GL_LIGHTING);<span class="kom">// Vypne světla</span></p>
+
+<p>V další části kódu načteme shader soubor. Obsahuje pouze 32 desetinných čísel uložených, pro jednoduchou modifikaci, v ASCII formátu, každé na samostatném řádku.</p>
+
+<p class="src1">In = fopen(&quot;Data\\shader.txt&quot;, &quot;r&quot;);<span class="kom">// Otevření shader souboru</span></p>
+<p></p>
+<p class="src1">if (In)<span class="kom">// Kontrola, zda je soubor otevřen</span></p>
+<p class="src1">{</p>
+<p class="src2">for (i = 0; i &lt; 32; i++)<span class="kom">// Projde všech 32 hodnot ve stupních šedi</span></p>
+<p class="src2">{</p>
+<p class="src3">if (feof(In))<span class="kom">// Kontrola konce souboru</span></p>
+<p class="src4">break;</p>
+<p></p>
+<p class="src3">fgets(Line, 255, In);<span class="kom">// Získání aktuálního řádku</span></p>
+
+<p>Přeměníme načtené stupně šedi na RGB, jak jsme si popsali výše.</p>
+
+<p class="src3"><span class="kom">// Zkopíruje danou hodnotu do všech složek barvy</span></p>
+<p class="src3">shaderData[i][0] = shaderData[i][1] = shaderData[i][2] = float(atof(Line));</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">fclose(In);<span class="kom">// Zavře soubor</span></p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Neúspěch</span></p>
+<p class="src1">}</p>
+
+<p>Nahrajeme texturu přesně tak, jak je. Bez použití filtrování, jinak by výsledek vypadal opravdu hnusně, přinejmenším. Použijeme GL_TEXTURE_1D, protože jde o jednorozměrné pole hodnot.</p>
+
+<p class="src1">glGenTextures(1, &amp;shaderTexture[0]);<span class="kom">// Získání ID textury</span></p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_1D, shaderTexture[0]);<span class="kom">// Přiřazení textury; od teď je 1D texturou</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Nikdy nepoužívejte bi-/trilinearní filtrování!</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);</p>
+<p class="src1">glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</p>
+<p></p>
+<p class="src1">glTexImage1D(GL_TEXTURE_1D, 0, GL_RGB, 32, 0, GL_RGB , GL_FLOAT, shaderData);<span class="kom">// Upload dat</span></p>
+
+<p>Nastavíme směr dopadání světla na objekt ze směru kladné části osy z. Ve svém důsledku to znamená, že světlo bude zepředu svítit na model.</p>
+
+<p class="src1">lightAngle.X = 0.0f;<span class="kom">// Nastavení směru x</span></p>
+<p class="src1">lightAngle.Y = 0.0f;<span class="kom">// Nastavení směru y</span></p>
+<p class="src1">lightAngle.Z = 1.0f;<span class="kom">// Nastavení směru z</span></p>
+<p></p>
+<p class="src1">Normalize(lightAngle);<span class="kom">// Normalizování vektoru světla</span></p>
+
+<p>Načtení tvaru ze souboru (funkce popsána výše).</p>
+
+<p class="src1">return ReadMesh();<span class="kom">// Vrátí návratovou hodnotu funkce ReadMesh()</span></p>
+<p class="src0">}</p>
+
+<p>Funkce Deinitialize() je pravým opakem předchozí funkce. Smaže texturu a data polygonů nahraná pomocí funkcí Initialize() a ReadMesh().</p>
+
+<p class="src0">void Deinitialize(void)<span class="kom">// Deinicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">glDeleteTextures(1, &amp;shaderTexture[0]);<span class="kom">// Smaže shader texturu</span></p>
+<p class="src1"></p>
+<p class="src1">delete [] polyData;<span class="kom">// Uvolní data polygonů</span></p>
+<p class="src0">}</p>
+
+<p>Funkce Update() se periodicky volá v hlavní smyčce tohoto dema. Jedinou její funkcí je zpracování vstupu z klávesnice.</p>
+
+<p class="src0">void Update(DWORD milliseconds)<span class="kom">// Aktualizace scény (objektu)</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_ESCAPE] == TRUE)<span class="kom">// Klávesa ESC</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication (g_window);<span class="kom">// Ukončení programu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_F1] == TRUE)<span class="kom">// Klávesa F1</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen(g_window);<span class="kom">// Přepnutí módů fullscreen/okno</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown [' '] == TRUE)<span class="kom">// Mezerník</span></p>
+<p class="src1">{</p>
+<p class="src2">modelRotate = !modelRotate;<span class="kom">// Zapne/vypne rotaci objektu</span></p>
+<p></p>
+<p class="src2">g_keys-&gt;keyDown [' '] = FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown ['1'] == TRUE)<span class="kom">// Klávesa čísla 1</span></p>
+<p class="src1">{</p>
+<p class="src2">outlineDraw = !outlineDraw;<span class="kom">// Zapne/vypne vykreslování obrysu</span></p>
+<p></p>
+<p class="src2">g_keys-&gt;keyDown ['1'] = FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown ['2'] == TRUE)<span class="kom">// Klávesa číslo 2</span></p>
+<p class="src1">{</p>
+<p class="src2">outlineSmooth = !outlineSmooth;<span class="kom">// Zapne/vypne anti-aliasing</span></p>
+<p></p>
+<p class="src2">g_keys-&gt;keyDown ['2'] = FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_UP] == TRUE)<span class="kom">// Šipka nahoru</span></p>
+<p class="src1">{</p>
+<p class="src2">outlineWidth++;<span class="kom">// Zvětší tloušťku čáry</span></p>
+<p></p>
+<p class="src2">g_keys-&gt;keyDown [VK_UP] = FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_DOWN] == TRUE)<span class="kom">// Šipka dolů</span></p>
+<p class="src1">{</p>
+<p class="src2">outlineWidth--;<span class="kom">// Zmenší tloušťku čáry</span></p>
+<p></p>
+<p class="src2">g_keys-&gt;keyDown [VK_DOWN] = FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (modelRotate)<span class="kom">// Je rotace zapnutá</span></p>
+<p class="src2">modelAngle += (float)(milliseconds) / 10.0f;<span class="kom">// Aktualizace úhlu natočení v závislosti na FPS</span></p>
+<p class="src0">}</p>
+
+<p>Funkce, na kterou už určitě netrpělivě čekáte. Draw() provádí většinu nejdůležitější práce v tomto tutoriálu - počítá hodnoty stínu, renderuje daný tvar a renderuje obrys.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">int i, j;<span class="kom">// Řídící proměnné cyklů</span></p>
+
+<p>Proměnná TmpShade se použije na uložení dočasné hodnoty stínu pro aktuální vertex. Všechna data týkajícího se jednoho vertexu jsou spočítána ve stejném čase, což znamená, že můžeme použít jen jednu proměnnou, kterou postupně použijeme pro všechny vertexy. Struktury TmpMatrix, TmpVector a TmpNormal jsou také použity pro spočítání dat jednoho vertexu. TmpMatrix se nastaví vždy jednou při startu funkce Draw() a nezmění se až do jejího dalšího startu. TmpVector a TmpNormal se liší vertex od vertexu.</p>
+
+<p class="src1">float TmpShade;<span class="kom">// Dočasná hodnota stínu</span></p>
+<p></p>
+<p class="src1">MATRIX TmpMatrix;<span class="kom">// Dočasná MATRIX struktura</span></p>
+<p class="src1">VECTOR TmpVector, TmpNormal;<span class="kom">// Dočasné VECTOR struktury</span></p>
+
+<p>Po deklaraci proměnných vymažeme buffery a data OpenGL matice.</p>
+
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Vymaže buffery</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>Nejdříve zkontrolujeme zda chceme obrys vyhlazený. Když ano, zapneme anti-aliasing. Když ne, tak ho vypneme. Jak jednoduché...</p>
+
+<p class="src1">if (outlineSmooth)<span class="kom">// Chce uživatel vyhlazené čáry?</span></p>
+<p class="src1">{</p>
+<p class="src2">glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);<span class="kom">// Použije nejkvalitnější výpočty</span></p>
+<p class="src2">glEnable(GL_LINE_SMOOTH);<span class="kom">// Zapne anti-aliasing</span></p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Nechce</span></p>
+<p class="src1">{</p>
+<p class="src2">glDisable(GL_LINE_SMOOTH);<span class="kom">// Vypne anti-aliasing</span></p>
+<p class="src1">}</p>
+
+<p>Posunutím kamery o 2 jednotky dozadu nastavíme pohled, potom model pootočíme o daný úhel. Poznámka: protože jsme nejdříve pohnuli s kamerou, model se bude točit na místě. Pokud bychom to udělali opačně, model by rotoval kolem kamery.</p>
+
+<p class="src1">glTranslatef(0.0f, 0.0f, -2.0f);<span class="kom">// Posun do hloubky</span></p>
+<p class="src1">glRotatef(modelAngle, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace objektem na ose y</span></p>
+
+<p>Získáme nově vytvořenou OpenGL matici a uložíme ji do TmpMatrix.</p>
+
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX, TmpMatrix.Data);<span class="kom">// Získání matice</span></p>
+
+<p>Kouzla začínají... Povolíme 1D texturování a použijeme texturu stínu. Potom nastavíme barvu modelu. Vybral jsem bílou, protože na ní jde lépe vidět světlo a stín než na ostatních barvách. Nejméně vhodná je zcela určitě černá.</p>
+
+<p class="src1"><span class="kom">// Kód Cel-Shadingu</span></p>
+<p class="src1">glEnable(GL_TEXTURE_1D);<span class="kom">// Zapne 1D texturování</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_1D, shaderTexture[0]);<span class="kom">// Zvolí texturu</span></p>
+<p></p>
+<p class="src1">glColor3f(1.0f, 1.0f, 1.0f);<span class="kom">// Nastavení barvy modelu (bílá)</span></p>
+
+<p>Začneme s kreslením trojúhelníků. Projdeme všechny polygony v poli a všechny vertexy každého z těchto polygonů. Nejdříve zkopírujeme normálu do dočasné struktury. Díky tomu můžeme hodnotami normály otáčet bez toho, že bychom ztratili původní data (bez průběžné degradace).</p>
+
+<p class="src1">glBegin(GL_TRIANGLES);<span class="kom">// Začátek kreslení trojúhelníků</span></p>
+<p></p>
+<p class="src2">for (i = 0; i &lt; polyNum; i++)<span class="kom">// Prochází jednotlivé polygony</span></p>
+<p class="src2">{</p>
+<p class="src3">for (j = 0; j &lt; 3; j++)<span class="kom">// Prochází jednotlivé vertexy</span></p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// Zkopírování aktuální normály do dočasné struktury</span></p>
+<p class="src4">TmpNormal.X = polyData[i].Verts[j].Nor.X;</p>
+<p class="src4">TmpNormal.Y = polyData[i].Verts[j].Nor.Y;</p>
+<p class="src4">TmpNormal.Z = polyData[i].Verts[j].Nor.Z;</p>
+
+<p>Otočíme vektor o matici, kterou jsme získali od OpenGL a normalizujeme ho.</p>
+
+<p class="src4">RotateVector(TmpMatrix, TmpNormal, TmpVector);<span class="kom">// Otočí vektor podle matice</span></p>
+<p></p>
+<p class="src4">Normalize(TmpVector);<span class="kom">// Normalizace normály</span></p>
+
+<p>Spočítáme odchylku pootočené normály a směru světla. Potom hodnotu dáme do rozmezí 0-1 (z původního -1 až 1).</p>
+
+<p class="src4">TmpShade = DotProduct(TmpVector, lightAngle);<span class="kom">// Spočítání hodnoty stínu</span></p>
+<p></p>
+<p class="src4">if (TmpShade &lt; 0.0f)<span class="kom">// Pokud je TmpShade menší než nula bude se rovnat nule</span></p>
+<p class="src5">TmpShade = 0.0f;</p>
+
+<p>Předáme tuto hodnotu OpenGL jako texturovací souřadnici. Potom předáme pozici vertexu a opakujeme. A opakujeme. A opakujeme. Myslím, že podstatu už chápete.</p>
+
+<p class="src4">glTexCoord1f(TmpShade);<span class="kom">// Nastavení texturovací souřadnice na hodnotu stínu</span></p>
+<p class="src4">glVertex3fv(&amp;polyData[i].Verts[j].Pos.X);<span class="kom">// Pošle pozici vertexu</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p></p>
+<p class="src1">glDisable(GL_TEXTURE_1D);<span class="kom">// Vypne 1D texturování</span></p>
+
+<p>Přesuneme se k obrysům. Obrys můžeme definovat jako hranu, kde je jeden polygon přivrácen směrem k nám a druhý od nás. Použijeme pro OpenGL běžné testování hloubky - méně nebo stejně (GL_LEQUAL) a také nastavíme vyřazování všech polygonů otočených k nám. Také použijeme blending, aby to trochu vypadalo.</p>
+
+<p>Nastavíme OpenGL tak, aby polygony čelem od nás vyrenderoval jako čáry. Vyřadíme všechny polygony čelem k nám a nastavíme testování hloubky na menší nebo stejné na aktuální ose Z. Potom ještě nastavíme barvu čar, projdeme všechny polygony a vykreslíme jejich rohy. Stačí zadat pozici. Nemusíme zadávat normálu a stíny, protože chceme jenom obrys.</p>
+
+<p class="src1"><span class="kom">// Kód pro vykreslení obrysů</span></p>
+<p class="src1">if (outlineDraw)<span class="kom">// Chceme vůbec kreslit obrys?</span></p>
+<p class="src1">{</p>
+<p class="src2">glEnable(GL_BLEND);<span class="kom">// Zapne blending</span></p>
+<p class="src2">glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);<span class="kom">// Mód blendingu</span></p>
+<p></p>
+<p class="src2">glPolygonMode(GL_BACK, GL_LINE);<span class="kom">// Odvrácené polygony se stanout pouze obrysovými čarami</span></p>
+<p class="src2">glLineWidth(outlineWidth);<span class="kom">// Nastavení šířky čáry</span></p>
+<p></p>
+<p class="src2">glCullFace(GL_FRONT);<span class="kom">// Nerenderovat přivrácené polygony</span></p>
+<p class="src2">glDepthFunc(GL_LEQUAL);<span class="kom">// Mód testování hloubky</span></p>
+<p></p>
+<p class="src2">glColor3fv(&amp;outlineColor[0]);<span class="kom">// Barva obrysu (černá)</span></p>
+<p></p>
+<p class="src2">glBegin(GL_TRIANGLES);<span class="kom">// Začátek kreslení trojúhelníků</span></p>
+<p></p>
+<p class="src3">for (i = 0; i &lt; polyNum; i++)<span class="kom">// Prochází jednotlivé polygony</span></p>
+<p class="src3">{</p>
+<p class="src4">for (j = 0; j &lt; 3; j++)<span class="kom">// Prochází jednotlivé vertexy</span></p>
+<p class="src4">{</p>
+<p class="src5">glVertex3fv(&amp;polyData[i].Verts[j].Pos.X);<span class="kom">// Pošle pozici vertexu</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Na konci už jenom vrátíme nastavení do původního stavu a ukončíme funkci i tutoriál.</p>
+
+<p class="src2">glDepthFunc(GL_LESS);<span class="kom">// Testování hloubky na původní nastavení</span></p>
+<p class="src2"></p>
+<p class="src2">glCullFace(GL_BACK);<span class="kom">// Nastavení ořezávání na původní hodnotu</span></p>
+<p class="src2">glPolygonMode(GL_BACK, GL_FILL);<span class="kom">// Normální vykreslování</span></p>
+<p class="src2"></p>
+<p class="src2">glDisable(GL_BLEND);<span class="kom">// Vypne blending</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p class="autor">napsal: Sami &quot;MENTAL&quot; Hamlaoui <span class="transform_email">&lt;disk_disaster (zavináč) hotmail.com&gt;</span><br />
+teoretickou část přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span><br />
+praktickou část přeložil: Václav Slováček - Wessan <span class="transform_email">&lt;horizont (zavináč) host.sk&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson37.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson37_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson37.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson37.zip">Delphi</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson37.zip">Dev C++</a> kód této lekce. ( <a href="mailto:zealouselixir@mchsi.com">Warren Moore</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson37.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson37.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson37.tar.gz">Linux / GLut</a> kód této lekce. ( <a href="mailto:rainmaker@xs4all.nl">Kah</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson37.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Schubert_P@Yahoo.de">Patrick Schubert</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson37.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:drfnbee@wanadoo.fr">Sean Farrell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson37.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson37.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_37_big.jpg" class="nehe_velky" alt="Lekce 37" /></div>
+<p class="okolni_lekce"><a href="tut_36.php">&lt;&lt;&lt; Lekce 36</a> | <a href="tut_38.php">Lekce 38 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_37.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

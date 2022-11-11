@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (14.) - Ucelený částicový systém</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="Protože na českém internetu je jen velmi málo informací ohledně programování uceleného částicového systému, rozhodl jsem se navrhnout základní strukturu, kterou lze využít pro většinu efektů s částicemi - Plápolající oheň s dýmem, jiskry ve zkratu na vedení, tryskající gejzír vody, oheň za raketou nebo její explose, déšt, sníh nebo rozstříknutí krve po zabitém nepříteli. Věřím, že tyto informace budou pro většinu z vás přínosem. Protože se jedná o poměrně rozsálné téma, rozhodl jsem se jej rozdělit i do několika příštích článků."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/casticovy-system-v-opengl&amp;title=OpenGL (14.) - Ucelený částicový systém" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (14.) - Ucelený částicový systém</h1><i>Protože na českém internetu je jen velmi málo informací ohledně programování uceleného částicového systému, rozhodl jsem se navrhnout základní strukturu, kterou lze využít pro většinu efektů s částicemi - Plápolající oheň s dýmem, jiskry ve zkratu na vedení, tryskající gejzír vody, oheň za raketou nebo její explose, déšt, sníh nebo rozstříknutí krve po zabitém nepříteli. Věřím, že tyto informace budou pro většinu z vás přínosem. Protože se jedná o poměrně rozsálné téma, rozhodl jsem se jej rozdělit i do několika příštích článků.</i><br/><hr/><br/><H2>Particle Manager</H2>
+<P>Jak začít? Je třeba vytvořit nějaký Particle manager, který se bude starat (vytvářet, rušit, nastavovat) o jednotlivé částicové systémy. Jeho datová struktura je zde:</P>
+
+<PRE><B>type</B>
+  ParticleManagerC = class
+    <B>private</B>
+      ParticleSystem: <B>Array of</B> ParticleSystemC;
+    <B>public</B>
+      Camera: CameraC;
+      <B>procedure</B> AddParticleSystem(Name: <B>string</B>);
+      <B>procedure</B> RemoveParticleSystem(Name: <B>string</B>);
+      <B>function</B> FindParticleSystem(Name: <B>string</B>): ParticleSystemC;
+      <B>procedure</B> Update;
+      <B>procedure</B> Render;
+      <B>constructor</B> Create;
+  <B>end;</B></PRE>
+
+<P>Vše budeme psát do samostatné unity, kterou uložíme jako ParticleManagerU.pas. Konstruktor Create vytvoří objekt ParticleManager, destructor ho opět uvolní z paměti. Procedura AddParticleSystem vytvoří nový částicový systém a nastaví mu defaultní hodnoty, RemoveParticleSystem odstraní požadovaný systém. Funkcí FindParticleSystem vybereme systém a můžeme změnit jeho chování. Třídou CameraC oznamujeme manageru, jakou souřadnici má kamera v prostoru. To využijeme při zobrazování samotných částic - jsou otočeny vždy kolmo ke kameře. Místo této třídy můžeme vkládat jen tyto samotné souřadnice. Procedura Update se stará o aktualizování pozice, přidávání nových a rušení starých částic. Procedurou Render Všechny aktivní částice vykreslíme.</P>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/particles/fontana.jpg" BORDER=0></TD></TR><TR><TD>Podobné efekty lze vytvořit jedině v precizně naprogramovaných systémech.</TD></TR></TABLE></CENTER>
+
+<P>Potom do zdrojového kódu programu, který využívá částicový systém stačí přidat:</P>
+<PRE><B>uses</B>
+  ParticleManagerU;
+
+<B>var</B>
+  ParicleManager: ParticleManagerC;
+
+<B>implementation</B>
+
+<B>procedure</B> TForm1.FormCreate(Sender: TObject);
+<B>begin</B>
+  ParticleManager := ParticleManagerC.Create;
+
+  ParticleManager.AddParticleSystem('Fire');
+  ParticleManager.Camera := Camera;
+<B>end;</B></PRE>
+
+<P>Podrobný popis funkcí je zde:</P>
+<PRE><B>constructor</B> ParticleManagerC.Create;
+<B>begin
+end;
+
+destructor</B> ParticleManagerC.Free;
+<B>begin
+end;
+
+
+procedure</B> ParticleManagerC.AddParticleSystem(Name:string);
+<B>begin</B>
+  setlength(ParticleSystem,length(ParticleSystem)+1);
+  ParticleSystem[length(ParticleSystem)-1] := ParticleSystemC.Create;
+  ParticleSystem[length(ParticleSystem)-1].Name := Name;
+  ParticleSystem[length(ParticleSystem)-1].Active := true;
+<B>end;</B>
+
+
+
+<B>procedure</B> ParticleManagerC.RemoveParticleSystem(Name: string);
+<B>var</B>
+  i: integer;
+<B>begin
+  for</B> no:=1 <B>to</B> length(ParticleSystem)-1 <B>do begin
+    if</B> ParticleSystem[i].Name = Name <B>then begin</B>
+      //zde vymažeme ParticleSystem[i] a všechny další
+      //posuneme o jeden dopředu...
+    <B>end;
+  end;
+end;
+
+
+
+function</B> ParticleManagerC.FindParticleSystem(Name: string): ParticleSystemC;
+<B>var</B>
+  i: integer;
+<B>begin
+  for</B> i:=1 <B>to</B> length(ParticleSystem)-1 <B>do begin
+    if</B> ParticleSystem[i].Name = Name <B>then begin</B>
+      result := ParticleSystem[i];
+    <B>end;
+  end;
+end;</B></PRE>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/particles/stars.jpg" BORDER=0></TD></TR><TR><TD>Toto je nejjednoduší aplikace částicového systému.</TD></TR></TABLE></CENTER>
+
+<PRE><B>procedure</B> ParticleManagerC.Update;
+<B>var</B>
+  i, j: integer;
+  Time: single;
+  CountNew: integer;
+<B>begin</B>
+  Time := GetTickCount/100;
+
+  //Pro aktivní každý částicový systém...
+  <B>for</B> i:=0 <B>to</B> length(ParticleSystem)-1 <B>do with</B> ParticleSystem[i] <B>do begin
+    if</B> Active = true <B>then begin</B>
+
+      CountNew := 0;
+      //...a pro každou částici dělej:
+      <B>for</B> j:=0 <B>to</B> length(Particles)-1 <B>do begin</B>
+
+        //Pokud vyhasla...
+        <B>if</B> Particles[j].EndTime <= time <B>then begin</B>
+
+          <B>if</B> CountNew>10 <B>then</B> continue;
+          //Vygeneruj novou částici...
+          Particles[j].Position := Position;
+          Particles[j].OldPosition := Position;
+
+          //Nastavíme náhodný rozptyl každé nové částice
+          Particles[j].Direction := VectorAdd(
+            Direction,
+            AffineVectorMake(
+              (random(DirectionError)-DirectionError/2)/127,
+              (random(DirectionError)-DirectionError/2)/127,
+              (random(DirectionError)-DirectionError/2)/127));
+
+          //... a nastav její životnost náhodně v rozmězí 1 krát až 1,5 krát LifeTime.
+          Particles[j].EndTime := Time+Lifetime*(1+random(LifeTimeError)/512);
+
+          inc(CountNew);
+
+        //Pokud nevyhasla, vypočítej její novou pozici.
+        <B>end else begin</B>
+          Particles[j].OldPosition := Particles[j].Position;
+          Particles[j].Direction[1] := Particles[j].Direction[1] - Gravity/100;
+          Particles[j].Position :=
+            VectorAdd(
+              Particles[j].Position,
+              VectorScale(
+                VectorScale(
+                  Particles[j].Direction,
+                  Speed),
+                (Particles[j].EndTime-Time)/LifeTime));
+        <B>end;
+      end;
+    end;
+  end;
+end;
+
+procedure</B> ParticleManagerC.Render;
+<B>var</B>
+  i: integer;
+<B>begin</B>
+ //Pro aktivní každý částicový systém...
+  <B>for</B> i:=0 <B>to</B> length(ParticleSystem)-1 <B>do with</B> ParticleSystem[i] <B>do begin
+    if</B> Active = true <B>then begin</B>
+      Material.Activate;
+      ParticleSystem[i].Render(Camera);
+      Material.DeActivate;
+    <B>end;
+  end;
+end;</B></PRE><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="nastaveni-opengl-v-c">OpenGL (13.) - Nastavení OpenGL v jazyce C/C++</a></li><li><a href="3d-studio-max-modifikacni-funkce">3D Studio MAX (13.) - Popis modifikačních funkcí ve 3D Studiu MAX</a></li><li><a href="knihovna-fmod-zvuky-direct-sound-eax">Delphi (10.) - knihovna FMOD</a></li><li><a href="vizualizacni-plugin-pro-winamp">OpenGL (12.) - visualizační plugin pro WinAMP</a></li><li><a href="3d-engine-mengine">Herní grafické enginy (1.) - MEngine od Mister Group</a></li><li><a href="download-manager-2">Delphi (9.) - Download 2</a></li><li><a href="download-manager-1">Delphi (8.) - Download</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne2">3D Studio MAX (12.) - Tvorba realistické jeskyně 2</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne">3D Studio MAX (11.) - Tvorba realistické jeskyně</a></li><li><a href="jak-na-programovani-her">Jak na tvorbu her - Na co máme myslet při programování hry?</a></li><li><a href="3d-studio-max-izometricky-pohled">3D Studio MAX (10.) - Izometrický pohled ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-tutorial-chromovy-text">Adobe Photoshop (4.) - Chromový text</a></li><li><a href="export-do-pdf">Zoner Callisto (2.) - Export do PDF</a></li><li><a href="detekce-kolizi-ve-3d">OpenGL (11.) - Nová detekce kolizí</a></li><li><a href="matematicka-knihovna-geometry-pas-delphi">OpenGL (10.) - Nová knihovna geometry.pas</a></li><li><a href="generovani-textur-terenu-a-far-clip">OpenGL (9.) - Generování textur a vylepšení FarClip Distance</a></li><li><a href="export-do-gif">Zoner Callisto (1.) - Export do GIFu</a></li><li><a href="3d-studio-max-odlesky-na-vodni-hladine">3D Studio MAX (9.) - Vytváření odlesků vodní hladiny</a></li><li><a href="slovnik-pojmu-opengl">OpenGL (8.) - Slovníček pojmů v OpenGL</a></li><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li><li><a href="co-je-to-minigl">OpenGL (6.) - Co je to MiniGL</a></li><li><a href="opengl-vertex-array-gldrawelements">OpenGL (5.) - Urychlení pomocí glDrawElements</a></li><li><a href="system-speaker-a-destrukce-souboru">Delphi (7.) - Syst. repro a autodestrukce souboru</a></li><li><a href="opengl-fullscreen">OpenGL (4.) - FullScreen</a></li><li><a href="3d-studio-max-horici-zapalka-ohen">3D Studio MAX (8.) - Tvorba hořící zápalky</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=2&amp;url=%2Fcasticovy-system-v-opengl" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.227682017px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12653 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

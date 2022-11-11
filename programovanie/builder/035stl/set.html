@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Úvod</title>
+</head>
+
+<body>
+<h3 class="main">Usporiadané množiny - <b>set</b></h3>
+Množina je taký objekt o ktorom pre ľub. prvok vieme rozhodnúť či patrí alebo nepatrí do množiny. Prvky množiny sú jedinečné a po vložení do štruktúry nemenné (možno ale rušiť prvky a vsúvať).
+<br>Oproti matematike, kde je tiež objekt množina, tu máme niektoré rozdiely:
+<br>prvky množiny/set sú rovnakého typu (presnejšie ak sú prvkami triedy, musia mať spoločného predka)
+<br>prvky sú vždy usporiadané
+Vlastnosti objektu set:
+<ul><li>Prvky objektu set sú vždy usporiadané
+	<li>Vieme pridávať/rušiť prvky v log. čase
+	<li>Vieme hľadať prvok v set s časovou zložitosťou log n
+		<br>Ak budeme potrebovať zistiť, či se nejaký prvok nacháza v množine použijeme metodu count(), která vráti 0, ak sa prvok v množině nenachádza, inak vráti 1. 
+		<br>Táto metóda vlastne vracia počet prvkov v množine, čo je 0, alebo 1.
+	<li>Vieme urobiť prechod cez všetky prvky množiny
+	<li>nemáme priamy prístup ku prvkom (iterátor možno meniť operátormi ++, --)
+	<li>Prvky v sete sa nedajú meniť
+	<li>Implementácia je binárne usporiadaným stromom (samovyvažovacie stromy)
+</ul>	
+<dl><dt>pripnutie knižnice
+		<dd>Aby sme mohli používať obojstranné zoznamy musíme pripnúť príslušnú knižnicu
+			<br><b>#include &lt;set></b>
+			<br>Po pripnutí môžme začať používať objekty popísané v tejto knižnici a teraz si základ popíšeme.
+	<dt>deklarácia
+	<dd>Je úplne podobné ako pri deklarácii poľa.
+		<ul><li>set &lt;int> v1; //vytvorí prázdny set
+			<li>set &lt;int> v1(iterator1, iterator2); //iterátory môžu byť ukazovatele na prvky poľa, vektora, listu
+				<br> &nbsp; &nbsp; &nbsp;(prvky okopíruje z nejakého iného objektu)
+			<li>set &lt;int> v1(set); //kópia iného set (pravdepodobne možno dať aj iný typ)
+			<li>set &lt;typ, adresa_porovnávacej_funkcie>; // ak pre prvky nie je definovaná operácia porovnania &lt;, môžme ju tu zadať
+		</ul>	
+	<dt>členské funkcie
+	<dd><ul><li><b>size()</b>; // vráti počet prvkov v množine
+			<li><b>begin();</b> //funkcia vráti iterátor na prvý prvok
+			<li><b>end();</b> //funkcia vráti iterátor na posledný prvok
+			<li><b>rbegin();</b> //funkcia vráti reverzný iterátor na prvý prvok (čiže posledný prvok - pozri iterátory)
+			<li><b>rend();</b> //funkcia vráti iterátor na posledný prvok (čiže prvý prvok - pozri iterátory)
+
+			<li><b>clear();</b> //podprogram, ktorý vymaže všetky prvky množiny 
+			<li><b>count(x);</b> //funkcia vráti počet výskytov prvku x (0 alebo 1) v log čase
+			<li><b>empty();</b> // funkcia vráti TRUE ak jew set prázdny
+			<li><b>find(x);</b> //funkcia vráti iterátor na nájdený prvok, ak prvok nenájde vráti iterator end (log n čas)
+			<li><b>erase(iterator);</b> //odstráni tento prvok (konšt. čas)
+			<br><b>erase(iterator1, iterator2);</b> //odstráni prvky z intervalu
+			<br><b>erase(hodnota);</b> //odstráni hodnotu zo setu
+			<li><b>insert(hodnota);</b> //pridá hodnotu do set (ak sa už nachádza neurobí nič), robí v log n čase
+				<br>návratová hodnota je pair, kde prvá hodnota je iterátor na novopridaný prvok a druhá je TRUE ak sa pridanieč uskutočnilo (pozri pair)
+			<br><b>insert(iterator, hodnota);</b> //určíme miesto kam sa má vložiť, ak je miesto korektné vloží v konštantnom čase, inak vkladá logaritmicky
+			<br><b>insert(iterator1,iterator2);</b> // vkladá z iných objektov (pole, list, vector)
+			
+			<li>operátor = ... priraďovanie objektov set je možné, prekopíruje obsah, upraví size
+			<li><b>swap(set)</b>; //vymení obsah dvoch setov
+	<dt>Operácie s množinou v knižnici algorithm
+	<dd>
+	<ul><li>set_intersection(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)
+			<br>urobí prienik množín 1 a 2 do množiny 3 a zapíše do množiny od určeného iterátora.
+			<br>návratová hodnota je ukazovateľ na koniec štruktúry (pri množine nepotrebujem)
+			<br>je vhodné výstupnú množinu pred volaním najprv vyprázdniť erase();
+			<br>množina3_začiatok .. tu je dosť veľký problém, ak vytvoríme obyčajný iterátor, tak po spustení padne
+				<br>musíme vytvoriť insert_iterator&lt;set&lt;int> > iter(v,v.begin());
+				<br>ktorý nie je konštantný a môže byť výstupným parametrom
+			<pre>
+#include &lt;iostream>
+#include &lt;set>
+#include &lt;algorith>
+
+using namespace std;
+int main ()
+{
+  int myints[] = {75,23,65,42,13};
+  int myints2[] = {75,20,65,40,13};
+  std::set&lt;int> myset (myints,myints+5) ;
+  std::set&lt;int> myset2 (myints2,myints2+5) ;
+  std::set&lt;int> v;
+
+  std::set&lt;int>::iterator it=v.begin();
+  insert_iterator&lt;set&lt;int> > iter(v,v.begin());
+set_intersection(myset.begin(),myset.end(),myset2.begin(),myset2.end(),iter); //nemožno použiť it ako 5-ty parameter 
+cout &lt;&lt; v.size();  system("pause");
+
+  std::cout &lt;&lt; "myset contains:";
+  for (it=v.begin(); it!=v.end(); ++it)
+    std::cout &lt;&lt; ' ' &lt;&lt; *it;
+
+  std::cout &lt;&lt; '\n';
+  system("pause");
+  return 0;
+}</pre>			
+		<li>set_union(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)
+			<br>urobí zjednotenie množín 1 a 2 do množiny 3 a zapíše do množiny od určeného iterátora.
+			<br>je vhodné výstupnú množinu pred volaním najprv vyprázdniť erase();
+			<br>návratová hodnota je ukazovateľ na koniec štruktúry
+			<pre>
+#include &lt;iostream>
+#include &lt;set>
+#include &lt;algorith>
+
+using namespace std;
+int main ()
+{
+  int myints[] = {75,23,65,42,13};
+  int myints2[] = {75,20,65,40,13};
+  std::set&lt;int> myset (myints,myints+5) ;
+  std::set&lt;int> myset2 (myints2,myints2+5) ;
+  std::set&lt;int> v;
+
+  std::set&lt;int>::iterator it=v.begin();
+  insert_iterator&lt;set&lt;int> > iter(v,v.begin());
+set_union(myset.begin(),myset.end(),myset2.begin(),myset2.end(),iter); //nemožno použiť it ako 5-ty parameter 
+cout &lt;&lt; v.size();  system("pause");
+
+  std::cout &lt;&lt; "myset contains:";
+  for (it=v.begin(); it!=v.end(); ++it)
+    std::cout &lt;&lt; ' ' &lt;&lt; *it;
+
+  std::cout &lt;&lt; '\n';
+  system("pause");
+  return 0;
+}</pre>			
+		<li>set_difference(množina1_začiatok,množina1_koniec,množina2_začiatok,množina2_koniec,množina3_začiatok)	
+			<br>urobí rozdiel množín 1 a 2 do množiny 3 a zapíše do množiny od určeného iterátora.
+			<br>návratová hodnota je ukazovateľ na koniec štruktúry
+	<dt>Príklady
+	<dd><ul>
+		<li>Na vstupe máme niekoľko celých čísel z &lt;-10 000, +10 000> zisti koľko rôznych čísel tam je
+		<li>Janka a Danka sú sestry, Janka má v Memo1 zapísané svoje kamarátky, Danka má svoje kamarátky v Memo2
+			<br>Obidve si na oslavu zavolajú všetky svoje kamarátky
+			<br>U1: koľko kamarátok príde na oslavu
+			<br>U2: koľko majú spoločných kamarátok
+			<br>U3: koľkým kamarátkam môže Janka prezradiť niečo, čo sa nemá dozvedieť žiadna kamarátka Danky)
+			<br>(ak majú kamarátky rovnaké meno berieme, že ide o tú istú osobu
+		</ul>
+
+	
+</dl>
+</body>
+</html>

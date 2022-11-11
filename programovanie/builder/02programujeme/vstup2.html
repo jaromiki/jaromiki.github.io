@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<title>Tlačítka, prepínače, zaškrtávacie okná</title>
+</head>
+
+<body BACKGROUND="../image15.gif">
+<center><h3 class=nadpis>Vstup 2. časť</h3></center>
+<dl><dt class=main>Opakovanie:
+	<dd>Aké typy údajov možno priamo načítať?
+	<br>Ako sa dá riešiť číselný kontrolovaný vstup?
+	<br>Ako sa dá zabrániť odchodu zo vstupneho riadka pokiaľ vstup nie je v poriadku?
+</dl>
+<h3  class=main>Prepínače, zaškrtávacie okná</h3>
+<dl>
+    <dt><font color="Blue">Radiobutton</font> - karta Standart
+		<dd>Používame na výber jednej možnosti z N ponúk.
+			<br>Postup:
+			<br>Vložíme niekoľko RB na formulár, nastavíme zobrazovaný text vlastnosť - Caption
+			<br>Zarovnám ich Označovanie Shift + Klick, pravým kliknem a zvolím align
+			<br>Určíme ktorý bude implicitne nastavený ako zapnutý <b>Checked</b> na TRUE, len jeden sa dá
+			<br>2x kliknem na každý, aby som určil, čo sa má robiť pri výbere
+    <dt><font color="Blue">Radiogroup</font> - karta Standart
+		<dd>Používame na ak chceme na ploche mať viac skupín
+	    	radiobuttonov. Takto vytvoríme skupiny RB, v ktorých je zapnutý práve jeden. Keď zapneme 
+			ľubovoľný z nich zavolá sa spoločný podprogram pre všetky RB. Pridávanie nového radiobuttonu robíme cez <b>"Items"</b>,
+			nedá sa pridávať položením objektu Radiobutton.
+			<br>Vlastnosti pomocou ktorých zistíme, ktorý je stlačený:
+			<ul>
+			<li>Item->capacity - tu je zapísané číslo=počet radiobuttonov v skupine 
+			<li>ItemIndex - index práve aktívneho buttonu (číslované od nuly)
+			<li>Item[index] - text patriaci ku RB pod číslom index (väčšinou za index volíme ItemIndex)
+		    </ul>
+    <dt><font color="Blue">Checkbox</font> - karta Standart
+		<dd>Používame na aktivovanie/deaktivovanie nejakej vlastnosti.
+        	<br>Vlastnosti:
+			<ul>
+			<li>Caption - text pri zaskrtávaciom políčku
+			<li>Checked - TRUE/FALSE označené/neoznačené
+		    </ul>
+			<br><br>
+<dt class=main>Príklady na precvičenie:
+<dd><table cellspacing="20">
+	<tr><td><img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+		<td>
+		<ol>
+			<li>Naprogramuj <a href="project1.exe">stiahni</a>
+			<li>Naprogramuj <a href="pruzina.exe">stiahni</a> (grafika)
+			<li>Naprogramuj kontrolovaný vstup celého čísla, pričom užívateľ si volí sústavu
+				v ktorej klepe vstup pomocou prepínača (základ 2,8,10,16).
+				<br>Hodnota sa zobrazí v druhom edite, pričom užívateľ si základ sústavy volí sám. 
+		</ol>
+	</table>
+	<dt class=main>Otázky:
+		<dd><ol>
+			<li>Ako zistím ktorý radiobutton je zvolený?
+			<li>Ako vytvoriť viac skupín radiobuttonov, z ktorých môže byť jeden zvolený?
+			<li>Aký je rozdiel medzi zaškrtávacím okienkom a radiobuttonom?
+			</ol>		
+</dl>
+<h3>Úlohy</h3>
+<dl><dt>úloha1
+	<dd>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:500px;" id="back2">
+  <div style="margin:10">
+			<table><tr><td>
+				<input type="Text" value="15" id="a" style="width:70">
+	<td style="width:50"><input type="Radio" name="inf"  checked onclick="vysl.value= eval(a.value) + eval(b.value);">+
+					<br><input type="Radio" name="inf"  onclick="vysl.value= a.value - b.value;">-
+					<br><input type="Radio" name="inf"  onclick="vysl.value= a.value * b.value;">*
+					<br><input type="Radio" name="inf"  onclick="vysl.value= a.value / b.value;">/
+					<br><input type="Radio" name="inf"  
+					 onclick="vysl.value= (a.value-a.value % b.value) / b.value;">div
+				<td><input type="Text" value="15" id="b" style="width:70"> = <input type="Text" value="30" id="vysl">
+			</table>
+		</div></div></div>	
+<dt>úloha2
+<dd>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:500px;" id="back2">
+  <div style="margin:10">
+	<table><tr><td>
+	<textarea  id="text1" style="height: 260;width:260">
+Pre
+tento
+text
+nastavíme
+veľkosť
+písma
+	</textarea>
+<td>
+<br><input type="Radio" name="inf" value="8" checked onclick="text1.style.fontSize=8"> 8<br>
+<br><input type="Radio" name="inf" value="10" onclick="text1.style.fontSize=10">10
+<br><input type="Radio" name="inf" value="12" onclick="text1.style.fontSize=12">12
+<br><input type="Radio" name="inf" value="16" onclick="text1.style.fontSize=16">16
+<br><input type="Radio" name="inf" value="20" onclick="text1.style.fontSize=20">20
+			</tr></table> 
+</div></div></div>
+</dl>
+
+</body>
+</html>

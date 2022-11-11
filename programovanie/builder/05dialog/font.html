@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Časovač a dialógy</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Dialógové okná - Font</h3>
+Z programov Word, Excel a ďalších poznáme postup ako zvoliť typ písma. Tu si ukážeme ako tento spôsob voľby
+písma pre užívateľa naučiť aj náš program.
+<dl>
+	<dt class=main>FontDialog
+	<dd>Toto dialógové okno použijeme, ak chceme aby užívateľ zvolil nejaký typ písma, ktorý potom možno aplikovať 
+		na niektorý vložený objekt. Tento dialóg ale písmo nenastavuje (nemení ničomu písmo), len umožní nám postupom
+		bežným vo Win zvoliť si vlastnosti písma. Dialógové okno <b>FontDialog</b> nájdeme na karte <b>Dialogs</b>,
+		vložíme ho do nášho formulára. Ide o nevizuálny objekt a tak umiestnenie v okne nemá vplyv na použitie.
+		Po vložení do formulára získame funkciu <b>FontDialog1.execute</b>, ktorá vytvorí dialógové okno na voľbu typu písma,
+		ktoré nám umožní súhrnne zadať 
+		<ul><li>meno fontu (Times, Courier, ...)
+			<li>rez písma (normálne, šikmé, tučné)
+			<li>veľkosť (8,10,12,...)
+			<li>iné vlastnosti (farba, kódovanie,...)
+		</ul>
+		<br>a v object inspector alebo príkazmi možno pred zavolaním okna nastaviť nejaké vlastnosti
+		<ul><li>device - určíme z akej sady písiem sa bude vyberať ( screen, printer)
+			<li>obmedzenie na maximálnu a minimálnu veľkosť veľkosti písma 
+		</ul>	
+	
+	<dt>Execute
+	<dd>- základná funkcia objektu, ktorá vytvorí na obrazovke okno cez ktoré bude
+		komunikovať s užívateľom.
+		<img src="font.png" width="437" height="351" border="0" alt="" style="margin:6">
+		 <br>V tomto okne je viacero vstupných polí, v ktorých volíme jednotlivé vlastnosti písma a dve tlačítka 
+		 <b>OK</b> a <b>Storno</b>.	
+		<br>Funkcia nadobúda logickú hodnotu TRUE - ak užívateľ stlačí <b>OK</b> 
+		<br>a FALSE ak stlačí <b>Storno</b> alebo okno len zavrie. 
+		Ak stlačíme <b>OK</b> vlastnosti písma  sa zapíšu do FontDialog1.Font
+	<dt>FontDialog.Font 
+	<dd>- je typu Tfont, a možno ho priradiť do vlastnosti Font nejakého iného objektu.
+	<dt>Použitie
+	<dd>Tu si ukážeme ako použiť FontDialog napr. pri voľbe písma Mema na obrazovke
+		<br>Vytvoríme nasledovný formulár.
+	<div style="border-widtD:\html\jaro\programovanie\delphi-nove\08oop
+h:3;border-style:outset;width:450px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1</div>
+   <div style="background-color:#dddddd; width:450px;">
+ 	 <table><tr><td><textarea rows="5" >Memo1</textarea>
+	 			<td><img src="../obr/font.jpg" width="32" height="32" border="0" alt=""><br><br>
+					<input type="Button" value="Font"><br>
+	</table>
+	</div></div>				
+	<br>Program na obsluhu tlačídka by mohol byť nasledovný:
+	<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   		<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+  if (FontDialog1.Execute) Memo1->Font = FontDialog1->Font;
+  else ShowMessage("Voľba písma bola zrušená užívateľom");
+end;
+</pre>	
+	</div></div></div>	
+				 
+		<dt class=second><font size="+1" color="red">Príklady na precvičenie:</font>
+			<dd><table cellspacing="20"><tr><td>
+				<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+   				<td>1. Vytvor nasledovný program
+				<br><a href="dialog1.exe">stiahnuť</a>		
+   				<td>2. Vytvor nasledovný program
+				<br><a href="dialog2.exe">stiahnuť</a>		
+				</tr>
+				</table>		
+
+</dl>
+
+</body>
+</html>

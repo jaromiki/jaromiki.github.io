@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Menu</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Tvorba menu</h3>
+<dl><dt class=main>Menu
+	<dd>Väčšina win programov ponúka na spustenie akcii menu umiestnené v hornej časti formulára.
+		Delphi ponúka jednoduchý nástroj na pridanie menu do formulára.
+		<br>Menu má obyčajne dve úrovne
+		<ol>
+		<li>pruh menu - obsahuje mená skupinových - rozbalitelných akcií
+		<li>rozbalené menu - obsahuje určitý počet položiek, pričom každej obyčajne odpovedá nejaká akcia.
+			Okrem položiek môže obsahovať ešte grafické prvky - čiary.
+		</ol>
+		Štruktúra ale môže byť rozmanitá, aj v pruhu môže byť priamo položka - nie je odporúčané (užívateľ by mohol byť veľmi
+		v šoku ak by sa po kliknutí na pruh menu spustila akcia) a položka rozbaleného menu môže byť opäť rozbalitelná.
+		<dl><dt class=second>Položky
+			<dd><ul>
+				<li>podmenu - každá položka môže byť rozbalovacia 
+				<li>príkazy - po ich volbe sa vykoná určitý podprogram
+				<li>nastavenie - pomocou prepínača sa aktivuje resp. deaktivuje nejaká vlastnosť. Znak, či je aktívna býva naľavo 
+				<li>výber z N - volíme ktorá položka bude checked, nemôžu byť aktívne viaceré
+				<li>dialógová položka - zavolá dialógové okno. Býva zvykom za text pridať tri bodky 
+				</ul>
+				Položky i akcie s nimi spojené je možné meniť i za behu programu.
+		</dl>		
+	<dt class=main>Tvorba menu
+ 	<dd><table>
+		<tr><td>
+			<img src="menu1.jpg" border="0"  align="left" hspace="10" alt="ukážka">
+			<td>			
+			Vložíme objekt menu do formulára a dvakrát naň klikneme. Tým sa zavolá Menu Designer, v ktorom môžme vytvoriť
+			celú štruktúru menu môžme vytvoriť. Oddeľovací riadok možno do menu vložiť, ak Caption zvolíme rovno '-' (minus),
+			takejto položke nemá zmysel vytvárať ošetrenie udalosti OnClick a ani ďalšie vlastnosti.
+			<br>Ak názov položky neobsahuje znaky na vytvorenie korektného mena (položka Name), tak "zlé" znaky sú vynechané
+			a ak je treba je pridaný na začiatok znak N.
+		</table>
+		<dl><dt class=second>Vloženie podmenu
+			<dd>ak chceme môžme menu ľubovoľne presúvať v objektInspectorovi a tiež Menu Designer.
+				<br>- Kliknutím pravým ma aktívnu položku sa ukažu možnosti a zvolíme Create Submenu, potom môžme
+				vytvárať menu patriacej ku tejto položke. Ku rozbalovacím položkám nie je rozumné ošetrovať udalosť OnClick. 
+			<dt class=second>Vloženie príkazu
+			<dd>2-krát klikneme na položku menu a do zobrazeného podprogramu vložíme požadované príkazy,
+				<br>alebo ošetríme udalosť OnClick.
+				<br>Každá položka má udalosť OnClick.
+			<dt class=second>Vloženie zaškrtávacích políčok - prepínač
+ 			<dd><table>
+				<tr><td>
+				<img src="menu2.jpg" width="91" height="122" border="0" alt="ukážka"  align="left" hspace="10">
+				<td>
+				Podľa stavu vlastnosti Checked je možné pred položkou zapnúť alebo vypnúť značku "zafajknuté".
+				Pri ošetrení udalosti OnClick vo svojej réžii prepíname vlastnosti Checked,	čím prepíname značku výberu.
+				(voľbou menu sa vlastnosť Checked automaticky nezmení, to musí urobiť program)
+				</table>					
+			<dt class=second>Vloženie volby 1 z N - radiobutton
+ 			<dd><table>
+				<tr><td>
+				<img src="menu4.jpg" width="107" height="104" border="0" alt="ukážka" align="left">
+				<td>
+				Niekoľkým za sebou idúcim položkám menu nastavím:
+				<ol>
+				<li>vlastnosť RadioItem nastavím na True
+				<li>vlastnosť RadioGroup mastavím, ma rovnaké číslo - jedinečné
+				</ol>
+				Ak jednu položku označím za checked ostatné v tej istej radiogrupe sa nastavia automaticky na unchecked.
+				(Tu tiež prepínanie vlastnosti Checked nie je urobené automaticky, ale musí byť ošetrené v udalosti OnClick) 
+				</table>					
+			<dt class=second>Vkladanie obrázkov ku položkám menu
+ 			<dd><table>
+				<tr><td>
+				<img src="menu3.jpg" width="109" height="134" border="0" alt="ukážka" align="left" hspace="10">
+				<td>
+				Ku tlačítkam BitBtn sme vyberali obrázky z adresára \Program Files\Common Files\Borland Files\Images\Buttons\,
+				tieto obrázky sú vlastne spojené dva 16x16 spojené dokopy na rozmer 16x32 a priamo do menu sa nehodia - potrebujeme rozmer
+				16x16 a navyše potrebujeme systémové obrázky, ktoré tam nie sú.
+				<tr><td colspan="2">
+				<h4><font color="Red">Postup:</font></h4>
+				<ol>
+				<li>vložíme object MainMenu do formulára
+				<li>cez File-Open načítame súbor \Program Files\Borland\Delphi\Source\Vcr\ActnRes.pas
+				<li>z vytvoreného okna klikneme prvým na ImageList a zvolíme Edit-Copy
+				<li>pravým klikneme na formulár a zvolíme Edit-Paste
+				<li>na formulári má pribudnúť objekt Imagelist
+				<li>zavrieme vytvorené okno
+				<li>nastavíme v objekte MainMenu vlastnosť Images na ImageList1
+				<li>teraz môžme už každej položke priradiť obrázok z ImageListu cez vlastnosť ImageIndex
+				<li>do Imagelistu môžme obrázky pridávať
+					<ul>
+					<li>2-krát klikneme na Imagelist1
+					<li>zvolíme si akciu Add
+					<li>zvolíme si obrázok napr. z obrázkov pre BitBtn
+					<li>na otázku, či chceme obrázok roztrhnúť na dva zvolíme Yes
+					<li>pribudnú nám dva obrázky do ImageList
+					<li>ten druhý (šedý) obyčajne odstránime
+					</ul> 
+				</ol>
+				</table>	
+			<dt class=second>Vkladanie horúcich kľúčov
+			<dd>Fungujú aj ak menu nie je zobrazené.
+				Každej položke môžme nastaviť vlastnosť ShortKey, kde si môžme vybrať z veľkého počtu kľúčov.
+				<br>Často sa to kombinuje s neviditelným menu (položka vlastne neexistuje) - vlastnosť Visible - čím
+				možno určiť horúci kľúč ku nejakému podprogramu. Ak užívateľ stlačí ShortKey je zavolaná procedúra OnClick patriaca
+				tej položke.
+			<dt class=second>Vkladanie horúcich znakov
+			<dd>Fungujú ak je menu zobrazené. V každej položke možno určiť jeden znak ako horúci (bude podčiarknutý), urobíme to tak, že pred požadovaný 
+				znak vložíme znak &amp;.
+		</dl>
+	<br>
+<dt class=main>Príklady na precvičenie:
+<dd><table cellspacing="20"><tr><td>
+	<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+	<td>1. Vytvor program s menu rovnakým ako má delphi ale len dvoma položkami v pruhu File a Help 
+		<br>2. Vytvor program podobný programu Notepad s menu 
+		<br>File - Open,Save, Save as | Exit
+		<br>Font - Name - Times New, Arial, Script, Courier
+		<br>&nbsp; &nbsp; &nbsp; &nbsp; - Size - 8,10,12,16,24 
+		<br>každá položka bude mať svoj typický obrázok a samozrejme aj typickú akciu.  
+	</table>
+</dl>	
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+<dt>Pojem textura
+<dd>Texturovanie je ofarbenie stien trojrozmerných telies nanesením dvojrozmerných rastrových obrazcov. Tento postup bol navrhnutý 
+	aby  umožňoval grafické efekty bez veľkého zaťaženia grafického systému. Textúry môžu byť:
+	<ul><li>jednorozmerné - sem patria farebné prechody (vytvárame zadávaním rôznych farieb do vrcholov plôch)
+		<li>dvojrozmerné - sem patria zosnímané obrázky a tiež vypočítané textury (fraktály)
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(majú šírku a výšku)
+		<li>trojrozmerné
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(majú šírku, výšku a hĺbku)
+	</ul>
+	Teraz si ukážeme ako vytvoriť farebný povrch pomocou manuálneho priradenia farieb každému pixelu - vytvoríme farebnú "štruktúru",
+	ktorú budeme potom na plochu "naťahovať". Vzorku možno vytvoriť zadávaním hopdnoty každého pixla, alebo zobratím nejakého obrázka.
+	Obmedzenie na ktoré treba dávať pozor je že rozmery vzorky musia byť 
+	mocniny 2. (napr. 32, 64, 128, 256).
+<br>V nasledovnom programe vytváram vzorku tvorenú šachovnicovo - každé druhú políčko je čierne, biele políčka sú tieňované.
+<br>
+<img src="textura1.jpg" width="435" height="320" border="0" alt="">  
+<br><br>
+<h3>Deklarácia textúry</h3>
+(volím systém RGB, kde každá farba je zadaná hodnotou &lt;0;255&gt; ) 
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+    GL_UNSIGNED_BYTE bmp[256][256][3];
+   // miesto pre texturu 256*256
+</pre></code>
+</table>
+<h3>Vytvorenie textúry</h3>
+Textúra bude tvorená šachovnicou 8x8 kde sa striedajú čierne políčka so svetlými, pričom vo svetlých políčkach pribúda 
+červenej farby smerom doprava a zelenej pribúda smerom nadol
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+   for (int y=0;y<256;y++)             // pro vsechny radky pixmapy
+        for (int x=0;x<256;x++)        // pro vsechny pixely na radku
+        if ((y/32+x/32)%2)
+            bmp[y][x][0]= bmp[y][x][1]= bmp[y][x][2]= 0;// cierne policko
+        else
+		{   bmp[y][x][0]=x; bmp[y][x][1]=y; bmp[y][x][2]= 0; }
+    glEnable(GL_TEXTURE_2D);       // povolime texturu  
+    glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);      // v smere osi x povolime opakovanie textury
+    glTexParameter(GL_TEXTURE_2D, GL_Texture_WRAP_T, GL_REPEAT);      // v smere osi y povolime opakovanie textury
+    glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spôsob výpočtu ďalších bodov (textura vacsia)
+    glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2d(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, @bmp);
+		  // 1. par. ........ vždy dať GL_TEXTURE_2D
+		  // 2. par. ........ vždy dať 0 (má význam ak urobíme viac textur pre rôzne detaily)
+		  // 3. par. ........ počet farieb RGB=3, RGBA=4
+		  // 4. par. ........ rozmer v smere x  
+		  // 5. par. ........ rozmer v smere y
+		  // 6. par. ........ vždy dať GL_UNSIGNED_BYTE (typ premennej v texture)
+		  // 7. par. ........ adresa textury
+</pre></code>
+</table>
+<h3>Natiahnutie textúry</h3>
+textúra tým že sa "naťahuje" na plochu sa rôzne deformuje
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+    glBegin(GL_QUADS);
+        glTextCoord(0.0, 0.0); glVertex3f(-1, +1, -2);
+        glTextCoord(1.0, 0.0); glVertex3f(+1, +1, -2);
+        glTextCoord(1.0, 1.0); glVertex3f(+1, -1, -2);
+        glTextCoord(0.0, 1.0); glVertex3f(-1, -1, -2);
+    glEnd();
+    SwapBuffers(DC);
+</pre></code>
+</table>
+</body>
+</html>

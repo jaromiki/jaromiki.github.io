@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<script>
+	 var x=68; var s="Memo1\n"; var ss="";
+	 function vypocet()
+	 {  alert (a1.value);
+	    v1.value = (eval(a1.value)+eval(a1.value)).toString(10);
+	    text.innerText+='\n'+a1.value+'+'+a2.value+'='+v1.value;
+	 }
+	 function prvy()
+	 { ss="";
+	   for (var i=0;s.charAt(i)!='\n';i++) ;
+	   for (i++; i<s.length; i++) ss+=s.charAt(i);
+	   s=ss;
+	   if (s.length)
+	   { text.textContent=s; text.innerText=s;}
+	   else 
+	   { text.textContent=s="Memo1\n"; text.innerText=s;}
+	 }
+	 function posledny()
+	 {  ss="";
+	    for (var i=s.length-2; i && s.charAt(i)!='\n';i--);
+	    i--;
+		for (var j=0;j<=i;j++) ss+= s.charAt(j);
+		s=ss;
+	   if (s.length)
+	   { text.textContent=s; text.innerText=s;}
+	   else 
+	   { text.textContent=text.innerText=s="Memo1\n";}
+		
+	 }
+	 
+	</script>
+</head>
+
+<body>
+<h3>Výstup 1. časť</h3>
+<dl>
+	<dt class=main>	Opakovanie
+	<dd style="background-color:#ddffdd">- Ako zadáme farbu pomocou mena
+	<br>- Ako zadáme farbu v 16-kovej sústave
+	<br>- Ako vypočítame čídlo farby v desiatkovej sústave
+	<br>- Ako vložíme objekt do programu
+	<br>- Sú všetky objekty vizuálne (viditeľné po spustení programu)
+	<br>- Aké základné vlastnosti má každý vizuálny objekt
+	<br>- Kde môžme nastaviť počiatočné vlastnosti objektu
+<dt class=main>Objekty, kde zobrazíme text
+	<dd>Ako sme si povedali v minulej kapitole, úlohou programu je riešiť nejakú úlohu. Riešením tejto úlohy je spravidla hodnota 
+	(riešenie rovnice, výpočet úroku ale odpoveďou môže byť vizuálny efekt, my však spočiatku budeme riešiť len číselné úlohy). 
+	Textový/číselný výstup je v takýchto programoch riešený nejakým matematickým postupom a zobrazený zapísaním do vizuálnej vlastnosti 
+	niektorého vloženého objektu (napr. Label1->Caption). 
+	Vlastnosti objektov, kde sa dá poslať/zobraziť hodnota sú výhradne <b>textové</b> - dokážeme zobrazovať len <b>text</b>. 
+	Ak potrebujeme zobraziť hodnotu iného typu ako string/text musíme urobiť prevod tejto premennej na string/text.
+	Prevodovým funkciám je venovaná celá nasledujúca kapitola. Okrem tam uvedených funkcií existujú aj ďalšie a vyzerá to pre začiatočníka 
+	komplikovane tak to skrátime na najčastejšie používané prevodové funkcie. Pri väčšine úloh vystačíme s funkciami: 
+	<br>IntToStr() ... na zápis celého čísla
+	<br>FloatToStr() ... na zápis desatinného čísla
+<dt><font color="Red">Jednoriadkový výstup v tomto okne</font>
+ 	<dd><ol>
+		<li>Label - slúži na písanie na plochu, na výpis výsledkov býva málo vhodný (ale dá sa použiť). Používa sa ako hlavne ako popis ku niektorým vloženým objektom.
+			<br>Základná vlastnosť je <b>Caption</b>, kde je zapísaný zobrazovaný text.
+			<br>Label1->Caption = "Ahoj";
+		<li>Edit - vstupno-výstupný riadok - ovládame pomocou vlastnosti <b>Text</b>, kde je zapísaný zobrazovaný text 
+			<br>(tiež je v tejto vlastnosti zapísaný text, ktorý naklepe užívateľ do tohoto "okienka" v <b>Inspektor objektov</b>). 
+			<br>Pri získaní číselnej hodnoty z Editu->Text musíme použiť konverziu textu na číslo - <b>StrToInt()</b>
+		<li>CheckBox - používame na zobrazovanie logickej hodnoty (viac sa používa na vstup)	
+		<li>RadioButton - používame na zobrazovanie "správnej odpovede z viacerých možností" (viac sa používa na vstup)	
+			<br>Dva posledné objekty si v prípade záujmu odskúšame po prebraní vetvenia.
+   		</ol>
+<dt><font color="Red">Viacriadkový výstup v tomto okne</font>
+	<dd><ol>
+		<li>Memo - slúži na viacriadkový výstup, ktorý možno rolovať v oboch smeroch.
+			(voľba Scrollbar-ssBoth)
+			<dl><dt><font color="Green">Základné metódy pre prácu s memo</font>
+				<dd><ul>
+					<li>Memo1->Lines->Count() - skutočný počet vložených riadkov
+					<li>memo1->Lines.strings[int i] - text v i-tom riadku (môžme čítať aj zapisovať)
+					<li>Memo1->Lines[int i] - text v i-tom riadku - to isté ako predošlé
+					<li>Memo1->Lines->Append(string) - na pridanie ďalšieho riadka
+					<li>memo1->Clear() - vymaže všetky riadky
+					<li>Memo1->Lines->Clear() - vymaže všetky riadky
+					<li>Memo1->Lines->Delete(int i) - vymaže i-ty riadok
+					<li>Memo1->Lines->Exchange(int i,int j) - vymení i-ty a j-ty riadok
+					<li>int Memo1->Lines->IndexOf(string riadok) - vráti číslo prvého riadku, kde nastala zhoda
+					<li>int Memo1->Lines->IndexofName(string) - vráti číslo prvého riadku, kde je uvedený text 
+					<li>Memo1->Lines->Insert(int i,string) - vsunie nový riadok pred i-ty
+					<li>Memo1->Lines->LoadFromFile(string) - pripíše riadky zo súboru
+					<li>Memo1->Lines->SaveToFile(FileName: string) - zapíše riadky do súboru
+					<li>Memo1->Lines->Move(int i,int j) - presunie i-ty na j-ty riadok
+					<li>Memo1->CaretPos->Line(), CaretPos->Col() - súradnice kurzora 
+					</ul>
+			</dl>
+		<li>StringGrid - používame na zobrazovanie tabuľky hodnôt (viac sa používa na vstup)	
+		<li>Image - na zobrazovanie grafických výsledkov
+		</ol>
+<dt><font color="Red">Výstup do stavového riadku</font>
+	<dd>Stavový riadok môžme pridať položením objektu StatusBar hocikde na plochu. Tým vznikne naspodu formulára
+		jeden riadok. Tento riadok možno používať celý (SimplePanel = TRUE a hodnota je v SimpleText) alebo ho rozdeliť na sekcie. 	
+
+<dt><font color="Red">Výstup do iného okna</font>
+	<dd>Delphi poskytuje niekoľko hotových modálnych okien, ktoré sa zobrazia po zavolaní príslušného podprogramu a užívateľ sa nemusí o nič starať.
+		Ak nám žiadne s ponúkaných okien nevyhovuje, musíme si vytvoriť okno sami (to však chce nejaké vedomosti).   
+		<dl><dt><font color="Green">ShowMessage(text)</font> - jednoduchy oznam s tlačítkom OK
+			<dd>Nedá sa nejak meniť, len ako parameter dáme zobrazovaný text. 
+				Zalamovať riadky možno vkladaním znakov \n
+				<br>Príklad použitia: <b>ShowMessage("Game over\nHra skončila");</b>
+			<dt><font color="Green">MessageDlg(text, typokna, množinaTlačítok, help)</font>
+	    		<dd>text - zobrazený text v okne
+				<br>typokna .......... mtWarning - zobrazí žltý výkričník
+				<br>................ - mtError - zobrazí červené stop
+				<br>................ - mtInformation - zobrazí zelený otáznik
+				<br>................ - mtConfirmation - zobrazí otáznik
+				<br>................ - mtCustom - bez obrázka
+				<br>Množina tlačítok môže byť určená
+				<ul><li> zadaním jedného tlačídka z možností:
+ 						<br>mbYes, mbNo, mbOK, mbCancel, mbAbort, mbRetry, mbIgnore, mbAll, mbNoToAll, mbYesToAll, mbHelp
+					<li>zadaním presnej skupiny tlačítok z možností:
+						<br>mbYesNoCancel, mbOKCancel, mbAbortRetryIgnore, mbAbortIgnore
+					<li>zadaním mnou určenej množiny tlačitok. Množina - musí byť vztvorená pomocou funkcie TMsgDlgButtons()&lt;&lt;tlačídko1&lt;&lt;tlačídko2 ...
+				</ul>
+				<br>Help - zatiaľ dávame 0 - bez nápovedy 
+				<br>Návratová hodnota - číslo stlačeného tlačidla, existujú konštanty
+				<br>mrYes,mrYesToAll, mrOK, mrCancel, mrRetry, mrAbort, mrIgnore
+				<br>Príklad použitia: <b>MessageDlg("Hra skončila\nHrať znova?", mtCustom,TMsgDlgButtons()&lt;&lt;mbYes&lt;&lt;mbNo,0);</b>
+		</dl>
+		<br>
+<dt class=main>Príklady na precvičenie:
+	<dd><table cellspacing="20"><tr><td>
+		<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+		<td>
+		<ol>
+		<li>Napíš program s vloženými tlačítkami
+			<br>Exit, Message, Info, Error, Warning
+			<br>každé tlačítko zavolá príslušné dialógové okno
+				(tlačítko Exit zavolá Message s oznamom "Program bude ukončený")	
+		<li>Uprav predošlú úlohu tak, aby sa do mema zapisovalo aké návratové tlačítko
+			sme stlačili na opustenie pomocného okna.<a href="okna.exe">stiahnuť</a>
+		<li>Napíš program na tabelovanie funkcií
+			<br>i.......i^2........i! pre i od 1 po 10
+			<br>(bodky znamenajú medzery - čísla v stĺpcoch chcem zarovnané sprava) 
+		<li>Na plochu umiestni Label s textom "Ahoj"
+			<br> Vytvor tlačítka 
+			<br> ...."farba-červená" - nastaví výpis na červeno <font color="Red">clRed</font>				
+			<br> ...."farba-modrá" - nastaví výpis na modro <font color="Blue">clBlue</font>				
+			<br> ...."farba-pôvodná" - nastaví výpis na pôvodnú farbu 				
+			<br> ...."Zväčši" - size písma 
+			<br> ...."Zmenši" - size písma 
+			<br><a href="vystup4.exe">stiahnuť</a>
+       		<br><br>
+		<li>Naprogramuj nasledovný program pre prácu s memo.
+			<br><a href="memo.exe">stiahnuť</a>
+		<li>Naprogramuj nasledovný program pre prácu s memo.
+			<br><a href="memo2.exe">stiahnuť</a>
+		</ol> 
+		</tr></table>	
+<dt><font size="+1" color="red">Otázky:</font>
+<dd><ol>
+	<li>Vymenuj ktoré typy premenných možno poslať na výstup
+	<li>Je možné za behu programu zmeniť obsah Edit riadku, ak má vlastnosť ReadOnly?
+	<li>V čom sú výhody a nevýhody objektu memo oproti výstupnému oknu v "klasickom" pascale?
+</ol>
+</dl>
+<h3>Úloha</h3>
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;">
+   <div style="margin:10">
+    <textarea id="text" cols="20" rows="5" style="margin-top:10">Memo1</textarea>
+	<br>
+	<input type="Button" value="Clear all" onclick='s="Memo1\n"; text.innerText=text.textContent=s="Memo1\n";'>
+	<input type="Button" value="Clear first" onclick="prvy();">
+	<input type="Button" value="Clear last" onclick="posledny();">
+	<br>
+	<input type="Button" value="Left"  onclick="s+='Stlačil si ľavé\n'; text.textContent=s;text.innerText=s;">
+	<input type="Button" value="Right" onclick="s+='Stlačil si pravé\n'; text.textContent=s;text.innerText=s;">
+	
+	<br><br>
+	</div></div>	
+</div>
+<br><br>
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:450px;margin:0" id="back1">
+   <div style="margin:10">
+   	<br>Vložená suma: <input type="Text" value="1000" id="suma" style="width:75" onchange="vysl.value=suma.value;roky.value=0">&nbsp; &nbsp;    
+	Ročný úrok: <input type="Text" value="5" id="urok" style="width:75"> 
+	<br><br>
+	<div align="center">
+	<input type="Button" value="Výpočet" onclick="roky.value=eval(roky.value)+1; vysl.value=(eval(vysl.value)*(1+eval(urok.value)/100)).toFixed(2);">
+	</div>
+   	<br>Počet rokov: <input type="Text" value="0" id="roky" style="width:75"  readonly>&nbsp; &nbsp;    
+	Výsledná Suma: <input type="Text" value="1000" id="vysl" style="width:75"  readonly>&nbsp; &nbsp;&nbsp; &nbsp;
+	<input type="Button" value="Help" onclick="alert ('1. roky a výsledok určíme READONLY\n2. pri zmene (OnChange) vloženej sumy zmeníme aj rok na 0 a zmeníme aj výsledok\n3. úrok vypočítame vysledok:=vysledok*(1+urok/100)\n4. nezabudnuť, že výsledok je desatinné číslo\n5. Skúste zadať takéto tlačídko do vášho riešenia');"> 
+	</div></div>
+</div>
+<br><br>
+
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:500px;" id="back2">
+  <div style="margin:10">
+			<input type="Text" id="c1" name="c1" value="0" style="position:absolute;left:x;"><br>
+			<br><input type="Button" value="Vlož - Ahoj" onclick="c1.value='Ahoj'">&nbsp; &nbsp;
+			    <input type="Button" value="Vlož - Čau" onclick="c1.value='Čau'">&nbsp; &nbsp;
+				<input type="Button" value="Zotri"  onclick="c1.value=''"><br>
+			<br><input type="Button" value="červená" onclick="c1.style.color='red'">&nbsp; &nbsp;
+			    <input type="Button" value="zelená" onclick="c1.style.color='green'">&nbsp; &nbsp;
+				<input type="Button" value="modrá" onclick="c1.style.color='blue'"><br>
+			<br><input type="Button" value="vľavo" onclick="c1.style.left=(x-=5);">&nbsp; &nbsp;
+			    <input type="Button" value="vpravo" onclick="c1.style.left=(x+=5);"><span style="width:250">&nbsp; </span>
+				<input type="Button" value="Help" onclick="alert('* zobrazovaný text je vo vlastnosti Text\n* farba textu je vo vlastnosti Font->Color\n* poloha je vo vlastnosti Left');">
+		</ul>
+	</div></div>
+</div>						
+
+</body>
+</html>

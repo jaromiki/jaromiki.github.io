@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">		
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	  <script language="JavaScript">
+	function ciara(data) {document.ciaraHrubka.src = 'obr/ciara.php?farba='+data.farbaciary.value+'&hrubka=' + data.t.value  ;	}
+	function tile(data) {document.ciaraTile.src = 'obr/ciara.php?tile=' + data.tileciary.value+'&hrubka=' + data.t2.value ;	}
+	function brush(data) {document.ciaraBrush.src = 'obr/ciara.php?brush='+ data.brushciary.value +'&hrubka=' + data.t3.value;	}
+	function style1(data) {document.ciaraStyle.src = 'obr/ciara.php?style[]=4&style[]=4&style[]=0&style[]=0&style[]=5&style[]=5&style[]=0&style[]=0&hrubka='+data.t4.value;	}
+	function fplochatile(data) {document.plochaTile.src = 'obr/plocha.php?tile=' + data.tileplochy.value ;	}
+
+	function fplocha(data) {document.plochaFarba.src = 'obr/plocha.php?farba='+data.farbaplocha.value ;	}
+	function fplochastyle(data) {document.plochaStyle.src = 'obr/plocha.php?style[]=4&style[]=4&style[]=0&style[]=0&style[]=5&style[]=5&style[]=0&style[]=0';	}
+	function fplochabrush(data)  {document.plochaBrush.src  = 'obr/plocha.php?brush='+ data.brushplocha.value;}
+	
+	function ftext(data) {	
+	document.obrtext1.src = 'obr/text1.php?velkost=' + data.velkost.value + '&smer='+data.smer.value +
+												   '&x='+data.x.value + '&y='+data.y.value + '&farba='+data.farba.value +
+												   '&font='+data.font.value;	
+}
+</script>
+	<title>Kreslenie v PHP</title>
+</head>
+
+<body>
+<h3>Kreslenie v PHP</h3>
+<dl><dt>Postup 
+	<dd>Aby sme mohli "kresliť" v PHP potrebujeme mať nainštalovanú grafickú knižnicu GD. Na väčšine serverov, kde beží PHP
+		(teda aj na našom) je grafická knižnica nainštalovaná.
+		<br>Myšlienka je taká, že PHP súbor (napr. pokus.php) vie v pamäti vytvoriť  akože súbor typu *.jpeg, *.png alebo *.gif 
+		a keď v dokumente html (napr. aa.html) sa zapíše odkaz na obrázok, kde do adresy zapíšeme názov PHP súboru, ktorý ten obrázok vytvorí.
+		Výhodou je, že PHP súbor môže mať viacero parametrov, ktoré môžu vytvárať viacero variant obrázkov. 
+		Ak do adresného poľa prehliadača zapíšeme takýto PHP súbor zobrazí sa len obrázok. Takto vytvorená "stránka" nemá žiadny kód.
+		V časti PHP kódu musia byť vytvorené nasledovné časti:
+		<ul><li><b>hlavička</b> 
+				<br>header ("Content-type: image/png"); // na vloženie png obrázka
+				<br>header ("Content-type: image/gif"); // na vloženie gif obrázka
+				<br>header ("Content-type: image/jpeg"); // na vloženie jpeg obrázka
+				<br>zabezpečí vytvorenie správneho obrázka
+			<li><b>vytvorenie obrázka v pamäti servera</b>
+				<ul><li>$prem=ImageCreateTrueColor(int x_size, int y_size);
+						<br>vytvorí true color čierny obrázok s danými rozmermi, ktorý v ďalších častiach môžme vylepšovať. 
+					 	Každý bod je odpamätaný 24 bitmi, takýto obrázok je veľmi náročný na pamäť
+					<li>$prem=ImageCreate(int x_size, int y_size);
+						<br>vytvorí true color čierny obrázok s danými rozmermi, ktorý v ďalších častiach môžme vylepšovať. 
+					 	Každý bod je odpamätaný  8 bitmi, takýto obrázok môže z celej palety farieb použiť maximálne 256 farieb,
+						použité farby musia byť zapísaný v tabuľke farieb.
+				</ul>
+				Obrázky jpeg sú truecolor, gif používajú max 256 farieb (veľkosť tabuľky je 256 riadkov)
+				<br>png obrázky môžu byť truecolor a tiež môžu používať indexovanú farbu, index farby môže byť 1,2,4,8,16 bitov.	
+			<li><b>pridanie obsahu obrázku</b>
+				<br>Je veľa grafických objektov ktoré možno vkladať do obrázka, základom pre indexované obrázky je ImageColoralLocate(),
+					lebo používať možno len farby zapísané do tabuľky pomocou tohto príkazu.
+			<li><b>výstup obrázka do html dokumentu</b>
+				<br>Imagejpeg($prem) zapíše JPEG obrázok do html
+				<br>Imagepng($prem) zapíše JPEG obrázok do html
+				<br>Imagepng($prem) zapíše JPEG obrázok do html
+			<li><b>zrušenie obrázka</b>
+				<br>imageDestroy($prem);
+				<br>Vztv8rané obrázky treba po odoslaní na stránku vymazať, inak môžu zahltiť server.
+		</ul>		
+	<dt><b>Dôležité funkcie</b>
+	<dd>
+		<ul><li>Imagesx($prem)zistí šírku obrázku
+			<li>Imagesy($prem) zistí výšku obrázku
+			<li>
+			<li>$farba=ImageColoralLocate($prem,$r,$g,$b) namieša farbu a pridá ju do tabuľky, jej hodnotu je možno odpamätať,
+				<br>nultá farba je použitá ako pozadie obrázka
+			<li>ImageColorTransparent = ($prem,$farba) nastaví zadanú farbu (index) na priesvistnú. Je možné len pri jpeg a png.  	
+			<li>imagestring( $prem, $veľkosť_fontu, $x, $y, $text, $farba) vypíše reťazec horizontálne
+			<li>Imagestringup( $prem, $veľkosť_fontu, $x, $y, $text, $farba) vypíše reťazec vertikálne
+			<li>ImageSetPixel($prem,$x,$y,$farba)
+			<li>ImageLine($prem,$x1,$y1,$x2,$y2,$farba)
+			<li>ImageRectangle($prem,$x1,$y1,$x2,$y2,$farba)
+			<li>ImageFilledRectangle($prem,$x1,$y1,$x2,$y2,$farba)
+ 			<li>ImagePolygon($prem,$body, $pocet,$farba)
+ 			<li>ImageFilledPolygon($prem,$body, $pocet,$farba)
+			<li>ImageEllipse($prem, $stredx,$stredy,$sirka,$vyska)
+			<li>ImageFilledEllipse($prem, $stredx,$stredy,$sirka,$vyska)
+			<li>imageArc($prem, $stredx, $stredy, $šírka, $výška, $uhol1, $uhol2, $farba).
+				<br> 
+			<li>imageFilledArc($prem, $stredx, $stredy, $šírka, $výška, $uhol1, $uhol2, $farba,$stýl).
+				štýl:
+				<ul><li>IMG_ARC_PIE ... koláčový výsek
+					<li>IMG_ARC_CHORD ... oblúk je nahradený úsečkou
+					<li>IMG_ARC_EDGED
+					<li>IMG_ARC_NOFILL
+				</ul>	
+			<li>imageFill($prem,$x,$y,$farba)	vyplní útvar
+			<li>imageFillToBorder($prem, $x,$y,$farba_border,$farba_vypln)
+			<li>int imageColorAt ( $prem, int x, int y) vráti index farby zo zadaných súradníc
+			<li>int imageColorExact ($prem, int red, int green, int blue) vráti index zadanej farby (ak nie je v tabuľke vráti -1)
+			<li>bool imageColorSet ($prem, int index, int red, int green, int blue) zmení farbu so zadaným indexom
+		</ul>	
+	<dt><b>Použitie existujúcich obrázkov</b>
+	<dd>Môžme meniť existujúce obrázky
+		<ul><li>pridávať nové prvky - napr. text, čiary, plochy
+			<li>meniť farby - existujúcemu obrázku môžme prepisovať tabuľku farieb
+			<li>môžme hotový obrázok "pečiatkovať" do nášho obrázka
+			<li>výplň čiar a plôch
+		</ul>
+		Načítanie existujúceho obrázka:
+		<br>$obr= imageCreateFromPNG ( string filename )
+		<br>$obr= imageCreateFromJPEG ( string filename )
+		<br>$obr= imageCreateFromGIF ( string filename )
+ 	<dt><b>štýl čiar</b>
+	<dd><table cellpadding="10" bgcolor="white">
+		<tr><th  bgcolor="White"  colspan="2"   >Hrúbka a farba čiary</tr>
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/ciara.php?farba=1&hrubka=1" alt="" name="ciaraHrubka" height="101" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setThicknessForm">
+							Farba:<br><select name="farbaciary" size="1">
+								<option value="0">white</option>
+								<option value="1">blue</option>
+								<option value="2">green</option>
+								<option value="3">silver</option>
+								<option value="4">red</option>
+								<option value="5">black</option>
+							</select>
+							<br>
+							imageThickness ($im, <input type="text" name="t" value="1" size="3" maxlength="2">&nbsp;) ;
+							<p><input onclick="ciara(this.form);" type="button" name="istrd" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>
+		<hr>
+		<table cellpadding="10" bgcolor="white">					
+		<tr><th  bgcolor="White"  colspan="2" >Čiara kreslená bodmi</tr>
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF">
+		<img src="obr/ciara.php?style[]=4&style[]=4&style[]=0&style[]=0&style[]=5&style[]=5&style[]=0&style[]=0&hrubka=3" alt="" name="ciaraStyle" height="101" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setStyleForm">
+							imageSetStyle ($im, array(4,4,0,0,5,5,0,0));
+							<br>
+							imageThickness ($im, <input type="text" name="t4" value="1" size="3" maxlength="2">&nbsp;) ;
+							<p><input onclick="style1(this.form);" type="button" name="istrd2" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>			
+		<hr>
+		<table cellpadding="10" bgcolor="white">					
+		<tr><th  bgcolor="White"  colspan="2" >Čiara kreslená obrázkom<br>(obrázok ako tapeta)</tr>
+		<tr><td  bgcolor="White"  colspan="2" >
+											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
+												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
+												 <td><img src="obr/rbow.png" width="12" height="2" border="0" alt="">
+												 <td><img src="obr/reddot.png" width="7" height="7" border="0" alt="">
+												 <td><img src="obr/nyphp.png" width="36" height="36" border="0" alt="">
+												 <td><img src="obr/php1.png" width="40" height="22" border="0" alt=""></tr>
+												 <tr align="center"><td>cbrd.png<td>rbow.png<td>reddot.png<td>nyphp.png<td>php1.png</tr>
+											</table></tr>	 
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/ciara.php?tile=cbrd.png&hrubka=1" alt="" name="ciaraTile" height="101" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setTileForm">
+							imageSetTile ($im, <select name="tileciary" size="1">
+								<option value="cbrd.png">cbrd.png</option>
+								<option value="rbow.png">rbow.png</option>
+								<option value="reddot.png">reddot.png</option>
+								<option value="nyphp.png">nyphp.png</option>
+								<option value="php1.png">php1.png</option>
+							</select> );
+							<br>
+							imageThickness ($im, <input type="text" name="t2" value="1" size="3" maxlength="2">&nbsp;) ;
+							<p><input onclick="tile(this.form);" type="button" name="istrd2" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>			
+		<hr>
+		<table cellpadding="10" bgcolor="white">					
+		<tr><th  bgcolor="White"  colspan="2" >Čiara vyplnená obrázkom<br>(jeden obrázok sa ťahá po čiare)</tr>
+		<tr><td  bgcolor="White"  colspan="2" >
+											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
+												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
+												 <td><img src="obr/rbow.png" width="12" height="2" border="0" alt="">
+												 <td><img src="obr/reddot.png" width="7" height="7" border="0" alt="">
+												 <td><img src="obr/nyphp.png" width="36" height="36" border="0" alt="">
+												 <td><img src="obr/php1.png" width="40" height="22" border="0" alt=""></tr>
+												 <tr align="center"><td>cbrd.png<td>rbow.png<td>reddot.png<td>nyphp.png<td>php1.png</tr>
+											</table></tr>	 
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/ciara.php?brush=cbrd.png&hrubka=1" alt="" name="ciaraBrush" height="101" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setBrushForm">
+							imageSetBrush ($im, <select name="brushciary" size="1">
+								<option value="cbrd.png">cbrd.png</option>
+								<option value="rbow.png">rbow.png</option>
+								<option value="reddot.png">reddot.png</option>
+								<option value="nyphp.png">nyphp.png</option>
+								<option value="php1.png">php1.png</option>
+							</select> );
+							<br>
+							imageThickness ($im, <input type="text" name="t3" value="1" size="3" maxlength="2">&nbsp;) ;
+							<p><input onclick="brush(this.form);" type="button" name="istrd2" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>			
+
+	<dt><b>štýl výplní</b>	
+	<dd>
+	<table cellpadding="10" bgcolor="white">
+		<tr><th  bgcolor="White"  colspan="2"   >Farba výplne</tr>
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/plocha.php?farba=1" alt="" name="plochaFarba" height="151" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="FarbaPlochaForm">
+							Farba:<br><select name="farbaplocha" size="1">
+								<option value="0">white</option>
+								<option value="1">blue</option>
+								<option value="2">green</option>
+								<option value="3">silver</option>
+								<option value="4">red</option>
+								<option value="5">black</option>
+							</select>
+							<p><input onclick="fplocha(this.form);" type="button" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>
+		<hr>
+
+		<table cellpadding="10" bgcolor="white">					
+		<tr><th  bgcolor="White"  colspan="2" >Plocha kreslená bodmi</tr>
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF">
+		<img src="obr/plocha.php?style[]=4&style[]=4&style[]=0&style[]=0&style[]=5&style[]=5&style[]=0&style[]=0&hrubka=3" alt="" name="plochaStyle" height="151" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setPlochaBodyForm">
+							imageSetStyle ($im, array(4,4,0,0,5,5,0,0));
+							<p><input onclick="fplochastyle(this.form);" type="button" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>			
+		<hr>
+
+	
+		<table cellpadding="10" bgcolor="white">					
+		<tr><th  bgcolor="White"  colspan="2" >Výplň kreslená obrázkom<br>(obrázok ako tapeta)</tr>
+		<tr><td  bgcolor="White"  colspan="2" >
+											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
+												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
+												 <td><img src="obr/rbow.png" width="12" height="2" border="0" alt="">
+												 <td><img src="obr/reddot.png" width="7" height="7" border="0" alt="">
+												 <td><img src="obr/nyphp.png" width="36" height="36" border="0" alt="">
+												 <td><img src="obr/php1.png" width="40" height="22" border="0" alt="">
+												 <td><img src="obr/kamen2.png" width="40" height="22" border="0" alt="">
+												 <td><img src="obr/strk.png" width="40" height="22" border="0" alt="">
+												 </tr>
+												 <tr align="center"><td>cbrd.png<td>rbow.png<td>reddot.png<td>nyphp.png<td>php1.png<td>kamen.png<td>strk.png</tr>
+											</table></tr>	 
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/plocha.php?tile=strk.png" alt="" name="plochaTile" height="151" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setPlochaTile">
+							imageSetTile ($im, <select name="tileplochy" size="1">
+								<option value="cbrd.png">cbrd.png</option>
+								<option value="rbow.png">rbow.png</option>
+								<option value="reddot.png">reddot.png</option>
+								<option value="nyphp.png">nyphp.png</option>
+								<option value="php1.png">php1.png</option>
+								<option value="kamen2.png">kamen.png</option>
+								<option value="strk.png">strk.png</option>
+							</select> );
+							<p><input onclick="fplochatile(this.form);" type="button"  value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>		
+
+		<hr>
+		<table cellpadding="10" bgcolor="white">					
+		<tr><th  bgcolor="White"  colspan="2" >Plocha vyplnená obrázkom<br>(jeden obrázok sa ťahá po čiare)</tr>
+		<tr><td  bgcolor="White"  colspan="2" >
+											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
+												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
+												 <td><img src="obr/rbow.png" width="12" height="2" border="0" alt="">
+												 <td><img src="obr/reddot.png" width="7" height="7" border="0" alt="">
+												 <td><img src="obr/nyphp.png" width="36" height="36" border="0" alt="">
+												 <td><img src="obr/php1.png" width="40" height="22" border="0" alt=""></tr>
+												 <tr align="center"><td>cbrd.png<td>rbow.png<td>reddot.png<td>nyphp.png<td>php1.png</tr>
+											</table></tr>	 
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/plocha.php?brush=cbrd.png" alt="" name="plochaBrush" height="151" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="setBrushForm1">
+							imageSetBrush ($im, <select name="brushplocha" size="1">
+								<option value="cbrd.png">cbrd.png</option>
+								<option value="rbow.png">rbow.png</option>
+								<option value="reddot.png">reddot.png</option>
+								<option value="nyphp.png">nyphp.png</option>
+								<option value="php1.png">php1.png</option>
+							</select> );
+							<p><input onclick="fplochabrush(this.form);" type="button" value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>			
+				
+	<dt><b>Vkladanie textu do obrázka</b>	
+	<dd>Aby sme mohli vkladať text musíme si "zohnať" nejaké fonty, pomocou ktorých bude náš text potom zobrazovaný.
+	Ja som sa obmedzil na fonty *.ttf, ktoré sú súčasťou Win a je ich pomerne ľahko aj zohnať na internete. 
+	<dt>Funkcie
+	<dd>array imageTTFText  ( resource image, int size, int angle, int x, int y, int color, string fontfile, string text)
+		<br>array imageTTFBBox  ( int size, int angle, string fontfile, string text)
+		<br><br>obe funkcie vrátia 8-prvkové pole, kde sú zapísané súradnice bodov ĽD-PD-PH-ĽH, prvá funkcia navxše ten text aj zobrazí. 
+
+		<table cellpadding="10" bgcolor=#99ffff>					
+		<tr><th  bgcolor="White"  colspan="2" >Vkladanie textu do obr</tr>
+		<tr ><td align="center" height="180" bgcolor="#FFFFFF">
+				<img src="obr/text1.php?velkost=20&smer=0&x=10&y=60&farba=5&font=times.ttf" alt="" name="obrtext1" height="201" width="301" border="0"></td>
+					<td bgcolor="silver">
+						<form method="post" name="formtext1">
+							imagettftext($im, <input type="Text" value="20" name="velkost" size="2">, 
+							                  <input type="Text" value=" 0" name="smer" size="2">, 
+							                  <input type="Text" value="10" name="x" size="2">, 
+							                  <input type="Text" value="60" name="y" size="2">, 
+											  <select name="farba" size="1">
+												<option value="0">white</option>
+												<option value="1">blue</option>
+												<option value="2">green</option>
+												<option value="3">silver</option>
+												<option value="4">red</option>
+												<option value="5">black</option>
+												<option value="6">yellow</option>
+											</select>,
+											  <select name="font" size="1">
+												<option value="arial.ttf">arial</option>
+												<option value="cour.ttf">courier</option>
+												<option value="freehand.ttf">freehand</option>
+												<option value="garamond.ttf">garamond</option>
+												<option value="monotype.ttf">monotype</option>
+												<option value="times.ttf">times</option>
+												<option value="verdana.ttf">verdana</option>
+												<option value="zapf.ttf">zapf</option>
+											</select>,'text')
+							<p><input onclick="ftext(this.form);" type="button"  value="redraw"></p>
+						</form>
+					</td></tr>
+		</table>			
+	
+	<dt><b>Vkladanie obrázka do obrázka</b>	
+	<dd>Niekedy potrebujeme opečiatkovať jedon obrázok do iného obrázka. Na ten účel máme niekoľko možností:
+		<br><b>bool imageCopy (resource dst_im, resource src_im, int dst_x, int dst_y, int src_x, int src_y, int src_w, int src_h)</b>
+		<br>dst_im ... číslo obrázka kam sa pečiatkuje
+		<br>src_im ... číslo obrázka ktorý sa pečiatkuje
+		<br>dst_x ... súradnica kam sa bude pečiatkovať
+		<br>dst_y ... súradnica kam sa bude pečiatkovať
+		<br>src_x ... súradnica výrezu ktorý sa bude pečiatkovať
+		<br>src_y ... súradnica výrezu ktorý sa bude pečiatkovať
+		<br>src_w ... šírka výrezu ktorý sa bude pečiatkovať
+		<br>src_h ... výška výrezu ktorý sa bude pečiatkovať
+		<br>návratová hodnota je či sa akcia podarila
+		<br>výsek nemožno "naťahovať"
+		<br><br><b>bool imageCopyMerge  ( resource dst_im, resource src_im, int dst_x, int dst_y, int src_x, int src_y, int src_w, int src_h, int pct)</b>
+		<br>identická funkcia ako predošlá, len posledný parameter určuje priesvitnosť vkladanej pečiatky
+		<br>0 ... úplne priesvitná
+		<br>100 ... úplne nepriesvitná
+		<br><br>int imageCopyMergeGray  ( resource dst_im, resource src_im, int dst_x, int dst_y, int src_x, int src_y, int src_w, int src_h, int pct)
+		<br>identická funkcia ako predošlá, len posledný parameter určuje "vyšedenie" vkladaného obrázka
+		<br><br>int imageCopyResized  ( resource dst_im, resource src_im, int dstX, int dstY, int srcX, int srcY, int dstW, int dstH, int srcW, int srcH)
+		<br>dst_im ... číslo obrázka kam sa pečiatkuje
+		<br>src_im ... číslo obrázka ktorý sa pečiatkuje
+		<br>dst_x ... súradnica kam sa bude pečiatkovať
+		<br>dst_y ... súradnica kam sa bude pečiatkovať
+		<br>src_x ... súradnica výrezu ktorý sa bude pečiatkovať
+		<br>src_y ... súradnica výrezu ktorý sa bude pečiatkovať
+		<br>src_w ... šírka výrezu ktorý sa bude pečiatkovať
+		<br>src_h ... výška výrezu ktorý sa bude pečiatkovať
+		<br>dst_w ... šírka výrezu ktorý sa bude pečiatkovať
+		<br>dst_h ... výška výrezu ktorý sa bude pečiatkovať
+
+	<dt><b>Ukážky</b>
+	<dd><table border="1" cellpadding="5"><tr><td width="200">Prázdny čierny obrázok<td><img src="cierne.php">
+					<td>&lt;?php
+			  			<br>$prem=ImageCreate(200, 100);
+			  			<br>$tc = ImageColorAllocate($prem,0,0,0); 
+			  			<br>header ("Content-type: image/png");
+			  			<br>Imagepng($prem);
+			  			<br>imageDestroy($prem);
+						<br>?>
+					</tr>
+				<tr><td>farebný obdĺžnik<td><img src="far.php">
+					<td>&lt;?php
+			  			<br>$prem=ImageCreate(200, 100);
+			  			<br>$tc = ImageColorAllocate($prem,100,100,255); 
+			  			<br>header ("Content-type: image/png");
+			  			<br>Imagepng($prem);
+			  			<br>imageDestroy($prem);
+						<br>?></tr>
+				<tr><td>farebný obdĺžnik
+						<br>s cerv. čiarou<td><img src="far2.php">
+					<td>&lt;?php
+			  			<br>$prem=ImageCreate(200, 100);
+			  			<br>$tp = ImageColorAllocate($prem,100,100,255); 
+			  			<br>$tc = ImageColorAllocate($prem,255,100,100); 
+			  			<br>header ("Content-type: image/png");
+						<br>ImageLine($prem,0,99,199,0,$fc);
+			  			<br>Imagepng($prem);
+			  			<br>imageDestroy($prem);
+						<br>?></tr>
+				<tr><td>farebný obdĺžnik
+						<br>body sinus<td><img src="far3.php">
+						<td>&lt;?php
+			  				<br>$prem=ImageCreate(201, 101);
+			  				<br>$tp = ImageColorAllocate($prem,100,100,255); 
+			  				<br>$fc = ImageColorAllocate($prem,255,100,100);
+			  				<br>$fb = ImageColorAllocate($prem,255,255,100);
+			  				<br>ImageLine($prem,0,50,200,50,$fc);
+			  				<br>ImageLine($prem,100,0,100,100,$fc);
+			  				<br>for ($i=0;$i&lt;201;$i++) 
+			  				<br>{$x=($i-100)*3.1415/100;
+			   				<br> &nbsp; $y=(sin($x)+1)*50;
+               				<br> &nbsp; ImageSetPixel($prem,$i,$y,$fb);
+			  				<br>}
+			  				<br>header ("Content-type: image/png");
+			  				<br>Imagepng($prem);
+			  				<br>imageDestroy($prem);
+							<br>?></tr>
+				<tr><td>hodiny<td><img src="hodiny2.php">
+			</tr></table>							
+</dl>
+
+</body>
+</html>

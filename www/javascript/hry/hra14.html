@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>Arkanoid</title>
+<script>
+    var hra=0;
+	var tr=0;    
+	function start1()
+	{ 
+	  hra=1;
+	  window.tr=setInterval('anim()',10);
+	 } 
+    function pohyb()
+	{  if (hra)
+	   if (event.clientX>49+15 && event.clientX<560-49+30) elipsa.style.left=event.clientX-49+20; }
+	function anim()
+	{
+		 x1+=dx1; y1+=dy1;
+		 if (y1>319 && Math.abs(x1-parseInt(elipsa.style.left)-40)<50)
+		 { dx1=parseInt((x1-parseInt(elipsa.style.left)-40)/8);dy1=Math.abs(dx1)-8;
+		 }
+		 if (x1<45) dx1=Math.abs(dx1);
+		 if (y1<45) dy1=Math.abs(dy1); 
+		 if (x1>580) dx1=-Math.abs(dx1); 
+		 if (y1>327) {  clearInterval(tr); hra=0; 
+		 				alert('Spadla');
+						x1=parseInt(elipsa.style.left)+10;y1=315;
+						dx1=-5; dy1=-3;
+		                gulicka.style.left=parseInt(elipsa.style.left)+10;
+  						gulicka.style.top=315;
+						b1.focus();return;
+}
+		 gulicka.style.left=x1;		 
+		 gulicka.style.top=y1;
+	} 
+</script>	
+</head>
+
+<body>
+<div style="background:'silver';width:600;" onmousemove="pohyb()">
+  <div style="width:560; height:300; background:'#ccccff'; margin:30" 
+      onmousemove="pohyb()">
+  <script> 
+  for(i=0;i<24;i++) {document.writeln('<span style="position:absolute"></span>');}
+  </script>
+  </div>
+  <br>
+  <input type="Button" value=" Štart " style="margin:5 100 5 150" onclick="start1()" id="b1">
+  <input type="Button" value=" Exit " style="margin:5 100 5 150" onclick="window.close()">
+</div>
+  <script>
+  
+  for(var i=0;i<3;i++)
+  { for(var j=0;j<8;j++)  
+    {document.all.tags('span')[8*i+j].style.background='purple';
+	 document.all.tags('span')[8*i+j].style.width=66;
+	 document.all.tags('span')[8*i+j].style.height=16;
+	 document.all.tags('span')[8*i+j].style.left=j*70+42;
+	 document.all.tags('span')[8*i+j].style.top=i*20+48;
+	} 
+  }	
+  </script>
+
+<img src="elipsa.bmp" width="98" height="23" border="0" alt="" style="position:absolute; filter:chroma(color=#ffffff)" id="elipsa"
+    onmousemove="pohyb()">
+<img src="gulicka.gif" width="15" height="15" border="0" alt=""  style="position:absolute" id="gulicka">	
+<script>
+  elipsa.style.left=270;
+  elipsa.style.top=321;
+  gulicka.style.left=280;
+  gulicka.style.top=315;
+  b1.focus();  
+var x1=280, y1=315, dx1=-5, dy1=-3;
+</script>
+</body>
+</html>

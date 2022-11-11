@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Textové súbory</title>
+</head>
+
+<body>
+Textový súbor sa skladá z riadkov. Každý riadok môže mať "ľubovoľnú" veľkosť a je ukončený
+CR/LF pod OS DOS a LF pod OS UNIX. Pri zápise systém sám vloží koniec riadku a pri čítaní
+koniec riadku odstráni.
+<dl><dt><font size="+1" color="Blue">Deklarácia</font>
+	<dd><dl><dt><font color="Red">FILE </font>*f,*g
+			<dd>f,g sú názvy-adresy buffra cez ktorý sa spojenie so súborom urobí
+			<br>slovo FILE musí byť celé veľkými písmenami
+		</dl>
+	<dt><font size="+1" color="Blue">Otvorenie</font>
+	<dd><dl><dt>f<font color="Red">=fopen(</font>cesta, použitie<font color="Red">)</font>
+			<dd>vytvorí logické spojenie medzi buffrom f a fyzickým súborom
+			<br>ak sú v ceste opačné lomítka musia byť zdvojené
+			<br>použitie:
+			<br> &nbsp; "r" - otvorenie len na čítanie
+			<br> &nbsp; "w" - otvorenie len na zápis
+			<br> &nbsp; "a" - otvorenie na zápis-pridávanie
+			<br>Ošetrenie chyby:
+			<br>Subor na zapis (ak je pripadná cesta k nemu spravna) sa da pod Win otvoriť prakticky vždy
+			<br>Ak otvárame súbor na čítanie alebo pridávanie tak tento musí existovať (ak neexistuje funkcia vráti NULL)
+			<br>Podobne ako v pascale môžme otvorení na čítanie testovať, či súbor existuje alebo nie. 
+		</dl>
+	<dt><font size="+1" color="Blue">Uzavretie súboru</font>
+	<dd><dl><dt><font color="Red">fclose(</font>identifikátor<font color="Red">)</font>
+			<dd>Vyprázdni buffer spojený s daným súborom a súbor korektne uzavrie.  
+			<br>Ošetrenie chyby:
+			<br>Ak sa nepodarí uzavrieť vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+		</dl>
+	<dt><font size="+1" color="Blue">Zápis do súboru </font>
+	<dd><dl><dt><font color="Red">fprintf(</font>subor, format, argumenty<font color="Red">)</font>
+			<dd>funguje ako printf, len zápis je do súboru
+			<br>Ošetrenie chyby:
+			<br>Ak sa nepodarí zapísať vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+			<dt><font color="Red">fputc(</font>znak, subor<font color="Red">)</font>
+			<dt><font color="Red">putc(</font>znak, subor<font color="Red">)</font>
+			<dd>Položí znak do súboru
+			<br>!Pozor na poradie parametrov!
+			<br>Ošetrenie chyby:
+			<br>Ak sa nepodarí zapísať vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+			<dt><font color="Red">fputs(</font>reťazec, subor<font color="Red">)</font>
+			<dd>Položí reťazec do súboru a pridá '\n' - ukončenie vety
+			<br>!Pozor na poradie parametrov!
+			<br>Ošetrenie chyby:
+			<br>Ak sa nepodarí zapísať vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+			<dt><font size="+1" color="Blue">Úlohy</font>
+			<dd><ol><li>Napíšte program na načítanie textu z klávesnice a jeho zápis do súboru. Názov súboru načítajte.
+						Pri otváraní i zápise robte kontrolu vykonania - v prípade chyby vypíšte oznam a ukončite program.
+					<li>Napíš program na generovanie príkladov typu cislo1 operacia cislo2 =
+						<br>počet príkladov je 10, operácie +,-,*,/
+						<br>cislo1, cislo2 sú náhodné dvojciferné čísla volené tak, aby výsledky boli tiež maximálne dvojciferné a celé.
+				</ol>
+		</dl>
+	
+	<dt><font size="+1" color="Blue">Čítanie zo súboru </font>
+	<dd><dl><dt><font color="Red">fscanf(</font>subor, format, argumenty<font color="Red">)</font>
+			<dd>funguje ako scanf, len číta zo súboru
+			<br>Návratová hodnota:
+			<br><b>EOF</b> - Ak sa pokúsime čítať za koncom súboru vráti hodnotu EOF (preddefinovaná konštanta)
+			          <br> &nbsp; &nbsp; ak však načíta aspoň jeden znak nevráti EOF ale počet uspokojených premenných
+			<br><b>0</b> - ak sa žiadna premenná nenaplnila
+			<br><b>n</b> - ak sa naplnilo n premenných zo zoznamu premenných
+			<br>Pozn. - Ak sa niektorý údaj zo vstupu nepodarí zapísať-skonvertovať do premennej 
+			    načítanie končí bez chyby a funkcia vráti počet úspešne zmenených premenných.
+			<dt><font color="Red">fgetc(</font>subor<font color="Red">)</font>
+			<dd>funkcia funguje ako getch z klávesnice, umožní aj vrátiť posledne prečítaný znak ungetc
+				<br>( úplne rovnako možno použiť aj makro getc(subor))
+			<br>Ošetrenie chyby:
+			<br>Ak sa nepodarí načítať (čítame za koncom súboru) vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+			<dt><font color="Red">fgets(...)</font>
+			<dd>načíta reťazec, preberie sa pri preberaní reťazcových premenných
+			<dt><font color="Red">ungetc(znak, subor)</font>
+			<dd>vráti zadaný znak (obyčajne posledne načítaný), aby ho bolo možné opätovne načítať 
+			    (funguje podobne ako ungetch() pri načítaní z klávesnice)
+			<dt><font size="+1" color="Blue">Úlohy</font>
+			<dd><ol>
+				<li>Napíš program na načítanie názvu súboru a jeho výpis na obrazovku, v prípade chyby vypíš oznam.
+				<li>Napíš program, ktorý načítava súbor vytvorený úlohou2 v predošlých úlohách, vypisuje po riadkoch
+					a vyžiada si za rovná sa natipovanú správnu odpoveď. Nakoniec vypíš štatistiku odpovedí.
+				</ol>
+		</dl>	
+	<dt><font size="+1" color="Blue">Ošetrovanie chýb</font>
+	<dd>Každá funkcia má návratovú hodnotu a podľa nej sa dá testovať úspešnosť operácie. Ďalšie možnosti:
+		<ul>
+		<li><font color="Red">feof(</font> subor<font color="Red"> )</font> ... pri čítaní zo súboru je možné testovať "logickú" funkciu feof() 
+		<li><font color="Red">ferror(</font> subor<font color="Red"> )</font> ... vráti číslo chyby (0=OK)
+		<li><font color="Red">perror(</font> retazec<font color="Red"> )</font> ... vypíše reťazec a text chyby 
+		<li><font color="Red">clearerr(</font> subor<font color="Red"> )</font> ... vymaže chybový stav na danom súbore 
+		</ul>
+	<dl><dt><font size="+1" color="Blue">Úlohy k ošetrovaniu chýb</font>
+	<dd><ol><li>Načítaj názov súboru a vypíš ho na obrazovku. V prípade chyby pri otváraní vypíš "Chyba pri otváraní súboru:" 
+				a potom vypíš štandartné chybové hlásenie patriace vzniklej chybe. 
+		</ol>
+	</dl>
+	<dt><font size="+1" color="Blue">Typické úlohy</font>
+	<dd><ol>
+	<li>Poznáme počet viet - vytvorme súbor plat1996.dat, kde v 12-tich riadkoch bude každý riadok začína platom za jednotlivý mesiac
+		<br>- napíšte program, ktorý vypíše priebeh zárobku za mesiace
+		<br>- vypíše názov mesiaca s najväčším prímom
+	<li>Počet viet je uvedený v prvej vete
+		<br>upravme súbor plat1996.dat tak, že v prvej vete bude uvedené počet spracovaných mesiacov
+		<br>- vypočítaj priemerný plat za uvedené mesiace
+	<li>Nevieme počet viet
+		<br>upravme súbor z úlohy2 tak, že vynecháme prvú vetu
+		<br>- vypíš počet sledovaných mesiacov
+		<br>- vypíš priemerný plat za uvedené mesiace
+	<li>Nevieme počet viet a ani počet čísel v riadku
+ 		<br>vytvorme súbor vreckove.dat, kde v každom riadku budú všetky príjmy za odpovedajúci mesiac
+		<br>- napíš počet sledovaných mesiacov
+		<br>- napíš číslo mesiaca, kde bol najväčší počet príjmov
+		<br>- napíš číslo mesiaca, kde bol najmenší príjem
+	<li>Napíš program na okopírovanie súboru. Program si vypýta oba názvy súborov.
+	<li>Napíš program na spočítanie počtu bajtov,písmen, číslic a riadkov.
+</ol>
+	<dt><font size="+1" color="Blue">Špeciálne funkcie pre prácu so súbormi</font>
+	<dd><font color="Red">int remove(subor)</font>
+	<br>je to makro na zrušenie súboru, ak OK vráti nulu 0
+	<br><font color="Red">int rename(stare_meno, nove_meno)</font>
+	<br>je makro na premenovanie súboru
+	<dl>
+	<dt>Úlohy:
+	<dd>Napíšte program na pridávanie čísel do usporiadaného zoznamu čísel
+	<br>(každé číslo je na samostatnom riadku)
+	<br>program bude ovládaný pomocou menu:
+	<ul>
+	<li>pridaj nove cislo
+	<li>vypis cisel po strankach (aj s poradovými číslami)
+	<li>zrus cislo pod por. cislom
+	<li>hladaj číslo
+	<li>koniec
+	</ul>
+	</dl>
+</dl>
+<h3>Prúdy - knižnica fstream.h</h3>
+Podobne ako pri práci so štandartným vstupom-klávesnicou a štandartným výstupom-monitor aj tu možno prácu riešiť objektovo - pomocou streamov.
+<dl>
+<dt>Knižnica
+<dd>Príkazy sú v knižnici fstream.h
+<dt>Deklarácia
+<dd>ifstream prem1; // premenná pre vstup zo súboru
+	<br>ofstream prem2; // premenná pre výstup do súboru 	
+	<br>Pri deklarácii možno hneď aj otvoriť prepojenie na konkrétny súbor
+	<br>ifstream prem1(text);
+	<br>ofstream prem1(text);
+	<br>V texte je adresa s názvom súboru, takto zadefinovanú premennú už netreba otvárať, overenie či sa otvorenie podarilo
+	urobíme pomocou testu <b>if (prem1)</b> čo vráti <b>true</b> ak sa otvorenie podarilo.
+	<br>alebo pomocou <b>if (prem1.is_open())</b>
+	
+<dt>Otvorenie súboru
+<dd>Ak v deklarácii neuvedieme názov súboru je nutné vytvoriť spojenie našej premennej so súborom pomocou príkazu open.
+    <br><b>prem1.open(string)</b> // v stringu je zapísaný názov súboru (prípadne aj s cestou), otvorí na čítanie
+	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ak súbor neexistuje (otvorenie sa nepodarí) môžme otestovať pomocou 
+	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; logickej funkcie prem1.fail() alebo testom priamo premennej prem1
+	<br><b>prem2.open(string)</b> // v stringu je zapísaný názov súboru (prípadne aj s cestou), otvorí na zápis
+<dt>Zápis do súboru
+<dd>Zápis možno robiť pomocou operátora &lt;&lt; (napr. prem2 &lt;&lt; "Ahojte vsetci!") podobne ako s cout
+	<br>alebo pomocou funkcie put(char) (napr. prem2.put(char))
+
+<dt>Čítanie zo súboru
+<dd><dl><dt>test vykonania operácie
+		<dd><ul><li>good(prem1) - vráti 1 ak posledná operácia dopadla dobre, 0 ak zle
+				<li>fail(prem1) - vráti 0 ak posledná operácia dopadla dobre, 1 ak zle
+			</ul>
+		<dt>Čítanie do premennej
+		<dd>prem1 &gt;&gt; prem
+			<dd>prem1 ... zdroj dátového toku
+				<br>&gt;&gt; ... operátor, ktorý dáta zľava pošle cielu uvedenému vpravo
+				<br>prem ... povolené typy premenných sú znaky, texty, celé čísla a reálne čísla
+				<br><br>Pozn.
+				<br>operátor môžme aj zreťaziť - prem1 &gt;&gt; a &gt;&gt; b &gt;&gt;c;
+				<br>načíta sa a potom b a nakoniec c
+			<dt>Funkcie objektu prem1
+			<dd><ul><li>prem1.get() - načíta zo vstupu 1 znak a vráti ho ako návratovú hodnotu (alebo vráti EOF)
+					<li>prem1.get(char prem) - načíta zo vstupu 1 znak a zapíše ho do parametra
+					<li>prem1.get(char *prem,int n) - načíta zo vstupu text až po enter a zapíše ho do prem. Enter zostane na vstupe
+						<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+						<ul><li>narazili sme na enter
+							<li>načítali sme už (n-1) znakov
+							<li>narazili sme na EOF
+						</ul>	
+				<li>prem1.get(char *,int ,char) - načíta zo vstupu text a zapíše ho do prem. 
+					<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+					<ul><li>narazili sme na znak 3. parameter - znak z zostáva na vstupe
+						<li>načítali sme už (n-1) znakov (druhý parameter)
+						<li>narazili sme na EOF
+					</ul>	
+				<li>prem1.getline(char *,int ) - tento príkaz nefunguje - namiesto neho používame príkaz getline z knižnice string.
+					<br>getline(stream, prem_typu_string)
+					<br>Priklad:
+<pre style="background-color:#eeeeee; padding:20; border-width:3; border-style:outset; width:80%" >
+#include &lt;iostream>
+#include &lt;string>
+#include &lt;fstream>
+using namespace std;
+int main()
+{ string s;
+ifstream f("pokus.txt");
+if (!f) {cout &lt;&lt;"Nenasiel som subor"; return 0;}
+getline(f,s);
+cout &lt;&lt;"1. riadok suboru:" &lt;&lt;s;
+f.close();
+return 0;}
+</pre>
+					<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+					<ul><li>narazili sme na enter (nezostane na vstupe)
+						<li>narazili sme na EOF
+					</ul>	
+				</ul>	
+		</dl>
+</dl>	 
+</body>
+</html>

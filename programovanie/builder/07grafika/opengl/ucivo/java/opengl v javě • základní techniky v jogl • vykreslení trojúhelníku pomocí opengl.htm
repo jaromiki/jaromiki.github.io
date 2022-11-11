@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+	<title>OpenGL v Javě • Základní techniky v JOGL • Vykreslení trojúhelníku pomocí OpenGL</title>
+
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<link href="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/style.css" rel="stylesheet" type="text/css" media="screen">
+	<link rel="shortcut icon" href="http://jogl.tichava.cz/images/favicon.gif">
+</head>
+<body>
+<div id="wrapper">
+	<div id="wrapper2">
+		<div id="header">
+			<div id="logo">
+				<h1>OpenGL v Javě</h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li><a href="http://tichava.cz/">Domů</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- end #header -->
+		<div id="page">
+			<div id="content">
+				<div class="post">
+					<h2 class="title">Vykreslení trojúhelníku pomocí OpenGL</h2>
+					<div class="entry">
+						<p>V této kapitole vykreslíme barevný trojúhelník pomocí OpenGL v 
+Javě s využitím JOGL. Budeme potřebovat Javu ve verzi 1.5 a vyšší a JOGL
+ ve verzi 1.1 a vyšší. Programovat je možné v libovolném textovém 
+editoru, ale s ohledem na budoucí ukázky je výhodnější použít <a href="http://www.eclipse.org/" title="Eclipse">Eclipse</a> nebo podobný <span class="explain" title="Integrated Development Environment">IDE</span>,
+ protože doplní automaticky potřebné importy apod. Pro bezproblémovou 
+přenositelnost mezi platformami je výhodné používat UTF-8 pro kódování 
+všech souborů, pokud chceme používat české popisky.</p>
+						<p>Program se skládá ze dvou tříd. Klientská třída <span class="code">Lesson</span> je společná pro všechny kapitoly. Mění se pouze titulek okna. Pomocí této třídy se spouští celý program, obsahuje metodu <span class="code">main()</span>. Druhou třídou je <span class="code">Renderer</span>, která definuje výslednou vyrenderovanou scénu a v tomto příkladu navíc ještě obsluhuje stisky kláves.</p>
+						<p>Po spuštění níže uvedeného kódu uvidíte okno, jako je na následujícím obrázku.</p>
+						<p class="image"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img03-lesson1-target-triangle.png" alt="Výsledný trojúhelník"><br>Výsledný trojúhelník</p>
+
+						<h3>Třída Lesson</h3>
+						<p>Obsahuje statickou metodu <span class="code">main()</span>, vytváří swingový <span class="code">JFrame</span>, na který je umístěn <span class="code">canvas</span> (kreslící plátno pro OpenGL renderování) a spouští <span class="code">Animator</span>, aby se automaticky překreslovala scéna.</p>
+
+						<div class="sourceCode">
+							<p class="src0">public class Lesson extends JFrame</p>
+							<p class="src0">{</p>
+							<p class="src1">GLCanvas canvas = new GLCanvas();</p>
+							<p class="src1">Animator animator = new Animator();</p>
+							<p class="src1">&nbsp;</p>
+							<p class="src1">public static void main(String[] args)</p>
+							<p class="src1">{</p>
+							<p class="src2">new Lesson();</p>
+							<p class="src1">}</p>
+							<p class="src1">&nbsp;</p>
+							<p class="src1">public Lesson()</p>
+							<p class="src1">{</p>
+							<p class="src2">canvas.addGLEventListener(new Renderer());</p>
+							<p class="src2">&nbsp;</p>
+							<p class="src2">animator.add(canvas);</p>
+							<p class="src2">&nbsp;</p>
+							<p class="src2">this.getContentPane().add(canvas);</p>
+							<p class="src2">this.setTitle("Lekce 1: Vytvoření OpenGL okna");</p>
+							<p class="src2">this.setSize(640, 480);</p>
+							<p class="src2">this.setLocationRelativeTo(null);</p>
+							<p class="src2">&nbsp;</p>
+							<p class="src2">this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</p>
+							<p class="src2">this.setVisible(true);</p>
+							<p class="src2">&nbsp;</p>
+							<p class="src2">animator.start();</p>
+							<p class="src2">canvas.requestFocus();</p>
+							<p class="src1">}</p>
+							<p class="src0">}</p>
+						</div>
+
+						<h3>Třída Renderer</h3>
+						<p>Implementuje <span class="code">GLEventListener</span> pro řešení událostí OpenGL a <span class="code">KeyListener</span> pro obsluhu stisků kláves. V této třídě je definována celá scéna, která se renderuje. Metoda <span class="code">display()</span> definuje co, je bude vykreslovat a je automaticky volána třídou <span class="code"><span class="explain" title="Viz třída Lesson">Animator</span></span>, ostatní metody slouží k nastavení scény.</p>
+						<p>Importujeme <span class="code">GL</span>, což je základní rozhraní pro zpřístupnění funkcí z OpenGL verze 2.0. <span class="code">GLAutoDrawable</span> vychází z <span class="code">GLDrawable</span>, který slouží k renderování scén, ale podporuje vykreslování pomocí událostí, což přispívá k vyššímu výkonu. <span class="code">GLU</span> se využívá k nastavení pohledu.</p>
+						<div class="sourceCode">
+							<p class="src0">public class Renderer implements GLEventListener, KeyListener</p>
+							<p class="src0">{</p>
+							<p class="src1">private GLU glu = new GLU();</p>
+							<p class="src1">private GL gl;</p>
+						</div>
+						<p>Metodu <span class="code">display()</span> volá <span class="code">Animator</span>
+ pro zobrazení každého framu, definuje se tu celá scéna, která se má 
+vykreslovat. V této kapitole se smaže obrazovka s hloubkovým bufferem, 
+resetuje matice a posune se scéna o -2,75 ve směru osy Z (do hloubky). 
+Posunutí je nutné, protože rovina z<sub>near</sub> je ve vzdálenosti 1 a trojúhelník by nebyl zobrazen, viz níže.</p>
+						<div class="sourceCode">
+							<p class="src1">public void display(GLAutoDrawable gLDrawable)</p>
+							<p class="src1">{</p>
+							<p class="src2">gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);</p>
+							<p class="src2">gl.glLoadIdentity();</p>
+							<p class="src2">&nbsp;</p>
+							<p class="src2">gl.glTranslatef(0f, 0.0f, -2.75f);</p>
+						</div>
+						<p>Na začátku vykreslování si volíme, jaké útvary chceme kreslit. 
+Na výběr máme z několika základních geometrických útvarů, které jsou 
+zobrazeny na obrázcích a popsány v tabulce. Na první pohled jde pouze o 
+2D útvary, ale souřadnice každého vrcholu obsahují i složku Z.</p>
+						<div class="table">
+							<table class="draw">
+								<tbody><tr>
+									<td class="draw"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-01.png" alt="GL_POINTS"></td>
+									<td class="draw"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-02.png" alt="GL_LINES"></td>
+									<td class="draw"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-03.png" alt="GL_LINE_STRIP"></td>
+									<td class="draw"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-04.png" alt="GL_LINE_LOOP"></td>
+									<td class="draw"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-05.png" alt="GL_TRIANGLES"></td>
+								</tr>
+								<tr class="draw">
+									<td class="drawCell"><span class="code">GL_POINTS</span></td>
+									<td class="drawCell"><span class="code">GL_LINES</span></td>
+									<td class="drawCell"><span class="code">GL_LINE_STRIP</span></td>
+									<td class="drawCell"><span class="code">GL_LINE_LOOP</span></td>
+									<td class="drawCell"><span class="code">GL_TRIANGLES</span></td>
+								</tr>
+								<tr>
+									<td><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-06.png" alt="GL_TRAINGLE_STRIP"></td>
+									<td><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-07.png" alt="GL_TRAINGLE_FAN"></td>
+									<td><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-08.png" alt="GL_QUADS"></td>
+									<td><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-09.png" alt="GL_QUAD_STRIP"></td>
+									<td><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img04-draw-10.png" alt="GL_POLYGON"></td>
+								</tr>
+								<tr class="draw">
+									<td class="drawCell"><span class="code">GL_TRAINGLE_STRIP</span></td>
+									<td class="drawCell"><span class="code">GL_TRAINGLE_FAN</span></td>
+									<td class="drawCell"><span class="code">GL_QUADS</span></td>
+									<td class="drawCell"><span class="code">GL_QUAD_STRIP</span></td>
+									<td class="drawCell"><span class="code">GL_POLYGON</span></td>
+								</tr>
+							</tbody></table>
+						</div>
+
+						<div class="table">
+							<table>
+								<tbody><tr>
+									<td class="drawCellLegend">GL_POINTS</td>
+									<td>Každý vertex je reprezentovaný jako samostatný bod.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_LINES</td>
+									<td>Každý pár po sobě jdoucích vertexů definuje úsečku.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_LINE_STRIP</td>
+									<td>Spojí po sobě jdoucí vertexy v lomenou čáru.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_LINE_LOOP</td>
+									<td>Stejně jako GL_LINE_STRIP spojuje po sobě jdoucí vertexy, ale navíc ještě spojí první a poslední bod.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_TRIANGLES</td>
+									<td>Každá trojice po sobě jdoucích vertexů definuje trojúhelník.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_TRIANGLE_STRIP</td>
+									<td>První tři vertexy definují jeden trojúhelník, každý další 
+bod definuje nový trojúhelník s využitím předchozích dvou vertexů jako 
+vrcholy.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_TRIANGLE_FAN</td>
+									<td>Podobně jako GL_TRIANGLE_STRIP, všechny trojúhelníky 
+využívají první vertex jako jeden svůj vrchol, druhý vrchol je předchozí
+ vrchol.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_QUADS</td>
+									<td>Každá čtveřice vertexů definuje čtyřúhelník.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_QUAD_STRIP</td>
+									<td>První čtyři vertexy definují jeden čtyřúhelník a každé 
+další dva vertexy definují nový čtyřúhelník, který využívá předchozí dva
+ vertexy.</td>
+								</tr>
+								<tr>
+									<td class="drawCellLegend">GL_POLYGON</td>
+									<td>Jako GL_LINE_LOOP, ale s vyplněnou plochou.</td>
+								</tr>
+							</tbody></table>
+						</div>
+
+						<p>Na začátku vykreslování nastavíme kreslení trojúhelníků pomocí <span class="code">GL_TRIANGLES</span>.
+ Pak pro každý bod specifikujeme barvu vrcholu a jeho souřadnici v 
+prostoru. Barva je reprezentována jako třísložkový vektor, kde 
+jednotlivé složky odpovídají červené, zelené a modré barvě. Hodnoty jsou
+ v intervalu &lt;0; 1&gt;. Souřadnice bodu v prostoru jsou 
+reprezentovány obvyklým způsobem (X, Y, Z). Kreslení se nesmí zapomenout
+ ukončit.</p>
+						<div class="sourceCode">
+							<p class="src2">gl.glBegin(GL.GL_TRIANGLES);</p>
+							<p class="src3">gl.glColor3d(1.0, 0.0, 0.0);</p>
+							<p class="src3">gl.glVertex3f(0.0f, 1.0f, 0.0f);</p>
+							<p class="src3">gl.glColor3d(0.0, 1.0, 0.0);</p>
+							<p class="src3">gl.glVertex3f(-1.0f, -1.0f, 0.0f);</p>
+							<p class="src3">gl.glColor3d(0.0, 0.0, 1.0);</p>
+							<p class="src3">gl.glVertex3f(1.0f, -1.0f, 0.0f);</p>
+							<p class="src2">gl.glEnd();</p>
+							<p class="src1">}</p>
+						</div>
+
+						<p>Metoda <span class="code">displayChanged()</span> není nyní v 
+JOGL implementována. V budoucnu se bude volat při změně barevné hloubky 
+nebo připojení dalšího monitoru, atd. Metodu je nutné implementovat, 
+protože je definována v rozhraní <span class="code">GLEventListener</span>.</p>
+
+						<div class="sourceCode">
+							<p class="src1">public void displayChanged(GLAutoDrawable gLDrawable, boolean modeChanged, boolean deviceChanged)</p>
+							<p class="src1">{</p>
+							<p class="src1">}</p>
+						</div>
+
+						<p>Metoda <span class="code">init()</span> se volá bezprostředně 
+po vytvoření OpenGL okna, je vhodná pro nastavení základních parametrů 
+vykreslování apod. V této kapitole se vytváří přístup k OpenGL, 
+nastavuje barva pozadí (černá) a přidává třída, která bude obsluhovat 
+stisky kláves. Barva pozadí je reprezentována jako čtyřsložkový vektor, 
+kde první tři hodnoty určují barvu a čtvrtá hodnota určuje průhlednost, u
+ barvy pozadí na nastavení průhlednosti nezáleží.</p>
+
+						<div class="sourceCode">
+							<p class="src1">public void init(GLAutoDrawable gLDrawable)</p>
+							<p class="src1">{</p>
+							<p class="src2">this.gl = gLDrawable.getGL();</p>
+							<p class="src2">gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);</p>
+							<p class="src2">gLDrawable.addKeyListener(this);</p>
+							<p class="src1">}</p>
+						</div>
+
+						<p>Metoda <span class="code">reshape()</span> je zavolána při 
+změně velikosti okna a při prvním vykreslením, protože je nutné, aby se 
+nastavil perspektivní pohled podle aktuální velikosti okna.</p>
+
+						<div class="sourceCode">
+							<p class="src1">public void reshape(GLAutoDrawable gLDrawable, int x, int y, int width, int height)</p>
+							<p class="src1">{</p>
+							<p class="src2">if (height &lt;= 0)</p>
+							<p class="src3">height = 1;</p>
+							<p class="src3">&nbsp;</p>
+							<p class="src2">final float h = (float)width / (float)height;</p>
+							<p class="src2">gl.glViewport(0, 0, width, height);</p>
+						</div>
+
+						<p>Matice <span class="code">GL_PROJECTION</span> ovlivňuje jak výrazná bude perspektiva, tj. jak moc se budou vzdálenější objekty zmenšovat. Metodou <span class="code">gluPerspective</span>
+ se nastavuje pohledová pyramida (viz následující obrázek), která v 
+tomto případě svírá úhel 45°, závisí na výšce a šířce okna, ořezávací 
+rovina znear je ve vzdálenosti 1 a z<sub>far</sub> 20 na ose Z. Hodnota z<sub>near</sub>
+ by neměla nabývat 0, protože pak se mohou vyskytnout z důvodu 
+zaokrouhlovacích chyb problémy s viditelností. Přepnutí na matici <span class="code">GL_MODELVIEW</span> oznamuje, že forma pohledu bude změněna, <span class="code">glLoadIdentity</span>  opět resetuje matici.</p>
+
+						<div class="sourceCode">
+							<p class="src2">gl.glMatrixMode(GL.GL_PROJECTION);</p>
+							<p class="src2">gl.glLoadIdentity();</p>
+							<p class="src2">glu.gluPerspective(45.0f, h, 1.0, 20.0);</p>
+							<p class="src2">gl.glMatrixMode(GL.GL_MODELVIEW);</p>
+							<p class="src2">gl.glLoadIdentity();</p>
+							<p class="src1">}</p>
+						</div>
+
+						<p class="image"><img src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/img05-pyramid.png" alt="Pohledová pyramida"><br>Pohledová pyramida</p>
+
+						<p>Metoda <span class="code">keyPressed()</span> je zavolána, když uživatel stiskne klávesu. Pokud stiskne Escape, aplikace se ukončí. Metody <span class="code">keyReleased()</span> a <span class="code">keyTyped()</span> jsou prázdné, ale musí být implementovány, aby byla implementace korektní.</p>
+
+						<div class="sourceCode">
+							<p class="src1">public void keyPressed(KeyEvent e)</p>
+							<p class="src1">{</p>
+							<p class="src2">if (e.getKeyCode() == KeyEvent.VK_ESCAPE)</p>
+							<p class="src3">System.exit(0);</p>
+							<p class="src1">}</p>
+						    <p class="src1">&nbsp;</p>
+							<p class="src1">public void keyReleased(KeyEvent e) {}</p>
+						    <p class="src1">&nbsp;</p>
+							<p class="src1">public void keyTyped(KeyEvent e) {}</p>
+							<p class="src0">}</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- end #content -->
+			<div id="sidebar">
+				<ul>
+					<li>
+						<h3>Hlavní menu</h3>
+						<ul>
+						    <li><a href="http://jogl.tichava.cz/">OpenGL v Javě</a></li>
+							<li><a href="http://jogl.tichava.cz/moznosti-v-jave.php">Možnosti OpenGL v Javě</a></li>
+							<li><a href="http://jogl.tichava.cz/java-opengl.php">JOGL – Java OpenGL</a></li>
+							<li><a href="http://jogl.tichava.cz/zaklady-jogl.php">Základní techniky v JOGL</a></li>
+							<li><a href="http://jogl.tichava.cz/3d-bludiste.php">3D Bludiště</a></li>
+							<li><a href="http://jogl.tichava.cz/download.php">Download</a></li>
+						</ul>
+					</li>
+					<li>
+						<h3>Základní techniky v JOGL</h3>
+						<ul>
+							<li><a href="http://jogl.tichava.cz/lekce1.php">Vykreslení trojúhelníku</a></li>
+							<li><a href="http://jogl.tichava.cz/lekce2.php">Rotující jehlan</a></li>
+							<li><a href="http://jogl.tichava.cz/lekce3.php">Textury na krychli, použití kláves</a></li>
+							<li><a href="http://jogl.tichava.cz/lekce4.php">Světla</a></li>
+							<li><a href="http://jogl.tichava.cz/lekce5.php">Text a 2D grafika</a></li>
+						</ul>
+					</li>				</ul>
+			</div>
+			<!-- end #sidebar -->
+			<div style="clear: both;">&nbsp;</div>
+			<!-- end #widebar -->
+		</div>
+		<!-- end #page -->
+	</div>
+	<!-- end #wrapper2 -->
+	<div id="footer">
+		<p>© 2008 Jan Tichava</p>
+	</div>
+</div>
+<!-- end #wrapper -->
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="OpenGL%20v%20Jav%C4%9B%20%E2%80%A2%20Z%C3%A1kladn%C3%AD%20techniky%20v%20JOGL%20%E2%80%A2%20Vykreslen%C3%AD%20troj%C3%BAheln%C3%ADku%20pomoc%C3%AD%20OpenGL_subory/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5042941-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+</body></html>

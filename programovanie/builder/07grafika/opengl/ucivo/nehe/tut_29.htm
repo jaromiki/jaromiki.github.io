@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 29 - Blitter, nahrávání .RAW textur</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_29.jpg" class="nehe_maly" alt="Lekce 29" />
+
+<h1>Lekce 29 - Blitter, nahrávání .RAW textur</h1>
+
+<p class="nadpis_clanku">V této lekci se naučíte, jak se nahrávají .RAW obrázky a konvertují se do textur. Dozvíte se také o blitteru, grafické metodě přenášení dat, která umožňuje modifikovat textury poté, co už byly nahrány do programu. Můžete jím zkopírovat část jedné textury do druhé, blendingem je smíchat dohromady a také roztahovat. Maličko upravíme program tak, aby v době, kdy není aktivní, vůbec nezatěžoval procesor.</p>
+
+<p>Blitting... v počítačové grafice je toto slovo hodně používané. Označuje se jím zkopírování části jedné textury a vložení do druhé. Pokud programujete ve Win API nebo MFC, jistě jste slyšeli o funkcích BitBlt() nebo StretchBlt(). Přesně toto se pokusíme vytvořit.</p>
+
+<p>Chcete-li napsat funkci, která implementuje blitting, měli byste něco vědět o lineární grafické paměti. Když se podíváte na monitor, vidíte spousty bodů reprezentujících nějaký obrázek, ovládací prvky nebo třeba kurzor myši. Vše je prostě složeno z matice pixelů. Ale jak ví grafická karta nebo BIOS, jak nakreslit bod například na souřadnicích [64; 64]? Jednoduše! Všechno, co je na obrazovce není v matici, ale v lineární paměti (v jednorozměrném poli). Pozici bodu v paměti můžeme získat následující rovnicí:</p>
+
+<p class="src0"><span class="kom">adresa_v_paměti = (pozice_y * rozlišení_obrazovky_x) + pozice_x</span></p>
+
+<p>Pokud máme rozlišení obrazovky 640x480, bude bod [64; 64] umístěn na paměťové adrese (64*640) + 64 = 41024. Protože paměť, do které budeme ukládat bitmapy je také lineární, můžeme této vlastnosti využít při přenášení bloků grafických dat. Výslednou adresu ještě budeme násobit barevnou hloubkou obrázku, protože nepoužíváte jedno-bytové pixely (256 barev), ale RGBA obrázky. Pokud jste tento výklad nepochopili, nemá cenu jít dál...</p>
+
+<p>Vytvoříme strukturu TEXTURE_IMAGE, která bude obsahovat informace o nahrávaném obrázku - šířku, výšku, barevnou hloubku. Pointer data bude ukazovat do dynamické paměti, kam nahrajeme ze souboru data obrázku.</p>
+
+<p class="src0">typedef struct Texture_Image<span class="kom">// Struktura obrázku</span></p>
+<p class="src0">{</p>
+<p class="src1">int width;<span class="kom">// Šířka v pixelech</span></p>
+<p class="src1">int height;<span class="kom">// Výška v pixelech</span></p>
+<p class="src1">int format;<span class="kom">// Barevná hloubka v bytech na pixel</span></p>
+<p class="src1">unsigned char *data;<span class="kom">// Data obrázku</span></p>
+<p class="src0">} TEXTURE_IMAGE;</p>
+
+<p>Další datový typ je ukazatelem na právě vytvořenou strukturu. Po něm následují dvě proměnné t1 a t2. Do nich budeme nahrávat obrázky, které potom blittingem sloučíme do jednoho a vytvoříme z něj texturu.</p>
+
+<p class="src0">typedef TEXTURE_IMAGE *P_TEXTURE_IMAGE;<span class="kom">// Datový typ ukazatele na obrázek</span></p>
+<p></p>
+<p class="src0">P_TEXTURE_IMAGE t1;<span class="kom">// Dva obrázky</span></p>
+<p class="src0">P_TEXTURE_IMAGE t2;</p>
+<p></p>
+<p class="src0">GLuint texture[1];<span class="kom">// Jedna textura</span></p>
+
+<p>Rot proměnné určují úhel rotace výsledného objektu. Nic nového.</p>
+
+<p class="src0">GLfloat xrot;<span class="kom">// X rotace</span></p>
+<p class="src0">GLfloat yrot;<span class="kom">// Y rotace</span></p>
+<p class="src0">GLfloat zrot;<span class="kom">// Z rotace</span></p>
+
+<p>Funkcí AllocateTextureBuffer(), alokujeme dynamickou paměť pro obrázek a vrátíme ukazatel. Při neúspěchu se vrací NULL. Funkci předává program celkem tři parametry: šířku, výšku a barevnou hloubku v bytech na pixel.</p>
+
+<p class="src0">P_TEXTURE_IMAGE AllocateTextureBuffer(GLint w, GLint h, GLint f)<span class="kom">// Alokuje paměť pro obrázek</span></p>
+<p class="src0">{</p>
+
+<p>Ukazatel na obrázek ti vrátíme na konci funkce volajícímu kódu. Na začátku ho inicializujeme na NULL. Proměnné c, přiřadíme také NULL. Představuje úložiště nahrávaných dat.</p>
+
+<p class="src1">P_TEXTURE_IMAGE ti = NULL;<span class="kom">// Ukazatel na strukturu obrázku</span></p>
+<p class="src1">unsigned char *c = NULL;<span class="kom">// Ukazatel na data obrázku</span></p>
+
+<p>Pomocí standardní funkce malloc() se pokusíme alokovat dynamickou paměť pro strukturu obrázku. Pokud se operace podaří, program pokračuje dále. Při jakékoli chybě vrátí malloc() NULL. Vypíšeme chybovou zprávu a oznámíme volajícímu kódu neúspěch.</p>
+
+<p class="src1">ti = (P_TEXTURE_IMAGE)malloc(sizeof(TEXTURE_IMAGE));<span class="kom">// Alokace paměti pro strukturu</span></p>
+<p></p>
+<p class="src1">if(ti != NULL)<span class="kom">// Podařila se alokace paměti?</span></p>
+<p class="src1">{</p>
+
+<p>Po úspěšné alokaci paměti vyplníme strukturu atributy obrázku. Barevná hloubka není v obvyklém formátu bit na pixel, ale kvůli jednodušší manipulaci s pamětí v bytech na pixel.</p>
+
+<p class="src2">ti-&gt;width = w;<span class="kom">// Nastaví atribut šířky</span></p>
+<p class="src2">ti-&gt;height = h;<span class="kom">// Nastaví atribut výšky</span></p>
+<p class="src2">ti-&gt;format = f;<span class="kom">// Nastaví atribut barevné hloubky</span></p>
+
+<p>Stejným způsobem jako pro strukturu alokujeme paměť i pro data obrázku. Její velikost získáme násobením šířky, výšky a barevné hloubky. Při úspěchu nastavíme atribut data struktury na právě získanou dynamickou paměť, neúspěch ošetříme stejně jako minule.</p>
+
+<p class="src2">c = (unsigned char *)malloc(w * h * f);<span class="kom">// Alokace paměti pro strukturu</span></p>
+<p></p>
+<p class="src2">if (c != NULL)<span class="kom">// Podařila se alokace paměti?</span></p>
+<p class="src2">{</p>
+<p class="src3">ti-&gt;data = c;<span class="kom">// Nastaví ukazatel na data</span></p>
+<p class="src2">}</p>
+<p class="src2">else<span class="kom">// Alokace paměti pro data se nepodařila</span></p>
+<p class="src2">{</p>
+<p class="src3">MessageBox(NULL, &quot;Could Not Allocate Memory For A Texture Buffer&quot;, &quot;BUFFER ERROR&quot;, MB_OK | MB_ICONINFORMATION);</p>
+
+<p>Překl.: Tady by správně měla funkce vrátit namísto NULL proměnnou ti nebo ještě lépe před opuštěním funkce dealokovat dynamickou paměť struktury ti. Bez vrácení ukazatele nemůžeme z venku paměť uvolnit. Pokud operační systém nepracuje tak, jak má (Toto není narážka na MS Windows :-), čili po skončení neuvolní poskytne zdroje programu, vznikají paměťové úniky.</p>
+
+<p class="src3"><span class="kom">// Uvolnění paměti struktury (Překl.)</span></p>
+<p class="src3"><span class="kom">// free(ti);</span></p>
+<p class="src3"><span class="kom">// ti = NULL;</span></p>
+<p></p>
+<p class="src3">return NULL;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">else<span class="kom">// Alokace paměti pro strukturu se nepodařila</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL,&quot;Could Not Allocate An Image Structure&quot;,&quot;IMAGE STRUCTURE ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">return NULL;</p>
+<p class="src1">}</p>
+
+<p>Pokud dosud nebyly žádné problémy, vrátíme ukazatel na strukturu ti.</p>
+
+<p class="src1">return ti;<span class="kom">// Vrátí ukazatel na dynamickou paměť</span></p>
+<p class="src0">}</p>
+
+<p>Ve funkci DeallocateTexture() děláme pravý opak - uvolňujeme paměť obrázku, na kterou ukazuje předaný parametr t.</p>
+
+<p class="src0">void DeallocateTexture(P_TEXTURE_IMAGE t)<span class="kom">// Uvolní dynamicky alokovanou paměť obrázku</span></p>
+<p class="src0">{</p>
+<p class="src1">if(t)<span class="kom">// Pokud struktura obrázku existuje</span></p>
+<p class="src1">{</p>
+<p class="src2">if(t-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src2">{</p>
+<p class="src3">free(t-&gt;data);<span class="kom">// Uvolní data obrázku</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">free(t);<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Všechno už máme připravené, zbývá jenom nahrát .RAW obrázek. RAW formát je nejjednodušší a nejrychlejší způsob, jak nahrát do programu texturu (samozřejmě kromě funkce auxDIBImageLoad()). Proč je to tak jednoduché? Protože .RAW formát obsahuje pouze samotná data bitmapy bez hlaviček nebo něčeho dalšího. Jediné, co musíme udělat, je otevřít soubor a načíst data tak, jak jsou. Téměř... bohužel tento formát má dvě nevýhody. První je to, že ho neotevřete v některých grafických editorech, o druhé později. Pochopíte sami :-(</p>
+
+<p>Funkci předáváme název souboru a ukazatel na strukturu.</p>
+
+<p class="src0">int ReadTextureData(char *filename, P_TEXTURE_IMAGE buffer)<span class="kom">// Načte data obrázku</span></p>
+<p class="src0">{</p>
+
+<p>Deklarujeme handle souboru, řídící proměnné cyklů a proměnnou done, která indikuje úspěch/neúspěch operace volajícímu kódu. Na začátku jí přiřadíme nulu, protože obrázek ještě není nahraný. Proměnnou stride, která určuje velikost řádku, hned na začátku inicializujeme na hodnotu získanou vynásobením šířky řádku v pixelech s barevnou hloubkou. Pokud bude obrázek široký 256 pixelů a barevná hloubka 4 byty (32 bitů, RGBA), velikost řádku bude celkem 1024 bytů. Pointer p ukazuje do paměti dat obrázku.</p>
+
+<p class="src1">FILE *f;<span class="kom">// Handle souboru</span></p>
+<p class="src1">int i, j, k;<span class="kom">// Řídící proměnné cyklů</span></p>
+<p class="src1">int done = 0;<span class="kom">// Počet načtených bytů ze souboru (návratová hodnota)</span></p>
+<p></p>
+<p class="src1">int stride = buffer-&gt;width * buffer-&gt;format;<span class="kom">// Velikost řádku</span></p>
+<p class="src1">unsigned char *p = NULL;<span class="kom">// Ukazatel na aktuální byte paměti</span></p>
+
+<p>Otevřeme soubor pro čtení v binárním módu.</p>
+
+<p class="src1">f = fopen(filename, &quot;rb&quot;);<span class="kom">// Otevře soubor</span></p>
+<p></p>
+<p class="src1">if(f != NULL)<span class="kom">// Podařilo se ho otevřít?</span></p>
+<p class="src1">{</p>
+
+<p>Pokud soubor existuje a šel otevřít, začneme se postupně vnořovat do cyklů. Vše by bylo velice jednoduché, kdyby .RAW formát byl trochu jinak uspořádán. Řádky vedou, jak je obvyklé, zleva doprava, ale jejich pořadí je invertované. To znamená, že první řádek je poslední, druhý předposlední atd. Vnější cyklus tedy nastavíme tak, aby řídící proměnná ukazovala dolů na začátek obrázku. Soubor načítáme od začátku, ale hodnoty ukládáme od konce paměti vzhůru. Výsledkem je převrácení obrázku.</p>
+
+<p class="src2">for(i = buffer-&gt;height-1; i &gt;= 0 ; i--)<span class="kom">// Od zdola nahoru po řádcích</span></p>
+<p class="src2">{</p>
+
+<p>Nastavíme ukazatel, kam se právě ukládá, na správný řádek paměti. Jejím začátkem je samozřejmě buffer-&gt;data. Sečteme ho s umístěním od začátku i * velikost řádku. Představte si, že buffer-&gt;data je stránka v paměti a i * stride představuje offset. Je to úplně stejné. Offsetem se pohybujeme po přidělené stránce. Na začátku je maximální a postupně klesá. Výsledkem je, že v paměti postupujeme vzhůru. Myslím, že je to pochopitelné.</p>
+
+<p class="src3">p = buffer-&gt;data + (i * stride);<span class="kom">// P ukazuje na požadovaný řádek</span></p>
+
+<p>Druhým cyklem se pohybujeme zleva doprava po pixelech obrázku (ne bytech!).</p>
+
+<p class="src3">for (j = 0; j &lt; buffer-&gt;width; j++)<span class="kom">// Zleva doprava po pixelech</span></p>
+<p class="src3">{</p>
+
+<p>Třetí cyklus prochází jednotlivé byty v pixelu. Pokud barevná hloubka (= byty na pixel) bude 4, cyklus projde celkem 3x (od 0 do 2; format-1). Důvodem odečtení jedničky je, že většina .RAW obrázků neobsahuje alfa hodnotu, ale pouze RGB složky. Alfu nastavíme ručně.</p>
+
+<p>Všimněte si také, že každým průchodem inkrementujeme tři proměnné: k, p a done. Řídící proměnná k je jasná. P ukazovalo před vstupem do všech cyklů na začátek posledního řádku v paměti. Postupně ho inkrementujeme až dosáhne úplného konce. Potom ho nastavíme na předposlední řádek atd. Done na konci funkce vrátíme, označuje celkový počet načtených bytů.</p>
+
+<p class="src4">for (k = 0; k &lt; buffer-&gt;format-1; k++, p++, done++)<span class="kom">// Jednotlivé byty v pixelu</span></p>
+<p class="src4">{</p>
+
+<p>Funkce fgetc() načte ze souboru f jeden znak a vrátí ho. Tento znak má velikost 1 byte (Už víte proč zrovna unsigned char?). Považujeme ho za složku barvy. Protože se cyklus po třetím průchodu zastaví, načteme a uložíme složky R, G a B.</p>
+
+<p class="src5">*p = fgetc(f);<span class="kom">// Načte R, G a B složku barvy</span></p>
+<p class="src4">}</p>
+
+<p>Po opuštění cyklu přiřadíme alfu a opět inkrementujeme ukazatel, aby se posunul na další byte.</p>
+
+<p>Překl.: Tady se hodí poznamenat, že alfa nemusí být zrovna 255 (neprůhledná), ale můžeme ji nastavit na polovinu (122) a tak vytvořit poloprůhlednou texturu. Nebo si říct, že pixel o určitých složkách RGB bude průhledný. Většinou se vezme černá nebo bílá barva, ale nic nebrání např. načtení levého horního pixelu obrázku a zprůhlednění všech ostatních pixelů se stejným RGB. Nebo postupně, jak načítáme jednotlivé pixely v řádku, snižovat alfu od 255 do 0. Textura bude vlevo neprůhledná a vpravo průhledná - plynulý přechod. S průhledností se dělají hodně kvalitní efekty. Maličké upozornění na konec: Efekty s alfa hodnotou jsou možné nejen u .RAW textur. Nezapomeňte, že už v 6. lekci !!! jsme měli přístup k datům textury. Funkci glTexImage2D() jsme na konci LoadGLTextures() předávali parametr data!</p>
+
+<p class="src4">*p = 255;<span class="kom">// Alfa neprůhledná (ruční nastavení)</span></p>
+<p class="src4">p++;<span class="kom">// Ukazatel na další byte</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p>Poté, co projdeme všechny byty v pixelu, pixely v řádku a řádky v souboru se všechny cykly ukončí. Uf, Konečně! :-) Po ukončení cyklů zavřeme soubor.</p>
+
+<p class="src2">fclose(f);<span class="kom">// Zavře soubor</span></p>
+<p class="src1">}</p>
+
+<p>Pokud byly problémy s otevřením souboru (neexistuje ap.) zobrazíme chybovou zprávu.</p>
+
+<p class="src1">else<span class="kom">// Soubor se nepodařilo otevřít</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL,&quot;Unable To Open Image File&quot;,&quot;IMAGE ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src1">}</p>
+
+<p>Nakonec vrátíme done. Pokud se soubor nepodařilo otevřít a my nic nenačetli, obsahuje nulu. Pokud bylo vše v pořádku done se rovná počtu načtených bytů.</p>
+
+<p class="src1">return done;<span class="kom">// Vrátí počet načtených bytů</span></p>
+<p class="src0">}</p>
+
+<p>Máme loadovaná data obrázku, takže vytvoříme texturu. Funkci předáváme ukazatel na obrázek. Vygenerujeme texturu, nastavíme ji jako aktuální, zvolíme lineární filtrování pro zvětšení i zmenšení a nakonec vytvoříme mipmapovanou texturu. Vše je úplně stejné jako s knihovnou glaux, ale s tím rozdílem, že jsme si obrázek tentokrát nahráli sami.</p>
+
+<p class="src0">void BuildTexture(P_TEXTURE_IMAGE tex)<span class="kom">// Vytvoří texturu</span></p>
+<p class="src0">{</p>
+<p class="src1">glGenTextures(1, &amp;texture[0]);<span class="kom">// Generuje texturu</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Vybere texturu za aktuální</span></p>
+<p></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</p>
+<p></p>
+<p class="src1"><span class="kom">// Mipmapovaná textura</span></p>
+<p class="src1">gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, tex-&gt;width, tex-&gt;height, GL_RGBA, GL_UNSIGNED_BYTE, tex-&gt;data);</p>
+<p class="src0">}</p>
+
+<p>Funkci Blit(), která implementuje blitting, je předávána spousta parametrů. Co vyjadřují? Vezmeme to hezky popořadě. Src je zdrojovým obrázkem, jehož data vkládáme do cílového obrázku dst. Ostatní parametry vyznačují, která data se zkopírují (obdélník určený čtyřmi src_* čísly), kam se mají do cílového obrázku umístit (dst_*) a jakým způsobem (blending, popř. alfa hodnota).</p>
+
+<p class="src0"><span class="kom">// Blitting obrázků</span></p>
+<p class="src0">void Blit(P_TEXTURE_IMAGE src,<span class="kom">// Zdrojový obrázek</span></p>
+<p class="src1">P_TEXTURE_IMAGE dst,<span class="kom">// Cílový obrázek</span></p>
+<p class="src1">int src_xstart,<span class="kom">// Levý horní bod kopírované oblasti</span></p>
+<p class="src1">int src_ystart,<span class="kom">// Levý horní bod kopírované oblasti</span></p>
+<p class="src1">int src_width,<span class="kom">// Šířka kopírované oblasti</span></p>
+<p class="src1">int src_height,<span class="kom">// Výška kopírované oblasti</span></p>
+<p class="src1">int dst_xstart,<span class="kom">// Kam kopírovat (levý horní bod)</span></p>
+<p class="src1">int dst_ystart,<span class="kom">// Kam kopírovat (levý horní bod)</span></p>
+<p class="src1">int blend,<span class="kom">// Použít blending?</span></p>
+<p class="src1">int alpha)<span class="kom">// Hodnota alfy při blendingu</span></p>
+<p class="src0">{</p>
+
+<p>Po řídících proměnných cyklů deklarujeme pomocné proměnné s a d, které ukazují do paměti obrázků. Dále ošetříme předávané parametry tak, aby alfa hodnota byla v rozmezí 0 až 255 a blend 0 nebo 1.</p>
+
+<p class="src1">int i, j, k;<span class="kom">// Řídící proměnné cyklů</span></p>
+<p class="src1">unsigned char *s, *d;<span class="kom">// Pomocné ukazatele na data zdroje a cíle</span></p>
+<p></p>
+<p class="src1">if(alpha &gt; 255)<span class="kom">// Je alfa mimo rozsah?</span></p>
+<p class="src2">alpha = 255;</p>
+<p class="src1">if(alpha &lt; 0)</p>
+<p class="src2">alpha = 0;</p>
+<p></p>
+<p class="src1">if(blend &lt; 0)<span class="kom">// Je blending mimo rozsah?</span></p>
+<p class="src2">blend = 0;</p>
+<p class="src1">if(blend &gt; 1)</p>
+<p class="src2">blend = 1;</p>
+
+<p>Překl.: Celé kopírování raději vysvětlím na příkladu, bude snáze pochopitelné. Máme obrázek 256 pixelů široký a chceme zkopírovat např. oblast od 50. do 200. pixelu o určité výšce. Před vstupem do cyklu se přesuneme na první kopírovaný řádek. Potom skočíme na 50. pixel zleva, zkopírujeme 150 pixelů a skočíme na konec řádku přes zbývajících 56 pixelů. Vše opakujeme pro další řádek, dokud nezkopírujeme celý požadovaný obdélník dat zdrojového obrázku do cílového.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_29_priklad.gif" width="128" height="128" alt="Příklad" /></div>
+
+<p>Nyní nastavíme ukazatele d a s. Cílový ukazatel získáme sečtením adresy, kde začínají data cílového obrázku s offsetem, který je výsledkem násobení y pozice, kam začneme kopírovat, šířkou obrázku v pixelech a barevnou hloubkou obrázku. Tímto získáme řádek, na kterém začínáme kopírovat. Zdrojový ukazatel určíme analogicky.</p>
+
+<p class="src1"><span class="kom">// Ukazatele na první kopírovaný řádek</span></p>
+<p class="src1">d = dst-&gt;data + (dst_ystart * dst-&gt;width * dst-&gt;format);</p>
+<p class="src1">s = src-&gt;data + (src_ystart * src-&gt;width * src-&gt;format);</p>
+
+<p>Vnější cyklus prochází kopírované řádky od shora dolů.</p>
+
+<p class="src1">for (i = 0; i &lt; src_height; i++)<span class="kom">// Řádky, ve kterých se kopírují data</span></p>
+<p class="src1">{</p>
+
+<p>Už máme ukazatel nastaven na správný řádek, ale ještě musíme přičíst x-ovou pozici, která se opět násobí barevnou hloubkou. Akci provedeme pro zdrojový i cílový ukazatel.</p>
+
+<p class="src2"><span class="kom">// Posun na první kopírovaný pixel v řádku</span></p>
+<p class="src2">s = s + (src_xstart * src-&gt;format);</p>
+<p class="src2">d = d + (dst_xstart * dst-&gt;format);</p>
+
+<p>Pointery nyní ukazují na první kopírovaný pixel. Začneme cyklus, který v řádku prochází jednotlivé pixely.</p>
+
+<p class="src2">for (j = 0; j &lt; src_width; j++)<span class="kom">// Pixely v řádku, které se mají kopírovat</span></p>
+<p class="src2">{</p>
+
+<p>Nejvnitřnější cyklus prochází jednotlivé byty v pixelu. Všimněte si, že se také inkrementují pozice ve zdrojovém i cílovém obrázku.</p>
+
+<p class="src3">for(k = 0; k &lt; src-&gt;format; k++, d++, s++)<span class="kom">// Byty v kopírovaném pixelu</span></p>
+<p class="src3">{</p>
+
+<p>Přichází nejzajímavější část - vytvoření alfablendingu. Představte si, že máte dva pixely: červený (zdroj) a zelený (cíl). Oba leží na stejných souřadnicích. Pokud je nezprůhledníte, půjde vidět pouze jeden z nich, protože původní pixel bude nahrazen novým. Jak jistě víte, každý pixel se skládá ze tří barevných kanálů RGB. Chceme-li vytvořit alfa blending, musíme nejdříve spočítat opačnou hodnotu alfa kanálu a to tak, že odečteme tuto hodnotu od maxima (255 - alpha). Násobíme jí cílový (zelený) pixel a sečteme ho se zdrojovým (červeným), který jsme násobili neupravenou alfou. Jsme skoro hotovi. Konečnou barvu vypočítáme dělením výsledku maximální hodnotou průhlednosti (255). tuto operaci z důvodu větší rychlosti vykonává bitový posun doprava o osm bitů. A je to! Máme pixel složený z obou předcházejících pixelů. Všimněte si, že se výpočty postupně provádějí se všemi kanály RGBA. Víte, co jsme právě implementovali? OpenGL techniku glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).</p>
+
+<p class="src4">if (blend)<span class="kom">// Je požadován blending?</span></p>
+<p class="src4">{</p>
+<p class="src5">*d = ((*s * alpha) + (*d * (255-alpha))) &gt;&gt; 8;<span class="kom">// Sloučení dvou pixelů do jednoho</span></p>
+<p class="src4">}</p>
+
+<p>Pokud nebudeme chtít blending, jednoduše zkopírujeme data ze zdrojové bitmapy do cílové. Žádná matematika, alfa se ignoruje.</p>
+
+<p class="src4">else<span class="kom">// Bez blendingu</span></p>
+<p class="src4">{</p>
+<p class="src5">*d = *s;<span class="kom">// Obyčejné kopírování</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p>Dojdeme-li až na konec kopírované oblasti, zvětšíme ukazatel tak, aby se dostal na konec řádku. Pokud dobře rozumíme ukazatelům a paměťovým operacím, je blitting hračkou.</p>
+
+<p class="src2"><span class="kom">// Skočí ukazatelem na konec řádku</span></p>
+<p class="src2">d = d + (dst-&gt;width - (src_width + dst_xstart)) * dst-&gt;format;</p>
+<p class="src2">s = s + (src-&gt;width - (src_width + src_xstart)) * src-&gt;format;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Inicializace je tentokrát změněna od základů. Alokujeme paměť pro dva obrázky veliké 256 pixelů, které mají barevnou hloubku 4 byty (RGBA). Poté se je pokusíme nahrát. Pokud něco nevyjde vypíšeme chybovou zprávu a ukončíme program.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">t1 = AllocateTextureBuffer(256, 256, 4);<span class="kom">// Alokace paměti pro první obrázek</span></p>
+<p></p>
+<p class="src1">if (ReadTextureData(&quot;Data/Monitor.raw&quot;, t1) == 0)<span class="kom">// Nahraje data obrázku</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Nic se nenahrálo</span></p>
+<p class="src2">MessageBox(NULL, &quot;Could Not Read 'Monitor.raw' Image Data&quot;, &quot;TEXTURE ERROR&quot;, MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">t2 = AllocateTextureBuffer(256, 256, 4);<span class="kom">// Alokace paměti pro druhý obrázek</span></p>
+<p></p>
+<p class="src1">if (ReadTextureData(&quot;Data/GL.raw&quot;, t2) == 0)<span class="kom">// Nahraje data obrázku</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Nic se nenahrálo</span></p>
+<p class="src2">MessageBox(NULL, &quot;Could Not Read 'GL.raw' Image Data&quot;, &quot;TEXTURE ERROR&quot;, MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+
+<p>Pokud jsme se dostali až tak daleko, je bezpečné předpokládat, že můžeme pracovat s daty obrázků, které se pokusíme blittingem sloučit do jednoho. Předáme je funkci - obrázek t2 jako zdrojový, t1 jako cílový. Výsledný obrázek získaný sloučením se uloží do t1. Vytvoříme z něj texturu.</p>
+
+<p class="src1"><span class="kom">// Blitting obrázků</span></p>
+<p class="src1">Blit(t2,<span class="kom">// Zdrojový obrázek</span></p>
+<p class="src2">t1,<span class="kom">// Cílový obrázek</span></p>
+<p class="src2">127,<span class="kom">// Levý horní bod kopírované oblasti</span></p>
+<p class="src2">127,<span class="kom">// Levý horní bod kopírované oblasti</span></p>
+<p class="src2">128,<span class="kom">// Šířka kopírované oblasti</span></p>
+<p class="src2">128,<span class="kom">// Výška kopírované oblasti</span></p>
+<p class="src2">64,<span class="kom">// Kam kopírovat (levý horní bod)</span></p>
+<p class="src2">64,<span class="kom">// Kam kopírovat (levý horní bod)</span></p>
+<p class="src2">1,<span class="kom">// Použít blending?</span></p>
+<p class="src2">128)<span class="kom">// Hodnota alfy při blendingu</span></p>
+<p></p>
+<p class="src1">BuildTexture(t1);<span class="kom">// Vytvoří texturu</span></p>
+
+<p>Překl.: Původně jsem chtěl vložit obrázky, abyste věděli, jak vypadají, ale bohužel ani jeden grafický editor, který mám zrovna doma .RAW formát nepodporuje. V anglickém tutoriálu je zmíněno, že Adobe Photoshop to svede. Ale poradil jsem si... víte jak? OpenGL.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_29_noblit1.gif" width="170" height="185" alt="Obrázek t2" />
+<img src="images/nehe_tut/tut_29_noblit2.gif" width="170" height="185" alt="Obrázek t1" />
+<img src="images/nehe_tut/tut_29_blit.gif" width="170" height="185" alt="Obrázek t1 po blittingu" />
+</div>
+
+<p>Potom, co je vytvořena textura, můžeme uvolnit paměť obou obrázků.</p>
+
+<p class="src1">DeallocateTexture(t1);<span class="kom">// Uvolní paměť obrázků</span></p>
+<p class="src1">DeallocateTexture(t2);</p>
+
+<p>Následují běžná nastavení OpenGL.</p>
+
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturování</span></p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.0f);<span class="kom">// Černé pozadí</span></p>
+<p></p>
+<p class="src1">glClearDepth(1.0);<span class="kom">// Povolí mazání depth bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LESS);<span class="kom">// Typ testování hloubky</span></p>
+<p></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>DrawGLScene() renderuje obyčejnou krychli - to už určitě znáte.</p>
+
+<p class="src0">GLvoid DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže buffery</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f,0.0f,-10.0f);<span class="kom">// Přesun do hloubky</span></p>
+<p></p>
+<p class="src1">glRotatef(xrot, 1.0f,0.0f,0.0f);<span class="kom">// Rotace</span></p>
+<p class="src1">glRotatef(yrot, 0.0f,1.0f,0.0f);</p>
+<p class="src1">glRotatef(zrot, 0.0f,0.0f,1.0f);</p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Zvolí texturu</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Začátek kreslení obdélníků</span></p>
+<p class="src2"><span class="kom">// Čelní stěna</span></p>
+<p class="src2">glNormal3f(0.0f, 0.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f, 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,-1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,-1.0f, 1.0f);</p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">glNormal3f(0.0f, 0.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f,-1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f,-1.0f,-1.0f);</p>
+<p class="src2"><span class="kom">// Horní stěna</span></p>
+<p class="src2">glNormal3f(0.0f, 1.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f, 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, 1.0f, 1.0f);</p>
+<p class="src2"><span class="kom">// Dolní stěna</span></p>
+<p class="src2">glNormal3f(0.0f,-1.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f,-1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f,-1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,-1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,-1.0f,-1.0f);</p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">glNormal3f(1.0f, 0.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,-1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f, 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f,-1.0f, 1.0f);</p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">glNormal3f(-1.0f, 0.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,-1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f,-1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f,-1.0f);</p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p></p>
+<p class="src1">xrot += 0.3f;<span class="kom">// Zvětší úhly rotace</span></p>
+<p class="src1">yrot += 0.2f;</p>
+<p class="src1">zrot += 0.4f;</p>
+<p class="src0">}</p>
+
+<p>Maličko upravíme kód WinMain(). Pokud není program aktivní (např. minimalizovaný), zavoláme WaitMessage(). Všechno se zastaví, dokud program neobdrží nějakou zprávu (obyčejně o maximalizaci okna). Ve výsledku dosáhneme toho, že pokud program není aktivní nebude vůbec zatěžovat procesor.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain() - v hlavní smyčce programu</span></p>
+<p class="src2">if (!active)<span class="kom">// Je program neaktivní?</span></p>
+<p class="src2">{</p>
+<p class="src3">WaitMessage();<span class="kom">// Čekej na zprávu a zatím nic nedělej</span></p>
+<p class="src2">}</p>
+
+<p>Takže to bychom měli. Nyní máte ve svých hrách, enginech, demech nebo jakýchkoli programech všechny dveře otevřené pro vytváření velmi efektních blending efektů. S texturovými buffery můžete vytvářet věci jako například real-time plazmu nebo vodu. Vzájemnou kombinací více obrázků (i několikrát za sebou) je možné dosáhnout téměř fotorealistického terénu. Hodně štěstí.</p>
+
+<p class="autor">napsal: Andreas Löffler &amp; Rob Fletcher<br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span> &amp; Václav Slováček - Wessan <span class="transform_email">&lt;horizont (zavináč) host.sk&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul>
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson29.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson29_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson29.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson29.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson29.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson29.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson29.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:rodolphe.suescun@wanadoo.fr">Rodolphe Suescun</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson29.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson29.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_29_big.jpg" class="nehe_velky" alt="Lekce 29" /></div>
+<p class="okolni_lekce"><a href="tut_28.php">&lt;&lt;&lt; Lekce 28</a> | <a href="tut_30.php">Lekce 30 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Stopa</div>
+<div class="d_o_datumcas">03.06.2005 - 11:21:54</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_29.php&j=0">AplhaByte</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_29.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

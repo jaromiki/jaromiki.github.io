@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ <meta name="Content-language" content="sk"> 
+	<title>Číselník</title>
+ 	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	 
+</head>
+
+<body>
+<dl><dt>Vytváranie odkazov, tvorba číselníkov
+		<dd>V praxi sa často stretávame s číselníkmi - každý sledovaný objekt je určený číslom - kódom pomocou ktorého je jednoznacne určený
+		napr. IČO pri evidencii majetku, EAN čiarový kód v obchodoch a pod., prírastkové číslo v knižniciach,...
+		<br>Číselníkom budeme volať tabuľku kde v jednom stĺpci je jedinečný identifikačný kód a v ďalších stĺpcoch
+		sú ďalšie údaje o objekte (napr. názov, cena, množstvo, umiestnenie,  dátum nadobudnutia ...).
+		V tabuľkách "pohybov" zadávame len identifikačné číslo objektu (tovaru) a ostatné údaje sú
+		automaticky "ťahané" z číselníka.
+		<br>My budeme používať číselník vždy utriedený podľa identifikačného čísla.
+		<br>Funkcie, ktoré budeme používať:
+        <dl><dt style="width:410">VLOOKUP(CoHladáme, tabuľka, číslo stĺpca v tabuľke, typ)
+		    	<dd>CoHladame ... vyraz, ktorý vráti hladanú hodnotu - najčastejšie priamo IČO
+				<br>tabuľka   ... tabuľka číselníka, kde ident. číslo musí byť prvý stĺpec tejto tabuľky
+				<br>číslo     ... poradové čísla stĺpca, z ktorého chceme brať údaj
+				<br>typ ... zadáme 1
+			<dt>Príklad
+					<dd>Vytvor číselník prevodu známok z číselného na slovné hodnotenie (napr. 1 - výborný)
+					<br>vstup známky bude do políčka A2
+					<br>Slovné hodnotenie bude v bunke B2
+					<br>číselník bude v bunkách e1:f5
+            		<table border="1">
+    		 		<tr bgcolor="silver"><td width="10%"> <th width="15%">A<th width="15%">B<th width="15%">C<th width="15%">D<th width="15%">E<th width="15%">F</tr>
+	    	 		<tr><th bgcolor="Silver"> 1 <th>Známka<th>Slovne<th>&nbsp; <th>&nbsp; <th> 0 <th> xxxxxxxx <th> </tr>
+		     		<tr><th bgcolor="Silver"> 2 <th>&nbsp; <th>&nbsp; <th>&nbsp; <th>&nbsp; <th> 1 <th> výborný <th> </tr>
+		     		<tr><th bgcolor="Silver"> 3 <th>&nbsp; <th>&nbsp; <th>&nbsp; <th>&nbsp; <th> 2 <th> chválitebný <th> </tr>
+		     		<tr><th bgcolor="Silver"> 4 <th>&nbsp; <th>&nbsp; <th>&nbsp; <th>&nbsp; <th> 3 <th> dobrý <th> </tr>
+		     		<tr><th bgcolor="Silver"> 5 <th>&nbsp; <th>&nbsp; <th>&nbsp; <th>&nbsp; <th> 4 <th> dostatočný <th> </tr>
+		     		<tr><th bgcolor="Silver"> 6 <th>&nbsp; <th>&nbsp; <th>&nbsp; <th>&nbsp; <th> 5 <th> nedostatočný <th> </tr>
+					</table>    
+					Do bunky B2 zadáme vzorec =VLOOKUP(A2,D1:E5,2,1), ktorý zabezpečí že sa tu objaví údaj z číselníka
+					podľa toho aké číslo naklepeme do A1.
+					</dd>
+        </dl>
+	<dt>Úlohy na precvičenie:
+        <dd><table cellspacing="20"><tr><td>
+	    <img src="obr/zmateny.gif" border="0" alt="" height="50">
+		<td>
+	   	<ol>
+	    <li>Navrhni tabulky na evidenciu známok pre polročné vysvedčenie. Vstupná tabuľka bude v bunkách a1:k30 a 
+			je tvorená menom a známkami zadanými znakmi 1-5 alebo znakmi "O" - oslobodený, "A" - absolvoval.
+			<br>Číselník znamok daj do buniek M1:N8
+			<br>Voľbu mena žiaka da do bunky A32
+			<br>Vysvedčenie s hlavičkou - názov školy, trieda, školský rok, meno žiaka - a predmetmi aj so
+			známkami umiestni od bunky A34.
+			<br>Úlohu rieš tak, aby si od riadka 34 už do tabulky nevyžadoval žiaden vstup.
+        </ol></tr>
+        </table>
+   </dl>
+      	<hr width="80%" size="4">
+</body>
+</html>

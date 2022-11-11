@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_25.jpg" class="nehe_maly" alt="Lekce 25" />
+
+<h1>Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru</h1>
+
+<p class="nadpis_clanku">V této lekci se naučíte, jak nahrát souřadnice vrcholů z textového souboru a plynulou transformaci z jednoho objektu na druhý. Nezaměříme se ani tak na grafický výstup jako spíše na efekty a potřebnou matematiku okolo. Kód může být velice jednoduše modifikován k vykreslování linkami nebo polygony.</p>
+
+<p>Poznamenejme, že každý objekt by měl být seskládán ze stejného počtu bodů jako všechny ostatní. Je to sice hodně omezující požadavek, ale co se dá dělat - chceme přece, aby změny vypadaly dobře. Začneme vložením hlavičkových souborů. Tentokrát nepoužíváme textury, takže se obejdeme bez glaux.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;math.h&gt;<span class="kom">// Hlavičkový soubor pro matematickou knihovnu</span></p>
+<p></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+
+<p>Po deklarování všech standardních proměnných přidáme nové. Rot ukládají aktuální úhel rotace na jednotlivých souřadnicových osách, speed definují rychlost rotace. Poslední tři desetinné proměnné určují pozici ve scéně.</p>
+
+<p class="src0">GLfloat xrot, yrot, zrot;<span class="kom">// Rotace</span></p>
+<p class="src0">GLfloat xspeed, yspeed, zspeed;<span class="kom">// Rychlost rotace</span></p>
+<p class="src0">GLfloat cx, cy, cz = -15;<span class="kom">// Pozice</span></p>
+
+<p>Aby se program zbytečně nezpomaloval při pokusech morfovat objekt sám na sebe, deklarujeme key, který označuje právě zobrazený objekt. Morph v programu indikuje, jestli právě provádíme transformaci objektů nebo ne. V ustáleném stavu má hodnotu FALSE.</p>
+
+<p class="src0">int key = 1;<span class="kom">// Právě zobrazený objekt</span></p>
+<p class="src0">bool morph = FALSE;<span class="kom">// Probíhá právě morfování?</span></p>
+
+<p>Přiřazením 200 do steps určíme, že změna jednoho objektu na druhý bude trvat 200 překreslení. Čím větší číslo zadáme, tím budou přeměny plynulejší, ale zároveň méně pomalé. No a step definuje číslo právě prováděného kroku.</p>
+
+<p class="src0">int steps = 200;<span class="kom">// Počet kroků změny</span></p>
+<p class="src0">int step = 0;<span class="kom">// Aktuální krok</span></p>
+
+<p>Struktura VERTEX obsahuje x, y, z složky pozice jednoho bodu ve 3D prostoru.</p>
+
+<p class="src0">typedef struct<span class="kom">// Struktura pro bod ve 3D</span></p>
+<p class="src0">{</p>
+<p class="src1">float x, y, z;<span class="kom">// X, y, z složky pozice</span></p>
+<p class="src0">} VERTEX;<span class="kom">// Nazvaný VERTEX</span></p>
+
+<p>Pokusíme se o vytvoření struktury objektu. co všechno budeme potřebovat? Tak určitě to bude nějaké pole pro uložení všech vrcholů. Abychom ho mohli v průběhu programu libovolně měnit, deklarujeme jej jako ukazatel do dynamické paměti. Celočíselná proměnná vert specifikuje maximální možný index tohoto pole a vlastně i počet bodů, ze kterých se skládá.</p>
+
+<p class="src0">typedef struct<span class="kom">// Struktura objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">int verts;<span class="kom">// Počet bodů, ze kterých se skládá</span></p>
+<p class="src1">VERTEX* points;<span class="kom">// Ukazatel do pole vertexů</span></p>
+<p class="src0">} OBJECT;<span class="kom">// Nazvaný OBJECT</span></p>
+
+<p>Pokud bychom se nedrželi zásady, že všechny objekty musí mít stejný počet vrcholů, vznikly by komplikace. Dají se vyřešit proměnnou, která obsahuje číslo maximálního počtu souřadnic. Uveďme příklad: jeden objekt bude krychle s osmi vrcholy a druhý pyramida se čtyřmi. Do maxver tedy uložíme číslo osm. Nicméně stejně doporučuji, aby měly všechny objekty stejný počet bodů - vše bude jednodušší.</p>
+
+<p class="src0">int maxver;<span class="kom">// Eventuálně ukládá maximální počet bodů v jednom objektu</span></p>
+
+<p>První tři instance struktury OBJECT ukládají data, která nahrajeme ze souborů. Do čtvrtého vygenerujeme náhodná čísla - body náhodně rozházené po obrazovce. Helper je objekt pro vykreslování. Obsahuje mezistavy získané kombinací objektů v určitém kroku morfingu. Poslední dvě proměnné jsou ukazatele na zdrojový a výsledný objekt, které chce uživatel zaměnit.</p>
+
+<p class="src0">OBJECT morph1, morph2, morph3, morph4;<span class="kom">// Koule, toroid, válec (trubka), náhodné body</span></p>
+<p class="src0">OBJECT helper, *sour, *dest;<span class="kom">// Pomocný, zdrojový a cílový objekt</span></p>
+
+<p>Ve funkci objallocate() alokujeme paměť pro strukturu objektu, na který ukazuje pointer *k předaný parametrem. Celočíselné n definuje počet vrcholů objektu.</p>
+
+<p>Funkci malloc(), která vrací ukazatel na dynamicky alokovanou paměť předáme její požadovanou velikost. Získáme ji operátorem sizeof() vynásobeným počtem vertexů. Protože malloc() vrací ukazatel na void, musíme ho přetypovat.</p>
+
+<p>Pozn. překl.: Program by ještě měl otestovat jestli byla opravdu alokována. Kdyby se operace nezdařila, program by přistupoval k nezabrané paměti a aplikace by se zcela jistě zhroutila. Malloc() v případě neúspěchu vrací NULL.</p>
+
+<p class="src0">void objallocate(OBJECT *k,int n)<span class="kom">// Alokuje dynamickou paměť pro objekt</span></p>
+<p class="src0">{</p>
+<p class="src1">k-&gt;points = (VERTEX*) malloc(sizeof(VERTEX) * n);<span class="kom">// Alokuje paměť</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Překladatel:</span></p>
+<p class="src1"><span class="kom">// if(k-&gt;points == NULL)</span></p>
+<p class="src1"><span class="kom">// {</span></p>
+<p class="src2"><span class="kom">// MessageBox(NULL,&quot;Chyba při alokaci paměti pro objekt&quot;, &quot;ERROR&quot;, MB_OK | MB_ICONSTOP);</span></p>
+<p class="src2"><span class="kom">// Ukončit program</span></p>
+<p class="src1"><span class="kom">// }</span></p>
+<p class="src0">}</p>
+
+<p>Po každé alokaci dynamické paměti musí VŽDY přijít její uvolnění. Funkci opět předáváme ukazatel na objekt.</p>
+
+<p class="src0">void objfree(OBJECT *k)<span class="kom">// Uvolní dynamickou paměť objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">free(k-&gt;points);<span class="kom">// Uvolní paměť</span></p>
+<p class="src0">}</p>
+
+<p>Funkce readstr() je velmi podobná (úplně stejná) jako v lekci 10. Načte jeden řádek ze souboru f a uloží ho do řetězce string. Abychom mohli udržet data souboru přehledná funkce přeskakuje prázdné řádky (\n) a c-éčkovské komentáře (řádky začínající //, respektive '/').</p>
+
+<p class="src0">void readstr(FILE *f,char *string)<span class="kom">// Načte jeden použitelný řádek ze souboru</span></p>
+<p class="src0">{</p>
+<p class="src1">do</p>
+<p class="src1">{</p>
+<p class="src2">fgets(string, 255, f);<span class="kom">// Načti řádek</span></p>
+<p class="src1">} while ((string[0] == '/') || (string[0] == '\n'));<span class="kom">// Pokud není použitelný, načti další</span></p>
+<p class="src1">return;</p>
+<p class="src0">}</p>
+
+<p>Napíšeme funkci pro loading objektu z textového souboru. Name specifikuje diskovou cestu k souboru a k je ukazatel na objekt, do kterého uložíme výsledek.</p>
+
+<p class="src0">void objload(char *name,OBJECT *k)<span class="kom">// Nahraje objekt ze souboru</span></p>
+<p class="src0">{</p>
+
+<p>Začneme deklarací lokálních proměnných funkce. Do ver načteme počet vertexů, který určuje první řádka v souboru (více dále). Dá se říct, že rx, ry, rz jsou pouze pro zpřehlednění zdrojového kódu programu. Ze souboru do nich načteme jednotlivé složky bodu. Ukazatel filein ukazuje na soubor (po otevření). Oneline je znakový buffer. Vždy do něj načteme jednu řádku, analyzujeme ji a získáme informace, které potřebujeme.</p>
+
+<p class="src1">int ver;<span class="kom">// Počet bodů</span></p>
+<p class="src1">float rx, ry, rz;<span class="kom">// X, y, z pozice</span></p>
+<p class="src1">FILE* filein;<span class="kom">// Handle souboru</span></p>
+<p class="src1">char oneline[255];<span class="kom">// Znakový buffer</span></p>
+
+<p>Pomocí funkce fopen() otevřeme soubor pro čtení. Pozn. překl.: Stejně jako u alokace paměti i zde chybí ošetření chyb.</p>
+
+<p class="src1">filein = fopen(name, &quot;rt&quot;);<span class="kom">// Otevře soubor</span></p>
+
+<p class="src1"><span class="kom">// Překladatel:</span></p>
+<p class="src1"><span class="kom">// if(filein == NULL)</span></p>
+<p class="src1"><span class="kom">// {</span></p>
+<p class="src2"><span class="kom">// MessageBox(NULL,&quot;Chyba při otevření souboru s daty&quot;, &quot;ERROR&quot;, MB_OK | MB_ICONSTOP);</span></p>
+<p class="src2"><span class="kom">// Ukončit program</span></p>
+<p class="src1"><span class="kom">// }</span></p>
+
+<p>Do znakového bufferu načteme první řádku. Měla by být ve tvaru: <span class="src0">Vertices: x\n</span>. Z řetězce tedy potřebujeme vydolovat číslo x, které udává počet vertexů definovaných v souboru. Tento počet uložíme do vnitřní proměnné struktury a potom alokujeme tolik paměti, aby se do ní všechny koordináty souřadnic vešly.</p>
+
+<p class="src1">readstr(filein, oneline);<span class="kom">// Načte první řádku ze souboru</span></p>
+<p class="src1">sscanf(oneline, &quot;Vertices: %d\n&quot;, &amp;ver);<span class="kom">// Počet vertexů</span></p>
+<p></p>
+<p class="src1">k-&gt;verts = ver;<span class="kom">// Nastaví položku struktury na správnou hodnotu</span></p>
+<p></p>
+<p class="src1">objallocate(k, ver);<span class="kom">// Alokace paměti pro objekt</span></p>
+
+<p>Už tedy víme z kolikati bodů je objekt vytvořen a máme alokovánu potřebnou paměť. Nyní ještě musíme načíst jednotlivé hodnoty. Provedeme to cyklem for s řídící proměnnou i, která se každým průchodem inkrementuje. Postupně načteme všechny řádky do bufferu, ze kterého přes funkci sscanf() dostaneme číselné hodnoty složek vertexu pro všechny tři souřadnicové osy. Pomocné proměnné zkopírujeme do proměnných struktury. Po analýze celého souboru ho zavřeme.</p>
+
+<p>Ještě musím upozornit, že je důležité, aby soubor obsahoval stejný počet bodů jako je definováno na začátku. Pokud by jich bylo více, tolik by to nevadilo - poslední by se prostě nenačetly. V žádném případě jich ale NESMÍ být méně! S největší pravděpodobností by to zhroutilo program. Vše, na co se pokouším upozornit by se dalo shrnout do věty: Jestliže soubor začíná &quot;Vertices: 10&quot;, musí v něm být specifikováno 10 souřadnic (30 čísel - x, y, z).</p>
+
+<p class="src1">for (int i = 0; i &lt; ver; i++)<span class="kom">// Postupně načítá body</span></p>
+<p class="src1">{</p>
+<p class="src2">readstr(filein, oneline);<span class="kom">// Načte řádek ze souboru</span></p>
+<p></p>
+<p class="src2">sscanf(oneline, &quot;%f %f %f&quot;, &amp;rx, &amp;ry, &amp;rz);<span class="kom">// Najde a uloží tři čísla</span></p>
+<p></p>
+<p class="src2">k-&gt;points[i].x = rx;<span class="kom">// Nastaví vnitřní proměnnou struktury</span></p>
+<p class="src2">k-&gt;points[i].y = ry;<span class="kom">// Nastaví vnitřní proměnnou struktury</span></p>
+<p class="src2">k-&gt;points[i].z = rz;<span class="kom">// Nastaví vnitřní proměnnou struktury</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">fclose(filein);<span class="kom">// Zavře soubor</span></p>
+
+<p>Otestujeme, zda není proměnná ver (počet bodů aktuálního objektu) větší než maxver (v současnosti maximální známý počet vertexů v jednom objektu). Pokud ano přiřadíme ver do maxver.</p>
+
+<p class="src1">if(ver &gt; maxver)<span class="kom">// Aktualizuje maximální počet vertexů</span></p>
+<p class="src2">maxver = ver;</p>
+<p class="src0">}</p>
+
+<p>Na řadu přichází trochu méně pochopitelná funkce - zvlášť pro ty, kteří nemají v lásce matematiku. Bohužel morfing na ní staví. Co tedy dělá? Spočítá o klik máme posunout bod specifikovaný parametrem i. Na začátku deklarujeme pomocný vertex, podle vzorce spočítáme jeho jednotlivé x, y, z složky a v závěru ho vrátíme volající funkci.</p>
+
+<p>Použitá matematika pracuje asi takto: od souřadnice i-tého bodu zdrojového objektu odečteme souřadnici bodu, do kterého morfujeme. Rozdíl vydělíme zamýšleným počtem kroků a konečný výsledek uložíme do a.</p>
+
+<p>Řekněme, že x-ové souřadnice zdrojového objektu (sour) je rovna čtyřiceti a cílového objektu (dest) dvaceti. U deklarace globálních proměnných jsme steps přiřadili 200. Výpočtem a.x = (40-20)/200 = 20/200 = 0,1 zjistíme, že při přesunu ze 40 na 20 s krokem 200 potřebujeme každé překreslení pohnout na ose x bodem o desetinu jednotky. Nebo jinak: násobíme-li 200*0,1 dostaneme rozdíl pozic 20, což je také pravda (40-20=20). Mělo by to fungovat.</p>
+
+<p class="src0">VERTEX calculate(int i)<span class="kom">// Spočítá o kolik pohnout bodem při morfingu</span></p>
+<p class="src0">{</p>
+<p class="src1">VERTEX a;<span class="kom">// Pomocný bod</span></p>
+<p></p>
+<p class="src1">a.x = (sour-&gt;points[i].x - dest-&gt;points[i].x) / steps;<span class="kom">// Spočítá posun</span></p>
+<p class="src1">a.y = (sour-&gt;points[i].y - dest-&gt;points[i].y) / steps;<span class="kom">// Spočítá posun</span></p>
+<p class="src1">a.z = (sour-&gt;points[i].z - dest-&gt;points[i].z) / steps;<span class="kom">// Spočítá posun</span></p>
+<p></p>
+<p class="src1">return a;<span class="kom">// Vrátí výsledek</span></p>
+<p class="src0">}</p>
+
+<p>Začátek inicializační funkce není žádnou novinkou, ale dále v kódu najdete změny.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechno nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA, GL_ONE);<span class="kom">// Typ blendingu</span></p>
+<p class="src1"><span class="kom">// glEnable(GL_BLEND);// Zapne blending (překl.: autor asi zapomněl)</span></p>
+<p></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.0f);<span class="kom">// Černé pozadí</span></p>
+<p></p>
+<p class="src1">glClearDepth(1.0);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LESS);<span class="kom">// Typ hloubkového testování</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolení testování hloubky</span></p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nejlepší perspektivní korekce</span></p>
+
+<p>Protože ještě neznáme maximální počet bodů v jednom objektu, přiřadíme do maxver nulu. Poté pomocí funkce objload() načteme z disku data jednotlivých objektů (koule, toroid, válec). V prvním parametru předáváme cestu se jménem souboru, ve druhém adresu objektu, do kterého se mají data uložit.</p>
+
+<p class="src1">maxver = 0;<span class="kom">// Nulování maximálního počtu bodů</span></p>
+<p></p>
+<p class="src1">objload(&quot;data/sphere.txt&quot;, &amp;morph1);<span class="kom">//Načte kouli</span></p>
+<p class="src1">objload(&quot;data/torus.txt&quot;, &amp;morph2);<span class="kom">// Načte toroid</span></p>
+<p class="src1">objload(&quot;data/tube.txt&quot;, &amp;morph3);<span class="kom">// Načte válec</span></p>
+
+<p>Čtvrtý objekt nenačítáme ze souboru. Budou jím po scéně rozházené body (přesně 486 bodů). Nejdříve musíme alokovat paměť pro jednotlivé vertexy a potom stačí v cyklu vygenerovat náhodné souřadnice. Budou v rozmezí od -7 do +7.</p>
+
+<p class="src1">objallocate(&amp; morph4, 486);<span class="kom">// Alokace paměti pro 486 bodů</span></p>
+<p></p>
+<p class="src1">for(int i=0; i &lt; 486; i++)<span class="kom">// Cyklus generuje náhodné souřadnice</span></p>
+<p class="src1">{</p>
+<p class="src2">morph4.points[i].x = ((float)(rand() % 14000) / 1000) - 7;<span class="kom">// Náhodná hodnota</span></p>
+<p class="src2">morph4.points[i].y = ((float)(rand() % 14000) / 1000) - 7;<span class="kom">// Náhodná hodnota</span></p>
+<p class="src2">morph4.points[i].z = ((float)(rand() % 14000) / 1000) - 7;<span class="kom">// Náhodná hodnota</span></p>
+<p class="src1">}</p>
+
+<p>Ze souborů jsme loadovali všechny objekty do struktur. Jejich data už nebudeme upravovat. Od teď jsou jen pro čtení. Potřebujeme tedy ještě jeden objekt, helper, který bude při morfingu ukládat jednotlivé mezistavy. Protože na začátku zobrazujeme morp1 (koule) načteme i do pomocného tento objekt.</p>
+
+<p class="src1">objload(&quot;data/sphere.txt&quot;, &amp;helper);<span class="kom">// Načtení koule do pomocného objektu</span></p>
+
+<p>Nastavíme ještě pointery pro zdrojový a cílový objekt, tak aby ukazovali na adresu morph1.</p>
+
+<p class="src1">sour = dest = &amp;morph1;<span class="kom">// Inicializace ukazatelů na objekty</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Ukončí funkci</span></p>
+<p class="src0">}</p>
+
+<p>Vykreslování začneme klasicky smazáním obrazovky a hloubkového bufferu, resetem matice, posunem a rotacemi. Místo abychom všechny pohyby prováděli na konci funkce, tentokrát je umístíme na začátek. Poté deklarujeme pomocné proměnné. Do tx, ty, tz spočítáme souřadnice, které pak předáme funkci glVertex3f() kvůli nakreslení bodu. Q je pomocný bod pro výpočet.</p>
+
+<p class="src0">void DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(cx,cy,cz);<span class="kom">// Přesun na pozici</span></p>
+<p class="src1">glRotatef(xrot, 1,0,0);<span class="kom">// Rotace na ose x</span></p>
+<p class="src1">glRotatef(yrot, 0,1,0);<span class="kom">// Rotace na ose y</span></p>
+<p class="src1">glRotatef(zrot, 0,0,1);<span class="kom">// Rotace na ose z</span></p>
+<p></p>
+<p class="src1">xrot += xspeed;<span class="kom">// Zvětší úhly rotace</span></p>
+<p class="src1">yrot += yspeed;</p>
+<p class="src1">zrot += zspeed;</p>
+<p></p>
+<p class="src1">GLfloat tx, ty, tz;<span class="kom">// Pomocné souřadnice</span></p>
+<p class="src1">VERTEX q;<span class="kom">// Pomocný bod pro výpočty</span></p>
+
+<p>Přes glBegin(GL_POINTS) oznámíme OpenGL, že v blízké době budeme vykreslovat body. V cyklu for procházíme vertexy. Řídící proměnnou i bychom také mohli porovnávat s maxver, ale protože mají všechny objekty stejný počet souřadnic, můžeme s klidem použít počet vertexů prvního objektu - morph1.verts.</p>
+
+<p class="src1">glBegin(GL_POINTS);<span class="kom">// Začátek kreslení bodů</span></p>
+<p class="src2">for(int i = 0; i &lt; morph1.verts; i++)<span class="kom">// Cyklus prochází vertexy</span></p>
+<p class="src2">{</p>
+
+<p>V případě morfingu spočítáme o kolik se má vykreslovaný bod posunout oproti pozici při minulém vykreslení. Takto vypočítané hodnoty odečteme od souřadnic pomocného objektu, do kterého každé překreslení ukládáme aktuální mezistav morfingu. Pokud se zrovna objekty mezi sebou netransformují odečítáme nulu, takže se souřadnice defakto nemění.</p>
+
+<p class="src3">if(morph)<span class="kom">// Pokud zrovna morfujeme</span></p>
+<p class="src4">q = calculate(i);<span class="kom">// Spočítáme hodnotu posunutí</span></p>
+<p class="src3">else<span class="kom">// Jinak</span></p>
+<p class="src4">q.x = q.y = q.z = 0;<span class="kom">// Budeme odečítat nulu, ale tím neposouváme</span></p>
+<p></p>
+<p class="src3">helper.points[i].x -= q.x;<span class="kom">// Posunutí na ose x</span></p>
+<p class="src3">helper.points[i].y -= q.y;<span class="kom">// Posunutí na ose y</span></p>
+<p class="src3">helper.points[i].z -= q.z;<span class="kom">// Posunutí na ose z</span></p>
+
+<p>Abychom si zpřehlednili program a také kvůli maličkému efektu, zkopírujeme právě získaná čísla do pomocných proměnných.</p>
+
+<p class="src3">tx = helper.points[i].x;<span class="kom">// Zpřehlednění + efekt</span></p>
+<p class="src3">ty = helper.points[i].y;<span class="kom">// Zpřehlednění + efekt</span></p>
+<p class="src3">tz = helper.points[i].z;<span class="kom">// Zpřehlednění + efekt</span></p>
+
+<p>Všechno máme spočítáno, takže přejdeme k vykreslení. Nastavíme barvu na zelenomodrou a nakreslíme bod. Potom zvolíme trochu tmavší modrou barvu. Odečteme dvojnásobek souřadnic q od t a získáme umístění bodu při následujícím volání této funkce (ob jedno). Na této pozici znovu vykreslíme bod. Do třetice všeho dobrého znovu ztmavíme barvu a opět spočítáme další pozici, na které se vyskytne po čtyřech průchodech touto funkcí a opět ho vykreslíme.</p>
+
+<p>Proč jsme krásně přehledný kód vlastně komplikovali? I když si to asi neuvědomujete, vytvořili jsme jednoduchý částicový systém. S použitím blendingu vytvoří perfektní efekt, který se ale bohužel projeví pouze při transformaci objektů z jednoho na druhý. Pokud zrovna nemorfujeme, v q souřadnicích jsou uloženy nuly, takže druhý a třetí bod kreslíme na stejné místo jako první.</p>
+
+<p class="src3">glColor3f(0, 1, 1);<span class="kom">// Zelenomodrá barva</span></p>
+<p class="src3">glVertex3f(tx, ty, tz);<span class="kom">// Vykreslí první bod</span></p>
+<p></p>
+<p class="src3">glColor3f(0, 0.5f, 1);<span class="kom">// Modřejší zelenomodrá barva</span></p>
+<p class="src3">tx -= 2*q.x;<span class="kom">// Spočítání nových pozic</span></p>
+<p class="src3">ty -= 2*q.y;</p>
+<p class="src3">ty -= 2*q.y;</p>
+<p class="src3">glVertex3f(tx, ty, tz);<span class="kom">// Vykreslí druhý bod v nové pozici</span></p>
+<p></p>
+<p class="src3">glColor3f(0, 0, 1);<span class="kom">// Modrá barva</span></p>
+<p class="src3">tx -= 2*q.x;<span class="kom">// Spočítání nových pozic</span></p>
+<p class="src3">ty -= 2*q.y;</p>
+<p class="src3">ty -= 2*q.y;</p>
+<p class="src3">glVertex3f(tx, ty, tz);<span class="kom">// Vykreslí třetí bod v nové pozici</span></p>
+
+<p>Ukončíme tělo cyklu a glEnd() oznámí, že dále už nebudeme nic vykreslovat.</p>
+
+<p class="src2">}</p>
+<p class="src1">glEnd();<span class="kom">// Ukončí kreslení</span></p>
+
+<p>Jako poslední v této funkci zkontrolujeme jestli transformujeme objekty. Pokud ano a zároveň musí být aktuální krok morfingu menší než celkový počet kroků, inkrementujeme aktuální krok. Po dokončení morfingu ho vypneme. Protože jsme už došli k cílovému objektu, uděláme z něj zdrojový. Krok reinicializujeme na nulu.</p>
+
+<p class="src1">if(morph &amp;&amp; step &lt;= steps)<span class="kom">// Morfujeme a krok je menší než maximum</span></p>
+<p class="src1">{</p>
+<p class="src2">step++;<span class="kom">// Příště pokračuj následujícím krokem</span></p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Nemorfujeme nebo byl právě ukončen</span></p>
+<p class="src1">{</p>
+<p class="src2">morph = FALSE;<span class="kom">// Konec morfingu</span></p>
+<p class="src2">sour = dest;<span class="kom">// Cílový objekt je nyní zdrojový</span></p>
+<p class="src2">step = 0;<span class="kom">// První (nulový) krok morfingu</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>KillGLWindow upravíme jenom málo. Uvolníme pouze dynamicky alokovanou paměť.</p>
+
+<p class="src0">GLvoid KillGLWindow(GLvoid)<span class="kom">// Zavírání okna</span></p>
+<p class="src0">{</p>
+<p class="src1">objfree(&amp;morph1);<span class="kom">// Uvolní alokovanou paměť</span></p>
+<p class="src1">objfree(&amp;morph2);<span class="kom">// Uvolní alokovanou paměť</span></p>
+<p class="src1">objfree(&amp;morph3);<span class="kom">// Uvolní alokovanou paměť</span></p>
+<p class="src1">objfree(&amp;morph4);<span class="kom">// Uvolní alokovanou paměť</span></p>
+<p class="src1">objfree(&amp;helper);<span class="kom">// Uvolní alokovanou paměť</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Zbytek nezměněn</span></p>
+<p class="src0">}</p>
+
+<p>Ve funkci WinMain() upravíme kód testující stisk kláves. Následujícími šesti testy regulujeme rychlost rotace objektu.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src4">if(keys[VK_PRIOR])<span class="kom">// PageUp?</span></p>
+<p class="src5">zspeed += 0.01f;</p>
+<p></p>
+<p class="src4">if(keys[VK_NEXT])<span class="kom">// PageDown?</span></p>
+<p class="src5">zspeed -= 0.01f;</p>
+<p></p>
+<p class="src4">if(keys[VK_DOWN])<span class="kom">// Šipka dolu?</span></p>
+<p class="src5">xspeed += 0.01f;</p>
+<p></p>
+<p class="src4">if(keys[VK_UP])<span class="kom">// Šipka nahoru?</span></p>
+<p class="src5">xspeed -= 0.01f;</p>
+<p></p>
+<p class="src4">if(keys[VK_RIGHT])<span class="kom">// Šipka doprava?</span></p>
+<p class="src5">yspeed += 0.01f;</p>
+<p></p>
+<p class="src4">if(keys[VK_LEFT])<span class="kom">// Šipka doleva?</span></p>
+<p class="src5">yspeed -= 0.01f;</p>
+
+<p>Dalších šest kláves pohybuje objektem po scéně.</p>
+
+<p class="src4">if (keys['Q'])<span class="kom">// Q?</span></p>
+<p class="src5">cz -= 0.01f;<span class="kom">// Dále</span></p>
+<p></p>
+<p class="src4">if (keys['Z'])<span class="kom">// Z?</span></p>
+<p class="src5">cz += 0.01f;<span class="kom">// Blíže</span></p>
+<p></p>
+<p class="src4">if (keys['W'])<span class="kom">// W?</span></p>
+<p class="src5">cy += 0.01f;<span class="kom">// Nahoru</span></p>
+<p></p>
+<p class="src4">if (keys['S'])<span class="kom">// S?</span></p>
+<p class="src5">cy -= 0.01f;<span class="kom">// Dolu</span></p>
+<p></p>
+<p class="src4">if (keys['D'])<span class="kom">// D?</span></p>
+<p class="src5">cx += 0.01f;<span class="kom">// Doprava</span></p>
+<p></p>
+<p class="src4">if (keys['A'])<span class="kom">// A?</span></p>
+<p class="src5">cx -= 0.01f;<span class="kom">// Doleva</span></p>
+
+<p>Teď ošetříme stisk kláves 1-4. Aby se kód provedl, nesmí být při stisku jedničky key roven jedné (nejde morfovat z prvního objektu na první) a také nesmíme právě morfovat (nevypadalo by to dobře). V takovém případě nastavíme pro příští průchod tímto místem key na jedna a morph na TRUE. Cílovým objektem bude objekt jedna. Klávesy 2, 3, 4 jsou analogické.</p>
+
+<p class="src4">if (keys['1'] &amp;&amp; (key!=1) &amp;&amp; !morph)<span class="kom">// Klávesa 1?</span></p>
+<p class="src4">{</p>
+<p class="src5">key = 1;<span class="kom">// Proti dvojnásobnému stisku</span></p>
+<p class="src5">morph = TRUE;<span class="kom">// Začne morfovací proces</span></p>
+<p class="src5">dest = &amp;morph1;<span class="kom">// Nastaví cílový objekt</span></p>
+<p class="src4">}</p>
+<p class="src4">if (keys['2'] &amp;&amp; (key!=2) &amp;&amp; !morph)<span class="kom">// Klávesa 2?</span></p>
+<p class="src4">{</p>
+<p class="src5">key = 2;<span class="kom">// Proti dvojnásobnému stisku</span></p>
+<p class="src5">morph = TRUE;<span class="kom">// Začne morfovací proces</span></p>
+<p class="src5">dest = &amp;morph2;<span class="kom">// Nastaví cílový objekt</span></p>
+<p class="src4">}</p>
+<p class="src4">if (keys['3'] &amp;&amp; (key!=3) &amp;&amp; !morph)<span class="kom">// Klávesa 3?</span></p>
+<p class="src4">{</p>
+<p class="src5">key = 3;<span class="kom">// Proti dvojnásobnému stisku</span></p>
+<p class="src5">morph = TRUE;<span class="kom">// Začne morfovací proces</span></p>
+<p class="src5">dest = &amp;morph3;<span class="kom">// Nastaví cílový objekt</span></p>
+<p class="src4">}</p>
+<p class="src4">if (keys['4'] &amp;&amp; (key!=4) &amp;&amp; !morph)<span class="kom">// Klávesa 4?</span></p>
+<p class="src4">{</p>
+<p class="src5">key = 4;<span class="kom">// Proti dvojnásobnému stisku</span></p>
+<p class="src5">morph = TRUE;<span class="kom">// Začne morfovací proces</span></p>
+<p class="src5">dest = &amp;morph4;<span class="kom">// Nastaví cílový objekt</span></p>
+<p class="src4">}</p>
+
+<p>Doufám, že jste si tento tutoriál užili. Ačkoli výstup není až tak fantastický jako v některých jiných, naučili jste se spoustu věcí. Hraním si s kódem lze docílit skvělých efektů - třeba po scéně náhodně rozházené body měnící se ve slova. Zkuste použít polygony nebo linky namísto bodů, výsledek bude ještě lepší.</p>
+
+<p>Před tím, než vznikla tato lekce bylo vytvořeno demo &quot;Morph&quot;, které demonstruje mnohem pokročilejší verzi probíraného efektu. Lze ho najít na adrese <a href="http://homepage.ntlworld.com/fj.williams/PgSoftware.html" target="_blank">http://homepage.ntlworld.com/fj.williams/PgSoftware.html</a>.</p>
+
+<p class="autor">napsal: Piotr Cieslak<br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson25.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson25_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson25.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson25.zip">Delphi</a> kód této lekce. ( <a href="mailto:Alexandre.Hirzel@nat.unibe.ch">Alexandre Hirzel</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson25.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson25.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson25.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson25.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:jay@remotepoint.com">Jay Groven</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson25.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Schubert_P@Yahoo.de">Patrick Schubert</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson25.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:scarab@egyptian.net">DarkAlloy</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson25.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson25.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_25_big.jpg" class="nehe_velky" alt="Lekce 25" /></div>
+<p class="okolni_lekce"><a href="tut_24.php">&lt;&lt;&lt; Lekce 24</a> | <a href="tut_26.php">Lekce 26 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_25.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

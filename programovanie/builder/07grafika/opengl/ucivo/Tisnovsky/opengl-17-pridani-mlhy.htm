@@ -1,0 +1,846 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (17): přidání "mlhy" - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="V dnešní části seriálu o grafické knihovně OpenGL se budeme zabývat jednoduchou technikou pro přidání &quot;mlhy&quot; do vykreslované scény. Tato technika je často používána v různých aplikacích, protože je na první pohled efektní a současně umožňuje urychlit vykreslování celé scény." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-17-pridani-mlhy%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-17-pridani-mlhy%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-17-pridani-mlhy%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (17): přidání "mlhy"</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 21. 10. 2003 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (17): přidání "mlhy"</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+V dnešní části seriálu o grafické knihovně OpenGL se budeme zabývat jednoduchou technikou pro přidání "mlhy" do vykreslované scény. Tato technika je často používána v různých aplikacích, protože je na první pohled efektní a současně umožňuje urychlit vykreslování celé scény.
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Mlha</h2>
+
+<p>Grafická knihovna OpenGL podporuje metodu, pomocí které lze do vykreslované
+scény přidat takzvanou <i>mlhu</i> (<i>fog</i>). Jedná se o grafický efekt, při
+kterém se se vzrůstající vzdáleností od pozorovatele postupně mění barva
+vykreslovaných těles. V blízkosti pozorovatele (tj. malé vzdálenosti) má těleso
+svoji původní barvu (zadanou buď příkazem glColor*(), texturou, nebo
+materiálem), ve velké vzdálenosti pak barvu mlhy. Pokud je barva mlhy totožná s
+barvou pozadí, dosáhne se vcelku realistického efektu, kdy se tělesa ztrácí v
+mlze nebo ve tmě. Barva mlhy a pozadí však může být odlišná, čehož lze využít 
+pro tvorbu různých nerealistických efektů.</p>
+
+<p>Ukázku použití této metody znázorňuje první obrázek
+(je převzat z jiných zdrojů na Internetu). Z obrázku je patrné, že
+pouze travnatý povrch je zobrazen svou původní barvou (resp. barvou textury),
+vzdálenější povrch i budova se však ztrácí v mlze, která je, podobně jako
+pozadí, nastavena na šedou barvu.</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_17_1.jpg" alt="Prostorová scéna s aplikovaným efektem mlhy" width="410" height="392" /><br />
+Obrázek 1: Prostorová scéna s aplikovaným efektem mlhy
+</p>
+
+<h4>Princip efektu</h4>
+
+<p>Na první pohled vypadá tento efekt velmi složitě. Ve skutečnosti je jeho
+princip velice jednoduchý. Pomocí příkazů z grafické knihovny OpenGL se zadají
+základní vlastnosti mlhy, což ve skutečnosti představuje výběr jedné ze tří
+funkcí a nastavení parametrů těchto funkcí. Potom se při výpočtu barvy každého
+fragmentu získá jeho barva bez působení mlhy (tj. použije se například
+texturování nebo osvětlení) a následně se tato barva mísí s předem zadanou barvou
+mlhy. Poměr původní barvy fragmentu a barvy mlhy ve výsledné barvě je dán
+parametry funkce mlhy a vzdáleností fragmentu od pozorovatele (tato vzdálenost
+se stejně musí počítat, mininálně pro potřeby hloubkového bufferu). Princip
+tohoto efektu je naznačen na druhém obrázku.</p>
+
+<p class="urs-p-center">
+
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_17_2.gif" alt="Princip efektu mlhy" width="320" height="240" /><br />
+Obrázek 2: Princip efektu mlhy
+</p>
+
+<h4>Funkce mlhy a parametry této funkce</h4>
+
+<p>Jak již bylo popsáno v minulém odstavci, pracuje efekt mlhy tak, že se
+kombinuje původní barva fragmentu s barvou mlhy. To, jakým způsobem (resp. v
+jakém poměru) budou tyto barvy smíšeny, závisí na třech faktorech:</p>
+
+<ol class="urs-decimal"><li>vzdálenosti fragmentu od pozorovatele</li>
+<li>nastavené funkci hustoty mlhy (viz dále)</li>
+<li>parametrech funkce hustoty mlhy</li>
+
+</ol>
+
+<p>OpenGL podporuje tři typy funkcí, které lze použít pro výpočet hustoty mlhy
+v místě fragmentu. Tyto funkce vlastně určují, jakým způsobem se bude měnit
+barva těles se vzdáleností od pozorovatele:</p>
+
+<ol class="urs-decimal"><li>Nejjednodušší funkcí je lineární funkce. Tuto funkci lze vyjádřit vztahem<br />
+<i>f=(end-z)/(end-start)</i>,<br />
+kde <i>start</i> a <i>end</i> určují počáteční a koncovou vzdálenost, ve
+kterých hodnoty lineárně klesají. Mimo rozsah těchto parametrů se funkční
+hodnoty nepočítají. Výhodou je při použití této funkce vysoká rychlost
+zobrazování, ale efekt mlhy neodpovídá realitě.</li>
+
+<li>Poněkud složitější funkcí je exponenciální funkce se záporným exponentem, tj. funkce je klesající:<br />
+<i>f=e<sup>-density*z</sup></i>,<br />
+kde <i>density</i> je hustota mlhy a <i>z</i> je vzdálenost fragmentu od
+pozorovatele. Tato funkce je na výpočet poněkud složitější než funkce
+předchozí, ale vizuální výsledky lépe odpovídají realitě.</li>
+
+<li>Poslední, nejsložitější funkcí, je<br />
+<i>f=e<sup>-(density*z)<sup>2</sup></sup></i>    
+(pokud se dvojitý exponent zobrazí v prohlížeči špatně: <i>f=e^-((density*z)^2))</i><br />
+Člen <i>density</i> představuje opět hustotu mlhy, <i>z</i> je vzdálenost
+fragmentu. Výpočet této funkce je nejpomalejší, výsledky však nejlépe
+odpovídají realitě, kde se také intenzita světla snižuje se čtvercem
+vzdálenosti. Použití této funkce na počítači má však za následek velmi rychlé
+"mizení" objektů, proto doporučuji použít spíše předchozí funkci.</li>
+
+</ol>
+
+<p>Vliv typu funkce a parametru hustoty mlhy na průběh směšovací hodnoty je
+zobrazen na třetím obrázku.</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_17_3.gif" alt="Hustota mlhy v závislosti na vzdálenosti fragmentu od pozorovatele" width="450" height="250" /><br />
+Obrázek 3: Hustota mlhy v závislosti na vzdálenosti fragmentu od pozorovatele
+</p>
+
+<h4>Mlha a OpenGL</h4>
+
+<p>Efekt mlhy je zapotřebí před prvním použitím povolit nebo zakázat. Povolení
+se provede příkazem glEnable(GL_FOG), zakázání potom příkazem
+
+glDisable(GL_FOG). Kdykoliv za běhu aplikace se lze dotázat,
+zda je mlha zapnutá, či nikoliv, zavoláním funkce glIsEnabled(GL_FOG)
+nebo složitěji funkcí glGetBooleanv(GL_FOG, &amp;param).</p>
+
+<p>Dále je zapotřebí zvolit funkci, která určuje hustotu mlhy. Tato funkce se
+nastaví příkazem glFogi(GL_FOG_MODE, function), kde parametr
+<i>function</i> může nabývat hodnot: GL_LINEAR (první, lineární
+funkce), GL_EXP (druhá, exponenciální funkce) a GL_EXP2
+
+(třetí, exponenciální funkce, jejíž hodnota závisí na kvadrátu
+vzdálenosti).</p>
+
+<p>Dalším krokem je nastavení parametrů funkce a barvy mlhy. Parametry funkce se nastavují příkazy:</p>
+
+<div class="urs-pre"><pre>
+
+void glFogf(
+  GLenum pname,
+  GLfloat param
+);
+
+void glFogi(
+  GLenum pname,
+  GLint param
+);
+
+void glFogfv(
+  GLenum pname,
+  const GLfloat * params
+);
+
+void glFogiv(
+  GLenum pname,
+  const GLint * params
+);
+
+</pre></div>
+
+<p>Tyto příkazy se liší typem a počtem parametrů, které lze předat. Parametr
+<i>pname</i> může nabývat hodnot GL_FOG_MODE (bylo probráno výše),
+
+GL_FOG_DENSITY (hustota mlhy pro exponenciální funkce),
+GL_FOG_START (bližší vzdálenost pro lineární funkci) a
+glFogEnd (větší vzdálenost pro lineární funkci). Pomocí příkazů
+glFogfv() a glFogiv() lze předat barvu mlhy. Parametr
+<i>pname</i> je nastaven na hodnotu GL_FOG_COLOR a parametr
+
+<i>params</i> je ukazatel na pole čtyř čísel vyjadřujících složky barvy, tj.
+RGB a průhlednost.</p>
+
+<p>Následuje ukázka nastavení mlhy v aplikaci:</p>
+
+<code>
+GLfloat fogColor[4]={0.5,0.5,0.5,1.0};  // barva mlhy<br />
+glEnable(GL_FOG);                       // povolit mlhu<br />
+fogMode = GL_EXP;                       // funkce pro mlhu<br />
+glFogi(GL_FOG_MODE, fogMode);<br />
+glFogfv(GL_FOG_COLOR, fogColor);<br />
+glFogf(GL_FOG_DENSITY, 0.35);           // hustota mlhy<br />
+glHint(GL_FOG_HINT, GL_DONT_CARE);<br />
+glFogf(GL_FOG_START, 1.0);              // pouzito pro linearni funkci, tady zbytecne<br />
+glFogf(GL_FOG_END, 5.0);<br />
+glClearColor(0.5,0.5,0.5,1.0);          // pouzijeme barvu mlhy pro vymazani sceny
+</code><br />
+<br />
+<h4>Použití mlhy</h4>
+
+<p>Tento efekt lze použít v mnoha příkladech při zobrazování trojrozměrných
+scén. Pokud se podrobněji podíváme na princip, jakým se mlha počítá, zjistíme,
+že se nejedná o žádný extrémně náročný výpočet. Naopak, vzhledem k tomu, že se
+mlha počítá pro každý potenciálně viditelný fragment, je možné tento výpočet
+zabudovat přímo do grafického vykreslovacího řetězce a provádět s hardwarovou
+podporou. Proto je zejména na novějších grafických akcelerátorech (které
+provádí většinu výpočtů hardwarově případně s pomocí GPU) tento efekt velmi
+dobře použitelný.</p>
+
+<p>Použitím tohoto efektu můžeme paradoxně zvýšit rychlost zobrazování
+některých scén. Můžeme totiž využít faktu, že vzdálená tělesa jsou díky mlze
+buď částečně, nebo úplně neviditelná. Proto tato tělesa nemusíme vykreslovat.
+Zejména ve scénách, kde se nachází velké množství složitých těles na velkém
+prostoru (typicky počítačové hry, kde jsou zobrazena auta, stromy apod.), může
+být díky odstranění těles z vykreslovacího procesu vykreslování až
+několikanásobně urychleno.</p>
+
+<p>Princip "uschování" těles v mlze nebo ve tmě byl v minulosti častokrát 
+použit v počítačových hrách, a to i tehdy, když se vykreslování provádělo
+specializovanými algoritmy a ne pomocí OpenGL. Jmenujme například letecké
+simulátory (Chuck Yager`s Air Combat) nebo hry typu dungeon (Dungeon Master,
+série Ishar). Tyto hry byly vytvořeny pro relativně pomalé procesory typu 286,
+příp. 386, a proto se při vykreslování scény musely zvolit velmi rychlé
+algoritmy. Urychlení pomocí mlhy je vidět zejména v sérii Ishar, kde se jedná o
+klasický čtverečkový dungeon, ale hráč před sebou vidí jen několik políček,
+ostatní se ztrácí ve všudypřítomné mlze, která hře dodává zajímavou atmosféru.
+Podobný princip je vidět i v Dungeon Masteru, kde se však hrací prostředí ztrácí
+ve tmě.</p>
+
+<p>Mlhu (resp. stmívání hran se vzrůstající vzdáleností těles) lze použít i při
+vykreslování technických výkresů, kdy se zobrazují pouze hrany těles. Potom se
+místo neměnné barvy hran může použít mlha, která i bez složitějších výpočtů
+osvětlení dodá zobrazované scéně zdání prostorovosti. Na rozdíl od stínování,
+kdy se počítá barva ve vrcholech a barva plošek, případně hran, se interpoluje,
+se mlha počítá až pro každý fragment, což v některých případech může znamenat
+zpomalení vykreslování.</p>
+
+<h4>Demonstrační příklady</h4>
+
+<p>V <a href="http://i.iinfo.cz/r/photos/opengl/opengl_17_1.c">prvním demonstračním příkladu</a>
+
+(<a href="http://i.iinfo.cz/r/photos/opengl/opengl_17_1.html">HTML verze tohoto příkladu</a>) je ukázáno
+jednoduché použití mlhy při vykreslování těles. Pozadí je nastaveno na šedou
+barvu, stejně jako barva mlhy, což je nejobvyklejší způsob, který se také
+nejvíce blíží realitě. Pro výpočet mlhy je použita exponenciální funkce.</p>
+
+<p>Ve <a href="http://i.iinfo.cz/r/photos/opengl/opengl_17_2.c">druhém demonstračním příkladu</a>
+(<a href="http://i.iinfo.cz/r/photos/opengl/opengl_17_2.html">HTML verze tohoto příkladu</a>) je ukázáno zapínání
+a vypínání mlhy v průběhu vykreslování (jeden objekt je vykreslený se zapnutou
+mlhou, druhý objekt s mlhou vypnutou). Pozadí je nastaveno na černou barvu a
+barva mlhy na modrou, takže se dosahuje zajímavých světelných efektů. Pro
+výpočet mlhy je použita lineární funkce.</p>
+
+<p><a href="http://i.iinfo.cz/r/photos/opengl/opengl_17_3.c">Třetí demonstrační příklad</a>
+(<a href="http://i.iinfo.cz/r/photos/opengl/opengl_17_3.html">HTML verze tohoto příkladu</a>) navazuje na
+příklady vytvořené v předchozích dílech. Je dodána podpora pro mlhu s tím, že
+se dají nastavovat parametry mlhy (funkce hustoty, barva pozadí a mlhy).</p>
+
+<p>Pro majitele pomalejších linek je zde k dispozici <a href="http://i.iinfo.cz/r/photos/opengl/opengl_17.zip">celý článek i s přílohami</a>.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-15-orezani-teles-ve-scene/">Grafická knihovna OpenGL (15): ořezání těles ve scéně</a></li>
+			<li><a href="/clanky/opengl-16-pole-vrcholu-vertex-arrays/">Grafická knihovna OpenGL (16): pole vrcholů (vertex arrays)</a></li>
+			<li class="actual">Grafická knihovna OpenGL (17): přidání "mlhy"</li>
+			<li><a href="/clanky/opengl-18-vykreslovani-osvetlenych-teles/">Grafická knihovna OpenGL (18): vykreslování osvětlených těles</a></li>
+			<li><a href="/clanky/opengl-19-phonguv-osvetlovaci-model/">Grafická knihovna OpenGL (19): Phongův osvětlovací model</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-17-pridani-mlhy%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-17-pridani-mlhy%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/">Vlastní</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q2/">2</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q3/">3</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q4/">4</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q5/">5</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q6/">6</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q7/">7</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q8/">8</a>
+<a href="/clanky/opengl-17-pridani-mlhy/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-17-pridani-mlhy/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[25613]" /></td>
+	<th><a href="/clanky/opengl-17-pridani-mlhy/nazory/25613/">Obr. č. 1</a></th>
+	<td class="op-au">Tomáš</td>
+	<td class="op-dt">21. 10. 2003 07:46	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[25620]" /></td>
+	<th><a href="/clanky/opengl-17-pridani-mlhy/nazory/25620/">Chybicka</a></th>
+	<td class="op-au">Razi</td>
+	<td class="op-dt">21. 10. 2003 11:26	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[25794]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-17-pridani-mlhy/nazory/25794/">Re: Chybicka</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">27. 10. 2003 07:27	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[26050]" /></td>
+	<th><a href="/clanky/opengl-17-pridani-mlhy/nazory/26050/">skvely serial</a></th>
+	<td class="op-au">brano</td>
+	<td class="op-dt">30. 10. 2003 19:37	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-17-pridani-mlhy/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-17-pridani-mlhy/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-17-pridani-mlhy/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3762">IT PROJECT MANAGER (i2438) / až 65.000,- / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3646">PROGRAMÁTOR C/C++ (i5140) / VÍCE POZIC / NADNÁRODNÍ SPOLEČNOST / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3466">SPECIALISTA ROZVOJE SYSTÉMŮ A MOBIL. APLIKACÍ (i4557) / MEZINÁR. SPOL. / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4098">ANALYTIK DATOVÉHO SKLADU (i3548) / NADNÁRODNÍ SPOL. / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3935">IT PROJECT MANAGER (i4548) / MEZINÁRODNÍ SPOLEČNOST / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3790">JAVA, XML DEVELOPER (i3284) / INTERNATIONAL COMPANY / PRAGUE</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3029">J2EE ARCHITEKT (i6582) / 45-80.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4080">DB SPECIALISTA PRO DATOVÉ SKLADY - SQL (i4378) / PRAHA</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

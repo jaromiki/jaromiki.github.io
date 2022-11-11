@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (4.) - FullScreen</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="V tomto článku vám ukážu, jak se lze v OpenGL jednoduče přepnout do FullScreen modu. Stačí jen jedna procedura, kterou zavoláte s parametrem požadovaného rozlišení a počtem bitů na pixel. "/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/opengl-fullscreen&amp;title=OpenGL (4.) - FullScreen" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (4.) - FullScreen</h1><i>V tomto článku vám ukážu, jak se lze v OpenGL jednoduče přepnout do FullScreen modu. Stačí jen jedna procedura, kterou zavoláte s parametrem požadovaného rozlišení a počtem bitů na pixel. </i><br/><hr/><br/><P>Do FullScreen modu se přepnete pomocí této procedury,</P>
+	
+<PRE><B>procedure</B> TForm1.SetFullScreen(SizeX,SizeY,Bits:longint);
+<B>var</B> dmScreenSettings: DEVMODE;
+<B>begin</B>
+  ZeroMemory( @dmScreenSettings, sizeof( DEVMODE ) );
+  dmScreenSettings.dmSize := sizeof( DEVMODE );
+  dmScreenSettings.dmPelsWidth  := SizeX; // Width
+  dmScreenSettings.dmPelsHeight := SizeY; // Height
+  dmScreenSettings.dmFields     := DM_PELSWIDTH or DM_PELSHEIGHT;
+  dmScreenSettings.dmBitsPerPel := Bits;
+
+  // Switch To Fullscreen Mode  
+  ChangeDisplaySettings(dmScreenSettings, CDS_FULLSCREEN); 
+
+  Form1.WindowState := wsMaximized;
+<B>end;</B></PRE>
+
+
+<P>kterou stačí zavolat s parametrem (šířka obrazovky, výška obrazovky, barevná hloubka). např SetFullScreen(640, 480, 16) přepne aplikaci do rozličení 640*480 v 16 bitech na pixel.</P>
+	
+<PRE><B>procedure</B> TForm1.FormDestroy(Sender: TObject);
+<B>begin</B>
+  wglDeleteContext(hRC);
+  RestoreMode;
+<B>end;</B></PRE>		
+
+<P>Před ukončením nezapomeňte zavolat proceduru RestoreMode, která vrátí původní nastavení obrazovky.</P>
+
+<PRE><B>procedure</B> TForm1.RestoreMode;
+<B>begin</B>
+  ChangeDisplaySettings(DEVMODE(nil^), 0);
+<B>end;</B></PRE>
+
+	
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glfullscreen/fullscreen.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+	
+<P>Za samozřejmost považuji, že budete mít všechny procedury nadefinovány:</P>
+
+<PRE><B>type</B>
+  TForm1 = <B>class</B>(TForm)
+    <B>procedure</B> FormDestroy(Sender: TObject);  
+  <B>private</B>
+    <B>procedure</B> SetFullScreen(SizeX,SizeY,Bits:longint);
+    <B>procedure</B> RestoreMode;
+  <B>end;</B></PRE>
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="3d-studio-max-horici-zapalka-ohen">3D Studio MAX (8.) - Tvorba hořící zápalky</a></li><li><a href="techniky-zobrazeni-3d-doom">'DOOM' 3D Engine techniques</a></li><li><a href="pohyb-ve-3d-scene">OpenGL (3.) - Procházení scénou</a></li><li><a href="3d-studio-max-3d-text">3D Studio MAX (7.) - 3D text</a></li><li><a href="3d-studio-max-dym-smoke">3D Studio MAX (6.) - Vznášející se dým</a></li><li><a href="adobe-photoshop-textura-vodni-hladiny">Adobe Photoshop (3.) - Textura vodní hladiny</a></li><li><a href="grafika-a-zvuky-v-delphi">Delphi (6.) - Grafika a zvuky</a></li><li><a href="zajimave-zdrojaky-pro-delphi-2">Delphi (5.) - Zajímavé zdrojáky 2.</a></li><li><a href="3d-studio-max-mlha-fog">3D Studio MAX (5.) - Přízemní mlha ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-hvezdna-obloha-deep-stars">Photoshop tutoriály (2.) - Temná hvězdná obloha</a></li><li><a href="opengl-ctverec-s-texturou">OpenGL (2.) - Čtverec s texturou</a></li><li><a href="nastaveni-opengl-zobrazeni-barevneho-ctverce">OpenGL (1.) - Čtverec s interpolací barvy</a></li><li><a href="3d-studio-max-laser">3D Studio MAX (4.) - Jak vytvořit jednoduchý laser</a></li><li><a href="zajimave-zdrojaky-pro-delphi-1">Delphi (4.) - Zajímavé zdrojáky</a></li><li><a href="3d-studio-max-tvorba-krajiny-landscape">3D Studio MAX (3.) - Tvorba 3D krajiny</a></li><li><a href="detekce-typu-procesoru-jeho-frekvence-vytizeni">Delphi (3.) - Detekce typu procesoru, jeho frekvence a využití</a></li><li><a href="ini-soubory-a-registr-windows-v-delphi">Delphi (2.) - Práce se soubory, *.ini soubory a registry</a></li><li><a href="adobe-photoshop-ohniva-koule-fireball">Photoshop tutoriály (1.) - Ohnivé koule</a></li><li><a href="jak-zobrazit-startovaci-obrazek">Delphi (1.) - Jak zobrazit startovací obrázek</a></li><li><a href="3d-studio-max-ohniva-exploze-explosion">3D Studio MAX (2.) - Jak na ohnivé explose</a></li><li><a href="3d-studio-max-panel-nastroju">3D Studio MAX (1.) - Panel nástrojů ve 3D Studiu MAX</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=15&amp;url=%2Fopengl-fullscreen" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.1659377412px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12651 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

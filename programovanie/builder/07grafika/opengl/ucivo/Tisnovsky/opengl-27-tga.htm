@@ -1,0 +1,1836 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (27): TGA - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="Tento díl seriálu o grafické knihovně OpenGL je zaměřen na popis formátu rastrového souboru typu TGA, který může být použit pro načítání a ukládání textur do externích souborů. Výhodou TGA formátu při práci s texturami je jeho jednoduchost a možnost uložení obrázků v pravých barvách (true color) i s alfa kanálem (tj. průhledností)." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-27-tga%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-27-tga%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-27-tga%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (27): TGA</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 6. 1. 2004 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (27): TGA</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+Tento díl seriálu o grafické knihovně OpenGL je zaměřen na popis formátu rastrového souboru typu TGA, který může být použit pro načítání a ukládání textur do externích souborů. Výhodou TGA formátu při práci s texturami je jeho jednoduchost a možnost uložení obrázků v pravých barvách (true color) i s alfa kanálem (tj. průhledností).
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Texturování 6</h2>
+
+<h4>Obsah</h4>
+
+<a href="#hrf1">Popis formátu rastrového souboru TGA</a><br />
+<a href="#hrf2">Použití formátu TGA v počítačové grafice</a><br />
+<a href="#hrf3">Interní struktura TGA souboru</a><br />
+<a href="#hrf4">Hlavička souboru TGA</a><br />
+<a href="#hrf5">Identifikační pole obrázku</a><br />
+<a href="#hrf6">Barevná paleta</a><br />
+<a href="#hrf7">Rastrová data</a><br />
+<a href="#hrf8">Příklady typických souborů TGA</a><br />
+<a href="#hrf9">Pokračování</a><br />
+<a href="#hrf10">Demonstrační příklad</a><br />
+<span id="hrf1"></span><h4>Popis formátu rastrového souboru TGA</h4>
+
+<p>Formát pro uložení rastrových obrázků TGA byl vyvinut firmou <i>Truevision
+Inc.</i>, která jej používala pro ukládání snímků z jejích video grabberů
+<i>Targa</i>. Vzhledem ke své jednoduchosti a současně možnostem ukládání true
+color obrázků se formát značně rozšířil a byl použit v mnoha aplikacích,
+zejména těch, které pracovaly s true color grafikou (různé raytracery,
+skenovací programy apod).</p>
+
+<p>Rastrový obraz může být v souborech typu TGA uložen buď v komprimované, nebo
+volné (nekomprimované) formě. V dalším textu si oba způsoby ukládání rastrových
+dat popíšeme. Za zmínku však stojí fakt, že komprimované obrazové soubory typu
+TGA se dnes již téměř nepoužívají a mnoho převodních programů s nimi ani
+nedokáže korektně pracovat.</p>
+
+<span id="hrf2"></span><h4>Použití formátu TGA</h4>
+
+<p>Formát TGA je také vhodný pro ukládání a načítání textur, protože umožňuje
+spolu s barevnou informací ukládat i alfa složku (průhlednost), a to dokonce i v
+obrázcích s barevnou paletou. Pokud stačí ukládat pouze příznak průhlednosti,
+je možné využít 16bitového formátu pixelů, kdy je pro průhlednost rezervován
+pouze jeden bit -- počet barev dosahuje hodnoty 32 tisíc, což je například pro
+textury dostatečné množství.</p>
+
+<p>Specialitou formátu TGA je schopnost ukládat obrázky v osmibitové barevné
+hloubce bez palety. Toho se využívá při práci s obrázky ve stupních šedi
+(grayscale). Jedná se například o naskenované obrázky nebo textury s
+luminancí bez barevné informace.</p>
+
+<span id="hrf3"></span><h4>Interní struktura TGA souboru</h4>
+
+<p>Data jsou v souboru TGA rozdělena do čtyř sekcí, ale pouze první sekce je
+povinná. V první sekci na začátku souboru je <a href="#hrf4">hlavička</a>, jejíž
+velikost je vždy 18 byte. V hlavičce jsou uloženy základní informace o obraze,
+zejména jeho rozlišení, způsob kódování barvy a orientace obrázku.</p>
+
+<p>Za hlavičkou může následovat <a href="#hrf5">identifikační pole obrázku</a>, což
+je textový řetězec o maximální délce 255 znaků. Tato sekce je však nepovinná a
+málokdy se s ní v obrazových souborech setkáváme.</p>
+
+<p>Ve třetí sekci může být uložena <a href="#hrf6">barevná paleta</a>. Tato sekce
+je, podobně jako sekce předchozí, opět nepovinná. Používá se pouze u některých
+obrázků s formátem 8 bitů na pixel.</p>
+
+<p>V sekci čtvrté jsou uložena vlastní <a href="#hrf7">rastrová data</a>, tj. barvy
+jednotlivých pixelů. Posloupnost rastrových dat (zejména orientaci vertikální
+osy) lze ve formátu TGA specifikovat přímo v hlavičce, je například možné
+obrázky ukládat od prvního řádku do řádku posledního či naopak. Rastrová data
+mohou být komprimována jednoduchým RLE algoritmem.</p>
+
+<span id="hrf4"></span><h4>Hlavička souboru TGA</h4>
+
+<p>Na začátku souboru typu TGA je uložena hlavička, která má vždy velikost 18
+bytů (srovnej s hlavičkou souboru BMP, jejíž velikost je 14+40=54 bytů a přitom
+neobsahuje žádné další důležité informace, mnohé informace naopak chybí). V
+hlavičce jsou specifikovány všechny informace o rastrovém obraze a způsobu jeho
+uložení v souboru.</p>
+
+<p>Hlavička má následující formát:</p>
+
+<div class="urs-tab"><table>
+<caption>Tabulka č. 526</caption>
+
+<tbody>
+
+<tr>
+	
+	<th>
+	 offset 
+	</th>
+	
+	<th>
+	 velikost 
+	</th>
+	
+	<th>
+	 název 
+	</th>
+	
+	<th>
+	 význam 
+	</th>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	0     
+	</td>
+	
+	<td>
+	1 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh1">IDLength       </a>
+	</td>
+	
+	<td>
+	velikost obrazového identifikátoru
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	1     
+	</td>
+	
+	<td>
+	1 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh2">ColorMapType   </a>
+	</td>
+	
+	<td>
+	typ barevné mapy                  
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	2     
+	</td>
+	
+	<td>
+	1 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh3">ImageType      </a>
+	</td>
+	
+	<td>
+	typ obrázku                       
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	3     
+	</td>
+	
+	<td>
+	2 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh4">CMapStart      </a>
+	</td>
+	
+	<td>
+	počátek barevné palety            
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	5     
+	</td>
+	
+	<td>
+	2 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh5">CMapLength     </a>
+	</td>
+	
+	<td>
+	délka barevné palety              
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	7     
+	</td>
+	
+	<td>
+	1 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh6">CMapDepth      </a>
+	</td>
+	
+	<td>
+	bitová hloubka položek barevné palety
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	8     
+	</td>
+	
+	<td>
+	2 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh7">XOffset        </a>
+	</td>
+	
+	<td>
+	Xová souřadnice počátku obrázku  
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	10    
+	</td>
+	
+	<td>
+	2 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh8">YOffset        </a>
+	</td>
+	
+	<td>
+	Yová souřadnice počátku obrázku  
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	12    
+	</td>
+	
+	<td>
+	2 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh9">Width          </a>
+	</td>
+	
+	<td>
+	šířka obrázku                     
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	14    
+	</td>
+	
+	<td>
+	2 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh10">Height         </a>
+	</td>
+	
+	<td>
+	výška obrázku                     
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	16    
+	</td>
+	
+	<td>
+	1 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh11">PixelDepth     </a>
+	</td>
+	
+	<td>
+	počet bitů na jeden pixel         
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	17    
+	</td>
+	
+	<td>
+	1 byte  
+	</td>
+	
+	<td>
+	<a href="#hrfh12">ImageDescriptor</a>
+	</td>
+	
+	<td>
+	popisovač obrázku                 
+	</td>
+	
+</tr>
+
+</tbody>
+</table></div>
+
+<p>Význam jednotlivých položek v hlavičce:</p>
+
+<span id="hrfh1"></span><p>Položka <strong>IDLength</strong> obsahuje počet bytů v <a href="#hrf5">identifikačním
+poli obrázku</a>. Pokud je hodnota této položky nulová, identifikační pole není
+použito.
+
+<span id="hrfh2"></span>
+</p>
+
+<p>Položka <strong>ColorMapType</strong> může nabývat pouze dvou hodnot. Pokud se
+nepoužívá barevná paleta, je zde uložena nula (0x00), pokud se barevná
+paleta používá, je zde uložena jednička (0x01).</p>
+
+<span id="hrfh3"></span><p>Položka <strong>ImageType</strong> obsahuje informace o formátu uložení a kódování
+rastrových dat:<br />
+0-žádná rastrová data nejsou uložena<br />
+1-nekomprimovaná data s barevnou paletou<br />
+2-nekomprimovaná data ve formátu RGB<br />
+3-nekomprimovaná data v odstínech šedi (grayscale)<br />
+9-data kódovaná RLE s barevnou paletou (je nastaven bit 0x08)<br />
+10-data kódovaná RLE ve formátu RGB (je nastaven bit 0x08)<br />
+11-data kódovaná RLE v odstínech šedi (je nastaven bit 0x08)<br />
+32-data kódovaná Huffmanovým kódem a RLE s barevnou paletou<br />
+33-data kódovaná Huffmanovým kódem a RLE s barevnou paletou (uložení v quadtree)</p>
+
+<span id="hrfh4"></span><p>Položka <strong>CMapStart</strong> obsahuje index první barvy v barevné paletě. Více
+informací bude uvedeno v části věnované <a href="#hrf6">barevné paletě</a>.</p>
+
+<span id="hrfh5"></span><p>Položka <strong>CMapLength</strong> obsahuje počet položek uložených v barevné paletě.</p>
+
+<span id="hrfh6"></span><p>Položka <strong>CMapDepth</strong> obsahuje počet bitů pro každou barevnou položku v
+paletě. Mohou zde být uloženy hodnoty 0 (bez palety), 16, 24 nebo 32.</p>
+
+<span id="hrfh7"></span><p>V položce <strong>XOffset</strong> je uložena Xová souřadnice levého spodního rohu
+obrázku. Tato hodnota může být použita pro ukládání výřezů i s jejich relativním
+umístěním v originálním obrázku.</p>
+
+<span id="hrfh8"></span><p>V položce <strong>YOffset</strong> je uložena Yová souřadnice levého spodního rohu
+obrázku. Význam této hodnoty je stejný jako u předchozí položky.</p>
+
+<span id="hrfh9"></span><p>Položka <strong>Width</strong> obsahuje šířku obrázku v pixelech. Maximální šířka je
+tak teoreticky 65535 pixelů, v praxi však některé programy používají 16bitová čísla se 
+znaménkem (short int), a tak je vhodné omezit šířku "pouze" na 32767 pixelů.</p>
+
+<span id="hrfh10"></span><p>Položka <strong>Height</strong> obsahuje výšku obrázku v pixelech. Maximální výška je
+opět prakticky omezena na 32767 pixelů.</p>
+
+<span id="hrfh11"></span><p>Položka <strong>PixelDepth</strong> obsahuje počet bitů na jeden pixel. Podle typu
+obrázku (tj. maximálního počtu barev) zde mohou být hodnoty 1bpp, 8bpp, 16bpp,
+24bpp a 32bpp (bpp-bits per pixel).</p>
+
+<span id="hrfh12"></span><p>V položka <strong>ImageDescriptor</strong> jsou uloženy příznaky (flags) specifikující
+posloupnost uložených pixelů:<br />
+bity 0-3: počet atributových (alfa) bitů na pixel (nastaveno na 0, 1 nebo 8)<br />
+bit 4: rezervován, nastaven na nulu<br />
+bit 5: je-li nastaven na jedničku, je počátek umístěn v levém horním rohu<br />
+bity 6-7: prokládání řádků: 00-žádné, 01-liché/sudé, 10-čtyři řádky, 11-rezervováno</p>
+
+<span id="hrf5"></span><h4>identifikační pole obrázku</h4>
+
+<p>Identifikační pole je představováno řetězcem, jehož formát není pevně
+stanoven. Proto může každá aplikace do tohoto pole ukládat libovolné údaje.
+Maximální délka řetězce je 255 znaků, protože velikost položky <a href="#hrfh1">IDLength</a> je 1 byte. Většina aplikací identifikační pole
+nepoužívá, proto do IDLength nastavuje nulovou hodnotu.</p>
+
+<span id="hrf6"></span><h4>Barevná paleta</h4>
+
+<p>Barevná paleta obsahuje hodnoty barevných složek RGB pro každou položku v
+paletě. Celkový počet položek v paletě je zadán v hlavičce souboru TGA
+atributem <a href="#hrfh5">CMapLength</a>, index první položky atributem <a href="#hrfh4">CMapStart</a>. Podle počtu bitů na jednu položku (atribut <a href="#hrfh6">CMapDepth</a>) jsou povoleny tři formáty položek:</p>
+
+<p><strong>32 bitů</strong> (Targa 32): barevné složky RGB spolu s alfa-složkou jsou
+uloženy v pořadí modrá, zelená, červená a alfa. Každá složka má velikost jeden
+byte. Opačné pořadí barevných složek (tj. BGRA) většinou není na závadu, neboť
+odpovídá pořadí bytů při čtení na procesorech Intel (formát TGA vznikl pro
+potřeby aplikací pracujících na těchto procesorech).</p>
+
+<p><strong>24 bitů</strong> (Targa 24): barevné složky RGB jsou uloženy v pořadí modrá,
+zelená a červená. Každá složka má velikost opět jeden byte.</p>
+
+<p><strong>16 bitů</strong> (Targa 16): barevné složky RGB jsou spolu s příznakem
+průhlednosti (pouze 1 bit!) uloženy v bitové struktuře:
+ARRRRRGG GGGBBBB. Pořadí bytů odpovídá opět konvencím zavedeným
+u procesorů Intel.</p>
+
+<span id="hrf7"></span><h4>Rastrová data</h4>
+
+<p>Formát uložení rastrových dat je vždy little endian, tj. v konvencích
+používaných u procesorů Intel.</p>
+
+<p>Pro nekomprimované obrázky uložené ve formátu 1bpp je každý pixel
+reprezentován jedním bitem, které se slučují po osmicích do jednoho bytu. Tento
+formát není příliš podporován, i když odpovídá dokumentaci firmy Truevision.</p>
+
+<p>Pro nekomprimované obrázky uložené ve formátu 8bpp (tj. buď paletové
+obrázky, nebo obrázky ve stupních šedi) je každý pixel reprezentován jedním 
+bytem.</p>
+
+<p>Pro nekomprimované obrázky uložené ve formátu 16bpp (bez palety) je každý
+pixel uložen ve dvou bytech, které mají bitovou strukturu
+ARRRRRGG GGGBBBB, kde A odpovídá bitu průhlednosti,
+R jsou bity červené složky, G zelené složky a B
+
+složky modré.</p>
+
+<p>Nekomprimované obrázky v barevné hloubce 24bpp nebo 32bpp (samozřejmě bez
+palety) jsou uloženy tak, že každý pixel je představován trojicí bytů RGB popř.
+čtveřicí bytů ARGB. Vše je uloženo opět dle konvence procesorů Intel.</p>
+
+<p>V TGA lze ukládat i obrázky kódované jednoduchým kódem RLE. Kódování RLE je
+použito pouze u obrázků, které mají nastavenou hodnotu <i>ImageType</i> na 9,
+10 nebo 11. Při RLE kódování jsou posloupnosti po sobě následujících barev se
+stejnou hodnotou zakódovány dvojicí hodnot: počtem opakování a hodnotou
+opakování. V režimu RLE je nejvyšší bit (hodnota 0x80) každého bytu
+na začátku datového paketu rezervován pro příznak, zda se bude jednat o
+opakování, či nikoliv.</p>
+
+<p>Pokud je tento příznak nastaven (v byte je uložena hodnota větší než
+0x7f), udávají hodnoty nižších sedmi bitů počet opakování (počet
+opakování=hodnota &amp; 0x7f + 1) hodnoty/barvy uložené v následujících
+bytech (1 byte pro osmibitové obrázky, 2 byte pro 16bitové obrázky atd).
+Opakovaná hodnota není omezena pouze na jeden řádek, může přeskakovat přes více
+řádků, což je výhodné zejména při ukládání pozadí. Tato datová posloupnost se
+nazývá <i>RLE paket</i>.</p>
+
+<p>Pokud je příznak vynulován (v prvním byte posloupnosti je uložena hodnota
+menší než 0x80), udávají hodnoty nižších sedmi bitů délku dat, která nejsou
+pomocí RLE kódovaná. Pokud se tedy v obraze vyskytne složitý motiv, je možné
+uložit až 128 pixelů různých barev v jednom shluku. Tato datová posloupnost se
+nazývá <i>Raw paket</i>.</p>
+
+<span id="hrf8"></span><h4>Příklady typických souborů TGA</h4>
+
+<p>V následujících tabulkách budou ukázány hlavičky typických souborů TGA.</p>
+
+<p> </p>
+
+<p>Hlavička souboru TGA ve formátu 1 bit na pixel bez barevné palety:</p>
+
+<div class="urs-tab"><table>
+<caption>Tabulka č. 527</caption>
+
+<tbody>
+
+<tr>
+	
+	<th>
+	hodnoty (hexa)
+	</th>
+	
+	<th>
+	význam
+	</th>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	obrázek je uložen bez popisky
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	paleta není přítomna
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	03         
+	</td>
+	
+	<td>
+	obrázek ve stupních šedi
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	počátek barevné palety=0
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	délka barevné palety je nulová
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	počet bitů na jednu položku palety je nulový
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00 00 00
+	</td>
+	
+	<td>
+	umístění obrázku do počátku
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	XX XX      
+	</td>
+	
+	<td>
+	šířka obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	YY YY      
+	</td>
+	
+	<td>
+	výška obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	01         
+	</td>
+	
+	<td>
+	počet bitů na pixel je 1
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	20         
+	</td>
+	
+	<td>
+	obrázek je uložen shora dolů
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	...        
+	</td>
+	
+	<td>
+	rastrová data po řádcích 1 bit na pixel
+	</td>
+	
+</tr>
+
+</tbody>
+</table></div>
+
+<p> </p>
+
+<p>Hlavička souboru TGA ve formátu 8 bitů na pixel s barevnou paletou:</p>
+
+<div class="urs-tab"><table>
+<caption>Tabulka č. 528</caption>
+
+<tbody>
+
+<tr>
+	
+	<th>
+	hodnoty (hexa)
+	</th>
+	
+	<th>
+	význam
+	</th>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	obrázek je uložen bez popisky
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	01         
+	</td>
+	
+	<td>
+	paleta je přítomna
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	01         
+	</td>
+	
+	<td>
+	obrázek v paletovém režimu
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	počátek barevné palety=0
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 01      
+	</td>
+	
+	<td>
+	délka barevné palety je 256 položek
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	18         
+	</td>
+	
+	<td>
+	počet bitů na jednu položku palety je 24
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00 00 00
+	</td>
+	
+	<td>
+	umístění obrázku do počátku
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	XX XX      
+	</td>
+	
+	<td>
+	šířka obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	YY YY      
+	</td>
+	
+	<td>
+	výška obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	08         
+	</td>
+	
+	<td>
+	počet bitů na pixel je 8
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	20         
+	</td>
+	
+	<td>
+	obrázek je uložen shora dolů
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	...        
+	</td>
+	
+	<td>
+	rastrová data po řádcích 1 byte na pixel
+	</td>
+	
+</tr>
+
+</tbody>
+</table></div>
+
+<p> </p>
+
+<p>Hlavička souboru TGA ve formátu 8 bitů na pixel bez barevné palety (stupně šedi):</p>
+
+<div class="urs-tab"><table>
+<caption>Tabulka č. 529</caption>
+
+<tbody>
+
+<tr>
+	
+	<th>
+	hodnoty (hexa)
+	</th>
+	
+	<th>
+	význam
+	</th>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	obrázek je uložen bez popisky
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	paleta není přítomna
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	03         
+	</td>
+	
+	<td>
+	obrázek v grayscale režimu
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	počátek barevné palety=0
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	délka barevné palety je nulová
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	počet bitů na jednu položku palety je 0
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00 00 00
+	</td>
+	
+	<td>
+	umístění obrázku do počátku
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	XX XX      
+	</td>
+	
+	<td>
+	šířka obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	YY YY      
+	</td>
+	
+	<td>
+	výška obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	08         
+	</td>
+	
+	<td>
+	počet bitů na pixel je 8
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	20         
+	</td>
+	
+	<td>
+	obrázek je uložen shora dolů
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	...        
+	</td>
+	
+	<td>
+	rastrová data po řádcích 1 byte na pixel
+	</td>
+	
+</tr>
+
+</tbody>
+</table></div>
+
+<p> </p>
+
+<p>Hlavička souboru TGA ve formátu 24 bitů na pixel bez barevné palety (True Color):</p>
+
+<div class="urs-tab"><table>
+<caption>Tabulka č. 530</caption>
+
+<tbody>
+
+<tr>
+	
+	<th>
+	hodnoty (hexa)
+	</th>
+	
+	<th>
+	význam
+	</th>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	obrázek je uložen bez popisky
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	paleta není přítomna
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	02         
+	</td>
+	
+	<td>
+	obrázek v True Color režimu
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	počátek barevné palety=0
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00      
+	</td>
+	
+	<td>
+	délka barevné palety je nulová
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00         
+	</td>
+	
+	<td>
+	počet bitů na jednu položku palety je 0
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	00 00 00 00
+	</td>
+	
+	<td>
+	umístění obrázku do počátku
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	XX XX      
+	</td>
+	
+	<td>
+	šířka obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	YY YY      
+	</td>
+	
+	<td>
+	výška obrázku v pixelech
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	18         
+	</td>
+	
+	<td>
+	počet bitů na pixel je 24
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	20         
+	</td>
+	
+	<td>
+	obrázek je uložen shora dolů
+	</td>
+	
+</tr>
+
+<tr>
+	
+	<td>
+	...        
+	</td>
+	
+	<td>
+	rastrová data po řádcích 3 byte na pixel
+	</td>
+	
+</tr>
+
+</tbody>
+</table></div>
+
+<span id="hrf9"></span><h4>Pokračování</h4>
+
+<p>V dalším díle se budeme opět více věnovat přímo knihovně OpenGL. Konkrétně
+se budeme zabývat blendingem a modulováním textur. Obě techniky se často
+používají pro kombinaci stínování a texturování na jednom objektu.</p>
+
+<span id="hrf10"></span><h4>Demonstrační příklad</h4>
+
+<p>Dnešní demonstrační příklad vychází z příkladu minulého. Jediná věc, která
+se změnila, je kód pro načítání textur. Naše textury jsou uloženy ve formátu
+TGA v režimu true color, tj. každý pixel je uložen na třech bytech. Proto je
+také kód pro načtení textur poměrně jednoduchý, neboť se z hlavičky pouze vyčte
+rozlišení a formát obrázku.</p>
+
+<p>Ovládání demonstračního programu je možné buď myší (pohybem vlevo a vpravo
+se provádí otáčení ve scéně, tlačítka slouží k chůzi vpřed a vzad), nebo
+klávesnicí (šipky pro pohyb a otáčení, CTRL+šipky pro úkroky).</p>
+
+<p>Zdrojový kód demonstračního příkladu je dostupný <a href="http://i.iinfo.cz/r/photos/opengl/opengl_27_1.c">zde</a>, k dispozici je i <a href="http://i.iinfo.cz/r/photos/opengl/opengl_27_1.html">HTML
+verze se zvýrazněnou syntaxí</a>.</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_27_1.jpg" alt="Screenshot z demonstračního příkladu" width="450" height="450" /><br />Obrázek 1: Screenshot z demonstračního příkladu
+</p>
+
+<p>Pro majitele pomalejšího připojení k internetu je zde k dispozici celý
+článek i s přílohami zabalený do jednoho <a href="http://i.iinfo.cz/r/photos/opengl/opengl_27.zip">zip
+souboru</a>.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-25-mipmapping/">Grafická knihovna OpenGL (25): mipmapping</a></li>
+			<li><a href="/clanky/opengl-26-formaty-rastrovych-souboru/">Grafická knihovna OpenGL (26): formáty rastrových souborů</a></li>
+			<li class="actual">Grafická knihovna OpenGL (27): TGA</li>
+			<li><a href="/clanky/opengl-28-blending/">Grafická knihovna OpenGL (28): blending</a></li>
+			<li><a href="/clanky/opengl-29-modulace-textur/">Grafická knihovna OpenGL (29): modulace textur</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-27-tga%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-27-tga%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-27-tga/nazory/">Vlastní</a>
+<a href="/clanky/opengl-27-tga/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-27-tga/nazory/q2/">2</a>
+<a href="/clanky/opengl-27-tga/nazory/q3/">3</a>
+<a href="/clanky/opengl-27-tga/nazory/q4/">4</a>
+<a href="/clanky/opengl-27-tga/nazory/q5/">5</a>
+<a href="/clanky/opengl-27-tga/nazory/q6/">6</a>
+<a href="/clanky/opengl-27-tga/nazory/q7/">7</a>
+<a href="/clanky/opengl-27-tga/nazory/q8/">8</a>
+<a href="/clanky/opengl-27-tga/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-27-tga/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[29401]" /></td>
+	<th><a href="/clanky/opengl-27-tga/nazory/29401/">Odstiny barev v demonstracnich prikladech</a></th>
+	<td class="op-au">Jaroslav</td>
+	<td class="op-dt">6. 1. 2004 08:31	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[29420]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/29420/">Re: Odstiny barev v demonstracnich prikladech</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">6. 1. 2004 12:14	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[29425]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/29425/">Re: Odstiny barev v demonstracnich prikladech</a></th>
+	<td class="op-au">Jaroslav</td>
+	<td class="op-dt">6. 1. 2004 14:33	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[29427]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/29427/">Re: Odstiny barev v demonstracnich prikladech</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">6. 1. 2004 16:16	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[29430]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/29430/">Re: Odstiny barev v demonstracnich prikladech</a></th>
+	<td class="op-au">Johanka the Editor</td>
+	<td class="op-dt">6. 1. 2004 20:56	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[29435]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/29435/">Re: Odstiny barev v demonstracnich prikladech</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">7. 1. 2004 07:23	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[29426]" /></td>
+	<th><a href="/clanky/opengl-27-tga/nazory/29426/">png?</a></th>
+	<td class="op-au">&lt;HeaD&gt;</td>
+	<td class="op-dt">6. 1. 2004 16:14	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[29428]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/29428/">Re: png?</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">6. 1. 2004 16:21	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[32177]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-27-tga/nazory/32177/">Re: png?</a></th>
+	<td class="op-au">hanz007</td>
+	<td class="op-dt">11. 3. 2004 12:50	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-27-tga/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-27-tga/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-27-tga/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3919">ADMINISTRÁTOR ZÁKAZNICKÝCH SYSTÉMŮ (i7170) / 35-45.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3799">PROGRAMÁTOR ASP.NET - WEBFORMS (i5216) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D2961">DEVELOPER JAVA (i4993) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3594">IT ANALYTIK / KONZULTANT (i1613) / až 65.000,- / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3720">JUNIOR/SENIOR PROGRAMÁTOR C++ WINDOWS (i6973) / 25-55.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4102">ANALYTIK TESTŮ SW APLIKACÍ (i3234) / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3759">KONZULTANT (i4567) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D1987">SENIOR TESTER (i6212)</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

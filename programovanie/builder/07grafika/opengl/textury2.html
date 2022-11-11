@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+<body>
+<h3>Manuálna tvorba textúry</h3>
+V nasledovnom programe vytváram vzorku tvorenú šachovnicovo - každé druhé políčko je čierne, biele políčka sú tieňované.
+Zelená farba pribúda doprava
+<br>
+<img src="textura1.jpg" width="435" height="320" border="0" alt="">  
+<br><br>
+<h3>Deklarácia textúry</h3>
+(volím systém RGB, kde každá farba je zadaná hodnotou &lt;0;255&gt; ) 
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+    GL_UNSIGNED_BYTE bmp[256][256][3];
+   // miesto pre texturu 256*256
+</pre></code>
+</table>
+<h3>Vytvorenie textúry</h3>
+Textúra bude tvorená šachovnicou 8x8 kde sa striedajú čierne políčka so svetlými, pričom vo svetlých políčkach pribúda 
+červenej farby smerom nahor a zelenej pribúda smerom doprava
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+char bmp[256][256][3]; //0 ... červená, 1 ... zelená, 2 ... modrá
+   for (int y=0;y<256;y++)             // pro vsechny radky pixmapy
+        for (int x=0;x<256;x++)        // pro vsechny pixely na radku
+        if ((y/32+x/32)%2)
+            bmp[y][x][0]= bmp[y][x][1]= bmp[y][x][2]= 0;// cierne policko
+        else
+		{   bmp[y][x][0]=x; bmp[y][x][1]=y; bmp[y][x][2]= 0; }
+    glEnable(GL_TEXTURE_2D);       // povolime texturu (toto nemusí byť, lebo to máme zadané v Unit1.h) 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);      // v smere osi x povolime opakovanie textury
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);      // v smere osi y povolime opakovanie textury
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spôsob výpočtu bodov (textura vacsia)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);  // spôsob výpočtu bodov (textura mensia)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, &bmp);
+</pre></code>
+</table>
+<h3>Natiahnutie textúry</h3>
+textúra tým že sa "naťahuje" na plochu sa rôzne deformuje, rozumné výsledky sú ak 
+<ul><li>útvar textury a rovinného útvaru sú podobné
+	<li>textúra je štvorec a rovinný útvar je rovnobežník.
+	<li>textúra je štvorec a rovinný útvar je trojuholník 
+</ul>
+<table bgcolor="#ccccff"><tr><td><img src="obr/textura1.png" width="558" height="428" border="0" alt="">
+<td><code><pre>
+    glBegin(GL_QUADS);
+//štvorec sa natiahne na štvorec
+        glTexCoord2f(0.0, 0.0); glVertex3f(-6, +6, -2);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +6, -2);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+6, -6, -2);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-6, -6, -2);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura2.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+    glBegin(GL_QUADS);
+//štvorec sa natiahne na obdĺžnik
+        glTexCoord2f(0.0, 0.0); glVertex3f(-6, +3, -1);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +3, -1);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+6, -3, -1);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-6, -3, -1);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura3.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+    glBegin(GL_QUADS);
+//štvorec sa natiahne na rovnobežník
+        glTexCoord2f(0.0, 0.0); glVertex3f(-6, +3, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+3, +3, 0);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+6, -3, 0);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-3, -3, 0);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura4.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+    glBegin(GL_QUADS);
+//lichobežník sa vyreže zo štvorca
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(1.0*10/12, 1.0); glVertex3f(+4, -4, 0);
+        glTexCoord2f(1.0*2/12, 1.0); glVertex3f(-4, -4, 0);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura5.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+ glBegin(GL_TRIANGLES);
+ //pravouhlý trojuholník sa vyreže zo štvorca
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-6, -4, 0);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura6.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+ glBegin(GL_TRIANGLES);
+ //rovnoramenný trojuholník sa vyreže zo štvorca
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(0.5, 1.0); glVertex3f(0, -4, 0);
+    glEnd();
+    glBegin(GL_QUADS);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura7.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+//lichobežník sa vyreže zo štvorca vo vodorovnom smere bude 2xtoľko políčok
+    glBegin(GL_QUADS);
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(2.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(2.0*10/12, 1.0); glVertex3f(+4, -4, 0);
+        glTexCoord2f(2.0*2/12, 1.0); glVertex3f(-4, -4, 0);
+glEnd();</pre></code></tr>
+
+</pre></code></tr>
+</table>
+
+
+
+</body>
+</html>

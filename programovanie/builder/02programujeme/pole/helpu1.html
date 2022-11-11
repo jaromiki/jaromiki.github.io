@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Návod ku úlohe 1</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3 style="width:500">Help - Hľadanie najdlhšieho súvislého rastúceho úseku v poli</h3>
+<dl><dt>Vizuálna stránka programu
+	<dd>Vlastne ktoré objekty použiť a ako ich rozmiestniť. Môžme povkladať objekty napr. takto:<br>
+		<img  src="obr/u1.png"><br>
+		Vidíme, že Edity som nevkladal, len som pre ne nechal volné miesto (Medzi Label s obsahom Pole a tlačidkami).
+	<dt>Premenné
+	<dd>Potrebujeme polia, kde budú odpamätané
+		<ul><li>čísla
+		    <li>Edity
+		</ul>	
+		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Deklarácia polí</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<pre>
+<b>var</b>
+  Form1: TForm1;
+  Edity: Array[1..20] of TEdit;
+  Cisla: Array[1..20] of TEdit;
+<b>implementation</b>  
+...</pre>
+		</tr>
+		</table>
+		V prípade ak chceme aby počet prvkov volil užívateľ, Edity zadeklarujeme ako dynamické pole a nastavíme požadovanú dĺžku.
+	<dt>Vytvorenie Editov
+	<dd>Keď počet editov prekročí nejakú hodnotu je vhodnejšie mať edity v poli a pristupovať ku nim pomocou indexu. 
+		<br>Nebudeme Edity vkladať do formulára, ale si ich vytvoríme vo <b>Form1.Create()</b>, čo je teraz pre nás výhodnejšie. 
+		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Form1.Create() - vytvorenie 20-tich editov</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<pre>
+procedure TForm1.FormCreate(Sender: TObject);
+Var i:integer;
+begin
+  for i := 1 to 10 do                           // Edity budu v dvoch riadkoch, kazdy urobim zvlast
+  Begin
+	Edity[i] := TEdit.Create(Form1);          // uz sa Edit narodil, ale este nie je zobrazeny
+	Edity[i].Parent := Form1;                   // kto bude rodic (komu sa Edit ma narodit)
+	Edity[i].left := i*45; Edity[i].top := 80;  // urcime polohu, kde bude u rodica zobrazeny
+	Edity[i].width := 40;                       // ak ich má byt viac, je vhodne určiť sirku
+	Cisla[i]:=10+Random(90);                     // ked uz mame cyklus, naplnime si pole
+	Edity[i].Text := IntToStr(Cisla[i]);         // a polozku pola zapiseme do Editu
+  End;
+  for i := 11 to 20 do                           // Edity budu v dvoch riadkoch, kazdy urobim zvlast
+  Begin
+	Edity[i] := TEdit.Create(Form1);          // uz sa Edit narodil, ale este nie je zobrazeny
+	Edity[i].Parent := Form1;                   // kto bude rodic (komu sa Edit ma narodit)
+	Edity[i].left := (i-10)*45; Edity[i].top := 110; // urcime polohu, kde bude u rodica zobrazeny
+	Edity[i].width := 40;                       // ak ich má byt viac, je vhodne určiť sirku
+	Cisla[i]:=10+Random(90);                     // ked uz mame cyklus, naplnime si pole
+	Edity[i].Text := IntToStr(Cisla[i]);         // a polozku pola zapiseme do Editu
+  End;
+end;
+</pre>
+		</tr>
+		</table>
+	<dt>Naplnenie a vypísanie poľa do Editov
+	<dd>Pole sme napĺňali a vypisovali už vo FormCreate(), takže Ctrl C a Ctrl V (čo sa dá vytvoriť touto kombináciou je u žiakov naozaj obľúbené).
+		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Form1.Create() - vytvorenie 20-tich editov</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<pre>
+procedure TForm1.Button1Click(Sender: TObject);
+Var i: integer;
+begin
+for i := 1 to 20 do                           // Edity budu v dvoch riadkoch, kazdy urobim zvlast
+  Begin
+	Cisla[i]:=10+Random(90);                     // ked uz mame cyklus, naplnime si pole
+	Edity[i].Text := IntToStr(Cisla[i]);         // a polozku pola zapiseme do Editu
+  Edity[i].Font.Color := clBlack;              // vsetkz polozky chceme mat napisane ciernym
+  End;
+end;
+</pre>
+		</tr>
+		</table>
+	<dt>Hľadanie najdlhšieho rastúceho úseku
+	<dd>Konečne sme sa prebojovali ku hlavnej časti programu. Myšlienka je nasledovná: budeme prezerať prvky poľa od indexu 2 po 20
+		a ak náš prvok je väčší ako predchodca (sme v rastúcom úseku) upravíme aktuálnu dĺžku toho úseku v ktorom sme <b>AktDlzka</b> .
+		Ak náš prvok nie je väčší ako predchodca (minulý rastúci úsek narazením na tento prvok je ukončený) tak skontrolujeme, či 
+		ten minulý rastúci úsek nie je náhodou maximálny. Potom nastavíme <b>AktDlzka</b> na hodnotu 1, lebo začína nový rastúci úsek.
+		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Form1.Create() - vytvorenie 20-tich editov</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<pre>
+procedure TForm1.Button2Click(Sender: TObject);
+Var i,aktDlzka,maxDlzka,odKade: integer;
+begin
+  aktDlzka := 1;
+  maxDlzka := 0;
+  for i := 2 to 20 do
+  Begin
+    if Cisla[i]>Cisla[i-1] then               // sme v rastucej casti
+      aktDlzka := aktDlzka+1
+    else                                      // rastuca cast je skoncena
+    Begin
+      if aktDlzka>maxDlzka then Begin maxDlzka := aktDlzka; odKade:= i-maxDlzka; End;
+      aktDlzka := 1;                          // a aktualna dlzka rast useku je 1
+    End;
+  End;
+  for i := odKade to odKade+maxDlzka-1 do
+    Edity[i].Font.Color := clRed;
+end;
+</pre>
+		</tr>
+		</table>
+</dl>		
+</body>
+</html>

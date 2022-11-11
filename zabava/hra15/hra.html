@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <STYLE type="text/css">
+		input {height:100; width:100;background:#eeeeee;border-width:2; border-style:'solid'; border-color:#999999; margin: 5pt; font-size:52; padding:15 1 18 20;font-family:'monospace'}
+
+	</STYLE>
+
+	<title>Ukladaná</title>
+    <script type="text/javascript">
+	var pr=16,pi;
+	    p = new Array(17);
+		f = new Array(17);
+	function SetF()
+	{  for ( var ii = 1; ii < 17; ii++ ) f[ii] = 1; }
+		
+	function test()
+	{  for ( var ii = 1; ii < 17; ii++ ) f[ii] = 1;
+
+    start = 1;
+    sign = 0;
+    while ( start < 17 ) {
+      f[start] = 0;
+	  k= p[start].value;
+      ii=(k!='X'? ii= parseInt(k,16):16);
+      while ( start != ii ) {
+        f[ii] = 0;
+  	    k= p[ii].value;
+         ii=(k!='X'? ii= parseInt(k,16):16);
+        sign =1-sign;
+        }
+      start = 0
+      while ( start < 17 && !f[start] ) start++
+      }
+	k=(4-Math.floor((pr-1)/4+1)+pr%4)%2; 
+	//alert(sign+"  "+k); 
+	sign = Math.abs(sign - k);
+    poc.value = sign;
+    return sign;
+  }
+
+	function miesaj()
+	{  for(i=14;i<17;i++) 
+	   {  j=1+Math.floor(15*Math.random());
+	  	  vymen(i,j); 
+       }
+		//vymen(13,15);	  
+	   while (test()) 
+	   {  j=1+Math.floor(15*Math.random());
+	      i=1+Math.floor(15*Math.random());
+	  	  vymen(i,j);
+		}  
+	test();
+	}
+	function vymen(i,j)
+	{var k=0; 
+//		alert(""+i+","+document.all[i].innerText);
+	 k=p[i].value;
+	 p[i].value=p[j].value;
+	 p[j].value=k;
+	 k=p[i].style.visibility;
+	 p[i].style.visibility=p[j].style.visibility;
+	 p[j].style.visibility=k;
+	 if (i==pr) pr=j;
+	 else if(j==pr) pr=i;
+	} 
+	function tahaj(i)
+	{
+	 if (i+1==pr && (i)%4) 
+	 { p[pr].value=p[i].value;
+	   p[i].value='X'; 
+	   p[pr].style.visibility='visible';
+	   p[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i-1==pr && (i-1)%4) 
+	 { p[pr].value=p[i].value;
+	   p[i].value='X'; 
+	   p[pr].style.visibility='visible';
+       p[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i+4==pr) 
+	 { p[pr].value=p[i].value;
+	   p[i].value='X'; 
+	   p[pr].style.visibility='visible';
+	   p[i].style.visibility='hidden';
+	   pr=i;// alert(document.all[i].innerText+i);
+	}
+	 if (i-4==pr) 
+	 { p[pr].value=p[i].value;
+	   p[i].value='X'; 
+	   p[pr].style.visibility='visible';
+   p[i].style.visibility='hidden';
+	   pr=i;
+	}
+	test();
+//	if (!pi) alert ("Gratulujem");
+	}
+	</script>
+</head>
+<body>
+<div style="width:490; background:#dddddd; border-width:2; border-style:'solid'; border-color:#999999; padding:5" id="M1">
+<h2 align="center"> Hra 15</h2>
+		<input type="Text" value="1"  onclick="tahaj(1)" id="c1" readonly> 
+		<input type="Text" value="2"  onclick="tahaj(2)" id="c2" readonly> 
+		<input type="Text" value="3"  onclick="tahaj(3)" id="c3" readonly> 
+		<input type="Text" value="4"  onclick="tahaj(4)" id="c4" readonly> 
+	<br><input type="Text" value="5"  onclick="tahaj(5)" id="c5" readonly> 
+		<input type="Text" value="6"  onclick="tahaj(6)" id="c6" readonly> 
+		<input type="Text" value="7"  onclick="tahaj(7)" id="c7" readonly> 
+		<input type="Text" value="8"  onclick="tahaj(8)" id="c8" readonly> 
+	<br><input type="Text" value="9"  onclick="tahaj(9)" id="c9" readonly> 
+		<input type="Text" value="A"  onclick="tahaj(10)" id="ca" readonly>
+		<input type="Text" value="B"  onclick="tahaj(11)" id="cb" readonly>
+		<input type="Text" value="C"  onclick="tahaj(12)" id="cc" readonly>
+	<br><input type="Text" value="D"  onclick="tahaj(13)" id="cd" readonly>
+		<input type="Text" value="E"  onclick="tahaj(14)" id="ce" readonly>
+		<input type="Text" value="F"  onclick="tahaj(15)" id="cf" readonly>
+		<input type="Text" value="X"   style="visibility:hidden" onclick="tahaj(16)" id="cx" >
+</div>
+
+<input type="Button" value="Zamiešaj" onclick="miesaj()" style="margin:20;width:300">
+<input type="Text" value=" "  id="poc" readonly style="visibility:hidden">
+
+</body>
+<script  type="text/javascript">
+ p[1] = c1;p[2] =   c2;p[3] =  c3;p[4] = c4;
+ p[5] = c5;p[6] =   c6;p[7] =  c7;p[8] = c8;
+ p[9] = c9;p[10] =  ca;p[11] = cb;p[12] = cc;
+ p[13] = cd;p[14] = ce;p[15] = cf;p[16] = cx;
+
+
+</script>
+
+</html>
+

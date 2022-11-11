@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 40 - Fyzikální simulace lana</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_40.jpg" class="nehe_maly" alt="Lekce 40" />
+
+<h1>Lekce 40 - Fyzikální simulace lana</h1>
+
+<p class="nadpis_clanku">Přichází druhá část dvoudílné série o fyzikálních simulacích. Základy už známe, a proto se pustíme do komplikovanějšího úkolu - klávesnicí ovládat pohyby simulovaného lana. Zatáhneme-li za horní konec, prostřední část se rozhoupe a spodek se vláčí po zemi. Skvělý efekt.</p>
+
+<p>Celé demo založíme na jednoduchém fyzikálním enginu z lekce 39. Nyní už byste měli umět aplikovat libovolné síly na jakýkoli hmotný objekt, přepočítat jeho novou pozici i rychlost a samozřejmě provádět operace s 3D vektory. Pokud něčemu z toho nerozumíte, vraťte se k minulé lekci, popř. zkuste jiné zdroje.</p>
+
+<p>Předpokladem pro fyzikální simulace je implementace fyzikálních podmínek a závislostí, kdy se snažíme o to, aby vše vypadalo jako v reálném prostředí. Nejvíce na očích bývá vždy dynamika - pohybové reakce objektů na uživatelovy příkazy. Právě na nich hodnotí, zda se naše práce podařila, či ne. Na úplném začátku se vždy musí najít vhodný kompromis mezi rychlostí a kvalitou. Jsme schopni všimnout si atomů, elektronů nebo protonů? Ne. Určitě bude stačit aproximace pohybu skupiny částic.</p>
+
+<h2>Matematika pohybů</h2>
+
+<p>Klasická mechanika reprezentuje předměty jako částice v prostoru, které mají určitou hmotnost. Jejich zrychlení závisí na působících silách a pozice na uplynulém čase od minulých výpočtů. Můžeme ji použít k simulaci chování objektů, které jsou viditelné prostým okem (pro mikrosvět platí jiné fyzikální zákony). V lekci 39 jsme s její pomocí implementovali pohyb v gravitaci a objekt zavěšený na pružině. Nyní zkusíme simulovat složitější předmět - lano.</p>
+
+<h2>Výkon počítače, který používáme k simulaci</h2>
+
+<p>Rychlost počítače je hlavním omezením pro množství detailů simulace. Například při simulaci chodícího člověka eliminujeme na pomalém počítači pohyb prstů na nohou, které jsou sice důležité, ale výsledek vypadá přesvědčivě i bez nich. Musíme je vynechat z jednoduchého důvodu: počítač by nestíhal provádět potřebné výpočty, kterých je i bez nich až příliš.</p>
+
+<p>Jako minimální požadavek pro simulaci určíme počítač s frekvencí procesoru kolem 500 MHz. Z toho plyne omezení počtu detailů. Při implementaci použijeme knihovnu Physics1.h z lekce 39. Tato knihovna obsahuje třídu Mass (hmota), která reprezentuje jeden hmotný bod. Spojením několika za sebe získáme fyzikální model, který reprezentuje lano. Můžeme usoudit, že se bude kývat a různě vlát, ale nebude moci kroužit, protože kroužení nejde pomocí hmotných bodů implementovat (nemohou rotovat okolo os). Určíme si, že body spojíme po vzdálenostech 10 cm. Tato hodnota vychází z toho, že kvůli rychlosti použijeme maximálně 50 až 100 částic na 3 až 4 metrové lano. Z toho plynou 3 až 8 cm velké mezery, což bude ještě větší přesnost, než jsme původně zamýšleli.</p>
+
+<h2>Odvození rovnice pohybu</h2>
+
+<p>Rovnice pohybu je v matematice vyjádřena diferenciální rovnicí druhého stupně. V modelu lana si můžeme každé dvě sousední částice, ze kterých je složeno, představit jako konce jedné pružiny. Znak o představuje částici a pomlčka pružinu.</p>
+
+<p class="src0"><span class="kom">o----o----o----o</span></p>
+
+<p>První částice poutá druhou, ta zase třetí, ta čtvrtou atd. Vzniká jakýsi řetězec, složený ze čtyř částic a tří pružin. Pružiny představují zdroje síly mezi každými dvěma částicemi. Zapamatujte si, že síla pružiny se dá vyjádřit takto:</p>
+
+<p class="src0"><span class="kom">síla = -k * x</span></p>
+<p class="src0"><span class="kom">k: konstanta určující tuhost pružiny</span></p>
+<p class="src0"><span class="kom">x: vzdálenost mezi body pružiny</span></p>
+
+<p>Kdybychom použili tuto rovnici, lano by se za chvíli smrštilo, protože z rovnice vyplývá, že dokud není vzdálenost částic nulová, působí na ně síla. Všechny by tíhly k ostatním a to nechceme. Představte si lano položené na stole. Chceme, aby to naše mělo stejnou pevnost a tudíž musíme explicitně udržovat jeho délku konstantní. Abychom toho dosáhli, musí být při určité kladné vzdálenosti síla pružiny nulová. Nic těžkého:</p>
+
+<p class="src0"><span class="kom">síla = -k * (x - d)</span></p>
+<p class="src0"><span class="kom">k: konstanta určující tuhost pružiny</span></p>
+<p class="src0"><span class="kom">x: vzdálenost mezi body pružiny</span></p>
+<p class="src0"><span class="kom">d: konstanta označující kladnou vzdálenost částic, při které pružina zůstane ve stálé poloze</span></p>
+
+<p>Z rovnice vyplývá, že pokud se bude vzdálenost mezi částicemi rovnat konstantě d, nebudou aplikovány žádné síly. Definovali jsme si lano složené ze sta částic. Zvolíme-li d = 5 cm (0,05 metrů), získáme pevné pětimetrové lano. Pokud bude x větší než d, pružina se začne natahovat a při menším x naopak smršťovat. Každopádně se bude neustále nacházet v blízkosti bodu rovnováhy.</p>
+
+<p>Máme zajištěn celkem slušný pohyb, ale něco mu schází. A to něco jsou ztráty - napětí vláken, jejich tření a podobně. Beze ztrát si fyzikální systém uchovává veškerou energii, kterou mu dodáme - lano se nikdy nepřestane houpat. Než se začneme ztrátám věnovat, pojďme se nejprve podívat na kód.</p>
+
+<h2>Třída pružiny</h2>
+
+<p>Třída pružiny (anglicky spring) popisuje dvě částice a silové působení pružiny na každou z nich.</p>
+
+<p class="src0">class Spring<span class="kom">// Třída pružiny</span></p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">Mass* mass1;<span class="kom">// Částice na prvním konci pružiny</span></p>
+<p class="src1">Mass* mass2;<span class="kom">// Částice na druhém konci pružiny</span></p>
+<p></p>
+<p class="src1">float springConstant;<span class="kom">// Konstanta tuhosti pružiny</span></p>
+<p class="src1">float springLength;<span class="kom">// Délka, při které nepůsobí žádné síly</span></p>
+<p class="src1">float frictionConstant;<span class="kom">// Konstanta vnitřního tření</span></p>
+
+<p>V konstruktoru nastavíme vnitřní datové členy na hodnoty, které byly předány v parametrech.</p>
+
+<p class="src1">Spring(Mass* mass1, Mass* mass2, float springConstant, float springLength, float frictionConstant)<span class="kom">// Konstruktor</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Nastavení členských proměnných</span></p>
+<p class="src2">this-&gt;springConstant = springConstant;</p>
+<p class="src2">this-&gt;springLength = springLength;</p>
+<p class="src2">this-&gt;frictionConstant = frictionConstant;</p>
+<p></p>
+<p class="src2">this-&gt;mass1 = mass1;</p>
+<p class="src2">this-&gt;mass2 = mass2;</p>
+<p class="src1">}</p>
+
+<p>Nejdůležitější částí třídy je metoda solve(), ve které se aplikují síly. Za číslo x se má dosadit vzdálenost mezi okrajovými body, v našem případě se jedná o délku 3D vektoru, kterou vypočteme odečtením pozic bodů.</p>
+
+<p class="src1">void solve()<span class="kom">// Aplikování sil na částice</span></p>
+<p class="src1">{</p>
+<p class="src2">Vector3D springVector = mass1-&gt;pos - mass2-&gt;pos;<span class="kom">// Vektor mezi částicemi</span></p>
+<p></p>
+<p class="src2">float r = springVector.length();<span class="kom">// Vzdálenost částic</span></p>
+
+<p>Vytvoříme další vektor, který bude označovat výslednou sílu. Konstruktor ji automaticky vynuluje. Protože v další části dělíme, musíme ošetřit, jestli se číslo r nerovná nule. Pokud je vše v pořádku, můžeme přistoupit k výpočtu.</p>
+
+<p class="src2">Vector3D force;<span class="kom">// Pomocný vektor síly</span></p>
+<p></p>
+<p class="src2">if (r != 0)<span class="kom">// Proti dělení nulou</span></p>
+<p class="src2">{</p>
+
+<p>Chceme-li dosáhnout rovnice uvedené výše, potřebujeme získat jednotkový vektor, který reprezentuje směr působení síly. Defakto ho už máme uložen v objektu springVector, ale je v něm navíc započítána i jeho délka a to nechceme. Dá se však velice jednoduše odstranit dělením (springVector / r). Dále se pokusíme implementovat část (x - d). Máme jak vzdálenost bodů, tak délku pružiny, nic nám proto nebrání, abychom je odečetli (r - springLength). Konečný výsledek ještě vynásobíme tuhostí pružiny. Záporná hodnota označuje, že se lano bude spíše vléci než odrážet.</p>
+
+<p class="src3">force += (springVector / r) * (r - springLength) * (-springConstant);<span class="kom">// Výpočet síly</span></p>
+<p class="src2">}</p>
+
+<p>Vyřešili jsme silové působení pružiny, ale ještě nám chybí ztráty energie v materiálu. Pokud se na hmotu aplikuje síla v opačném směru, než se pohybuje, zpomalí. Kam se ztratila pohybová energie? Mohla se například přeměnit ve tření a následně v tepelnou energii.</p>
+
+<p class="src0"><span class="kom">třecí síla = -k * rychlost</span></p>
+<p class="src0"><span class="kom">k: konstanta představující velikost ztrát (např. v závislosti na drsnosti povrchu)</span></p>
+<p class="src0"><span class="kom">rychlost: rychlost hmoty, na kterou působí třecí síla</span></p>
+
+<p>Tato rovnice by se dala napsat i jinak (více složitě), ale nám bude tato verze bohatě stačit. Všimněte si, že lze dosadit pouze rychlost jednoho bodu, ale pružina se skládá ze dvou. Co dělat? Vypočteme rozdíl rychlostí a předáme ho jako relativní rychlost. Ztráty tedy budou představovat vnitřní tření v materiálu.</p>
+
+<p class="src2">force += -(mass1-&gt;vel - mass2-&gt;vel) * frictionConstant;<span class="kom">// Zmenšení síly o tření</span></p>
+
+<p>Podle Newtonova zákona akce a reakce aplikujeme na jeden bod pružiny kladnou sílu a na druhý zápornou. (Působí-li jedno těleso na druhé silou, působí i druhé na první. Obě síly jsou stejně velké, ale opačně orientované.) Představte si dvě loďky na jezeře. Po odstrčení se nezačne pohybovat jenom jedna, ale obě. Pokud by bylo jedno těleso mnohonásobně těžší než to druhé, mohlo by se silové působení na něj zanedbat, jeho zrychlení by se blížilo k nule. Představte si například raketu v gravitačním poli planety, která je přitahována dolů do jejího středu. Raketa se zároveň snaží přitáhnout planetu nahoru, nicméně nemá nejmenší šanci :-) a tak se druhé působení jednoduše zanedbává. To ale není náš případ, protože oba naše objekty mají stejnou hmotnost.</p>
+
+<p class="src2">mass1-&gt;applyForce(force);<span class="kom">// Aplikování síly na částici 1</span></p>
+<p class="src2">mass2-&gt;applyForce(-force);<span class="kom">// Aplikování opačné síly na částici 2</span></p>
+<p class="src1">}</p>
+<p class="src0">};</p>
+
+<p>Nyní už máme vyřešenu rovnici pohybu, kterou si můžeme představit jako silové působení pružin. Abychom simulaci dokompletovali, přidáme ještě gravitační sílu, tření lana se vzduchem a plochý povrch, po kterém lanem posunujeme. První dvě jsou jednoduché, nejprve odpor vzduchu:</p>
+
+<p class="src0"><span class="kom">odpor vzduchu = -k * rychlost</span></p>
+<p class="src0"><span class="kom">k: konstanta, která představuje velikost odporu</span></p>
+<p class="src0"><span class="kom">rychlost: rychlost pohybu</span></p>
+
+<p>A gravitace...</p>
+
+<p class="src0"><span class="kom">gravitační síla = gravitační zrychlení * hmotnost</span></p>
+
+<p>Gravitace i odpor vzduchu působí na každou částici lana zvlášť. Co se zemí? Můžeme si vytvořit pomyslnou rovinu a testovat, kolize s částicemi lana. Pokud se ocitne pod úrovní roviny, vyvýšíme ji a rozšíříme působící sílu o tření s podlahou.</p>
+
+<h2>Nastavení počátečních hodnot simulace</h2>
+
+<p>V tuto chvíli je prostředí připraveno pro simulaci, ale potřebujeme definovat jednotky používaných fyzikálních veličin. Vzdálenost bude specifikována v metrech, čas v sekundách a hmotnost v kilogramech. Gravitaci nastavíme tak, aby působila ve směru záporné části osy y se zrychlením 9,81 m*s<sup>-2</sup> (odpovídá gravitaci na zemi). Před spuštěním umístíme lano rovnoběžně se zemí ve vzdálenosti čtyř metrů od ní. Aby se jí mohlo dotknout bude mít délku (v klidovém stavu) také čtyři metry, Z toho vyplývá 5 cm vzdálenost mezi jednotlivými částicemi (4 m / 80 částic = 0,05 m = 5 cm). Normální délku pružiny mezi částicemi (délka bez působení žádných sil) tedy nastavíme na těchto 5 cm, aby lano na začátku simulace nebylo ani napnuté ani prohnuté. Celkovou hmotnost lana určíme na 4 kg a to dává 0,05 kg (= 50 gramů) na každou částici. Pro přehlednost si vše shrneme:</p>
+
+<ul>
+<li>gravitační zrychlení: 9,81 m*s<sup>-2</sup></li>
+<li>počet částic lana: 80</li>
+<li>normální vzdálenost mezi sousedními částicemi (bez působení sil): 5 cm</li>
+<li>hmotnost jedné částice: 50 gramů</li>
+<li>počáteční orientace lana: horizontálně bez napětí</li>
+</ul>
+
+<p>Nyní zkusíme vypočítat konstantu určující tuhost pružiny. Pokud budeme držet lano za jeden konec, tak se natáhne. Představte si elastické lano se závažím. Je to úplně stejné, akorát my nemáme pouze jednu pružinu ale hned několik. Nejvíce se natáhne horní pružina, protože drží hmotnost všech ostatních částic - prakticky celé lano. Naopak nejméně se prodlouží ta spodní, protože je na ní zavěšena jenom jedna jediná částice. Nechceme, aby se ta horní natáhla více než o 1 cm.</p>
+
+<p class="src0"><span class="kom">f = hmotnost lana * gravitační zrychlení = (4 * 9,81) N ~= 40 N</span></p>
+
+<p>Síla pružiny odpovídá přibližně 40 N. Dá se ale vyjádřit i jinak:</p>
+
+<p class="src0"><span class="kom">síla pružiny = -k * x = -k * 0,1 metrů</span></p>
+
+<p>Suma těchto sil by se měla rovnat nule.</p>
+
+<p class="src0"><span class="kom">40 N + (-k * 0,01 metrů) = 0</span></p>
+
+<p>Vypočteme a získáme</p>
+
+<p class="src0"><span class="kom">k = 4000 N/m</span></p>
+
+<p>Pro snadnější zapamatovatelnost budeme předpokládat 10000 N/m, což nám dává větší tuhost lana, které se v horní části natáhne jen o 4 mm.</p>
+
+<p>Aby se nalezla konstanta vnitřního tření v laně, museli bychom podniknout mnohem více komplikovanější výpočet než je ten výše. Proto jsem použil metodu pokusů a omylů a získal...</p>
+
+<p class="src0"><span class="kom">konstanta vnitřního tření = 0,2 N/(m/s)</span></p>
+
+<p>... což vypadá celkem realisticky.</p>
+
+<h2>Třída simulace lana</h2>
+
+<p>Předtím než začneme zkoumat tření se vzduchem a se zemí, pojďme se podívat na třídu simulace lana, která je odvozená od obecné třídy simulace z lekce 39. Tato třída obsahuje čtyři metody potřebné pro běh simulace.</p>
+
+<ul>
+<li>virtual void init() - reset sil</li>
+<li>virtual void solve() - aplikování sil</li>
+<li>virtual void simulate() - iterování pozic a rychlostí</li>
+<li>virtual void operate(float dt) - kompletní simulační metoda</li>
+</ul>
+
+<p>V potomku základní třídy přepíšeme funkci solve() a funkci simulate(float dt), protože kvůli lanu potřebujeme jejich speciální implementaci. Solve() slouží k aplikování sil a simulate(float dt) k ovládání lana za jeden konec pověšený v prostoru. Jak už bylo řečeno, třída RopeSimulation je potomkem třídy Simulation. Obecnou simulaci rozšiřuje o lano složené z hmotných bodů (částic) pospojovaných pružinami. Tyto pružiny mají vnitřní tření a klidovou délku. Jeden konec lana je udržován v prostoru na souřadnicích ropeConnectionPos a je jím možno pohybovat pomocí metody setRopeConnectionVel(Vector3D ropeConnectionVel). Třída dále zajišťuje tření se vzduchem a s rovinným povrchem (nebo-li se zemí), jehož normála z něj vychází ve směru kladné části osy y.</p>
+
+<p class="src0">class RopeSimulation : public Simulation<span class="kom">// Třída simulace lana</span></p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">Spring** springs;<span class="kom">// Pružiny spojující částice</span></p>
+<p></p>
+<p class="src1">Vector3D gravitation;<span class="kom">// Gravitační zrychlení</span></p>
+<p class="src1">Vector3D ropeConnectionPos;<span class="kom">// Bod v prostoru; pozice první částice pro ovládání lanem</span></p>
+<p class="src1">Vector3D ropeConnectionVel;<span class="kom">// Rychlost a směr požadovaného pohybu</span></p>
+<p></p>
+<p class="src1">float groundRepulsionConstant;<span class="kom">// Velikost odrážení částic od země</span></p>
+<p class="src1">float groundFrictionConstant;<span class="kom">// Velikost tření částic se zemí</span></p>
+<p class="src1">float groundAbsorptionConstant;<span class="kom">// Velikost absorpce sil částic zemí (vertikální kolize)</span></p>
+<p class="src1">float groundHeight;<span class="kom">// Pozice roviny země na ose y</span></p>
+<p class="src1">float airFrictionConstant;<span class="kom">// Konstanta odporu vzduchu na částice</span></p>
+
+<p>Konstruktorem inicializujeme všechny členské proměnné třídy, alokujeme paměť pro všechny potřebné pružiny a umístíme je v řadě rovnoběžně se zemí.</p>
+
+<p class="src1">RopeSimulation(<span class="kom">// Konstruktor třídy</span></p>
+<p class="src2">int numOfMasses,<span class="kom">// Počet částic</span></p>
+<p class="src2">float m,<span class="kom">// Hmotnost každé částice</span></p>
+<p class="src2">float springConstant,<span class="kom">// Tuhost pružiny</span></p>
+<p class="src2">float springLength,<span class="kom">// Délka pružiny v klidovém stavu</span></p>
+<p class="src2">float springFrictionConstant,<span class="kom">// Konstanta vnitřního tření pružiny</span></p>
+<p class="src2">Vector3D gravitation,<span class="kom">// Gravitační zrychlení</span></p>
+<p class="src2">float airFrictionConstant,<span class="kom">// Odpor vzduchu</span></p>
+<p class="src2">float groundRepulsionConstant,<span class="kom">// Odrážení částic zemí</span></p>
+<p class="src2">float groundFrictionConstant,<span class="kom">// Tření částic se zemí</span></p>
+<p class="src2">float groundAbsorptionConstant,<span class="kom">// Absorpce sil zemí</span></p>
+<p class="src2">float groundHeight<span class="kom">// Pozice země na ose y</span></p>
+<p class="src2">) : Simulation(numOfMasses, m)<span class="kom">// Inicializace předka třídy</span></p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;gravitation = gravitation;</p>
+<p class="src2"></p>
+<p class="src2">this-&gt;airFrictionConstant = airFrictionConstant;</p>
+<p></p>
+<p class="src2">this-&gt;groundFrictionConstant = groundFrictionConstant;</p>
+<p class="src2">this-&gt;groundRepulsionConstant = groundRepulsionConstant;</p>
+<p class="src2">this-&gt;groundAbsorptionConstant = groundAbsorptionConstant;</p>
+<p class="src2">this-&gt;groundHeight = groundHeight;</p>
+<p></p>
+<p class="src2">for (int a = 0; a &lt; numOfMasses; ++a)<span class="kom">// Nastavení počáteční pozice částic</span></p>
+<p class="src2">{</p>
+<p class="src3">masses[a]-&gt;pos.x = a * springLength;<span class="kom">// Offsety jednotlivých částic</span></p>
+<p class="src3">masses[a]-&gt;pos.y = 0;<span class="kom">// Rovnoběžně se zemí</span></p>
+<p class="src3">masses[a]-&gt;pos.z = 0;<span class="kom">// Rovnoběžně s obrazovkou</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">springs = new Spring*[numOfMasses - 1];<span class="kom">// Alokace paměti pro ukazatele na pružiny</span></p>
+<p></p>
+<p class="src2">for (a = 0; a &lt; numOfMasses - 1; ++a)<span class="kom">// Vytvoření jednotlivých pružin</span></p>
+<p class="src2">{</p>
+<p class="src3"></p>
+<p class="src3">springs[a] = new Spring(masses[a], masses[a + 1], springConstant, springLength, springFrictionConstant);<span class="kom">// Dvě částice na pružinu</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Jak jsme si už řekli výše, funkce solve() slouží k aplikování sil na všechny objekty, ze kterých je lano složeno.</p>
+
+<p class="src1">void solve()<span class="kom">// Aplikování sil</span></p>
+<p class="src1">{</p>
+
+<p>Nejdříve ošetříme všechny pružiny; na jejich pořadí nezáleží. Třída  obsahuje svoji vlastní funkci.</p>
+
+<p class="src2">for (int a = 0; a &lt; numOfMasses - 1; ++a)<span class="kom">// Prochází pružiny</span></p>
+<p class="src2">{</p>
+<p class="src3">springs[a]-&gt;solve();<span class="kom">// Aplikování sil na pružinu</span></p>
+<p class="src2">}</p>
+
+<p>V cyklu přes všechny částice zajistíme působení gravitace a odpor vzduchu.</p>
+
+<p class="src2">for (a = 0; a &lt; numOfMasses; ++a)<span class="kom">// Prochází částice</span></p>
+<p class="src2">{</p>
+<p class="src3">masses[a]-&gt;applyForce(gravitation * masses[a]-&gt;m);<span class="kom">// Gravitace</span></p>
+<p class="src3">masses[a]-&gt;applyForce(-masses[a]-&gt;vel * airFrictionConstant);<span class="kom">// Odpor vzduchu</span></p>
+
+<p>Síly ze země vypadají trochu komplikovaněji, ale jsou právě tak jednoduché, jako všechny ostatní. Země na částici může působit pouze tehdy, pokud se navzájem dotknou, tj. částice se na ose y nachází pod její úrovní.</p>
+
+<p class="src3">if (masses[a]-&gt;pos.y &lt; groundHeight)<span class="kom">// Kolize se zemí,</span></p>
+<p class="src3">{</p>
+
+<p>Smýkání lana na zemi je zajištěno třecí silou, která ze své podstaty zanedbává rychlost na ose y. Y je směr, kterým země (její normálový vektor) směřuje vzhůru; smýkání nemůže působit v tomto směru.</p>
+
+<p class="src4">Vector3D v;<span class="kom">// Pomocný vektor</span></p>
+<p></p>
+<p class="src4">v = masses[a]-&gt;vel;<span class="kom">// Grabování rychlosti</span></p>
+<p class="src4">v.y = 0;<span class="kom">// Vynechání rychlosti na ose y</span></p>
+<p></p>
+<p class="src4">masses[a]-&gt;applyForce(-v * groundFrictionConstant);<span class="kom">// Třecí síla země</span></p>
+
+<p>Opakem smýkání je absorpční efekt, kdy se síla aplikuje pouze ve směru, kterým země směřuje vzhůru. Proto obě ostatní složky vynulujeme. Absorpce nemůže na částici působit tehdy, když se vzdaluje od země. Pokud bychom nepřidali podmínku v.y &lt; 0, lano by tíhlo k zemi, i když by se jí už nedotýkalo.</p>
+
+<p class="src4">v = masses[a]-&gt;vel;<span class="kom">// Grabování rychlosti</span></p>
+<p></p>
+<p class="src4">v.x = 0;<span class="kom">// Zanedbání rychlosti na osách x a z</span></p>
+<p class="src4">v.z = 0;</p>
+<p></p>
+<p class="src4">if (v.y &lt; 0)<span class="kom">// Pouze při kolizi směrem k zemi</span></p>
+<p class="src4">{</p>
+<p class="src5">masses[a]-&gt;applyForce(-v * groundAbsorptionConstant);<span class="kom">//Absorpční síla</span></p>
+<p class="src4">}</p>
+
+<p>Síla odrazu je poslední ze sil, kterou vyvolává kolize se zemí. Země odráží částice právě tak, jako kdyby se mezi nimi nacházela pružina. Její síla je přímo úměrná rychlosti částice při nárazu.</p>
+
+<p class="src4">Vector3D force = Vector3D(0, groundRepulsionConstant, 0) * (groundHeight - masses[a]-&gt;pos.y);<span class="kom">// Síla odrazu</span></p>
+<p></p>
+<p class="src4">masses[a]-&gt;applyForce(force);<span class="kom">// Aplikování síly odrazu</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Abychom vyvolali dojem média, které za jeden konec drží lano a pohybuje s ním, musíme přepsat metodu simulate(float dt).</p>
+
+<p class="src1">void simulate(float dt)<span class="kom">// Simulace lana</span></p>
+<p class="src1">{</p>
+
+<p>Nejdříve ze všeho zavoláme metodu předka, potom k aktuální pozici přičteme rychlost pohybu a nakonec ošetříme náraz do země.</p>
+
+<p class="src2">Simulation::simulate(dt);<span class="kom">// Metoda předka</span></p>
+<p></p>
+<p class="src2">ropeConnectionPos += ropeConnectionVel * dt;<span class="kom">// Zvětšení pozice o rychlost</span></p>
+<p></p>
+<p class="src2">if (ropeConnectionPos.y &lt; groundHeight)<span class="kom">// Dostala se částice pod zem?</span></p>
+<p class="src2">{</p>
+<p class="src3">ropeConnectionPos.y = groundHeight;<span class="kom">// Přesunutí na úroveň země</span></p>
+<p class="src3">ropeConnectionVel.y = 0;<span class="kom">// Nulování rychlosti na ose y</span></p>
+<p class="src2">}</p>
+
+<p>Pomocí právě získaných parametrů nastavíme vlastnosti částice na indexu nula.</p>
+
+<p class="src2">masses[0]-&gt;pos = ropeConnectionPos;<span class="kom">// Pozice první částice</span></p>
+<p class="src2">masses[0]-&gt;vel = ropeConnectionVel;<span class="kom">// Rychlost první částice</span></p>
+<p class="src2">}</p>
+
+<p>Potřebujeme funkci, pomocí které budeme moci nastavit rychlost první částice.</p>
+
+<p class="src1">void setRopeConnectionVel(Vector3D ropeConnectionVel)<span class="kom">// Nastavení rychlosti první částice</span></p>
+<p class="src1">{</p>
+<p class="src2">this-&gt;ropeConnectionVel = ropeConnectionVel;<span class="kom">// Přiřazení rychlostí</span></p>
+<p class="src1">}</p>
+
+<p>Tím končí vysvětlování vnitřních závislostí třídy RopeSimulation. Její objekt v aplikaci vytváříme dynamicky pomocí operátoru new. Změnou hodnot předávaných konstruktoru můžete docílit téměř libovolného chování lana. Všimněte si, že zemi umisťujeme -1.5f jednotek pod osou y. Lano inicializujeme na nule rovnoběžně se zemí. To nám tedy dává možnost vidět hned na začátku efektní pád a kolizi se zemí.</p>
+
+<p class="src0">RopeSimulation* ropeSimulation = new RopeSimulation(<span class="kom">// Vytvoření objektu simulace lana</span></p>
+<p class="src1">80,<span class="kom">// 80 částic</span></p>
+<p class="src1">0.05f,<span class="kom">// Každá částice váží 50 gramů</span></p>
+<p class="src1">10000.0f,<span class="kom">// Tuhost pružin</span></p>
+<p class="src1">0.05f,<span class="kom">// Délka pružin, při nepůsobení žádné sily</span></p>
+<p class="src1">0.2f,<span class="kom">// Konstanta vnitřního tření pružiny</span></p>
+<p class="src1">Vector3D(0, -9.81f, 0), <span class="kom">// Gravitační zrychlení</span></p>
+<p class="src1">0.02f,<span class="kom">// Odpor vzduchu</span></p>
+<p class="src1">100.0f,<span class="kom">// Síla odrazu od země</span></p>
+<p class="src1">0.2f,<span class="kom">// Třecí síla země</span></p>
+<p class="src1">2.0f,<span class="kom">// Absorpční síla země</span></p>
+<p class="src1">-1.5f);<span class="kom">// Poloha země na ose y</span></p>
+
+<p>Stejně jako v lekci 39 existuje maximální možná hodnota dt simulace. S výše uvedenými parametry konstruktoru činí přibližně 0,002 sekund. Pokud vaše změna tuto hodnotu sníží, může simulace vypadat poněkud nestabilně a lano nemusí pracovat správně. Abyste poměry stabilizovali, musíte najít nové maximální možné dt. Velké síly a/nebo malé hmotnosti znamenají větší nestabilitu, protože zrychlení bude vyšší (zrychlení = síla / hmotnost).</p>
+
+<p class="src0"><span class="kom">// Funkce Update(DWORD milliseconds)</span></p>
+<p></p>
+<p class="src1">float dt = milliseconds / 1000.0f;<span class="kom">// Převod milisekund na sekundy</span></p>
+<p class="src1">float maxPossible_dt = 0.002f;<span class="kom">// Maximální možné dt</span></p>
+<p class="src1">int numOfIterations = (int)(dt / maxPossible_dt) + 1;<span class="kom">// Výpočet počtu opakování při této aktualizaci</span></p>
+<p></p>
+<p class="src1">if (numOfIterations != 0)<span class="kom">// Proti dělení nulou</span></p>
+<p class="src1">{</p>
+<p class="src2">dt = dt / numOfIterations;<span class="kom">// Aktualizace dt podle numOfIterations</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">for (int a = 0; a &lt; numOfIterations; ++a)<span class="kom">// Opakování simulace</span></p>
+<p class="src1">{</p>
+<p class="src2">ropeSimulation-&gt;operate(dt);</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Lanem můžete pohybovat pomocí šipek a kláves HOME a END. Pohrajte si, stojí to za to. Simulační procedura hodně závisí na výkonu procesoru, tudíž jsou také důležité optimalizace kompilátoru. Při standardním Visual C++ Release nastavení běží program více než 10 krát rychleji než v Debug módu, pro který činí minimální frekvence procesoru cca. 500 MHz.</p>
+
+<p>V tomto tutoriálu je představeno kompletní fyzikální nastavení, teoretická funkce, design a implementace. Více pokročilejší simulace uvnitř vypadají úplně stejně jako tato.</p>
+
+<p class="autor">napsal: Erkin Tunca <span class="transform_email">&lt;erkintunca (zavináč) icqmail.com&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson40.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson40_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson40.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson40.zip">Dev C++</a> kód této lekce. ( <a href="mailto:zealouselixir@mchsi.com">Warren Moore</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson40.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:mailto:cestarigianni@libero.it">Gianni Cestari</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson40.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_40_big.jpg" class="nehe_velky" alt="Lekce 40" /></div>
+<p class="okolni_lekce"><a href="tut_39.php">&lt;&lt;&lt; Lekce 39</a> | <a href="tut_41.php">Lekce 41 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_40.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Grafika_v_C++_=284.=29?=
+Date: Thu, 12 Jul 2007 09:51:15 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2518
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Grafika v C++ (4.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Grafika v C++ (4.)</H2>
+<H4>=C8as od =E8asu pot=F8ebujeme zjistit rozm=ECry grafick=E9ho m=F3du, =
+jindy naopak=20
+velikost textu apod. A pr=E1v=EC o tomto je dne=9An=ED =E8l=E1nek.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>V dne=9An=EDm d=EDle si pov=EDme o informac=EDch, kter=E9 mohou b=FDt =
+pro n=E1s d=F9le=9Eit=E9.=20
+Nap=F8=EDklad, programujete hru pro v=EDce rozli=9Aen=ED, co=9E se =
+b=EC=9En=EC pou=9E=EDv=E1 a nev=EDte=20
+p=F8edem jak=E9 si =E8lov=ECk zvol=ED. Nebo pot=F8ebujete za b=EChu =
+programu zjistit velikost=20
+p=EDsma, abyste mohli podle toho za=F8=EDdit spr=E1vn=FD b=ECh programu. =
+</P>
+<P>Zde je program, kter=FD demonstruje pou=9Eit=ED z=EDsk=E1n=ED =
+n=ECkolika informac=ED: </P>
+<P><PRE style=3D"BACKGROUND-COLOR: #dddddd">#include &lt;graphics.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+#include &lt;dos.h&gt;
+
+int main(void)
+{
+   /* request autodetection */
+   int gdriver =3D DETECT, gmode, errorcode;
+
+   // pozdeji naplnime informacemi
+   struct viewporttype viewinfo;
+   struct linesettingstype lineinfo;
+   struct fillsettingstype fillinfo;
+   struct textsettingstype textinfo;
+
+   /* initialize graphics and local variables */
+   initgraph(&amp;gdriver, &amp;gmode, "");
+
+   /* read result of initialization */
+   errorcode =3D graphresult();
+   if (errorcode !=3D grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1); /* terminate with an error code */
+   }
+
+   // plnime informacemi
+   getviewsettings(&amp;viewinfo);
+   getlinesettings(&amp;lineinfo);
+   getfillsettings(&amp;fillinfo);
+   gettextsettings(&amp;textinfo);
+
+   //informace o grafickem modu
+
+   printf("Graficky adapter: %s\r\n\n", getdrivername());
+   printf("Graficky rezim: %s\r\n\n", getmodename(gmode));
+   printf("Dosah souradnic: 0, 0, %d, %d\r\n\n", getmaxx(),
+	  getmaxy());
+
+   printf("Aktualni pozice kurzoru: %d, %d\r\n\n", getx(),
+	  gety());
+
+   printf("Pocet barev: %d\r\n\n",getmaxcolor()+1);
+   printf("Aktualni barva: %d\r\n\n", getcolor());
+
+   printf("Velikost znaku: %d\r\n\n", textinfo.charsize);
+   printf("Barva vyplne: %d\r\n\n", fillinfo.color);
+   printf("Orezavani: %s\r\n\n",
+	  viewinfo.clip ? "Aktivni" : "Neaktivni");
+
+   printf("Tlouska cary: %d\r\n\n",lineinfo.thickness);
+
+   printf("\n\n\nToto jsou informace, ktere mohou byt "
+	  "pri programovani treba.");
+
+   getch();
+   closegraph();
+   return 0;
+}
+
+</PRE>
+<P></P>
+<P>Na za=E8=E1tku programu si deklarujeme n=ECkolik prom=ECnn=FDch typu =
+struct. Jsou to=20
+lineinfo, textinfo, fillinfo a viewinfo.</P>
+<P>Lineinfo n=E1m poslou=9E=ED k ulo=9Een=ED informac=ED o =E8=E1r=E1ch, =
+kter=E9 vykreslujeme pomoc=ED=20
+line, lineto atd. Textinfo se zab=FDv=E1 textem, nap=F8. velikost =
+p=EDsmen, druh p=EDsmen.=20
+Celou strukturu m=E1me popsanou v dokumentaci ke knihovn=EC graphics.h, =
+kter=E1 je=20
+sou=E8=E1st=ED Borland C++. Z=E1le=9E=ED jen na V=E1s, kterou tu =
+informaci do sv=E9ho programu=20
+pot=F8ebujete. Viewinfo n=E1m d=E1v=E1 informace o velikostti =
+aktu=E1ln=EDho okna a o tom,=20
+jestli je o=F8=EDznut=E9 =E8i nikoliv. Posledn=ED, =E8tvrt=E1, struktura =
+v na=9A=ED deklaraci je=20
+fillinfo. Tedy informace o v=FDplni. Uchov=E1v=E1 v sob=EC informace =
+aktu=E1ln=ED barvy=20
+v=FDpln=EC a typ vzoru, kter=FD je pou=9Eit. Standardn=EC nen=ED =
+=9E=E1dn=E1 v=FDpl=F2 u=9Eita.</P>
+<P>Po deklaraci n=E1sleduje zapnut=ED grafick=E9ho m=F3du. =
+Samoz=F8ejm=EC i s kontrolou, zda=20
+nedo=9Alo k n=ECjak=E9 chyb=EC. A d=E1le v programu, pomoc=ED funkc=ED, =
+kter=E9 za=E8=EDnaj=ED na GET=20
+(jako dostat) a kon=E8=ED na SETTINGS, postupn=EC napln=EDme v=9Aechny =
+=E8ty=F8i na=9Ae=20
+prom=ECnn=E9. M=ECn=ED se pouze ko=F8en funkce a to podle toho, co =
+pr=E1v=EC pln=EDme. Nakonec=20
+programu je vyps=E1n=ED n=ECkolika informac=ED, kter=E9 jsme si zjistili =
+o na=9Aem programu,=20
+respektive o grafick=E9m m=F3du. </P>
+<P>Funkce getx a gety vracej=ED aktu=E1ln=ED pozici kurzoru v programu. =
+Getmaxcolor=20
+vrac=ED index nejv=ECt=9A=ED mo=9En=E9 barvy, ale jeliko=9E mus=EDme =
+zapo=E8=EDtat i nulu, to je=20
+=E8ern=E1 barva, tak mus=EDme je=9At=EC k t=E9to hodnot=EC p=F8i=E8=EDst =
+jedni=E8ku, abychom dostali=20
+spr=E1vn=FD po=E8et barev. Getcolor je aktu=E1ln=ED barva, v na=9Aem =
+p=F8=EDpad=EC tedy 15 jako=20
+b=EDl=E1. Pot=E9 u=9E pouze vypisujeme informace, kter=E9 jsme si =
+popsali v=FD=9Ae. </P>
+<P>P=F8iklad si m=F9=9Eete st=E1hnout <A=20
+href=3D"http://www.pcsvet.cz/art/climg/2518/gcpp4.rar">zde</A>=20
+[climg/2518/gcpp4.rar] a p=F8=ED=9At=EC si budeme pov=EDdat bl=ED=9Ee o =
+viewportu, to je=20
+aktu=E1ln=ED velikost obrazovky. </P>
+<HR SIZE=3D1>
+Autor: <B>Pavel Matou=9Aek</B>, <A=20
+href=3D"mailto:pavelmmm@seznam.cz">pavelmmm@seznam.cz</A><BR>Rubrika: =
+<B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 9:51:00 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

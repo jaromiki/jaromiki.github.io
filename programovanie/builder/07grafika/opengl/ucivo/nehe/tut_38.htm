@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_38.jpg" class="nehe_maly" alt="Lekce 38" />
+
+<h1>Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků</h1>
+
+<p class="nadpis_clanku">Tento tutoriál jsem napsal pro všechny z vás, kteří se mě v emailech dotazovali na to &quot;Jak mám loadovat texturu ze zdrojů programu, abych měl všechny obrázky uložené ve výsledném .exe souboru?&quot; a také pro ty, kteří psali &quot;Vím, jak otexturovat obdélník, ale jak mapovat na trojúhelník?&quot; Tutoriál není, oproti jiným, extrémně pokrokový, ale když nic jiného, tak se naučíte, jak skrýt vaše precizní textury před okem uživatele. A co víc - budete moci trochu ztížit jejich kradení :-)</p>
+
+<p>Tak už víte, jak otexturovat čtverec, jak nahrát bitmapu, tga,... Tak jak kruci otexturovat trojúhelník? A co když chci textury ukrýt do .exe souboru? Když zjistíte, jak je to jednoduché, budete se divit, že vás řešení už dávno nenapadlo.</p>
+
+<p>Raději než abych vše do detailů vysvětloval, předvedu pár screenshotů, takže budete přesně vědět, o čem mluvím. Budu používat nejnovější základní kód, který si můžete na <a href="http://nehe.gamedev.net/" target="_blank">http://nehe.gamedev.net/</a> pod nadpisem "NeHeGL Basecode" a nebo kliknutím na odkaz na konci tohoto tutoriálu.</p>
+
+<p>První co potřebujeme udělat, je přidat obrázky do zdrojového souboru (resource file). Mnoho z vás už zjistilo, jak to udělat, ale naneštěstí jste často opominuli několik kroků, a proto skončili s nepoužitelným zdrojovým souborem naplněným bitmapami, které nejdou použít.</p>
+
+<p>Tento tutoriál je napsán pro Visual C++ 6.0. Pokud používáte něco jiného, tato část tutoriálu je pro vás zbytečná, obzvláště obrázky prostředí Visual C++.</p>
+
+<p>Momentálně budete schopni nahrát pouze 24-bitové BMP. K nahrání 8-bitového BMP bychom potřebovali mnoho kódu navíc. Rád bych věděl o někom, kdo má malý optimalizovaný BMP loader. Kód, který mám k současnému načítání 8 a 24-bitových BMP je prostě příšerný. Něco, co používá LoadImage, by se hodilo.</p>
+
+<p>Tak tedy začneme...</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource1.jpg" width="480" height="360" border="0" alt="Resource 1" /></div>
+
+<p>Otevřete projekt a vyberte z hlavního menu Insert-&gt;Resource.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource2.jpg" width="351" height="282" border="0" alt="Resource 2" /></div>
+
+<p>Jste dotázáni na typ zdroje, který si přejete importovat. Vyberte Bitmap a klikněte na tlačítko Import.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource3.jpg" width="428" height="304" border="0" alt="Resource 3" /></div>
+
+<p>Otevře se prohlížeč souborů. Vstupte do složky Data a označte všechny 3 bitmapy (podržte Ctrl když je budete označovat). Pak klikněte na tlačítko Import. Pokud nevidíte soubory bitmap, ujistěte se, že v poli Files of type je vybráno All Files(*.*).</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource4.jpg" width="480" height="85" border="0" alt="Resource 4" /></div>
+
+<p>Třikrát se zobrazí varovná zpráva (jednou za každý obrázek). Vše co vám říká je, že obrázky byly v pořádku importovány, ale nemůžete je upravovat, protože mají více než 256 barev. Žádný důvod ke starostem!</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource5.jpg" width="480" height="360" border="0" alt="Resource 5" /></div>
+
+<p>Když jsou všechny obrázky importovány, zobrazí se jejich seznam. Každá bitmapa dostane své identifikační jméno (ID), které začíná na IDB_BITMAP a následuje číslo 1 - 3. Pokud jste líní, mohli byste to nechat tak a vrhnout se na kód této lekce. ( My ale nejsme líní!</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource6.jpg" width="480" height="360" border="0" alt="Resource 6" /></div>
+
+<p>Pravým tlačítkem klikněte na každé ID a vyberte z menu položku Properties. Přejmenujte identifikační jména na původní názvy souborů.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource7.jpg" width="428" height="304" border="0" alt="Resource 7" /></div>
+
+<p>Teď, když jsme hotovi, vyberte z hlavního menu File-&gt;Save All. Protože jste právě vytvořili nový zdrojový soubor, budete dotázáni na to, jak chcete soubor pojmenovat. Můžete soubor pojmenovat, jak chcete. Jakmile vyplníte jméno souboru klikněte na tlačítko Save.</p>
+
+<p>Až sem se hodně z vás propracovalo. Máte zdrojový soubor plný bitmapových obrázků a už jste ho i uložili na disk. Abyste však obrázky mohli použít, musíte udělat ještě pár věcí.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource8.jpg" width="480" height="360" border="0" alt="Resource 8" /></div>
+
+<p>Dále musíte přidat soubor se zdroji do aktuálního projektu. Z hlavního menu vyberte Project-&gt;Add To Project-&gt;Files.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource9.jpg" width="428" height="304" border="0" alt="Resource 9" /></div>
+
+<p>Vyberte resource.h a váš zdrojový soubor s bitmapami. Podržte Ctrl pro výběr víc souborů, nebo je přidejte samostatně.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_resource10.jpg" width="480" height="360" border="0" alt="Resource 10" /></div>
+
+<p>Poslední věc, kterou je třeba udělat, je kontrola, zda je zdrojový soubor ve složce Resource Files. Jak vidíte na obrázku, byl přidán do složky Source Files. Klikněte na něho a přetáhněte ho do složky Resource Files.</p>
+
+<p>Když je vše hotovo. Vyberte z hlavního menu File-&gt;Save All. Máme to těžší za sebou!</p>
+
+<p>Vrhneme na kód! Nejdůležitější řádek v kódu je #include &quot;resource.h&quot;. Bez tohoto řádku vám kompiler při kompilování vrátí chybu &quot;undeclared identifier&quot;. Resource.h umožňuje přístup k importovaným obrázkům.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro GLu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro GLaux knihovnu</span></p>
+<p></p>
+<p class="src0">#include &quot;NeHeGL.h&quot;<span class="kom">// Hlavičkový soubor pro NeHeGL</span></p>
+<p class="src0">#include &quot;resource.h&quot;<span class="kom">// Hlavičkový soubor pro Resource (*DŮLEŽITÉ*)</span></p>
+<p></p>
+<p class="src0">#pragma comment( lib, &quot;opengl32.lib&quot; )<span class="kom">// Přilinkuje OpenGL32.lib</span></p>
+<p class="src0">#pragma comment( lib, &quot;glu32.lib&quot; )<span class="kom">// Přilinkuje GLu32.lib</span></p>
+<p class="src0">#pragma comment( lib, &quot;glaux.lib&quot; )<span class="kom">// Přilinkuje GLaux.lib</span></p>
+<p></p>
+<p class="src0">#ifndef CDS_FULLSCREEN<span class="kom">// Pokud ještě CDS_FULLSCREEN není definován</span></p>
+<p class="src1">#define CDS_FULLSCREEN 4<span class="kom">// Tak ho nadefinujeme</span></p>
+<p class="src0">#endif<span class="kom">// Vyhneme se tak možným chybám</span></p>
+<p></p>
+<p class="src0">GL_Window* g_window;</p>
+<p class="src0">Keys* g_keys;</p>
+<p></p>
+<p class="src0">GLuint texture[3];<span class="kom">// Místo pro 3 textury</span></p>
+
+<p>Následující struktura bude obsahovat informace o motýlku, se kterým budeme pohybovat po obrazovce. Tex určuje, jakou texturu na objekt namapujeme. X, y a z udávají pozici objektu v prostoru. Yi bude náhodné číslo udávající, jak rychle motýl padá k zemi. Spinz se při pádu použije na otáčení okolo osy z. Spinzi udává rychlost této rotace. Flap bude použito pro mávání křídly (k tomu se později ještě vrátíme). Fi bude udávat jak rychle objekt mává křídly.</p>
+
+<p class="src0">struct object<span class="kom">// Struktura nazvaná object</span></p>
+<p class="src0">{</p>
+<p class="src1">int tex;<span class="kom">// Kterou texturu namapovat</span></p>
+<p class="src1">float x;<span class="kom">// X Pozice</span></p>
+<p class="src1">float y;<span class="kom">// Y Pozice</span></p>
+<p class="src1">float z;<span class="kom">// Z Pozice</span></p>
+<p class="src1">float yi;<span class="kom">// Rychlost pádu</span></p>
+<p class="src1">float spinz;<span class="kom">// Úhel otočení kolem osy z</span></p>
+<p class="src1">float spinzi;<span class="kom">// Rychlost otáčení kolem osy z</span></p>
+<p class="src1">float flap;<span class="kom">// Mávání křídly</span></p>
+<p class="src1">float fi;<span class="kom">// Směr mávání</span></p>
+<p class="src0">};</p>
+
+<p>Vytvoříme padesát těchto objektů pojmenovaných obj[index].</p>
+
+<p class="src0">object obj[50];<span class="kom">// Vytvoří 50 objektů na bázi struktury</span></p>
+
+<p>Následující část kódu nastavuje náhodné hodnoty všem objektům. Loop se bude pohybovat mezi 0 - 49 (celkem 50 objektů). Nejdříve vybereme náhodnou texturu od 0 do 2, aby nebyli všichni stejní. Potom nastavíme náhodnou pozici x od -17.0f do 17.0f. Počáteční pozice y bude 18.0f. Tím zajistíme, že se objekt vytvoří mimo obrazovku, takže ho nevidíme úplně od začátku. Pozice z je rovněž náhodná hodnota od -10.0f do -40.0f. Spinzi opět je náhodná hodnota od -1.0f do 1.0f. Flap nastavíme na 0.0f (křídla budou přesně uprostřed). Fi a yi nastavíme taky na náhodné hodnoty.</p>
+
+<p class="src0">void SetObject(int loop)<span class="kom">// Nastavení základních vlastností objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">obj[loop].tex = rand() % 3;<span class="kom">// Výběr jedné ze tří textur</span></p>
+<p></p>
+<p class="src1">obj[loop].x = rand() % 34 - 17.0f;<span class="kom">// Náhodné x od -17.0f do 17.0f</span></p>
+<p class="src1">obj[loop].y = 18.0f;<span class="kom">// Pozici y nastavíme na 18 (nad obrazovku)</span></p>
+<p class="src1">obj[loop].z = -((rand() % 30000 / 1000.0f) + 10.0f);<span class="kom">// Náhodné z od -10.0f do -40.0f</span></p>
+<p></p>
+<p class="src1">obj[loop].spinzi = (rand() % 10000) / 5000.0f - 1.0f;<span class="kom">// Spinzi je náhodné číslo od -1.0f do 1.0f</span></p>
+<p class="src1">obj[loop].flap = 0.0f;<span class="kom">// Flap začne na 0.0f</span></p>
+<p></p>
+<p class="src1">obj[loop].fi = 0.05f + (rand() % 100) / 1000.0f;<span class="kom">// Fi je náhodné číslo od 0.05f do 0.15f</span></p>
+<p class="src1">obj[loop].yi = 0.001f + (rand() % 1000) / 10000.0f;<span class="kom">// Yi je náhodné číslo od 0.001f do 0.101f</span></p>
+<p class="src0">}</p>
+
+<p>Teď k té zábavnější části. Nahrání bitmapy ze zdrojového souboru a její přeměna na texturu. hBMP je ukazatel na soubor s bitmapami. Řekne našemu programu odkud má brát data. BMP je bitmapová struktura, do které můžeme uložit data z našeho zdrojového souboru.</p>
+
+<p class="src0">void LoadGLTextures()<span class="kom">// Vytvoří textury z bitmap ve zdrojovém souboru</span></p>
+<p class="src0">{</p>
+<p class="src1">HBITMAP hBMP;<span class="kom">// Ukazatel na bitmapu</span></p>
+<p class="src1">BITMAP BMP;<span class="kom">// Struktura bitmapy</span></p>
+
+<p>Řekneme jaké identifikační jména chceme použít. Chceme nahrát IDB_BUTTEFLY1, IDB_BUTTEFLY2 a IDB_BUTTERFLY3. Pokud chcete přidat více obrázků, připište jejich ID.</p>
+
+<p class="src1">byte Texture[] = { IDB_BUTTERFLY1, IDB_BUTTERFLY2, IDB_BUTTERFLY3 };<span class="kom">// ID bitmap, které chceme načíst</span></p>
+
+<p>Na dalším řádku použijeme sizeof(Texture) na zjištění, kolik textur chceme sestavit. V Texture[] máme zadány 3 identifikační čísla, takže výsledkem sizeof(Texture) bude hodnota bude 3.</p>
+
+<p class="src1">glGenTextures(sizeof(Texture), &amp;texture[0]);<span class="kom">// Vygenerování tří textur, sizeof(Texture) = 3 ID</span></p>
+<p></p>
+<p class="src1">for (int loop = 0; loop &lt; sizeof(Texture); loop++)<span class="kom">// Projde všechny bitmapy ve zdrojích</span></p>
+<p class="src1">{</p>
+
+<p>LoadImage() přijímá parametry GetModuleHandle(NULL) - handle instance. MAKEINTRESOURCE(Texture[loop]) přemění hodnotu celého čísla Texture[loop] na hodnotu zdroje (obrázku, který má být načten). Tady je nutné poznamenat, že sice používáme identifikační jméno např. IDB_BUTTERFLY1, ale v souboru Resource.h je napsáno něco ve stylu #define IDB_BUTTERFLY1 115, my se tím ale nemusíme vůbec zabývat. Vývojové prostředí vše automatizuje. IMAGE_BITMAP říká našemu programu, že zdroj, který chceme načíst je bitmapový obrázek.</p>
+
+<p>Další dva parametry (0,0) jsou požadovaná výška a šířka obrázku. Chceme použít implicitní velikost, tak nastavíme obě na 0. Poslední parametr (LR_CREATEDIBSECTION) vrátí DIB část mapy, která obsahuje jen bitmapu bez informací o barvách v hlavičce. Přesně to, co chceme.</p>
+
+<p>hBMP bude ukazatelem na naše bitmapová data nahraná pomocí LoadImage().</p>
+
+<p class="src2">hBMP = (HBITMAP) LoadImage(GetModuleHandle(NULL), MAKEINTRESOURCE(Texture[loop]), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);<span class="kom">// Nahraje bitmapu ze zdrojů</span></p>
+
+<p>Dále zkontrolujeme, zda pointer hBMP opravdu ukazuje na data. Pokud byste chtěli přidat ošetření chyb, můžete zkontrolovat hBMP a zobrazit chybové hlášení. Pokud ale data existují, použijeme funkci getObject() na získání všech dat o velikosti sizeof(BMP) a jejich uložení do bitmapové struktury &amp;BMP.</p>
+
+<p class="src2">if (hBMP)<span class="kom">// Pokud existuje bitmapa</span></p>
+<p class="src2">{</p>
+<p class="src3">GetObject(hBMP, sizeof(BMP), &amp;BMP);<span class="kom">// Získání objektu</span></p>
+
+<p>glPixelStorei() oznámí OpenGL, že data jsou uložena ve formátu 4 byty na pixel. Nastavíme filtrování na GL_LINEAR a GL_LINEAR_MIPMAP_LINEAR (kvalitní a vyhlazené) a vygenerujeme texturu.</p>
+
+<p class="src3">glPixelStorei(GL_UNPACK_ALIGNMENT,4);<span class="kom">// 4 byty na jeden pixel</span></p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, texture[loop]);<span class="kom">// Zvolí texturu</span></p>
+<p></p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR); <span class="kom">// Mipmapované lineární filtrování</span></p>
+
+<p>Všimněte si, že používáme BMP.bmWidth a BMP.bmHeight, abychom získali výšku a šířku bitmapy. Také musíme použitím GL_BGR_EXT prohodit červenou a modrou barvu. Data získáme z BMP.bmBits.</p>
+
+<p class="src3"><span class="kom">// Vygenerování mipmapované textury (3 byty, šířka, výška a BMP data)</span></p>
+<p class="src3">gluBuild2DMipmaps(GL_TEXTURE_2D, 3, BMP.bmWidth, BMP.bmHeight, GL_BGR_EXT, GL_UNSIGNED_BYTE, BMP.bmBits);</p>
+
+<p>Posledním krokem je smazání objektu bitmapy, abychom uvolnili všechny systémové prostředky spojené s tímto objektem.</p>
+
+<p class="src3">DeleteObject(hBMP);<span class="kom">// Smaže objekt bitmapy</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>V inicializačním kódu není nic moc zajímavého. Použijeme funkci LoadGLTextures(), abychom zavolali kód, který jsme právě napsali. Nastavíme pozadí na černou barvu. Vyřadíme depth testing (jednoduchý blending). Povolíme texturování, nastavíme a povolíme blending.</p>
+
+<p class="src0">BOOL Initialize (GL_Window* window, Keys* keys)<span class="kom">// Inicializační kód a nastavení</span></p>
+<p class="src0">{</p>
+<p class="src1">g_window = window;</p>
+<p class="src1">g_keys = keys;</p>
+<p></p>
+<p class="src1">LoadGLTextures();<span class="kom">// Nahraje textury ze zdrojů</span></p>
+<p></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ hloubkového testování</span></p>
+<p class="src1">glDisable(GL_DEPTH_TEST);<span class="kom">// Vypnutí hloubkového testování</span></p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Vyhlazené stínování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Výpočet perspektivy na nejvyšší kvalitu</span></p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Povolí texturové mapování</span></p>
+<p></p>
+<p class="src1">glBlendFunc(GL_ONE,GL_SRC_ALPHA);<span class="kom">// Nastavení blendingu (nenáročný / rychlý)</span></p>
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Povolení blendingu</span></p>
+
+<p>Hned na začátku potřebujeme inicializovat 50 objektů tak, aby se neobjevily uprostřed obrazovky nebo všechny na stejném místě. I tuto funkci už máme napsanou. Zavoláme ji padesátkrát.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; 50; loop++)<span class="kom">// Inicializace 50 motýlů</span></p>
+<p class="src1">{</p>
+<p class="src2">SetObject(loop);<span class="kom">// Nastavení náhodných hodnot</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace úspěšná</span></p>
+<p class="src0">}</p>
+
+<p>Deinicializaci tentokrát nevyužijeme.</p>
+
+<p class="src0">void Deinitialize (void)<span class="kom">// Deinicializace</span></p>
+<p class="src0">{</p>
+<p class="src0">}</p>
+
+<p>Následující funkce ošetřuje stisk kláves ESC a F1. Periodicky ji voláme v hlavní smyčce programu.</p>
+
+<p class="src0">void Update (DWORD milliseconds)<span class="kom">// Vykonává aktualizace</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_ESCAPE] == TRUE)<span class="kom">// Stisknuta klávesa ESC?</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication(g_window);<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_F1] == TRUE)<span class="kom">// Stisknuta klávesa F1?</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen(g_window);<span class="kom">// Prohodí mód fullscreen/okno</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Teď k vykreslování. Pokusím se vysvětlit nejjednodušší způsob, jak otexturovat jedním obrázkem dva trojúhelníky. Z nějakého důvodu si mnozí myslí, že namapovat texturu na trojúhelník je takřka nemožné. Pravdou je, že s velmi malou námahou můžete otexturovat libovolný tvar. Obrázek může tvaru odpovídat, nebo může být totálně odlišný. Je to úplně jedno.</p>
+
+<p>Tak od začátku... vymažeme obrazovku a deklarujeme cyklus na renderování motýlků (objektů).</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslení scény</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p></p>
+<p class="src1">for (int loop = 0; loop &lt; 50; loop++)<span class="kom">// Projde 50 motýlků</span></p>
+<p class="src1">{</p>
+
+<p>Zavoláme glLoadIdentity() pro resetování matice. Pak vybereme texturu, která byla při inicializaci určena pro daný objekt (obj[loop].tex). Umístíme motýlka pomocí glTranslatef() a otočíme ho o 45 stupňů na ose x. Tím ho natočíme trochu k divákovi, takže nevypadá tak placatě. Nakonec ho ještě otočíme kolem osy z o hodnotu spinz - při pádu se bude točit.</p>
+
+<p class="src2">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[obj[loop].tex]);<span class="kom">// Zvolí texturu</span></p>
+<p></p>
+<p class="src2">glTranslatef(obj[loop].x,obj[loop].y,obj[loop].z);<span class="kom">// Umístění</span></p>
+<p></p>
+<p class="src2">glRotatef(45.0f, 1.0f,0.0f,0.0f);<span class="kom">// Rotace na ose x</span></p>
+<p class="src2">glRotatef((obj[loop].spinz), 0.0f,0.0f,1.0f);<span class="kom">// Rotace na ose y</span></p>
+
+<p>Texturování trojúhelníku se neliší od texturování čtverce. To že máme jen 3 body, neznamená, že nemůžeme čtyřhranným obrázkem otexturovat trojúhelník. Musíme si pouze dávat větší pozor na texturovací souřadnice. V následujícím kódu nakreslíme první trojúhelník. Začneme v pravém horním rohu viditelného čtverce. Pak se přesuneme do levého horního rohu a potom do levého dolního rohu. Kód vyrenderuje následující obrázek:</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_triangle1.jpg" width="128" height="128" border="0" alt="První trojúhelník" /></div>
+
+<p>Všimněte si, že na první trojúhelník se vyrenderuje jen polovina motýla. Druhá část bude pochopitelně na druhém trojúhelníku. Texturovací souřadnice odpovídají tomu, jak jsme texturovali čtverce. Tři souřadnice stačí OpenGL k tomu, aby rozpoznalo jakou část obrázku má na trojúhelník namapovat.</p>
+
+<p class="src2">glBegin(GL_TRIANGLES);<span class="kom">// Kreslení trojúhelníků</span></p>
+<p class="src3"><span class="kom">// První trojúhelník</span></p>
+<p class="src3">glTexCoord2f(1.0f,1.0f); glVertex3f( 1.0f, 1.0f, 0.0f);<span class="kom">// Pravý horní bod</span></p>
+<p class="src3">glTexCoord2f(0.0f,1.0f); glVertex3f(-1.0f, 1.0f, obj[loop].flap);<span class="kom">// Levý horní bod</span></p>
+<p class="src3">glTexCoord2f(0.0f,0.0f); glVertex3f(-1.0f,-1.0f, 0.0f);<span class="kom">// Levý dolní bod</span></p>
+
+<p>Další část kódu vyrenderuje druhý trojúhelník stejným způsobem jako předtím. Začneme vpravo nahoře, pak půjdeme vlevo dolů a nakonec vpravo dolů.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_triangle2.jpg" width="128" height="128" border="0" alt="Druhý trojúhelník" /></div>
+
+<p>Druhý bod prvního a třetí bod druhého trojúhelníku se posunují zpět po ose z, aby se vytvořila iluze mávání křídly. To, co se ve skutečnosti děje, je pouze posouvání těchto bodů tam a zpátky od -1.0f do 1.0f, což způsobuje ohýbaní v místech, kde má motýl tělo. Pokud se na oba tyto body podíváte, zjistíte, že jsou to rožky křídel. Takto vytvoříme pěkný efekt s minimem námahy.</p>
+
+<p class="src3"><span class="kom">// Druhý trojúhelník</span></p>
+<p class="src3">glTexCoord2f(1.0f,1.0f); glVertex3f( 1.0f, 1.0f, 0.0f);<span class="kom">// Pravý horní bod</span></p>
+<p class="src3">glTexCoord2f(0.0f,0.0f); glVertex3f(-1.0f,-1.0f, 0.0f);<span class="kom">// Levý dolní bod</span></p>
+<p class="src3">glTexCoord2f(1.0f,0.0f); glVertex3f( 1.0f,-1.0f, obj[loop].flap);<span class="kom">// Pravý dolní bod</span></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Posuneme motýly směrem dolů odečtením obj[loop].yi od obj[loop].y. Motýlovo otočení spinz se zvýší o spinzi (což může být kladné i záporné číslo) a ohyb křídel se zvýší o fi. Fi může být rovněž kladné, nebo záporné podle směru kam se křídla pohybují.</p>
+
+<p class="src2">obj[loop].y -= obj[loop].yi;<span class="kom">// Pád motýla dolů</span></p>
+<p class="src2">obj[loop].spinz += obj[loop].spinzi;<span class="kom">// Zvýšení natočení na ose z o spinzi</span></p>
+<p class="src2">obj[loop].flap += obj[loop].fi;<span class="kom">// Zvětšení máchnutí křídlem o fi</span></p>
+
+<p>Potom co se motýl přesune dolů mimo viditelnou oblast, zavoláme funkci SetObject(loop) na tohoto motýla, aby se znovu nastavila náhodná textura, pozice, rychlost,... Jednoduše řečeno: vytvoříme nového motýla v horní části scény, které bude opět padat dolů.</p>
+
+<p class="src2">if (obj[loop].y &lt; -18.0f)<span class="kom">// Je motýl mimo obrazovku?</span></p>
+<p class="src2">{</p>
+<p class="src3">SetObject(loop);<span class="kom">// Nastavíme mu nové parametry</span></p>
+<p class="src2">}</p>
+
+<p>Aby motýl křídly skutečně mával, musíme zkontrolovat, jestli hodnota mávnutí není větší než 1.0f nebo menší než -1.0f. Pokud ano, změníme směr mávnutí jednoduše nastavením fi na opačnou hodnotu (fi = -fi). Takže pokud se křídla pohybují nahoru a dosáhnou 1.0f, fi se změní na záporné číslo a křídla půjdou dolů.</p>
+
+<p class="src2">if ((obj[loop].flap &gt; 1.0f) || (obj[loop].flap &lt; -1.0f))<span class="kom">// Máme změnit směr mávnutí křídly</span></p>
+<p class="src2">{</p>
+<p class="src3">obj[loop].fi = -obj[loop].fi;<span class="kom">// Změní směr mávnutí</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Sleep(15) bylo přidáno, aby pozastavilo program na 15 milisekund. Na počítačích přátel běžel zběsile rychle a mě se nechtělo nijak upravovat program, takže jsem jednoduše použil tuto funkci. Nicméně osobně její použití ze zásady nedoporučuji, protože se zbytečně plýtvá výpočetním výkonem procesoru.</p>
+
+<p class="src1">Sleep(15);<span class="kom">// Pozastavení programu na 15 milisekund</span></p>
+<p></p>
+<p class="src1">glFlush ();<span class="kom">// Vyprázdní renderovací pipeline</span></p>
+<p class="src0">}</p>
+
+<p>Doufám, že jste si užili tento tutoriál. Snad pro vás udělá nahrávání textur ze zdrojů programu trochu jednodušším na pochopení a texturování trojúhelníků rovněž. Přečetl jsem tento tutoriál snad 5krát a zdá se mi teď už dost jednoduchý.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Václav Slováček - Wessan <span class="transform_email">&lt;horizont (zavináč) host.sk&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson38.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson38_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson38.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson38.zip">Dev C++</a> kód této lekce. ( <a href="mailto:zealouselixir@mchsi.com">Warren Moore</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson38.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:alex_r@vortexentertainment.com">Alexandre Ribeiro de S?</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson38.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson38.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson38.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/extras/lesson38/lesson38 - enhanced.zip">Lesson 38 - Enhanced</a> (Masking, Sorting, Keyboard - NeHe).</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/extras/lesson38/lesson38 - screensaver.zip">Lesson 38 - Screensaver</a> by Brian Hunsucker.</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_38_big.jpg" class="nehe_velky" alt="Lekce 38" /></div>
+<p class="okolni_lekce"><a href="tut_37.php">&lt;&lt;&lt; Lekce 37</a> | <a href="tut_39.php">Lekce 39 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">06.05.2005 - 16:54:04</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_38.php&j=0">Unhandled exeption</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Klokotik</div>
+<div class="d_o_datumcas">21.09.2007 - 22:34:03</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_38.php&j=7">Re: Unhandled exeption</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">08.05.2005 - 08:28:42</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_38.php&j=1">Bila textura</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">09.05.2005 - 14:08:27</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_38.php&j=2">Re: Bila textura</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">09.05.2005 - 20:24:45</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_38.php&j=3">Re: Bila textura</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">09.05.2005 - 21:22:53</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_38.php&j=4">Re: Bila textura</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">10.05.2005 - 07:15:57</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_38.php&j=5">Re: Bila textura</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Daniel</div>
+<div class="d_o_datumcas">29.08.2007 - 11:54:26</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_38.php&j=6">Jak přidat BMP v delfi?</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_38.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

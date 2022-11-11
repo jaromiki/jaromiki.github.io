@@ -1,0 +1,264 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>This library is based on Mike Lischke'</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p><font size="5" face="Arial"><strong>GLScene - v0.6</strong></font></p>
+
+<p>Maintained by <a href="mailto:egrange@infonie.fr">Eric Grange</a>
+- This library is based on <a
+href="mailto:public@lischke-online.de">Mike Lischke</a>'s <a
+href="http://www.lischke-online.de/">GLScene</a>.</p>
+
+<p>GLScene is an OpenGL based 3D library for Delphi. It provides
+visual components and objects allowing description and rendering
+of 3D scenes in an easy, no-hassle, yet powerfull manner.</p>
+
+<p>GLScene is not just an OpenGL wrapper or utility library, it
+has grown to become a set of founding classes for a generic 3D
+engine with Rapid Application Development in mind. GLScene allows
+you to quickly design and render 3D scenes without having to
+learn the intricacies of OpenGL, if you know how to design a
+TForm, you'll easily master the basic operations of TGLScene.
+GLScene comes with a set of demos showcasing the ease of use, and
+demonstrating RAD wasn't done at the expense of CPU horsepower.</p>
+
+<p>GLScene is released to the public as open-source under <a
+href="http://www.mozilla.org/mpl">Mozilla Public Licence</a>.</p>
+
+<p><font size="2"><u>Note for users of previous versions :</u>
+the version released here has been altered quite heavily, most
+classes and components are still here, but most have been renamed
+or rearranged and this package is not an incremental improvement
+(neither is it a complete rewrite) : projects designed with
+previous versions won't compile with this one, and you'll
+probably have to manually modify DFMs to make them work. However,
+this version is more stable, faster, uses less memory and has
+more to offer. And since previous versions won't be supported, it
+is highly recommended to migrate your applications. Incremental
+compatibility will be provided from this point on.</font></p>
+
+<p>'nuff with the commercials, let's get down to the features :</p>
+
+<p><font size="2"><b>GLScene </b><em><b>Changes since v0.5.0 </b></em><b>:</b>
+(in no particular order)</font></p>
+
+<ul>
+    <li><font size="2">Requires Delphi 5 (may compile under D4,
+        but experts make use of D5's TFrame)</font></li>
+    <li><font size="2">Fixed (all ?) crashes (most came from bugs
+        in experts and OpenGL12.pas, other buggy objects have
+        been deactivated)</font></li>
+    <li><font size="2">Added a bunch of demos (heavily commented,
+        tutorial-style)</font></li>
+    <li><font size="2">Added new experts (color editor, material
+        editor, material preview, vector editor, material library
+        picker)</font></li>
+    <li><font size="2">Added and optimized many Geometry function
+        (mainly through better parameters support)</font></li>
+    <li><font size="2">Changed GLScene main objects names so they
+        begin with &quot;TGL&quot;</font></li>
+    <li><font size="2">Significantly reduced dependencies, EXE
+        size is now vastly reduced for a bare-bones GLScene
+        application</font></li>
+    <li><font size="2">Massive optimization of what is stored in
+        the DFMs (smaller EXEs)</font></li>
+    <li><font size="2">Fixed texturing (PersistentImage), added
+        full-polymorphic texture image data support</font></li>
+    <li><font size="2">Vector file objects, Joystick support have
+        been moved to eparate units</font></li>
+    <li><font size="2">Added &quot;Target&quot; to TGLCamera so
+        you can point your camera to a particular object, also
+        added utility functions for moving a camera around its
+        target</font></li>
+    <li><font size="2">New objects : TDummyCube (for use as
+        camera target or composite object handler), TSprite (a
+        &quot;plane&quot; that is always facing the camera, for
+        use in particle systems, special effects or doom-like 2D
+        monsters :)</font></li>
+    <li><font size="2">Added AbsolutePosition calculation
+        functions, and depth-sorting for blended objects
+        rendering</font></li>
+    <li><font size="2">TSpaceText now allows for low-quality 3D
+        text (reduced poly count)</font></li>
+    <li><font size="2">Added ability to save/load scene or
+        material library to a file</font></li>
+    <li><font size="2">Added ProgressBy event chain</font></li>
+    <li><font size="2">...and many more (see headers in pascal
+        files for more details)</font></li>
+</ul>
+
+<p><b>GLScene </b><em><b>Available</b></em><b> Features:</b> </p>
+
+<ul>
+    <li>Scene description <ul>
+            <li>hierarchical objects structure, with as many
+                objects as memory allows</li>
+            <li>interactive scene management (numerous Delphi
+                experts)</li>
+            <li>easy to use rotation and movement functions for
+                each object</li>
+            <li>predefined objects (all standards from cube to
+                teapot to sprite), easily extendable</li>
+            <li>structural object (dummy cube) for manageing
+                composite objects</li>
+            <li>camera and light objects that can be used
+                anywhere in a scene objects hierarchy</li>
+            <li>3D Studio file import with automatic and precise
+                normal vector calculation (using the given
+                smoothing groups of the file) and texture
+                coordinate import </li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+    <li>Materials <ul>
+            <li>easy to use, optimized, material object </li>
+            <li>material library to share or reuse materials</li>
+            <li>ambient, diffuse, emission, specular and
+                shininess support</li>
+            <li>support of blending modes (transparency, additive...)</li>
+            <li>alpha-channel auto-generation</li>
+            <li>polymorphic image support for texturing (allows
+                any formats* as well as procedural textures),
+                easily extendable</li>
+            <li>more than 150 predefined colors like
+                clrCornflowerBlue or clrCoolCopper, easily
+                extendable </li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+    <li>Rendering <ul>
+            <li>automatically uses the hardware OpenGL driver if
+                possible</li>
+            <li>a well working camera model using focal length
+                and targeting</li>
+            <li>multiple viewers for one or more scenes, easy
+                change of view through camera selection</li>
+            <li>fog and depth-of-view support</li>
+            <li>render to a file, a bitmap or to the printer in
+                any color and pixel resolution </li>
+            <li>full screen support with dynamic resolution
+                changes </li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+    <li>Interface <ul>
+            <li>picking objects</li>
+            <li>helper functions for camera movements</li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+    <li>Utilities <ul>
+            <li>optimized geometry functions and utilities (vector,
+                quaternion and matrix...)</li>
+            <li>precise frame speed determination </li>
+            <li>asynchronous timer (multi-threaded)</li>
+            <li>joystick support</li>
+        </ul>
+    </li>
+</ul>
+
+<p><b>GLScene </b><em><b>Planned</b></em><b> Features:</b> (in no
+particular order, dunno yet which ones will be actually worked on)</p>
+
+<ul>
+    <li><font size="2">Further EXE-size and memory use reductions,
+        faster geometry, faster OpenGL calls</font></li>
+    <li><font size="2">Particle-systems management components</font></li>
+    <li><font size="2">&quot;Behaviours&quot; or &quot;Mutators&quot;
+        (things that do things on objects)</font></li>
+    <li><font size="2">More demos, as well as more complex
+        samples</font></li>
+    <li><font size="2">Multi-texturing, texture movements,
+        deformations and animations</font></li>
+    <li><font size="2">Set of built-in procedural textures (plasma,
+        fire, sky, marble, wood...)</font></li>
+    <li><font size="2">Composite objects with automatic Delphi
+        IDE expert support (ala Poser4 morphs)</font></li>
+    <li><font size="2">Support for more vector file formats as
+        well as 3DS texture mapping (only coordinates are
+        imported now)</font></li>
+    <li><font size="2">Support for reflections and mirror effects</font></li>
+    <li><font size="2">Light maps, shadow maps</font></li>
+    <li><font size="2">Additionnal objects (landscape,
+        environments...)</font></li>
+    <li><font size="2">Support for revolution objects (described
+        by a curve and an axis)</font></li>
+    <li><font size="2">Terrain and height-fields objects,
+        progressive fractal terrain refinement terrain</font></li>
+    <li><font size="2">After-effects (lens-flares, rain, snow...)</font></li>
+    <li><font size="2">Collision detection</font></li>
+    <li><font size="2">Physics (inertia, gravity, friction,
+        bouncing...)</font></li>
+    <li><font size="2">Skeletal animation, skinning</font></li>
+    <li><font size="2">Bezier and Nurbs (curves and surfaces)</font></li>
+    <li><font size="2">Trajectory following, terrain flyover,
+        &quot;drop on floor&quot;</font></li>
+    <li><font size="2">Volumetric fog</font></li>
+    <li><font size="2">Volumetric shadows</font></li>
+    <li><font size="2">&quot;Automatic&quot; tesselation</font></li>
+    <li><font size="2">Environmental audio (3D) sound support (maybe
+        through </font><a href="http://openal.org"><font size="2">OpenAL</font></a><font
+        size="2"> if it reaches stability)</font></li>
+    <li><font size="2">....and many more (that may be implemented
+        sooner than those :)</font></li>
+</ul>
+
+<p><b>GLScene </b><em><b>Known Bugs</b></em><b>:</b> (in no
+particular order)</p>
+
+<ul>
+    <li>GLScene crashes when a TGLSceneViewer is visible and
+        resolution is changed with &quot;QuickRes&quot; or the
+        Windows Display pannel.</li>
+    <li>OpenGL library won't be unbinded after ending an
+        application from Delphi's debugger, causing some memory
+        loss under Win9x (no pb with NT).</li>
+    <li>GLScene.WindowOptions ignores some of the options (I have
+        not really tested this code yet).</li>
+    <li>Moving a camera's target, or a camera's parent will not
+        automatically update the TGLSceneViewer, maybe not really
+        a bug since all the ways I found around this would gobble
+        up zillions of cpu-cycles in complex scenes...</li>
+    <li>Won't run on SGI's Windows software implementation
+        (&quot;opengl.dll&quot;).</li>
+</ul>
+
+<p><b>OpenGL ICD drivers </b><em><b>Known Bugs</b></em><b>:</b> (known
+to me 8)</p>
+
+<ul>
+    <li>NT4 software OpenGL won't honour some resize requests,
+        clinging to a 640x480 resolution</li>
+    <li>3Dfx ICD has at least one hard-coded break point (don't
+        worry if Delphi's debugger sometimes stops in the middle
+        of nowhere, just continue running the code, it won't
+        happen with a standalone EXE)</li>
+    <li>3Dfx ICD has a tendency to accumulate access-violations (and
+        not intercept them fast enough, don't worry if Delphi's
+        debugger sometimes stops with a &quot;too much unhandled
+        access violations&quot; message, just continue running
+        the code, it won't happen with a standalone EXE)</li>
+</ul>
+
+<p><font size="2">Notes :</font></p>
+
+<p><font size="2">* Delphi 5 basicly supports BMP, WMF, EMF, ICO
+and JPG, you can add GraphicEx to support TIF, BW, RGB, PIC, TGA,
+VST, ICB, VDA, WIN, and use RxLib for instance to support GIF.</font></p>
+</body>
+</html>

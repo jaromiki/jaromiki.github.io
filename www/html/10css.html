@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+  	<meta name="Content-language" content="sk">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+Doteraz sme ukazovali ako možno pomocou parametrov presne nastaviť, ako sa má príslušný tag realizovať na stránke. V súčasnosti je však už tento spôsob tvorby html stránokna ústupe a je možné, že do budúcna parametre tagov zmiznú úplne.
+Nastavenie vlastností tagov začali preberať štýly.
+<dl><dt>Spôsoby vkladania štýlov
+	<dd><ul><li>Zápis do taku pomocou atribútu style
+			<div>Tento spôsob sme používali, lebo nie všetky vlastnosti tagu sa dali nastaviť priamo pomocou atribútov
+			<br>(Napr. podfarnenie tagu Hn)
+			<br>Takto nastavené vlastnosti platia pre jeden tag
+			</div>
+			<li>Zápis v hlavičke html dokumentu pomocou tagou &lt;STYLE&gt; ... &lt;/STYLE&gt;
+			<div>Príklad
+			<br>&lt;STYLE&gt;
+			<br>H2	{background:silver;}
+			<br>&lt;/STYLE&gt;
+			<hr>
+			Týmto postupom sme predpísali, že všetky tagy H2 použité v dokumente majú implicitne nastavené strieborné 
+			podfarbenie. Keďže na svojich stránkach sa každý snaží o jednotný vzhľad, získame týmto väčšinou kratší kód
+			a zjednoduší sa písanie stránok.
+			</div>
+			<li>Externý súbor
+			<div style="margin-left:20">ide o ďalšie vylepšenie vkladania do hlavičky súboru. Rozsiahlejšie dokumenty mali v tagu STYLE dosť veľa 
+			riadkov, čo jednak predlžovalo súbor a znepríjemňovalo písanie - autor musel odrolovať značnú časť textov, aby
+			sa prebil ku časti BODY.
+			<br>Riadky, ktoré by mali byť umiestnené v tagu STYLE umiesnime do externého súboru (bez akýchkoľvek tagov)
+			názov i koncovka može byť ľubovoľná (i keď je zvykom dávať koncovku css). Aplikáciu týchto riadkov v dokumente 
+			urobí nasledovný tag:
+			<br>&lt;link rel=”stylesheet” type=”text/css” href=”xxx.css”&gt;
+			</div>
+		</ul>
+		<dt>Syntax zápisu pravidla
+		<dd>Syntax zápisu pravidiel je nasledovná
+			<br>selektor<sub>1</sub> &nbsp; &nbsp; {pravidlo<sub>1</sub>; pravidlo<sub>2</sub>; ...pravidlo<sub>n</sub>}	
+			<br>selektor<sub>2</sub> &nbsp; &nbsp; {pravidlo<sub>1</sub>; pravidlo<sub>2</sub>; ...pravidlo<sub>n</sub>}	
+			<hr>
+			<dl><dt>Selektor
+				<dd>Selektorom môže byť
+					<ul><li>názov tagu
+							<div>Napr. div, H3, Table, Ul, img
+							<br>Pravidlá uvedené takto zadanému selektoru nastavia vlastnosti uvedené v pravidlách v celom
+							dokumente 
+							</div>
+						<li>#ID-prvku
+							<div>Napr. #obsah, #cervene ...  
+							 Každý tag vložený v dokumente môže dostať meno, ktoré je jedinečné pre celý dokument a na ktoré
+							 sa môžme odvolávať napr. v JavaScriptoch, pomocou parametra ID="meno". Aby prehliadať vedel, že
+							 ideme v štýloch spomenúť ID-meno a nie tag musíme pred zadané meno vložiť znak <b>#</b>.
+							 <br>Napr. #cervene&nbsp; &nbsp; {color:red;}
+							 <br>jeden Prvok na stranke, ktor7 má zadané ID ="cervene" bude mať nastavenú implicitnú farbu
+							 červenú.   
+							<div>
+						<li>.trieda
+							<div>
+							Každý prvok môže mať nastavený parameter class="meno", oproti ID názov triedy nemusí byť
+							jedinečný, môžem vytvoriť vlastnosti pre triedu <b>cerveny</b>, kde nastavím vlastnosť
+							color="red" a potom všetky prvky, ktor0 bud[ mať class="cervene" budú mať nastavené písmo 
+							červené
+							<br>Napr.
+							<br>.cervene &nbsp; &nbsp; {color:red;}
+							<br>.oramovane &nbsp; &nbsp; {border-width:3;border-style:outset;}
+							<br>
+							</div>
+						<li>tag.trieda
+							<div>
+							Podobne ako predoslé ale platnosť je len na uvedý tag, ktorý má uvedenú triedu parametrom class	
+							</div>	
+						<li>tag tag
+							<div>
+							<br>Napr. 
+							<br>div div {margin-left:15;}
+							<br>Ak je div vnorený v div tak jeho ľavý okraj bude odsunutý o 15
+							</div>
+						<li>tag .trieda	
+							<div>
+							Napr. 
+							<br>div .cervene {color:black;}
+							<br>Ak je nejaky prvok triedy cervene vnorený do div tak jeho farba písma bude čierna
+							</div>
+						<li>zoznam
+							<div>
+							ak chceme pravidá aplikovať na viac tagov (prvkov) naraz môžme ich vymenovať a oddeliť čiarkou
+							<br>Napr. 
+							H1,H2,H3,H4,.cervene &nbsp; &nbsp; {color:red;}
+							</div>	
+						<li>*
+							<div>
+							Napr.
+							<br>div * &nbsp; &nbsp; {margin-left:15;}
+							<br>*  &nbsp; &nbsp; {font-family:serif;}
+							<br>Všetky prvky vnorené v tagu div budú zľava odsadené
+							<br>všetky tagy majú nastavené základné písmo serif=Times
+							žolíkom <b>*</b> môžme zadať platnosť pre všetky
+							</div>	
+						<li>pseudoelementy
+							<ul><li>a:hover ... keď sme myšou nad tagom A
+								<li>a:link ... nenavštívený odkaz
+								<li>a:visited ... navštívený odkaz
+								<li>a:active ... sme nad odkazom klávesnicou (pomocou tab)
+							</ul>
+							Napr.
+							<br>a:visited a:link &nbsp; &nbsp; {color:black; text-decoration:none}
+							<br>a:active a:hover &nbsp; &nbsp; {color:blue; text-decoration: underline}
+							<br>prvý riadok zabezpečí aby odkazy boli nepodčiarknuté a čierne a druhý zabezpečí,
+							<br>že keď nane dôjdeme tak omodrejú a podčiarknú sa	
+					</ul>
+				<dt>pravidlá
+				<dd>pravidlá zapisujeme v ozdobných zátvorkách <b>{}</b> a oddeľujeme ich od seba bodkočiarkou
+					<br>(podobne ako sme ich zadávali v parametri style nejakého fagu)		 	
+</body>
+</html>

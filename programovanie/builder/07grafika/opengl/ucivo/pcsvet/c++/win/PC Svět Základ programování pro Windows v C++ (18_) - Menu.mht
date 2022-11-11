@@ -1,0 +1,203 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_pro_Windows_v_C++?=
+	=?windows-1250?Q?_=2818.=29_-_Menu?=
+Date: Thu, 12 Jul 2007 10:09:55 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1732
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED pro =
+Windows v C++ (18.) - Menu</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED pro Windows v C++ (18.) - Menu</H2>
+<H4>Jak pracovat s dal=9A=EDm, =9Airoce vyu=9Eiteln=FDm, prvkem Win32 =
+aplikac=ED</H4>
+<HR color=3D#777777 SIZE=3D1>
+Menu neboli strukturovan=E9 nab=EDdky jsou velmi vhodn=FDm prvkem pro =
+sdru=9Eov=E1n=ED=20
+p=F8=EDkaz=F9 do souvisej=EDc=EDch skupin. Pou=9E=EDv=E1n=ED t=ECchto =
+nab=EDdek je pro u=9Eivatele velmi=20
+jednoduch=E9 a intuitivn=ED, m=ECn=EC jednoduch=E9 je to ji=9E pro =
+program=E1tora. Pry=E8 jsou=20
+ale doby, kdy si program=E1to=F8i r=F9zn=E1 menu kreslili sami. Dnes to =
+za n=EC ud=ECl=E1 v=9Ae=20
+Windows API.
+<P>Vytvo=F8it menu pro v=E1=9A program m=F9=9Eete dv=ECma zp=F9soby. =
+Prvn=ED z nich je pou=9Eit=ED=20
+zdroj=F9. Spo=E8=EDv=E1 v tom, =9Ee program=E1tor k vytvo=F8en=ED =
+hierarchie p=F8=EDkaz=F9 pou=9Eije=20
+n=ECkter=FD z editor=F9 zdroj=F9 (nap=F8. freewarov=FD Weditres nebo =
+Microsoft AppStudio).=20
+Takto vytvo=F8en=E9 menu je mo=9En=E9 na=E8=EDst funkc=ED LoadMenu, =
+kter=E1 m=E1 pouze dva=20
+parametry a to handle na instanci aplikace a n=E1zev zdroje menu.</P>
+<P>Druh=FD zp=F9sob je slo=9Eit=ECj=9A=ED, ale flexibiln=ECj=9A=ED, a =
+t=EDm je pou=9Eit=ED funkc=ED=20
+CreateMenu, AppendMenu, CreatePopupMenu, DestroyMenu, InsertMenu, =
+SetMenu a=20
+InsertMenuItem. Tento zp=F9sob m=E1 tak=E9 v=FDhodu v tom, =9Ee v=E1=9A =
+program nebude mo=9En=E9=20
+upravovat r=F9zn=FDmi editory zdroj=F9 jako je nap=F8. Resource =
+Hacker.</P>
+<P>Na=E8ten=E9 nebo vytvo=F8en=E9 menu je pak mo=9En=E9 p=F8ichytit k =
+oknu funkc=ED SetMenu nebo=20
+jej m=F9=9Eeme nechat vysunout na libovoln=E9 pozici funkc=ED =
+TrackPopupMenu p=F8=EDp.=20
+TrackPopupMenuEx. Pokud specifikujeme menu p=F8i tvorb=EC okna funkc=ED =
+CreateWindow=20
+nebo CreateWindowEx, nemus=EDme jej p=F8ed ukon=E8en=EDm aplikace =
+odstra=F2ovat funkc=ED=20
+DestroyWindow, pon=ECvad=9E tuto akci za n=E1s ud=EClaj=ED Windows.</P>
+<P>Nejjednodu=9A=9A=EDm postupem k vytvo=F8en=ED menu je ud=EClat jej =
+p=F8es zdroje.=20
+Jednoduch=E9 menu m=F9=9Ee vypadat takto: <FONT =
+color=3D#000077></P><PRE>1000 MENU
+BEGIN
+    POPUP "&amp;Soubor"
+        BEGIN
+        MENUITEM "&amp;Nov=FD", 1010
+        MENUITEM SEPARATOR
+        POPUP "Posledn=ED"
+            BEGIN
+            MENUITEM "Jm=E9no souboru", 1040
+            END
+        MENUITEM "&amp;Otev=F8=EDt", 1020
+        MENUITEM "Konec", 1030, INACTIVE
+        END
+    POPUP "&amp;N=E1pov=ECda"
+        BEGIN
+        MENUITEM "&amp;O programu", 1090
+        END
+END
+</PRE></FONT>Jednoduch=FDm z=E1pisem lze jednodu=9Ae doc=EDlit =
+p=ECkn=E9ho menu. Mnoh=E9=20
+editory nab=EDz=ED i mo=9Enost n=E1hledu/uk=E1zky. Syntaxe je =
+jednoduch=E1. Polo=9Eku uv=E1d=ED=20
+kl=ED=E8ov=E9 slovo MENUITEM nebo POPUP, jeho=9E polo=9Eky mus=ED b=FDt =
+uzav=F8eny mezi slovy=20
+BEGIN a END, povoleny jsou i znaky <FONT color=3D#000077>{</FONT> a =
+<FONT=20
+color=3D#000077>}</FONT>. N=E1sleduje v uvozovk=E1ch n=E1zev polo=9Eky, =
+ve kter=E9m uveden=EDm=20
+znaku &amp; (ampersand) p=F8ed libovoln=FDm p=EDsmenem doc=EDl=EDme =
+aktivity dan=E9 polo=9Eky=20
+na stisk kombinace kl=E1vesy Alt a dan=E9ho p=EDsmena a toto p=EDsmeno =
+je vykresleno=20
+podtr=9Een=E9. Pot=F8ebujeme-li pou=9E=EDt v nab=EDdce znak &amp;, =
+sta=E8=ED jej zdvojit. Za=20
+n=E1zvem polo=9Eky n=E1sleduje identifika=E8n=ED =E8=EDslo, kter=E9 je =
+posl=E1no procedu=F8e zpr=E1v=20
+mate=F8sk=E9ho okna v r=E1mci zpr=E1vy WM_COMMAND v p=F8=EDpad=EC, =9Ee =
+je dan=E1 nab=EDdka vybr=E1na.=20
+Za t=EDmto =E8=EDslem m=F9=9Ee uv=E9st stav polo=9Eky uveden=EDm jednoho =
+z kl=ED=E8ov=FDch slov:<BR>
+<UL>
+  <LI>INACTIVE - polo=9Eka nab=EDdky nereaguje na kliknut=ED=20
+  <LI>GRAYED - polo=9Eka je nereaguje a je vykreslena v neaktivn=EDm =
+stavu=20
+  <LI>CHECKED - po lev=E9 stran=EC nab=EDdky je u dan=E9 polo=9Eky =
+zobrazeno za=9Akrtnut=ED.=20
+  <LI>MENUBREAK - od dan=E9 polo=9Eky v=E8etn=EC, jsou dal=9A=ED =
+polo=9Eky vypisov=E1ny v dal=9A=EDm=20
+  sloupci=20
+  <LI>MENUBARBREAK - jako MENUBREAK, sloupce jsou odd=ECleny svislou =
+=E8arou=20
+</LI></UL>Pokud m=EDsto n=E1zvu polo=9Eky uvedete kl=ED=E8ov=E9 slovo =
+SEPARATOR, z=EDsk=E1te t=EDm=20
+horizont=E1ln=ED odd=EClova=E8.=20
+<P><FONT color=3D#0033cc><B>Pou=9Eit=ED menu</B></FONT></P>
+<P>M=E1me-li vytvo=F8eno menu pro na=9Ai aplikaci, m=F9=9Eeme jej nyn=ED =
+zprovoznit. Abychom=20
+mohli menu pou=9E=EDt, budeme pot=F8ebovat prom=ECnnou typu HMENU, do =
+n=ED=9E funkc=ED=20
+LoadMenu na=E8teme dan=E9 menu. Pokud jste pou=9Eili modifikaci =
+p=F8=EDkladu v=FD=9Ae, budete=20
+muset pou=9E=EDt tento tvar:<FONT color=3D#000077></P><PRE>HMENU hMenu1 =
+=3D LoadMenu( hThisInstance, MAKEINTRESOURCE(1000) );
+</PRE></FONT>V p=F8=EDpad=EC, =9Ee m=EDsto =E8=EDslice 1000 m=E1te =
+pou=9Eit n=ECjak=FD =F8et=ECzec, dejme=20
+tomu <FONT color=3D#000077>HlavniMenu</FONT>, sta=E8=ED pou=9E=EDt tento =
+tvar:<FONT=20
+color=3D#000077><PRE>HMENU hMenu1 =3D LoadMenu( hThisInstance, =
+"HlavniMenu" );
+</PRE></FONT>B=EC=9En=EC se menu p=F8ipojuje k oknu p=F8ed=E1n=EDm =
+parametrem funkce=20
+CreateWindow nebo CreateWindowEx, kter=E9 n=E1m automaticky =
+zabezpe=E8=ED tak=E9 uvoln=ECn=ED=20
+pou=9Eit=E9 pam=ECti. K p=F8i=F8azen=ED menu oknu m=F9=9Eeme tak=E9 =
+pou=9E=EDt funkci SetMenu, kter=E1=20
+m=E1 dva parametry (handle na okno a handle na menu) nap=F8=EDklad =
+takto: <FONT=20
+color=3D#000077><PRE>SetMenu( hHlavniOkno, hMenu1 );
+</PRE></FONT>Nyn=ED pot=F8ebujeme na p=F8=EDkazy z menu reagovat. =
+P=F8esuneme se tedy do=20
+t=E9 =E8=E1sti k=F3du, kde m=E1me proceduru okna. Jak jsem ji=9E =
+v=FD=9Ae uvedl, menu pos=EDl=E1=20
+sv=E9mu mate=F8sk=E9mu oknu informace v r=E1mci zpr=E1vy WM_COMMAND. To =
+znamen=E1, =9Ee po=20
+obdr=9Een=ED zpr=E1vy WM_COMMAND jednodu=9Ae porovn=E1me ID prvku, =
+kter=FD zpr=E1vu poslal=20
+(LOWORD(wParam)), se zn=E1m=FDmi identifik=E1tory polo=9Eek menu a dle =
+toho reagovat.=20
+Reakce na v=FD=9Ae uveden=E9 menu by tedy mohla prob=EDhat n=ECjak =
+takto: <FONT=20
+color=3D#000077><PRE>switch(Message) {
+ . . .
+ case WM_COMMAND:
+  . . .
+  switch(LOWORD(wParam)) {
+   case 1010:
+    // Zvolena polo=9Eka "Nov=FD soubor"
+   break;
+   case 1020:
+    // Polo=9Eka "Otev=F8=EDt"
+   break;
+
+  // a tak d=E1le...
+
+  }
+  . . .
+ break;
+ . . .
+}
+</PRE></FONT>P=F8esto=9Ee jsem n=ECco m=E1lo o nab=EDdk=E1ch zm=EDnil v =
+d=EDle 7 a stru=E8nou=20
+uk=E1zku pou=9Eit=ED jste mohli nal=E9zt v =E8=E1sti 8, nebylo to =
+zdaleka v=9Ae, co je mo=9En=E9 s=20
+menu prov=E1d=ECt. Jak tvo=F8it a upravovat menu dynamicky v pr=F9b=EChu =
+b=EChu aplikace a=20
+jak vysouvat libovoln=E9 menu na libovoln=E9m m=EDst=EC aplikace, se =
+dozv=EDte p=F8=ED=9At=EC.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:09:41 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

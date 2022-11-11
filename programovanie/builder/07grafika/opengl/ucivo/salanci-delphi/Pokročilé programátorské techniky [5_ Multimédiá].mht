@@ -1,0 +1,722 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?Pokro=E8il=E9_program=E1torsk=E9_techniky_=5B5._Mult?=
+	=?windows-1250?Q?im=E9di=E1=5D?=
+Date: Thu, 31 May 2007 16:20:48 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_002D_01C7A39F.A61E0020"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://edi.fmph.uniba.sk/salanci/PPT/05/
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Pokro=E8il=E9 program=E1torsk=E9 techniky [5. =
+Multim=E9di=E1]</TITLE>
+<META http-equiv=3DContent-Language content=3Dsk>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1250"><LINK=20
+href=3D"http://edi.fmph.uniba.sk/salanci/PPT/styles.css" type=3Dtext/css =
+
+rel=3Dstylesheet>
+<STYLE fprolloverstyle>A:hover {
+	COLOR: #ff0000
+}
+</STYLE>
+
+<SCRIPT language=3Djavascript><!--
+
+function Flip(Name, State) {
+  document.images[Name].src=3DState;
+}
+
+--></SCRIPT>
+
+<META content=3D"MSHTML 6.00.6000.16441" name=3DGENERATOR></HEAD>
+<BODY>
+<TABLE cellSpacing=3D0 cellPadding=3D0 align=3Dright border=3D0>
+  <TBODY>
+  <TR>
+    <TD width=3D20><A=20
+      onmouseover=3D"Flip('_Hlavna', '../../Zahlavie/Hlavna.b.png')"=20
+      onmouseout=3D"Flip('_Hlavna', '../../Zahlavie/Hlavna.a.png')"=20
+      href=3D"http://edi.fmph.uniba.sk/salanci/index.html"><IMG =
+height=3D20=20
+      alt=3D"Domovsk=E1 str=E1nka"=20
+      src=3D"http://edi.fmph.uniba.sk/salanci/Zahlavie/Hlavna.a.png" =
+width=3D20=20
+      border=3D0 name=3D_Hlavna></A></TD>
+    <TD width=3D20><A onmouseover=3D"Flip('_C', =
+'../../Zahlavie/C.b.png')"=20
+      onmouseout=3D"Flip('_C', '../../Zahlavie/C.a.png')"=20
+      href=3D"http://edi.fmph.uniba.sk/salanci/PPT/Index.html"><IMG =
+height=3D20=20
+      alt=3D"Programovanie v C++"=20
+      src=3D"http://edi.fmph.uniba.sk/salanci/Zahlavie/C.a.png" =
+width=3D20 border=3D0=20
+      name=3D_C></A></TD>
+    <TD width=3D20><A=20
+      onmouseover=3D"Flip('_Kontakt', '../../Zahlavie/Kontakt.b.png')"=20
+      onmouseout=3D"Flip('_Kontakt', '../../Zahlavie/Kontakt.a.png')"=20
+      href=3D"http://edi.fmph.uniba.sk/salanci/Kontakt/Index.html"><IMG =
+height=3D20=20
+      alt=3DKontakt =
+src=3D"http://edi.fmph.uniba.sk/salanci/Zahlavie/Kontakt.a.png"=20
+      width=3D20 border=3D0 =
+name=3D_Kontakt></A></TD></TR></TBODY></TABLE>
+<TABLE class=3DTitle>
+  <TBODY>
+  <TR>
+    <TD width=3D20>&nbsp;</TD>
+    <TD width=3D400=20
+    =
+background=3Dhttp://edi.fmph.uniba.sk/salanci/Zahlavie/HCiaraModra.png>5.=
+=20
+      Multim=E9di=E1</TD></TR></TBODY></TABLE>
+<P>Na predn=E1=9Ake:</P>
+<UL>
+  <LI>multim=E9di=E1 vo Windows a Delphi,=20
+  <LI>tvorba komponentu pre pr=E1cu so zvukom,=20
+  <LI>algoritmick=E9 generovanie zvuku na n=EDzkej =FArovni. </LI></UL>
+<H2>=DAvod</H2>
+<P>Pre pr=E1cu s multim=E9diami (zvuk, MIDI, video, CD, DVD) m=E1me vo =
+Windows k=20
+dispoz=EDci=ED nieko=BEko prostriedkov:</P>
+<UL>
+  <LI>pomocou kni=9En=EDc DirectX,=20
+  <LI>volanie funkci=ED, ktor=E9 pracuj=FA s konkr=E9tnym zariaden=EDm,=20
+  <LI>pomocou pr=EDkazov MCI (Media Control Interface). </LI></UL>
+<P>Budeme vyu=9E=EDva=9D funkcie z kni=9Enice<SPAN class=3Dprogram> =
+MMSystem</SPAN>.</P>
+<H2>Prehr=E1vanie<SPAN class=3Dprogram> wav </SPAN>s=FAborov</H2>
+<P>Funkcie<SPAN class=3Dprogram> PlaySound </SPAN>je =
+vysoko=FArov=F2ov=E1 funkcia:</P>
+<P><SPAN class=3Dprogram>&nbsp; PlaySound('C:\Windows\Media\chord.wav', =
+0,=20
+SND_SYNC);<BR>&nbsp; PlaySound('C:\Windows\Media\chimes.wav', 0,=20
+SND_ASYNC);</SPAN></P>
+<P>Sp=F4sob prehr=E1vania zvuku ur=E8uje posledn=FD parameter =
+funkcie<SPAN=20
+class=3Dprogram> PlaySound</SPAN>:<BR><SPAN class=3Dprogram>&nbsp;=20
+SND_SYNC&nbsp;&nbsp; </SPAN>...<SPAN class=3Dprogram> </SPAN><SPAN=20
+class=3Dterm>synchr=F3nne</SPAN> prehratie (pr=EDkaz =E8ak=E1, k=FDm sa =
+zvuk dohr=E1),<SPAN=20
+class=3Dprogram><BR>&nbsp; SND_ASYNC&nbsp; </SPAN>...<SPAN =
+class=3Dprogram>=20
+</SPAN><SPAN class=3Dterm>asynchr=F3nne</SPAN> prehratie (pr=EDkaz =
+spust=ED prehr=E1vanie=20
+zvuku, a pritom sa program =EFalej vykon=E1va).</P>
+<P>Funkcia sa d=E1 pou=9Ei=9D aj na prehr=E1vanie zvukov, ktor=E9 s=FA =
+skompilovan=E9 v<SPAN=20
+class=3Dprogram> exe</SPAN>:</P>
+<OL>
+  <LI>Na disku mus=EDme ma=9D ulo=9Een=FD s=FAbor so zvukom =
+napr=EDklad,<SPAN class=3Dprogram>=20
+  C:\WINDOWS\Media\chord.wav</SPAN>.=20
+  <LI>Vytvor=EDme textov=FD resource s=FAbor, napr=EDkaz<SPAN =
+class=3Dprogram> pokus.rc=20
+  </SPAN>s tak=FDmto obsahom:<BR><SPAN class=3Dprogram>&nbsp; ZVUK WAVE=20
+  "C:\WINDOWS\Media\chord.wav"</SPAN>=20
+  <LI>Skompilujeme<SPAN class=3Dprogram> pokus.rc =
+</SPAN>pr=EDkazom:<SPAN=20
+  class=3Dprogram><BR>&nbsp; brcc32 pokus.rc</SPAN>=20
+  <LI>Po kompil=E1cii vznikne na disku vznikne s=FAbor<SPAN =
+class=3Dprogram>=20
+  pokus.res</SPAN>. </LI></OL>
+<P>Pou=9Eitie v Delphi:</P>
+<TABLE class=3DProgram id=3Dtable1 borderColorDark=3D#000088=20
+  borderColorLight=3D#000088><TBODY>
+  <TR>
+    <TD width=3D"100%"><SPAN class=3Dreserverword>unit </SPAN><SPAN=20
+      class=3Dprogram>Unit1;<BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>interface</SPAN><SPAN=20
+      class=3Dprogram><BR><BR></SPAN><SPAN =
+class=3Dreserverword>uses</SPAN><SPAN=20
+      class=3Dprogram><BR>&nbsp; Windows, Messages, SysUtils, Classes, =
+Graphics,=20
+      Controls, Forms, Dialogs, StdCtrls,<BR>&nbsp; <FONT=20
+      color=3D#0044ff>MMSystem</FONT>;<BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>type</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+TForm1 =3D=20
+      </SPAN><SPAN class=3Dreserverword>class</SPAN><SPAN=20
+      class=3Dprogram>(TForm)<BR>&nbsp;&nbsp;&nbsp; Button1:=20
+      TButton;<BR>&nbsp;&nbsp;&nbsp; </SPAN><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      Button1Click(Sender: TObject);<BR></SPAN><SPAN =
+class=3Dreserverword>&nbsp;=20
+      end</SPAN><SPAN class=3Dprogram>;<BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>var</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+Form1:=20
+      TForm1;<BR><BR></SPAN><SPAN =
+class=3Dreserverword>implementation</SPAN><SPAN=20
+      class=3Dprogram><BR><BR>{$R *.DFM}<BR><FONT color=3D#0044ff>{$R=20
+      pokus.res}<BR></FONT><BR></SPAN><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      TForm1.Button1Click(Sender: TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>begin</SPAN><SPAN class=3Dprogram><BR>&nbsp;=20
+      PlaySound('<FONT color=3D#0044ff>ZVUK</FONT>', HInstance, =
+SND_ASYNC=20
+      </SPAN><SPAN class=3Dreserverword>or</SPAN><SPAN class=3Dprogram>=20
+      SND_RESOURCE);<BR></SPAN><SPAN =
+class=3Dreserverword>end</SPAN><SPAN=20
+      class=3Dprogram>;<BR><BR></SPAN><SPAN =
+class=3Dreserverword>end</SPAN><SPAN=20
+      class=3Dprogram>.</SPAN></TD></TR></TBODY></TABLE>
+<P>Program na =FApravu zvukov=FDch s=FAborov: <A=20
+href=3D"http://audacity.sourceforge.net/">http://audacity.sourceforge.net=
+/</A>.</P>
+<H2>Multim=E9di=E1</H2>
+<P>Kni=9Enica MCI obsahuje funkcie a =FAdajov=E9 =9Atrukt=FAry pre =
+pr=E1cu multim=E9diami a=20
+multimedi=E1lnymi zariadeniami. Programy m=F4=9Eu komunikova=9D s =
+kni=9Enicou nieko=BEk=FDmi=20
+sp=F4sobmi :</P>
+<UL>
+  <LI>pomocou spr=E1v - funkcia<SPAN class=3Dprogram>=20
+  mciSendCommand</SPAN>:<BR><SPAN class=3Dprogram>&nbsp; </SPAN><SPAN=20
+  class=3Dreserverword>function </SPAN><SPAN =
+class=3Dprogram>mciSendCommand(Id:=20
+  MCIDEVICEID; Msg: Cardinal; Param1, Param2: DWORD): MCIERROR</SPAN>=20
+  <LI>pomocou textov=FDch pr=EDkazov - funkcia<SPAN class=3Dprogram>=20
+  mciSendString</SPAN>:<BR><SPAN class=3Dreserverword>&nbsp; function =
+</SPAN><SPAN=20
+  class=3Dprogram>mciSendString(Command, Result: PChar; ResultLength: =
+Cardinal;=20
+  Handle: HWND): MCIERROR</SPAN>=20
+  <LI>na vysokej =FArovni, pomocou funkcie<SPAN class=3Dprogram>=20
+  mciExecute</SPAN>:<BR><SPAN class=3Dreserverword>&nbsp; function =
+</SPAN><SPAN=20
+  class=3Dprogram>mciExecute(Command: PChar): BOOL</SPAN> </LI></UL>
+<P>Pr=EDklad pou=9Eitia funkcie<SPAN class=3Dprogram> =
+mciSendString</SPAN>:</P>
+<TABLE class=3DProgram id=3Dtable2 borderColorDark=3D#000088=20
+  borderColorLight=3D#000088><TBODY>
+  <TR>
+    <TD width=3D"100%"><SPAN class=3Dreserverword>procedure</SPAN><SPAN=20
+      class=3Dprogram> TForm1.Button1Click(Sender: =
+TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>begin<BR></SPAN><SPAN class=3Dprogram>&nbsp;=20
+      mciSendString('<FONT color=3D#0044ff>play =
+</FONT>C:\WINDOWS\clock.avi',=20
+      </SPAN><SPAN class=3Dreserverword>nil</SPAN><SPAN =
+class=3Dprogram>, 0,=20
+      0);<BR></SPAN><SPAN class=3Dreserverword>end</SPAN><SPAN=20
+      class=3Dprogram>;</SPAN></TD></TR></TBODY></TABLE>
+<P>Pr=EDklad pou=9Eitia funkcie<FONT face=3D"Courier New" size=3D2>=20
+mciExecute</FONT>:</P>
+<TABLE class=3DProgram id=3Dtable3 borderColorDark=3D#000088=20
+  borderColorLight=3D#000088><TBODY>
+  <TR>
+    <TD width=3D"100%"><SPAN class=3Dreserverword>procedure</SPAN><SPAN=20
+      class=3Dprogram> TForm1.Button1Click(Sender: =
+TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>begin<BR></SPAN><FONT face=3D"Courier New" =
+size=3D2>&nbsp;=20
+      mciExecute('<FONT color=3D#0044ff>play=20
+      </FONT>C:\Windows\Media\flourish.mid');<BR></FONT><SPAN=20
+      class=3Dreserverword>end</SPAN><SPAN=20
+class=3Dprogram>;</SPAN></TD></TR></TBODY></TABLE>
+<H2>Prehr=E1vanie videa</H2>
+<P>Delphi pre pr=E1cu s multim=E9diami s=FA zapuzdren=E9 v Delphi =
+pomocou=20
+komponentu<SPAN class=3Dprogram> TMediaPlayer</SPAN>. Komponent m=E1 pre =
+n=E1s=20
+nasleduj=FAce d=F4le=9Eit=E9 vlastnosti:<BR><SPAN class=3Dprogram>&nbsp; =
+
+FileName&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>... meno s=FAboru, ktor=FD sa =
+m=E1=20
+prehr=E1va=9D,<BR><SPAN class=3Dprogram>&nbsp; =
+Display&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+</SPAN>... ur=E8uje komponent (potomok<SPAN class=3Dprogram> =
+TWinControl</SPAN>), v=20
+ktorom sa zobrazuje video,<BR><SPAN class=3Dprogram>&nbsp; =
+DisplayRect&nbsp;=20
+</SPAN>... obd=E5=9Enik, v ktorom sa bude video zobrazova=9D,<SPAN=20
+class=3Dprogram><BR>&nbsp; AutoOpen&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>... =
+=E8i sa m=E1=20
+s=FAbor otvori=9D u=9E pri spusten=ED programu.</P>
+<P><U>Uk=E1=9Eka:</U> Vo formul=E1ri budeme ma=9D polo=9Een=FD =
+komponent<SPAN class=3Dprogram>=20
+Panel</SPAN>, v ktorom pobe=9E=ED video:</P>
+<P align=3Dcenter><IMG height=3D329=20
+src=3D"http://edi.fmph.uniba.sk/salanci/PPT/05/Video.png" width=3D377 =
+border=3D0></P>
+<P>Komponent<SPAN class=3Dprogram> MediaPlayer </SPAN>vytvor=EDme a =
+nastav=EDme po=E8as=20
+behu programu.</P>
+<TABLE class=3DProgram borderColorDark=3D#000088 =
+borderColorLight=3D#000088>
+  <TBODY>
+  <TR>
+    <TD width=3D"100%">
+      <P style=3D"MARGIN-TOP: 0pt"><SPAN =
+class=3Dreserverword>uses</SPAN><SPAN=20
+      class=3Dprogram><BR>&nbsp; </SPAN>...<SPAN class=3Dprogram>, <FONT =
+
+      color=3D#0044ff>MPlayer</FONT>;<BR><BR></SPAN>...<SPAN=20
+      class=3Dprogram><BR></SPAN><SPAN=20
+      class=3Dreserverword><BR>procedure</SPAN><SPAN class=3Dprogram>=20
+      TForm1.Button1Click(Sender: TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>var</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+MediaPlayer:=20
+      TMediaPlayer;<BR></SPAN><SPAN =
+class=3Dreserverword>begin</SPAN><SPAN=20
+      class=3Dprogram><BR>&nbsp; =
+MediaPlayer:=3DTMediaPlayer.Create(Self);<BR>&nbsp;=20
+      MediaPlayer.Parent:=3DSelf;<BR>&nbsp; =
+MediaPlayer.Visible:=3DFalse;<BR><FONT=20
+      color=3D#0044ff>&nbsp; =
+MediaPlayer.Display:=3DPanel1;<BR></FONT>&nbsp;=20
+      MediaPlayer.FileName:=3D'C:\Windows\clock.avi';<BR><FONT=20
+      color=3D#0044ff>&nbsp; </FONT><FONT=20
+      color=3D#0044ff>MediaPlayer.Open;<BR></FONT>&nbsp;=20
+      MediaPlayer.DisplayRect:=3DPanel1.ClientRect;<BR><FONT =
+color=3D#0044ff>&nbsp;=20
+      </FONT><FONT =
+color=3D#0044ff>MediaPlayer.Play;<BR></FONT></SPAN><SPAN=20
+      class=3Dreserverword>end</SPAN><SPAN=20
+class=3Dprogram>.</SPAN></P></TD></TR></TBODY></TABLE>
+<H2>Algoritmick=E9 generovanie zvuku</H2>
+<P>Uk=E1=9Eeme, ako sa daj=FA prehr=E1va=9D vlastn=E9 zvukov=E9 vzorky. =
+Zvukov=FA vzorku ulo=9E=EDme=20
+do po=BEa<SPAN class=3Dprogram> Wave</SPAN>:</P>
+<TABLE class=3DProgram id=3Dtable4 borderColorDark=3D#000088=20
+  borderColorLight=3D#000088><TBODY>
+  <TR>
+    <TD width=3D"100%"><SPAN class=3Dreserverword>uses</SPAN><SPAN=20
+      class=3Dprogram><BR>&nbsp; </SPAN>...,<SPAN class=3Dprogram>=20
+      MMSystem;<BR><BR></SPAN>...<SPAN =
+class=3Dprogram><BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>const</SPAN><SPAN class=3Dprogram><BR>&nbsp;=20
+      Frequency=3D44100;<BR>&nbsp; Length=3D10000;<BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>var</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+OutHandle:=20
+      Integer=3D0;<BR>&nbsp; Header: TWAVEHDR;<BR><FONT =
+color=3D#0044ff>&nbsp; Wave:=20
+      </FONT></SPAN><FONT color=3D#0044ff><SPAN=20
+      class=3Dreserverword>array</SPAN><SPAN =
+class=3Dprogram>[0..Length-1]=20
+      </SPAN><SPAN class=3Dreserverword>of</SPAN></FONT><SPAN =
+class=3Dprogram><FONT=20
+      color=3D#0044ff> SmallInt;<BR></FONT><BR></SPAN><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      TForm1.FormCreate(Sender: TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>var</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+Format:=20
+      TPCMWaveformat;<BR></SPAN><SPAN =
+class=3Dreserverword>begin</SPAN><SPAN=20
+      class=3Dprogram><BR>&nbsp; OutHandle:=3D0;<BR>&nbsp; Format.=20
+      wf.wFormatTag:=3DWAVE_FORMAT_PCM;<BR>&nbsp;=20
+      Format.wf.nChannels:=3D1;<BR>&nbsp;=20
+      Format.wf.nSamplesPerSec:=3DFrequency;<BR>&nbsp;=20
+      Format.wf.nAvgBytesPerSec:=3DFrequency*SizeOf(SmallInt);<BR>&nbsp; =
+
+      Format.wf.nBlockAlign:=3D2;<BR>&nbsp; =
+Format.wBitsPerSample:=3D16;<BR>&nbsp;=20
+      <FONT color=3D#0044ff>waveOutOpen</FONT>(@OutHandle, WAVE_MAPPER, =
+@Format,=20
+      0, 0, CALLBACK_NULL);<BR>&nbsp; Header.lpData:=3D@Wave;<BR>&nbsp;=20
+      Header.dwBufferLength:=3DSizeOf(Wave);<BR>&nbsp;=20
+      Header.dwBytesRecorded:=3D0;<BR>&nbsp; =
+Header.dwUser:=3D0;<BR>&nbsp;=20
+      Header.dwFlags:=3D0;<BR>&nbsp; Header.dwLoops:=3D0;<BR>&nbsp;=20
+      waveOutPrepareHeader(OutHandle, @Header, =
+SizeOf(Header));<BR></SPAN><SPAN=20
+      class=3Dreserverword>end</SPAN><SPAN =
+class=3Dprogram>;<BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      TForm1.FormDestroy(Sender: TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>begin</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+</SPAN><SPAN=20
+      class=3Dreserverword>if</SPAN><SPAN class=3Dprogram> OutHandle=3D0 =
+</SPAN><SPAN=20
+      class=3Dreserverword>then</SPAN><SPAN class=3Dprogram> =
+Exit;<BR>&nbsp;=20
+      waveOutUnprepareHeader(OutHandle, @Header, =
+SizeOf(Header));<BR>&nbsp;=20
+      <FONT =
+color=3D#0044ff>waveOutClose</FONT>(OutHandle);<BR></SPAN><SPAN=20
+      class=3Dreserverword>end</SPAN><SPAN =
+class=3Dprogram>;<BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      TForm1.Button1Click(Sender: TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>var</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+Index:=20
+      Integer;<BR></SPAN><SPAN class=3Dreserverword>begin</SPAN><SPAN=20
+      class=3Dprogram><BR></SPAN><SPAN class=3Dreserverword>&nbsp; =
+for</SPAN><SPAN=20
+      class=3Dprogram> Index:=3D0 </SPAN><SPAN =
+class=3Dreserverword>to</SPAN><SPAN=20
+      class=3Dprogram> Length-1 </SPAN><SPAN =
+class=3Dreserverword>do</SPAN><SPAN=20
+      class=3Dprogram><BR><FONT color=3D#0044ff>&nbsp;&nbsp;&nbsp;=20
+      =
+Wave[Index]:=3D</FONT>Round(32000*Sin(2*PI*Index/Frequency*523.25));&nbsp=
+;&nbsp;&nbsp;=20
+      // C5<BR><FONT color=3D#0044ff>&nbsp; =
+waveOutWrite</FONT>(OutHandle,=20
+      @Header, SizeOf(Header));<BR></SPAN><SPAN=20
+      class=3Dreserverword>end</SPAN><SPAN=20
+class=3Dprogram>;</SPAN></TD></TR></TBODY></TABLE>
+<TABLE id=3Dtable5 cellSpacing=3D0 cellPadding=3D0 width=3D"100%" =
+border=3D0>
+  <TBODY>
+  <TR>
+    <TD width=3D"100%">
+      <P style=3D"MARGIN-TOP: 0pt" align=3Dright><FONT face=3DArial =
+size=3D1><A=20
+      =
+href=3D"http://edi.fmph.uniba.sk/salanci/PPT/05/WaveProject.zip"><IMG=20
+      height=3D16 =
+src=3D"http://edi.fmph.uniba.sk/salanci/PPT/disketa.png" width=3D16=20
+      align=3Dright border=3D0>Cel=FD program =
+</A></FONT></P></TD></TR></TBODY></TABLE>
+<P>Viac o zvuku a frekvenci=E1ch:</P>
+<UL>
+  <LI><A=20
+  =
+href=3D"http://en.wikipedia.org/wiki/Sound">http://en.wikipedia.org/wiki/=
+Sound</A>=20
+
+  <LI><A=20
+  =
+href=3D"http://en.wikipedia.org/wiki/Audio_frequency">http://en.wikipedia=
+.org/wiki/Audio_frequency</A>=20
+  </LI></UL>
+<P>To, =9Ee sa zvukov=E1 vzorka cel=E1 prehrala zist=EDme pomocou =
+tak=FDmto sp=F4sobom:</P>
+<TABLE class=3DProgram id=3Dtable6 borderColorDark=3D#000088=20
+  borderColorLight=3D#000088><TBODY>
+  <TR>
+    <TD width=3D"100%">...<SPAN class=3Dprogram><BR></SPAN><SPAN=20
+      class=3Dreserverword>type</SPAN><SPAN class=3Dprogram><BR>&nbsp; =
+TForm1 =3D=20
+      </SPAN><SPAN class=3Dreserverword>class</SPAN><SPAN=20
+      class=3Dprogram>(TForm)<BR>&nbsp; </SPAN>...<SPAN =
+class=3Dprogram><BR>&nbsp;=20
+      </SPAN><SPAN class=3Dreserverword>private</SPAN><SPAN=20
+      class=3Dprogram><BR><FONT color=3D#0044ff>&nbsp;&nbsp;&nbsp;=20
+      </FONT></SPAN><FONT color=3D#0044ff><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      MMWOMDone(</SPAN><SPAN class=3Dreserverword>var</SPAN><SPAN =
+class=3Dprogram>=20
+      Msg: TMsg); </SPAN><SPAN =
+class=3Dreserverword>message</SPAN></FONT><SPAN=20
+      class=3Dprogram><FONT color=3D#0044ff> =
+MM_WOM_DONE;<BR></FONT>&nbsp;=20
+      </SPAN><SPAN class=3Dreserverword>end</SPAN><SPAN=20
+      class=3Dprogram>.<BR><BR></SPAN>...<SPAN =
+class=3Dprogram><BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>implementation</SPAN><SPAN=20
+      class=3Dprogram><BR><BR></SPAN>...<SPAN =
+class=3Dprogram><BR><BR></SPAN><SPAN=20
+      class=3Dreserverword>procedure</SPAN><SPAN class=3Dprogram>=20
+      TForm1.FormCreate(Sender: TObject);<BR></SPAN><SPAN=20
+      class=3Dreserverword>begin</SPAN><SPAN class=3Dprogram><BR>&nbsp;=20
+      </SPAN>...<SPAN class=3Dprogram><BR>&nbsp; <FONT=20
+      color=3D#0044ff>waveOutOpen</FONT>(@OutHandle, WAVE_MAPPER, =
+@Format, <FONT=20
+      color=3D#0044ff>Handle</FONT>, 0, <FONT=20
+      color=3D#0044ff>CALLBACK_WINDOW</FONT>);<BR>&nbsp; </SPAN>...<SPAN =
+
+      class=3Dprogram><BR></SPAN><SPAN =
+class=3Dreserverword>end</SPAN><SPAN=20
+      class=3Dprogram>;<BR><BR></SPAN><FONT face=3D"Courier New" =
+size=3D2><SPAN=20
+      class=3Dreserverword>procedure </SPAN><SPAN=20
+      class=3Dprogram>TForm1.MMWOMDone(</SPAN><SPAN=20
+      class=3Dreserverword>var</SPAN><SPAN class=3Dprogram> Msg:=20
+      TMsg);<BR></SPAN><SPAN class=3Dreserverword>begin</SPAN><SPAN=20
+      class=3Dprogram><BR>&nbsp; Caption:=3D'Koniec';<BR></SPAN><SPAN=20
+      class=3Dreserverword>end</SPAN><SPAN=20
+  class=3Dprogram>;</SPAN></FONT></TD></TR></TBODY></TABLE>
+<P>Met=F3da<SPAN class=3Dprogram> MMWOMDone </SPAN>je dynamick=E1 =
+virtu=E1lna met=F3da,=20
+ktor=E1 spracov=E1va spr=E1vu<SPAN class=3Dprogram> MM_WOM_DONE</SPAN>. =
+T=E1 sa posiela=20
+formul=E1ru po tom, ako sa dohrala zvukov=E1 vzorka.</P>
+<P align=3Dright><FONT face=3DArial color=3D#c0c0c0 size=3D1>=A9 2007 =
+=BC.=20
+SALANCI</FONT></P></BODY></HTML>
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://edi.fmph.uniba.sk/salanci/Zahlavie/Hlavna.a.png
+
+iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAA10lEQVR4nGP4TwFgoJnmTnMQIkdz
+jw0C4QCMIAMwwQQndJGCfZiqsGme7I7FOCDI3UlI8zQf7DohIGsLbs0zAvHphICM9dg0zwkjrBMC
+UlZhs/m8BWGdhifgTBYUCUZWIPFb+zCEx3rVFpOLDLBoZmDEy8WpmYmdBC66n6/4MxAEOhtx2cxG
+WDMSgGo+8GTX59+feL5DNX/+x8DLxICVzfdkF5DhIOMG4kOS+KEne7beX3fwXMKWMwn4SYhKlIxx
+9Nl+iNlffn/mYeUlyHaX90PYTB6gSDMAKlvVMcFxxi4AAAAASUVORK5CYII=
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://edi.fmph.uniba.sk/salanci/Zahlavie/C.a.png
+
+iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAABWklEQVR4nGP4TwFgGDyaf3z6++jY
+n3Nzfx/tBiIgA8gFChLS/O/f/z8//9ze/nOJ5/dJqt97JEFokiqQCxQESoEU4NL87/uHv3f3fO+X
+/7W74u/zC////AIiIAPIBQoCpYAKcGj++fnPra3fJ6n9fXGJZD//fXrm5+qIX/vrideJ0Pznyqof
+82z/vryCLNe/AF01mggLAwT8+szw9zeTiDoDEmBmYkADaCKMINsZGP5eWPjn/Fz2+H0MTCDjpi1D
+UZQVhUUEBKDOvrHx51Kff6+vI7tq+nJ0Z6OJwALs5eVf2/N/n5iILDd7FbpmNBFYVP36+vfh4Z/L
+/f+9vY2uAzdASmE/P/99dvbnqtDfp2eAjPj7G4iADCAXKAiUAirArRmY+v7+Bkb4r321vzam/Fwb
+DURABpALFASZhSd5wtz/7d+bm3/v7f1zYxMQARlALlCQkLNJBwOnGQCTFRaQlnBkBwAAAABJRU5E
+rkJggg==
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://edi.fmph.uniba.sk/salanci/Zahlavie/Kontakt.a.png
+
+iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAABMElEQVR4nGP4TwFgGGjNh29vAyII
+49yjI7hU33p5CUhuvbTkyJ3tCM3rzs1ZenISkLHhwvyjd3bi0nzu4eEbz8/PPty6/8ZGhObLT08B
+9R+6taVvdykedwJ1br64eO/19SjOhjgGaOSkvVXuE+Tx6D9yezucjdAM1Dl1fx0Q+U1RAyI0PUCR
++Ue7gLLbLi/DohkoN/1AAwQB2cg6Q2boAdHCY71AtOzUZCyagWDl6WlA+1ecmopm7aozM5aemAhB
+QDZ2zUAw90gHMvvqszMQ9qaLC4F2AklkxSiaga5FdjCEDRdB8wuK5gl7KoDkouN9cASXgrCRRdA1
+T95XAySXnZz8HxsAigMRRA12Z/8HhxlWzRCpGQcb8WlefXYmLs2YUgjNwOQJRMgMglIDnp/JAwAv
+v1IBWg6uPwAAAABJRU5ErkJggg==
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://edi.fmph.uniba.sk/salanci/PPT/05/Video.png
+
+iVBORw0KGgoAAAANSUhEUgAAAXkAAAFJCAIAAADxG8rHAAAbn0lEQVR42u3dCZRb1WHw8Xufttns
+8TZmxiwG44aUFlICofYpYHB6AidlMWsCJGndgAmQkJQmTRvSGgppSMuXkgYCOAV//ZJAgLB9JSVb
+WYwdEqAQSgEbTLwv4xnDLJJG0ltu79Wb0cizyXqauR7s/+9whOZZT9LI0t/3vrnSSKWUKCPPfEnK
+mD6j3JT5Oib7/yBZZ86nYiIeE56vT2UspnwlvEA4jnCECAauwnMEoovt6zvw3iQL+/oevGep8qec
+Pu/v8af58H/64U2KgieSxdd5wRHJuNkmPPOfW6xEQpckXrxwXLhK5Heqp48pvyZZao1z1ivm8gfP
+l431TXVOqs5srNdtqRMN+iJ1or54H2LFa3NG70kQCETmEOpIeNbVYsizTj+Yvmde6aXT0fS5Q7f0
+FNvUlRG9PX7h1ddFT1q9tDD8o/7W6NDI6W3xhkYv4SfqpjQlTajC3KSK4xtdsXhZ/pLx/jOF0e8H
+gMnPGxjHhC/w8EsvN7Cxbuhr3PFEEB/8Mp/f40/zAzumMyb/+fas2LJBrTYDHNMaufgF0dwqYjk5
+Y7repAYq5yTi0okLmYgn4nmlYspsjztKn09JE6NwY7hFf6k3Kl/oE0/wrzOsCgqq9is5MDlJqR89
+lTKvZV8Ojg9lny9dJWOu8P3AjSv92nZjIuHrOZNMFA+zmFf7QIe8QKdBqLjI5voPvMSLp7k+8W6X
+KNSrVUcOtKYhJppnDN6+rlnckTFHd0cXp/+2nfhod1cFnvTKhj2+LwC8RwXFqVGgAqGkZyIe+IH+
+0mz0B5qugj3OFLdL31Pmpe/1X0xHJ++KdE5s2qh2XCDFB58RrQcL2S3qpvTvnEqY02JuzP7F4vT/
+kZMYeoeKZBAod6A1HlPnWpBpWDf8cJcui+6Fqc0eKdGnavAZWja5CuPiFbfoPAUDh+r1eNPNmjNb
+NhRbozXXy8akSjWY88NaU7pCVXYQSRbvn/IDqaQKbykYuNMBA1pgfCQctfSk5PKPTZszI76Xu1xx
+R+fK1QU3kBF3v71j5ZM5Nwh0XBKO+LPFjcsvnTVn5l7vfvPGlY/vdnVxCq6QrshlhZcR76almH+v
+mHrwsNYkzJGiYa0J6b6Y7f2JKcalFLghAy1USzEqjGT/fdyWnVr3V+fNuuPH7u4elcmpXEHol7Ge
+PBSK84ria1HkXPOi1H/Ul3dbGrrv+eKM237St+LpXPTdn8h+9+dpPYRZ9pHG287NdD9wR9C1O8hm
+VD6nPH1pT3hm5KKKR0tUIWeO6RRyXq4vPbVl7tfu+fIjU1Y8sMNctW5NV044u8WuN6RofVDMmS0a
+G526eDB1sDXXzPrHsR+Cf+m6bnAgI8rGMh6zAFi3/7ZG/eiwL9+dnzNT6n/9uzOqK2OOgeTyphc6
+EErPUXzVVxD5gsrmRW/W7+7uniI2//jWEw++Ynstux+ydJNujfrxkbu/+eXY7DkyFg/S3X5vlyrk
+VU7HxSuGRgnPDfJ9xY1ZL9Pb1d29PTHlAyufP/isV0zPXEdku4e2RjQ0iqZYaVBzzbSv+0d8q/QN
+3/7qHdc0rZ0xY0ZH83L95auPLFp1+IPqD34gX7p06LyJQU0t9t/XzMTafx83HYtl38p9cL4Ti8l3
+e1V31oxNsmYkYeYVOhb6H/dMXunXdV9epftMLHbveH3XTz8iL9hc0+5nbhLK063Zdf2y1NEflLGY
+3/2uzo0exQTZrA6NDHSKlPK8IJdRbkHl+/xsWu++tn33hS/ukgteNPc+44u0EPHfFlsz5xfi0GYR
+T4nmBlGfEE5cz/CE41wz42tha/pe/fT69ev1metOWnX/zj9vamrS2zue+9inwzGSEKdf8oD5H7Mn
+7EP77zov9fCci7/ed9z8mB6Y9GRVT1aPQUS6T7memQ3psUnBU3l93jcjlEJBT3S639mxdscTfyzP
+2z5k92vPS459Wx/6XO/g7ro1evfH57Z/6eLk7x4n4/H6Exaljj6+46arg0xaua4e0ajAN5Vx8wf/
+688zTz3WeedNPdnsm7veOf/XO+QfvmquMZvdszWHzBYNDULPnxpSQjrmSE1MllqjhzD6dP78+Xdf
+Vv/5H5ofNoWt+VHq2/5xP7jj2u9ddfETA49K8WjxfW1DvgF50fZx/wt47qZZC96XnIhrBiYV9cCc
+82/sO+pQJ+aITM4MSfR8pzersyLynimOPi345niGMj848r18b/eutZv//cPhq6N89xs/lRr7to67
+qmdw94HW7PzC+Yl5RwknNvOzN4YX23nNBYFOjJcXrqtPD/n+mnD7xguOS7vem53d563ZLBeuMz+N
+6g1EX04kt4qdr+zZmlS9eUODaU38mhl/X5pDxTZ8/je/+c0zn1tyw2s94RxKt+b+BQt+du0j2+5Z
+evlTZ+vhWP+IRgVhaxrbbir/HrIn//l4PfS3fHLqhQvrDpsVD29lHK8ZmIR0LM5e3ndEm+M4Qvcl
+lzet6cmogq6MaypTCMy4RgmzvlYKPyj0dre/Ud6a0u7/vKxCaz5wVe/g7gOt2XH12YlDjxAxR+UL
+LV+9PbzktsvPEG5eeYVSaLacf6wvZNoN3tw90BpfmMU1I7RmWlLUxc24xiz7i43dGj2xOuGel3dd
+f86Nb39WhDMnT3+zxYPS9x4k+itwxcQ89C36IU4l5ITeCjBJ6Cf86V/JzpnpOLK4js0kRphxjZ46
+6dD4+lT2eeYYhn7hxvVr0O3p2blu6+OL5UUdQ3a/+9rUJ27Ojbb723c1HH1l7+DuZ241uz9+yPZl
+p8da5pg3TQXmx1cH/dP3wzu29ZN/dMj3BkJz5pF64BPE4mlPvLm759xfbu1vjSwObeQOsfWXUhz+
+K9E6TUxtEo36nibC+yvizvWH/0uYFTGsNS3dN/Re/4Mp119648a/EH7/ir7+3Jg51CwRVuDUz5Q/
+ZL+5edoH5prByCubvD/4667+x7F4Yb3l8BZn2qff0V8++Vrh+CPizQ3O5k7/wV8XLvzD5GGzYt3Z
+4JbH+256pE9feN03p99+60+/9Y2Pjngr73kc8MKedCxO/svMoS1OXL82i4dyC65K51Uh0LMnPagR
+OV/0uVI/cRylYro1+XS6fe32x08rtaa0+//7Ut0lX8+NtvuG79S/76rewd3PLrbm/x+y9VMnJw46
+1LwLU8/RPE/5hbZbf1R+D7ctmW9+JiWdwImlXd2a9JJfbZenvG3eP+AqM7Tx14vdG/ZsTSoZhkY1
+/u2iV1895txnwuvqb813lnz7yfj69ev1eb1xzbx/L92YH76pPFxWeN/08vshL35Xnz7391MW/E78
+wad2p7dvXnrpcb9+Pb3gRrd04Qcffa030fLZv1uT/a9z9ZcPPN31xuvbl191tD6//N4uJ/PO8svn
+9aTdmX+6y0uan8rXbX+t75mTRH9rrt7XTwZgAunXyILPZ/TAJBmXjjQDENdTmYLJhJk9+SIXyKxr
+lutLnRs9lsj1Znasbf+P08KXXvnuP/xK3cf/ITfa7ptuq593dXpw9/M6ze4Pz9p6yYL4rDkykdQ1
+UXpk5bsqn5lz50/Cu7f948eIfLb42pe+dHRr1nVmljzfLk/aYhbfFXLinUCkNon2/5Fi7n+LwxpE
+fZ1oliJmWqOKw5kbWlqGjmuOOeaLP7t9y3EXHX300a+//vpDjf+39HAESqlwUbLu4/fNex3Kj9dk
+P/z53MomPevRG70TL8k/Ni+f95rPfi3fMq90Yb1dhzP/8GGlL/XFwvOFky93HzDzsoYTHut7/+L+
+v4CBHfWV7+snAyYBX9Z+HZOTuq/p+M9m2mbI+qRujVTmzQNK16GgiqMSPTwJRNqVro5QUFyc19eT
+3bFu9xOnyovTQ3Z/8Kv1F92UG233LbfWH3p1ZnD387qFHpY8PGvLhcfHWtqcVL1ujXn/pPJbb32o
+/B7uPH+e8lxRfFdDb0GPa7LnvLhbLm4XKm/GNb2e8N4SHW8VW3PIVNEYF81JkXJ0bn76b39yxmW/
++Naxd63zPxdeV91fvM/876NvufOvCQ/idDz3sYdmfD98a4IcWLwXFN/tHaw0Qw9dgb4zri3dm/KN
+4fmGY+/NHb9kyIWHX2z4+eFXuK+fDOP6xOIjn7An9YOG37/CxKIhZdbjyeLQpk/PTopvNsqZXsi0
+Hqf4xbc8e36Q6c3vXNf1k0Xy0uyQ3R+7vv6Cm/pG233rN+vars4M7n5Rj/CUerh585Lfj81qc+oa
+ZDyuX+6tAxOonctOaV2xytxEpmfXJ47W0yh9B3pzwVvv5s96qcu0RisUTH76W3Pk66K1QTQ2mDnU
+VHOY+jv/tuhI0fS2SOv/wjP69IenTHnm5mO+/eJRYYB0ax6dfa/vhW+JKh6mCX8M5Qm10vwM34w4
+zvir0uOVW5EIxzV6o76AHtfMOPzm8Hz5hcu/HO18/1/ASLcC7H/0U33up9Kt02VTnfzPbzQMv8Cx
+f5frLkhz8MX8GNoPenvdnevyTy6SSwvDdz9reZ+ebLlSebI4tBFS5ybcfectqalXZAZ3vyhjdn+g
+ceNH5sZmtjoNTTKRmnPnf4Q3uvMzi4VfkEHhoLufD7fs+pMZfsHr7gve7HLP/p+8PKNLKFe4gclN
+3wax5ZWB1kxLiSlxkUpJGdPjtH8+7l9Xr169c+fOD63aMeX6SzdvNgsQ776s/oaftZR+5v1Y232e
+clR4PLi4lCp8q7daYd4/ZUYcZw5W4Jd/E18wz3nw0dfqj/jdMz/gPP9fW0/99LO5D50ffDdZfuHy
+L0c7H17h8C04kClvv/3sVLUy1nZJenazbKoXa77ZOPwCv/e3+V5X5DzzsVVun+f19vrta/2nT5VL
+/eG7n35dVumpiCN0a8zQRrdGyXD3XbekGi7LDO5+cc4sC/5h/YbT2mLTZzuNTaWfOu1Ytlg/4jJw
+dWukl5v9vdfC7dtPa+jJeuu6/XPW+qY1WiEv+hyR/q1ofz6cQ00T0+rFlJhIxXVrZCKuT65OfrG0
+lm/VqlVL2sSVS8XbO8XT6Yt6Dr0/+8KiXx3/tDCfVGPmyUFx0XD4OTv+7f0/jc6dd135I/LylwrH
+Hm7GTb9+K7/4lH8KFl5UaPudIRcu/3K08+G1jXYrODAF7n778zv9j3fLx9LTm0wsXrpthNa8769z
+aRMLqcc1hZzv9/aoXWuDVafJZcHe7F4uuTQzuPsnC+bI0L2p357cEmueLuubZl65vHHxOdv+7BTz
+cXgikCpsTV7m07Mf2d7343ve+cZnerL+ul61ZF0gz0oL1zNDmx4h8uvF1helmPOyOGJm2BpZlzIH
+n8znlpvWjH237ozdKswhuYFjcmWLxFMPmAPDwyuQ3PKa88Kj+kwYmnBj3cNfK79w+ZejnR9xR2C/
+pP9ZbT73namNjp4EpcxbFaV+zenXnd8/NpF6KpR2ZaE4h3ILeg7VI3a/odZ8JHa1qmX30rBo3YLm
+WNNUp75JJlMyVvxhmPLNdSjPCVwzk8rprJidvYKr51Dr0uLC9cq0RtO56XZF4Y3iHGrP1ug/1bnR
+AxxhPsbckeHH+YXjU2foof7wU3NGzA2iCeekQMmWm9SHv7C5o1vUJUUyoV+UynzWrnSC4ueq+TKm
+h3Q582YoqV/XfsFTfd1z67dtfOz0sDWRdw9bs+3/yJ2f+D31bodI1sWSyeLvNijGSulxjR/T1+G7
+ws1Jz1We67l+d0G1z5h7wbMb5XkZ80OoUms2Pb9Ha/QVyUQsHNoI88k15jP5hBPbozjmMPBgdIaH
+hlcLMI4uPyF35Unux7/639vae+OJlJSBU1wkrF/yvpK+cMyn/hbfhBmImH7Bz53pPvqPJ9z5y/rv
+vlgXefc7nqlb8VxKeP6yPyrcvOjt5675ePeObclEXIcqkE5MmASY1ijzbm/leSLQ54OCr4LWuafc
++ehXn5q34snYiK2ZLqY1hq0Jf01DLFHshUyIlM5f0hQn5PT3xlcjBEUVf9GMDBjeROf7++0xTkST
+kMHSDxXuuqxhLy+//Z3ghodzK19IusVfRhBl9x9lV66JuzpKvkpIf+lJ/l1XTtnb3Xf7N9yXWfkL
+qQdKg8drhrbGyYnUwC9uMB9hI8MPRo8lB7ISK38ZJINhvytBubHiQSOhqE10tCYaPqEtKk/0/4JJ
+v/iWxiAwv50unK/oIYX+0iv+jrnwRV3+QaB6OKNHLgkdirj50/DwvDvsxT90XKNNE6KnUw9ipGE2
+BIm68MIy1n8Lygx89PCnVB81dL3m/rt8E5NantZEZT5ePGY+/2Y4PcsJN5f+UBZ/z61f9m9iEPS/
+LTM8eKLnZ4403Ql/g2ayTvgNI7UmZ95AYWohSycjG5xChef0RUtnUAOlONoVBU+7Wkzgcy433bxH
+Ib6t+HOotpdTBzc2nzirp+PdOes/+vxPHht++RPPOIftbGc726vd/tuDnhe97WL7y6Jnyx6t2Xqb
+KwBgnMz60zZaA2DC0RoANtAaADbQGgA20BoANtAaADaM2prR1tfMnH3Uvr7PACaph+5fceppi4Zv
+j7K+Rrdm9651+/o7AjAZPf3UMyO2Rgwf19Qf3DiF1gCIpEJrMh1i42qR7aQ1AGpCawDYQGsA2EBr
+ANhAawDYEKU1Y6yvoTUARjRaa/rX1zCuATAumEMBsKGK1tS1Nkxd2EJrAERAawDYQGsA2EBrANhA
+awDYEKU1rK8BUK0q1tcwrgEQGXMoADbQGgA20BoANlTRmlRrffPC2bQGQASVW7NptcjQGgC1oTUA
+bIjSGtbXAKhW5fU1jGsA1I45FAAbaA0AG2gNABtoDQAbaA0AG2gNABtYXwPABtbXALCBORQAG2gN
+ABtoDQAbaA0AG2gNABtoDQAbqmhNXWv9VNbXAIikwvqabIfYsEaf7tEaxjUAqlVhXENrAIwLWgPA
+BloDwAZaA8AGWgPABloDwIYorWF9DYBqVbG+hnXDACKrtG64s7humNYAqA2tAWADrQFgA60BYAOt
+AWADrQFgQ5TWsL4GQLUq/X4oxjUAxgNzKAA2VNEa3g8FILLKnze8cbXIdtIaADWhNQBsoDUAbKA1
+AGyI0hrW1wCoVqX1NYxrAIwH5lAAbKA1AGygNQBsqKo1DVMXttAaABFUbo15jwKtAVAbWgPAhiit
+YX0NgGpVXl/DuAZA7ZhDAbCB1gCwgdYAsIHWALChitak2hqaF9AaAFHsxecNP0trANQqSmtYXwOg
+Wnvx+6EY1wCoGXMoADbQGgA20BoANtAaADbQGgA20BoANlTRGn4/FIDIqvr8Gj7bHEBEVb33ktYA
+iIjWALCB1gCwgdYAsIHWALCB1gCwIUprWF8DoFpVrK9h3TCAyPi8YQA20BoANtAaADbQGgA20BoA
+NtAaADZEaQ3rawBUi/U1AGxgDgXABt4PBcCGCq3JdoiNa3RxaA2AmtAaADbQGgA20BoANkRpDetr
+AFSrwvoaxjUAxgVzKAA20BoANtAaADZU1ZqGqQt5jwKAKGgNABtoDQAborSG9TUHrFkHvb/8y872
+tbVcVWn38vPYX1W1voZxzYFuSBRqaUS4byletGa/xxwKVRj31tR+PXivoDWowmitGTI8KR+zlAdl
++GVGvFrsl2gNqlDxeM3wypS2DCkLrTnQ0BpUYbQolDdotLKUX57WHIBoDaowYhT2ZswyfEdac6Ch
+NajCuLSGOdSBifU1qELkOZTg2PABj/U1AGxgDgXABloDwAZaA8AGWgPABloDwAZaA8AG1tcAsIH1
+NQBsYA4FwAZaA8AGWgPABloDwAZaA8AGWgPABtbXALCB9TUAbGAOBcAGWgPABloDwAZaA8AGWgPA
+BloDwAbW1wCwgfU1AGxgDgXABloDwAZaA8AGWgPABloDwAZaA8AG1tcAsIH1NQBsYA4FwAZaA8AG
+WgPAhkqt6RQbVuvi0BoANaE1AGygNQBsiNIa1tcAqFal9TWMawCMB+ZQAGygNQBsoDUAbKA1AGyg
+NQBsqNCaTIfYxHsUANQsSmtYXwOgWhXW1zCuATAumEMBsIHWALCB1gCwgdYAsIHWALCB1gCwoYrW
+pFobmllfAyCSKtbXlFrDuAZAtaKMa2gNgGrRGgA20BoANtAaADbQGgA20BoANrC+BoANrK8BYEOl
+cU2n2PisyHbSGgA1oTUAbKA1AGygNQBsoDUAbKA1AGyI0hrW1wCoVqX1NYxrAIwH5lAAbKA1AGyo
+3JpNz+pTWgOgJrQGgA20BoANtAaADVFaw/oaANWqvL6GcQ2A2jGHAmADrQFgA60BYEOF1mQ7xMbV
+tAZArWgNABtoDQAborSG9TUAqlVhfQ3jGgDjgjkUABtoDQAbaA0AG2gNABtoDQAbKrWms9iaDloD
+oCZRWsP6GgDVqrS+hnENgPHAHAqADbQGgA20BoANtAaADbQGgA20BoANVbSmrrVhKutrAERSeX3N
+hmf16R6tYVwDoFqVxzW0BkDtaA0AG2gNABtoDQAbaA0AG2gNABuitIb1NQCqVcX6mlRrffPC2Yxr
+AERQYVyT6RCb1pTeo0BrAEREawDYQGsA2EBrANhAawDYQGsA2BClNaOtr9HXta+/HQCT11jra6oa
+1wBABFXPoQAggqGtqfh+KACIYKA1q0Vm7957CQAR0BoANtAaADbQGgA2jNqa0dbXnHjGOWxnO9v3
+cvvM2UeJ/de1X7j8uq98cW8eh7L1NYxrgAmgW9PTtWVf34sJ8fOfPrHmuReGtGYMzKGACRS2xi1k
+9/UdGX9PP/UMrQEmC1pTMrQ1qbaG5gW0BhgftKak+NnmHWLDGn1Ka4BxRmtKaA0wgWhNCa0BJlAt
+rZl10PtL5zvb107E3dM3Efmax601rK9hO9tr315ja0ohGCMKpT+qKhylkI1vayqsr2FcA0yQSdua
+ildbEXMoYBIZ99YM3xiOUMrPiGHDliGXHPEmqkVrgElk3I/XjNiaIRkao0dir4dLFdEaYBKxM67Z
+m9aMUato3xqtASYRWjP47QxpDe9RAMbRxLWm/DDNe6Y1vB8KmCATsb5mbyoz4rHh0u6TqzWsr2E7
+22vffqCtG+bza4B940BrzRiYQwETiNaU0BpgAtGaEloDTCBaU0JrgAlEa0poDTCBaE0JrQEmkG7N
+Q/ev2Nf3YqJEac3G1SLL+hq2s328t3/tH24R+7Wq19cMbw3jGgDjaNRxDa0BMI5oDQAbaA0AG2gN
+ABtoDQAbaA0AG1hfw3a2s93G9hHW1zQc0RRvrde5UYUpYhT5fEoAwN7ToenabP4rtSYxW8amJAqZ
+QiGnRtvL8xNjXalSYtzJMW5Ojrln5Dsz+tVKFXHHyI+MjHqdEXcc+yEdwwQ82mNfp+0nxiR7sqlo
+j1vk76KGJ0YhLTKdomeHyLRLMfthUdczcI219CLq8ybatz9B92UiXt5j3OTYLww5AX/90R/SyN+F
+7Ts6AVc7Qa2JSkWLVORkRL+jQsSECIRfELluKWbdJVSv9TsB4MDyv0pFx3NJCWicAAAAAElFTkSu
+QmCC
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://edi.fmph.uniba.sk/salanci/PPT/disketa.png
+
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABbUlEQVR4nGP4TyJgoL2Gdbs+B+Zc
+OHTmp3/WZb/MywdP/zxw6qdn6jnXpHMrtn7CoiEw+4J/1oVDp38CVfukXwaqPnP1l0fKOZfEs04J
+Z6GqLpjDNbD8+8/w7x9QI5AEOY+Hm5GLEyQCFmcAgYsWQEkGOPDNOO+dfv7gqZ8Qs6/d+3Xmyi+g
+8Q5xZ4+d/wYy+4Lp/wvG/88b/T9v8P+8HgNQNdDFQDe4J4Pc7Qx2CVC1XeyZfxfMQKqvR/2/Fvn/
+Wvj/a2FAxAhUXZ6qDbQK5CEwgNAc7P9yku3Obk5l+HiAgd+eASbLADQb6Jglm94u2fhm8YY3i4Bo
+/ZuF69/sPf7j6LmvRkZG/5/O+P9kuh4MMLgln9t/8gcQ7QOiEyAEVApEe47/MA8/DbQWqAioARGs
+QP9BVMPNXrAOhPYc+2EadgqiCKQHrmHWyveb933ftO/7xr0gtGHP9/V7vq/b/X3dru8TF76jRtKg
+uQYAihxaYxwxxzQAAAAASUVORK5CYII=
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://edi.fmph.uniba.sk/salanci/Zahlavie/HCiaraModra.png
+
+iVBORw0KGgoAAAANSUhEUgAAAZAAAAABCAIAAAB/kG/JAAAA80lEQVR4nG1SWZYEIQgzeMM59FzL
+ViEYLH39gQjZqtH+/tvjYP/mGSzafQVi0osxSn9eoYvfTuKYcPFJMZ9brYKnmG/nhroWrbJ8B3Ab
+iWOVSJq4ooOAD3bsLBXxYMdOb0VnByqSzElNspWI0D6vp8DmNbSOkGu7MOrNq1kUHlWnS+PMhHSa
+NZy6CJVPLsqLzjE4FK9ZzAFPML7AWDKmgE4fnQml4FXzNakTU8WAtSGM66QOp8F0B1l/W66kx9dO
+zBNQbe8EBFANqn1VG3R2FjvqVxA7IYbsWV+CVacqufKETHYrkoKUqrLW/5jioCpJuhT/A51XH/0u
+Pq1pAAAAAElFTkSuQmCC
+
+------=_NextPart_000_002D_01C7A39F.A61E0020
+Content-Type: text/css;
+	charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://edi.fmph.uniba.sk/salanci/PPT/styles.css
+
+BODY {
+	FONT-SIZE: 80%; BACKGROUND: #ffffff; FONT-FAMILY: Arial
+}
+BLOCKQUOTE {
+	MARGIN-TOP: 4pt; MARGIN-BOTTOM: 4pt
+}
+H1 {
+	MARGIN-TOP: 24pt; FONT-WEIGHT: bold; FONT-SIZE: 200%; MARGIN-BOTTOM: =
+12pt; MARGIN-LEFT: 32pt; FONT-FAMILY: Arial
+}
+H2 {
+	MARGIN-TOP: 16pt; FONT-WEIGHT: bold; FONT-SIZE: 150%; MARGIN-BOTTOM: =
+8pt; MARGIN-LEFT: 32pt; FONT-FAMILY: Arial
+}
+H3 {
+	MARGIN-TOP: 12pt; FONT-WEIGHT: bold; FONT-SIZE: 100%; MARGIN-BOTTOM: =
+4pt; MARGIN-LEFT: 32pt; FONT-STYLE: italic; FONT-FAMILY: Arial
+}
+P {
+	MARGIN-TOP: 8pt; MARGIN-BOTTOM: 0pt
+}
+A:hover {
+	COLOR: #ff0000
+}
+BLOCKQUOTE {
+	MARGIN-TOP: 0pt; MARGIN-BOTTOM: 0pt
+}
+UL {
+	MARGIN-TOP: 0pt; MARGIN-BOTTOM: 0pt
+}
+OL {
+	MARGIN-TOP: 0pt; MARGIN-BOTTOM: 0pt
+}
+SPAN.term {
+	FONT-WEIGHT: bold; COLOR: #0044ff
+}
+SPAN.program {
+	FONT-SIZE: 100%; FONT-FAMILY: Courier New
+}
+SPAN.reserverword {
+	FONT-WEIGHT: bold; FONT-SIZE: 100%; FONT-FAMILY: Courier New
+}
+IMG {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: =
+0px
+}
+TABLE {
+	FONT-SIZE: 100%; FONT-FAMILY: Arial
+}
+TABLE.Definition {
+	BORDER-RIGHT: #ffdd88 2px solid; BORDER-TOP: #ffdd88 2px solid; =
+FONT-SIZE: 100%; BACKGROUND: #ffffee; BORDER-LEFT: #ffdd88 2px solid; =
+COLOR: #0044ff; BORDER-BOTTOM: #ffdd88 2px solid; FONT-FAMILY: Arial; =
+BORDER-COLLAPSE: collapse
+}
+TABLE.Program {
+	BORDER-RIGHT: #0000aa 2px solid; BORDER-TOP: #0000aa 2px solid; =
+BACKGROUND: #ffffdd; BORDER-LEFT: #0000aa 2px solid; WIDTH: 100%; =
+BORDER-BOTTOM: #0000aa 2px solid; BORDER-COLLAPSE: collapse
+}
+TABLE.Title {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: =
+0px; FONT-WEIGHT: bold; FONT-SIZE: 120%; BACKGROUND: #0052c6; =
+PADDING-BOTTOM: 0px; MARGIN: 0px 0px 12px; BORDER-LEFT: 0px; WIDTH: =
+420px; COLOR: #ffffff; PADDING-TOP: 0px; BORDER-BOTTOM: 0px; =
+FONT-FAMILY: Arial; BORDER-COLLAPSE: collapse; spacing: 0px 0px 0px 0px
+}
+TABLE.Title TD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+
+------=_NextPart_000_002D_01C7A39F.A61E0020--

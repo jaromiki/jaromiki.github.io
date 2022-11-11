@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_26.jpg" class="nehe_maly" alt="Lekce 26" />
+
+<h1>Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu</h1>
+
+<p class="nadpis_clanku">Tutoriál demonstruje extrémně realistické odrazy za použití stencil bufferu a jejich ořezávání, aby &quot;nevystoupily&quot; ze zrcadla. Je mnohem více pokrokový než předchozí lekce, takže před začátkem čtení doporučuji menší opakování. Odrazy objektů nebudou vidět nad zrcadlem nebo na druhé straně zdi a budou mít barevný nádech zrcadla - skutečné odrazy.</p>
+
+<p><b>Důležité:</b> Protože grafické karty Voodoo 1, 2 a některé jiné nepodporují stencil buffer, nebude na nich tento tutoriál fungovat. Pokud si nejste jistí, že vaše karta stencil buffer podporuje, stáhněte si zdrojový kód a zkuste jej spustit. Kromě toho budete také potřebovat procesor a grafickou kartu se slušným výkonem. Na mé GeForce 1 občas vidím malé zpomalení. Demo běží nejlépe v 32 bitových barvách.</p>
+
+<p>První část kódu je celkem standardní.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+
+<p>Nastavíme pole pro definici osvětlení. Okolní světlo bude 70% bílé. Difúzní světlo nastavuje rozptyl osvětlení (množství světla rovnoměrně odrážené na plochách objektů). V tomto případě odrážíme plnou intenzitou. Poslední je pozice. Pokud bychom ho mohli spatřit, plulo by v pravém horním rohu monitoru.</p>
+
+<p class="src0"><span class="kom">// Parametry světla</span></p>
+<p class="src0">static GLfloat LightAmb[] = {0.7f, 0.7f, 0.7f, 1.0f};<span class="kom">// Okolní</span></p>
+<p class="src0">static GLfloat LightDif[] = {1.0f, 1.0f, 1.0f, 1.0f};<span class="kom">// Rozptýlené</span></p>
+<p class="src0">static GLfloat LightPos[] = {4.0f, 4.0f, 6.0f, 1.0f};<span class="kom">// Pozice</span></p>
+
+<p>Ukazatel q je pro quadratic koule (plážový míč). Xrot a yrot ukládají hodnoty natočení míče, xrotspeed a yrotspeed definují rychlost rotace. Zoom používáme pro přibližování a oddalování scény a height je výška balónu nad podlahou. Pole texture[] už standardně ukládá textury.</p>
+
+<p class="src0">GLUquadricObj *q;<span class="kom">// Quadratic pro kreslení koule (míče)</span></p>
+<p></p>
+<p class="src0">GLfloat xrot = 0.0f;<span class="kom">// X rotace</span></p>
+<p class="src0">GLfloat yrot = 0.0f;<span class="kom">// Y rotace</span></p>
+<p></p>
+<p class="src0">GLfloat xrotspeed = 0.0f;<span class="kom">// Rychlost x rotace</span></p>
+<p class="src0">GLfloat yrotspeed = 0.0f;<span class="kom">// Rychlost y rotace</span></p>
+<p></p>
+<p class="src0">GLfloat zoom = -7.0f;<span class="kom">// Hloubka v obrazovce</span></p>
+<p class="src0">GLfloat height = 2.0f;<span class="kom">// Výška míče nad scénou</span></p>
+<p></p>
+<p class="src0">GLuint texture[3];<span class="kom">// 3 textury</span></p>
+
+<p>Vytváření lineárně filtrovaných textur z bitmap je standardní, v předchozích lekcích jsme jej používali velice často, takže ho sem nebudu opisovat. Na obrázcích vidíte texturu míče, podlahy a světla odráženého od míče.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_26_tex_mic.jpg" width="128" height="128" alt="Textura míče" />
+<img src="images/nehe_tut/tut_26_tex_podlaha.jpg" width="128" height="128" alt="Textura podlahy" />
+<img src="images/nehe_tut/tut_26_tex_svetlo.jpg" width="128" height="128" alt="Textura světla odráženého od míče" />
+</div>
+
+<p>Inicializace OpenGL.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Loading textur</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Vyhlazené stínování</span></p>
+<p class="src1">glClearColor(0.2f, 0.5f, 1.0f, 1.0f);<span class="kom">// Světle modré pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+
+<p>Příkaz glClearStencil() definuje chování funkce glClear() při mazání stencil bufferu. V tomto případě ho budeme vyplňovat nulami.</p>
+
+<p class="src1">glClearStencil(0);<span class="kom">// Nastavení mazání stencil bufferu</span></p>
+<p></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolí testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Perspektivní korekce</span></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Mapování textur</span></p>
+
+<p>Nastavíme světla. Pro okolní použijeme hodnoty z pole LightAmb[], rozptylové světlo definujeme pomocí LightDif[] a pozici z LightPos[]. Nakonec povolíme světla. Pokud bychom dále v kódu chtěli vypnout všechna světla, použili bychom glDisable(GL_LIGHTING), ale při vypínání jenom jednoho postačí pouze glDisable(GL_LIGHT(0až7)). GL_LIGHTING v parametru zakazuje globálně všechna světla.</p>
+
+<p class="src1">glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);<span class="kom">// Okolní</span></p>
+<p class="src1">glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);<span class="kom">// Rozptylové</span></p>
+<p class="src1">glLightfv(GL_LIGHT0, GL_POSITION, LightPos);<span class="kom">// Pozice</span></p>
+<p></p>
+<p class="src1">glEnable(GL_LIGHT0);<span class="kom">// Povolí světlo 0</span></p>
+<p class="src1">glEnable(GL_LIGHTING);<span class="kom">// Povolí světla</span></p>
+
+<p>Dále vytvoříme a nastavíme objekt quadraticu. Vygenerujeme mu normály pro světlo a texturové koordináty, jinak by měl ploché stínování a nešly by na něj namapovat textury.</p>
+
+<p class="src1">q = gluNewQuadric();<span class="kom">// Nový quadratic</span></p>
+<p></p>
+<p class="src1">gluQuadricNormals(q, GL_SMOOTH);<span class="kom">// Normály pro světlo</span></p>
+<p class="src1">gluQuadricTexture(q, GL_TRUE);<span class="kom">// Texturové koordináty</span></p>
+
+<p>Nastavíme mapování textur na vykreslované objekty a to tak, aby při natáčení míče byla viditelná stále stejná část textury. Zatím ho nezapínáme.</p>
+
+<p class="src1">glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);<span class="kom">// Automatické mapování textur</span></p>
+<p class="src1">glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);<span class="kom">// Automatické mapování textur</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Následující funkci budeme volat pro vykreslení plážového míče. Bude jím quadraticová koule s nalepenou texturou. Nastavíme barvu na bílou, aby se textura nezabarvovala, poté zvolíme texturu a vykreslíme kouli o poloměru 0.35 jednotek, s 32 rovnoběžkami a 16 poledníky.</p>
+
+<p class="src0">void DrawObject()<span class="kom">// Vykreslí plážový míč</span></p>
+<p class="src0">{</p>
+<p class="src1">glColor3f(1.0f, 1.0f, 1.0f);<span class="kom">// Bílá barva</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[1]);<span class="kom">// Zvolí texturu míče</span></p>
+<p class="src1">gluSphere(q, 0.35f, 32, 16);<span class="kom">// Nakreslí kouli</span></p>
+
+<p>Po vykreslení první koule vybereme texturu světla, nastavíme opět bílou barvu, ale tentokrát s 40% alfou. Povolíme blending, nastavíme jeho funkci založenou na zdrojové alfa hodnotě, zapneme kulové mapování textur a nakreslíme stejnou kouli jako před chvílí. Výsledkem je simulované odrážení světla od míče, ale vlastně se jedná jen o světlé body namapované na plážový míč. Protože je povoleno kulové mapování, textura je vždy natočena k pozorovateli stejnou částí bez ohledu na natočení míče. Je také zapnutý blending takže nová textura nepřebije starou (jednoduchá forma multitexturingu).</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[2]);<span class="kom">// Zvolí texturu světla</span></p>
+<p class="src1">glColor4f(1.0f, 1.0f, 1.0f, 0.4f);<span class="kom">// Bílá barva s 40% alfou</span></p>
+<p></p>
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapne blending</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA, GL_ONE);<span class="kom">// Mód blendingu</span></p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_GEN_S);<span class="kom">// Zapne kulové mapování</span></p>
+<p class="src1">glEnable(GL_TEXTURE_GEN_T);<span class="kom">// Zapne kulové mapování</span></p>
+<p></p>
+<p class="src1">gluSphere(q, 0.35f, 32, 16);<span class="kom">// Stejná koule jako před chvílí</span></p>
+
+<p>Vypneme kulové mapování a blending.</p>
+
+<p class="src1">glDisable(GL_TEXTURE_GEN_S);<span class="kom">// Vypne kulové mapování</span></p>
+<p class="src1">glDisable(GL_TEXTURE_GEN_T);<span class="kom">// Vypne kulové mapování</span></p>
+<p></p>
+<p class="src1">glDisable(GL_BLEND);<span class="kom">// Vepne blending</span></p>
+<p class="src0">}</p>
+
+<p>Následující funkce kreslí podlahu, nad kterou se míč vznáší. Vybereme texturu podlahy a na ose z vykreslíme čtverec s jednoduchou texturou.</p>
+
+<p class="src0">void DrawFloor()<span class="kom">// Vykreslí podlahu</span></p>
+<p class="src0">{</p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Zvolí texturu podlahy</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníků</span></p>
+<p class="src2">glNormal3f(0.0, 1.0, 0.0);<span class="kom">// Normálová vektor míří vzhůru</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f);<span class="kom">// Levý dolní bod textury</span></p>
+<p class="src2">glVertex3f(-2.0, 0.0, 2.0);<span class="kom">// Levý dolní bod podlahy</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f);<span class="kom">// Levý horní bod textury</span></p>
+<p class="src2">glVertex3f(-2.0, 0.0,-2.0);<span class="kom">// Levý horní bod podlahy</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f);<span class="kom">// Pravý horní bod textury</span></p>
+<p class="src2">glVertex3f( 2.0, 0.0,-2.0);<span class="kom">// Pravý horní bod podlahy</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f);<span class="kom">// Pravý dolní bod textury</span></p>
+<p class="src2">glVertex3f( 2.0, 0.0, 2.0);<span class="kom">// Pravý dolní bod podlahy</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src0">}</p>
+
+<p>Na tomto místě zkombinujeme všechny objekty a obrázky tak, abychom vytvořili výslednou scénu. Začneme mazáním obrazovky (GL_COLOR_BUFFER_BIT) na výchozí modrou barvu, hloubkového bufferu (GL_DEPTH_BUFFER_BIT) a stencil bufferu (GL_STENCIL_BUFFER_BIT). Při čištění stencil bufferu ho vyplňujeme nulami.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslí výslednou scénu</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Smaže obrazovku, hloubkový buffer a stencil buffer</span></p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);</p>
+
+<p>Nadefinujeme rovnici ořezávací plochy (clipping plane equation). Bude použita při vykreslení odraženého míče. Hodnota na ose y je záporná, to znamená, že uvidíme pixely jen pokud jsou kresleny pod podlahou nebo na záporné části osy y. Při použití této rovnice se nezobrazí nic, co vykreslíme nad podlahou (odraz nemůže vystoupit ze zrcadla). Více později.</p>
+
+<p class="src1"><span class="kom">// Rovnice ořezávací plochy</span></p>
+<p class="src1">double eqr[] = { 0.0f, -1.0f, 0.0f, 0.0f };<span class="kom">// Použito pro odražený objekt</span></p>
+
+<p>Všemu, co bylo doposud probráno v této lekci byste měli rozumět. Teď přijde něco &quot;maličko&quot; horšího. Potřebujeme nakreslit odraz míče a to tak, aby se na obrazovce zobrazoval jenom na těch pixelech, kde je podlaha. K tomu využijeme stencil buffer. Pomocí funkce glClear() jsme ho vyplnili samými nulami. Různými nastaveními, které si vysvětlíme dále, docílíme toho, že se podlaha sice nezobrazí na obrazovce, ale na místech, kde se měla vykreslit se stencil buffer nastaví do jedničky. Pro pochopení si představte, že je to obrazovka v paměti, jejíž pixely jsou rovny jedničce, pokud se na nich objekt vykresluje a nule (nezměněný) pokud ne. Na místa, kde je stencil buffer v jedničce vykreslíme plochý odraz míče, ale ne do stencil bufferu - viditelně na obrazovku. Odraz vlastně můžeme vykreslit i kdekoli jinde, ale pouze tady bude vidět. Nakonec klasickým způsobem vykreslíme všechno ostatní. To je asi všechno, co byste měli o stencil bufferu prozatím vědět.</p>
+
+<p>Nyní už konkrétně ke kódu. Resetujeme matici modelview a potom přesuneme scénu o šest jednotek dolů a o zoom do hloubky. Nejlepší vysvětlení pro translaci dolů bude na příkladě. Vezměte si list papíru a umístěte jej rovnoběžně se zemí do úrovně očí. Neuvidíte nic víc než tenkou linku. Posunete-li jím o maličko dolů, spatříte celou plochu, protože se na něj budete dívat více ze shora namísto přímo na okraj. Rozšířil se zorný úhel.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(0.0f, -0.6f, zoom);<span class="kom">// Zoom a vyvýšení kamery nad podlahu</span></p>
+
+<p>Novým příkazem definujeme barevnou masku pro vykreslované barvy. Funkci se předávají čtyři parametry reprezentující červenou, zelenou, modrou a alfu. Pokud například červenou složku nastavíme na jedna (GL_TRUE) a všechny ostatní na nulu (GL_FALSE), tak se bude moci zobrazit pouze červená barva. V opačném případě (0,1,1,1) se budou zobrazovat všechny barvy mimo červenou. Asi tušíte, že jsou barvy implicitně nastaveny tak, aby se všechny zobrazovaly. No, a protože v tuto chvíli nechceme nic zobrazovat zakážeme všechny barvy.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_26_color_1111.jpg" width="63" height="63" alt="glColorMask(1,1,1,1);" />
+<img src="images/nehe_tut/tut_26_color_1000.jpg" width="63" height="63" alt="glColorMask(1,0,0,0);" />
+<img src="images/nehe_tut/tut_26_color_0111.jpg" width="63" height="63" alt="glColorMask(0,1,1,1);" />
+</div>
+
+<p class="src1">glColorMask(0,0,0,0);<span class="kom">// Nastaví masku barev, aby se nic nezobrazilo</span></p>
+
+<p>Začínáme pracovat se stencil bufferem. Napřed potřebujeme získat obraz podlahy vyjádřený jedničkami (viz. výše). Začneme zapnutím stencilového testování (stencil testing). Jakmile je povoleno jsme schopni modifikovat stencil buffer.</p>
+
+<p class="src1">glEnable(GL_STENCIL_TEST);<span class="kom">// Zapne stencil buffer pro paměťový obraz podlahy</span></p>
+
+<p>Následující příkaz je možná těžko pochopitelný, ale určitě se velice těžko vysvětluje. Funkce glStencilFunc(GL_ALWAYS,1,1) oznamuje OpenGL, jaký typ testu chceme použít na každý pixel při jeho vykreslování. GL_ALWAYS zaručí, že test proběhne vždy. Druhý parametr je referenční hodnotou a třetí parametr je maska. U každého pixelu se hodnota masky ANDuje s referenční hodnotou a výsledek se uloží do stencil bufferu. V našem případě se do něj umístí pokaždé jednička (reference &amp; maska = 1 &amp; 1 = 1). Nyní víme, že na souřadnicích pixelu na obrazovce, kde by se vykreslil objekt, bude ve stencil bufferu jednička.</p>
+
+<p>Pozn.: Stencilové testy jsou vykonávány na pixelech pokaždé, když se objekt vykresluje na scénu. Referenční hodnota ANDovaná s hodnotou masky se testuje proti aktuální hodnotě ve stencil bufferu ANDované s hodnotou masky.</p>
+
+<p class="src1">glStencilFunc(GL_ALWAYS, 1, 1);<span class="kom">// Pokaždé proběhne, reference, maska</span></p>
+
+<p>GlStencilOp() zpracuje tři rozdílné požadavky založené na stencilových funkcích, které jsme se rozhodli použít. První parametr říká OpenGL, co má udělat pokud test neuspěje. Protože je nastaven na GL_KEEP nechá hodnotu stencil bufferu tak, jak právě je. Nicméně test uspěje vždy, protože máme funkci nastavenu na GL_ALWAYS. Druhý parametr určuje co dělat, pokud stencil test proběhne, ale hloubkový test bude neúspěšný. Tato situace by nastala například, když by se objekt vykreslil za jiným objektem a hloubkový test by nepovolil jeho vykreslení. Opět může být ignorován, protože hned následujícím příkazem hloubkové testy vypínáme. Třetí parametr je pro nás důležitý. Definuje, co se má vykonat, pokud test uspěje (uspěje vždycky). V našem případě OpenGL nahradí nulu ve stencil bufferu na jedničku (referenční hodnota ANDovaná s maskou = 1).</p>
+
+<p class="src1">glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);<span class="kom">// Vykreslením nastavíme konkrétní bit ve stencil bufferu na 1</span></p>
+
+<p>Po nastavení stencilových testů vypneme hloubkové testy a zavoláme funkci pro vykreslení podlahy.</p>
+
+<p class="src1">glDisable(GL_DEPTH_TEST);<span class="kom">// Vypne testování hloubky</span></p>
+<p></p>
+<p class="src1">DrawFloor();<span class="kom">// Vykreslí podlahu (do stencil bufferu ne na scénu)</span></p>
+
+<p>Takže teď máme ve stencil bufferu neviditelnou masku podlahy. Tak dlouho, jak bude stencilové testování zapnuté, budeme moci zobrazovat pixely pouze tam, kde je stencil buffer v jedničce (tam kde byla vykreslena podlaha). Zapneme hloubkové testování a nastavíme masku barev zpět do jedniček. To znamená, že se od teď vše vykreslované opravdu zobrazí.</p>
+
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glColorMask(1, 1, 1, 1);<span class="kom">// Povolí zobrazování barev</span></p>
+
+<p>Namísto užití GL_ALWAYS pro stencilovou funkci, použijeme GL_EQUAL. Reference i maska zůstávají v jedničce. Pro stencilové operace nastavíme všechny parametry na GL_KEEP. Vykreslované pixely se zobrazí na obrazovku POUZE tehdy, když je na jejich souřadnicích hodnota stencilu v jedničce (reference ANDovaná s maskou (1), které jsou rovny (GL_EQUAL) hodnotě stencil bufferu ANDované s maskou (také 1)). GL_KEEP zajistí, že se hodnoty ve stencil bufferu nebudou modifikovat.</p>
+
+<p class="src1">glStencilFunc(GL_EQUAL, 1, 1);<span class="kom">// Zobrazí se pouze pixely na jedničkách ve stencil bufferu (podlaha)</span></p>
+<p class="src1">glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);<span class="kom">// Neměnit obsah stencil bufferu</span></p>
+
+<p>Zapneme ořezávací plochu zrcadla, která je definována rovnicí uloženou v poli eqr[]. Umožňuje, aby byl odraz objektu vykreslen pouze směrem dolů od podlahy (v podlaze). Touto cestou nebude moci odraz míče vystoupit do &quot;reálného světa&quot;. Pokud nechápete, co je tímto míněno zakomentářujte v kódu řádek glEnable(GL_CLIP_PLANE0), zkompilujte program a zkuste projít reálným míčem skrz podlahu. Pokud clipping nebude zapnutý uvidíte, jak při vstupu míče do podlahy jeho odraz vystoupí nahoru nad podlahu. Vše vidíte na obrázku. Mimochodem, všimněte si, že vystoupivší obraz je pořád vidět jen tam, kde je ve stencil bufferu obraz podlahy.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_26_clip.jpg" width="80" height="80" alt="Clipping zapnutý" />
+<img src="images/nehe_tut/tut_26_no_clip.jpg" width="80" height="80" alt="Clipping vypnutý" />
+</div>
+
+<p>Po zapnutí ořezávací plochy 0 (obyčejně jich může být 0 až 5) jí předáme parametry rovnice uložené v eqr[].</p>
+
+<p class="src1">glEnable(GL_CLIP_PLANE0);<span class="kom">// Zapne ořezávací testy pro odraz</span></p>
+<p class="src1">glClipPlane(GL_CLIP_PLANE0, eqr);<span class="kom">// Rovnice ořezávací roviny</span></p>
+
+<p>Zálohujeme aktuální stav matice, aby ji změny trvale neovlivnily. Zadáním mínus jedničky do glScalef() obrátíme směr osy y. Do této chvíle procházela zezdola nahoru, nyní naopak. Stejný efekt by měla rotace o 180°. Vše je teď invertované jako v zrcadle. Pokud něco vykreslíme nahoře, zobrazí se to dole (zrcadlo je vodorovně ne svisle), rotujeme-li po směru, objekt se otočí proti směru hodinových ručiček a podobně. Tento stav se může zrušit buď opětovným voláním glScalef(), které provede opětovnou inverzi nebo POPnutím matice.</p>
+
+<p class="src1">glPushMatrix();<span class="kom">// Záloha matice</span></p>
+<p class="src2">glScalef(1.0f, -1.0f, 1.0f);<span class="kom">// Zrcadlení směru osy y</span></p>
+
+<p>Nadefinujeme pozici světla podle pole LightPos[]. Na reálný míč svítí z pravé horní strany, ale protože se i poloha světla zrcadlí, tak na odraz bude zářit zezdola.</p>
+
+<p class="src2">glLightfv(GL_LIGHT0, GL_POSITION, LightPos);<span class="kom">// Umístění světla</span></p>
+
+<p>Přesuneme se na ose y nahoru nebo dolů v závislosti na proměnné height. Opět je translace zrcadlena, takže pokud se přesuneme o pět jednotek nad podlahu budeme vlastně o pět jednotek pod podlahou. Stejným způsobem pracují i rotace. Nakonec nakreslíme objekt plážového míče a POPneme matici. Tím zrušíme všechny změny od volání glPushMatrix().</p>
+
+<p class="src2">glTranslatef(0.0f, height, 0.0f);<span class="kom">// Umístění míče</span></p>
+<p class="src2">glRotatef(xrot, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace na ose x</span></p>
+<p class="src2">glRotatef(yrot, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace na ose y</span></p>
+<p></p>
+<p class="src2">DrawObject();<span class="kom">// Vykreslí míč (odraz)</span></p>
+<p></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnoví matici</span></p>
+
+<p>Vypneme ořezávací testy, takže se budou zobrazovat i objekty nad podlahou. Také vypneme stencil testy, abychom mohli vykreslovat i jinam než na pixely, které byly modifikovány podlahou.</p>
+
+<p class="src1">glDisable(GL_CLIP_PLANE0);<span class="kom">// Vypne ořezávací rovinu</span></p>
+<p class="src1">glDisable(GL_STENCIL_TEST);<span class="kom">// Už nebudeme potřebovat stencil testy</span></p>
+
+<p>Připravíme program na vykreslení podlahy. Opět umístíme světlo, ale tak, aby už jeho pozice nebyla zrcadlena. Osa y je sice už v pořádku, ale světlo je stále vpravo dole.</p>
+
+<p class="src1">glLightfv(GL_LIGHT0, GL_POSITION, LightPos);<span class="kom">// Umístění světla</span></p>
+
+<p>Zapneme blending, vypneme světla (globálně) a nastavíme 80% průhlednost bez změny barev textur (bílá nepřidává barevný nádech). Mód blendingu je nastaven pomocí glBlendFunc(). Poté vykreslíme částečně průhlednou podlahu. Asi nechápete, proč jsme napřed kreslili odraz a až poté zrcadlo. Je to proto, že chceme, aby byl odraz míče smíchán s barvami podlahy. Pokud se díváte do modrého zrcadla, tak také očekáváte trochu namodralý odraz. Vykreslení míče napřed způsobí zabarvení podlahou. Efekt je více reálný.</p>
+
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapne blending, jinak by se odraz míče nezobrazil</span></p>
+<p class="src1">glDisable(GL_LIGHTING);<span class="kom">// Kvůli blendingu vypneme světla</span></p>
+<p></p>
+<p class="src1">glColor4f(1.0f, 1.0f, 1.0f, 0.8f);<span class="kom">// Bílá barva s 80% průhledností</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);<span class="kom">// Funkce na bázi alfy zdroje a jedna mínus alfy cíle</span></p>
+<p></p>
+<p class="src1">DrawFloor();<span class="kom">// Vykreslí podlahu</span></p>
+
+<p>A konečně vykreslíme reálný míč. Napřed ale zapneme světla (pozice už je nastavená). Kdybychom nevypnuli blending, míč by při průchodu podlahou vypadal jako odraz. To nechceme.</p>
+
+<p class="src1">glEnable(GL_LIGHTING);<span class="kom">// Zapne světla</span></p>
+<p class="src1">glDisable(GL_BLEND);<span class="kom">// Vypne blending</span></p>
+
+<p>Tento míč už narozdíl od jeho odrazu neořezáváme. Kdybychom používali clipping, nezobrazil by se pod podlahou. Docílili bychom toho definováním hodnoty +1.0f na ose y u rovnice ořezávací roviny. Pro toto demo není žádný důvod, abychom míč nemohli vidět pod podlahou. Všechny translace i rotace zůstávají stejné jako minule s tím rozdílem, že nyní už jde osa y klasickým směrem. Když posuneme reálný míč dolů, odraz jde nahoru a naopak.</p>
+
+<p class="src1">glTranslatef(0.0f, height, 0.0f);<span class="kom">// Umístění míče</span></p>
+<p class="src1">glRotatef(xrot, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace na ose x</span></p>
+<p class="src1">glRotatef(yrot, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace na ose y</span></p>
+<p></p>
+<p class="src1">DrawObject();<span class="kom">// Vykreslí míč</span></p>
+
+<p>Zvětšíme hodnoty natočení míče a jeho odrazu o rychlost rotací. Před návratem z funkce zavoláme glFlush(), které počká na ukončení renderingu. Prevence mihotání na pomalejších grafických kartách.</p>
+
+<p class="src1">xrot += xrotspeed;<span class="kom">// Zvětší natočení</span></p>
+<p class="src1">yrot += yrotspeed;<span class="kom">// Zvětší natočení</span></p>
+<p></p>
+<p class="src1">glFlush();<span class="kom">// Vyprázdní pipeline</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Všechno v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Následující funkce testuje stisk kláves. Voláme ji periodicky v hlavní smyčce WinMain(). Šipkami ovládáme rychlost rotace míče, klávesy A a Z přibližují/oddalují scénu, Page Up s Page Down umožňují změnit výšku plážového míče nad podlahou. Klávesa ESC plní stále svoji funkci, ale její umístění zůstalo ve WinMain().</p>
+
+<p class="src0">void ProcessKeyboard()<span class="kom">// Ovládání klávesnicí</span></p>
+<p class="src0">{</p>
+<p class="src1">if (keys[VK_RIGHT]) yrotspeed += 0.08f;<span class="kom">// Šipka vpravo zvýší rychlost y rotace</span></p>
+<p class="src1">if (keys[VK_LEFT]) yrotspeed -= 0.08f;<span class="kom">// Šipka vlevo sníží rychlost y rotace</span></p>
+<p class="src1">if (keys[VK_DOWN]) xrotspeed += 0.08f;<span class="kom">// Šipka dolů zvýší rychlost x rotace</span></p>
+<p class="src1">if (keys[VK_UP]) xrotspeed -= 0.08f;<span class="kom">// Šipka nahoru sníží rychlost x rotace</span></p>
+<p></p>
+<p class="src1">if (keys['A']) zoom +=0.05f;<span class="kom">// A přiblíží scénu</span></p>
+<p class="src1">if (keys['Z']) zoom -=0.05f;<span class="kom">// Z oddálí scénu</span></p>
+<p></p>
+<p class="src1">if (keys[VK_PRIOR]) height += 0.03f;<span class="kom">// Page Up zvětší vzdálenost míče nad podlahou</span></p>
+<p class="src1">if (keys[VK_NEXT]) height -= 0.03f;<span class="kom">// Page Down zmenší vzdálenost míče nad podlahou</span></p>
+<p class="src0">}</p>
+
+<p>V CreateGLWindow() je úplně miniaturní změna, nicméně by bez ní program nefungoval. Ve struktuře PIXELFORMATDESCRIPTOR pfd nastavíme číslo, které vyjadřuje počet bitů stencil bufferu. Ve všech minulých lekcích jsme ho nepotřebovali, takže mu byla přiřazena nula. Při použití stencil bufferu MUSÍ být počet jeho bitů větší nebo roven jedné! Nám stačí jeden bit.</p>
+
+<p class="src0"><span class="kom">// Uprostřed funkce CreateGLWindow()</span></p>
+<p></p>
+<p class="src1">static PIXELFORMATDESCRIPTOR pfd=<span class="kom">// Oznamuje Windows jak chceme vše nastavit</span></p>
+<p class="src1">{</p>
+<p class="src2">sizeof(PIXELFORMATDESCRIPTOR),<span class="kom">// Velikost struktury</span></p>
+<p class="src2">1,<span class="kom">// Číslo verze</span></p>
+<p class="src2">PFD_DRAW_TO_WINDOW |<span class="kom">// Podpora okna</span></p>
+<p class="src2">PFD_SUPPORT_OPENGL |<span class="kom">// Podpora OpenGL</span></p>
+<p class="src2">PFD_DOUBLEBUFFER,<span class="kom">// Podpora double bufferingu</span></p>
+<p class="src2">PFD_TYPE_RGBA,<span class="kom">// RGBA formát</span></p>
+<p class="src2">bits,<span class="kom">// Barevná hloubka</span></p>
+<p class="src2">0, 0, 0, 0, 0, 0,<span class="kom">// Bity barev ignorovány</span></p>
+<p class="src2">0,<span class="kom">// Žádný alfa buffer</span></p>
+<p class="src2">0,<span class="kom">// Ignorován shift bit</span></p>
+<p class="src2">0,<span class="kom">// Žádný akumulační buffer</span></p>
+<p class="src2">0, 0, 0, 0,<span class="kom">// Akumulační bity ignorovány</span></p>
+<p class="src2">16,<span class="kom">// 16 bitový z-buffer</span></p>
+<p class="src2"><span class="warning">1</span>,<span class="kom">// Stencil buffer <span class="warning">(DŮLEŽITÉ)</span></span></p>
+<p class="src2">0,<span class="kom">// Žádný auxiliary buffer</span></p>
+<p class="src2">PFD_MAIN_PLANE,<span class="kom">// Hlavní vykreslovací vrstva</span></p>
+<p class="src2">0,<span class="kom">// Rezervováno</span></p>
+<p class="src2">0, 0, 0<span class="kom">// Maska vrstvy ignorována</span></p>
+<p class="src1">};</p>
+
+<p>Jak jsem se zmínil výše, test stisknutí kláves už nebudeme vykonávat přímo ve WinMain(), ale ve funkci ProcessKeyboard(), kterou voláme hned po vykreslení scény.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p></p>
+<p class="src5">DrawGLScene();<span class="kom">// Vykreslí scénu</span></p>
+<p class="src5">SwapBuffers(hDC);<span class="kom">// Prohodí buffery</span></p>
+<p></p>
+<p class="src5">ProcessKeyboard();<span class="kom">// Vstup z klávesnice</span></p>
+
+<p>Doufám, že jste si užili tuto lekci. Vím, že probírané téma nebylo zrovna nejjednodušší, ale co se dá dělat? Byl to jeden z nejtěžších tutoriálů, jak jsem kdy napsal. Pro mě je celkem snadné pochopit, co který řádek dělá a který příkaz se musí použít, aby vznikl požadovaný efekt. Ale sedněte si k počítači a pokuste se to vysvětlit lidem, kteří neví, co to je stencil buffer a možná o něm dokonce v životě neslyšeli (Překl.: Můj případ). Osobně si myslím, že i když mu napoprvé neporozumíte, po druhém přečtení by mělo být vše jasné...</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span> &amp; Milan Turek <span class="transform_email">&lt;nalim.kerut (zavináč) email.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson26.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson26_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson26.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson26.zip">Delphi</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson26.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson26.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson26.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson26.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:grayfox@pobox.sk">Gray Fox</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson26.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson26.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_26_big.jpg" class="nehe_velky" alt="Lekce 26" /></div>
+<p class="okolni_lekce"><a href="tut_25.php">&lt;&lt;&lt; Lekce 25</a> | <a href="tut_27.php">Lekce 27 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">25.01.2007 - 18:47:51</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_26.php&j=0">Zakřivené zrcadlo</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Martin</div>
+<div class="d_o_datumcas">17.06.2007 - 14:28:10</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_26.php&j=1">Chybicka se vloudila</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jan16</div>
+<div class="d_o_datumcas">09.09.2007 - 19:04:16</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_26.php&j=2">Re: Chybicka se vloudila</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Martin</div>
+<div class="d_o_datumcas">23.09.2007 - 08:38:48</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_26.php&j=3">Opraveno</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_26.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

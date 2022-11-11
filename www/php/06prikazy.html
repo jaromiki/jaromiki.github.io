@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h2 >Príkazy jazyka PHP</h2>
+Je jasné, že stránka sa vytvára postupnosťou príkazov. Ako teda napísať korektný príkaz.<br>
+V jazyku PHP podobne ako v C++ poznáme tieto typy príkazov:
+<ul><li>výrazový - stačí za ľubovoľný výraz zapísať bodkočiarku a príkaz je hotový.
+	<li>zložený príkaz
+	<li>príkazy vetvenia - if, switch
+	<li>príkazy cyklu - for, while, foreach
+</ul>	
+<dl><dt>Výrazové príkazy
+	<dd>Príklady:
+	<br>$x = $y = 3.14*2; 
+	<br>echo "Ahoj";
+	<br>5/2; &nbsp; //prikaz je spravny, ale nema zmysel
+	<br>$i++;
+	<dt>Zložený príkaz, blok
+	<dd>podobne ako v pascale aj v PHP-čku sa na niektorom mieste vyžaduje 1 príkaz. Ak tam potrebujeme 
+		vložiť príkazov viac, uzavrieme ich zátvorkami a vznikne jeden zložený príkaz. Zložený príkaz
+		ktorý má deklaračnú časť sa častejšie nazýva blok. 
+		<br>Syntax:
+		<br> &nbsp; {príkazy }
+		<br> &nbsp; Pozn. - za } sa nepíše bodkočiarka, aj posledný príkaz pred } musí mať bodkočiarku
+		<br> &nbsp; Príklad: {$pom=$x; $x=$y; $y=$pom;}
+	<dt>Vetvenie programu
+	<dd>používame if, switch
+		<dl><dt>Príkaz if
+			<dd><dl><dt>Syntax
+					<dd><font color="Red"><b>if (</b></font>celociseny_vyraz<font color="Red"><b>)</b></font> prikaz1
+					<br><font color="Red"><b>if (</b></font>celociseny_vyraz<font color="Red"><b>)</b></font> prikaz1 <font color="Red"><b>else</b></font> prikaz2
+					<dt>Sémantika
+					<dd>ak je celociseny_vyraz rôzny od nuly urobí sa príkaz1, ak je =0 urobí sa príkaz2
+				</dl>
+				Relačné operátory: &gt;, &gt;=, &lt;, &lt;=, ==, !=
+				Logické operátory na tvorbu zložitých logických výrazov (samozrejme, že logické výrazy sú v C celočíselné):
+				<br>&amp;&amp;, ||
+				<br>Pozn.
+				<br>Aj pred else musí byť bodkočiarka
+			<dt>Príklady:
+			<dd><ol>
+				<li>Načítaj rok a zisti čí je rok priestupný
+				<br><img src="obr1.bmp">
+				<li>Načítaj celé číslo a vypíš najbližšie celé delitelné 3
+				<li>Načítaj tri celé čísla a vypíš ich utriedené	
+				</ol>	
+			<dt>Príkaz switch - obdoba pascalského case
+			<dd><dl><dt>Syntax
+					<dd><font color="Red"><b>switch (</b></font>celociseny_vyraz<font color="Red"><b>)</b></font>
+					<br><font color="Red"><b>{ case</b></font> konst_vyraz1 <font color="Red"><b>:</b></font> prikazy1
+					<br><font color="Red"><b> case</b></font> konst_vyraz2 <font color="Red"><b>:</b></font> prikazy2
+					<br> ...
+					<br><font color="Red"><b> default:</b></font> prikazy
+					<br>} 
+					<br>Vetva default je nepovinná, oproti pascalu v každej vetve môže byť aj viac príkazov.
+					<dt>Sémantika
+					<dd><ul>
+						<li>Vyhodnotí sa cečíselný výraz
+						<li>hľadá konšt. výraz požadovanej hodnoty
+						<li>ak nájde pokračuje od príkazov v danej vetve (vzkoná aj príkazy vo vetvách pod ňou)
+						<li>ak nenájde pokračuje od vetvy default 
+						<li>ak vetva defaut nie je nevykoná sa nič
+						</ul>
+						Pozn.:
+						<br>Ak chceme podobný príkaz ako pascalský case musíme na konci každej vetvy použiť príkaz 
+						<br>break;
+						<br>ktorý ukončí vykonávanie zloženého príkazu
+						<br>Príklad
+						<table width="60%" bgcolor="#c0c0c0" border="2"  bordercolorlight="ffffff" align="center">
+						<tr><th bgcolor="Blue" align="left"> switch</th></tr>
+						<tr><td>
+					<pre><code>
+    switch n
+	{
+	 case 1: echo ("vyborny");break;
+	 case 2: echo ("chvalitebny");break;
+	 case 3: echo ("dobry");break;
+	 case 4: echo ("dostatocny");break;
+	 case 5: echo ("nedostatocny");break;
+	 default: echo ("-----------");break;
+	}
+			</code></pre>
+					</td></tr>
+					</table>
+				<dt>Úlohy:
+				<dd>Načítaj dátum - den, mesiac, rok a zisti, či je korektný.
+				<br>Načítaj 3 reálne čísla a vypíš ich utriedené
+				<br>Načítaj znak a vypíš či ide o spoluhlásku, samohlásku, číslicu, iný (špec.) znak
+			</dl>
+	</dl>
+	<dt>Vetvenie programu
+	<dd>Cykly používame na opakované vykonávanie nejakého príkazu. Jazyk PHP podobne ako pascal pozná 3 druhy cyklov.
+		<dl><dt><font size="+1" color="Blue">Cyklus for</font>  
+			<dd><dl><dt>Syntax:
+					<dd><font color="Red"><b>for (</b></font>start_vyraz <font color="Red"><b>;</b></font>
+													 podm <font color="Red"><b>;</b></font>
+													 iter_vyraz <font color="Red"><b>)</b></font> prikaz
+						<br>start_vyraz - ľubovoľný výraz, ktorý sa vykoná pred cyklom (iba raz
+						<br>podm - podmienka zotrvania cyklu - celočíselný výraz
+						<br>iter_vyraz - ľubovoľný výraz, ktorý sa vykoná vždy po vykonaní príkazu
+						<br>prikaz - ľubovoľný príkaz, ktorý sa bude opakovane vykonávať 
+					<dt>Sémantika:
+					<dd><ol>
+						<li>vyhodnotí sa startovací výraz
+						<li>vyhodnotí sa podmienka
+						<li>ak podm != 0 tak sa urobí príkaz , potom iteračný výraz a potom späť na 2.
+						<li>ak podm = 0 cyklus končí 
+						</ol>	
+					<dt>Poznámky:
+					<dd> ... všetky údaje v zátvorke sú nepovinné, t.j. možno ich vynechať, dve bodkočiarky sú nutné
+					<br> &nbsp; &nbsp; &nbsp;for (;;) vypocet; // je nekonečný cyklus
+					<br> ... ak chýba podmienka je implicitne 1 teda TRUE
+					<br> &nbsp; &nbsp; &nbsp;tento cyklus spočíta čísla 1 - 10
+					<br> &nbsp; &nbsp; &nbsp;premenná i je viditelná jen v cykle, po skončení cyklu neexistuje
+					<br> ... je zvykom za for písať medzeru (pre odlíšenie od podprogramu, kde medzeru nedávame)
+					<br> ... ak chceme vynechať príkaz musíme dať prázdny príkaz
+					<br> ... ide o veľmi mohutný príkaz, ktorý obsahuje väčšie množstvo kódu, preto ak sa dá, nahrádzame ho cyklami while, resp. do while
+					<br>Úlohy:
+					<ol>
+					<li>Načítaj číslo prirodzené n, načítaj znak z a vypíš do riadku n znakov z 
+					<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš obdĺžnik tvorený znakmi z 
+					<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš rovnobežník (vrch posunutý vľavo) tvorený znakmi z 
+					<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš rovnobežník (vrch posunutý vpravo) tvorený znakmi z 
+					<li>Načítaj prirodzené číslo a načítaj znak z a vypíš a-riadkový pravoúhly trojuholník tvorený znakmi z 
+					<code>
+					<br> *
+					<br> **
+					<br> ***
+					<br> ...
+					</code>
+					<li>Načítaj prirodzené číslo a načítaj znak z a vypíš a-riadkový pravoúhly trojuholník tvorený znakmi z 
+					<code>
+					<br> &nbsp; &nbsp; *
+					<br> &nbsp; &nbsp;**
+					<br> &nbsp; ***
+					<br> &nbsp;...
+					</code>
+					<li>Načítaj prirodzené číslo a načítaj znak z a vypíš  a-riadkovú pyramídu tvorenú znakmi z 
+			<code>
+			<br> &nbsp; &nbsp; *
+			<br> &nbsp; &nbsp;***
+			<br> &nbsp; *****
+			<br> &nbsp;.....
+			</code>
+			<li>Načítaj suma, urok, pocet_rokov a zisti koľko našetrí ak vloží suma peňazí na dobu pocet_rokov pri úroku urok
+			<li>Načítaj prirodzené číslo n a rozlož ho na súčin prvočísel 
+			<li>Načítaj prirodzené číslo n a zisti, či je prvočíslo
+			<li>Načítaj prirodzené číslo n a zisti jeho ciferný súčet
+			<li>Na vstupe je prirodzene n a za ním n celých čísel oddelených čiarkou,
+				načítajte tieto čísla a vypíšte najväčšie z nich a tiež ich priemer
+			<li>vytvorte exe z minulej úlohy a popíšte ako by sa dal použiť aby dáta čítal zo súboru
+			<li>načítaj znaky-veľké písmená z1, z2 a vypíš pod ne všetky písmená znakom z1 počínajúc a z2 končiac,
+				ak z2 &lt; z1 program vypíše ERROR
+			<li>na vstupe sú znaky ukončené enterom alebo koncom suboru načítajte znaky a vypíšte ich pod vstupné data	 	 
+			<li>na vstupe sú čísla ukončené enterom alebo koncom suboru načítajte čísla a vypíšte ich pod vstupné data
+				a do ďalšieho riadku ich spočítajte
+			<li>na vstupe je číslo pri základe (-2) napr. 11<sub>-2</sub>=1*(-2)<sup>0</sup>+1*(-2)<sup>1</sup> = 1 - 2 = -1
+				do ďalšieho riadku vypíš to číslo v 10-tkovej sústave a do ďalšieho v klasickej dvojkovej	
+			<li>načítaj prirodzené a,b a vypočítaj NSD(a,b), NSN(a,b)
+			</ol>
+		</dl>
+		<br>
+<font size="-3"></font>		
+<hr width="85%" size="3">
+<hr width="40%" size="2">
+</font>		
+<br>
+<dt><font size="+1" color="Blue">Cyklus while</font> - cyklus s podmienkou na začiatku
+<dd><dl><dt>Syntax:
+		<dd><font color="Red"><b>while (</b></font>podm <font color="Red"><b>)</b></font> prikaz
+ 		<br>podm ... ľubovoľný celočíselný výraz
+		<dt>Sémantika:
+		<dd>pokiaľ je podm != 0 vykonáva sa príkaz
+		<dt>Pozn.
+		<dd>za slovom while je zvykom písať medzeru aby sa zvýraznilo, že nejde o funkciu
+		<br>Úlohy:
+		<ol>
+			<li>načítaj prirodzené a,b a vypočítaj NSD(a,b), NSN(a,b)
+	</dl>		
+		<br>
+<font size="-3"></font>		
+<hr width="85%" size="3">
+<hr width="40%" size="2">
+</font>		
+<br>
+<dt><font size="+1" color="Blue">Cyklus do-while</font> - cyklus s podmienkou na konci
+<dd><dl><dt>Syntax:
+		<dd><font color="Red"><b>do</b></font> prikaz <font color="Red"><b>while (</b></font>podm <font color="Red"><b>)</b></font> 
+ 		<br>podm ... ľubovoľný celočíselný výraz
+		<dt>Sémantika:
+		<dd>vykoná sa príkaz
+		<br>pokiaľ je podm != 0 vykonáva sa príkaz
+		<dt>Pozn.
+		<dd>príkaz sa vykoná aspoň raz
+		<dt>Úlohy:
+		<dd><ol>
+		<li>Načítaj číslo n a zisti počet cifier v des. sústave
+		</ol>
+	</dl>	
+	<br>
+	<font size="-3"></font>		
+	<hr width="85%" size="3">
+	<hr width="40%" size="2">
+	</font>		
+	<br>
+	<dt><font size="+1" color="Blue">Príkaz break</font> - ukončí cyklus
+	<dd><dl><dt>Syntax:
+			<dd><font color="Red"><b>break;</b></font>
+			<dt>Sémantika:
+			<dd>Používa sa v zložených príkazoch na ich ukončenie a pokračovanie až za }
+			<br>Pokiaľ sa dá sa takejto konštrukcii cyklu s break vyhýbame
+		</dl>	
+	<br>
+	<hr width="85%" size="3">
+	<hr width="40%" size="2">
+	<br>
+	<dt><font size="+1" color="Blue">Príkaz continue</font> - ukončí iteráciu cyklu
+	<dd><dl><dt>Syntax:
+			<dd><font color="Red"><b>continue;</b></font>
+			<dt>Sémantika:
+			<dd>Používa sa v zložených príkazoch v cykloch na ich ukončenie návrat na začiatok príkazu cyklu
+		</dl>
+</dl> 
+
+
+</dl>
+</body>
+</html>

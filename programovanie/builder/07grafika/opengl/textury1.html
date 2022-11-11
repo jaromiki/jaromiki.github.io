@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+<dt>Pojem textura
+<dd>Textúrovanie (resp. presnejšie nanášanie textúr ) sa označuje princíp zafarbenie povrchu zobrazovacích telies rôznymi obrazcami. 
+Dôležité pritom je, že sa nijako nemení geometrické vlastnosti telies, len sa inak zobrazuje ich povrch. Obrazce, ktoré sa na povrch telies nanášajú, 
+sa nazývajú textúry (textures). Tieto textúry sú väčšinou predstavované plošnými obrázky (dvojdimenzionálne textúry), niektoré grafické systémy však 
+podporujú aj vykresľovanie jednorozmerných a dokonca trojrozmerných (objemu) textúr.
+<br>Obrazce pre textúry sa môžu vytvárať niekoľkými spôsobmi. Buď je možné použiť klasické rastrové obrázky (vzniknuté napríklad namaľuje, 
+vyfotením alebo naskenovaním), alebo sa textúra môže vytvárať pomocou rôznych algoritmov založených väčšinou na fraktálne technikách - týmto spôsobom vznikajú 
+takzvané procedurálne textúry . Procedurálne textúry možno použiť buď pre výpočet rastrových obrázkov pred vlastným vykresľovaním 
+(po výpočte obrázku sa táto textúra chová ako každý iný rastrový obrázok so všetkými výhodami i nevýhodami), alebo sa môže výpočet textúr vykonávať 
+v reálnom čase až pri vykresľovaní, pričom sa parametre výpočtu textúry nastaví podľa aktuálnej veľkosti a orientácie plôšky, na ktorú sa textúra nanáša. 
+Túto druhú možnosť však OpenGL priamo nepodporuje, výpočet procedurálnych textúr je teda nutné vykonávať "ručne". 
+<br>V ďalšom texte sa budeme najviac zaoberať textúrami reprezentovanými rastrovými obrázky, nezávisle na tom, akým spôsobom vznikli. 
+Aj keď reč bude prevažne o dvojdimenzionálnych textúrach (teda bitmapách a pixmapách ), väčšina tu popisovaných vlastností sa vzťahuje aj na jednorozmerné 
+a trojrozmerné textúry. Prípadné výnimky a odlišnosti si samozrejme postupne popíšeme. 
+<img src="obr/tehly.gif" width="230" height="230" border="0" alt="" align="left" vspace="10" hspace="10">
+Na obrázku je ukázaná dvojdimenzionálne, "ručne" nakreslená textúra v grafickom editore. Rastrové textúry budeme v demonštračných príkladoch vyrábať 
+buď programovo (rôzne šachovnice a pod), alebo ich budeme načítať z externých súborov (obrázkov typu bmp).
+<br>Podobne, ako je bitmapa či pixmap zložená zo základných rastrových elementov ( pixelov ), je textúra zložená z Texelov. 
+Pixel a texel majú rovnaké vlastnosti a podobný či dokonca ekvivalentný spôsob uloženia v pamäti. V ďalšom texte sa však budeme obidva pojmy navzájom oddeľovať, 
+tj pixel je element zobrazená na obrazovke, kdežto texel je rastrový element (väčšinou) dvojrozmerné textúry. 
+Textúrovanie potom spočíva v nanášaní Texel na opísaná povrch.
+<br>Textúru možno použiť vo všetkých prípadoch, keď je nutné vykresľovať telesá s opakujúcou sa štruktúrov. Typickým príkladom je tehlová stena, 
+ktorá je v reálnom svete zložená z jednotlivých tehál spojených maltou. Pri modelovaní tejto múru síce môžeme každú tehlu reprezentovať napríklad kvádrom 
+s vhodne zvolenou farbou, ale v prípade vykresľovanie veľkých múrov by počet vykreslovaných telies rástol príliš rýchlo, takže by sa zbytočne zaberala pamäťí, 
+a zbytočne by sa zvyšoval nárok na výpočtový čas. Ešte horšia situácia by nastala napríklad u koberca, kde by bolo nutné vytvárať všetky farebné vlákna a pod.
+V týchto prípadoch je možné stenu alebo koberec reprezentovať jednou plochou (zloženú napríklad z dvoch trojuholníkov alebo jedného štvoruholníka) 
+a na túto plochu potom naniesť predom vytvorený rastrový obrázok, ale vykreslenie bude na dnešných počítačoch dostatočne rýchle a v prípade dostatočnej 
+veľkosti (rozlíšenie) textúry aj kvalitné.
+<br>Textúry sa tiež niekedy používajú trochu iným spôsobom pre vytváranie a následné vykreslenie rôznych zložitých modelov, napríklad stromov. 
+Buď je možné strom namodelovať ako teleso obsahujúce až niekoľko tisíc polygónov, alebo je možné vytvoriť dvojrozmerný obrázok stromu z niekoľkých smerov 
+a strom vykresliť ako niekoľko vzájomne sa pretínajúcich plôch s aplikovanou kontúrou stromu - viď tretí obrázok. 
+V tomto prípade však textúra musí byť v niektorých miestach priehľadná, čo však pri vykresľovaní nepredstavuje väčší problém. 
+Táto technika sa nazýva billboarding , pretože sa vychádza z podobnosti s klasickými billboardami.
+<h4>Výhody použitia rastrových textúr</h4>
+Použitie rastrových textúr so sebou prináša samozrejme svoje výhody aj nevýhody. Ako sme si už povedali, používa sa technika textúrovanie ako určitá náhrada 
+pri zobrazovaní zložitých povrchov telies (múr, omietka, drevo, kameň), kedy sa tento všeobecne nehomogénne povrch nahradí plôškou s nanesenou textúrou. 
+Záleží na vhodnej voľbe textúry, veľkosti objektu a nasvietenie celej scény, či táto náhrada bude dostatočné alebo či užívateľ uvidí vizuálne chyby v scéne.
+<br>Veľkou výhodou rastrových textúr je ich ľahká implementácia vo vykreslovacím reťazci. Jednoduché grafické akcelerátory riešili textúrovanie tak, 
+že sa do ich vykreslovacího reťazca pridala vyrovnávacia pamäť pre textúry a niekoľko interpolátor, pomocou ktorých sa riešil prístup do textúrovacích pamäti. 
+Dnešné grafické akcelerátory idú oveľa ďalej: textúry je možné komprimovať, sú podporované mipmap (textúry vo viacerých rozlíšeniach), 
+antialiasing, multitextury apod textúrovacích jednotka však stále patrí k tým častiam vizuálneho systému, ktorá má veľmi dobrý pomer zložitosť / vizuálny efekt.
+<br>Ďalšou výhodou textúrovanie je, že pokiaľ u textúr použijeme priehľadnosť (nazývanú aj alfa kanál ), je možné vizuálne zmeniť geometriu predmetov, 
+pretože sa predmet môže na niektorých miestach javiť ako deravý. Ukážka tejto techniky je zobrazená na prvom obrázku. Poznamenajme, že pri použití 
+transparentnosti potrebné programovo zotrieďiť priehľadné alebo polopriehľadné plôšky, pretože by v tomto prípade Z-buffer (pamäť hĺbky) 
+nepracoval korektne - aj priehľadné texely by sa "vykreslili" a poškodili tak informáciu o hĺbke fragmentu uloženú v Z-bufferu .
+
+<h4>Nevýhody rastrových textúr</h4>
+
+Prvou vážnou nevýhodou týchto textúr je ich vopred dané rozlíšenie, teda počet pixelov, z ktorých sa textúra skladá. Pri voľbe rozlíšenie textúry sa vždy musí 
+zvoliť kompromis medzi dvoma extrémami. Prvým extrémom je voľba textúry s malým rozlíšením, čo však pri zobrazovaní vedie k viditeľným chybám 
+(spomeňme napríklad staršie hry typu Wolfenstein alebo Doom, ktoré používali pomerne hrubé textúry s rozlíšením 64x64 pixelov; u týchto hier sa samozrejme 
+ani OpenGL ani grafická akcelerácia nepoužívala). Druhým extrémom je voľba textúry s neúmerne veľkým rozlíšením, kedy sa naopak plytvá pamäťou na 
+grafickom akcelerátora.
+<br>Druhá nevýhoda spočíva vo fakte, že ak zobrazujeme textúru na obrazovke a použije sa zväčšenie alebo zmenšenie počtu zobrazovaných pixelov 
+(čo sa stáva pri textúrovanie takmer vždy, pretože sa na textúrovaný povrch pozeráme z rôznych smerov a vzdialeností), dochádza k aliasu 
+(zjednodušene povedané tvorbe moaré), ktorý nie je možné principiálne odstrániť, možno len zmierniť jeho vizuálnu podobu. Preto sa používajú rôzne metódy 
+odstránenia aliasu (tj metódy antialiasing ), ktoré však komplikujú zobrazovacie reťazec a všeobecne vedú k spomaleniu vykresľovanie.
+<br>Tretia nevýhodou je skutočnosť, že textúry zaberajú pomerne veľké množstvo pamäte. Ak je v pamäti grafického akcelerátora dostatočné miesto, 
+je možné textúry nahrať do tejto pamäte a vykresľovanie tak niekoľkonásobne urýchliť. Ak je však v tejto pamäti miesta málo 
+(oblasť pamäti grafického akcelerátora je mimo iného obsadená všetkými farbovým buffery, pamäťou hĺbky, stencil bufferom apod), 
+musí sa textúry pri vykresľovanie nahrávať z hlavnej pamäte počítača, čo zaťažuje zbernicu alebo port a spomaľuje vykresľovanie. 
+Túto nevýhodu čiastočne rieši rôzne metódy komprimácie textúr.
+
+<br>Textúry môžu byť:
+	<ul><li>jednorozmerné - sem patria farebné prechody (vytvárame zadávaním rôznych farieb do vrcholov plôch)
+		<li>dvojrozmerné - sem patria zosnímané obrázky a tiež vypočítané textury (fraktály)
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(majú šírku a výšku)
+		<li>trojrozmerné
+			<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(majú šírku, výšku a hĺbku)
+	</ul>
+	Teraz si ukážeme ako vytvoriť farebný povrch pomocou manuálneho priradenia farieb každému pixelu - vytvoríme farebnú "štruktúru",
+	ktorú budeme potom na plochu "naťahovať". Vzorku možno vytvoriť zadávaním hopdnoty každého pixla, alebo zobratím nejakého obrázka.
+	Obmedzenie na ktoré treba dávať pozor je že rozmery vzorky musia byť 
+	mocniny 2. (napr. 32, 64, 128, 256).
+<br>Aby sme mohli pracovať s textúrami je nutné:
+<ul><li>Povoliť prácu s textúrami - napr. príkaz glEnable(GL_TEXTURE_2D);
+	<li>Vytvoriť štruktúru, kde bude povrch zadaný v texeloch - môžme vytvoriť manuálne zadaním vlastnosti texelu alebo načítaním obrázka.
+	<li>Vytvoriť prepojenie OpenGl na našu vytvorenú textúru - príkaz glTexImage2D()
+	<li>Nastaviť parametre zobrazenia zobrazovania textúry - príkaz glTexParameteri() resp. glTexParameterf()
+</ul>
+<h3>Povoliť textúru</h3>
+glEnable(GL_TEXTURE_1D); 	//povolí jednorozmernú textúru
+glEnable(GL_TEXTURE_2D); 	//povolí jednorozmernú textúru - toto budeme používať - je to už zadané v súbore Unit1.h
+glEnable(GL_TEXTURE_3D);	//pre povolenie trojrozmerných textúr - nebudeme sa im venovať
+<h3>Vytvoriť štruktúru</h3>
+Ukážeme si v nasledovných častiach ako vytvoriť štruktúru manuálne, ako vytvoriť štruktúru načítaním z obrázka. Štruktúra ba mala byť štvorcového
+rozmeru n x n, kde n je z množiny {32,64,128,256}, ak používame viac textúr volíme 128 alebo 64 inak 256 	
+<h3>Prepojiť štruktúru na OpenGl</h3>
+glTexImage2D(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, &bmp);
+<br> &nbsp; &nbsp; // 1. par. ........ vždy dať GL_TEXTURE_2D
+<br> &nbsp; &nbsp; // 2. par. ........ vždy dať 0 (má význam ak urobíme viac textur pre rôzne detaily - mipmapy)
+<br> &nbsp; &nbsp; // 3. par. ........ počet farieb RGB=3, RGBA=4 (ak potrebujeme nastavovať priesvitnosť, volíme 4)
+<br> &nbsp; &nbsp; // 4. par. ........ rozmer textúry v smere x  
+<br> &nbsp; &nbsp; // 5. par. ........ rozmer textúry v smere y
+<br> &nbsp; &nbsp; // 6. par. ........ vždy dať GL_UNSIGNED_BYTE (typ premennej v texture), je možné voliť aj úspornejšie modely 
+<h3>Nastavenie parametrov zobrazovania textúry</h3>
+    Súradnice v textúre sú označované 
+	<br>s ... vodorovná súradnica - celá textúra je v intervale &lt;0 ; 1&gt;
+	<br>t ... zvislá súradnica - celá textúra je v intervale &lt;0 ; 1&gt;
+	<br><br>Prvé určíme čo sa má diať, ak pri zadávaní bodu z textúru použijeme hodnotu mimo intervalu &lt;0 ; 1&gt;,
+	je možné voliť opakovanie - textúra je akoby nekonečná, tvorená kachličkami o rozmere 1
+	<br>alebo volíme natiahnutie - textúra sa zdeformuje/natiahne do zadanej hodnoty 
+    <br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);      // v smere osi x povolime opakovanie textury
+    <br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);      // v smere osi y povolime opakovanie textury
+    <br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);      // v smere osi x povolime naťahovanie textury
+    <br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);      // v smere osi y povolime naťahovanie textury
+    <br><br>Ako druhé určíme ako sa textúra bude chovať pri zmenšovaní/zvečšovaní. Textúra môže mať viac texelov viac ako povrch pixelov a musíme prepočítať
+	farbu jednotlivých pixelov podľa nejakého vzorca. Sú možné dva základné postupy
+	<br>Určiť farbu pixelu podľa najbližšieho texelu
+	<br>Určiť farbu pixelu podľa viacerých najbližších texelov lineárnou aproximáciou - presnejšie ale pomalšie
+	<br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spôsob výpočtu bodov aproximáciou (textura vačšia)
+    <br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);  // spôsob výpočtu bodov aproximáciou (textura menšia)
+	<br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );  // spôsob výpočtu bodov pomocou najbližšieho (textura vačšia)
+    <br>glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );  // spôsob výpočtu bodov pomocou najbližšieho (textura menšia)
+
+</body>
+</html>
+
+
+<br>V nasledovnom programe vytváram vzorku tvorenú šachovnicovo - každé druhú políčko je čierne, biele políčka sú tieňované.
+<br>
+<img src="textura1.jpg" width="435" height="320" border="0" alt="">  
+<br><br>
+<h3>Deklarácia textúry</h3>
+(volím systém RGB, kde každá farba je zadaná hodnotou &lt;0;255&gt; ) 
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+    GL_UNSIGNED_BYTE bmp[256][256][3];
+   // miesto pre texturu 256*256
+</pre></code>
+</table>
+<h3>Vytvorenie textúry</h3>
+Textúra bude tvorená šachovnicou 8x8 kde sa striedajú čierne políčka so svetlými, pričom vo svetlých políčkach pribúda 
+červenej farby smerom doprava a zelenej pribúda smerom nadol
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+   for (int y=0;y<256;y++)             // pro vsechny radky pixmapy
+        for (int x=0;x<256;x++)        // pro vsechny pixely na radku
+        if ((y/32+x/32)%2)
+            bmp[y][x][0]= bmp[y][x][1]= bmp[y][x][2]= 0;// cierne policko
+        else
+		{   bmp[y][x][0]=x; bmp[y][x][1]=y; bmp[y][x][2]= 0; }
+    glEnable(GL_TEXTURE_2D);       // povolime texturu  
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);      // v smere osi x povolime opakovanie textury
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);      // v smere osi y povolime opakovanie textury
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spôsob výpočtu bodov (textura vacsia)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);  // spôsob výpočtu bodov (textura mensia)
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, &bmp);
+		  // 1. par. ........ vždy dať GL_TEXTURE_2D
+		  // 2. par. ........ vždy dať 0 (má význam ak urobíme viac textur pre rôzne detaily)
+		  // 3. par. ........ počet farieb RGB=3, RGBA=4
+		  // 4. par. ........ rozmer v smere x  
+		  // 5. par. ........ rozmer v smere y
+		  // 6. par. ........ vždy dať GL_UNSIGNED_BYTE (typ premennej v texture)
+		  // 7. par. ........ adresa textury
+</pre></code>
+</table>
+<h3>Natiahnutie textúry</h3>
+textúra tým že sa "naťahuje" na plochu sa rôzne deformuje, rozumné výsledky sú ak 
+<ul><li>útvar textury a rovinného útvaru sú podobné
+	<li>textúra je štvorec a rovinný útvar je rovnobežník.
+	<li>textúra je štvorec a rovinný útvar je trojuholník 
+</ul>
+<table bgcolor="#ccccff"><tr><td><img src="obr/textura1.png" width="558" height="428" border="0" alt="">
+<td><code><pre>
+    glBegin(GL_QUADS);
+//štvorec sa natiahne na štvorec
+        glTexCoord2f(0.0, 0.0); glVertex3f(-6, +6, -2);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +6, -2);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+6, -6, -2);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-6, -6, -2);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura2.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+    glBegin(GL_QUADS);
+//štvorec sa natiahne na obdĺžnik
+        glTexCoord2f(0.0, 0.0); glVertex3f(-6, +3, -1);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +3, -1);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+6, -3, -1);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-6, -3, -1);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura3.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+    glBegin(GL_QUADS);
+//štvorec sa natiahne na rovnobežník
+        glTexCoord2f(0.0, 0.0); glVertex3f(-6, +3, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+3, +3, 0);
+        glTexCoord2f(1.0, 1.0); glVertex3f(+6, -3, 0);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-3, -3, 0);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura4.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+    glBegin(GL_QUADS);
+//lichobežník sa vyreže zo štvorca
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(1.0*10/12, 1.0); glVertex3f(+4, -4, 0);
+        glTexCoord2f(1.0*2/12, 1.0); glVertex3f(-4, -4, 0);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura5.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+ glBegin(GL_TRIANGLES);
+ //pravouhlý trojuholník sa vyreže zo štvorca
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(0.0, 1.0); glVertex3f(-6, -4, 0);
+glEnd();</pre></code></tr>
+<tr><td><img src="obr/textura6.png" width="558" height="428" border="0" alt="">	
+<td><code><pre>
+ glBegin(GL_TRIANGLES);
+ //rovnoramenný trojuholník sa vyreže zo štvorca
+         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
+        glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
+        glTexCoord2f(0.5, 1.0); glVertex3f(0, -4, 0);
+    glEnd();
+
+</pre></code></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,136 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Tipy_pro_C++Builder_=281.=29?=
+Date: Thu, 12 Jul 2007 09:52:46 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1780
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Tipy pro C++Builder (1.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Tipy pro C++Builder (1.)</H2>
+<H4>V n=E1sleduj=EDc=ED s=E9rii =E8l=E1nku se budu v=ECnovat =
+C++Builderu. Budu uv=E1d=ECt n=ECjak=E9=20
+tipy, n=ECjak=E9 p=F8=EDkazy, kter=E9 se t=F8eba budou hodit do Va=9Aich =
+project=F9, nebo si je=20
+mo=9En=E1 jenom vyzkou=9A=EDte.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Za=E8n=ECme hezky jednou v=ECc=ED, kter=E1 by nem=ECla chyb=ECt u =
+program=F9, kter=E9 budete=20
+voln=EC =9A=ED=F8it: </P>
+<P><FONT color=3D#0033cc><B>Program bez pot=F8ebn=FDch DLL =
+knihoven</B></FONT></P>
+<P>Pokud V=E1=9A program d=E1te n=ECkomu jin=E9mu, kdo nem=E1 C++ =
+Builder, bude pot=F8ebovat=20
+cca 3 dynamick=E9 knihovny. Tyto knihovny v=9Aak maj=ED dohromady =
+velk=FD objem a je to=20
+i neestetick=E9 je k Va=9Aemu programu p=F8ikl=E1dat. =D8e=9Aen=EDm je u =
+ka=9Ed=E9ho Va=9Aeho=20
+Projectu ud=EClat tyto v=ECci: <BR></P>
+<UL>
+  <LI>V nab=EDdce Project-&gt;Options=20
+  <LI>Z=E1lo=9Eka Linker - od=9Akrtnout "Use Dynamic RTL"=20
+  <LI>Z=E1lo=9Eka Compiler - zm=E1=E8knout tla=E8=EDtko Release=20
+  <LI>Z=E1lo=9Eka Packages - od=9Akrtnout "Build with runtime packages" =
+a je to.=20
+  <BR></LI></UL>
+<P>Program se po p=F8elo=9Een=ED zv=ECt=9A=ED sice asi o 300KB, ale u=9E =
+nebude pot=F8ebovat=20
+dynamick=E9 knihovny.<BR><BR>A pokra=E8ujme n=ECkter=FDmi =
+jednodu=9A=9A=EDmi p=F8=EDkazy<BR></P>
+<P><FONT color=3D#0033cc><B>Hodiny a datum</B> </FONT></P>
+<P>Pokud chcete, aby Label (m=F9=9Eete samoz=F8ejm=EC pou=9E=EDt i u =
+dal=9A=EDch komponent)=20
+zobrazoval =E8as nebo datum, pou=9Eijte n=E1sleduj=EDc=ED p=F8=EDkazy. =
+Nezapome=F2te, =9Ee pokud=20
+chcete, aby se =E8as ka=9Edou vte=F8inu obnovoval (tj. norm=E1ln=ED =
+hodiny), pou=9E=EDt Timer=20
+(=E8asova=E8).</P>
+<P class=3Dsc>Label1 -&gt; Caption =3D TimeToStr(Time()); &nbsp;&nbsp;=20
+//=E8as<BR><BR>Label1-&gt;Caption =3D DateToStr(Date()); &nbsp;&nbsp; =
+//datum </P>
+<P>S pou=9Eit=EDm Timeru:</P>
+<P class=3Dsc>void __fastcall TForm1::Timer1Timer(TObject=20
+*Sender)<BR>{<BR>&nbsp;&nbsp; Label1-&gt;Caption =3D TimeToStr(Time()); =
+<BR>}</P>
+<P><FONT color=3D#0033cc><B>N=E1hodnost (randomize, =
+random)</B></FONT></P>
+<P>Funkci randomize pou=9Eijte, pokud chcete, aby V=E1=9A program =
+provedl n=E1hodnou=20
+operaci z t=ECch, kter=E9 jste mu dali na v=FDb=ECr, nebo pokud chcete, =
+aby n=ECjak=E1=20
+prom=ECnn=E1 (typu int) nabyla n=E1hodn=E9ho =E8=EDsla.</P>
+<P class=3Dsc>#include &lt;stdlib.h&gt;<BR><BR>//nejd=F8=EDve mus=EDte =
+"includovat"=20
+knihovnu stdlib.h (pod #include &lt;vcl.h&gt;)<BR><BR>int r; //mus=EDte =
+definovat=20
+n=ECjakou prom=ECnnou typu int<BR>randomize(); //pou=9Eijete funkci =
+randomize()<BR>r =3D=20
+random(2); //prom=ECnn=E1 r nabude =E8=EDsla od 0do 1 =
+(!)<BR>if(r=3D=3D0) //te=EF nap=ED=9Aete, co=20
+se m=E1 st=E1t, kdy=9E r bude 0<BR>Close(); //t=F8eba zav=F8i program =
+<BR>if(r=3D=3D1) //a=20
+kdy=9E bude 1<BR>Form1-&gt;Caption=3D"Pokus"; //zm=EC=F2 Caption u Formy =
+</P>
+<P>nebo</P>
+<P class=3Dsc>int ran;<BR>randomize();<BR>ran=3Drandom(100); =
+//prom=ECnn=E1 ran nabude=20
+=E8=EDsla od 0 do 99<BR><BR>//prom=ECnnou ran pak m=F9=9Eete pou=9E=EDt =
+d=E1le (t=F8eba pro n=ECjak=E9=20
+v=FDpo=E8ty)</P>
+<P><FONT color=3D#0033cc><B>P=F8ehr=E1n=ED zvuku typu WAVE =
+(*.wav)</B></FONT></P>
+<P class=3Dsc>#include &lt;mmsystem.hpp&gt; //nejd=F8=EDve mus=EDte =
+"includovat"=20
+knihovnu mmsystem.hpp (pod #include &lt;vcl.h&gt;)<BR>//pot=E9 =
+pou=9Eijte=20
+n=E1sleduj=EDc=ED p=F8=EDkaz (do OnActive(), ButtonClick()...)=20
+<BR><BR>sndPlaySound("zvuk.wav",SND_SYNC); //dal=9A=ED zvuk se =
+p=F8ehraje a=9E po=20
+skon=E8en=ED p=F8edch=E1zej=EDc=EDho<BR>//doporu=E8uji pou=9E=EDt =
+sp=ED=9Ae=20
+toto:<BR>sndPlaySound("zvuk.wav",SND_ASYNC); //zvuk se ukon=E8=ED, =
+kdy=9E se za=E8=EDn=E1=20
+p=F8ehr=E1vat dal=9A=ED </P>
+<P><FONT color=3D#0033cc><B>Pozice my=9Ai (kurzoru)</B></FONT></P>
+<P class=3Dsc>SetCursorPos(X,Y); //X je n=ECjak=E9 =E8=EDslo nebo =
+=E8=EDseln=E1 prom=ECnn=E1, kter=E1=20
+ud=E1v=E1 sou=F8adnici ve vodorovn=E9m sm=ECru, Y ve svisl=E9m </P>
+<P>Tak, to by pro dne=9Aek sta=E8ilo. Pozd=ECji, v dal=9A=EDch =
+pokra=E8ov=E1n=EDch se mo=9En=E1=20
+do=E8k=E1te t=F8eba i p=F8=EDkaz=F9 na to, jak zabr=E1nit objeven=ED =
+=84tabulky=93 po stisku=20
+Ctrl+Alt+Delete nebo p=F8=EDkaz=F9 pro vyfocen=ED obrazovky. <BR></P>
+<HR SIZE=3D1>
+Autor: <B>Ond=F8ej Kubera</B>, <A=20
+href=3D"mailto:kubera@seznam.cz">kubera@seznam.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 9:52:32 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

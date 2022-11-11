@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>Delphi (10.) - knihovna FMOD</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="V článku o projektu MEngine jsem psal, že tento balík obsahuje také knihovnu FMOD. 
+Pokud nevíte, o co se jedná, tak se podívejte na tento článek. Sami uvidíte, že práce 
+se zvukem na profesionální úrovni není vůbec složitá a zvládne ji i začátečník. Vše je 
+vysvětleno na jednoduchém přehrávači mp3 a jiných souborů."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/knihovna-fmod-zvuky-direct-sound-eax&amp;title=Delphi (10.) - knihovna FMOD" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>Delphi (10.) - knihovna FMOD</h1><i>V článku o projektu MEngine jsem psal, že tento balík obsahuje také knihovnu FMOD. 
+Pokud nevíte, o co se jedná, tak se podívejte na tento článek. Sami uvidíte, že práce 
+se zvukem na profesionální úrovni není vůbec složitá a zvládne ji i začátečník. Vše je 
+vysvětleno na jednoduchém přehrávači mp3 a jiných souborů.</i><br/><hr/><br/><P>Nejprve stručná charakteristika: Jedná se o jednoduché stabilní rozhrání s podporou standardů jako DirectSound, DirectSound3D (DirectX 6.1, DirectX 7.0 a DirectX8), A3D 3.0 a EAX 2.0 i 3.0. Rozhrání je multiplatformní, tzn. že je možno rozchodit jej v Linuxu, Unixu, pod Windows 9x-XP, WinCE/PocketPC a nově i na konzoli XBox. FMOD rozchodíte i na 16-ti bitových zvukových kartách. Výhodou je, že s knihovnami FMOD můžete pracovat v Microsoft Visual C++ 5 & 6, Borland C++ Builderu, Delphi, Kylixu a Visual Basicu.</P>
+
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/fmod/fmod.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+
+<P>Toto rozhrání je schopné bez problémů "vstřebat" soubory typu MOD, S3M, XM, IT, MID, RMI, SGT, WAV, MP2, MP3, OGG, WMA, ASF. Instalace by měla být bez problémů: Je nutno stáhnout z domovské adresy balík, který obsahuje soubory fmod.pas,fmoderrors.pas, fmod.dll (fmoderrors.pas se v balíku nemusí objevit - není důležité pro chod rozhrání). První varianta je, že soubory fmod.pas a fmoderrors.pas (popř. i fmod.dcu a fmoderrors.dcu)
+umístíte do vámi vytvořeného adresáře (např. C:\FMOD). Potom také musíte v Delphi v menu Tools - Environment options - Library přidat do položky Library Paths tento adresář. Soubor fmod.dll je nutno umístit do složky Windows\System (ve Win9x, WinME), nebo do složky Windows\System32 (platí pro WinNT, Win2k, WinXP). Ve druhé variantě je třeba skopírovat všechny tyto soubory do adresáře každého projektu, ve kterém budeme využívat knihovny FMOD.</P>
+
+<P>Co se týče licence je poměrně výhodná pro ty, kdo plánují tvořit freewarové progrmy - Ti mají licenci zdarma. Pro shareware ve Win32, CE, LINUX program se platí 100USD(jeden sharewarový program) - 250USD(neomezeně) a pro plně komerční využítí si můžete v peněžence nachystat celých 1250 USD(jedna licence) - 3200USD(neomezeně). Pro konzole se cena pohyboje od 5000USD do 17000USD, což už je pěkná pálka...<BR><BR>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/fmod/player.png" BORDER=0></TD></TR><TR><TD>V dnešním článku vytvoříme tento jednoduchý přehrávač hudebních souborů</TD></TR></TABLE></CENTER>
+
+<H1>Jak vytvořit jednoduchý přehrávač hudebních souborů?</H1>
+
+<P>Pro zpřístupnění všech funkcí, které nám FMOD nabízí bychom měli do uses přidat řádek:</P>
+<PRE><B>uses</B>
+  FMod, FModErrors;
+</PRE>
+
+<P>V public declarations mám definovány tyto proměnné:</P>
+<PRE>  <B>private</B>
+    Sound : PFSoundSample;
+    SoundChannel: Longint;
+    DriverName : pchar;
+    Paused : boolean;</PRE>
+
+
+<P>V události FormCreate budou následující funkce:</P>
+<PRE><B>procedure</B> TForm1.FormCreate(Sender: TObject);
+<B>var</B> i: integer;
+<B>begin</B>
+  <B>if</B> (FSOUND_GetVersion() < FMOD_VERSION) <B>then
+  begin</B>
+    FMODError('FMOD - chybná verze');
+  <B>end;</B></PRE>
+  
+<P>V tomto kousku zdrojáku máme vyřešen test správné verze knihovny FMOD. Já jsem v době  psaní tohoto článku pracoval s verzí 3.5, je ale možné že už je vydána verze další...</P>
+
+<PRE>  // nastartuje sound systém na 44 Khz
+  <B>if</B> (NOT FSOUND_Init(44100, 8, FSOUND_INIT_GLOBALFOCUS)) <B>then
+  begin</B>
+    FMODError('Chyba při inicializaci');
+  <B>end;</B></PRE>
+  
+<P>Tato funkce provedla inicializaci knihovny FMOD. První parametr udává vzorkovací frekvenci a měl by být v rozsahu 4000 - 65535. 44kHz je již vžitý standart pro přenosové pásmo do 20kHz. Další parametr udává maximální počet použitých softwarových kanálů, což udává maximální počet mixovaných zvuků. Tuto hodnotu je možno zjistit funkcí FSOUND_GetMaxChannels. Posledním parametrem se mění různé režimy: FSOUND_INIT_ENABLEOUTPUTFX je mód, v němž může být mixer buffer ovlivňován efekty DX8, FSOUND_INIT_GLOBALFOCUS nastavuje, že hudba hraje i když okno není aktivní. Parametry je také možno spojovat spojkou OR.</P>
+
+<PRE>  FSOUND_SetOutput(FSOUND_OUTPUT_WINMM);</PRE>
+
+<P>Tímto příkazem jsem nastavil, že má být použito DirectSound rozhrání.</P>
+
+<PRE>  DriverName := FSOUND_GetDriverName(FSOUND_GetDriver());
+  Label1.Caption := DriverName;
+
+  <B>for</B> i := 0 <B>to</B> FSOUND_GetNumDrivers() <B>do
+  begin</B>
+    DriverName := FSOUND_GetDriverName(i);
+    ListBox1.Items.Add(DriverName);
+  <B>end</B>;
+<B>end</B>;
+</PRE>
+
+<P>Pro informaci jsem ještě zobrazil do ListBoxu seznam všech ovladačů, které je možno využít k výsutpu a do Label1 jsem vložil aktuálně používaný ovladač. Funkce FSOUND_GetDriver vrací číslo aktuálně používaného ovladače, FSOUND_GetNumDrivers vrátí celkový počet ovladačů a  FSOUND_GetDriverName zase vrací jméno ovladače. Tato funkce vypisuje chybové hlášky:</P>
+
+<PRE><B>procedure</B> TForm1.FMODError(error: string);
+<B>var</B> mess, code: string;
+<B>begin</B>
+  code := FMOD_ErrorString(FSound_GetError());
+  mess := error+chr(13)+'(error code: '+(code)+')';
+  MessageBox(Application.Handle,PChar(mess),'Error',MB_OK);
+<B>end</B>;</PRE>
+
+<P>Tuto proceduru voláme vždy v případě neúspěchu nějakého příkazu zároveň s řetězcem, který oznamuje, co se nepovedlo. Funkce také přidá popis poslední chyby. Tak v této funkci jsem se i já naučil používat OpenDialog, který velmi usnadňuje práci při otevírání souborů. Tato procedura se spustí při kliknutí na tlačítko OpenDialog:</P>
+<PRE><B>procedure</B> TForm1.OpenFileClick(Sender: TObject);
+<B>begin
+  if</B> (OpenDialog1.Execute() = false) <B>then exit</B>;
+
+  FSOUND_StopSound(soundChannel);
+  Sound := FSOUND_Sample_Load(
+    FSOUND_FREE,
+    pointer(OpenDialog1.FileName),
+    FSOUND_STEREO,
+    0
+    );
+  <B>if</B> (Sound=nil) <B>then</B>
+    FMODError('Soubor se nepodařilo načíst');
+<B>end</B>;</PRE>
+
+<P>OpenDialog jsme otevřeli funkcí OpenDialog.Execute() a pokud se vybral jakýkoliv soubor, který vyhovuje filtru nastavenému komponentě OpenDialog pokračujeme dál. Přerušíme přehrávaný zvuk a otevřeme nový pomocí pointeru na OpenDialog1.FileName.</P>
+
+<P>Funkce FSOUND_Sample_Load vrací ukazatel na zvukový záznam, její parametry jsou: Číslo, pod které se má nahraný zvuk uložit. Pokud uvedem FSOUND_FREE tak se uloží pod první volné číslo. Další parametry udávají cestu k souboru a druh zvuku (FSOUND_HW3D, FSOUND_STEREO,...). Tato procedura začne přehrávat načtenou skladbu:</P>
+
+<PRE><B>procedure</B> TForm1.PlayFileClick(Sender: TObject);
+<B>begin</B>
+  soundChannel := FSOUND_PlaySound(FSOUND_FREE,Sound);
+  FSOUND_SetVolume(soundChannel, Volume.Position);
+  Pozice.Max := FSOUND_Sample_GetLength(Sound);
+
+  <B>if</B> (Loop.Checked = true) <B>then</B>
+   FSOUND_SetLoopMode(soundChannel, FSOUND_LOOP_NORMAL)
+  <B>else</B>
+   FSOUND_SetLoopMode(soundChannel, FSOUND_LOOP_OFF);
+<B>end</B>;</PRE>
+
+<P>Funkce FSOUND_PlaySound zajistí přehrání zvuku. Funkce také vrací číslo kanálu, na kterém se zvuk přehraje. FSOUND_SetVolume nastaví hlasitost výsupu podle jezdce Volume. Dále ještě nastavíme stavový ukazatel, abysme věděli, v jaké části skladby se nacházíme. a nastavíme mód přehrávání - smyčku nebo normal. Tahle procedura zajistí změnu hlasitosti přehrávání při změně polohy jezdce:</P>
+<PRE><B>procedure</B> TForm1.VolumeChange(Sender: TObject);
+<B>begin</B>
+  FSOUND_SetVolume(soundChannel, Volume.Position);
+<B>end</B>;</PRE>
+
+<P>Stisknutím tlačítka Stop zastavíme přehrávání aktuální skladby:</P>
+<PRE><B>procedure</B> TForm1.StopClick(Sender: TObject);
+<B>begin</B>
+  FSOUND_StopSound(soundChannel);
+<B>end;</B></PRE>
+
+
+<P>Na formulář jsem také přidal Timer, který se stará o aktualizaci pozice posuvníku každých 250ms:</P>
+<PRE><B>procedure</B> TForm1.Timer1Timer(Sender: TObject);
+<B>begin</B>
+  pozice.Position := FSOUND_GetCurrentPosition(soundChannel);
+<B>end</B>;</PRE>
+
+<P>Procedura pro pauznutí a znovuspuštění přehrávání zvuku je v mém příkladu následující:</P>
+<PRE><B>procedure</B> TForm1.PauseClick(Sender: TObject);
+<B>begin</B>
+  <B>if</B> Paused <B>then</B> FSOUND_SetPaused(SoundChannel,false)
+  <B>else</B> FSOUND_SetPaused(SoundChannel,true);
+<B>end;</B></PRE>
+
+<P>A na závěr by měl každý programátor uklidit to, co si pootevíral:</P>
+<PRE><B>procedure</B> TForm1.FormDestroy(Sender: TObject);
+<B>begin</B>
+  FSOUND_Close();
+<B>end;</B>
+<B>end.</B></PRE>
+
+<P>Sami asi vidíte, že práce se zvukem na profesionální úrovni není vůbec složitá a zvládne ji i začátečník ;-)</P>
+
+<P>Autoři tvrdí, že je FMOD nejrychlejší na světě (*THE* fastest mixing routines in the world.) a že je dvakrát rychlejší v mixování zvukových efektů, nežli Direct Sound s hardwarovou podporou !!! Mezi další vlastnosti patří podpora MMX instrukcí a podpora streamovaných dat (Voláním jediné funkce jemožné přehrát např mp3 nebo wma přes internet - místo jména souboru napíšete jeho URL adresu!!!). Zajímavé je také srovnání s jinými knihovnami (BASS, Midas, Seal, WinAMP, Galaxy Sound System). Měří se zatížení procesoru při přehrávání 8-bitových a 16-ti bitových dat a FMOD bezkonkurenčně vítězí ve všech testech(3% zatížení) - i když by se mohly vést polemiky o věrohodnosti, prožože se srovnání knihoven nachází přímo na stránkách fmod.org.</P>
+
+<P><B>Pozn:</B> Přehrávač, který jsem vytvořil by měl sloužit k přehrávání krátkých samplů. Nedoporučuji vkládat delší soubory, protože jejich načítání trvá velmi dlouho. K jejich přehrávání slouží druhá část knihovny FMOD - FMusic. Ta je určena pro přehrávání streamovaných dat.</P> 
+
+<P>No a to je vše! Zdroják je možno si stáhnout <A HREF=articles/fmod/fmod.zip><B>zde</B></A> (8kB). Je, málem bych zapoměl uvést oficiální stránku - Můžete ji nalézt na adrese <A HREF= http://www.fmod.org>www.fmod.org</A>.<BR> EOF</P><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="vizualizacni-plugin-pro-winamp">OpenGL (12.) - visualizační plugin pro WinAMP</a></li><li><a href="3d-engine-mengine">Herní grafické enginy (1.) - MEngine od Mister Group</a></li><li><a href="download-manager-2">Delphi (9.) - Download 2</a></li><li><a href="download-manager-1">Delphi (8.) - Download</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne2">3D Studio MAX (12.) - Tvorba realistické jeskyně 2</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne">3D Studio MAX (11.) - Tvorba realistické jeskyně</a></li><li><a href="jak-na-programovani-her">Jak na tvorbu her - Na co máme myslet při programování hry?</a></li><li><a href="3d-studio-max-izometricky-pohled">3D Studio MAX (10.) - Izometrický pohled ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-tutorial-chromovy-text">Adobe Photoshop (4.) - Chromový text</a></li><li><a href="export-do-pdf">Zoner Callisto (2.) - Export do PDF</a></li><li><a href="detekce-kolizi-ve-3d">OpenGL (11.) - Nová detekce kolizí</a></li><li><a href="matematicka-knihovna-geometry-pas-delphi">OpenGL (10.) - Nová knihovna geometry.pas</a></li><li><a href="generovani-textur-terenu-a-far-clip">OpenGL (9.) - Generování textur a vylepšení FarClip Distance</a></li><li><a href="export-do-gif">Zoner Callisto (1.) - Export do GIFu</a></li><li><a href="3d-studio-max-odlesky-na-vodni-hladine">3D Studio MAX (9.) - Vytváření odlesků vodní hladiny</a></li><li><a href="slovnik-pojmu-opengl">OpenGL (8.) - Slovníček pojmů v OpenGL</a></li><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li><li><a href="co-je-to-minigl">OpenGL (6.) - Co je to MiniGL</a></li><li><a href="opengl-vertex-array-gldrawelements">OpenGL (5.) - Urychlení pomocí glDrawElements</a></li><li><a href="system-speaker-a-destrukce-souboru">Delphi (7.) - Syst. repro a autodestrukce souboru</a></li><li><a href="opengl-fullscreen">OpenGL (4.) - FullScreen</a></li><li><a href="3d-studio-max-horici-zapalka-ohen">3D Studio MAX (8.) - Tvorba hořící zápalky</a></li><li><a href="techniky-zobrazeni-3d-doom">'DOOM' 3D Engine techniques</a></li><li><a href="pohyb-ve-3d-scene">OpenGL (3.) - Procházení scénou</a></li><li><a href="3d-studio-max-3d-text">3D Studio MAX (7.) - 3D text</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=23&amp;url=%2Fknihovna-fmod-zvuky-direct-sound-eax" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.227682017px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12653 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

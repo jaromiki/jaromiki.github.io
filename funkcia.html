@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+</head>
+
+<body>
+<pre>
+unit Unit1;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  StdCtrls;
+
+type
+
+  { TForm1 }
+
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    GroupBox1: TGroupBox;
+    Image1: TImage;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Init;
+  private
+    { private declarations }
+  public
+    { public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  a0,a1,a2,a3,a4,xmin,xmax,ymin,ymax:real;
+  mierka:integer;
+implementation
+
+{$R *.lfm}
+
+{ TForm1 }
+Procedure TForm1.Init;
+Begin
+   a0:=StrToFloat(Edit1.Text);
+   a1:=StrToFloat(Edit2.Text);
+   a2:=StrToFloat(Edit3.Text);
+   a3:=StrToFloat(Edit4.Text);
+   xmin:=StrToFloat(Edit5.Text);
+   xmax:=StrToFloat(Edit6.Text);
+   ymin:=StrToFloat(Edit7.Text);
+   ymax:=StrToFloat(Edit8.Text);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Image1.Canvas.Brush.Color:=RGBTOCOLOR(150,200,250);
+  Image1.Canvas.FillRect(Image1.ClientRect);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+Var x,y:real;
+    i:integer;
+begin
+  init;
+  ymax:=a0*xmin*xmin*xmin+a1*xmin*xmin+a2*xmin+a3;
+  ymin:=ymax;
+  for i:=0 to Image1.width do
+  Begin
+    x:=i/Image1.Width*(xmax-xmin)+xmin;
+    y:=a0*x*x*x+a1*x*x+a2*x+a3;
+    if y>ymax then ymax:=y;
+    if y&lt;ymin then ymin:=y;
+  end;
+  Edit7.Text:=FloatToStr(ymin);
+  Edit8.Text:=FloatToStr(ymax);
+ mierka:=1;  
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Image1.Canvas.FillRect(Image1.ClientRect);
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+Var x,y:real;
+    i,yy:integer;
+begin
+  if mierka=0 then Button1Click(Sender) else init;
+  y:=a0*xmin*xmin*xmin+a1*xmin*xmin+a2*xmin+a3;
+  yy:=Round(Image1.height-(y-ymin)/(ymax-ymin)*Image1.Height);
+  Image1.Canvas.MoveTo(0,yy);
+  for i:=0 to Image1.width do
+  Begin
+    x:=i/Image1.Width*(xmax-xmin)+xmin;
+    y:=a0*x*x*x+a1*x*x+a2*x+a3;
+    yy:=Round(Image1.height-(y-ymin)/(ymax-ymin)*Image1.Height);
+    Image1.Canvas.LineTo(i,yy);
+  end;
+end;
+
+end.
+
+</pre>
+
+</body>
+</html>

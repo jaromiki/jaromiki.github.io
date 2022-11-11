@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<meta name="Content-language" content="sk">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	<title>Červík</title>
+	<script LANGUAGE="Javascript">
+	var live=3;
+	var poz=64; nx=40; ny=20; start=5*nx+25; n=1; charCode=37;level=0;play=1;nxpol=nx/2;pause=0;
+	var ch=37,ii=0;
+	var ps=(ny/2-1)*nx+13;  ds=nx;
+	var ps2=(ny-ny/2)*nx+26; ds2=-nx;
+	var c= new Array(500);
+	var cc= new Array(nx*ny);
+//*************************************INIT*************************************************************************	
+	function init()
+	{ level++; start=4*nx+25; n=1; window.clearInterval(window.tr); t.focus(); charCode=40; 
+	  t.value=1; tt.value=level; ttt.value=live; next.style.display='block';
+	  for (i=1; i<ny-1; i++)
+      for (j=1;j<nx-1; j++) 
+	    {document.images[i*nx+j].src="prazdne.png";
+         cc[i*nx+j]=0;
+	    }
+	  for (j=0;j<nx; j++)
+	  { document.images[j].src="stena.png"; cc[j]=3;
+	    document.images[j+(ny-1)*nx].src="stena.png"; cc[j+(ny-1)*nx]=3;
+	  }	
+	  for(i=1; i<ny-1; i++)
+	  {  document.images[i*nx].src="stena.png"; cc[i*nx]=3;
+	    document.images[i*nx+nx-1].src="stena.png"; cc[i*nx+nx-1]=3;
+	  }	
+	  switch (level)
+	  {case 10:
+	   case 9:
+	   case 8:{ document.images[10*nx+nxpol-1].src="stena.png"; cc[10*nx+nxpol-1]=3;}
+	   case 7:{ document.images[9*nx+nxpol-1].src="stena.png"; cc[9*nx+nxpol-1]=3;}
+	   case 6:for (i=1;i<6;i++)
+			    {document.images[nx*5+i].src="stena.png"; cc[5*nx+i]=3;
+				 document.images[nx*(ny-6)+nx-i-1].src="stena.png"; cc[nx*(ny-6)+nx-i-1]=3;
+				}
+	   case 5:{ document.images[12*nx+10].src="stena.png"; cc[12*nx+10]=3;
+	            document.images[11*nx+10].src="stena.png"; cc[11*nx+10]=3;}
+	   case 4:for (i=10;i<26;i++)
+			    if (i-13) {document.images[13*nx+i].src="stena.png"; cc[13*nx+i]=3;}
+
+	   case 3:for (i=14;i<30;i++)
+			    if (i-26) {document.images[7*nx+i].src="stena.png"; cc[7*nx+i]=3;}
+	    
+	   case 2:for (i=1;i<ny/2;i++)
+	          { j=(ny-i-1)*nx+26;
+			    document.images[j].src="stena.png"; cc[j]=3;}
+
+	   case 1:for (i=1;i<ny/2;i++)
+	          {j=i*nx+13;
+			    document.images[j].src="stena.png"; cc[j]=3;}
+	   
+	  }	
+	  cc[start]=1; c[0]=start; 
+	  document.images[c[0]].src="hlava.png";
+    }
+//***************************PLOCHA*******************************************************************	
+function plocha()
+{
+	for (i=1;i<nx*ny;i++) cc[i]=0;
+	cc[start]=1;
+	c[0]=start; 
+	for (j=0;j<nx; j++)
+	{  	document.writeln('<img src="stena.png" width="20" height="20" border="0" alt="" style="position:absolute;left:'+j*20+';top:0">');
+		document.writeln('<br>');
+		cc[j]=3;
+	}
+	for (i=1; i<ny-1; i++)
+	{  document.writeln('<img src="stena.png" width="20" height="20" border="0" alt="" style="position: absolute; left:0;top:'+i*20+'">');
+   		cc[i*nx]=3;
+   		for (j=1;j<nx-1; j++) 
+			document.writeln('<img src="prazdne.png" width="20" height="20" border="0" alt="" style="position:absolute;left:'+j*20+';top:'+i*20+'">');
+   		document.writeln('<img src="stena.png" width="20" height="20" border="0" alt="" style="position: absolute; left:'+(nx-1)*20+';top:'+i*20+'">');		
+   		document.writeln('<br>');
+   		cc[i*nx+nx-1]=3;
+	}		
+	for (j=0;j<nx; j++)
+	{	document.writeln('<img src="stena.png" width="20" height="20" border="0" alt="" style="position:absolute;left:'+j*20+';top:'+(ny-1)*20+'">'); 
+ 		cc[ny*nx-1-j]=3;
+	}
+   
+}	
+//*************************************POHYB*********************************************************************	
+	function pohyb()	
+{	ii=1-ii;
+    if (!pause) {for (i=n-1;i>=0;i--) c[i+1]=c[i];
+	             if (ii)
+				 {
+                 if (level>1) { if (cc[ps+ds]) ds=-ds;
+				                else { cc[ps]=0; document.images[ps].src="prazdne.png";
+								       cc[ps+=ds]=3; document.images[ps].src="stena.png";
+								     }
+				              }
+                 if (level>3) { if (cc[ps2+ds2]) ds2=-ds2;
+				                else { cc[ps2]=0; document.images[ps2].src="prazdne.png";
+								       cc[ps2+=ds2]=3; document.images[ps2].src="stena.png";
+								     }
+				              }
+				 }		  
+                }
+      switch (charCode)
+	  { case 38: case 40: case 37: case 39: break;
+	    case 19: if (!pause) {pause=!0;Bpause.style.display='block';charCode=32; }
+	           else        {pause=0;Bpause.style.display='none';charCode=ch;}
+	    default: charCode=ch;
+	  }	
+	  switch (charCode)
+	  {
+	  case 38:{if (!pause){c[0]-=nx; ch=38;document.images[c[0]].src="hlava.png";}break;}
+	  case 40:{if (!pause){c[0]+=nx; ch=40;document.images[c[0]].src="hlava.png";}break;}
+	  case 37:{if (!pause){c[0]-=1;  ch=37;document.images[c[0]].src="hlava.png";}break;}
+	  case 39:{if (!pause){c[0]+=1;  ch=39;document.images[c[0]].src="hlava.png";}break;}
+	  case 19:break;
+	  default : charCode=ch; 		   
+	  }
+    if (!pause)
+	{ 	if (n) {document.images[c[1]].src="telo.png"; cc[c[1]]=1;}
+        if (cc[c[0]]==3||cc[c[0]]==1) if (live) {window.clearInterval(window.tr);live--;level--;init();return 0;} else{window.clearInterval(window.tr); over.style.display='block';play=0;} 
+	    if (cc[c[0]]==2) {n=n+1; t.value=n; if (n==(10+5*level)) {init(); return 0;}
+		                  if (c[0]<2*nx||c[0]>(ny-2)*nx||c[0]%nx==1||c[0]%nx==nx-2) {document.images[nx+13].src="prazdne.png"; cc[nx+13]=0;
+		                                                                             document.images[(ny-2)*nx+26].src="prazdne.png"; cc[(ny-2)*nx+26]=0; 
+																					}
+						 }
+	    else {document.images[c[n]].src="prazdne.png"; cc[c[n]]=0;}
+//	    cc[c[0]]=1; 
+	    if (c[0]%nx<nxpol)
+               i= nx*Math.round((ny-3)*Math.random()+1)+Math.round((nxpol-3)*Math.random()+1+nxpol);
+	    else
+               i= nx*Math.round((ny-3)*Math.random()+1)+Math.round((nxpol-3)*Math.random()+1);
+        if (Math.random()<0.1-level/200)
+           {  if (!cc[i])
+	             { cc[i]=2;document.images[i].src="kolac1.jpg";}
+	       }	   
+	    t.focus();
+     } 
+}
+//*************************************POSUN************************************************************************	
+	function posun(evt)
+	{ charCode = (evt.which) ? evt.which : event.keyCode ;
+	  switch (charCode)
+	  { case 38: case 40: case 37: case 39: case 19: break;
+	    default: {charcode=ch; break;}
+	  }	
+	  return 0;
+	}
+	
+	function newgame()
+	{ if (play) 
+	  {next.style.display='none';
+       window.tr= window.setInterval('pohyb()', 230-15*level);	   
+	  }
+    }
+	
+function stop()
+	{
+	t.focus();
+window.clearInterval(window.tr);
+	}
+	</script>
+</head>
+
+<body bgcolor="LightBlue" style="font-size:125%" >
+
+<script>
+plocha();
+ document.images[c[0]].src="hlava.png";
+//document.images[50].src="kolac1.jpg";
+document.writeln('<div style="position:absolute;left:170; top:'+(ny+2)*20+';">');  
+document.writeln('Length</div>');
+document.writeln('<div style="position:absolute;left:300; top:'+(ny+2)*20+';">');  
+document.writeln('Level</div>');
+document.writeln('<div style="position:absolute;left:430; top:'+(ny+2)*20+';">');  
+document.writeln('Live</div>');
+
+document.writeln('<input type="Text" ONKEYPRESS="javascript:return false;" value="1" ID="t" onkeydown="javascript:return posun(event)" name="t" style="width:50;position:absolute;left:170; top:'+(ny+3)*20+'">');
+document.writeln('<input type="Text" ONKEYPRESS="javascript:return false;" value="0" ID="tt"  name="tt" style="width:50;position:absolute;left:300; top:'+(ny+3)*20+'">');
+document.writeln('<input type="Text" ONKEYPRESS="javascript:return false;" value="3" ID="ttt"  name="ttt" style="width:50;position:absolute;left:430; top:'+(ny+3)*20+'">');
+
+</script>
+<h2 align="center" style="width:200;background:rgb(150,150,255);position:absolute;left:220;top:100;display:none;border-width:5;border-style:outset" id="over"><br> <a href="index.html" target="obsah">Game over</a> <br>&nbsp;</h2>
+<h2 align="center" onclick="newgame()" style="width:200;background:rgb(150,150,255);position:absolute;left:220;top:100;display:block;border-width:5;border-style:outset" id="next"><br> Game <br>Press "Play"</h2>
+<h2 align="center"  style="width:200;background:rgb(150,150,255);position:absolute;left:220;top:100;display:none;border-width:5;border-style:outset" id="Bpause"><br> Game <br>P a u s e </h2>
+
+</body>
+</html>

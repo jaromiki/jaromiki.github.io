@@ -1,0 +1,310 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C+?=
+	=?windows-1250?Q?+_=287.=29?=
+Date: Thu, 12 Jul 2007 10:04:29 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=684
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (7.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (7.)</H2>
+<H4>N=ECco m=E1lo ke zdroj=F9m a resource =E8=E1stem program=F9m pro =
+Windows</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Ka=9Ed=FD program pro Windows obsahuje tzv. zdrojovou =E8=E1st =
+(resource). Ta je=20
+p=F8ipojena v=ECt=9Ainou ke konci EXE souboru a m=F9=9Ee obsahovat =
+dialogov=E1 okna, r=F9zn=E1=20
+menu, bitmapy, ikony, fonty a r=F9zn=E1 jin=E1 data, je=9E aplikace =
+vyu=9E=EDv=E1 ke=20
+komfortn=ECj=9A=ED interakci s u=9Eivatelem.=20
+<P>Zvl=E1=9At=EC pro program=E1tora je tento zp=F9sob vytv=E1=F8en=ED =
+dialog=F9 mnohem=20
+komfortn=ECj=9A=ED. Pokud vyu=9Eijete n=ECjak=FD WYSIWYG editor jako =
+nap=F8. AppStudio (viva=20
+Microsoft), pak je tvorba dialog=F9 =FApln=EC jednoduch=E1, ale ani =
+syntaxe rc soubor=F9=20
+nen=ED p=F8=EDli=9A slo=9Eit=E1. Program=E1tor ur=E8=ED viz=E1=9E okna, =
+um=EDst=ED tla=E8=EDtka a p=F8id=ECl=ED jim=20
+identifik=E1tory. Potom pomoc=ED funkce Windows p=F8id=ECl=ED proceduru =
+pro zpracov=E1v=E1n=ED=20
+zpr=E1v a jednodu=9Ae jej otev=F8e. Pr=E1ce p=F8es zdroje je mnohem =
+jednodu=9A=9A=ED ne=9E=20
+vytv=E1=F8et HWND prom=ECnn=E9 pro v=9Aechny tla=E8=EDtka, statick=E9 =
+objekty atd. a ty po=20
+jednom otev=EDrat funkc=ED CreateWindow.=20
+<P>Jak tedy na to? Pokud vyu=9Eijeme Dev-C++, ukl=E1d=E1 se zdrojov=FD =
+k=F3d ke zdrojov=E9=20
+=E8=E1sti implicitn=EC v souboru rsrc.rc. Nejd=F9le=9Eit=ECj=9A=ED je u =
+tohoto kompil=E1toru=20
+p=F8ipojit k souboru rsrc.rc soubor winresrc.h, kter=FD obsahuje seznam =
+v=9Aech=20
+hlavi=E8kov=FDch soubor=F9 nutn=FDch ke tvorb=EC zdroj=F9. Dal=9A=ED =
+soubor, kter=FD je t=F8eba=20
+p=F8ipojit, je v=E1=9A vlastn=ED soubor s definicemi identifik=E1tor=F9, =
+obvykle resource.h,=20
+ale je mo=9En=E9 vkl=E1dat definice i na za=E8=E1tek rsrc.rc, ale =
+znep=F8ehledn=ED to=20
+strukturu projektu.
+<P>Syntaxe rc soubor=F9 je jednoduch=E1. Nejprve se nap=ED=9Ae =
+identifik=E1tor, kter=FD je v=20
+podstat=EC =E8=EDslo, ale pomoc=ED direktiv #define je dobr=E9 si je =
+vhodn=EC pojmenovat.=20
+Konvence je ID, d=E1le p=EDsmeno typu nap=F8. D jako dialog, =
+podtr=9E=EDtko a popis=20
+zdroje. V=FDsledn=FD identifik=E1tor by mohl vypadat IDD_HLAVNIOKNO, ale =
+nen=ED to=20
+podm=EDnka.
+<P>D=E1le je t=F8eba specifikovat typ zdroje. Nej=E8ast=ECji =
+pou=9E=EDvan=E9 jsou dialogy=20
+(specifikace "DIALOG"), nab=EDdky ("MENU"), ikony ("ICON"), kurzory =
+("CURSOR"),=20
+bitmapy ("BITMAP"), fonty ("FONT"), akceler=E1tory, kter=E9 jsou =
+vlastn=EC kl=E1vesov=E9=20
+zkratky ("ACCELERATORS"), a tak=E9 tabulky =F8et=ECzc=F9 =
+("STRINGTABLE"), kter=E9 se=20
+deklaruj=ED trochu jinak, ale jsou u=9Eite=E8n=E9 p=F8i tvorb=EC =
+v=EDcejazy=E8n=FDch program=F9.
+<P>Pak je mo=9Eno vsadit n=ECkter=E9 speci=E1ln=ED p=F8=EDkazy, ale ty =
+nejsou pro za=E8=EDnaj=EDc=EDho=20
+program=E1tora zase tak d=F9le=9Eit=E9. Potom mohou n=E1sledovat =
+parametry a obsah polo=9Eky=20
+uzav=F8en=E9 mezi p=F8=EDkazy BEGIN a END nebo { a }. Proto=9Ee se =
+ka=9Ed=FD typ deklaruje=20
+r=F9zn=EC, bude lep=9A=ED uv=E9st p=F8=EDklady.=20
+<P>Jednoduch=E9 okno m=F9=9Ee vypadat takto:=20
+<P><TT><FONT color=3D#000099>IDD_DIALOG1 DIALOG DISCARDABLE&nbsp; 0, 0, =
+187,=20
+65</FONT></TT> <BR><TT><FONT color=3D#000099>STYLE DS_MODALFRAME | =
+WS_MINIMIZEBOX=20
+| WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>CAPTION "Dialogov=E9 okno"</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>FONT 8, "MS Sans Serif"</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>BEGIN</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+DEFPUSHBUTTON&nbsp;&nbsp; "OK",IDOK,106,38,50,14</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp; =
+PUSHBUTTON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+"Storno",IDCANCEL,29,38,50,14</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+CONTROL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Tak takto =
+vypad=E1=20
+jednoduch=E9 okno.",IDC_STATIC,</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+"Static",SS_SIMPLE | WS_GROUP,34,15,119,8</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>END</FONT></TT>=20
+<P>Zp=F9sob=F9, jak vytvo=F8it jednoduch=E9 okno, je spousta. Tak=E9 =
+text je mo=9En=E9=20
+vytvo=F8it n=ECkolika zp=F9soby, styl okna je mo=9En=E9 m=ECnit. Pokud =
+za tag CAPTION=20
+uvedeme nap=F8: <FONT color=3D#000099>MENU IDM_MENU1,</FONT> bude k =
+tomuto oknu=20
+pou=9Eito menu IDM_MENU1.=20
+<P>Parametry STYLE mohou b=FDt: <FONT color=3D#000099>WS_BORDER, =
+WS_CAPTION,=20
+WS_CHILD, WS_CHILDWINDOW,&nbsp; WS_CLIPCHILDREN,&nbsp; =
+WS_CLIPSIBLINGS,&nbsp;=20
+WS_DISABLED,&nbsp; WS_DLGFRAME, WS_GROUP, WS_HSCROLL,&nbsp; =
+WS_ICONIC,&nbsp;=20
+WS_MAXIMIZE&nbsp; WS_MAXIMIZEBOX, WS_MINIMIZE, WS_MINIMIZEBOX, =
+WS_OVERLAPPED,=20
+WS_OVERLAPPEDWINDOW ,WS_POPUP, WS_POPUPWINDOW, WS_SIZEBOX, WS_SYSMENU,=20
+WS_TABSTOP, WS_THICKFRAME,&nbsp; WS_TILED,&nbsp; WS_TILEDWINDOW, =
+WS_VISIBLE,=20
+WS_VSCROLL</FONT>=20
+<P>Popisovat je nebudu, snad jen =9Ee nap=F8: WS_MAXIMIZE p=F8inut=ED =
+okno b=FDt=20
+maxim=E1ln=ED, WS_MAXIMIZEBOX umo=9En=ED aby se na oknu objevilo =
+tla=E8=EDtko pro=20
+maximalizaci, WS_VSCROLL nech=E1 na okn=EC vykreslit vertik=E1ln=ED =
+posuvn=EDk. Pro=20
+vytvo=F8en=ED standardn=EDho obvykle sta=E8=ED pou=9E=EDt =
+WS_OVERLAPPEDWINDOW, kter=E9 p=F8ipoj=ED=20
+n=ECkter=E9 parametry automaticky.=20
+<P><B><U>Jednoduch=E9 menu</U></B>=20
+<P><TT><FONT color=3D#000099>IDR_MENU1 MENU DISCARDABLE</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>BEGIN</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+POPUP "&amp;Soubor"</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+BEGIN</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MENUITEM=20
+"&amp;Nov=FD",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+ID_SOUBOR_NOVY</FONT></TT>=20
+<BR><TT><FONT color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+MENUITEM=20
+"&amp;Otev=F8=EDt...", ID_SOUBOR_OTEVRIT</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; POPUP=20
+"&amp;Seznam"</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+BEGIN</FONT></TT>=20
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;=20
+MENUITEM "1",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+ID_SOUBOR_SEZNAM_1</FONT></TT>=20
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;=20
+MENUITEM "2",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+ID_SOUBOR_SEZNAM_2</FONT></TT>=20
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;=20
+MENUITEM "3",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+ID_SOUBOR_SEZNAM_3</FONT></TT>=20
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;=20
+MENUITEM "4",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_SOUBOR_SEZNAM_4,=20
+MENUBARBREAK</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;=20
+MENUITEM "5",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+ID_SOUBOR_SEZNAM_5</FONT></TT>=20
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;=20
+MENUITEM "6",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+ID_SOUBOR_SEZNAM_6</FONT></TT>=20
+<BR><TT><FONT color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+
+END</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MENUITEM=20
+"Nefunk=E8n=ED",&nbsp;&nbsp; ID_SOUBOR_NEFUNKCNI, GRAYED</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MENUITEM=20
+SEPARATOR</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MENUITEM=20
+"&amp;Konec",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_SOUBOR_KONEC</FONT></TT>=20
+<BR><TT><FONT color=3D#000099>&nbsp;&nbsp;&nbsp; END</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>END</FONT></TT>=20
+<P>Vhodn=EC zvolen=E9 identifik=E1tory, zp=F8ehledn=ED zdrojov=FD k=F3d =
+nejen ve zdroj=EDch.=20
+Vlo=9Een=EDm znaku &amp; p=F8ed n=ECkter=E9 p=EDsmeno zp=F9sob=ED, =9Ee =
+stiskem tohoto p=EDsmena na=20
+kl=E1vesnici je dan=E1 polo=9Eka zvolena.=20
+<P>P=F8ipojov=E1n=ED kurzor=F9, ikon a bitmap nen=ED tak slo=9Eit=E9 a =
+lze je napsat jedn=EDm=20
+=F8=E1dkem:=20
+<P><TT><FONT=20
+color=3D#000099>IDC_CURSOR1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;=20
+CURSOR&nbsp; DISCARDABLE&nbsp;&nbsp;&nbsp;&nbsp; =
+"CURSOR1.CUR"</FONT></TT>=20
+<BR><TT><FONT=20
+color=3D#000099>IDI_ICON1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ICON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+"ICON1.ICO"</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>IDB_BITMAP1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;=20
+BITMAP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+"BITMAP1.BMP"</FONT></TT>=20
+<P>Uvedeme ID objektu, typ, roz=9A=ED=F8en=E9 parametry a n=E1zev =
+souboru.=20
+<P>Definice akceler=E1torov=FDch kl=E1ves je podobn=E1, uvedeme ID, =
+kl=ED=E8ov=E9 slovo=20
+ACCELERATORS, paramtery a mezi tagy BEGIN a END zad=E1me jejich =
+definice. Do=20
+uvozovek uvedeme p=EDsmeno kl=E1vesy nebo n=E1hradn=ED ozna=E8en=ED =
+virtu=E1ln=ED kl=E1vesy, d=E1le=20
+identifik=E1tor, a dal=9A=ED parametry. Nejprve zvol=EDme typ kl=E1vesy =
+(VIRTKEY nebo=20
+ASCII), SHIFT, ALT nebo CONTROL jsou vlajky stisku p=F8esmyka=E8=F9. =
+D=E1le je mo=9En=E9=20
+uv=E9st dal=9A=ED parametry.=20
+<P><TT><FONT color=3D#000099>IDR_ACCELERATOR1 ACCELERATORS =
+DISCARDABLE</FONT></TT>=20
+<BR><TT><FONT color=3D#000099>BEGIN</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+"A",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ID_ACCEL40011,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+VIRTKEY,SHIFT, ALT, NOINVERT</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+"B",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ID_ACCEL40012,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+VIRTKEY,NOINVERT</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+VK_F1,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ID_ACCEL40013,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+VIRTKEY,NOINVERT</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+VK_F2,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ID_ACCEL40014,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+VIRTKEY,CONTROL, ALT, NOINVERT</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+"X",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ID_ACCEL40015,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+ASCII,&nbsp; ALT, NOINVERT</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>END</FONT></TT>=20
+<P>Syntaxe tabulek =F8et=ECzc=F9 je trochu odli=9An=E1:=20
+<P><TT><FONT color=3D#000099>STRINGTABLE DISCARDABLE</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#000099>BEGIN</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+IDS_STRING1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;=20
+"Hello world"</FONT></TT> <BR><TT><FONT =
+color=3D#000099>&nbsp;&nbsp;&nbsp;=20
+IDS_STRING2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;=20
+"Nazdar lidi"</FONT></TT> <BR><TT><FONT color=3D#000099>END</FONT></TT>=20
+<P>Je t=F8eba uv=E9st kl=ED=E8ov=E9 slovo STRINGTABLE parametry se =
+definuj=ED a=9E k=20
+jednotliv=FDch =F8et=ECzc=F9m.=20
+<P>Nejslo=9Eit=ECj=9A=ED ze zdroj=F9 je definice dialogov=FDch oken. =
+Tato mohou obsahovat=20
+spousty r=F9zn=FDch ovl=E1dac=EDch i statick=FDch prvk=F9, jejich=9E =
+popis je bohu=9Eel mimo=20
+r=E1mec tohoto tutori=E1lku. V dal=9A=EDch d=EDlech se pokus=EDme =
+vytvo=F8it funk=E8n=ED a trochu=20
+zaj=EDmav=ECj=9A=ED Hello World.=20
+<P>V=EC=F8=EDm, =9Ee p=F8edchoz=ED a d=EDly nebyly p=F8=EDli=9A =
+zaj=EDmav=E9, ale je t=F8eba si uv=E9st=20
+alespo=F2 z=E1kladn=ED prvky Windows API pokud nevlastn=EDte =9E=E1dnou =
+publikaci nebo=20
+referen=E8n=ED p=F8=EDru=E8ku.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:04:12 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

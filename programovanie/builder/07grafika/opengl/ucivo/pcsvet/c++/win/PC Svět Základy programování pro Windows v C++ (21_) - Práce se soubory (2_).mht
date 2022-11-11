@@ -1,0 +1,149 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klady_programov=E1n=ED_pro_Windows_v_C+?=
+	=?windows-1250?Q?+_=2821.=29_-_Pr=E1ce_se_soubory_=282.=29?=
+Date: Thu, 12 Jul 2007 10:10:49 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2295
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klady programov=E1n=ED pro =
+Windows v C++ (21.) - Pr=E1ce se soubory (2.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klady programov=E1n=ED pro Windows v C++ (21.) - Pr=E1ce se =
+soubory (2.)</H2>
+<H4>Jak vyu=9E=EDt funkce Win32API k rychl=E9 pr=E1ci se soubory</H4>
+<HR color=3D#777777 SIZE=3D1>
+V minul=E9 =E8=E1sti jsem uvedl popis funkce CreateFile, pomoc=ED =
+kter=E9 soubory nejen=20
+vytv=E1=F8=EDme ale i otev=EDr=E1me a m=ECn=EDme jejich atributy. Tato =
+funkce m=E1 spoustu=20
+parametr=F9 a vlajek, kter=E9 prakticky z=EDsk=E1vaj=ED smysl, a=9E =
+kdy=9E ze souboru =E8teme=20
+nebo do n=ECj zapisujeme.
+<P>Pro =E8ten=ED ze souboru pou=9Eijeme funkci Win32API, kter=E1 se =
+jmenuje ReadFile a=20
+jej=ED prototyp je n=E1sleduj=EDc=ED: <FONT =
+color=3D#000077></P><PRE>BOOL ReadFile(
+  HANDLE hFile,                 // handle na =E8ten=FD soubor
+  LPVOID lpBuffer,      // adresa bufferu, kter=FD obdr=9E=ED data
+  DWORD nNumberOfBytesToRead,   // po=E8et byt=F9 ke =E8ten=ED
+       // adresa prom=ECnn=E9 pro po=E8et p=F8e=E8ten=FDch byt=F9
+  LPDWORD lpNumberOfBytesRead, =20
+  LPOVERLAPPED lpOverlapped     // adresa struktury OVERLAPPED
+);=09
+</PRE></FONT><BR>Prvn=EDm atributem hFile specifikujeme handle =
+vr=E1cen=E9 funkc=ED=20
+CreateFile. Tento parametr nen=ED t=F8eba bl=ED=9Ee specifikovat, jen =
+pro =FAplnost, tento=20
+parametr nemus=ED p=F8=EDmo ozna=E8ovat diskov=FD soubor, ale nap=F8. =
+komunika=E8n=ED resource=20
+=E8i mailslot. Handle p=F8ed=E1van=FD t=E9to funkci mus=ED m=EDt =
+p=F8=EDstupov=E9 pr=E1vo=20
+GENERIC_READ.
+<P>Druh=FD parametr mus=ED odkazovat na incializovan=FD buffer, jeho=9E =
+velikost je=20
+minim=E1ln=EC po=E8et byt=F9 uveden=FDch t=F8et=EDm parametrem =
+nNumberOfBytesToRead. Parametr=20
+nNumberOfBytesToRead tedy specifikuje, kolik byt=F9 se z dan=E9ho =
+souboru p=F8e=E8te a o=20
+kolik byt=F9 se posune vnit=F8n=ED ukazatel. Dal=9A=ED =E8tec=ED operace =
+bude tedy za=E8=EDnat=20
+prvn=EDm nep=F8e=E8ten=FDm bytem.</P>
+<P>Parametr lpNumberOfBytesRead by m=ECl odkazovat na prom=ECnnou, =
+kter=E1 obdr=9E=ED=20
+po=E8et skute=E8n=EC p=F8e=E8ten=FDch dat. Tuto hodnotu je dobr=E9 =
+testovat, pokud pracujeme=20
+se souborem nezn=E1m=E9 d=E9lky nebo s jin=FDm handle ne=9E na soubor. =
+Tento parametr m=F9=9Ee=20
+b=FDt NULL pokud lpOverlapped ukazuje na platnou strukturu =
+OVERLAPPED.</P>
+<P>Je-li soubor otev=F8en pro asynchronn=ED =E8ten=ED a z=E1pis, tj. =
+je-li p=F8i otev=F8en=ED=20
+funkc=ED CreateFile pou=9Eita vlajka FILE_FLAG_OVERLAPPED, je nutn=E9 =
+tento parametr=20
+pou=9E=EDt. Je-li p=F8esto ponech=E1n NULL, m=F9=9Ee se funkce chovat =
+nep=F8edv=EDdateln=FDm=20
+zp=F9sobem. Nen=ED-li FILE_FLAG_OVERLAPPED specifikov=E1no, je tento =
+parametr=20
+ignorov=E1n a m=ECl by b=FDt NULL.<BR><BR>Jednoduch=FDm p=F8=EDkladem =
+pou=9Eit=ED t=E9to funkce je=20
+n=E1sleduj=EDc=ED k=F3d: <FONT color=3D#000077></P><PRE>BOOL bResult =3D =
+ReadFile(hFile, &amp;inBuffer,
+                        nBytesToRead,=20
+                        &amp;nBytesRead, NULL) ;=20
+// test na konec souboru
+if (bResult &amp;&amp;  nBytesRead =3D=3D 0, ) {=20
+  // jsme na konci souboru
+}=20
+</PRE></FONT><BR>Podobn=FDm zp=F9sobem a stejn=EC jednodu=9Ae je =
+mo=9En=E9 do souboru i=20
+zapisovat. Pro z=E1pis je ur=E8ena funkce s analogick=FDm n=E1zvem =
+WriteFile a jej=ED=20
+prototyp je n=E1sleduj=EDc=ED: <FONT color=3D#000077><PRE>BOOL =
+WriteFile(
+  HANDLE hFile,                   // handle na soubor
+  LPCVOID lpBuffer,               // ukazatel na blok dat
+  DWORD nNumberOfBytesToWrite,    // po=E8et byt=F9 k z=E1pisu
+  // adresa prom=ECnn=E9 pro po=E8et zapsan=FDch byt=F9
+  LPDWORD lpNumberOfBytesWritten,=20
+  // ukazatel na strukturu OVERLAPPED
+  LPOVERLAPPED lpOverlapped
+);=09
+</PRE></FONT><BR>Parametry t=E9to funkce jsou hodn=EC podobn=E9 funkci=20
+ReadFile.<BR>Parametr hFile je handle na soubor, kter=FD byl otev=F8en =
+nebo vytvo=F8en=20
+s p=F8=EDstupov=FDm pr=E1vem GENERIC_WRITE. Jako u funkce ReadFile =
+nemus=ED ur=E8ovat=20
+soubor.<BR>Parametr lpBuffer odkazuje na za=E8=E1tek bloku dat v =
+pam=ECti, kter=E1 maj=ED=20
+b=FDt do souboru zaps=E1na a jejich d=E9lka v bytech je d=E1na =
+parametrem=20
+nNumberOfBytesToWrite. Jako u funkce ReadFile obdr=9E=EDme v =
+prom=ECnn=E9 specifikovan=E9=20
+lpNumberOfBytesWritten po=E8et skute=E8n=EC zapsan=FDch =
+byt=F9.<BR>Uveden=ED ukazatele na=20
+strukturu OVERLAPPED v parametru lpOverlapped je op=ECt podm=EDn=ECno =
+stejn=FDmi=20
+podm=EDnkami jako u funkce ReadFile. <BR><BR>Ob=EC tyto funkce se =
+chovaj=ED podobn=EC=20
+jako b=EC=9En=E9 c=E9=E8kovsk=E9 fread nebo fwrite. <BR><BR>A=E8koli by =
+se mohlo zd=E1t, =9Ee tyto=20
+funkce pro pr=E1ci se soubory =FApln=EC posta=E8uj=ED, Win32API =
+nab=EDz=ED je=9At=EC n=ECkolik=20
+dal=9A=EDch funkc=ED pro pr=E1ci se soubory, kter=E9 psan=ED program=F9 =
+mohou urychlit a=20
+usnadnit, a proto budu tomuto t=E9matu v=ECnovat je=9At=EC jeden =
+=E8l=E1nek.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:10:37 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

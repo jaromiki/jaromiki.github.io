@@ -1,0 +1,179 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_C++:_M=F9j_prvn=ED_program_pro_Windows?=
+Date: Thu, 12 Jul 2007 10:02:09 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=536
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: C++: M=F9j prvn=ED program pro =
+Windows</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>C++: M=F9j prvn=ED program pro Windows</H2>
+<H4>Sezn=E1men=ED s programovac=EDm jazykem C++ pro Windows a na=9Ae =
+prvn=ED aplikace=20
+Hello World</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Jazyk C++ je d=EDky objekt=F9m, ukazatel=F9m a podobn=FDm =
+srandi=E8k=E1m velice siln=FD=20
+jazyk, a proto je po=9E=EDv=E1n i pro programov=E1n=ED ve Windows.=20
+<P>V tomto seri=E1lu (douf=E1m) z=E1klad=F9 programov=E1n=ED ve Windows =
+se budeme v=ECnovat=20
+neobjektov=E9mu programov=E1n=ED, proto=9Ee je to, dle m=E9ho n=E1zoru, =
+nejjednodu=9A=9A=ED=20
+zp=F9sob, jak za=E8=EDt v=FDuku z=E1klad=F9 programov=E1n=ED pro =
+Windows. A proto=9Ee za=E8=EDn=E1me bez=20
+objekt=F9, nebudeme pou=9E=EDvat Microsoft=ED VC (zaj=EDmalo by m=EC, =
+kolik procent =E8ten=E1=F8=F9=20
+jej m=E1 leg=E1ln=EC) a vyu=9Eijeme n=E1stroj, kter=FD je zdarma (GNU), =
+a to Bloodshed=20
+Dev-C++. K dispozici je aktu=E1ln=EC verze 4 v=E8etn=EC patche na 4.01. =
+Programovat=20
+budeme v konvenci ANSI, tud=ED=9E by programy, kter=E9 zde naleznete, by =
+m=ECly b=FDt=20
+p=F8enositeln=E9 i na jin=E9 kompil=E1tory pro Windows. Tento =
+tutori=E1lnek p=F8edpokl=E1d=E1,=20
+=9Ee zn=E1te alespo=F2 trochu po=E8=EDta=E8ovou angli=E8tinu.=20
+<P>Jeden podstatn=FD rozd=EDl mezi programov=E1n=EDm pro DOS a Windows =
+je, =9Ee pro=20
+Windows pou=9Eijeme nam=EDsto hlavn=ED funkce main funkci WinMain a to =
+nejl=E9pe v tomto=20
+tvaru:=20
+<P><TT><FONT color=3D#3333ff>int STDCALL WinMain( HINSTANCE =
+hThisInstance,=20
+HINSTANCE hPrevInstance,</FONT></TT> <BR><TT><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;=20
+LPSTR lpszArgument, int nFunsterStil )</FONT></TT>=20
+<P>N=ECkolik odli=9Anost=ED zde je. Nap=F8. STDCALL za deklarac=ED =
+vr=E1cen=E9 hodnoty (kterou=20
+Windows nepou=9E=EDvaj=ED). T=EDmto nadeklarujete, =9Ee funkce je =
+vol=E1na standardn=EDm=20
+zp=F9sobem. Narozd=EDl od funkce main jsou zde parametry 4.=20
+<P><B>hThisInstance</B> - struktura dan=E1 typem HINSTANCE, handle =
+(rukoje=9D) na=20
+tuto instance aplikace <BR><B>hPrevInstance</B> - handle na instanci =
+p=F8edchoz=ED=20
+aplikace <BR><B>lpszArgument</B> - ukazatel na =F8et=ECzce argument=F9 =
+p=F8=EDkazov=E9 =F8=E1dky=20
+(ve Windows se moc nepou=9E=EDv=E1) <BR><B>nFunsterStil</B> - styl, =
+kter=FDm by Windows=20
+cht=ECly zobrazit na=9Ae okno=20
+<P>Pozn=E1mky: Instance aplikace: M=E1te nap=F8. Hello World a =
+spust=EDte jej v=EDckr=E1t,=20
+tzn. =9Ee m=E1te n=ECkolik instanc=ED t=E9 sam=E9 aplikace. Parametry =
+(argumenty) p=F8=EDkazov=E9=20
+=F8=E1dky vytvo=F8=ED Windows nap=F8. kdy=9E na ikonu programu =
+p=F8et=E1hnete jin=FD soubor.=20
+<P>D=E1le programy pro Windows vyu=9E=EDvaj=ED hlavn=ED proceduru okna o =
+kter=E9 se zm=EDn=EDm v=20
+p=F8=ED=9At=EDm d=EDle, proto=9Ee nechci =FAvodn=ED program p=F8=EDli=9A =
+komplikovat.=20
+<P>Tak=9Ee se pust=EDme do samotn=E9 tvorby programu Hello World. Pokud =
+u=9E m=E1me=20
+Dev-C++ nainstalovan=E9, vybereme z menu File polo=9Eku New project a =
+klikneme na=20
+ikonu projektu WinMain() Project. Je=9At=EC se ujist=EDme, =9Ee je =
+vybr=E1n C++ projekt a=20
+klikneme na OK. Zad=E1me Hello World a vybereme, kde se projekt =
+vytvo=F8=ED, nejl=E9pe v=20
+n=ECjak=E9 pr=E1zdn=E9 slo=9Ece.=20
+<P>Te=EF ji=9E m=E1me vytvo=F8en projekt a editor n=E1m automaticky =
+otev=F8el okno=20
+Untitled1, kter=E9 rad=ECji ulo=9E=EDme jako nap=F8. main.cpp do =
+slo=9Eky s projektem, a to=20
+v menu File - Save unit as...=20
+<P>V souboru main.cpp m=F9=9Eete vid=ECt standardn=ED p=F8ipojen=ED =
+hlavi=E8kov=E9ho souboru=20
+windows.h a hlavn=ED funkci WinMain, kter=E1 vrac=ED nulu.=20
+<P>Ve skute=E8nosti se k programu linkuje je=9At=EC jeden soubor, a to =
+rsrc.o, kter=FD=20
+vznikne zkompilov=E1n=EDm zdroj=F9, kter=E9 m=F9=9Eeme editovat p=F8es =
+menu: Project - Edit=20
+resource file. Jak m=F9=9Eete vid=ECt, je zde jen jedna polo=9Eka, a to =
+ikona, kterou=20
+m=F9=9Eete nahradit zde nebo v nastaven=ED projektu: Project - Project =
+options.=20
+<P>P=F8istoup=EDme k samotn=E9mu Hello World. =DApln=EC =
+nejjednodu=9A=9A=ED cesta je zavolat=20
+funkci MessageBox, kter=E1 je sou=E8=E1st=ED Windows API a jej=ED k=F3d =
+je um=EDst=ECn ve=20
+standardn=EDch knihovn=E1ch Windows, co=9E n=E1s v tuto chv=EDli =
+nemus=ED zaj=EDmat. Klikneme=20
+do voln=E9ho =F8=E1dku nad p=F8=EDkazem return nebo tam, kam chceme =
+k=F3d vlo=9Eit, a k=20
+zavol=E1n=ED m=F9=9Eeme pou=9E=EDt pr=F9vodce obsa=9Een=E9ho v Dev-C++: =
+Vybereme z menu Edit -=20
+Insert - MessageBox a ve vybran=E9m okn=EC vhodn=EC zvol=EDme, co =
+pot=F8ebujeme. Do=20
+pol=ED=E8ka <B>dialog title</B> nap=ED=9Aeme titulek dialogu nap=F8. =
+M=F9j program, do=20
+<B>editboxu</B> nap=ED=9Aeme text nap=F8. Hello World a vybereme, =
+kter=E1 tla=E8=EDtka=20
+budeme v dialogu cht=EDt a kter=E9 chceme m=EDt aktivn=ED, pop=F8. Ikonu =
+a mod=E1lnost okna=20
+(vysv=ECtl=EDm n=ECkdy v p=F8=ED=9At=EDm d=EDle, sta=E8=ED ponechat =
+Application modal).=20
+<P>Pokud za=9Akrtnete tla=E8=EDtko <B>advanced options</B>, m=F9=9Eete =
+si zvolit n=ECkter=E9=20
+dal=9A=ED parametry, kter=E9 v=9Aak nab=EDz=ED jen Win 95 a vy=9A=9A=ED. =
+Dialog vlo=9E=EDte do=20
+programu kliknut=EDm na OK. Program by tedy m=ECl vypadat n=ECjak takto: =
+
+<P><TT><FONT color=3D#3333ff>&nbsp;&nbsp;&nbsp; #include=20
+&lt;windows.h&gt;</FONT></TT>=20
+<P><TT><FONT color=3D#3333ff>&nbsp;&nbsp;&nbsp; int STDCALL</FONT></TT>=20
+<BR><TT><FONT color=3D#3333ff>&nbsp;&nbsp;&nbsp; WinMain (HINSTANCE =
+hInst,=20
+HINSTANCE hPrev, LPSTR lpCmd, int nShow)</FONT></TT> <BR><TT><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp; {</FONT></TT> <BR><TT><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox (NULL, "Hello =
+World" ,=20
+"M=F9j program", 0 + MB_OKCANCEL + MB_ICONASTERISK);</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;</FONT></TT> =
+<BR><TT><FONT=20
+color=3D#3333ff>&nbsp;&nbsp;&nbsp; }</FONT></TT>=20
+<P>Program zkompilujete stiskem kl=E1ves Ctrl+F9 nebo v=FDb=ECrem =
+Compile z menu=20
+Execute. T=EDmto z=EDsk=E1te velmi mal=FD exe soubor narozd=EDl =
+n=ECkolika des=EDtek kilov=FD=20
+soubor v delphi nebo i megov=FD soubor ve VC++. Tento soubor ji=9E =
+m=F9=9Eete spustit a=20
+pochlubit se s n=EDm komukoliv. Mysl=EDm v=9Aak, =9Ee s t=EDmto =
+programem na dlouho=20
+spokojeni nebudete. <BR>
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:01:56 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

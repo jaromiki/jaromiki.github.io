@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<meta name="Content-language" content="sk"> 
+	<meta name="keywords" content="programovanie, Delphi, príručka, Mikuláš, Jaroslav" >
+	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+ <META CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+
+	<title>Delphi -Jaroslav Mikuláš</title>
+</head>
+		<body>
+		<h3>Príklady na pracu s Memo</h3>
+		<ul><li>Vypíšte do Memo čísla :
+				<br>1
+				<br>4
+				<br>9
+				<br>16
+				<br>...
+				<br>2500
+				<br>Riešenie:
+				<pre><code>
+	Memo1-&gt;Lines-&gt;Clear();	
+	for (i=1;i&lt;=50;i++) Memo1-&gt;Lines-&gt;Append(IntToStr(i));
+				</code></pre>
+			<li>Vypíšte do Memo1 prvých 15 členov Fibonnacciho postupnosti
+				<br>1, 1, 2, 3, 5, 8, ...
+				<br>každé číslo je tvorené pomocou súčtu dvoch predošlých	
+				<br>Riešenie:
+				<pre><code>
+	int a=1,b=1,c=2;
+	Memo1-&gt;Lines-&gt;Clear();
+	Memo1-&gt;Lines-&gt;Append(IntToStr(a));
+	Memo1-&gt;Lines-&gt;Append(IntToStr(b));
+	Memo1-&gt;Lines-&gt;Append(IntToStr(c));
+	for (int i=4;i&lt;=15;i++)
+	{ a=b; b=c; Memo1-&gt;Lines-&gt;Append(IntToStr(c=a+b));
+	}
+				</code></pre>
+			<li>Zapíšte do Memo1 50 náhodných dvojciferných čísel a do Edit1 zapíšte max. z týchto náhodných čísel
+				<br>Riešenie:
+				<pre><code>
+	Memo1-&gt;Lines-&gt;Clear();	
+	for (i=1;i&lt;=50;i++) Memo1-&gt;Lines-&gt;Append(IntToStr(10+random(90)));
+	int maxi= StrToInt(Memo1->Lines->Strings[i]);
+	for (i=1;i&lt;50;i++) if (StrToInt(Memo1->Lines->Strings[0])&gt; maxi) maxi = StrToInt(Memo1->Lines->Strings[i];
+	Edit1->Text = IntToStr(maxi);
+				</code></pre>
+				alebo s použitím pola:
+				<pre><code>
+	Memo1-&gt;Lines-&gt;Clear();
+	int a[100];	
+	for (i=1;i&lt;=50;i++) Memo1-&gt;Lines-&gt;Append(IntToStr(a[i]=10+random(90)));
+	int maxi= a[0]);
+	for (i=1;i&lt;50;i++) if (a[i])&gt; maxi) maxi = a[i];
+	Edit1->Text = IntToStr(maxi);
+				</code></pre>
+			<li>Zapíšte do Memo1 50 náhodných dvojciferných čísel a do Edit1 zapíšte súčet z týchto náhodných čísel 
+				<br>Riešenie:
+				<pre><code>
+	Memo1-&gt;Lines-&gt;Clear();
+	int a[100];	
+	for (i=1;i&lt;=50;i++) Memo1-&gt;Lines-&gt;Append(IntToStr(a[i]=10+random(90)));
+	int sum= a[0]);
+	for (i=1;i&lt;50;i++)  sum += a[i];
+	Edit1->Text = IntToStr(maxi);
+				</code></pre>
+			<li>Zapíšte do Memo1 50 náhodných dvojciferných čísel a do Edit1 zapíšte počet párnych čísel z týchto náhodných čísel
+			<li>Zapíšte do Memo1 50 náhodných dvojciferných čísel a do Memo2 zapíšte čísla zväčšené o 1
+			<li>Zapíšte do Memo1 50 náhodných dvojciferných čísel a do Memo2 zapíšte tie isté čísla ale najmenšie číslo bude "ubytované" hneď v prvom riadku 
+			 
+
+		<//body>
+</body>
+</html>

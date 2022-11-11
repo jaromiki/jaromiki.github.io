@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<title>Farba</title>
+	<script>
+	   function farba(r,g,b)
+	   { back01.style.backgroundColor=back1.style.backgroundColor='#'+(Math.round(r)*256*256+Math.round(g)*256+Math.round(b)).toString(16);}  
+	</script>
+</head>
+
+<body>
+<h3>Farba</h3>
+<dl>
+<dt class=main>	Opakovanie
+	<dd style="background-color:#ddffdd">- Ako rýchlejšie vkladať viac rovnakých komponentov
+	<br>- Ako nastaviť úvodné vlastnosti vloženým objektom 
+	<br>- Ktoré vlastnosti objektu určujú polohu objektu
+	<br>- Ako nastavíme farbu objektu
+	<br>- Ako nastavíme zobrazovaný popisný text na objekte
+	<br>- Ako nastaviť písmo na objekte
+	<br>- Ako určiť aby objekt bol neviditelný
+	<br>- Aké udalosti budeme najčastejšie sledovať pri Form1
+	<br>- Aké udalosti budeme najčastejšie sledovať pri tlačídku/button
+	<br>- Ako ošetrím udalosť (kam píšem príkazy)
+	<br>- Ako zmeniť nejakú vlastnosť vloženému objektu ako reakcia na udalosť
+
+<dt class=main>Práca s farbou
+<dd>Asi najväčšiu radosť pascalskému odchovancovi prinesie množstvo farieb, ktoré sú k dispozícii. Je jasné, že nie všetky tieto
+	farby budú mať meno ako to bolo v pascale a musí existovať aj iný spôsob ako zadať zvolenú farbu.
+	<br>Zadávanie farby menom je najjednoduchší spôsob, meno farby je tvorené dvojicou písmen <b>cl</b> a anglického pomenovania farby.
+	<br>Zoznam najčastejšie pomenovaných farieb
+	<ul><li>biela - clWhite
+		<li>čierna - clBlack
+		<li>strieborná - clSilver
+		<li>šedá - clGray
+		<li>modrá - clBlue
+		<li>zelená - clGreen
+		<li>červená - clRed
+		<li>žltá - clYellow
+		<li>fialová - clFuchsia
+		<li>azúrová - clAqua
+	</ul>	
+	Farbu možno zadať aj číslom - najčastejšie v hexa (16-kovej) sústave <b>0xbbggrr</b>, kde bb je hexa údaj o modrej farbe, gg o zelenej, rr o červenej. 
+	Vyzerá to na prvý pohľad dosť komplikovane ale ukážeme si, že to nie je zložité.
+<br>Každé číslo bb, gg, rr určuje "množstvo" modrej, zelenej alebo červenej zložky vo výslednej farbe. hodnota každej z nich môže byť z intervalu 00 až po FF.
+<br>Pravidlá:
+<ul><li>výsledná farba je určená podľa "dominantnej" zložky 
+		<br>napr.  0x3366ff  je najviac v červenej zložke, tak výsledná farba bude červená, odtieň a jas je určený zvyšnými zložkami
+	<li>ak sú dominantné dve zložky 
+		<ul><li>červená so zelenou - vytvorí žltú (hnedú) farbu a menením modrej zložky určujeme jas
+			<li>červená so modrou - vytvorí fialovú farbu a menením zelenej zložky určujeme jas
+			<li>>modrá so zelenou - vytvorí azúrovú farbu a menením modrej zložky určujeme jas
+		</ul>
+	<li>ak sú všetky zložky rovnaké (skoro rovnaké) tvoríme odtiene šedej
+		<br>čím väčšie čísla sú, tým je farba svetlejšia
+</ul>
+Príklady číselných farieb v 16-kovej sústave	
+<table><tr>
+<td>	
+	<ul><li>biela - 0xffffff
+		<li>čierna - 0x000000
+		<li>strieborná - 0xc0c0c0
+		<li>šedá - 0x808080
+		<li>modrá - 0xff0000
+		<li>zelená - 0x00ff00
+		<li>červená - 0x0000ff
+		<li>žltá - 0x00ffff
+		<li>fialová - 0xff00ff
+		<li>azúrová - 0xffff00
+	</ul>
+<td valign="top">	
+	<ul><li>svetlošedá - 0xeeeeee
+		<li>tmavošedá - 0x666666
+		<li>svetlomodrá - 0xffcccc
+		<li>svetlomodrá nádych do fialova - 0xffbbee
+		<li>tmavozelená - 0x009900
+		<li>tmavozelená s nádychom do modra - 0x339900
+		<li>hnedá - 0x006699
+		<li>šedomodrá - 0xcc9999
+		<li>biela s nádychom do červena - 0xeeeeff
+	</ul></tr>
+</table>
+Z historických dôvodov (keď počet farieb na monitore bol limitovaný počtom 256) sa uprednostňuje zadávanie množstva farby
+z nasledovných hodnôt:
+<br>00,33,66,80,99,c0,cc,ff
+<br><br>Príklady číselných farieb v desiatkovej sústave
+<br>farbu zadáme jedným číslom, ktoré vypočítame nasledovným vzorcom:
+<br>farba = 256^2*modra + 256*zelená + červená	
+<br>kde za každú z farieb modrá, zelená, červená zapíšem jej množstvo vo výslednej farbe - volím z intervalu 0 až 255 
+<ul><li>biela - 16777215
+		<li>čierna - 0
+		<li>strieborná - 12632256
+		<li>modrá - 16711680
+		<li>zelená - 65280
+		<li>červená - 255
+		<li>žltá - 65535
+		<li>fialová - 16711935
+		<li>azúrová - 16776960
+	</ul>
+Zdanlivo je zadávanie farby pomocou desiatkového čísla jednoduchšie, ale vidíme, že takéto číslo je nám ťažko čitatelné
+(nevieme rýchlo odhadnúť aká farba sa za ním skrýva) 	
+<dt>Nastavenie farby v Object inspector
+<dd>Môžeme si vybrať z ponuky rozbalovacieho zoznamu, alebo do vstupného riadku naklepeme názov alebo číselnú hodnotu farby.
+<dt>Nastavenie farby v príkazovom riadku programu
+<dd>Farba može byť určená:
+			<ol><li>menom ...
+				<li>hexa číslom 
+				<li>desiatkovým číslom
+				<li>funkciou RGB(červená, zelená, modrá) ... parametre sú čísla od 0 po 255
+			</ol>
+	Pomocou RGB funkcie nie je možné zadávať farbu v <b>Object inspector</b>!!!	
+<dt>Tvorba náhodnej farby
+<dd>Náhodnú farbu možno vytvoriť príkazom random(256*256*255) alebo aj pomocou RGB nasledovne:
+<br> Form1-&gt;Color = random(256*256*255);
+<br> Form1-&gt;Color = RGB(random(255),random(255),random(255));	
+<dt>Úlohy
+<dd>Naprogramuj:
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;" id="back01">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;margin:0">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:500px;margin:'0px'" id="back1">
+		<table><tr><td><input type="Button" value="červená" style="width:110;margin:10" onclick="farba(255,64,64)"> 
+		<td> <input type="Button" value="zelená" style="width:110;margin:10" onclick="farba(32,255,32)"> 
+		<td> <input type="Button" value="modrá" style="width:110;margin:10" onclick="farba(64,64,255)"></tr>
+  		<tr><td> <input type="Button" value="fialová" style="width:110;margin:10" onclick="farba(200,0,225)"> 
+		<td> <input type="Button" value="hnedá" style="width:110;margin:10" onclick="farba(160,128,16)"> 
+		<td> <input type="Button" value="blankytná" style="width:110;margin:10" onclick="farba(32,255,255)"></tr>	
+  		<tr><td> <input type="Button" value="tmavošedá" style="width:110;margin:10" onclick="farba(64,64,64)"> 
+		<td> <input type="Button" value="bledošedá" style="width:110;margin:10" onclick="farba(128,128,128)"> 
+		<td> <input type="Button" value="bledomodrá" style="width:110;margin:10" onclick="farba(128,128,255)">	
+  		<tr><td> <input type="Button" value="náhodná" style="width:110;margin:10" onclick="farba(Math.random()*255,Math.random()*255,Math.random()*255)"> 
+		<td> <input type="Button" value="náhodná-zelená" style="width:110;margin:10" onclick="zz=Math.random()*124+130;rg=Math.random()*(zz-20);farba(rg,zz,rg)"> 
+		<td> <input type="Button" value="náhodná-šedá" style="width:110;margin:10" onclick="rg=Math.random()*255;farba(rg,rg,rg)">	
+			</tr></table>
+	</div>
+</div>		
+<br><br>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:500px;" id="back2">
+			<table style="margin:0"><tr><td>
+			<div style="margin:10 10 10 10">R <input type="Text" value="150" id="r" style="width:70"></div>
+			<div style="margin:10 10 10 10"><br>G <input type="Text" value="150" id="g" style="width:70"></div>
+			<div style="margin:10 10 10 10"><br>B <input type="Text" value="150" id="b" style="width:70"></div>
+			<td><input type="Button" value="Zmeň farbu" id="button" style="width:100" 
+			     onclick="c=(eval(r.value)*256*256+eval(g.value)*256+eval(b.value)).toString(16); while (c.length<6) c='0'+c; back2.style.backgroundColor='#'+c;">
+			</tr></table>
+	</div>	
+</div>
+</dl>		
+
+</body>
+</html>

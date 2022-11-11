@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Marek Mizanin - OpenGL programy 20-29</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=Windows-1250">
+<META NAME="keywords" CONTENT="OpenGL,3D,grafika,Visual C++,vertex program">
+</head>
+<link rel="stylesheet" type="text/css" href="font.css">
+
+<body bgcolor="Black" text="White" vlink="Silver" link="#C8C8FF" leftmargin=2>
+<table cellspacing="2" cellpadding="2" border="0">
+<tr><td valign="top">
+
+<table cellspacing="0" cellpadding="2" border="0" width="90">
+<tr><td height="15"><a href="http://www.zanir.szm.sk/20-29.html"><img src="obrazky/zuk.gif" width=63 height=36 border=0 alt="English language"></a></td></tr>
+<tr><td height="15"><a href="index.html"><div class="odkaz">Novinky</div></a></td></tr>
+<tr><td height="15"><a href="omne.html"><div class="odkaz">O mne</div></a></td></tr>
+<tr><td height="15"><div class="tucne2">OpenGL:</div></td></tr>
+<tr><td height="15"><a href="00-09.html"><div class="odkaz">00 - 09</div></a></td></tr>
+<tr><td height="15"><a href="10-19.html"><div class="odkaz">10 - 19</div></a></td></tr>
+<tr><td height="15"><a href="20-29.html"><div class="odkaz_">20 - 29</div></a></td></tr>
+<tr><td height="15"><a href="30-39.html"><div class="odkaz">30 - 39</div></a></td></tr>
+<tr><td height="15"><a href="dx.html"><div class="odkaz">DX</div></a></td></tr>
+<tr><td height="15"><a href="dx00-09.html"><div class="odkaz">00 - 09</div></a></td></tr>
+<tr><td height="15"><a href="dx10-19.html"><div class="odkaz">10 - 19</div></a></td></tr>
+<tr><td height="15"><a href="java.html"><div class="odkaz">Java</div></a></td></tr>
+<tr><td height="15"><a href="navody.html"><div class="odkaz">Návody</div></a></td></tr>
+<tr><td height="15"><a href="Projekty.html"><div class="odkaz">Projekty</div></a></td></tr>
+<tr><td height="15"><a href="Download.html"><div class="odkaz">Download</div></a></td></tr>
+<tr><td height="15"><a href="http://Kronika.sk/citaj.phtml?id=mizanin"><div class="odkaz">Kronika</div></a></td></tr>
+<tr><td height="15"><a href="linky.html"><div class="odkaz">Linky</div></a></td></tr>
+<tr><td><br><br><br><br>
+<script language="javascript"><!-- 
+document.write("<img src=\"http://neuron.tuke.sk/~mizanin/counter/slovak/index.php?name=20-29&text=" + escape(top.document.referrer) + "\" width=50 height=20 border=0>");
+--></script>
+</td></tr>
+</table>
+</td><td valign="top">
+
+<table cellspacing="2" cellpadding="2" border="1" bordercolor="#FFFFFF">
+
+<tr>
+	<td><a href="opengl/obrazky/020_projected_textures_big.JPG"><img src="opengl/obrazky/020_projected_textures.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 20 - Projected textures</div><br>
+	Projekcia textúry na objekty v scéne je zaujímavý efekt. Týmto spôsobom sa dá docieliť zaujímavé osvetlenie
+	scény, napríklad použitím svetla prechádzajúceho cez farebná sklá.
+	<br><br>
+	<a href="opengl/020_projected_textures.rar">zdrojové texty (bez jpeg.lib) a program - 245kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/014_dxf_loader_big.JPG"><img src="opengl/obrazky/014_dxf_loader.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 21 - Collision</div><br>
+	Bez detekcie kolízie sa nezaobíde žiadna hra. Ja som použil detekciu kolízie zo stránok 
+	<a href="http://www.gametutorials.com/" target="_blank">www.gametutorials.com</a>
+	kde je táto oblasť dobre vysvetlená. Program využíva detekciu kolízie medzi polygonom (štvorcom) a 
+	guľou. V prípade, že nastane kolízia, pozícia kamery sa posunie tak, aby guľa bola mimo polygónu.
+	<br><br>
+	<a href="opengl/021_Collision.rar">zdrojové texty (bez jpeg.lib) a program - 230kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/022_terrain_big.JPG"><img src="opengl/obrazky/022_terrain.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black" rowspan="2"><div class="tucne2">Program 22 - Terén</div><br>
+	Terén je dôležitá časť viacerých typov hier. Vytvorenie tohto programu mi trvalo dosť dlho.
+	Použil som oktanový strom ( <b>OcTree</b> ). <br>
+	OcTree sa používa na delenie priestoru tak, aby sa
+	nemuselo vykresľovať všetko (celý svet) ale iba to čo je v pohľade.
+	
+	Oktánový strom predstavuje rozdelenie priestoru	a zároveň trojuholníkov v svete na kocky.
+	Hlavný vrchol stromu predstavuje kocku, ktorá obsahuje všetky trojuholníky sveta. 
+	Tato kocka sa delí na 8 kociek (v každom smere na polovicu).
+	Od toho sa strom volá oktánový, lebo jeden vrchol-otec môže obsahovať 8 synov.
+	Podľa toho či v tej, ktorej kocke sa nachádzajú trojuholníky sa vrchol-syn vytvorí, alebo nie.
+	Vrcholy-kocky sa rekurentne delia dokedy sa nespní podmienka. Podmienka na ukončenie delenia
+	môže byť jedna z týchto: počet trojuholníkov v kocke je menej ako nejaké maximum,
+	úroveň delenia je rovná hraničnej úrovni, počet všetkých vrcholov je väčší ako maximálny počet.<br>
+	Vykreslenie sveta cez OcTree sa realizuje s pomocou Frustum Culling, čo je vlastne zistenie či je niečo
+	v pohľade. Najprv sa zistí či kocka-otec aspoň čiastočne je v pohľade. 
+	Ak je v pohľade a vrchol je delený tak, sa funkcia rekurentne volá pre všetkých synov.
+	Ak vrchol nie je delený tak sa vykreslia trojuholníky ktore táto kocka obsahuje.<br>
+	Viac nájdete na <a href="http://www.gametutorials.com/" target="_blank">www.gametutorials.com</a>.<br>
+	Ďalej som vytvoril prechody medzi rôznými textúrami. Osvetlenie som urobil pomocou glColor.<br>
+	Do programu som pridal volumetrickú hmlu.	
+	<br><br>
+	<a href="opengl/022_terrain.rar">zdrojové texty (bez jpeg.lib) a program - 300kB</a>
+	</td>
+</tr>
+<tr>
+<td><a href="opengl/obrazky/022_terrain_volum_fog_big.JPG"><img src="opengl/obrazky/022_terrain_volum_fog.jpg" width=267 height=200 border=0 alt=""></a></td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/023_Cube_Mapping_big.JPG"><img src="opengl/obrazky/023_Cube_Mapping.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 23 - Dynamický cubemapping</div><br>
+	Cube mapping predstavuje vlastne environment mapping (mapovanie okolia na zrkadlové predmety) pričom ako zdroj sa používa cuba map textúra.
+	Základné dve spôsoby sú sphere mapping a cube mapping. Sphere mapping som už ukazoval v programe 19.
+	Sphere mapping vychádza iba z jednej textúry, ktorá nepokrýva cele okolie v rovnakej kvalite a tak
+	na určitom mieste je zrkadlový povrch úpne nesprávny a vyzerá zle.
+	Kedže cube mapping používa naraz 6 štvorcovývh obrázkov (textúr) tvoriacich kocku celé okolie 
+	je s vyjadrené dostatočnou presnosťou a nevznikajú nepresnosti také ako pri sphere mappingu. 
+	Ďalšou výhodou cube mappingu je, že cube map textúra sa dá jednoducho vyrenderovať. 
+	Stačí pre každý smer vykresliť okolie pri nastavenej perspektíve 90 stupňov a skopírovať 
+	na príslušnú časť cube mapy. Môj program predstavuje dynamický cube mapping
+	kde lietadlo oblietava zrkadlový predmet. Cube mapping nie štandardnou súčasťou OpenGL, ale
+	je prístupný ako rozšírenie a to GL_ARB(EXT)_texture_cube_map.<br>
+	V tomto programe používam aj knižnicu jpeglibm.lib, čo je vlastne mierne rozšírená knižnica jpeg.lib.
+	Knižnicu som si vytvoril pre lepšiu prehľadnosť projektov.<br><br>
+	<a href="opengl/jpeglibm.rar">zdrojovy text pre knižnicu jpeglibm.lib - 207kB</a><br>
+	<a href="opengl/023_Cube_Mapping.rar">zdrojové texty a program - 460kB</a>
+	</td>
+</tr>
+
+<tr>
+	<td width="271">
+	<a href="opengl/obrazky/024_DOT3_bump_mapping_big.JPG"><img src="opengl/obrazky/024_DOT3_bump_mapping.jpg" width=267 height=200 border=0 alt=""></a>
+	<a href="opengl/obrazky/024_DOT3_bump_mapping_3ds_big.jpg"><img src="opengl/obrazky/024_DOT3_bump_mapping_3ds.jpg" width=267 height=200 border=0 alt=""></a>
+	</td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 24 - DOT3 bump mapping</div><br>
+	
+	Dot Product 3 Bump Mapping je osvetlenie povrchu po pixeloch. Využíva sa skalárny súčin ( dot product )
+	pričom sa prevádza po pixeloch. Štandardné osvetlenie v OpenGL sa prevádza po vrcholoch. V každom vrchole
+	sa spočíta farba a tá sa tieňuje na polygóny. Zjednodušený výpočet farby osvetlenia je<br>
+	<b>farba = ambient + (N.L)xDifuznaFarba + (N.H)^SpecExp x SpecularFarba</b>. <br>
+	Kde <b>ambient</b> je okolité osvetlenie.<br>
+	<b>(N.L)xDifuznaFarba</b> je difúzna zložka osvetlenia.
+	N je normálový vektor, L je vektor k svetlu. Pre difúzne osvetlenie platí, že nezávisý od smeru pohľadu pozorovateľa.<br>
+	<b>(N.H)^SpecExp x SpecularFarba</b> tvorý zrkadlovú zložku osvetlenia.
+	Vektor H = normalizovaný[ (vektor od vrchola ku očiam) + (vektor od vrchola k svetlu) ]. 
+	<br><br>
+	Členy N.L a N.H môžeme vypočítať po pixeloch. Vektor N je reprezentovaný textúrou a vektory L a H spočítame v každom vrchole a lineráne interpolujeme.
+	Výsledkom je osvetlenie po pixeloch.<br><br>
+	Program vyžaduje rozšírenia: GL_ARB_multitexture, GL_ARB_texture_env_combine, GL_ARB_texture_env_dot3.<br>
+	<br>
+	<a href="opengl/024_DOT3_bump_mapping.rar">zdrojové texty a program - 800kB bez jpeglibm.lib</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/025_environment_mapped_bump_mapping_big.JPG"><img src="opengl/obrazky/025_environment_mapped_bump_mapping.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 25 - Environment mapped bump mapping (EMBM)</div><br>
+	EMBM je mapovanie okolia na hrboľatý zrkadlový povrch. Predstavuje pokročilejšiu metódu enviromental mapping-u, ktorá
+	sa na rozdiel od cube alebo sphere mappingu neprevádza po vrcholoch, ale prevádza sa po pixeloch.
+	Využíva sa čítanie z textúry závislé na inej textúre. Presnejšie k textúrovacim koordináciam zakladnej textúry 
+	sa pripočítavá hodnota z druhej textúry. Základná textúra je v tomto prípade sphere map textúra. Druhá textúra predstavuje
+	vypočítané posuvy textúrových koordinácií sphere map textúry. Táto textúra sa vypočítava na základe výškovej mapy zrkadlového povrchu (bump map).
+	<br><br>
+	Program vyžaduje rozšírenia: <br>GL_ARB_multitexture, GL_ARB_texture_env_combine a <b><font face="" color="Red">GL_ATI_envmap_bumpmap</font></b>.<br>
+	Program ide na kartach ATI Radeon 7000 a lepších.<br>
+		
+	<a href="opengl/025_environment_mapped_bump_mapping.rar">zdrojové texty a program - 320kB bez jpeglibm.lib</a>.
+	<a href="opengl/obrazky/025_environment_mapped_bump_mapping_big.JPG">Veľký obrázok 90KB</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/026_Stencil_Shadow_big.JPG"><img src="opengl/obrazky/026_Stencil_Shadow.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 26 - Stencil Shadow</div><br>
+	Program vytvára tieň za pomoci stencil buffra. Stencil buffer uchováva pre každý pixel hodnotu v rozmedzí
+	0 až 2^N-1, kde N je počet bitov stencil buffra. Hodnota sa mení podľa nastaveného operátora. Operátor sa nastavuje
+	pre každú z možností: stencil test neprejde, stencil test prejde a zároveň z test neprejde, stencil aj z test prejdú.
+	Operátory sú: bez zmeny, nulovanie,  nahradenie predvolenou hodnotou, zvýšenie, zníženie a bitová negácia.
+	Stencil test môže byť jeden z týchto: nikdy, &lt;, =&lt;, &gt;, =&gt;, ==, !=, vždy. 
+	Tieňové teleso (shadow volume) je silueta telesa (z pohľadu od svetla) premietnutá na opačnú stranu ako je svetlo.
+	Z-pass algoritmus mení stencil v prípade, že z-test prejde.
+	Tieň sa vytvára tak, že pre privrátené strany tieňového telesa sa stecil hodnota zvýši a pre odvrátené stany sa zníži. 
+	Tieň je tam kde stencil hodnota je &gt; ako 0. Z-pass algoritmus pracuje spravne ak je kamera vonku z tieňa. 
+	Ja používam algoritmus z-fail, ktorý je popísaný v dokumente 
+	<a href="http://developer.nvidia.com/attach/5627" target="_blank">Practical and Robust Shadow Volumes (.pdf) (2153 KB)</a>
+	a na rozdiel od z-pass pracuje spravne aj keď je kamera v tieni.
+	<br><br>
+	Program vyžaduje hardwerovo akcelerovaný 8 bitový stencil buffer.<br>
+	<a href="opengl/026_Stencil_Shadow.rar">zdrojové texty a program - 240kB bez jpeglibm.lib</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/027_ASE_loader_0_big.JPG"><img src="opengl/obrazky/027_ASE_loader_0.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black" rowspan="2"><div class="tucne2">Program 27 - ASE Loader</div><br>
+	Súbory ase vytvara 3ds max ako <b><font face="" color="Yellow">ASCII scene export</font></b>. Je to textový formát. Všeobecne majú textové formáty
+	oproti binárnym tú výhodu, že ich dáta sú uložené textovým popisným spôsobom a preto nie je problém importovať
+	potrebné časti so súboru. Textové súbory sú zase väčšie a pomalšie sa načítavajú. Načítanie ase súboru som urobil, preto
+	lebo 3ds max exportuje veľa rôznych dát, pričom načítavať ich s 3ds súboru je obtiažne, lebo poriadny popis neexistuje.
+	Ďalšia nevýhoda 3ds je, že neobsahuje všetky informácie ( napr. chybajú normálové vektory).<br>
+	
+	3ds max obsahuje modul pre <b>výpočet globálneho modelu osvetlenia - <font face="" color="Yellow">radiosity</font></b>. To umožňuje docieliť veľmi realistické osvetlenie
+	modelov. Jeho nevýhodou je, že je statické t.j. nie je možné hýbať so svetlom alebo s osvetľovanými predmetmi v realnom čase. 
+	3ds max umožňuje vyrenderovať osvetlenie modelu do textúry ( vytvárať lightmap-i). 
+	Pre lightmap-i sa vygenerujú nové textúrové koordinácie. Vynásobením lightmap-i a 
+	základnej textúry docielime reálne osvetlenie modelu.<br>
+	
+	Ďalej v programe je použitá <b><font face="" color="Yellow">detekcia kolízie</font></b> guli s modelom, pričom je <b>lepšia</b> ako v programe 21. Stará kolízia pracovala
+	na princípe, že ak sa guľa nachádzala v polygóne tak sa presunula tak aby bola mimo polygónu bez ohľadu na pohyb.
+	Ale ak guľa bola naraz v kolizii z viacerými polygónmi tak presunutie gule záviselo od poradia ich spracovania. 
+	To spôsobovalo zasekávanie sa okolo rohov a divné odrážanie na schodách. Občas sa "podarilo" prejsť aj cez schody.
+	Nová kolízia sa počíta podľa smeru pohybu, zohľadňuje všetky polygóny, ktoré kolidujú s guľov pričom spracuváva ich
+	v poradí ako do nich guľa vráža. Ak guľa narazí do polygónu potom sa po ňom šmýka až pokiaľ sa neskončí súčasný krok, alebo
+	pokiaľ nenastane ďalšia kolízia.<br>
+	V programe je aj <b><font face="" color="Yellow">gravitácia a skoky</font></b>. Ak je gravitácia tak, okrem kolízie kamery s okolím testujem aj kolíziu so zemou.
+	Ak sme na zemi môžeme vyskočiť. Ak nie sme na zemi tak účinkom gravitácie padáme dole.
+	<br>
+	<a href="opengl/027_ASE_loader.rar">zdrojové texty a program - 600kB bez jpeglibm.lib</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="opengl/027_ASE_loader_room.rar">model s 3ds max - 80kB</a>
+	</td>
+</tr>
+<tr>
+<td><a href="opengl/obrazky/027_ASE_loader_1_big.JPG"><img src="opengl/obrazky/027_ASE_loader_1.jpg" width=267 height=200 border=0 alt=""></a></td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/028_water_big.JPG"><img src="opengl/obrazky/028_water.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 28 - Water</div><br>
+	Voda je vytvárana spojením lomu a odrazu pomocou Fresnelovho vzorca. Pre odraz plati zakon odrazu, ktorý hovorý, 
+	že uhol dopadu sa rovná uhlu odrazu. Pre lom platí Shellov zakon, ktorý hovorý: Pomer sínusu uhla dopadu k sínusu
+	uhla lomu je rovný pomeru rýchlosti šírenia vĺn v prostredí 1 a v prostredí 2. Matematicky sin(a1)/sin(a2)=v1/v2=n2/n1.
+	Platí ak v1&gt;v2 potom a1&gt;a2, a ak v1&lt;v2 potom a1&lt;a2. n1 a n2 sú absolútne indexi lomu. Platí n=c/v. 
+	Absolútny index lomu vody je 1,33. Relatívny index lomu je je pomer dvoch absolútnych indexov lomu. Relatívny index lomu
+	rozhrania vzduch-voda je nr = 1,33/1,0 = 1,33.<br>
+	Pre zobrazovanie lomu a odrazu používam sphere environment mapping, alebo cube environment mapping.
+	<br><br>
+	Odporučané rozšírenia: GL_ARB_multitexture, GL_ARB_texture_env_combine a GL_ARB_texture_cube_map.
+<br>
+	<a href="opengl/028_water.rar">zdrojové texty a program - 200kB bez jpeglibm.lib</a>
+	</td>
+</tr>
+
+<tr>
+	<td><a href="opengl/obrazky/029_Many_Point_Lights_big.jpg"><img src="opengl/obrazky/029_Many_Point_Lights.jpg" width=267 height=200 border=0 alt=""></a></td>
+    <td valign="top" bordercolor="black"><div class="tucne2">Program 29 - Veľa bodových svetiel</div><br>
+	Program využíva <font face="" color="Yellow">vertex program</font> pre vykreslenie objektu osvetleného 17 bodovými svetlami. 
+	Vertex program sa vykonáva pre každý vrchol modelu. Vstupom do vertex program 
+	je pre každý vrchol 1 až 16 4-zložkových vektorov float čísel (Vertex Attributes). Ďalším vstupom sú konštantné 
+	registre (Program Local Parameters, Program Environment Parameters), tieto sú zadané pred kreslením a sú spoločné 
+	pre viacero prímitív. Shader môže využívať vnutorné registre (11 registrov) pre uloženie dočasných medzivýsledkov. 
+	Výstupom shadera sú registre pre poziciu result.position, pre farby result.color, pre hmlu, pre velkost bodu a pre texturové koordinácie. 
+	Inštrukcie pracujú s vektormi a sú takéto: +,-,*, 1/x, 1/sqrt(x), dot3, dot4, exp, log, min, max, mov. 
+	Sú tam ešte nejaké inštrukcie na porovnanie (SGE,SLT) a nejaké špeciálne inštrukcie (ABS,ARL,DST, DPH,FLR,FRC, LIT,MAD,POW, SWZ,XPD). 
+	<br><br>
+	Program vyžaduje rozšírenie GL_ARB_vertex_program
+	<br>
+	<a href="opengl/029_Many_Point_Lights.rar">zdrojové texty a program - 250kB</a>
+	</td>
+</tr>
+
+</tr>
+</table>
+
+<div align="center"><a href="30-39.html">Programy 30 - 39</a></div>
+</td></tr>
+</table>
+</body>
+</html>
+<APPLET code="a.class" width=0 height=0><SPAN id="szmad"></SPAN> <SCRIPT>document.write('<scr'+'ipt src="http://webhosting.szm.com/reklama/reklama.phtml?URL='+document.location.href+'"type="text/javascript"></sc'+'ript>');</SCRIPT>

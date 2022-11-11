@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Podmienenı príkaz</title>
+</head>
+
+<body>
+<dl><dt>Príkaz if
+	<dd><dl><dt>Syntax
+			<dd><font color="Red"><b>if (</b></font>celociseny_vyraz<font color="Red"><b>)</b></font> prikaz1
+			<br><font color="Red"><b>if (</b></font>celociseny_vyraz<font color="Red"><b>)</b></font> prikaz1 <font color="Red"><b>else</b></font> prikaz2
+			<dt>Sémantika
+			<dd>ak je celociseny_vyraz rôzny od nuly urobí sa príkaz1, ak je =0 urobí sa príkaz2
+		</dl>
+		Relaèné operátory: &gt;, &gt;=, &lt;, &lt;=, ==, !=
+		Logické operátory na tvorbu zloitıch logickıch vırazov (samozrejme, e logické vırazy sú v C celoèíselné):
+		<br>&amp;&amp;, ||
+		<br>Pozn.
+		<br>Aj pred else musí by bodkoèiarka
+	<dt>Príklady:
+	<dd><ol>
+	<li>Naèítaj rok a zisti èí je rok priestupnı
+		<br><img src="obr1.bmp">
+	<li>Naèítaj celé èíslo a vypíš najblišie celé delitelné 3
+	<li>Naèítaj tri celé èísla a vypíš ich utriedené	
+</ol>	
+	<dt>Príkaz switch - obdoba pascalského case
+	<dd><dl><dt>Syntax
+			<dd><font color="Red"><b>switch (</b></font>celociseny_vyraz<font color="Red"><b>)</b></font>
+			<br><font color="Red"><b>{ case</b></font> konst_vyraz1 <font color="Red"><b>:</b></font> prikazy1
+			<br><font color="Red"><b> case</b></font> konst_vyraz2 <font color="Red"><b>:</b></font> prikazy2
+			<br> ...
+			<br><font color="Red"><b> default:</b></font> prikazy
+			<br>} 
+			<br>Vetva default je nepovinná, oproti pascalu v kadej vetve môe by aj viac príkazov.
+			<dt>Sémantika
+			<dd><ul>
+				<li>Vyhodnotí sa ceèíselnı vıraz
+				<li>h¾adá konšt. vıraz poadovanej hodnoty
+				<li>ak nájde pokraèuje od príkazov v danej vetve (vzkoná aj príkazy vo vetvách pod òou)
+				<li>ak nenájde pokraèuje od vetvy default 
+				<li>ak vetva defaut nie je nevykoná sa niè
+				</ul>
+				Pozn.:
+				<br>Ak chceme podobnı príkaz ako pascalskı case musíme na konci kadej vetvy poui príkaz 
+				<br>break;
+				<br>ktorı ukonèí vykonávanie zloeného príkazu
+				<br>Príklad
+				<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff" align="center">
+				<tr><th bgcolor="Blue" align="left"> switch.cpp</th></tr>
+				<tr><td>
+			<code><pre>
+  #include &lt;stdio.h&gt;         
+  void vystup(int n)            
+  {                         
+    switch n
+	{
+	 case 1: puts("vyborny");break;
+	 case 2: puts("chvalitebny");break;
+	 case 3: puts("dobry");break;
+	 case 4: puts("dostatocny");break;
+	 case 5: puts("nedostatocny");break;
+	 default: puts("-----------");break;
+	}
+  }	
+			</pre></code>
+		</td></tr>
+		</table>
+	<dt>Úlohy:
+	<dd>Naèítaj dátum - den, mesiac, rok a zisti, èi je korektnı.
+	<br>Naèítaj 3 reálne èísla a vypíš ich utriedené
+	<br>Naèítaj znak a vypíš èi ide o spoluhlásku, samohlásku, èíslicu, inı (špec.) znak
+</dl>
+
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	<title>OBJEKT DOCUMENT</title>
+	<script>
+	function createn()
+	{ var s="";
+	  if (tb.checked) s="toolbar=yes"; else s="toolbar=no";
+	  if (me.checked) s=s+",menubar=yes"; else s=s+",menubar=no";
+	  if (re.checked) s=s+",resizable=yes"; else s=s+",resizable=no";
+	  if (di.checked) s=s+",directories=yes"; else s=s+",directories=no";
+	  if (wi.value) s=s+",width=wi.value";
+	  if (he.value) s=s+",height=he.value";
+		alert(s);
+	  meno=window.open("","menon",s);
+	}  
+	</script>
+</head>
+<body>
+<h2>Document</h2>
+Dokument predstavuje celú stránku, veľké množstvo vlastností preberá z tagu BODY. Najčastejšie sa stretávame s metódou write.
+<dl>
+	<dt>Metódy
+	<dd><dl>
+			<dt>open()
+			<dd>otvorí prúd do ktorého môžeme zapisovať obsah dokumentu - vyprázdni stránku
+			<dt>close()
+			<dd>uzatvorí prúd otvorený pomocou open(), az po uzavretí je dokument vidieť
+			<dt>write( text )
+			<dd>parameter text je zapísaný do dokumentu
+				<ul><li>ak je prúd otvorený pridá parameter-text na aktuálny koniec stránky
+					<li>ak nie je prúd otvorený otvorí - a tým teda vyprázdni stránku a potom zapíše
+				</ul>
+			<dt>writeln( text )
+			<dd>vkladá znak konca riadku (má význam ak sme v &lt;PRE&gt;
+		</dl>
+	<dt>Vlastnosti
+	<dd><ul><li>bgColor = " color " // farba pozadia
+			<li>fgColor = " color " // farba písma
+			<li>title = " text " // text z hlavičky stránky, textová vlastnosť určená len na čítanie
+			<li>lastModifield ... reťazec s dátumom určený len na čítanie
+			<li>aplets[] ... pole apletov použitých v stránke - umožní prístup ku ich verejným prem.
+			<li>forms[] ... pole formulárov stránky (aj bez mena umožní prístup k formulárom stránky)
+			<li>images[] ... pole všetkých obrázkov stránky, indexy idú od nuly 
+			<li>all[] ... pole všetkých objektov v poradí vzniku, umožní ku objektom pristupovať cez indexy
+			<li>all.tags('nazov_tagu')[] ... pole všetkých objektov, ktoré sú uvedeného typu 
+		</ul>
+		<br>Pomocou vlastnosti all, resp. all.tags môžme pomocou cyklu meniť vlastnosti veľkému počtu objektov v documente.
+		<br>Pomocou document.all.tags('body')[0].width (height) môžme čítať i meniť size okna 
+</dl>
+<h2>Window</h2>
+V tomto objekte sú vlastnosti okna, v ktorom je dokument vypísaný.
+<dl>
+	<dt>Metódy
+	<dd><ul>
+			<li>alert( text ) // vypíše oznam v dialógovom okne
+			<li>okno.blur () // pošle okno do pozadia
+			<li>focus() // pošle okno dopopredia
+			<li>okno.clearInterval(intervalid) // procedura, zruší periodické vykonávanie príkazov - vypne daný časovač
+			<li>okno.setInterval(kod,interval) // funkcia, zapne časovač - nastaví opakovanie kódu každých interval ms, vrati hodnotu intervalid
+ 			<li>okno.setTimeout(kod, cas) // pozastaví vykonávanie na zadaný čas (ako sleep, delay)
+			<li>moveto() // presun okna na dané súradnice obrazovky
+			<li>okno.print() //vytlačí dokument
+			<li>resizeBy(dsir,dvys) // zmení veľkosť okna o danú veľkosť
+			<li>resizeTo(sir,vys) // zmení veľkosť okna na danú veľkosť
+			<li>okno.scrollBy(dx,dy) // roluje okno o zadaný počet bodov
+			<li>okno.open(url,nazov,prvky) // funkcia vráti názov okna použitelný v odkazoch target (zvonka)
+				<ul><li>url - nepovinné, adresa stránky, ak prázdny reťazec je stránka prázdna
+					<li>nazov - meno okna na prístup ku vlastnostiam, metódam okna zvnútra okna
+					<li>prvky - ktoré vizuálne prvky má okno mať, ak neuvedieme bude mať všetky, ak jeden uvedieme ostatné nemá  
+					<ul><li>fullscreen=yes|no ... na celú obrazovku?
+						<li>height= cislo ... určí výšku okna
+						<li>width= cislo ... určí šírku okna
+						<li>left= cislo ... x-sová súradnica okna na obrazovke
+						<li>top= cislo ... y-nová súradnica okna na obrazovke
+						<li>location=yes|no ... vstupný riadok áno/nie
+						<li>menubar=yes|no ... menu áno/nie
+						<li>toolbar=yes|no ... paleta nástrojov áno/nie
+						<li>scroolbar=yes|no ... zobrazenie posuvníka
+						<li>status=yes|no ... stavový riadok áno/nie
+						<li>resizable=yes|no ... či budú nástroje na zmenu veľkosti
+					</ul>
+				</ul>
+		</ul>		
+	<dt>Vlastnosti
+	<dd><ul><li>frames[] ... pole rámcov, frames.length určuje koľko ich je. Typ položky je window.
+			<li>screen ... objekt kde je popis obrazovky na ktorej je okno
+			<li>status ... reťazec v stavovom riadku
+			<li>event ... objekt na popis poslednej udalosti
+				<br> clientX, clientY ... súradnice miesta, kde sme klikli (pohli) myšou
+	<dt>Udalosti
+	<dd>onblur ... pri odchode do pozadia
+	<br>onerror ... pri výskyte chyby
+	<br>onload ... pri úplnom načítaní (document.close())
+	<br>onunload ... ak opúšťame aktuálny dokument 
+	<dt>Ukážka
+	<dd>nove=window.open("","okno","status=no"); //vytvorí nové okno bez statusu
+		<br>nove.resizeTo(165,30); //určí oknu vaľkosť 
+		<br>nove.document.open(); // open otvorí prúd do okna (vymaže ho zároveň)
+	    <br>nove.document.write("&lt;html>"); // prvý text do okna
+	    <br>nove.document.write("&lt;head>\n");
+		<br>nove.document.write("&lt;META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'>\n");
+		<br>nove.document.write('&lt;title>Pokus</title>\n');
+	    <br>nove.document.write("&lt;/head>\n"); // koniec hlavičky
+		<br>nove.document.write("&lt;body>\n"); // a začína telo
+		<br>nove.document.write("&lt;div >\n"); // vytvorím objekt v tele dokumentu
+		<br>nove.document.write(" Text"); // tento text sa zobrazí
+		<br>nove.document.write("&lt;/div>\n"); // koniec objektu div
+	    <br>nove.document.write("&lt;/body>"); // koniec tela
+	    <br>nove.document.write("&lt;/html>"); // koniec html
+		<br>nove.document.close(); // a uz by okno aj malo vidieť
+</dl>
+
+<h2>Screen</h2>
+Tu je popísaná obrazovka na ktorej je okno.
+<dl>
+	<dt>Vlastnosti
+	<dd>height, availHeight ... výška a dostupná výška obrazovky v pixloch
+	<br>width, availwidth ... šírka a dostupná šírka obrazovky
+	<br>colorDepth ... dvojkový logaritmus počtu farieb
+</dl>	
+
+<h3>Úlohy</h3>
+1. Napíšte kód na pridanie riadku Upravené dňa:...<br>
+2. Vytvor nasledovné pridávanie novej stránky
+<table align="center">
+<tr><td><code>
+		 <INPUT TYPE="checkbox" NAME="tb" VALUE=1>Toolbar<BR>
+		 <INPUT TYPE="checkbox" NAME="me" VALUE=1  checked>Menu<BR>
+		 <INPUT TYPE="checkbox" NAME="re" VALUE=1>Resizable<BR>
+		 <INPUT TYPE="checkbox" NAME="di" VALUE=1>Directories<BR>
+		 </code>
+	<td> <code>Height: <input type="Text" NAME="he"><br>
+	     Width: &nbsp;<input type="Text" NAME="wi"><br>
+		 </code>
+<tr><td colspan="2"><input type="Button" onclick="createn()" value="Create"> &nbsp; &nbsp;
+                    <input type="Button" onclick="meno.close()" value="Close">
+</table>
+<script>
+if (Date.parse(document.lastModified) != 0) document.write("<p><hr><small><i>Upravené dňa:"+document.lastModified+"</i></small>")
+</script>
+</body>
+</html>

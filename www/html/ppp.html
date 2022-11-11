@@ -1,0 +1,42 @@
+<html>
+<head>
+<style type="text/css"> 
+#div1
+{
+width:120px;
+height:100px;
+background-color:yellow;
+border:1px solid black;
+-ms-transform:rotate(7deg); 
+-moz-transform:rotate(7deg); 
+-webkit-transform:rotate(7deg); /* Safari and Chrome */
+-o-transform:rotate(7deg); /* Safari and Chrome */
+transform:rotate(7deg);
+}
+</style>
+
+<script type="text/javascript">
+function rotate(value)
+{
+document.getElementById('div1').style.webkitTransform="rotate(" + value + "deg)";
+document.getElementById('div1').style.msTransform="rotate(" + value + "deg)";
+document.getElementById('div1').style.MozTransform="rotate(" + value + "deg)";
+document.getElementById('div1').style.OTransform="rotate(" + value + "deg)";
+document.getElementById('div1').style.transform="rotate(" + value + "deg)";
+document.getElementById('span1').innerHTML=value + "deg";
+}
+</script>
+
+</head>
+<body>
+
+<p>Rotate the yellow div element:</p>
+
+<div id="div1">HELLO</div>
+
+Rotate: <br />
+<input type="range" min="-360" max="360" value="7" onchange="rotate(this.value)" /><br />
+transform: rotate(<span id="span1">7deg</span>);
+
+</body>
+</html>

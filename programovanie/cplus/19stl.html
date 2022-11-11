@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Pole znakov - reťazce</title>
+</head>
+
+<body>
+STL knižnica je kontajner pre používané typy objektov. Prístup ku položkám je pomocou iterátorov (podobné s ukazovateľom).
+Patrí sem:
+<ul><li>vector - pole
+	<li>deque - Podobné ako pole
+		<br>Vlastnosti/metódy:
+		<br>operátor [] - ku položkám možno pristupovať cez indexy
+		<br>Begin - vráti iterátor na začiatok zoznamu
+		<br>End - vráti iterátor na koniec zoznamu
+		<br>push_front, push_back, Insert - vloženie prvku na začiatok a koniec v konštantnom čase, inam v lineárnom
+		<br>Pop_front, Pop_back, Erase -  zrušenie prvku na začiatok a konci v konštantnom čase, inde v lineárnom
+		<br>Resize - skrátenie/predĺženie zoznamu - lineárne od počtu skrátenie/predĺženia
+
+	<li>list - obojsmerný lineárny zoznam
+		<br>Vlastnosti/metódy:
+		<br>Begin - vráti iterátor na začiatok zoznamu
+		<br>End - vráti iterátor na koniec zoznamu
+		<br>push_front, push_back, Insert - vloženie prvku na začiatok a koniec v konštantnom čase, inam v lineárnom
+		<br>Pop_front, Pop_back, Erase -  zrušenie prvku na začiatok a konci v konštantnom čase, inde v lineárnom
+		<br>Remove - odstráni zo zoznamu všetky prvky danej hodnoty 
+		<br>Remove_if - odstráni zo zoznamu všetky prvky vyhovujúce nejakej podmienke  
+		<br>Resize - skrátenie/predĺženie zoznamu - lineárne od počtu skrátenie/predĺženia
+		<br>Splice - pripojí jeden zoznam do druhého - v konštantnom čase
+		<br>Sort - utriedi zoznam - čas N*logN
+		<br>Unique - v utriedenom zozname odstráni duplicity
+		
+	<li>stack - zásobník
+		<br>LIFO zásobník na odloženie hodnôt a ich opätovné vybratie
+		<br>Empty - test či je prázdny
+		<br>Push - vloží do zásobníka hodnotu
+		<br>Pop - vyberie hodnotu (odstráni)
+		<br>Top - prístup ku posledne pridanému prvku v zásobníku (možno aj priradiť hodnotu alebo zmeniť)
+		
+		
+	<li>queue - fronta
+		<br>FIFO fronta napr. simulácia čakajúcich na autobus - prvý prišiel prvý ide do autobusu
+		<br>Empty - test či je prázdny
+		<br>Size - vráti počet prvkov vo fronte
+		<br>Push - vloží do zásobníka hodnotu
+		<br>Pop - vyberie hodnotu (odstráni)
+		<br>Front - prístup ku posledne pridanému prvku vo fronte (možno aj priradiť hodnotu alebo zmeniť)
+		<br>Back - prístup ku prvku pridanému odchádzajúcemu z fronty(možno aj priradiť hodnotu alebo zmeniť)
+		
+	<li>priority_queue - prioritná fronta (halda)
+		<br>Do čakárne ľudia prichádzajú v náhodnom poradí ale vychádzajú podľa veľkosti
+		<br>Empty - test či je prázdny
+		<br>Size - vráti počet prvkov v halde
+		<br>Push - vloží do haldy hodnotu
+		<br>Pop - vyberie hodnotu (odstráni)
+		<br>Top - prístup ku najväčšiemu pridanému prvku v halde 
+
+	<li>set - prvky sú tu utriedené a jedinečné (vyvažovaný strom)
+		<br>štruktúra, ktorá spája dobré vlastnosti poľa (rýchle hľadanie) a lin. zoznamu (rýchle vkladanie a vyberanie)
+		<br>Každý prvok má inú hodnotu.
+		<br>construktor - mozno volať bez parametrov a vtedy sa vytvorí prázdna štruktúra
+			<br> &nbsp; &nbsp; - s intervalom od adresy po adresu (napr. z poľa od indexu po index)
+		<br>Empty - test či je prázdny
+		<br>Size - vráti počet prvkov v strome
+		<br>Begin - vráti iterátor na začiatok - najmenší prvok
+		<br>End - vráti iterátor na koniec - najväčší - prvok zoznamu
+		<br>Find - hľadá zadanú hodnotu (log)
+		<br>Lower_bound - nájde prvý nie väčší
+		<br>Upper_bound - nájde prvý väčí
+		<br>Insert(hodnota) - vloží jednu hodnotu do stromu - log
+		<br>Insert(smernik na prvok,hodnota) - vloží jednu hodnotu do stromu za zadaný prvok- konst
+		<br>Erase - môžme rušiť zadaný prvok (konst), prvok s hodnotou (log), interval prvkov 
+			
+	<li>multiset
+	<li>map - akési asociatívne utriedené pole, každý prvok má "index/kľuč" a hodnotu. Ku prvkom možno pristupovať cez [], vyhľadať prvok s daným
+		indexom. Dva Prvky nemôžu mať rovnaké hodnoty.
+		<br>Insert - možno vkladať logaritmicky (ak nevieme za ktorý prvok vkladáme, alebo konštantne ak uvedieme za ktorý prvok vkladáme)
+		<br>[] - prvky možno vkladať aj priradením tiež možno meniť obsah hodnoty 
+		<br>Erase <ul><li>jeden prvok zadaný indexom/kľúčom - konštantne
+					  <li>jeden prvok zadaný hodnotou - log
+					  <li>viac prvkov od indexu1 po index2
+		<br>Find - nájde prvok odpovedajúci kľúču - log
+		<br>Lower_bound - nájde prvý nie väčší
+		<br>Upper_bound - nájde prvý väčí
+					    
+	<li>multimap
+	<li>biset
+</ul>	 				
+
+</body>
+</html>

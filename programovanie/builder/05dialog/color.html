@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Časovač a dialógy</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Dialógové okná - Color</h3>
+Z programov Word, Excel a ďalších poznáme postup ako zvoliť farbu. Tu si ukážeme ako tento spôsob voľby
+farby pre užívateľa naučiť aj náš program.
+<dl>
+	<dt class=main>ColorDialog
+	<dd>Toto dialógové okno použijeme, ak chceme aby si užívateľ mohol zvoliť farbu, ktorú potom možno aplikovať 
+		na niektorú vlastnosť vloženého objektu. Tento dialóg ale farbu nikomu nezmení-nenastavuje, len umožní nám 
+		postupom bežným vo Win navoliť si farbu. Dialógové okno <b>ColorDialog</b> nájdeme na karte <b>Dialogs</b>,
+		vložíme ho do nášho formulára. Ide o nevizuálny objekt a tak umiestnenie v okne nemá vplyv na použitie.
+		Po vložení do formulára získame funkciu <b>ColorDialog1.execute</b>, ktorá vytvorí dialógové okno na voľbu farby.
+		<br>V object inspector (alebo príkazmi) možno pred zavolaním okna nastaviť nejaké vlastnosti
+		<ul><li>CustomColor - určíme si vlastné farby
+			<br>Formát zadania vlastných farieb treba presne dodržať a zadať v samostaných riuadkoch bez medzier v tvare:
+			<br>ColorX=hexa_farba
+			<br>kde X môže byť A až P
+			<br>príklad:
+			<br>ColorA=c0c0c0
+			<br>ColorB=33ccdd  
+		</ul>	
+	
+	<dt>Execute
+	<dd>- základná funkcia objektu, ktorá vytvorí na obrazovke okno cez ktoré bude
+		komunikovať s užívateľom.<br>
+		<img src="color.png" width="222" height="341" border="0" alt="" style="margin:6"><br>
+		 <br>V tomto okne si zvolíme z ponúkaných základných farieb alebo si vytvoríme vlastnú farbu. 
+		 <b>OK</b> a <b>Storno</b>.	
+		<br>Funkcia nadobúda logickú hodnotu TRUE - ak užívateľ stlačí <b>OK</b> 
+		<br>a FALSE ak stlačí <b>Storno</b> alebo okno len zavrie. 
+		Ak stlačíme <b>OK</b> farba sa zapíše do <b>ColorDialog1.Color</b>
+	<dt>ColorDialog.Color 
+	<dd>- je typu Tcolor, a možno ho priradiť do vlastnosti Color nejakého iného objektu.
+	<dt>Použitie
+	<dd>Tu si ukážeme ako použiť ColorDialog napr. pri voľbe pozadia Mema na obrazovke
+		<br>Vytvoríme nasledovný formulár.
+	<div style="border-widtD:\html\jaro\programovanie\delphi-nove\08oop
+h:3;border-style:outset;width:450px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1</div>
+   <div style="background-color:#dddddd; width:450px;">
+ 	 <table><tr><td><textarea rows="5" >Memo1</textarea>
+	 			<td><img src="../obr/color.png" width="29" height="29" border="0" alt="">
+				    <br><br>
+					<input type="Button" value="Font"><br>
+	</table>
+	</div></div>				
+	<br>Program na obsluhu tlačídka by mohol byť nasledovný:
+	<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   		<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+  if (ColorDialog1.Execute) Memo1->Color = ColorDialog1->Color;
+  else ShowMessage("Voľba farby bola zrušená užívateľom");
+}
+</pre>	
+	</div></div></div>	
+</dl>
+
+</body>
+</html>

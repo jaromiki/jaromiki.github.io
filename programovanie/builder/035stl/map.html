@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Úvod</title>
+</head>
+
+<body>
+<h3 class="main"><b>map</b></h3>
+Triedu map používame na odpamätanie dvojíc (kľúč; hodnota). Hodnotu vyhľadávame zadaním kľúča. Podmienkou je aby kľúč bol jedinečný,
+ak chceme neunikátne kľúče zvolíme radšej multimap. Prvky triedy map sú utriedené podľa kľúča aby vyhľadávanie prvku bolo v loaritmickom čase.
+<dl><dt>pripnutie knižnice
+		<dd>Aby sme mohli používať obojstranné zoznamy musíme pripnúť príslušnú knižnicu
+			<br><b>#include &lt;map></b>
+			<br>Po pripnutí môžme začať používať objekty popísané v tejto knižnici a teraz si základ popíšeme.
+	<dt>deklarácia
+	<dd>Je úplne podobné ako pri deklarácii poľa.
+		<ul><li>map &lt;char,int> v1; //vytvorí prázdny map, kľúč je char hodnota je int
+			<li>map &lt;char, int> v1(iterator1, iterator2); //iterátory môžu byť ukazovatele na prvky map, vektora, listu
+				<br> &nbsp; &nbsp; &nbsp;(prvky okopíruje z nejakého iného objektu)
+			<li>map &lt;char, int> v1(map); //kópia iného map 
+			<li>map &lt;typ1, typ2, adresa_porovnávacej_funkcie>; // ak pre prvky nie je definovaná operácia porovnania &lt;, môžme ju tu zadať
+		</ul>
+	<dt>členské funkcie
+	<dd><ul><li><b>size()</b>; // vráti počet prvkov v map
+			<li><b>clear();</b> //podprogram, ktorý vymaže všetky prvky množiny 
+			<li><b>count(x);</b> //funkcia vráti počet výskytov kľúča (0 alebo 1) v log čase
+			<li><b>empty();</b> // funkcia vráti TRUE ak je map prázdny
+
+			<li><b>begin();</b> //funkcia vráti iterátor na prvý prvok
+			<li><b>end();</b> //funkcia vráti iterátor na posledný prvok
+			<li><b>rbegin();</b> //funkcia vráti reverzný iterátor na prvý prvok (čiže posledný prvok - pozri iterátory)
+			<li><b>rend();</b> //funkcia vráti iterátor na posledný prvok (čiže prvý prvok - pozri iterátory)
+			
+			<li><b>operátor [kľúč]</b> ... vráti hodnotu v log čase (v prípade ak kľúč neexistuje jak vloží novú dvojicu - hodnota bude inicializovaná na nulu)
+			<li><b>at(kľúč)</b> ... ako predošlé ale v prípade ak neexistuje zahlási chybu
+			<li><b>find(kľúč)</b> ... funkcia vráti iterátor na prvok s danou hodnotou (ak nenájde vráti end)
+			
+			<li><b>erase(iterator);</b> //odstráni tento prvok (konšt. čas)
+			<br><b>erase(iterator1, iterator2);</b> //odstráni prvky z intervalu
+			<br><b>erase(kľúč);</b> //odstráni hodnotu z map
+			<li><b>insert(std::pair<char,int>('a',100));</b> //pridá novú dvojicu, ak kľúč už existuje nerobí nič
+				<br>návratová hodnota je pair, kde prvá hodnota je iterátor na novopridaný prvok a druhá je TRUE ak sa pridanieč uskutočnilo (pozri pair)
+			<br><b>insert(iterator, hodnota);</b> //určíme miesto kam sa má vložiť, ak je miesto korektné vloží v konštantnom čase, inak vkladá logaritmicky
+			<br><b>insert(iterator1,iterator2);</b> // vkladá z iných map
+
+			<li><b>operátor =</b> ... priraďovanie objektov map je možné, prekopíruje obsah, upraví size
+			<li><b>swap(set)</b>; //vymení obsah dvoch map v konšt. čase
+		</ul>
+	<dt>Príklady
+	<dd><ul>
+		<li>Naprogramuj že zadáme názov mesiaca a program vráti počet dní v mesiaci
+			<br>ošetri, ak je názov mesiaca nekorektný
+		<li>máme zadaných ľudí s ich funkciami (mená sú jedinečné)
+			<br>naprogramuj aby po zadaní mena program v log čase vypísal funkciu a po zadaní funkcie v log čase vypísal všetkých čo ju majú	
+		</ul>
+
+</dl>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<title>Štruktúry - záznamy</title>
+</head>
+
+<body>
+<dl><dt><font size="+1" color="Blue">Štruktúrovaný typ - záznamy</font>
+	<dd>Záznamy sa tu volajú štruktúry a je viac možností ako ich zadeklarovať. 
+		Štruktúry sú nehomogénne - každý prvok môže byť iného typu a má svoje meno.
+		<ol>
+		<li>Nepomenovaná štruktúra
+			<br> &nbsp; struct { int vyska;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;} jano, peter, duro
+			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
+			<br>žiadna ďalšia premenná nemôže byť toho typu, lebo štruktúra nemá meno
+ 		<li>Pomenovaná štruktúra
+			<br> &nbsp; struct clovek { int vyska;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; } jano, peter
+			<br> &nbsp; struc clovek duro //takto to muselo byť v klasickom C
+			<br> &nbsp; clovek duro //takto to staci zadať v C++
+			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
+			<br>štruktúra má meno a môžu vznikať ďalšie premenné toho typu, pred každým názvom štruktúry musí byť slovo struc
+		<li>Vytvorený typ, nepomenovaný
+			<br> &nbsp; typedef struct  { int vyska;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;} clovek
+			<br> &nbsp;  clovek jano, peter, duro
+			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
+			<br>štruktúra má meno ale vo vnútri štruktúry ho ešte nepozná, pred každým názvom štruktúry sa už nepíše slovo struc
+		<li>Vytvorený typ, pomenovaný
+			<br> &nbsp; typedef struct CLOVEK { int vyska;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; struct CLOVEK *dalsi;
+			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;} clovek
+			<br> &nbsp;  clovek jano, peter, duro
+			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
+			<br>štruktúra má meno platné vnútri - CLOVEK, a meno platné navon - clovek
+		</ol>
+		My budeme výhradne používať 3. alebo 4. syntax, 3. je pascalu najbližší.
+		<br>Ak chceme používať konštruktor použijeme 1. syntax alebo 4.
+		<br>Pozn.:
+		<br> &nbsp; - funkcia môže byť typu struct
+		<br> &nbsp; - parametre funkcie môžu byť typu struct
+		<br> &nbsp; - premenná typu struct môže byť na ľavej strane priradenia
+		<br>Prístup ku položkám:
+		<br> &nbsp; - statické - jano.vyska
+		<br> &nbsp; - dynamické - (*jano).vyska, alebo jano -&gt;vyska
+		<dl>
+		<dt><b>Inicializácia:</b>
+		<dd>podobne ako iné premenné je možné aj štruktúry pri vzniku nastaviť nejakými počiatočnými hodnotami
+		<br> &nbsp; - položky štruktúry nemožno inicializovať v popise štruktúry(priradenim hodnoty) 
+		<br> &nbsp; - celú štruktúru možno inicializovať vymenovaním hodnôt v zátvorkách {}
+<div style="background-color:silver; width:800; padding:10;border-width:3;border-style:outset">
+<pre>typedef struct
+{double a; int b;}dvojica;    //tu v strapatej zátvorke nemožno parametre inicializovať
+dvojica a={1.5,5}; //a.a sa nastavi na 1.5, a.b sa nastaví na 5
+dvojica c={3}; //c.a sa nastaví na 3.0, c.b sa nastaví na 0
+dvojica d;     //d.a sa nastaví na 0.0, d.b sa nastaví na 0 
+</pre></div>
+		
+		<dt><b>Konštruktor:</b>
+		<dd>Použitie konštruktora je druhou možnosťou ako predpísať parametrom vznikajúcej štruktúry počiatočné hodnoty,
+			navyše jeho použitie je rozsiahlejšie a preto je aj viac používaný.
+			<br>Myšlienka je, že vytvoríme nejakú špeciálnu funkciu, ktorá vie nastaviť parametre štruktúry a nejakým spôsobom
+			sa zavolá pri vytváraní štruktúry v pamäti.
+		<br>Takáto funkcia sa volá konštruktor - vie vytvoriť konštantnú štruktúru s určenými počiatočnými hodnotami parametrov štruktúry,
+		<br>Funkciu popíšeme v popise štruktúry, jej názov musí byť rovnaký ako je názov štruktúry
+		<br>Môžme vytvoriť aj viacero konštruktorov, ktoré sa budú líšiť počtom parametrov alebo typom parametrov
+		<br>ak používame konštruktor nepoužívame pri vytváraní premennej inicializáciu pomocou strapatých zátvoriek
+		<br>Postup
+		<br>Pri tvorbe typu štruktúra najprv popíšeme/zadefinujeme položky štruktúry a potom pomocou názvu štruktúry popíšeme
+			jeden alebo viac konštruktorov
+<div style="background-color:silver; width:900; padding:10;border-width:3;border-style:outset">
+<pre>typedef struct Ta {               //len vytvara typ nie premennú, názov štruktúry (Ta) uvedieme aj pred zátvorkou
+  int x,y;        //parametre štruktúry
+  Ta(){x=y=0;}; //konštruktor ktorý sa zavolá, ak pri vytvorení premennej neuvedieme parameter 
+  Ta(int a) {x=y=a;}; //konštruktor ktorý sa zavolá,ak pri vytvorení premennej vedieme 1 parameter
+  Ta(int a,int b) {x=a; y=b;} //konštruktor ktorý sa zavolá,ak pri vytvorení premennej vedieme 2 parametre
+}Ta;
+ int main(int argc, char* argv[])
+{    int c=5;
+     Ta a1(1,2);  Ta a2(5); Ta a3(); Ta a4;//vytvorí premenné a1,a2,a3,a4, každá má iné hodnoty 
+}
+	//premenná a3 je zadaná nekorektne, ak konštruktor nemá parametre zátvorky nepíšeme		
+			</pre></div>
+	<dt>Použitie konštruktora
+	<dd>Pomocou koštruktora možno vytvoriť korektnú hodnotu/konštantu daného typu napr. do premennej a1 zapíšeme novú hodnotu 
+	a1=Ta(3.14, 5);  
+	<dt>Ukážka
+	<dd>Vytvoríme program na počítanie so zlomkami
+	<br>vytvoríme štruktúru zlomok s dvoma položkami citatel, zlomok - obe int
+	<br>vytvoríme funkciu sucet() typu zlomok z dvoma parametrami typu zlomok
+<div style="background-color:silver; width:850; padding:10;border-width:3;border-style:outset">
+<pre>#include &lt;iostream&gt;
+using namespace std;
+typedef struct zlomok {               //len vytvara typ nie premennú
+  int citatel,menovatel;
+  zlomok(){citatel=menovatel=1;}         //ak pri vytvorení premennej neuvedieme parameter
+  zlomok(int a) {citatel=a;menovatel=1;} //ak pri vytvorení premennej vedieme 1 parameter
+  zlomok(int a,int b) {citatel=a; menovatel=b;} //ak pri vytvorení premennej vedieme 2 parametre
+}zlomok;
+
+int nsd(int a, int b)
+{while (a!=b) a&gt;b ? a-=b: b-=a;
+ return a;
+}
+
+zlomok sucet(zlomok x, zlomok y)
+{ zlomok p;
+  p.menovatel=x.menovatel*y.menovatel;
+  p.citatel=x.citatel*y.menovatel + x.menovatel*y.citatel;
+  int n =nsd(p.citatel, p.menovatel);
+  p.citatel/=n; p.menovatel /=n;
+  return p;
+}
+
+ int main(int argc, char* argv[])
+{    randomize();
+     zlomok a(1+random(9),1+random(5)), b(1+random(9),1+random(5)),c;  //zlomky a,b majú náhodné hodnoty
+     cout &lt;&lt;"zlomok a: "&lt;&lt;a.citatel&lt;&lt;"/"&lt;&lt;a.menovatel&lt;&lt;endl;
+     cout &lt;&lt;"zlomok b: "&lt;&lt;b.citatel&lt;&lt;"/"&lt;&lt;b.menovatel&lt;&lt;endl;
+     cout &lt;&lt;"zlomok c: "&lt;&lt;c.citatel&lt;&lt;"/"&lt;&lt;c.menovatel&lt;&lt;endl;
+     c=sucet(a,b);
+     cout &lt;&lt;"a+b="&lt;&lt;c.citatel&lt;&lt;"/"&lt;&lt;c.menovatel&lt;&lt;endl;
+
+        system("pause" );
+        return 0;
+}
+</pre></div>
+
+		<dt>Špeciality:
+		<dd> &nbsp; - je možné zadefinovať aj bitové štruktúru
+		<br> &nbsp; typedef {
+		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int b1:1;
+		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int b2_5:4;
+		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int b6_8:3;
+		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}
+		<br>
+		<dt>Domáca úloha:
+		<dd>Napíšte program na výpočet nasledovných výrazov
+		    <br>a/b*(c/d+e/f)
+		    <br>pričom výsledok bude v tvare zlomku a zlomky a/b, c/d, e/f naplňte náhodnými celými nenulovými číslami	
+<form id="Submit" action="add.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/builder/02programujeme/zoznam.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form>
+
+		<br>Úlohy:
+		<ol>
+		<li>Vytvorte štruktúru komplex, a vytvorte podprogramy na abs, súčet, rozdiel, súčin, podiel a tlač
+		</ol>
+
+<dt class="main" >Prekrývanie operátorov
+<dd>V jazyku C++ môžme program naučiť používať operátory (napr. +,-,*,/) aj s prvkami s ktorými bežne tieto operátory nefungujú 
+	(napr. polia štruktúry). Čiže môžme náš program naučiť používať operátor + so zlomkami. 
+
+	<br>Teda podobne ako môžu existovať viaceré funkcie s rovnakým názvom, ktoré sa líšia počtom, resp. typom parametrov 
+	môžu existovať aj operátory, ktoré podľa argumentov môžu konať odlišne (inak funguje + s číslami inak so zlomkami), 
+	navyše môžme aj známe operátory predefinovať (napr. násobenie čísel bude fungovať inak). 
+	Našou úlohou teraz bude zaviesť operátory + - * / aj pre parametre typu zlomok.
+	<div style="background-color:silver; width:850; padding:10;border-width:3;border-style:outset">
+<pre>#include &lt;iostream&gt;
+using namespace std;
+typedef struct zlomok {               //len vytvara typ nie premennú
+  int citatel,menovatel;
+  zlomok(){citatel=menovatel=1;}         //ak pri vytvorení premennej neuvedieme parameter
+  zlomok(int a) {citatel=a;menovatel=1;} //ak pri vytvorení premennej vedieme 1 parameter
+  zlomok(int a,int b) {citatel=a; menovatel=b;} //ak pri vytvorení premennej vedieme 2 parametre
+}zlomok;
+zlomok a(1,2),b(2,3),c;
+<font color="Blue">  zlomok operator + (zlomok a, zlomok b)        //tu naucime program pouzivat + so zlomkami
+                     { zlomok temp;
+		       temp.menovatel= a.x * b.x;
+		       temp.citatel= a.citatel*b.menovatel + a.menovatel*b.citatel;
+		       return temp;
+		     } 
+  zlomok operator + (zlomok a, int b)        //tu naucime program pripocitat ku zlomku cele cislo
+                     { zlomok temp;
+		       temp.menovatel= a.x;
+		       temp.citatel= a.citatel + a.menovatel*b;
+		       return temp;
+		     }   
+</font>int main()
+{ c=a+b;      //  teraz uz mozem priamo spocitavat zlomky, operator = nemusim modifikovat, ten funguje klasicky
+  c=a+2;      //  teraz uz mozem priamo pripocitat ku zlomku cislo
+
+  return 0;
+}
+</pre></div>
+  <br><br>Postup je teda úplne analogický ako pri funkcii.
+  <br>sémantika:
+  <br>Pri použití operátora + s parametrami typu zlomok sa zavolá uvedený blok príkazov. 
+  <br>Na operátor + medzi číslami nemá táto definícia vplyv.
+<dt>Domáca úloha:
+<dd>Napíšte program na výpočet nasledovných výrazov
+		    <br>d=a*(b+c)   //kde a,b,c,d sú zlomky
+		    <br>pričom výsledok bude v tvare zlomku a zlomky a,b,c naplňte náhodnými celými nenulovými číslami	
+<form id="Submit2" action="add2.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/builder/02programujeme/zoznam2.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form>
+<dt>Pole štruktúr
+<dd>V praxi sa častejšie ako s jednoduchou štruktúrov stretávame s poľom štruktúr, napr. pole údajov o knihe, zamestnancovi, meste, výrobku, tovare atď. Samozrejme by sme tieto údaje mohli mať v samostatných poliach, ale obťažne by sme ich potom triedili, preskupovali, vyhľadávali. 
+Teraz vytvoríme pole štruktúr pretekárov v skoku do diaľky. O každom pretekárovi budeme evidovať <b>štartovné číslo, skok1 a skok2</b>.
+V praxi by sme samozrejme ešte evidovali minimálne meno a skoky by sme klepali podľa reálneho priebehu súťaže, tu skoky nastavíme náhodnými hodnotami.<br>
+<br><b>Deklarácia</b>		
+<pre><code>typedef struct sutaz
+{ int start_cislo,skok1,skok2;
+  sutaz(int a, int b, int c) {start_cislo=a;skok1=b; skok2=c;}
+  sutaz() { start_cislo=skok1=skok2=0; }
+}sutaz;
+sutaz a[100];   //vytvorí 100 premenných typu sutaz, všetky položky štruktúry budú vynulované
+</code></pre>
+<br><b>Naplnenie</b>		
+<pre><code>for (int i=0; i<100; i++)
+   {  a[i]=sutaz(i,random(200)+500,random(200)+500);
+      cout &lt;&lt;a[i].start_cislo&lt;&lt;" "&lt;&lt;a[i].skok1&lt;&lt;"  "&lt;&lt;a[i].skok2&lt;&lt;endl;
+   }
+</code></pre>
+<br><b>Vyhodnotenie-utriedenie</b>		
+<br>Ako sme si už pri poli ukázali môžme zavolať funkciu sort(), kde triedenie zadáme pomocou triediacou funkciou. Tu by triedenie bez
+triediacej funkcii spôsobilo chybu, lebo program nevie používať operátor &lt;, &gt; s položkami typu sutaz
+<pre><code>
+int fun (sutaz x, sutaz y)
+{ if (max(x.skok1,x.skok2) !=  max(y.skok1,y.skok2) ) return max(x.skok1,x.skok2) >  max(y.skok1,y.skok2);
+  else return min(x.skok1,x.skok2) >  min(y.skok1,y.skok2);;
+ }
+ . . .
+   sort (a+0,a+100,fun);
+   for (int i=0; i<100; i++)  cout &lt;&lt;i&lt;&lt;"  "&lt;&lt;a[i].start_cislo&lt;&lt;" "&lt;&lt;a[i].skok1&lt;&lt;"  "&lt;&lt;a[i].skok2&lt;&lt;endl;
+</code></pre>
+<dt>Domáca úloha:
+<dd>Napíšte program na vyhodnotenie súťaže v skoku do diaľky podľa uvedených ukážok, pošli súbor priezvisko.cpp cez túto stránku.
+<form id="Submit2" action="add3.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/builder/02programujeme/zoznam3.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form>
+
+<dt>Písomná práca - pole štruktúr:
+<dd>Napíšte <a href="project1.exe">program</a> na evidenciu údajov o 20-tich učiteľoch jednej nemenovanej skoly
+<br>Program v prvom riadku vypíše: Vypracoval: XXXX ZZZZZ
+<br>Sledovať u každého učiteľa budeme
+<br>- poradové číslo - 1 až 20 - <b>PC</b>
+<br>- meno učiteľa - náhodný text dĺžky 4 - <b>Meno[5]</b>
+<br>- roku narodenia - náhodné číslo 1970 až 1989 - <b>RokNar</b>
+<br>- popularita v percentách - náhodné číslo 10 až 100 - <b>Popularita</b>
+<br><br>Váš program bude obsahovať nasledovné:
+<br>- definovanie nového typu <b>Tucitel</b> obsahujúcu vymenované položky 
+<br>- vytvorenie premennej <b>ucitel</b> - poľa aspoň 30-tich položiek typu Tucitel 
+<br>- naplnenie a výpis prvých 20-tich položiek premennej clovek (ako vytvoriť náhodné meno radšej uvádzam:
+<br> <i>ucitel[i].meno[0]= 'A'+random(26);  ucitel[i].meno[1 až 3]= 'a'+random(26); ucitel[i].meno[4]= 0;</i>)
+<br>- utriedenie a výpis poľa <b>ucitel</b> podľa roku narodenia zostupne
+<br>-  utriedenie a výpis poľa <b>ucitel</b> podľa popularity zostupne
+<br>- Výpis učiteľov mladších ako 40 rokov s popularitou väčšou ako 50% 
+
+<br><br>- pošli súbor priezvisko.cpp cez túto stránku.
+<form id="Submit2" action="add4.php" enctype="multipart/form-data" method="post">
+<br>Zatiaľ zaslané súbory:
+<p style="background-color: Silver; width: 50%; padding:10px; border: thin inset;color:black">  
+<link rel=”stylesheet” type=”text/css” href=”xxx.css”> 
+<iframe src="http://www.gympd.sk/jaro/programovanie/builder/02programujeme/zoznam4.txt"  width="100%" height="240" frameborder="yes"></iframe>
+<br>
+</p>
+<br>
+Nájdi na svojom PC súbor na odoslanie a stlač odošli, 
+<br>systém ti oznámi či sa prenos podaril.<br>
+	<br><input type="File" name="subor" size="60"><br>
+    <br><input type="Submit" value="Odošli">
+<br>
+</form>
+
+</dl>
+
+</body>
+</html>

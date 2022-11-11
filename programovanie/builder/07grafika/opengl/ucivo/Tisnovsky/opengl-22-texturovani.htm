@@ -1,0 +1,961 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (22): texturování - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="Tímto dílem seriálu o grafické knihovně OpenGL se začínáme věnovat poměrně rozsáhlé a přitom důležité a zajímavé oblasti polygonální trojrozměrné grafiky. Řeč je o texturování, což je, zjednodušeně řečeno, metoda pro vykreslování trojrozměrných těles, která mají na svém povrchu naneseny rastrové obrazce. Při použití texturování je možné vytvářet a zobrazovat vizuálně složité scény bez větších nároků na výpočetní výkon grafického subsystému." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-22-texturovani%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-22-texturovani%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-22-texturovani%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (22): texturování</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 2. 12. 2003 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (22): texturování</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+Tímto dílem seriálu o grafické knihovně OpenGL se začínáme věnovat poměrně rozsáhlé a přitom důležité a zajímavé oblasti polygonální trojrozměrné grafiky. Řeč je o texturování, což je, zjednodušeně řečeno, metoda pro vykreslování trojrozměrných těles, která mají na svém povrchu naneseny rastrové obrazce. Při použití texturování je možné vytvářet a zobrazovat vizuálně složité scény bez větších nároků na výpočetní výkon grafického subsystému.
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Texturování 1</h2>
+
+<a href="#hrf1">Co si představit pod pojmem texturování?</a><br />
+<a href="#hrf2">Kdy a proč používat texturování</a><br />
+<a href="#hrf3">Výhody použití rastrových textur</a><br />
+<a href="#hrf4">Nevýhody rastrových textur</a><br />
+<a href="#hrf5">Podpora textur v OpenGL</a><br />
+<a href="#hrf6">Omezení texturování v OpenGL</a><br />
+<a href="#hrf7">Pokračování</a><br />
+<a href="#hrf8">Demonstrační příklady</a><br />
+<span id="hrf1"></span><h4>Co si představit pod pojmem texturování?</h4>
+
+<p>Texturování (resp. přesněji <i>nanášení textur</i>) se označuje
+princip obarvení povrchu zobrazovacích těles různými obrazci. Důležité
+přitom je, že se nijak nemění geometrické vlastnosti těles, pouze se jinak
+zobrazuje jejich povrch. Obrazce, které se na povrch těles nanášejí, se
+nazývají <i>textury</i> (textures). Tyto textury jsou většinou
+představovány plošnými obrázky (dvoudimenzionální textury), některé
+grafické systémy však podporují i vykreslování jednorozměrných a dokonce
+trojrozměrných (objemových) textur.</p>
+
+<p>Obrazce pro textury se mohou vytvářet několika způsoby. Buď je možné
+použít klasické rastrové obrázky (vzniklé například namalováním, vyfocením
+nebo naskenováním), nebo se textura může vytvářet pomocí různých algoritmů
+založených většinou na fraktálních technikách - tímto způsobem vznikají
+takzvané <i>procedurální textury</i>. Procedurální textury lze použít buď
+pro výpočet rastrových obrázků před vlastním vykreslováním (po výpočtu
+obrázku se tato textura chová jako každý jiný rastrový obrázek se všemi
+výhodami i nevýhodami), nebo se může výpočet textur provádět v reálném čase
+až při vykreslování, přičemž se parametry výpočtu textury nastaví podle
+aktuální velikosti a orientace plošky, na kterou se textura nanáší. Tuto
+druhou možnost však OpenGL přímo nepodporuje, výpočet procedurálních textur
+je tedy nutné provádět "ručně". Na prvním obrázku je ukázána procedurální
+textura vzniklá sloučením více fraktálních obrazců s procedurální texturou
+mramoru (marble).</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_22_1.jpg" alt="Ukázka procedurální textury" width="160" height="160" /><br />Obrázek 1: Ukázka procedurální textury
+</p>
+
+<p>V dalším textu se budeme téměř výhradně zabývat texturami
+reprezentovanými rastrovými obrázky, nezávisle na tom, jakým způsobem
+vznikly. I když řeč bude převážně o dvoudimenzionálních texturách (tedy
+<i>bitmapách</i> a <i>pixmapách</i>), většina zde popisovaných
+vlastností se vztahuje i na jednorozměrné a trojrozměrné textury. Případné
+výjimky a odlišnosti si samozřejmě postupně popíšeme. Na druhém obrázku je
+ukázána dvoudimenzionální, "ručně" nakreslená textura. Rastrové textury
+budeme v demonstračních příkladech vyrábět buď programově (různé šachovnice
+apod.), nebo je budeme načítat z externích souborů.</p>
+
+<p>Podobně, jako je <i>bitmapa</i> či <i>pixmapa</i> složena ze základních
+rastrových elementů (<i>pixelů</i>), je textura složena z <i>texelů</i>.
+Pixel a texel mají stejné vlastnosti a podobný či dokonce ekvivalentní způsob
+uložení v paměti. V dalším textu však budeme oba pojmy navzájem oddělovat, tj.
+pixel je element vykreslovaný na obrazovce, kdežto texel je rastrový element
+(většinou) dvourozměrné textury. Texturování potom spočívá v nanášení texelů na
+vykreslovaný povrch.</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_22_2.gif" alt="Ukázka nakreslené rastrové textury" width="230" height="230" /><br />Obrázek 2: Ukázka nakreslené rastrové textury
+
+</p>
+
+<span id="hrf2"></span><h4>Kdy a proč používat texturování</h4>
+
+<p>Texturu lze použít ve všech případech, kdy je nutné vykreslovat tělesa se
+složitě strukturovanými povrchy, která však nevykazují velké změny v geometrii
+(tedy tvaru) povrchu. Typickým příkladem je cihlová zeď, která je v reálném
+světě složená z jednotlivých cihel spojených maltou. Při modelování této zdi
+sice můžeme každou cihlu reprezentovat například kvádrem s vhodně zvolenou
+barvou, ale v případě vykreslování velkých zdí by počet vykreslovaných těles
+rostl příliš rychle, takže by se zbytečně plýtvalo jak pamětí, tak i výpočetním
+výkonem grafického subsystému. Ještě horší situace by nastala například u
+koberce, kde by bylo nutné vytvářet všechna barevná vlákna apod.</p>
+
+<p>V těchto případech je možné zeď nebo koberec reprezentovat jednou plochou
+(složenou například ze dvou trojúhelníků nebo jednoho čtyřúhelníku) a na tuto
+plochu potom nanést předem vytvořený rastrový obrázek. V případě zdi se tak
+sice připravíme o geometrické nerovnosti povrchu (ty lze částečně - při vhodném
+natočení tělesa - simulovat například bump-mappingem), ale vykreslení bude na
+dnešních počítačích dostatečně rychlé a v případě dostatečné velikosti
+(rozlišení) textury i kvalitní.</p>
+
+<p>Textury se také někdy používají poněkud jiným způsobem pro vytváření a
+následné vykreslení různých složitých modelů, například stromů. Buď je možné
+strom namodelovat jako těleso obsahující až několik tisíc polygonů, nebo je
+možné vytvořit dvourozměrný obrázek stromu z několika směrů a strom vykreslit
+jako několik vzájemně se protínajících ploch s nanesenou konturou stromu
+- viz třetí obrázek. V tomto případě však textura musí být v některých místech
+průhledná, což ovšem při vykreslování nepředstavuje větší problém. Tato
+technika se nazývá <i>billboarding</i>, protože se vychází z podobnosti 
+s klasickými billboardy (například ty u dálnic).</p>
+
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_22_3.jpg" alt="Vytvoření modelu stromu (billboardu) s využitím texturování" width="420" height="398" /><p>Obrázek 3: Vytvoření modelu stromu (billboardu) s využitím texturování</p>
+
+<p>V minulosti se často také používaly otexturované objekty (většinou
+obdélníky), které byly k pozorovateli natočeny vždy stejnou stranou. Tyto
+objekty se nazývají <i>sprity</i> a byly použity zejména v mnoha úspěšných
+hrách, například Doom, pro vykreslování předmětů a potvůrek ve hře. Sprity
+samozřejmě můžeme používat i v OpenGL, lze například vykreslovat pixmapy (viz
+již dříve popsaný příkaz <i>glDrawPixels()</i>) nebo vhodně natočený obdélník
+pokrytý texturou. Texturování může být v tomto případě výhodnější, protože se
+(narozdíl od vykreslování pixmap) nemusí stále přenášet pixmapová data po
+sběrnici/portu, ale jsou uložena přímo v paměti grafického akcelerátoru.</p>
+
+<p class="urs-p-center"><img src="http://i.iinfo.cz/r/photos/opengl/opengl_22_4.gif" alt="Ukázka 3D scény z několika sprity" width="420" height="263" /><br />Obrázek 4. Ukázka 3D scény s několika sprity (snad nemusím psát, odkud ten screenshot pochází)
+
+</p>
+
+<span id="hrf3"></span><h4>Výhody použití rastrových textur</h4>
+
+<p>Použití rastrových textur s sebou přináší samozřejmě své výhody i nevýhody.
+Jak jsme si již řekli, používá se technika texturování jako určitá náhrada při
+zobrazování složitých povrchů těles (zeď, omítka, dřevo, kámen), kdy se tento
+obecně nehomogenní povrch nahradí ploškou s nanesenou texturou. Záleží na
+vhodné volbě textury, velikosti objektu a nasvícení celé scény, zda tato
+náhrada bude dostatečná, či zda uživatel uvidí vizuální chyby ve scéně.</p>
+
+<p>Velkou výhodou rastrových textur je jejich snadná implementace ve
+vykreslovacím řetězci. Jednoduché grafické akcelerátory řešily texturování tak,
+že se do jejich vykreslovacího řetězce přidala vyrovnávací paměť pro textury a
+několik interpolátorů, pomocí kterých se řešil přístup do texturovací paměti.
+Dnešní grafické akcelerátory jdou mnohem dál: textury je možné komprimovat,
+jsou podporovány mipmapy (textury ve více rozlišeních), antialiasing,
+multitextury apod. Texturovací jednotka však stále patří k těm částem
+vizuálního systému, která má velmi dobrý poměr složitost/vizuální efekt.</p>
+
+<p>Další výhodou texturování je, že pokud u textur použijeme průhlednost
+(nazývanou také <i>alfa kanál</i>), je možné vizuálně změnit geometrii
+předmětů, protože se předmět může na některých místech jevit jako děravý.
+Ukázka této techniky je zobrazena na prvním obrázku. Poznamenejme, že při
+použití průhlednosti je nutné programově setřídit průhledné nebo poloprůhledné
+plošky, jelikož by v tomto případě Z-buffer (paměť hloubky) nepracoval korektně
+- i průhledné texely by se "vykreslily" a poškodily tak informaci o hloubce
+fragmentu uloženou v Z-bufferu.</p>
+
+<span id="hrf4"></span><h4>Nevýhody rastrových textur</h4>
+
+<p>První vážnou nevýhodou těchto textur je jejich předem dané rozlišení, tedy
+počet pixelů, ze kterých se textura skládá. Při volbě rozlišení textury se vždy
+musí zvolit kompromis mezi dvěma extrémy. Prvním extrémem je volba textury s
+malým rozlišením, což však při zobrazování vede k viditelným chybám (vzpomeňme
+například starší hry typu Wolfenstein nebo Doom, které používaly poměrně hrubé
+textury s rozlišením 64x64 pixelů; u těchto her se samozřejme ani OpenGL ani
+grafická akcelerace nepoužívala). Druhým extrémem je volba textury s neúměrně
+velkým rozlišením, kdy se naopak plýtvá pamětí na grafickém akcelerátoru.</p>
+
+<p>Druhá nevýhoda spočívá ve faktu, že pokud zobrazujeme texturu na
+obrazovce a použije se zvětšení či zmenšení počtu zobrazovaných pixelů (což
+se stává při texturování téměř vždy, protože se na texturovaný povrch
+díváme z různých směrů a vzdáleností), dochází k <i>aliasu</i>
+(zjednodušeně řečeno tvorbě moaré), který není možné principiálně
+odstranit, lze pouze zmírnit jeho vizuální podobu. Proto se používají různé
+metody odstranění aliasu (tj. metody <i>antialiasingu</i>), které však
+komplikují zobrazovací řetězec a obecně vedou ke zpomalení
+vykreslování.</p>
+
+<p>Třetí nevýhodou je skutečnost, že textury zabírají poměrně velké množství
+paměti. Pokud je v paměti grafického akcelerátoru dostatečné místo, je možné
+textury nahrát do této paměti a vykreslování tak několikanásobně urychlit.
+Pokud je však v této paměti místa málo (oblast paměti grafického akcelerátoru
+je mimo jiné obsazena všemi barvovými buffery, pamětí hloubky, stencil bufferem
+apod.), musí se textury při vykreslování nahrávat z hlavní paměti počítače, což
+zatěžuje sběrnici nebo port a zpomaluje vykreslování. Tuto nevýhodu částečně
+řeší různé metody komprimace textur.</p>
+
+<span id="hrf5"></span><h4>Podpora textur v OpenGL</h4>
+
+<p>V OpenGL jsou podporovány pouze rastrové textury, které mohou být buď
+jednodimenzionální, dvoudimenzionální, nebo třídimenzionální. V případě
+<i>jednodimenzionálních textur</i> se prakticky jedná o pruh pixelů, pomocí
+něhož se dají realizovat různé barevné přechody. <i>Dvoudimenzionální
+textury</i> (rastrové bitmapy a pixmapy) jsou v dnešní době zdaleka
+nejpoužívanější a jsou podporovány na naprosté většině grafických akcelerátorů
+(dokonce bych napsal na všech, protože jsem zatím nezažil, že by texturování
+nefungovalo; veškeré chyby texturování spočívají buď v nedostatku paměti pro
+textury, nebo v chybě driveru, který musí textury přenášet přes port do
+grafického akcelerátoru).</p>
+
+<p><i>Třídimenzionální textury</i> (tj. objemové či voxelové textury) se
+používají především ve specializovaných aplikacích (medicína apod.), kdy je
+potřeba zobrazovat objemová data. Větší podporu tohoto typu textur můžeme
+očekávat až v dalších generacích grafických akcelerátorů, protože pro uložení
+dat prostorových textur je zapotřebí velkého množství paměti, která současně
+musí být dostatečně rychlá pro čtení.</p>
+
+<p>Největší podpora ze strany grafických akcelerátorů je tedy u
+dvoudimenzionálních textur, které také splňují značnou část nároků programátora
+počítačové grafiky. Především tímto typem textur se budeme zabývat v dalším
+textu.</p>
+
+<p>V OpenGL lze také zvolit různé filtrace textur, režimy mapování textur na
+plošky, multitexturování a další grafické efekty, které si dále probereme.
+Musíme si však uvědomit, že pokud použijeme některý grafický efekt, který není
+grafickým akcelerátorem podporován, dojde k výpočtům pomocí hlavního procesoru
+počítače, což značně zpomaluje celý systém. Proto je nejprve vhodné zjistit,
+které efekty jsou na grafickém akcelerátoru podporovány, a případně dát
+uživateli naší aplikace na výběr mezi kvalitou a rychlostí zobrazení.</p>
+
+<span id="hrf6"></span><h4>Omezení texturování v OpenGL</h4>
+
+<p>V OpenGL jsme při použití rastrových textur omezeni poměrně málo. První
+omezení spočívá ve faktu, že texturování je podporováno pouze pro true-color
+barevné režimy, v indexových režimech (s barevnou paletou) není povoleno. Toto
+omezení však dnes již téměř nemá význam, protože paletové režimy se používají
+minimálně a velká část moderních grafických akcelerátorů je ani nemá
+implementovány.</p>
+
+<p>Další omezení spočívá v maximální povolené velikosti textury a rozlišeních
+textury. Všechny textury musí mít v OpenGL rozměry, které jsou mocninou čísla
+2, například 32x32 pixelů. Rozlišení 31x33 není povoleno. Maximální velikost
+textury závisí na mnoha faktorech, především na velikosti paměti grafického
+akcelerátoru. Všechny implementace OpenGL by však měly podporovat textury
+alespoň do velikosti 64x64 pixelů. Maximální podporovanou velikost textur lze
+zjistit pomocí příkazů OpenGL.</p>
+
+<span id="hrf7"></span><h4>Pokračování</h4>
+
+<p>V dalším pokračování si popíšeme základní postup, který se při texturování
+musí dodržet.</p>
+
+<span id="hrf8"></span><h4>Demonstrační příklady</h4>
+
+<p>Dnes ješte nemáme dostatečné informace o postupu, jakým lze texturování
+pomocí OpenGL provést, proto si podrobnější příklady necháme až na další
+pokračování. Ukážeme si pouze jednoduchý prográmek, který zjistí maximální
+povolenou velikost textury. Zdrojový kód tohoto programu je k dispozici
+<a href="http://i.iinfo.cz/r/photos/opengl/opengl_22_1.c">zde</a>, kód s
+<a href="http://i.iinfo.cz/r/photos/opengl/opengl_22_1.html">obarvenou syntaxí zde</a>.
+Po překladu a spuštění se do okna programu vypíšou požadované
+informace, program skončí stiskem klávesy Escape.</p>
+
+<p>Na grafické kartě nVidia RIVA TNT2 Model 64 se mi hlásí maximální velikost
+textury 1024x1024. Zajímavé by bylo zjistit od vás, čtenářů, jaká rozlišení
+jsou na vašich kartách podporována. Mnohým by to mohlo pomoci při vývoji
+přenositelných aplikací. Dnes považuji za minimum alespoň 256x256.</p>
+
+<p>Pro majitele pomalejšího připojení k internetu je zde k dispozici celý
+článek i s přílohami zabalený do jednoho <a href="http://i.iinfo.cz/r/photos/opengl/opengl_22.zip">zip
+souboru</a>.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/">Grafická knihovna OpenGL (20): bodové světlo, směrové světlo a reflektor</a></li>
+			<li><a href="/clanky/opengl-21-nastaveni-svetelnych-zdroju/">Grafická knihovna OpenGL (21): nastavení světelných zdrojů</a></li>
+			<li class="actual">Grafická knihovna OpenGL (22): texturování</li>
+			<li><a href="/clanky/opengl-23-korektni-otexturovani/">Grafická knihovna OpenGL (23): korektní otexturování</a></li>
+			<li><a href="/clanky/opengl-24-vlastnosti-textur/">Grafická knihovna OpenGL (24): vlastnosti textur</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-22-texturovani%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-22-texturovani%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-22-texturovani/nazory/">Vlastní</a>
+<a href="/clanky/opengl-22-texturovani/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q2/">2</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q3/">3</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q4/">4</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q5/">5</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q6/">6</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q7/">7</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q8/">8</a>
+<a href="/clanky/opengl-22-texturovani/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-22-texturovani/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[28111]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/28111/">velikost textur</a></th>
+	<td class="op-au">xbrut</td>
+	<td class="op-dt">2. 12. 2003 13:18	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28119]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28119/">Re: velikost textur</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">2. 12. 2003 15:36	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28194]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/i.gif" align="left" width="9" height="21" alt="&#9474;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28194/">Re: velikost textur</a></th>
+	<td class="op-au">xbrut</td>
+	<td class="op-dt">3. 12. 2003 15:41	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28120]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28120/">Re: velikost textur</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">2. 12. 2003 15:39	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28158]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28158/">Re: velikost textur</a></th>
+	<td class="op-au">Bedrich Michalek</td>
+	<td class="op-dt">3. 12. 2003 08:57	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[28185]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/28185/">Maximalni podporovana velikost textury na O2</a></th>
+	<td class="op-au">Jiri Hnidek</td>
+	<td class="op-dt">3. 12. 2003 13:13	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28191]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28191/">Re: Maximalni podporovana velikost textury na O2</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">3. 12. 2003 15:00	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[28196]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/28196/">3D textury</a></th>
+	<td class="op-au">xXx</td>
+	<td class="op-dt">3. 12. 2003 15:51	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28274]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28274/">Re: 3D textury</a></th>
+	<td class="op-au">Pavel Tisnovsky</td>
+	<td class="op-dt">4. 12. 2003 18:37	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[28279]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/28279/">rozmer textury 2^n</a></th>
+	<td class="op-au">martin</td>
+	<td class="op-dt">4. 12. 2003 19:56	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28303]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28303/">Re: rozmer textury 2^n</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">5. 12. 2003 07:37	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[28370]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/28370/">SVETLO - Svetlo na stejnem miste ve scene</a></th>
+	<td class="op-au">lioil</td>
+	<td class="op-dt">7. 12. 2003 05:55	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28465]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28465/">Re: SVETLO - Svetlo na stejnem miste ve scene</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">10. 12. 2003 07:22	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[28652]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-22-texturovani/nazory/28652/">Re: SVETLO - Svetlo na stejnem miste ve scene</a></th>
+	<td class="op-au">Kwan</td>
+	<td class="op-dt">12. 12. 2003 11:56	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[28655]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/28655/">Pamet grafickeho akceleratoru</a></th>
+	<td class="op-au">Kwan</td>
+	<td class="op-dt">12. 12. 2003 12:08	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[29196]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/29196/">Velikost textury</a></th>
+	<td class="op-au">Michal Eibl</td>
+	<td class="op-dt">31. 12. 2003 02:07	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[31680]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/31680/">screenshot a DOOM</a></th>
+	<td class="op-au">oxix</td>
+	<td class="op-dt">27. 2. 2004 20:03	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[116558]" /></td>
+	<th><a href="/clanky/opengl-22-texturovani/nazory/116558/">velikost textury na nvidia 7600GS</a></th>
+	<td class="op-au">freon</td>
+	<td class="op-dt">25. 11. 2006 01:03	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-22-texturovani/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-22-texturovani/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-22-texturovani/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3762">IT PROJECT MANAGER (i2438) / až 65.000,- / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3646">PROGRAMÁTOR C/C++ (i5140) / VÍCE POZIC / NADNÁRODNÍ SPOLEČNOST / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3466">SPECIALISTA ROZVOJE SYSTÉMŮ A MOBIL. APLIKACÍ (i4557) / MEZINÁR. SPOL. / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4098">ANALYTIK DATOVÉHO SKLADU (i3548) / NADNÁRODNÍ SPOL. / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3935">IT PROJECT MANAGER (i4548) / MEZINÁRODNÍ SPOLEČNOST / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3790">JAVA, XML DEVELOPER (i3284) / INTERNATIONAL COMPANY / PRAGUE</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3029">J2EE ARCHITEKT (i6582) / 45-80.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4080">DB SPECIALISTA PRO DATOVÉ SKLADY - SQL (i4378) / PRAHA</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

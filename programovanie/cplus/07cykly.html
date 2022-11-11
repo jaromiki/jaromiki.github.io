@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Cyklus - opakovanie príkazov</title>
+</head>
+
+<body>
+<h3>Cyklus</h3>
+Cykly používame na opakované vykonávanie nejakého príkazu. Technicky sa to urobí tak, že pred príkaz, ktorý chceme opakovane viackrát vykonať
+vložíme niečo/konštrukciu, ktorý toto opakovanie zabezpečí. Táto konštrukcia aj s príkazom, ktorý sa má opakovať tvorí opäť jeden príkaz - príkaz cyklu.
+Takto vytvorený príkaz cyklu môžme použiť všade kde syntax povoľuje vloženie príkazu - teda aj príkaz cyklu môžme "vnárať" (opakovať viac krát).
+V prípade, ak chceme viackrát vykonať skupinu príkazov dáme túto skupinu príkazov do ozdobnej zátvorky a takto vytvorenú skupinu príkazov program chápe ako jeden príkaz. 
+Jazyk C podobne ako pascal pozná 3 druhy cyklov.
+<dl><dt>Cyklus for  
+	<dd>Pred príkaz vložíme for (niečo1;niečo2;niečo3), kde pomocou 3 výrazov v zátvorke určíme príkazu koľko krát (resp. dokedy) sa má vykonať
+		<dl><dt>Syntax:
+			<dd><font color="Red"><b>for (</b></font>start_vyraz <font color="Red"><b>;</b></font>
+													 podm <font color="Red"><b>;</b></font>
+													 iter_vyraz <font color="Red"><b>)</b></font> prikaz
+				<br>start_vyraz - ľubovoľný výraz, ktorý sa vykoná pred cyklom (iba raz)
+				<br>podm - podmienka zotrvania cyklu - celočíselný výraz
+				<br>iter_vyraz - ľubovoľný výraz, ktorý sa vykoná vždy po vykonaní príkazu
+				<br>prikaz - ľubovoľný príkaz, ktorý sa bude opakovane vykonávať 
+				<br>príkaz for vždy má v zátvorke práve dve bodkočiarky, ktoré oddeľujú od seba tri výrazy (každý je nepovinný)	
+			<dt>Sémantika:
+			<dd><ol>
+				<li>vyhodnotí sa startovací výraz <b>start_vyraz</b>
+				<li>vyhodnotí sa podmienka <b>podm</b>
+				<li>ak podm != 0 tak sa urobí príkaz , potom sa vykoná iter_vyraz a ideme späť na bod 2. (vyhodnocovanie)
+				<li>ak podm = 0 cyklus končí 
+				</ol>	
+			<dt>Poznámky:
+			<dd> ... všetky údaje v zátvorke sú nepovinné, t.j. možno ich vynechať, dve bodkočiarky sú nutné
+			<br> &nbsp; &nbsp; &nbsp;for (;;) vypocet; // je nekonečný cyklus
+			<br> ... ak chýba podmienka je implicitne 1 teda TRUE
+			<br> ... v C++ je možné v start_vyraz premennú zadeklarovať int s=0;for (int i=0,i=1;i&lt;11;i++) s+=i;
+						<br> ... ... deklarovanie novej premennej používame len ak v start_vyraz nepoužijeme čiarku
+			<br> ... ... premenná zadeklarovaná v start_vyraz je platná len v príkaze, ktorý cyklus opakuje
+			<br> &nbsp; &nbsp; &nbsp;tento cyklus spočíta čísla 1 - 10
+			<br> &nbsp; &nbsp; &nbsp;premenná i je viditelná jen v cykle, po skončení cyklu neexistuje
+			<br> ... je zvykom za for písať medzeru (pre odlíšenie od podprogramu, kde medzeru nedávame)
+			<br> ... ak chceme vynechať príkaz musíme dať prázdny príkaz
+			<br> ... ide o veľmi mohutný príkaz, ktorý obsahuje väčšie množstvo kódu, preto ak sa dá, nahrádzame ho cyklami while, resp. do while
+			<br><br>Ukážka
+			<br>Chceme 100 krát napísať text: Programovanie ma bavi. Bez cyklu by sme napísali príkaz cout &lt;&lt;"Programovanie ma bavi\n"
+			<br>a potom ho ešte okopíroval 99-krát. Aby sme pomocou cyklu urobili tento príkaz presne 100 krát, vytvoríme si počítadlo v ktorom
+			budeme mať zapísané koľko krát sme ten príkaz na výpis už urobili, na žačiatku teda v počítadle bude hodnota nula a po každom výpise
+			hodnotu zväčšíme o 1. Keď počítadlo bude mať hodnotu 100 vieme, že úloha je splnená.
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor=#dddddd border=1>
+			<TR><TD vAlign="top" bgColor="#33bbff">
+			<P><I>Príklad: Program vypíše do 100 riadkov text Programovanie ma bavi</I></P>
+			<TR><TD vAlign="top">
+			<PRE>for (int i=0; i&lt;100;i++) cout &lt;&lt;"Programovanie ma bavi\n";</pre>
+			</tr></table>
+			Tento prípad vystihuje najčastejšie použitie cyklu for (;;) - vieme počet opakovaní príkazu
+			<br><br>V príkaze, ktorý opakovane vykonávame môžme využívať premennú - počítadlo. Napríklad namiesto rovnakého textu môžme vypísať
+			čísla 0, 1, 2, 3, ..., 98, 99
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor=#dddddd border=1>
+			<TR><TD vAlign="top" bgColor="#33bbff">
+			<P><I>Príklad: Program vypíše do 100 riadkov čísla 0-99</I></P>
+			<TR><TD vAlign="top">
+			<PRE>for (int i=0; i&lt;100;i++) cout &lt;&lt; i;</pre>
+			</tr></table>
+			Podobne možno vypisovať aj iné postupnosti
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor=#dddddd border=1>
+			<TR><TD vAlign="top" bgColor=#33ccff>
+			<P><I>Príklad: Program vypíše do 100 riadkov čísla 1-100</I></P>
+			<TR><TD vAlign="top">
+			<PRE>for (int i=0; i&lt;100;i++) cout &lt;&lt; i+1;</pre>
+			//alebo  for (int i=1; i&lt;101;i++) cout &lt;&lt; i;</pre>
+			</tr></table>
+			<br>
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor=#dddddd border=1>
+			<TR><TD vAlign="top" bgColor="#33ccff">
+			<P><I>Príklad: Program vypíše do 100 riadkov čísla 100-1</I></P>
+			<TR><TD vAlign="top">
+			<PRE>for (int i=0; i&lt;100;i++) cout &lt;&lt; 100-i;
+//alebo šikovnejsie	for (int i=100; i&gt;0;i--) cout &lt;&lt; i;		</pre>
+			</tr></table>
+			Skúste napísať program na výpis prvých 100 čísel nasledovných postupnosti:
+			<br>1,3,5,7,9,11,...
+			<br>1000,900,800,700,600,...
+			<br>1.00, 1.25, 1.50, 1.75, ...
+			<br>a, b, c, d, e, f, g, h, ...y, z  // písmenok nie je 100 ale 26
+			<br>1,2,1,2,1,2,1,2,...
+			<br><br>Cyklus možno s výhodou použiť na načítanie známeho počtu čísel a vypočítanie napr. na súčtu/priemeru týchto čísel
+			<br>Načítajme 10 celých čísel a vypíšme ich priemer
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor="white" border=1>
+			<TR><TD vAlign="top" bgColor="#99cccc">
+			<P><I>Príklad: Program načíta 10 celých čísel a vypíše priemer týchto čísel</I></P></tr>
+			<TR><TD vAlign="top">
+			<PRE>for (s=0,i=0; i&lt;10;i++) {cin &gt;&gt;c; s+=c;}
+cout &lt;&lt; "Priemer cisel:" &lt;&lt; s/10;</pre>
+			</tr></table>
+			  
+			<br><br>Cyklus nemusí mať len jedno počítadlo, môže ich mať viac. Nasledovný program vypíše všetky dvojice prirodzených čísel, ktorých súčet je 101
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor=#dddddd border=1>
+			<TR><TD vAlign="top" bgColor=#33ccff>
+			<P><I>Príklad: Program vypíše do 100 riadkov čísla 1-100</I></P>
+			<TR><TD vAlign="top">
+			<PRE>for (int i=1, j=100; i&lt;j;i++,j--) cout &lt;&lt; i &lt;&lt;", "&lt;&lt; j;</pre>
+			</tr></table>
+			<br><br>Niekedy je podmienka, ktorá určuje dokedy sa má príkaz vykonávať zložitejšia
+			<br>Na vstupe sú čísla ukončené 0. Načítajme max. 10 čísel a vypočítajme priemer týchto čísel
+			<TABLE cellSpacing=0 width="90%" align="center" bgColor=#cccccc border=1>
+			<TR><TD vAlign="top" bgColor=#33ccff>
+			<P><I>Príklad: Priemer z maximálne 10-tich čísel</I></P>
+			<TR><TD vAlign="top">
+			<PRE>for (p=0, s=0; cin &gt;&gt;c, p&lt;10 &&c;i++,p++) s+=c;
+cout &lt;&lt; 1.0*s/p;</pre>
+			</tr></table>
+ 
+			<br>Úlohy:
+			<ol>
+			<li>Načítaj číslo prirodzené n, načítaj znak z a vypíš do riadku n znakov z 
+			<li>Načítaj prirodzené číslo n a vypíš všetkých jeho deliteľov
+			<li>Načítaj prirodzené číslo n a vypíš ku nemu najbližšie deliteľné 13 
+			<li>Vypíš všetky prirodzené čísla, ktorých tretia mocnina je menšia ako 1 000 000
+			<li>Vypíš členy Fibonacciho postupnosti menšie ako 100 000
+			<li>Na vstupe je v prvom riadku počet známok (n prirodzené číslo)
+				<br>v ďalšom riadku je n známok oddelených medzerou
+				<br>zisti spravodlivú výslednú známku (ak je priemer napr. 2.5 je výsledná 3)
+			<li>Na vstupe je niekoľko celých čísel rôznych od nuly, ukončených 0 a zisti:
+				<br>najväčšie z nich
+				<br>či je medzi nimi číslo 7
+				<br>súčet čísel, priemer
+				<br>či tvoria rastúcu postupnosť
+			<li>Číslo nazveme pekné ak je deliteľné svojim ciferným súčtom
+				<br>Načítaj prirodzené číslo a zisti či je pekné
+				<br>Vypíš všetky pekné dvojciferné čísla
+			<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš obdĺžnik tvorený znakmi z 
+			<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš rovnobežník (vrch posunutý vľavo) tvorený znakmi z 
+			<li>Načítaj prirodzené čísla a,b načítaj znak z a vypíš rovnobežník (vrch posunutý vpravo) tvorený znakmi z 
+			<li>Načítaj prirodzené číslo a načítaj znak z a vypíš a-riadkový pravoúhly trojuholník tvorený znakmi z 
+			<code>
+			<br> *
+			<br> **
+			<br> ***
+			<br> ...
+			</code>
+			<li>Načítaj prirodzené číslo a načítaj znak z a vypíš a-riadkový pravoúhly trojuholník tvorený znakmi z 
+			<code>
+			<br> &nbsp; &nbsp; *
+			<br> &nbsp; &nbsp;**
+			<br> &nbsp; ***
+			<br> &nbsp;...
+			</code>
+			<li>Načítaj prirodzené číslo a načítaj znak z a vypíš  a-riadkovú pyramídu tvorenú znakmi z 
+			<code>
+			<br> &nbsp; &nbsp; *
+			<br> &nbsp; &nbsp;***
+			<br> &nbsp; *****
+			<br> &nbsp;.....
+			</code>
+			<li>Načítaj suma, urok, pocet_rokov a zisti koľko našetrí ak vloží suma peňazí na dobu pocet_rokov pri úroku urok
+			<li>Načítaj prirodzené číslo n a rozlož ho na súčin prvočísel 
+			<li>Načítaj prirodzené číslo n a zisti, či je prvočíslo
+			<li>Načítaj prirodzené číslo n a zisti jeho ciferný súčet
+			<li>Na vstupe je prirodzene n a za ním n celých čísel oddelených čiarkou,
+				načítajte tieto čísla a vypíšte najväčšie z nich a tiež ich priemer
+			<li>vytvorte exe z minulej úlohy a popíšte ako by sa dal použiť aby dáta čítal zo súboru
+			<li>načítaj znaky-veľké písmená z1, z2 a vypíš pod ne všetky písmená znakom z1 počínajúc a z2 končiac,
+				ak z2 &lt; z1 program vypíše ERROR
+			<li>na vstupe sú znaky ukončené enterom alebo koncom suboru načítajte znaky a vypíšte ich pod vstupné data	 	 
+			<li>na vstupe sú čísla ukončené enterom alebo koncom suboru načítajte čísla a vypíšte ich pod vstupné data
+				a do ďalšieho riadku ich spočítajte
+			<li>na vstupe je číslo pri základe (-2) napr. 11<sub>-2</sub>=1*(-2)<sup>0</sup>+1*(-2)<sup>1</sup> = 1 - 2 = -1
+				do ďalšieho riadku vypíš to číslo v 10-tkovej sústave a do ďalšieho v klasickej dvojkovej	
+			<li>načítaj prirodzené a,b a vypočítaj NSD(a,b), NSN(a,b)
+			</ol>
+		</dl>
+		<br>
+<hr width="85%" size="3">
+<hr width="40%" size="2">
+<br>
+<dt>Cyklus while
+<dd>cyklus s podmienkou na začiatku
+ 	<dl><dt>Syntax:
+		<dd><font color="Red"><b>while (</b></font>podm <font color="Red"><b>)</b></font> prikaz
+ 		<br>podm ... ľubovoľný celočíselný výraz
+		<dt>Sémantika:
+		<dd>pokiaľ je podm != 0 vykonáva sa príkaz
+		<dt>Pozn.
+		<dd>za slovom while je zvykom písať medzeru aby sa zvýraznilo, že nejde o funkciu
+		<dt>Príklad
+		<dd>Napíšeme program, ktorý načítava zo vstupu znaky až pokiaľ nenačíta koniec súboru
+			a vypisuje znaky na štandartný výstup
+		<table width="60%" bgcolor=#dddddd border="2" align="center">
+		<tr><th bgcolor=#33ccff align="left"> prog.cpp</th></tr>
+		<tr><td>
+<pre>
+
+  #include &lt;stdio.h&gt;         //pripojenie kniznice
+  void main(void)            //hlavicka "hlavneho podprogramu"
+  { char z;                         //zaciatok bloku
+    while ((z=getchar())!=EOF) putchar(z); 
+      //preco musi byt priradenie v zatvorkach? 
+  }	
+</pre>
+		</td></tr>
+		</table>
+		<br>Zdá sa, že tento program nemá žiadne využitie, ale chcem ukázať ako takýto jednoduchý
+		program môže byť silným nástrojom. Vyrobme si jeho exe, resp. a.out v UNIXe.
+		<br>príkazom: prog &lt;prog.cpp dosiahneme výpis súboru prog.cpp na obrazovku (vlastne obdoba príkazu type, view)
+		<br>príkazom: prog &gt;subor.txt sme vytvorili obdobu DOSáckeho copy con subor.txt
+		<br>príkazom: prog &lt;prog.cpp &gt;subor.txt okopírujeme súbor prog.cpp do subor.txt
+		<br>Úlohy:
+		<ol>
+		<li>Upravte posledný program pre UNIX, tak aby v prípade neúspechu zápisu znaku na štand. výstup 
+			vypíše na štand. chybový výstup hlásenie o chybe.
+			<li>na vstupe sú znaky ukončené enterom alebo koncom suboru načítajte znaky a vypíšte ich pod vstupné data	 	 
+			<li>na vstupe sú čísla ukončené enterom alebo koncom suboru načítajte čísla a vypíšte ich pod vstupné data
+				a do ďalšieho riadku ich spočítajte
+			<li>na vstupe je číslo pri základe (-2) napr. 11<sub>-2</sub>=1*(-2)<sup>0</sup>+1*(-2)<sup>1</sup> = 1 - 2 = -1
+				do ďalšieho riadku vypíš to číslo v 10-tkovej sústave a do ďalšieho v klasickej dvojkovej	
+			<li>načítaj prirodzené a,b a vypočítaj NSD(a,b), NSN(a,b)
+	</dl>		
+		<br>
+<font size="-3"></font>		
+<hr width="85%" size="3">
+<hr width="40%" size="2">
+</font>		
+<br>
+<dt><font size="+1" color="Blue">Cyklus do-while</font> - cyklus s podmienkou na konci
+<dd><dl><dt>Syntax:
+		<dd><font color="Red"><b>do</b></font> prikaz <font color="Red"><b>while (</b></font>podm <font color="Red"><b>)</b></font> 
+ 		<br>podm ... ľubovoľný celočíselný výraz
+		<dt>Sémantika:
+		<dd>vykoná sa príkaz
+		<br>pokiaľ je podm != 0 vykonáva sa príkaz
+		<dt>Pozn.
+		<dd>príkaz sa vykoná aspoň raz
+		<dt>Úlohy:
+		<dd><ol>
+		<li>Na vstupe je matematický výraz tvaru: cislo±cislo± ... cislo=. Vypíšte výsledok.
+		<li>Na vstupe sú čísla ukončené 0, zisti ich súčet
+		<li>Načítaj číslo n a vypíš ho v dvojkovej sústave
+		<li>Načítaj číslo n a zisti počet cifier v des. sústave
+		</ol>
+	</dl>	
+	<br>
+	<font size="-3"></font>		
+	<hr width="85%" size="3">
+	<hr width="40%" size="2">
+	</font>		
+	<br>
+	<dt><font size="+1" color="Blue">Príkaz break</font> - ukončí cyklus
+	<dd><dl><dt>Syntax:
+			<dd><font color="Red"><b>break;</b></font>
+			<dt>Sémantika:
+			<dd>Používa sa v zložených príkazoch na ich ukončenie a pokračovanie až za }
+			<br>Pokiaľ sa dá sa takejto konštrukcii cyklu s break vyhýbame
+			<dt>Príklad:
+			<dd>
+			<table width="60%" bgcolor=#dddddd border="2" align="center">
+			<tr><th bgcolor=#33ccff align="left"> break.cpp</th></tr>
+			<tr><td>
+<pre>
+
+  #include &lt;stdio.h&gt;         //pripojenie kniznice
+  void main(void)            //hlavicka "hlavneho podprogramu"
+  { int cislo, sucet=0, pocet=0, naj=0;                         
+    while ( scanf("%i", cislo) != EOF)
+    {     if (cislo&lt;0) break;
+          sucet +=cislo; pocet++; 
+          if (cislo &gt; naj) naj=cislo;
+    } 
+  }	
+</pre>
+			</td></tr>
+			</table>
+		</dl>	
+	<br>
+	<font size="-3"></font>		
+	<hr width="85%" size="3">
+	<hr width="40%" size="2">
+	</font>		
+	<br>
+	<dt><font size="+1" color="Blue">Príkaz continue</font> - ukončí iteráciu cyklu
+	<dd><dl><dt>Syntax:
+			<dd><font color="Red"><b>continue;</b></font>
+			<dt>Sémantika:
+			<dd>Používa sa v zložených príkazoch v cykloch na ich ukončenie návrat na začiatok príkazu cyklu
+		</dl>
+			<dt>Príklad:
+			<dd>
+			<table width="60%" bgcolor=#cccccc border="2" align="center">
+			<tr><th bgcolor=#33bbff align="left"> continue.cpp</th></tr>
+			<tr><td>
+<pre>
+
+  #include &lt;stdio.h&gt;         //pripojenie kniznice
+  void main(void)            //hlavicka "hlavneho podprogramu"
+  { int cislo, sucet=0, pocet=0, naj=0;                         
+    while ( scanf("%i", cislo) != EOF)
+    {     if (cislo&lt;0) continue;
+          sucet +=cislo; pocet++; 
+          if (cislo &gt; naj) naj=cislo;
+    } 
+  }	
+</pre>
+			</td></tr>
+			</table>
+	<dt>Kontrolné otázky
+	<dd><ul><li>Aká je účel použitia cyklu?
+			<li>Môžme vytvoriť for cyklus, ktorý nikdy neskončí?
+			<li>Je možné aby sa príkaz, ktorý sa má v cykle opakovať nevykonal ani raz?
+			<li>V príkaze for som zadeklaroval novú premennú a v cykle som do nej nieco zapisoval - môžem túto premennú vypísať po skončení cyklu?
+			<li>Koľko hviezdičiek napíše nasledovný cyklus
+				<br><code>for (i=0,n=10; i&lt;n; i++,n--) cout &lt;&lt; '*';
+			<li>Ako načítam neznámy počet kladných čísel za účelom zistenia ich súčtu ak viem, že sú ukončené číslom -1
+			<li>V programe chcem použiť cyklus, požadovaný efekt viem dosiahnuť aj cyklom for aj while - ktorý mám kedy uprednostniť 
+			<li>ako možno vyskočiť z tela cyklu
+			<li>Príklady - výpis čísel/znakov<ul><li>vypíš postupnosť 1,3,5,1,3,5,1,3,5,...(50 čísel)
+												<li>vypíš postupnosť a,A,b,B,c,C,...,z,Z
+												<li>vypíš náhodné trojciferné čísla (50 čísel)
+											</ul>
+			<li>Príklady - výpočty s číslami<ul><li>Načítaj prirodzené čísla ukončené -1 a do riadku pod vypíš čísla o 1 väčšie
+												<li>Načítaj text ukončený znakom '\n', vypíš pod veľkými písmenami
+												<li>Načítaj 10 náhodných známok a zisti počet pätiek/jednotiek
+												<li>Načítaj 10 náhodných známok a zisti priemer známok
+											</ul>		
+			<li>Kresba priebehu funkcie - zvislá os je x a vodorovná y, vedieť mierkovať hodnoty funkcie do intervalu 1-79
+			<li>Kresba obdĺžnika/trojuholníka vyplneného rovnakým znakom 								
+		</ul>	
+		
+</dl> 
+
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Retazce</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+
+<h1>7 Reťazce</h1>
+
+<ul>
+<li><a href="#retazcepredstava">Predstava o reťazcoch</a></li>
+<li><a href="#funkcie">Funkcie pre prácu s&nbsp;reťazcami</a></li>
+</ul>
+
+
+
+<h1><a name="retazcepredstava">7.1 Predstava o reťazcoch</a></h1>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Reťazec je jednorozmerné pole znakov, deklarované napr. ako :</p>
+
+<pre>
+  char str[length];
+</pre>
+
+<p align="justify">Podobne ako u každého poľa predstavuje názov reťazca str smerník na začiatok tohoto poľa (t.j. str[0]).<br />
+Konvencia jazyka C určuje, že všetky reťazce sú štandardne zakončené znakom '\0' (t.j. hodnotou \0), čím sa reťazec líši od iných typov polí. Z&nbsp;toho vyplýva, že efektívna dĺžka reťazca, ktorý možno do daného poľa uložiť, je 0 až length-2 (posledný znak length-1 je potrebné rezervovať pre už spomínanú binárnu nulu). Reťazce teda možno považovať za objekty premennej dĺžky (danou polohou znaku '\0'), ktorá je zhora ohraničená rozsahom deklarovaného poľa (length).<br />
+Pri deklarácii prekladač túto koncovú nulu automaticky doplňuje :</p>
+
+<pre>
+  char str[50] = "Iny retazec";
+  char *sm = "string";
+  char str[] = "STRING";
+</pre>
+
+<p align="justify">V prvom prípade sa alokuje pole o&nbsp;50-ich byte-och a&nbsp;naplní sa reťazcom, samozrejme ukončeným znakom '\0'. V&nbsp;druhom prípade má smerník sm ako počiatočnú hodnotu deklarovanú adresu reťazca "string". V&nbsp;treťom prípade prekladač automaticky alokuje miesto o&nbsp;6. byte-och :</p>
+
+<pre>
+  0 1 2 3 4 5 6
+  S T R I N G \0
+
+  printf("%s", "abc");
+</pre>
+
+<p align="justify">Vyššie uvedený príkaz vytlačí všetky znaky reťazca, t.j. znaky abc, zatiaľ čo príkaz :</p>
+
+<pre>
+   printf("%s","abc"+1);
+</pre>
+
+<p align="justify">vytlačí znaky reťazca, ktorý začína na adrese o&nbsp;1 väčšej ako v&nbsp;predchádzajúcom prípade, teda znaky bc.<br />
+Dôležité je si stále uvedomovať rozdiel medzi jedným znakom, napr. 'a' a&nbsp;reťazcom dľžky 1, napr. "a", ktorý samozrejme musí byť ukončený binárnou nulou a&nbsp;preto predstavuje pole znakov o&nbsp;dĺžke 2.</p>
+
+<p align="justify">V oboch prípadoch kompilátor automaticky doplní binárnu nulu na koniec príslušného reťazca. S&nbsp;reťazcami veľmi často pracujeme pomocou smerníkov, napr. v&nbsp;tvare</p>
+
+<h2><a id="funkcie" name="funkcie">7.2 Funkcie pre prácu s&nbsp;reťazcami</a></h2>
+
+
+<p align="justify">Práca s&nbsp;reťazcami je podporovaná celým radom štandardných funkcií, ktoré sa vyskytujú prakticky vo všetkých implementáciách jazyka C. Sú to funkcie pre kopírovanie, spájanie, porovnávanie, vyhľadávanie a&nbsp;určenie dĺžky reťazca. V&nbsp;nižšie uvedených základných funkciách sú parametre s, s1 a&nbsp;s2 typu char * (smerník na char), c je typu int a&nbsp;n typu unsigned int. Všetky funkcie sú definované v&nbsp;hlavičkovom súbore &lt;STRING.H&gt;.</p>
+
+<pre>
+  int <b>strcmp</b>(char *s1, char *s2) (string compare)
+</pre>
+
+<p align="justify">- lexikograficky porovnáva reťazce s1 a&nbsp;s2. Vracia číslo &gt;0, ==0, resp. &lt;0 podľa toho, či s1 &gt; , =, resp. &lt; ako s2.</p>
+
+<pre>
+  int <b>strncmp</b>(char *s1, char *s2, unsigned int n) (string max n compare)
+</pre>
+
+<p align="justify">- lexikograficky porovnáva maximálne n znakov reťazcov s1 a&nbsp;s2. Vracia číslo &gt;0, ==0, resp. &lt;0 podľa toho, či s1 &gt; , =, resp. &lt; s2.</p>
+
+<pre>
+  unsigned int <b>strlen</b>(char *s) (string length)
+</pre>
+
+<p align="justify">- vracia dĺžku reťazca so smerníkom s&nbsp;(bez binárnej koncovej nuly).</p>
+
+<pre>
+  char *<b>strcpy</b>(char *s1, char *s2) (string copy)
+</pre>
+
+<p align="justify">- kopíruje jednotlivé znaky reťazca s2 do s1, vrátane koncovej nuly. Vracia smerník na reťazec s1, obsah ktorého sa prepíše. Dĺžka s1 musí byť dostatočná.</p>
+
+<pre>
+  char *<b>strncpy</b>(char *s1, char *s2, unsigned int n) (string max n copy)
+</pre>
+
+<p align="justify">- kopíruje jednotlivé znaky reťazca s2 do s1, vrátane koncovej nuly, ak s2 je kratšie ako n. Inak sa kopíruje iba prvých n znakov reťazca s2 a&nbsp; s1 nie je zakončené binárnou nulou. Vracia smerník na reťazec s1, obsah ktorého sa prepíše. Dĺžka s1 musí byť dostatočná.</p>
+
+<pre>
+  char *<b>strcat</b>(char *s1, char *s2) (string concatenation)
+</pre>
+
+<p align="justify">- pripojí jednotlivé znaky reťazca s2 za reťazec s1, vrátane koncovej nuly (pôvodná koncová nula v&nbsp;s1 je prepísaná prvým znakom s2). Vracia smerník na reťazec s1, obsah ktorého sa prepíše. Reťazec s2 ostáva bez zmeny. Dĺžka s1 musí byť dostatočná.</p>
+
+<pre>
+  char *<b>strncat</b>(char *s1, char *s2, unsigned int n) (string max n concatenation)
+</pre>
+
+<p align="justify">Pripojí maximálne n znakov reťazca s2 za reťazec s1 (pôvodná koncová nula v&nbsp;s1 je prepísaná prvým znakom s2, za posledný znak s1 doplní novú koncovú nulu). Vracia smerník na reťazec s1, obsah ktorého sa prepíše. Reťazec s2 ostáva bez zmeny. Dĺžka s1 musí byť dostatočná.</p>
+
+<pre>
+  char *<b>strchr</b>(char *s, int c) (string search character)
+</pre>
+
+<p align="justify">- vracia smerník na prvý výskyt znaku c v&nbsp;reťazci s. Ak sa znak c v&nbsp;reťazci s&nbsp;nevyskytuje, vracia hodnotu NULL.</p>
+
+<pre>
+  char *<b>strrchr</b>(char *s, int c) (string right search character)
+</pre>
+
+<p align="justify">Vracia smerník na posledný výskyt znaku c v&nbsp;reťazci s, t.j. na prvý výskyt znaku c sprava. Ak sa znak c v&nbsp;reťazci s&nbsp;nevyskytuje, vracia hodnotu NULL.</p>
+
+<pre>
+  char *<b>strstr</b>(char *s1, char *s2) (string search string)
+</pre>
+
+<p align="justify">- vracia smerník na prvý výskyt reťazca s2 v&nbsp;reťazci s1. Ak sa reťazec s2 v&nbsp;reťazci s1 nevyskytuje, vracia NULL.</p>
+
+<p>Všetky funkcie je možné jednoducho zapísať v&nbsp;jazyku C. Funkciu pre určenie dĺžky reťazca pozri príklad v&nbsp;kap. 4.2. Funkciu pre pripojenie reťazca s2 za s1 možno zapísať takto :</p>
+
+<pre>
+  char *strcat(char *s1, char *s2)
+  {
+    char *p;
+
+    p=s1;
+    while (*p++);          /* nastavi smernik na koniec s1 */
+    --p;                   /* nastavi smernik na koncovu nulu */
+    while (*p++ = *s2++);  /* prikopíruje s2 za s1 */
+    return (s1);
+  }
+</pre>
+
+<p align="justify">Ďalší <a href="Zdrojaky/Pr7_1.c.html">príklad</a> ilustruje vyhľadanie podreťazca s2 v&nbsp;reťazci s1 :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr7_1.c vyhľadanie podreťazca */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;string.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b> *</font>s1 <font color="#800000">=</font> <font color="#0080c0">&quot;Text v ktorom hladame vzor&quot;</font><font color="#800000">;</font>
+  <font color="#800000"><b>char</b> *</font>s2 <font color="#800000">=</font> <font color="#0080c0">&quot;vzor&quot;</font><font color="#800000">, *</font>pom<font color="#800000">;</font>
+
+  pom <font color="#800000">=</font> strstr<font color="#800000">(</font>s1<font color="#800000">,</font> s2<font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>pom <font color="#800000">!=</font> NULL<font color="#800000">)</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Podretazec %s najdeny v %s na pozicii %d\n&quot;</font><font color="#800000">,</font> pom<font color="#800000">,</font>s1<font color="#800000">,</font>pom <font color="#800000">-</font> s1<font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Podretazec %s sa v %s nenachdza\n&quot;</font><font color="#800000">,</font>pom<font color="#800000">,</font>s1<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p align="justify">Reťazec je možné spracovávať i&nbsp;ako pole po jednotlivých znakoch, vrátane koncovej nuly, napr. :</p>
+
+<pre>
+   s[0]='A'; s[1]='B'; s[2]='C'; s[3]='\0';
+   printf("%s %c %s",s,*(s+1),s+1);
+</pre>
+
+<p align="justify">Príkaz printf vytlačí ABC B BC (smerníková aritmetika). Najčastejší spôsob inicializácie reťazca využíva funkciu strcpy</p>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; V&nbsp;ďalšom <a href="Zdrojaky/Pr7_2.c.html">príklade</a> program číta reťazec, vytlačí ho od konca a&nbsp;určí počet znakov 'a' v&nbsp;tomto reťazci :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr7_2.c   čítanie a tlač reťazca, počet znakov */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>int</b></font> charcount<font color="#800000">(<b>char</b> *</font>s<font color="#800000">, <b>char</b></font> c<font color="#800000">);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> a<font color="#800000">=</font><font color="#ff8080">'a'</font><font color="#800000">,</font>b<font color="#800000">,</font>c<font color="#800000">[</font><font color="#ff0080">80</font><font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font> i<font color="#800000">=-</font><font color="#ff0080">1</font><font color="#800000">;</font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Zadaj retazec = &quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>while</b>((</font>c<font color="#800000">[++</font>i<font color="#800000">]=</font>getchar<font color="#800000">()) !=</font> <font color="#ff8080">'\n'</font><font color="#800000">);</font>
+  c<font color="#800000">[</font>i<font color="#800000">]=</font><font color="#ff8080">'\0'</font><font color="#800000">;</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Retazec %s v opacnom poradi :\n&quot;</font><font color="#800000">,</font>c<font color="#800000">);</font>
+  <font color="#800000"><b>while</b>(</font>i<font color="#800000">)</font> putchar<font color="#800000">(</font>c<font color="#800000">[</font>i<font color="#800000">--]);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;\nobsahuje %d vyskytov znaku %c\n&quot;</font><font color="#800000">,</font> charcount<font color="#800000">(</font>c<font color="#800000">,</font>a<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> charcount<font color="#800000">(<b>char</b> *</font>s<font color="#800000">, <b>char</b></font> c<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> count<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>(*</font>s<font color="#800000">!=</font><font color="#ff8080">'\0'</font><font color="#800000">) <b>if</b>(*</font>s<font color="#800000">++ ==</font> c<font color="#800000">)</font> count<font color="#800000">++;</font>
+  <font color="#800000"><b>return</b>(</font>count<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Načítanie reťazca, vymazanie všetkých znakov 'a' v&nbsp;tomto reťazci a&nbsp;vytlačenie upraveného reťazca realizuje nasledujúci <a href="Zdrojaky/Pr7_3.c.html">príklad</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr7_3.c   čítanie a tlač reťazca, vyhodit znaky */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> remchar<font color="#800000">(<b>char</b> *</font>s<font color="#800000">, <b>char</b></font> c<font color="#800000">);</font>
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> a<font color="#800000">=</font><font color="#ff8080">'a'</font><font color="#800000">,</font>c<font color="#800000">[</font><font color="#ff0080">80</font><font color="#800000">];</font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Zadaj retazec = &quot;</font><font color="#800000">);</font>
+  scan<font color="#800000">(</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>c<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Retazec : %s\n&quot;</font><font color="#800000">,</font>c<font color="#800000">);</font>
+  remchar<font color="#800000">(</font>c<font color="#800000">,</font>a<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Retazec bez znakov %c :%s\n&quot;</font><font color="#800000">,</font>c<font color="#800000">,</font>a<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>void</b></font> remchar<font color="#800000">(<b>char</b> *</font>s<font color="#800000">, <b>char</b></font> c<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b> *</font>pom<font color="#800000">=</font>s<font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>(*</font>s<font color="#800000">!=</font><font color="#ff8080">'\0'</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b>(*</font>s<font color="#800000">++ !=</font> c<font color="#800000">) *</font>pom<font color="#800000">++ = *</font>s<font color="#800000">;</font>
+    s<font color="#800000">++;</font>
+  <font color="#800000">}</font>
+  <font color="#800000">*</font>pom <font color="#800000">=</font> <font color="#ff8080">'\0'</font><font color="#800000">;</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p align="justify">Posledný <a href="Zdrojaky/Pr7_4.c.html">príklad</a> v&nbsp;tejto časti uvádza porovnanie mechanizmu vytvorenia reťazca príkazom sprintf v&nbsp;prvej časti príkladu a&nbsp;štandardným spôsobom s&nbsp;využitím funkcií pre prácu s&nbsp;reťazcami v&nbsp;druhej časti :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr7_4.c   vstup - vystup retazca formatovy retazec */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;string.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> s2<font color="#800000">[</font><font color="#ff0080">30</font><font color="#800000">],</font>s3<font color="#800000">[</font><font color="#ff0080">30</font><font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font> i<font color="#800000">;</font>
+
+  <font color="#0000a0"><i>/*  vytvorenie retazca prikazom sprintf    */</i></font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Vstup retazca:&quot;</font><font color="#800000">);</font>
+  gets<font color="#800000">(</font>s2<font color="#800000">);</font>
+  i<font color="#800000">=</font>strlen<font color="#800000">(</font>s2<font color="#800000">);</font>
+  <font color="#800000"><b>switch</b>(</font>i<font color="#800000">)</font>
+  <font color="#800000">{</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">1</font><font color="#800000">:</font>
+    <font color="#800000">{</font>
+      sprintf<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;Dlzka &lt;%s&gt; je %d znak&quot;</font><font color="#800000">,</font>i<font color="#800000">);</font>
+      <font color="#800000"><b>break</b>;</font>
+    <font color="#800000">}</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">2</font><font color="#800000">:</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">3</font><font color="#800000">:</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">4</font><font color="#800000">:</font>
+    <font color="#800000">{</font>
+      sprintf<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;Dlzka &lt;%s&gt; je %d znaky&quot;</font><font color="#800000">,</font>i<font color="#800000">);</font>
+      <font color="#800000"><b>break</b>;</font>
+    <font color="#800000">}</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">0</font><font color="#800000">:</font>
+  <font color="#800000"><b>default</b>:</font>
+    <font color="#800000">{</font>
+      sprintf<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;Dlzka &lt;%s&gt; je %d znakov&quot;</font><font color="#800000">,</font>i<font color="#800000">);</font>
+      <font color="#800000"><b>break</b>;</font>
+    <font color="#800000">}</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;%s\n&quot;</font><font color="#800000">,</font>s3<font color="#800000">);</font>
+
+  <font color="#0000a0"><i>/*  klasicky pristup - standardne funkcie */</i></font>
+  strcpy<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;Dlzka &lt;&quot;</font><font color="#800000">);</font>
+  strcat<font color="#800000">(</font>s3<font color="#800000">,</font>s2<font color="#800000">);</font>
+  strcat<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;&gt; je &quot;</font><font color="#800000">);</font>
+  sprintf<font color="#800000">(</font>s2<font color="#800000">,</font><font color="#0080c0">&quot;%d&quot;</font><font color="#800000">,</font>i<font color="#800000">);</font>
+  strcat<font color="#800000">(</font>s3<font color="#800000">,</font>s2<font color="#800000">);</font>
+  strcat<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot; znak&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>switch</b>(</font>i<font color="#800000">)</font>
+  <font color="#800000">{</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">2</font><font color="#800000">:</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">3</font><font color="#800000">:</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">4</font><font color="#800000">:</font>
+    <font color="#800000">{</font>
+      strcat<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;y&quot;</font><font color="#800000">);</font>
+      <font color="#800000"><b>break</b>;</font>
+    <font color="#800000">}</font>
+  <font color="#800000"><b>case</b></font> <font color="#ff0080">0</font><font color="#800000">:</font>
+  <font color="#800000"><b>default</b>:</font>
+    <font color="#800000">{</font>
+      strcat<font color="#800000">(</font>s3<font color="#800000">,</font><font color="#0080c0">&quot;ov&quot;</font><font color="#800000">);</font>
+      <font color="#800000"><b>break</b>;</font>
+    <font color="#800000">}</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;%s\n&quot;</font><font color="#800000">,</font>s3<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+</div>
+
+
+</body>
+
+</html>
+

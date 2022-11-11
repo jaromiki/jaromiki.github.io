@@ -1,0 +1,303 @@
+<html>
+<head>
+	 <title>Animácia</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<script>
+        var canvas; var context;
+		var canvas2; var context2;
+		var x=[50]; var y=[50]; var dx=[5]; var dy=[2]; 
+		var n=0;
+		var i;
+		var obrazok = new Image();
+		var pozadie = new Image(); pozadie.src="117.jpg";
+		obrazok.src="kvet.png";
+	function init()
+	{	canvas = document.getElementById("platno");
+   		if (canvas.getContext) 
+		{context = canvas.getContext("2d");
+   		context.fillStyle = "#a8c101";
+    	context.fillRect(0, 0, 800, 600);
+		context.drawImage(obrazok,100,100);}
+		
+		canvas2 = document.getElementById("platno2");
+   		if (canvas2.getContext) 
+		{context2 = canvas2.getContext("2d");
+   		context2.fillStyle = "#a8c101";
+    	context2.fillRect(0, 0, 800, 600);}
+	}		
+	function anim()
+	{   context.fillStyle = "#a8c101";
+	    context.fillRect(0, 0, 800, 600);
+		context.fillStyle = "#ff3333";
+		for (i=0;i<n;i++)
+		{  	context.beginPath();
+			context.arc(x[i]+=dx[i], y[i]+=dy[i],20,0,2*Math.PI);
+			context.closePath();
+			context.fill();
+	    	if (x[i]>770 || x[i]<23) dx[i]=-dx[i];
+	    	if (y[i]>570 || y[i]<23) dy[i]=-dy[i];
+		}
+	}
+	function anim2()
+	{   context2.drawImage(pozadie,0,0);
+		for (i=0;i<n;i++)
+		{  	context2.drawImage(obrazok,x[i]+=dx[i],y[i]+=dy[i]);
+	    	if (x[i]>494 || x[i]<3) dx[i]=-dx[i];
+	    	if (y[i]>366 || y[i]<3) dy[i]=-dy[i];
+		}
+	}
+    function pridaj()
+	{ n++; 
+	  x[n-1]=y[n-1]=50;
+	  dx[n-1]=Math.round(4*Math.random())+1;
+	  dy[n-1]=Math.round(3*Math.random())+1;
+ 	} 
+    function restart()
+	{	startuj.style.display="inline";
+	  	prid.style.display="none";
+	  	idrestart.style.display="none";
+    	window.clearInterval(window.tr);
+		context.fillStyle = "#a8c101";
+	    context.fillRect(0, 0, 800, 600);
+		n=1;
+    }
+    function restart2()
+	{	startuj2.style.display="inline";
+	  	prid2.style.display="none";
+	  	idrestart2.style.display="none";
+    	window.clearInterval(window.tr2);
+		context2.drawImage(pozadie,0,0);
+		n=1;
+    }
+	function spusti()
+	{   startuj.style.display="none";
+    	prid.style.display="inline";
+		idrestart.style.display="inline";
+    	window.tr=window.setInterval('anim()',30);n=0
+	}	
+	function spusti2()
+	{   startuj2.style.display="none";
+    	prid2.style.display="inline";
+		idrestart2.style.display="inline";
+    	window.tr2=window.setInterval('anim2()',30);n=0
+	}	
+		</script>
+</head>
+
+<body onload="init()";>
+<center><h3 class=nadpis>Animácia</h3></center>
+<dl><dt>Animácia
+	<dd>Animácia spočíva v posúvaní (resp. menení) jedného alebo viacerých objektov na obrazovke v krátkych časových úsekoch.
+		Najťažšie ne tejto činnosti je korektne zotrieť posúvaný/menený objekt. Zotretie musí prebehnúť tak, aby obrazovka po zotretí vyzerala
+		presne ako pred nakreslením
+	<hr>
+	<dt class=main>Animácia zotieraním image farbou
+	<dd>Najjednoduchšia cesta ako zotrieť objekt/objekty je zotrieť celú obrazovku a nakresliť objekt v novej polohe. Pri väčšom a navyše obrázkovom
+		pozadí je táto metóda spojená v veľkým presunom dát, čo môže spôsobovať spomalenie. Programuje sa jednoducho a preto sa táto metóda často používa
+		napriek svojim obmedzeniam a nedostatkom.
+		<br>ukážeme to na najjednoduchšom prípade - pozadie i posúvané objekty sú kreslené. Naprogramujeme kruhy odrážajúce sa od mantinelov, tlačítkom možno pridať
+		ďalší kruh. Do formulára vložíme Image, Timer a Button.
+		<br>Zadeklarujeme premenné:
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>Type
+	Tkruh = Record x,y,dx,dy,f: integer;
+	Var kruhy:Array[1..1000] of Tkruh;
+	    n: integer;
+</pre>
+</div></div></div>				  
+		Timer bude robiť celú animáciu spočívajúcu v krokoch:
+		<ul><li>zotrie Image
+			<li>pre každý kruh 1..n vypočíta jeho novú polohu x,y (prípadne zmení smer pohybu dx,dy) 
+			<li>vykreslí kruhy 1..n
+		</ul>
+<div style="border-width:3;border-style:outset;width:760px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:760px; padding:0;border-width:0;color:white">Unit1.pas
+   </div>
+   <div style="background-color:#dddddd; width:760px;" >
+   <div style="margin:10px">
+<pre>
+Var i: integer;
+Begin
+	Image1.Canvas.Brush.Color:=RGB(196,204,255);
+	Image1.Canvas.FillRect(Image1.ClientRect);		//zotrieme celý image
+	for i:=1 to n do
+	Begin
+	  kruhy[i].x:=kruhy[i].x+kruhy[i].dx;
+	  kruhy[i].y:=kruhy[i].y+kruhy[i].dy;
+	  if (kruhy[i].x:>Image1.Width-14)or(kruhy[i].x<14) then kruhy[i].dx:=-kruhy[i].dx;
+	  if (kruhy[i].y:>Image1.Height-14)or(kruhy[i].y<14) then kruhy[i].dy:=-kruhy[i].dy;
+	  Image1.Canvas.Brush.Color:=kruhy[i].f;
+	  Image1.Canvas.Ellipse(kruhy[i].x-10,kruhy[i].y-10,kruhy[i].x+10,kruhy[i].y+10);
+	End;	
+</pre>
+</div></div></div>				  
+	Tlačítko má pridať další kruh do Image. Aby časovač vedel korektne pohybovať týmto novým kruhom potrebuje o tomto novom kruhu vedieť:
+	<ul><li>polohu ... kruhy[n].x,kruhy[n].y
+		<li>rýchlosť pohybu ... kruhy[n].dx,kruhy[n].dy
+		<li>farbu ... kruhy[n].f
+	</ul>
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>Begin
+	n:=n+1;
+	kruhy[n].x:=50;	kruhy[n].y:=50;        //miesto narodenia nového kruhu
+	kruhy[n].dx:=1+random(6); kruhy[n].dy:=1+Random(5);
+	kruhy[i].f:=rgb(random(128),random(128),random(128));
+End;
+</pre>
+</div></div></div>	
+Program by mohol vyzerať nasledovne:
+<div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:850px;">
+<canvas width="800" height="600" id="platno" style="margin:6">
+   Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.
+</canvas>
+<br>
+<input type="Button" value="startuj" id="startuj" onclick="if (canvas.getContext) spusti();" style="margin:6px">
+<input type="Button" value="pridaj" id="prid" onclick="pridaj()" style="display:none;margin:6px" style="margin:6"> &nbsp; &nbsp; &nbsp;
+<input type="Button" value="restart" id="idrestart" onclick="restart()" style="display:none;margin:6px">
+<br>
+</div></div></div>			  
+
+
+
+<hr>
+	<dt class=main>Animácia zotieraním image obrázkom
+	<dd>Modifikácia minulého postupu keď pozadie nie je jednoduchá farba ale obrázok a kruhy nie sú jednofarebné ale tiež sú dané obrázkami
+		<br>Dôležité poznámky:
+		<br>- vkladané obrázky môžu byť len typu *.bmp (na iné typy obr. musíme pripnúť patričnú knižnicu napr. uses jpeg)
+		<br>- v obrázku *.bmp možno dať jednu farbu ako priesvitnú (Obyčajne je priesvitná farba daná farbou pixla [1,1] obrázka)
+		<br>- obrázky si môžme namaľovať napr. v Zoner Calisto
+		Keďže budeme vkladať obrázky odporúčam si pozrieť nástroje objektu Canvas pre prácu s obrázkami.
+		<br>Na zotretie objektu možno 
+		<ul><li>prekresliť celé pozadie
+			<li>prekresliť len zasiahnutú oblasť (zdá sa výhodnejšie ale pri "väčšom" počte pohybujúcich je nevýhodné)
+		</ul>
+		<br>Vo FormCreate vytvoríme premennú typu Tbitmap
+		a potom do nej načítame obrázok, ktorý chceme mať v pozadí a vykreslíme aj pozadie týmto obrázkom.
+		Ďalej vytvoríme ďalšiu premennú typu TBitmap do ktorej načítame obrázok pohybujúceho sa objektu.
+		<br>
+<div style="border-width:3;border-style:outset;width:760px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:760px; padding:0;border-width:0;color:white">Unit1.pas
+   </div>
+   <div style="background-color:#dddddd; width:760px;" >
+   <div style="margin:10px">
+<pre>type
+    <font color="Blue">Tpoloha = Record
+                x,y,dx,dy: integer;
+             End;</font>
+  TForm1 = class(TForm)
+    Image1: TImage;
+    Timer1: TTimer;
+    Button1: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+var
+  Form1: TForm1;
+<font color="Blue">  bmp1,bmp2:TBitmap;
+  teleso: Array[1..1000] of Tpoloha;
+  n:integer;
+</font>implementation
+ {$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+<font color="Blue">  doublebuffered:=True;
+  bmp1:=TBitmap.Create;
+  bmp1.LoadFromFile('117.bmp');
+  Image1.Canvas.StretchDraw(rect(0,0,image1.Width,Image1.Height),bmp1);
+  bmp2:=TBitmap.Create;
+  bmp2.LoadFromFile('kvet.bmp');
+  bmp2.Transparent:=True;
+  bmp2.TransparentColor:=bmp2.Canvas.Pixels[0,0];
+  Image1.Canvas.Draw(100,100,bmp2);
+</font>end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+<font color="Blue">var i:integer;</font>
+begin
+<font color="Blue">  Image1.Canvas.StretchDraw(rect(0,0,image1.Width,Image1.Height),bmp1);
+  for i:=1 to n do
+  Begin
+    teleso[i].x:=teleso[i].x+teleso[i].dx;
+    teleso[i].y:=teleso[i].y+teleso[i].dy;
+    if (teleso[i].x>Image1.Width-14)or(teleso[i].x<14)  then teleso[i].dx:=-teleso[i].dx;
+    if (teleso[i].y>Image1.Height-14)or(teleso[i].y<14) then teleso[i].dy:=-teleso[i].dy;
+    Image1.Canvas.Draw(teleso[i].x-10,teleso[i].y-10,bmp2);
+  End;
+</font>end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+<font color="Blue">	n:=n+1;
+	teleso[n].x:=50;	teleso[n].y:=50;        //miesto narodenia nového kruhu
+	teleso[n].dx:=1+random(6); teleso[n].dy:=1+Random(5);
+</font>end;
+</pre>
+</div></div></div>		
+
+Program by mohol vyzerať nasledovne:
+<div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:850px;">
+<canvas width="512" height="384" id="platno2" style="margin:6">
+   Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.
+</canvas>
+<br>
+<input type="Button" value="startuj" id="startuj2" onclick="if (canvas2.getContext) spusti2();" style="margin:6px">
+<input type="Button" value="pridaj" id="prid2" onclick="pridaj()" style="display:none;margin:6px" style="margin:6"> &nbsp; &nbsp; &nbsp;
+<input type="Button" value="restart" id="idrestart2" onclick="restart2()" style="display:none;margin:6px">
+<br>
+</div></div></div>		
+
+<hr>
+<dt class=main>Animované obrázky
+<dd>Niekedy chceme aby sa obrázok pri pohybe menil - vtáci mávajú krídlami, roboti hýbu nohami atď. Predpokladám, že máme obrázky
+	obr1, ... ,obrn, kde je rozfázovaný pohyb objektu. Zavedieme si bajtovú premennú <font color="red">fáza</font>, kde bude zapísané
+	koľký obrázok - faza -  sa má aktuálne zobraziť.
+	<br>Postup:
+	<br>- obrázky si cyklom načítame do poľa obrázkov (array of Tpicture) 
+	<br>- časovač robí nasledné  - zotrie obrazovku - zmení fázu a súradnice obrázka a zobrazí ho 
+   <dl>
+   <dt><font color="green">Úlohy:</font>
+   <dd><ol><li><a href="anim6.exe">uloha1</a></ol>
+   </dl>
+ <hr>
+<dt class=main>Pohyb pozadia
+<dd>Niekedy potrebujeme posúvať pozadie, napr. hráč prišiel ku kraju okna a zobrazí sa mu ďalší priestor alebo
+	pre efekt letu nad krajinou sa pozadie plynule posúva nabok.
+	<br>Postup:
+	<ol>
+	<li>pripravíme si do premennej velký obrázok (resp. opakujúci sa obrázok, niečo ako kachličky)
+	<li>parametrami príkazu draw - x,y určíme ktorá časť veľkého obrázku bude vlastne viditelná
+		(x, y môžu byť súradnice mimo canvasu). 
+	<li>menením x,y vznikne dojem pohybujúceho sa pozadia
+	</ol>	 
+   <dl>
+   <dt class=second>Úlohy:
+   <dd><ol><li><a href="anim7.exe">uloha1</a></ol>
+   </dl>
+ <hr>
+</dl>
+</body>
+</html>

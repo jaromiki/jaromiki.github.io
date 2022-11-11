@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<META http-equiv=Content-Language content=sk>
+<META http-equiv=Content-Type content="text/html; charset=windows-1250">
+
+<html>
+<head>
+	<title>Transformácie</title>
+</head>
+
+<body>
+<h2>Spôsob zobrazovania</h2>
+<dl><dt>glViewport(0, 0, ClientWidth, ClientHeight);
+	<dd>Tento príkaz nastavuje súradnice výstupu v okne kam smeruje výstup z OPENGL. V našom príklade je výstup od súradnice [0,0] 
+		(čo je ľavý horný roh nášho okna) a veľkosť výstupu je daná tak aby pokryla celé naše okno - Form1. Výstup možno samozrejme
+		posielať aj do menšej časti okna.
+	<dt>Spôsob zobrazovania 3D scény
+	<dd>
+	<table bgcolor="#ffff99" cellpadding="10" border="1">
+					<tr><th>Perspektíva<th>Ortogonálne
+					<tr><td>glMatrixMode(GL_PROJECTION);  
+	                   <br>glLoadIdentity; 
+					   <br>gluPerspective(60, ClientWidth/ClientHeight, 1, 1000);	
+				   <td>glMatrixMode(GL_PROJECTION);  
+	                   <br>glLoadIdentity; 
+					   <br>  glOrtho(-5, 5, -5, 5, -5, 5);
+		</table>			 
+		<br>  
+		<h3>Perspektíva</h3>		
+		<table frame="vsides"><tr><td nowrap>gluPerspective(
+					<td>60, <td>počiatočný uhol otočenia okolo osi y
+				<tr><td> <td>ClientWidth/ClientHeight, <td>pomer šírka oproti výške
+				<tr><td> <td>1, <td>súradnice z &lt;= 1 sa nezobrazia - pre čiary/plochy cez ktoré táto rovina prechádza budú orezané
+								  <br>(ak chceme vidieť aj tieto súradnice musíme pred zobrazením zavolať transformáciu posun,
+								  ktorá posunie všetko o dz)
+				<tr><td> <td>1000, <td>z=1000 rovnica roviny za ktoru už bude všetko odrezané (nezobrazené)
+		</table>		
+<br>Pri perspektíve ak posúvame objekt od nás ďalej (z sa zmenšuje), tak sa objekt zmenšuje a naopak.
+<br>Tiež si treba uvedomiť rozdiel medzi zväčšením a priblížením.
+<br>
+		<h3>Orto</h3>
+		parametre: xmin,xmax,ymin,ymax,ymin,ymax určujú priestor, ktorý bude vykreslovaný (všetko mimo bude odrezané) a tento prestor je 
+		"natiahnutý" na obrazovku. Tento zobrazovací priestor je pevný - transformácie súradníc sa ho netýkajú. 
+</dl>
+<h2>Transformácie súradníc</h2>
+<br>Transformační matice v OpenGL
+<br>V OpenGL existují tři transformační matice, které se postupně aplikují na body (vrcholy, vertexy) popř. i na normály vrcholů. 
+První transformační matice se jmenuje ModelView matrix. Na tuto matici se můžeme dívat jako na spojení modelové matice a pohledové matice, 
+protože se používá jak pro nastavení pozice kamery, tak i pro manipulaci s objekty (modely) ve scéně. Druhá transformační matice se jmenuje 
+Projection matrix a používá se pro nastavení perspektivní projekce kamery. Třetí transformační matice se jmenuje Viewport matrix a používá se 
+po provedení perspektivní projekce k mapování objektů z abtraktních souřadnic do souřadnic okna. 
+Tato poslední matice ve skutečnosti pouze provádí transformaci v dvojrozměrné ploše, proto se s ní v OpenGL nepracuje jako s "plnohodnotnou" maticí. 
+Kromě těchto tří matic můžeme měnit matici, která se používá při mapování textur na povrch objektů. Tato matice se nazývá Texture matrix.
+Změna transformačních matic a nastavení aktuální transformační matice
+Při změně některé z transformačních matic musíme nejprve určit, kterou transformační matici budeme měnit. 
+K tomuto účelu se používá funkce void glMatrixMode(GLenum mode). Tato funkce má jeden parametr mode, jímž určujeme matici, 
+kterou budeme dalšími příkazy změnit. Parametr může nabývat tří hodnot, reprezentovaných symbolickými konstantami:
+GL_MODELVIEW - bude se měnit ModelView matrix, tj. matice, ve které jsou uloženy modelové a pohledové transformace (transformace objektů a nastavení kamery). 
+GL_PROJECTION - bude se měnit Projection matrix, tj. matice, která se používá pro nastavení perspektivní nebo ortogonální projekce kamery. 
+GL_TEXTURE - bude se měnit Texture matrix, tj. matice, která se používá při mapování textur na povrch objektů. 
+Aktuálně nastavenou matici lze zjistit pomocí příkazu glGetIntegerv(GL_MATRIX_MODE, &currentMode), po jehož provedení je v proměnné currentMode 
+některá z konstant GL_MODELVIEW, GL_PROJECTION nebo GL_TEXTURE.
+<br>Změna obsahu aktuálně nastavené transformační matice
+S obsahem aktuálně nastavené matice lze manipulovat pomocí funkcí glLoadIdentity(), glLoadMatrix*(), glMultMatrix*(), glTranslate*(), glScale*() a glRotate*().
+Nejjednodušší z těchto funkcí je funkce void glLoadIdentity(void). Tato funkce nahraje do aktuálně nastavené transformační matice koeficienty odpovídající 
+jednotkové matici, tj. matici, ve které jsou všechny prvky vynulovány s výjimkou prvků hlavní diagonály, které jsou nastaveny na jedničku. 
+Tato matice hraje úlohu neutrálního prvku při násobení matic nebo při násobení vektoru maticí. 
+Při nastavování některé transformační matice se v naprosté většině případů začíná touto funkcí, neboť pomocí ní matici "připravíme" na aplikaci dalších transformací.
+Funkce glLoadMatrix*() se používá pro přímé nastavení prvků matice. Tato funkce existuje ve dvou variantách lišících se pouze typem pole, 
+které funkci předáváme jako parametr. První varianta je nadeklarována jako void glLoadMatrixd(const GLdouble *m), druhá varianta jako 
+void glLoadMatrixf(const GLfloat *m). U první varianty má pole jako své prvky hodnoty typu GLdouble, ve druhé variantě jsou to prvky typu GLfloat.
+Další funkce glMultMatrix*() slouží k vynásobení aktuálně nastavené transformační matice maticí zadanou jako parametr této funkce. 
+Opět existují dvě varianty, které se liší typem prvků předávaného pole. Tyto varianty jsou nadeklarovány jako void glMultMatrixd(const GLdouble *m) 
+a void glMultMatrixf(const GLfloat *m). U první varianty se používají hodnoty typu GLdouble, u druhé typu GLfloat.
+Další tři funkce, glTranslate*(), glScale*() a glRotate*() jsou používány mnohem častěji než předchozí dvě funkce. 
+U těchto funkcí se nemanipuluje přímo s jednotlivými prvky matice, ale zadávají se základní lineární transformace - posun, změna měřítka a rotace. 
+Pro zadané transformace se vytvoří dočasná matice a aktuální matice (většinou je to matice ModelView) je touto dočasnou maticí vynásobena.
+Funkce glTranslate*(), která existuje ve dvou variantách void glTranslated(GLdouble x, GLdouble y, GLdouble z) a void glTranslatef(GLfloat x, GLfloat y, GLfloat z), 
+specifikuje posun o vektor [x, y, z].
+Funkce glScale*() s variantami void glScaled(GLdouble x, GLdouble y, GLdouble z) a void glScalef(GLfloat x, GLfloat y, GLfloat z) slouží k zadání 
+transformace změny měřítka, kdy je těleso nezávisle zvětšeno/zmenšeno ve třech směrech odpovídajících jednotlivým souřadným osám.
+Funkce glRotate*(), která má opět dvě varianty void glRotated(GLdouble angle, GLdouble x, GLdouble y, GLdouble z) 
+a void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z), specifikuje transformaci rotace. 
+Těleso je otočeno o úhel angle okolo osy procházející počátkem a bodem (x, y, z). Úhel angle je v obou variantách zadán ve stupních. 
+Bod, jímž osa rotace prochází, by neměl být nastaven na souřadnice (0, 0, 0).
+Získání hodnot prvků jednotlivých transformačních matic
+Pro získání hodnot, které mají jednotlivé prvky transformačních matic, lze použít funkci void glGetDoublev(GLenum pname, GLdouble * params) 
+nebo void glGetFloatv(GLenum pname, GLfloat * params). Parametr pname musí obsahovat jednu z těchto symbolických konstant: 
+GL_MODELVIEW_MATRIX, GL_PROJECTION_MATRIX nebo GL_TEXTURE_MATRIX. V poli params jsou potom vráceny prvky příslušné transformační matice.
+</body>
+</html>

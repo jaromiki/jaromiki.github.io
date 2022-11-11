@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+<meta name="Content-language" content="sk">
+	<LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl><dt class=main>Vlastnosti čísel - deliteľnosť
+<dd>Deliteľnosť je definovaná na množine celých čísel (v tejto časti uvažujem každé číslo ako celé)
+	<br><font size="+1" color="Blue">Def.</font>
+	<br>Hovoríme, že a delí b (píšeme a|b ) práve vtedy keď existuje také c že a*c=b
+	<br>(dá sa ukázať, že hľadané c je jediné)
+	<hr>
+	<br><font size="+1" color="Blue">Vlastnosti:</font>
+	<br>a|0, ... každé číslo delí nulu
+	<br>nula nedelí žiadne číslo
+	<br>reflexívnosť: x|x
+	<br>tranzitívnosť: x|y a y|z =&gt; x|z
+	<br>x|y a x|z =&gt; x|(y+z)
+	<br>x|y alebo x|z =&gt; x|(y*z)
+	<br>x|y a x|(y+z) =&gt; x|z
+	<br>x|y a x|z =&gt; pre ľubovoľné a,b platí: x|(ay+bz) 
+	<hr>
+	<br>Ku ľubovoľnému číslu vytvorme množinu jeho deliteľov, potom pre túto množinu platí:
+	<br>Lema: táto množina je konečná
+	<br>Lema: táto množina obsahuje 1
+	<br>Lema: Nech číslo N má delitele: d1,d2,...dk potom N^k=(d1*d2*...dk)^2
+			<br><input type="Button"  value="Dôkaz" onclick="alert('Ku každému deliteľovi di existuje doplnkový deliteľ N/di\npreto d1*d2*...dk = N/d1*N/d2*...N/dk')">	
+	<br>Príklad:
+	<br>Nájdite číslo, ktorého súčin všetkých deliteľov sa rovná 108
+	<br>Nájdite číslo, ktorého súčin všetkých deliteľov sa rovná 5832
+			<br><input type="Button"  value="Pomoc" onclick="alert('nemá riešenie, 18')">
+	<br>Ak ku dvom číslam vytvoríme množinu deliteľov, tak tieto množiny majú neprázdny prienik
+	<br><br><font size="+1" color="Blue">Def. najväčší spoločný deliteľ</font>
+	<br>Majmä dve celé čísla a,b. Vytvorme množinu M všetkých <b>c</b> takých že <b>c</b>|<b>a</b> a <b>c</b>|<b>b</b> 
+	<br>Maximum množiny M nazveme najväčší spoločný deliteľ (píšeme nsd(a,b))
+	<br><font color="Blue">Vlastnosti:</font>
+	<br>nsd(a,0) = |a|
+	<br>nsd(a,a) = |a|
+	<br>nsd(a,b) = nsd(b,a)
+	<br>nsd(a,b) = nsd(|a|,|b|)
+	<br>nsd(a,b) = nsd(a-b,b)
+	<br>nsd(a,b,c) = nsd(nsd(a,b),c) = nsd(a,nsd(b,c))
+	<br>Veta1: nsd(a,b)=nsd(a%b,b) 
+	<br>Bezoutova identita: Pre ľub. celé čísla a a b existujú celé čísla x a y tak, že ax + by = NSD(a; b). Skús dokázať
+			<br><input type="Button"  value="Pomoc" onclick="alert('Pozri diofantické rovnice')">
+	<br>Malá Fermatova veta: Pre každé prvočíslo p a každé prir. číslo a platí: a^p % p = a (inak povedané  p delí a^p - a) 
+	
+	<br>ak a nie je násobkom p potom platí aj zápis: p | a^(p-1) - 1.
+	<br>Wilsonova veta: Pre prvočíslo p platí p | (p - 1)! + 1.
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Nech a,n sú dané nesúdeliteľné prirodzené čísla, potom existuje jediná dvojica prirodzených čísel x,y, x&lt;n, takých že a*x = n*y')">
+			<br><input type="Button"  value="Pomoc2" onclick="alert('Platí (p-1)%p ==-1, skúste čísla 2..(p-2) popáriť aby (i * j) % p == 1')">
+
+
+	<dt>Príklady:
+	<dd>
+	<ul>
+	<li>Nájdi nsd(2n+1, 2n-1)
+			<br><input type="Button"  value="Pomoc1" onclick="alert('NSD(2n+1,2n-1) = NSD(2,2n-1), z prvého čísla vidíme, že delitele oboch môžu byť len 1 a 2, z druhého, že 2 byť nemôže -> NSD =1 ')">
+	<li>Nájdi nsd(n^3-1, n^2-1)
+	<li>Nech p je prvočíslo >3, potom 3^p - 2^p - 1 je deliteľné číslom 6p
+			<br><input type="Button"  value="Pomoc1" onclick="alert('niečo pomôže Malá Fermatova')">
+	<li>Nech číslo N má k rôznych deliteľov. Pomocou čísel N,k vypočítajte súčin všetkých deliteľov čísla N
+			<br><input type="Button"  value="Pomoc1" onclick="alert('ku každému deliteľu di existuje symetrický deliteľ N/di\nZrejme platí: d1*d2*..*dk = N/d1*N/d2*..*n/dk')">
+	<li>Nájdite číslo, ktorého súčin všetkých deliteľov je 
+		<br>a)108=2^2 * 3^3
+		<br>b)5832=2^3 * 3^6
+			<br><input type="Button"  value="Pomoc1" onclick="alert('a) nemá riešenie\nb) 18')">
+	<li>Dokážte, že 3^n - 2  nie je deliteľné 13
+	<li>Dokážte, že 2^n - 1  a 2^m - 1 súdeliteľné práve vtedy, keď n,m sú súdeliteľné 
+
+	<li>Nájdite celočíselné riešenia rovnice 5^n - 13m = 2
+			<br><input type="Button"  value="Pomoc" onclick="alert('hľadaj zvyšky 5^n po delení číslom 13')">
+	
+	<li>Nech a,b,c,d sú celé čísla (a rôzne od c) (a-c)| (ab+cd)  =>  (a-c)| (ad+bc)
+	<li>Nech čísla ad-bc a a-b sú násobky čísla n, nech b,n sú nesúdeliteľné. Dokážte, že n delí (c-d). 
+	<li>Dokážte, že výrazy 23x+y,19x+3y sú deliteľné číslom 50 pre rovnaké dvojice prirodzených čísel x,y
+			<br>Pom
+			<br>Dá sa upraviť 1100x+50y = 47*(23x+y)+19x+3y
+			<br>alebo 3·(23x+y)-(19x+ 3y) = 50x
+			<br>môžme riešiť aj cez diofantické rovnice
+	<li>Dokážte: Ak a, b, c sú celé a a^2 + b^2 = c^2,
+		<br>tak a, b nemôžu byť súčasne nepárne
+	<li>Je pravdivé tvrdenie? 
+		<br>Ak ab | c^2, tak aspoň jedno z čísel a a b je deliteľom čísla c?
+	<li>Ukážte, že každé prvočíslo väčšie ako 3 sa dá napísať v tvare 6k+1 alebo 6k-1
+		<br>Pom.
+		<br>Nech p=6a+b, zrejme b nie je párne
+	<li>Nech x+5y dáva zvyšok 1 po delení 7. Aký zvyšok po delení 7 dáva číslo 4x+13y?	
+		<br>( 4x+13y = 4(x+5y)-7y )
+	<li>Dokážte, že ku každému celému číslu x existuje celé číslo y také, že 19x+3y je deliteľné 50.
+		<br>(Zrejmé ako dôsledok existencie riešenia diofantickej rovnice)
+		<br>(ako je to v prípade 18x+3y)
+	<li>Určte všetky celé kladné čísla m,n také, že n delí (2m-1) a m delí (2n-1).
+		<br>Pom: Nech m&lt;n -> 2m-1&lt;2n-1&lt;2n -> n=2m-1 ...
+	<li>Určte  všetky  dvojice  celých  kladných  čísel m,n,  pre  ktoré  platí:  37 + 27^m=n^3.
+		<br>(27=3^3)
+	<li>Dokážte, že neexistuje 20 po debe idúcich prirodzených čísel, takých že ich súčet je štvorcom
+		<br>( 20*21/2 má exponent pri 2-ke nepárny )
+	<li>Nájdite prirodzené čísla a,b:
+		<br>a^2 + b^2 = 468
+		<br>nsd(a,b)+nsn(a,b) = 42
+			<br><input type="Button"  value="Pomoc" onclick="alert('a=c*d, b=e*d, c^2+e^2 = 468/d^2, 1+ec = 42/d  -> d=1,2,3,6')">
+			<br><input type="Button"  value="Pomoc" onclick="alert('zistíme, že vyhovuje len d=6, a=12, b=18 a naopak')">
+
+	<li>Určte, pre ktoré prirodzené čísla a,b platí: nsd(a,b) + nsn(a,b) = a+b.
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Nech nsd(a,b)=d, a=c*d, b=e*d a dosadíme')">
+			<br><input type="Button"  value="Pomoc2" onclick="alert('d+ecd = cd+ed  -> (c-1)(e-1)=0  -> c alebo e je =1')">
+			<br><input type="Button"  value="Pomoc3" onclick="alert('Riešením sú teda čísla m,n, kde jedno je násobkom druhého')">
+
+	<li>Určte, pre ktoré prirodzené čísla a,b platí: (a+b) delí nsn(a,b).
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Nech nsd(a,b)=d, a=c*d, b=e*d a dosadíme')">
+	<li>V obore prirodzených čísel riešte rovnicu: 
+		<br>a)  x^2+y^2= 13nsn(x,y)
+		<br>b)  x^2+y^2= 13nsd(x,y)
+			<br><input type="Button"  value="Pomoc1" onclick="alert('a) nemá riešenie\nb) {[2;3],[3,2]}')">
+	<li>Zisti koľko riešení v NxN má rovnica: NSD(a,b)+NSN(a,b) = 63
+	<li>Určte všetky dvojice <strong>a,b</strong> celých kladných čísel, pre ktoré platí: a*nsn(a, b) = 4*nsd(a, b),
+	<li>Dokážte, že najmenší spoločný násobok nsn(a,b) a najväčší spoločný deliteľ nsd(a,b) ľubovoľných dvoch kladných celých čísel a,b spĺňajú nerovnosť:
+		<br>a*nsd(a,b) +b*nsn(a;b)>=2ab:
+			<br><input type="Button"  value="Pomoc2" onclick="alert('nech a=c*d, b=e*d  -> c*d*d + e*d*c*e*d >= 2*c*e*d*d  -> 1+e^2 - 2e >=0')">
+	<li>Nájdite všetky dvojice prirodzených čísel a,b, pre ktoré platí rovnosť množín
+		<br>{a·nsd(a, b), b·nsn(a, b)}={45,180}.	
+			<br><input type="Button"  value="Pomoc1" onclick="alert('a*NSD(a,b)=45, b*NSN(a,b)=180,  nech a=c*d, b=e*d  -> c*d^2= 45, c*e^2*d^2=4*5*9 ')">
+			<br><input type="Button"  value="Pomoc2" onclick="alert('pre d=1 je c=45, e=2\npre d=3 je c=5, e=2')">
+	<li>Nájdite všetky kladné celé čísla n, ktoré sa nedajú zapísať v tvare n=nsn(a,b)+nsn(b,c)+nsn(c,a), pričom a, b, c môžu byť ľubovoľné kladné celé čísla. 
+			<br><input type="Button"  value="Pomoc1" onclick="alert('všetky nepárne >1 vytvoríme a=b=1, c=k\nvšetky párne, ktoré majú nepárneho deliteľa>1 a=b=2k, c=m\n n=2^m nenájdeme a,b,c  - dôkaz sporom')">
+			<br><input type="Button"  value="Pomoc2" onclick="alert('Nech a0,b0,c0 je také že:  nsn(a0,b0)+nsn(b0,c0)+nsn(c0,a0) = 2^n, je zrejmé, že aspoň dve z čísel a0,b0,co sú párne\nnech teda a0=2a1,b0=2b1 sú párne')">
+			<br><input type="Button"  value="Pomoc3" onclick="alert('Zrejme nsn(a1,b1)+nsn(b1,c0)+nsn(c0,a1) = 2^(n-1), po takýchto krátení dvoma bud na pravej strane vznikne 1, čo je spor, alebo na ľavej strane počet párnych klesne pod 2, čo je spor')">
+	<li>Príklad 2.1.6. Dokážte, že po sebe idúce hodnoty polynómu f(n) = n^4 + n^2 + 1 pre pridzené n sú súdeliteľné:
+		<br>Riešenie:		
+		<br>f(1) = 3
+		<br>f(2) = 21 = 3.7
+		<br>f(3) = 91 = 7.13
+		<br>f(4) = 273 = 3.7.13
+		<br>f(5) = 651 = 3.7.31
+		<br>Z prvých vypočítaných hodnôt sa zdá, že po sebe idúce čísla majú vždy spoločného deliteľa väčšieho ako 1, teda, že sú súdeliteľné. Ľahko sa môžeme presvedčiť o tom, 
+		že to tak bude skutočne pre ľubovoľné n. Platí totiž
+		<br>f(n) = n^4 + n^2 + 1 = (n^2 - n + 1)(n^2 + n + 1),
+		<br>f(n + 1) = [(n + 1)2 - (n + 1) + 1][(n + 1)2 + (n + 1) + 1] = (n^2 + n + 1)(n^2 + 3n + 3).
+		<br>Nájdi nsd(f(n),f(n+1))
+	</ul>	
+	<br><strong>Veta2</strong>: Nech a|b, a|c. Potom pre ľubovoľné celé x,y platí: a|bx+cy. &nbsp; &nbsp;Urob dôkaz.
+	<br><strong>Veta3</strong>: Nech nsd(a,b)=d. Potom existujú také celé čísla x<sub>0</sub>,y<sub>0</sub> že, d= ax<sub>0</sub>+by<sub>0</sub>. 	
+	<br>Dôkaz: Nájdeme x<sub>1</sub> a y<sub>1</sub> také že dd=ax<sub>1</sub>+by<sub>1</sub> bude najmenšie kladné ukážeme, že je rovné nsd
+	<br> &nbsp; &nbsp;nájdime q,r tak aby a=dd*q+r, kde 0&lt;=r&lt;dd
+	<br> &nbsp; &nbsp;teda r=a-dd*q=a-(ax<sub>1</sub>+by<sub>1</sub>)*q=a*(1-x<sub>1</sub>)+b*(-qy<sub>1</sub>)
+	<br> &nbsp; &nbsp;teda aj r sme zapísali v tvare lin. kombinácie ako aj dd a r je &gt;=0 a menšie ako dd, čiže r musí byť 0
+	<br> &nbsp; &nbsp;čiže dd delí a. Podobne sa dá dokázať že dd delí aj b.
+	<br> &nbsp; &nbsp;podľa vety2 d|ax<sub>1</sub>+by<sub>1</sub> a teda dd=d
+	<br><br><br><font size="+1" color="Blue">Def. Súdeliteľnosť</font>
+	<br>Čísla a,b nazveme súdeliteľné &lt;=&gt; nsd(a,b)&gt;1	  
+	<br>Čísla a,b nazveme nesúdeliteľné &lt;=&gt; nsd(a,b)=1	  
+	<br><br><font size="+1" color="Blue">Def. Kongruentnosť</font>
+	<br>Hovoríme, že čísla a,b sú kongruentné modulo m ak po delení m dávajú rovnaké zvyšky (a%m == b%m)
+	<br>Iná def.
+	<br>Hovoríme, že a je kongruentné s b modulo m a píšeme a = b (mod m), ak rozdiel a-b je deliteľný m. 
+	<br>Číslo m nazývame modul kongruencie.
+
+	<br><font color="Blue">Vlastnosti</font>	
+	<br>(a+b)%m == (a%m + b%m)%m ... použitie chceme zistiť zvyšok po deleni súčtu viacerých veľmi veľkých čísel
+	<br>(a*b)%m == (a%m * b%m)%m ... použitie chceme zistiť zvyšok po deleni súčinu viacerých veľmi veľkých čísel
+	<br>(a^b)%m == (a%m)^b)%m ... použitie chceme zistiť zvyšok po deleni mocniny veľkých čísel
+	<br>(a^(b*c))%m == (((a%m)^b)%m)^c)%m ... použitie chceme zistiť zvyšok po deleni mocniny veľkých čísel
+	<br>Pre každé prvočíslo p a každé celé n  platí :
+	<br> &nbsp; &nbsp; n<sup>p</sup> = n ( mod p).
+	<br> &nbsp; &nbsp; inak povedané n<sup>p</sup> %p = n % p  
+	
+	<dt>Ukážkový príklad na využitie deliteľnosti
+	<dd>Nájdi všetky n pre ktoré je (n^3+2010)/(n^2+2010) celé číslo
+		<br>Riešenie:
+		<br>Zlomok ľahko upravíme (n^3+2010)/(n^2+2010)=n-2010*(n-1)/(n^3+2010)
+		<br>Zistíme aké delitele má 2010: 2010=2*3*5*67
+		<br>Keďže (n-1)&lt;(n^2+2010) musí mať výraz (n^2+2010) niektoré delitele z {2,3,5,67}
+		<br>Je vhodné začať od najväčšieho: 67
+		<br>Mohlo by byť aby 67 nebola deliteľom (n^2+2010)? Potom by (n^2+2010) delilo výraz 2*3*5*(n-1) - ako najľahšie dokázať, že A nedelí B: ak ukážeme že A>B
+		<br>Skúsime (n^2+2010) > 2*3*5*(n-1)  -> n^2 -30n + 2040>0, čo platí pre všetky n -> čiže 67 delí (n^2+2010) -> 67 delí n^2 -> 67 delí n -> n=67m
+		<br>Dosadíme: 2*3*5*67*(n-1)/(n^2+2010) = 2*3*5*(67m-1)/(67m^2+2*3*5), keďže 2*3*5*(67m-1)&lt;(67m^2+2*3*5) tak výraz (67m^2+2*3*5) musí mať niektoré z deliteľov {2,3,5}
+		<br>Obdobne ako pri 67 uvažujme, či môže nastať situácia, že číslo 5 nedelí výraz (67m^2+2*3*5) -> potom by (67m^2+2*3*5) delilo 2*3*(67m-1)
+		<br>Hľadajme pre ktoré m je to možné: (67m^2+2*3*5)&lt; 2*3*(67m-1) 
+		<br>Táto kvadratická nerovnica má v celých číslach riešenie: &lt;1; 5&gt; -> nedeliteľné piatimi sú 1..4 -> dosadením za m ľahko zístíme že zlomok nedá celé číslo
+		<br>m=1: 2*3*5*(67m-1)/(67m^2+2*3*5) = 30*66=1980;  (67m^2+2*3*5)=97
+		<br>m=2;
+		<br>m=3;
+		<br>m=4;
+		<br>teda 5 delí (67m^2+2*3*5) -> 5 delí 67m^2 -> 5 delí m^2 -> 5 delí m -> m=5*k 
+		<br>po dosadení má zlomok tvar: 2*3*5*(67m-1)/(67m^2+2*3*5) = 2*3*(335k^2+6) / (335k^2+6)
+	<dt>Príklady:
+	<dd> 
+	<ul>	<li>Dokáž, že 12 | n^5-n^3
+		<li>Dokáž, že a*(a^12 -1) je deliteľné 5 
+		<li>Nájdite všetky prirodzené čísla n, pre ktoré 
+			<br>a) 7 | 2^n - 1
+			<br>b) 7 | 2^n + 1
+		<li>Dokážte, že platí:
+			<br> 42 | n^7 - n, pre každé celé n 
+		<li>Dokáž, že číslo n^(n-1) -1 je deliteľné číslom (n-1)
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Využi: n^(n-1) = ((n-1)+1)^(n-1)')">
+		<li>Nech p je prvočíslo, potom platí: p^4 + 24 je číslo zložené
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Pre p=5, je to jasné, pre iné využi zvyšok po delení 5')">
+		<li>Dokážte, že čísla 2*2^2^n + 3*2^2^(2n) + 1 sú čísla zložené
+			<br><input type="Button"  value="Pomoc1" onclick="alert('Dokáž pomocnú vetu: 2^(4k) % 5 = 1 (indukcia)')">
+		
+		<li>Dokáž, že súčet tretích mocnín troch po sebe idúcich čísel je deliteľný 9.
+				<br><input type="Button"  value="Pomoc1" onclick="alert('indukcia')">
+
+		<li>Dokáž, že 133 | 11^(n+2)-12^(2n+1)
+				<br><input type="Button"  value="Pomoc1" onclick="alert('indukcia')">
+		<li>Uvažujme zobrazenief: N^2 › N dané nasledovne:
+			<br>f(0,0)=0;
+			<br>f(n+1,k)= f(n,k)+2(n+k+2)
+			<br>f(n,k+1)= f(n,k)+2(n+k+1)
+			<br>Dokážte, že pre všetky prirodzené n,k platí: f(n,k) = (n+k+2)^2-n-3k-2.
+		<li>Dokáž, že rovnica 3^(2x)+6^y = 2013 nemá riešenie v NxN
+				<br><input type="Button"  value="Pomoc1" onclick="alert('Pravá strana nie je deliteľná 9  -> y musí byť 1')">
+		<li>Dokáž, že rovnica |3^(2x)-6^y| = 2013 nemá riešenie v NxN
+		<li>Dokáž, že rovnica a^2+b^2=3c^2 nemá v NxNxN riešenie
+				<br><input type="Button"  value="Pomoc1" onclick="alert('dôkaz sporom')">
+		<li>Dokáž, že rovnica a^2=35b^2 nemá v NxN riešenie
+				<br><input type="Button"  value="Pomoc1" onclick="alert('dôkaz sporom')">
+		<li>Dokáž, že rovnica a^2 -5b=27 nemá v NxN riešenie
+				<br><input type="Button"  value="Pomoc1" onclick="alert('pozri učivo: 2. mocniny (štvorce)')">
+				<br><input type="Button"  value="Pomoc2" onclick="alert('deliteľnosť piatimi')">
+		<li>Dokážte, že pre všetky prirodzené n, n>=8 existujú a,b prirodzené tak, že platí: n= 3a+5b
+				<br><input type="Button"  value="Pomoc1" onclick="alert('stačí dokázať pre n=8,9,10')">
+		<li>Nájdi všetky prirodzené <b>n</b> aby čísla 2^n-1, 2^n+1 boli prvočísla
+				<br><input type="Button"  value="Pomoc1" onclick="alert('jedno z čísel je deli')">
+		<li> Ma tabuli sú čísla od 1 po n. Postupne budeme mazať dvojice [a,b] a>b, a na tabuľu dopíšeme a-b
+			<br>Dá sa určiť či posledné číslo na tabuli bude párne alebo nepárne?
+			<br><input type="Button"  value="Pomoc" onclick="alert('Všímame si ako sa mení parita počtu párnych a nepárnych')">
+		<li>Pre ktoré n má rovnica i^n -7j=17 riešenie v NxN
+			<br><input type="Button"  value="Pomoc" onclick="alert('Hľadáme i,n aby i^n mod 7 = 3')">
+		<li>Zisti zvyšok po delení 3 čísla 1234567891234567891234567891^2
+		<li>ak cif. súčet prirodzeného čísla n je deliteľný 3 tak 3|n 
+		<li>Zisti zvyšok po delení čísla 60<sup>222</sup> číslom 11
+		<li>Nájdite prirodzené číslo, ktoré je deliteľné číslom 2 a číslom 9 a má práve 14 deliteľov
+			<br><input type="Button"  value="Pomoc1" onclick="alert('najmenšie číslo s týmito deliteľmi je 18 a má 6 deliteľov\npo vynásobení 3 počet deliteľov sa zväčší vždy o 2\nhľadáné číslo je 2*3^6')">
+		<li>Zistite počet delitelov čísla: 11^5*17^2
+	</ul>
+</dl>
+
+
+</body>
+</html>

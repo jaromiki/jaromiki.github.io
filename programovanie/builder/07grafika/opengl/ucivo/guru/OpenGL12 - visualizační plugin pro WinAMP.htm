@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (12.) - visualizační plugin pro WinAMP</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="Pokud jste již někdy viděli jakýkoliv vizualizační plugin pro WinAMP, určitě
+vám vrtalo hlavou, jak takový plugin vytvořit. V praxi se nejedná o nic jiného
+než obyčejnou dynamickou knihovnu, ze které si WinAMP bude volat potřebné funkce."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/vizualizacni-plugin-pro-winamp&amp;title=OpenGL (12.) - visualizační plugin pro WinAMP" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (12.) - visualizační plugin pro WinAMP</h1><i>Pokud jste již někdy viděli jakýkoliv vizualizační plugin pro WinAMP, určitě
+vám vrtalo hlavou, jak takový plugin vytvořit. V praxi se nejedná o nic jiného
+než obyčejnou dynamickou knihovnu, ze které si WinAMP bude volat potřebné funkce.</i><br/><hr/><br/><P>Oficiální stránky jsou na adrese <A class=odkaz HREF=http://www.winamp.com/nsdn/winamp2x/dev/plugins> www.winamp.com/nsdn/winamp2x/dev/plugins</A>, kde jsou i příklady v céčku.</P>
+
+<P>První věc, kterou musíte udělat je vytvořit dynamickou knihovnu (File - New - Other... - DLL Wizard). Doporučuji název projektu vis_cokoliv, protože nový WinAMP3beta načte jen knihovny začínající na vis_. WinAMP očekává od DLL exportaci hlavičky:</P>
+<PRE><B>library</B> vis_plugin_DEMO;
+
+<B>uses</B>
+  Windows,
+  GLplugin <B>in</B> 'GLplugin.pas',
+  setup <B>in</B> 'Setup.pas' {Form1};
+
+{$R *.RES}
+
+<B>exports</B> winampVisGetHeader;
+
+<B>end.</B></PRE> 
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/winamp/winamp2.jpg" BORDER=0></TABLE></CENTER>
+
+
+<P>Formulář setup slouží k nastavení pluginu (rozlišení, fullscreen, reakce na špičky, ...), v GLplugin.pas jsou uloženy všechny potřebné funkce. Potom do unity obsahující zbytek zdrojáku musíme přidat strukturu dat:</P>
+<PRE><B>unit</B> GLplugin;
+
+<B>interface
+
+uses</B> Windows, Messages, OpenGL, setup;
+
+
+<B>type</B>
+  PWinampVisModule = ^TwinampVisModule;
+  TwinampVisModule = <B>record</B>
+    description : PChar;
+    hwndParent  : HWND;
+    hDllInstance: HINST;
+    sRate       : Cardinal;
+    nCh         : Cardinal;
+    latencyMs   : Cardinal;
+    delayMs     : Cardinal;
+    spectrumNCh : Cardinal;
+    waveformNCh : Cardinal;
+    spectrumData: <B>Array</B> [0..1, 0..575] <B>of</B> Byte;
+    waveformData: <B>Array</B> [0..1, 0..575] <B>of</B> Byte;
+    Config      : <B>procedure</B>(const PVisModule:PwinampVisModule);cdecl;
+    Init        : <B>function</B>(const PVisModule:PwinampVisModule):Integer;cdecl;
+    Render      : <B>function</B>(const PVisModule:PwinampVisModule):Integer;cdecl;
+    Quit        : <B>procedure</B>(const PVisModule:PwinampVisModule);cdecl;
+    userData    : <B>procedure</B>; cdecl;
+  <B>end;</B>
+
+  PwinampVisHeader = ^TwinampVisHeader;
+  TwinampVisHeader = <B>record</B>
+    version      : Integer;
+    description  : PChar;
+    getModule    : function (Which : Integer) : PwinampVisModule; cdecl;
+  <B>end;</B></PRE>
+  
+  Pak je ještě nutné deklarovat hlavičky funkcí volaných WinAMPem:
+  
+<PRE>  <B>function</B>  GetModule(Which :integer) :PWinAMPVisModule; cdecl;
+  <B>procedure</B> Config(const PVisModule : PWinAMPVisModule); cdecl;
+  <B>function</B>  Init(const   PVisModule : PWinAMPVisModule) : integer; cdecl;
+  <B>function</B>  Render(const PVisModule : PWinAMPVisModule) :integer; cdecl;
+  <B>procedure</B> Quit(const   PVisModule : PWinAMPVisModule); cdecl;
+  <B>function</B>  winampVisGetHeader : PwinampVisHeader; cdecl; export;</PRE>
+  
+
+<P>Proměnné a konstanty:</P>
+  
+<PRE><B>implementation</B>
+
+<B>uses</B> IniFiles;
+
+<B>const</B>
+  WND_TITLE = 'Spektrální analyzér v OpenGL';
+<B>var</B>
+  h_Wnd  : HWND;
+  h_DC   : HDC;
+  h_RC   : HGLRC;
+  keys : <B>Array</B>[0..255] <B>of</B> Boolean;      //Stisknuté klávesy
+  Active : Boolean = FALSE;
+
+  PluginStart : DWord;
+  ElapsedTime : DWord;                  //Čas uplynutý mezi snímky
+
+  Mode, Modul: integer;
+
+  AppFullScreen : Boolean;
+  EnableBeat : Boolean;
+  BounceBeat : Boolean;
+  VUBars : <B>Array</B>[0..17, 1..17] <B>of</B> GLFloat;</PRE>
+  
+<P>A teď nejdůležítější věc. Funkce, které si WinAMP bude z naší knihovny volat:</P>
+  
+  
+<PRE><B>function</B> WinAMPVisGetHeader :PWinAMPVisHeader;
+<B>begin</B>
+  Result := @HDR;
+<B>end;</B></PRE>
+
+<P>Touto funkcí si WinAMP vycucne hlavičku našeho pluginu. Každý plugin může obsahovat víc modulů. WinAMP vybere ten pravý funkcí GetModule, která vrací ukazatel na VisModul:</P>
+
+<PRE><B>function</B> GetModule(Which : integer) : PwinampVisModule;
+<B>begin</B>
+  <B>if</B> which = 0 <B>then</B>
+    Result := @VisModule
+  <B>else</B>
+    Result := nil;
+<B>end;</B></PRE>
+ 
+ 
+<P>Procedura Config je volána, klikne-li uživatel na tlačítko Config při výběru pluginu. Je zobrazen formulář s konfigurací - rozlišení, fullscreen atd. Tyto hodnoty mohou být uchovány v souboru winamp.ini, který je v adresáři winamp/plugins.</P>
+<PRE><B>procedure</B> Config(const PVisModule : PWinAMPVisModule);
+<B>begin</B>
+  Form1 :=TForm1.Create(nil);
+  <B>try</B>
+    Form1.ShowModal;
+  <B>finally</B>
+    Form1.Free;
+  <B>end;
+end;</B></PRE>
+
+<P>Inicializační funkce načítá při spuštění pluginu hodnoty z winamp.ini souboru. Všechny globální proměnné by měli být inicializovány zde v této funkci. Zároveň jsem vytvořil glWindow a inicializoval OpenGL:</P>
+
+<PRE><B>function</B> Init(const PVisModule :PWinAMPVisModule) :integer;
+<B>var</B> Width, Height : Integer;
+    PluginIni : TIniFile;
+    Path : String;
+    P : Integer;
+<B>begin</B>
+  Path :=ParamStr(0);   //vrátí např. 'c:\program files\winamp\winamp.exe'
+  P :=Length(Path);
+  while Path[P] <> '\' do Dec(P);
+  Path :=Copy(Path, 1, P);
+  Path :=Path + 'Plugins\';
+
+  PluginIni := TIniFile.Create(Path + 'plugin.ini');
+
+  //Načteme nastavení okna
+  Width :=PluginIni.ReadInteger('WinAmpPlugin', 'Width', 800);
+  Height:=PluginIni.ReadInteger('WinAmpPlugin', 'Height', 600);
+  AppFullScreen :=PluginIni.ReadBool('WinAmpPlugin', 'FullScreen', FALSE);
+
+  //Načteme vlastnosti
+  EnableBeat :=PluginIni.ReadBool('WinAmpPlugin', 'BackgroundBeat', TRUE);
+  BounceBeat :=PluginIni.ReadBool('WinAmpPlugin', 'BounceBeat', FALSE);
+
+  PluginIni.Free;
+
+  <B>if not</B> glCreateWnd(PVisModule, Width, Height, 32, AppFullScreen) <B>then
+  begin</B>
+    glKillWnd(PVisModule, AppFullScreen);
+    Result := 1;        //Jestli se okno nevytvořilo, ukončíme to
+    <B>exit;
+  end;</B>
+
+  PluginStart := GetTickCount();        //Získání času při startu
+
+  Result := 0;
+  Active :=TRUE;
+<B>end;</B></PRE>
+
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/winamp/winamp1.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<P>Funkce Render je hlavní funkce, ve které se děje to nejdůležitější. Jak často je funkce volána závisí na hodnotě DelayMS ve VisModule. Hodnota 25 znamená, že je funkce volána každých 25 ms. Zde by se měla renderovat scéna a testovat stisknuté klávesy. Nejdůležitější je tedy volání procedury glDraw, která se postará o vykreslení celé scény:</P>
+
+<PRE><B>function</B> Render(const PVisModule : PWinAMPVisModule) : Integer;
+<B>var</B> LastTime : DWord;
+<B>begin
+  if</B> Active <B>then
+  begin</B>
+    LastTime :=ElapsedTime;
+    ElapsedTime :=GetTickCount() - PluginStart;     //Spočítá uplynutý čas
+    ElapsedTime :=(LastTime + ElapsedTime) DIV 2;
+
+    glDraw(PVisModule);                 //Vykreslí scénu
+    SwapBuffers(h_DC);                  //Zobrazí scénu
+
+    <B>if</B> (keys[VK_ESCAPE]) <B>then</B>           //reakce na ESC
+    <B>begin</B>
+      Active :=FALSE;
+      PostQuitMessage(0);
+      Result :=1;
+      <B>exit;
+    end
+    else</B>
+      ProcessKeys(PVisModule);          //Vyhodnotí ostatní klávesy
+  <B>end;</B>
+  Result :=0;
+<B>end;</B></PRE>
+
+<P>A nakonec by měl WinAMP uzavřít okno funkcí close:</P>
+<PRE><B>procedure</B> Quit(const PVisModule : PWinAMPVisModule);
+<B>begin</B>
+  glKillWnd(PVisModule, AppFullScreen);
+<B>end;</B></PRE>
+
+<P>Toto byly jen ty nejdůležitější funkce a procedury. Všechny ostatní už závisí na každé implementaci vlastního pluginu. Pro názornost uvedu ještě funkci glDraw, ze které je možno pochopit, jakým způsobem je možno vykreslit spektrální analyzér s pamětí 18 kroků:</P>
+
+<PRE><B>procedure</B> glDraw(const PVisModule : PWinAMPVisModule);
+<B>var</B>
+  BackgroundBeat : GLFloat;
+  Beat : GLFloat;
+  X, Y, i : integer;
+  
+<B>begin</B>
+  //Získání velikosti špičky
+  BackGroundBeat :=0;
+  <B>For</B> i:=0 <B>to</B> 9 <B>do</B>
+    BackGroundBeat := BackgroundBeat +
+	    PVisModule^.spectrumData[0][i] +
+		PVisModule^.spectrumData[1][i];
+  BackgroundBeat :=BackgroundBeat /10 /255 ;
+
+  <B>if</B> EnableBeat <B>then
+  begin</B>
+    //reakce na špičku
+  <B>end else begin</B>
+    //reakce, když není povolena reakce na špičku
+  <B>end;</B>
+
+  glClearColor(0, 0, 0, 0);
+
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
+  glTranslatef(0.0, -5.0, -50);
+  glRotate(30, 1, 0, 0 );
+  //rotace celého analyzéru
+  //glRotate(ElapsedTime/100, 0, 1, 0);
+
+  // Posunutí sloupců o jeden dozadu
+  <B>for</B> Y := 16 <B>downto</B> 1 <B>do
+    for</B> X :=0 <B>to</B> 17 <B>do</B>
+      VUBars[X, Y+1] :=VUBars[X, Y];
+
+  // Vynulování první řady
+  <B>for</B> X :=0 <B>to</B> 17 <B>do</B> VUBars[X, 1] :=0;
+
+  // Zprůměrovaní 288 sloupců získaných z winampu do 18.
+  <B>for</B> X :=0 <B>to</B> 287 <B>do</B>
+    VUBars[X DIV 16, 1] := VUBars[X DIV 16, 1] +
+	    PVisModule^.spectrumData[0][X]{left} +
+		PVisModule^.spectrumData[1,X]{right};
+
+  // Omezení špiček
+  <B>for</B> X :=0 <B>to</B> 17 <B>do</B>
+  <B>begin</B>
+    VUBars[X, 1] :=VUBars[X, 1]/51/2;
+    <B>if</B> VUBars[X, 1] > 15 <B>then</B>
+      VUBars[X, 1] :=15;
+  <B>end;</B>
+
+  // Je-li povolena špička, analyzátor poskočí...
+  <B>if</B> BounceBeat <B>then</B> Beat :=BackGroundBeat
+  <B>else</B> Beat :=0;
+
+  <B>if</B> (modul=0) <B>then begin
+    for</B> Y := 1 <B>to</B> 17 <B>do
+      for</B> X :=1 <B>to</B> 17 <B>do</B> ModulVUBox(X, Y, Beat, VUBars[X,Y]);
+  <B>end else if</B> (modul=1) <B>then begin</B> ModulPlocha();
+  <B>end;
+end;</B></PRE>
+
+<P>Zbytek funkcí (Vytvoření okna, hlídání a reakce na stisknuté klávesy, vykreslení sloupce nebo plochy atd.) je možno shlédnout ve staženém zdrojáku <A HREF=articles/winamp/winamp.zip><B>zde</B></A> (21kB). Ovládání F2 - změna módu, F3 - změna modulu, šipka nahoru/dolů - hlasitost, šipka vlevo/vpravo - předešlá/další skladba. Změna modulu spočívá ve změně způsobu vykreslování analyzéru. Ten může být buď sloupcový nebo plošný.</P><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="download-manager-2">Delphi (9.) - Download 2</a></li><li><a href="download-manager-1">Delphi (8.) - Download</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne2">3D Studio MAX (12.) - Tvorba realistické jeskyně 2</a></li><li><a href="3d-studio-max-tvorba-realisticke-jeskyne">3D Studio MAX (11.) - Tvorba realistické jeskyně</a></li><li><a href="jak-na-programovani-her">Jak na tvorbu her - Na co máme myslet při programování hry?</a></li><li><a href="3d-studio-max-izometricky-pohled">3D Studio MAX (10.) - Izometrický pohled ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-tutorial-chromovy-text">Adobe Photoshop (4.) - Chromový text</a></li><li><a href="export-do-pdf">Zoner Callisto (2.) - Export do PDF</a></li><li><a href="detekce-kolizi-ve-3d">OpenGL (11.) - Nová detekce kolizí</a></li><li><a href="matematicka-knihovna-geometry-pas-delphi">OpenGL (10.) - Nová knihovna geometry.pas</a></li><li><a href="generovani-textur-terenu-a-far-clip">OpenGL (9.) - Generování textur a vylepšení FarClip Distance</a></li><li><a href="export-do-gif">Zoner Callisto (1.) - Export do GIFu</a></li><li><a href="3d-studio-max-odlesky-na-vodni-hladine">3D Studio MAX (9.) - Vytváření odlesků vodní hladiny</a></li><li><a href="slovnik-pojmu-opengl">OpenGL (8.) - Slovníček pojmů v OpenGL</a></li><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li><li><a href="co-je-to-minigl">OpenGL (6.) - Co je to MiniGL</a></li><li><a href="opengl-vertex-array-gldrawelements">OpenGL (5.) - Urychlení pomocí glDrawElements</a></li><li><a href="system-speaker-a-destrukce-souboru">Delphi (7.) - Syst. repro a autodestrukce souboru</a></li><li><a href="opengl-fullscreen">OpenGL (4.) - FullScreen</a></li><li><a href="3d-studio-max-horici-zapalka-ohen">3D Studio MAX (8.) - Tvorba hořící zápalky</a></li><li><a href="techniky-zobrazeni-3d-doom">'DOOM' 3D Engine techniques</a></li><li><a href="pohyb-ve-3d-scene">OpenGL (3.) - Procházení scénou</a></li><li><a href="3d-studio-max-3d-text">3D Studio MAX (7.) - 3D text</a></li><li><a href="3d-studio-max-dym-smoke">3D Studio MAX (6.) - Vznášející se dým</a></li><li><a href="adobe-photoshop-textura-vodni-hladiny">Adobe Photoshop (3.) - Textura vodní hladiny</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=7&amp;url=%2Fvizualizacni-plugin-pro-winamp" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.1659377412px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12651 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

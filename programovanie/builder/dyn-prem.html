@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">   
+	 <meta name="Content-language" content="sk">
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h2 style="width:500;padding:6">Dynamické premenné - halda, smerníky</h2>
+<dl>
+	<dt class=main>Premenné programu <dd>
+	 <dl>
+	<dt>Viditeľnosť
+	<dd>Podľa viditeľnosti resp. životnosti delíme premenné na
+		<ul><li>globálne
+				<br>to sú všetky premenné definované v hlavnom programe. Sú viditelné zo všetkých častí programu. 
+				Vznikajú na začiatku programu a "žijú" si svoj život počas celého behu programu. Túto vlastnosť nazývame 
+				statickosť - tieto premenné nevznikajú a nezanikajú v priebehu programu. Štandartne bývajú inicializované nulovými hodnotami.
+			<li>lokálne
+				<br>to sú premenné definované v podprogramoch. Sú viditelné, len z v tomto podprograme. Vzniknú počas behu programu počas volania
+				   podprogramu. Zabezpečí to obslužný podprogram pre volanie podprogramov a užívateľ do toho procesu nemože zasiahnuť. 
+				   Ich počiatočná hodnota je neurčitá.
+	<dt>vytváranie
+	<dd>Podľa toho či premenné vznikajú počas deklarácie alebo voľbou užívateľa/programu delíme premenné na:
+		<ul><li>statické - kompilátor má všetky vedomosti na ich vytvorenie - vzniknú deklarovaním
+			<li>dynamické
+				<br>to sú premenné, ktoré vytvára a ruší užívateľ/program za behu. Prístup ku takýmto premenným je pomocou 
+	                 adries - smerníkov. Tieto adresy možu byť globálne alebo lokálne. Životnosť objektu je plne v réžii užívateľa - programátora. Tieto premenné
+					 vznikajú vo voľnej časti pamäti zvanej <b>halda</b>. 				  			      
+
+    <dt><font color="Blue">Význam dynamických premenných</font><dd>
+	    <ol><li>Možnosť vytvoriť netypický štruktúrovaný typ - napr. trojuholníková matica
+			<li>Lepšia správa pamäti - keď premenné nepotrebujem, môžem ich zrušiť a pamäť uvoľniť pre iné premenné</li>
+			<li>Vytváranie dynamických dátových štruktúr</li>
+		</ol>
+    <dt><font color="Blue">Smerníky</font>
+	<dd><dl><dt><font color="Red">Syntax:</font>
+			<dd>typ * identifikátor premennej;
+			    <br>znak <button>*</button> určuje, že bude vytvorená smerníková premenná do ktorej sa dajú zapisovať adresy. Skutočné dáta budú potom na tých adresách.
+            <dt><font color="Red">Postup práce:</font>
+			<dd><ol><li>zadeklarovať smerníkovú premennú
+			        <li>vytvoriť premennú v halde, adresu priradiť do smer. premennej</li>
+				 	<li>pracovať s objektom v halde </li>
+					<li>zrušiť objekt v halde</li> 
+				</ol>
+			<dt><font color="Red">Operácie so smerníkovými premennými</font>
+			<dd>Smerníkové premenné môžeme použiť 
+			    <ul><li>v priraďovacom príkaze
+			        <li>v testovaní na rovnosť, nerovnosť v podmienkach 
+				    <li>ako parametre podprogramov
+					<li>môžeme na ne používať numerické operátory ++, --, +, -
+				</ul>
+           <dt><font color="Red">Preddefinovaná konštanta</font>
+		   <dd><b>NULL</b> - je špeciálna hodnota adresy, ktorú žiadny objekt v pamäti nenadobudne. 
+		   		Používame ju na test, či premenná ukazuje na nejaký objekt v pamäti.
+			<dt><font color="Red">Používanie smerníkovej premennej</font>
+			<dd>nech smerníková premenná je zadefinovaná nasledovne:
+			    <br>int *smer;
+				<br>potom v príkazovej časti premenná
+				<br><font color="#FF8000">smer</font> - predstavuje adresu
+				<br><font color="#FF8000">*smer </font>- predstavuje objekt ktorého adresa je v prem. smer zapísaná (tu nejaká int hodnota).
+					 Jeho typ je v tomto prípade integer a môžme ho použiť všade tam, kde obyčajnú integer premennú.
+   		</dl>
+	
+    </dl> 
+</body>
+</html>

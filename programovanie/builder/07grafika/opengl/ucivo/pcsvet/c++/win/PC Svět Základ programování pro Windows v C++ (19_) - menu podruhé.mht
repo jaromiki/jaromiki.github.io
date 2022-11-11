@@ -1,0 +1,214 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_pro_Windows_v_C++?=
+	=?windows-1250?Q?_=2819.=29_-_menu_podruh=E9?=
+Date: Thu, 12 Jul 2007 10:10:10 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1805
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED pro =
+Windows v C++ (19.) - menu podruh=E9</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED pro Windows v C++ (19.) - menu =
+podruh=E9</H2>
+<H4>Tvorba menu v k=F3du, editace menu a vysouv=E1n=ED na libovoln=E9 =
+pozici</H4>
+<HR color=3D#777777 SIZE=3D1>
+Jak jste se mohli do=E8=EDst minule, nen=ED tvorba menu pomoc=ED =
+zdroj=F9 nijak obt=ED=9En=E1.=20
+Zdaleka to v=9Aak nen=ED v=9Ae, co je mo=9En=E9 s nab=EDdkami =
+prov=E1d=ECt.=20
+<P><FONT color=3D#0033cc><B>Tvorba a spr=E1va menu za b=EChu =
+programu</B></FONT></P>
+<P>Sice m=F9=9Eeme menu na=E8=EDtan=E1 ze zdroj=F9 upravovat a m=ECnit =
+dle libosti postupy=20
+popsan=FDmi d=E1le, ale maj=ED n=ECkolik nev=FDhod. Prvn=ED z nich je =
+ta, =9Ee prvotn=ED vzhled,=20
+n=E1zvy polo=9Eek a jejich ID jsou pevn=EC dan=E9 a p=F8i p=F8=EDpadn=E9 =
+zm=ECn=EC menu s t=EDm=20
+program=E1tor mus=ED po=E8=EDtat. Druhou nev=FDhodou je to, =9Ee =
+struktura, n=E1zvy a ID menu=20
+jsou d=E1ny tzv. resource (zdrojovou) =E8=E1st=ED spustiteln=E9ho PE =
+souboru a existuje=20
+spousta program=F9, jimi=9E je mo=9Eno tuto =E8=E1st m=ECnit. Zmi=F2me =
+nap=F8. velmi zn=E1m=FD=20
+Resource Hacker. </P>
+<P>Pr=E1zdn=E9 menu m=F9=9Eeme vytvo=F8it funkc=ED CreateMenu. Tato =
+funkce nem=E1 =9E=E1dn=FD=20
+parametr a vrac=ED handle na pr=E1v=EC vytvo=F8en=E9 nov=E9 menu =
+(HMENU). K p=F8id=E1n=ED nov=E9=20
+polo=9Eky do menu pou=9Eijeme funkci InsertMenu. Tato funkce m=E1 p=ECt =
+parametr=F9:<FONT=20
+color=3D#000077></P><PRE>BOOL InsertMenu(
+    HMENU hMenu,	// handle na menu
+    UINT uPosition,	// identifikuje polo=9Eku, za ni=9E se nov=E1
+                           polo=9Eka um=EDst=ED - z=E1visl=E9 na uFlags
+    UINT uFlags,	// vlajky polo=9Eky, vid d=E1le
+    UINT uIDNewItem,	// specifikuje identifik=E1tor polo=9Eky nebo
+                           handle na dal=9A=ED podnab=EDdku, z=E1visl=E9 =
+na
+                           uFlags
+    LPCTSTR lpNewItem	// =F8et=ECzec, handle na bitmapu nebo data
+                           pro zpr=E1vu WM_DRAWITEM, z=E1vis=ED na =
+uFLags
+);
+</PRE></FONT>Proto=9Ee novou polo=9Ekou m=F9=9Ee b=FDt jak text =E8i =
+obr=E1zek, tak dal=9A=ED=20
+podnab=EDdka, specifikuje parametr uFlags v=FDznam ostatn=EDch =
+parametr=F9. Parametr=20
+uFlags m=F9=9Ee b=FDt kombinac=ED n=E1sleduj=EDc=EDch =
+p=F8eddefinovan=FDch hodnot, ale v=9Edy se=20
+m=F9=9Ee vyskytnout jen jedna hodnota z ka=9Ed=E9ho bloku.<BR><BR>
+<UL>
+  <LI>MF_BYCOMMAND - implicitn=ED - nov=E1 polo=9Eka se za=F8ad=ED za =
+polo=9Eku s=20
+  identifik=E1torem dan=FDm parametrem uPosition=20
+  <LI>MF_BYPOSITION - uPosition indikuje pozici dan=E9 polo=9Eky<BR><BR>
+  <LI>MF_BITMAP - lpNewItem specifikuje handle na bitmapu, kter=E1 bude =
+pou=9Eita=20
+  pro vykreslen=ED polo=9Eky menu=20
+  <LI>MF_OWNERDRAW - p=F8es lpNewItem je p=F8ed=E1no 32-bitov=E9 =
+=E8=EDslo, kter=FDm je dan=E1=20
+  polo=9Eka identifikov=E1na p=F8i p=F8ed=E1n=ED zpr=E1vy WM_DRAWITEM=20
+  <LI>MF_STRING - implicitn=ED - lpNewItem obsahuje ukazatel na ASCIIZ =
+=F8et=ECzec,=20
+  kter=FD bude pou=9Eit u nab=EDdky<BR><BR>
+  <LI>MF_CHECKED - u nov=EC vytvo=F8en=E9 polo=9Eky je zna=E8ka =
+za=9Akrtnut=ED=20
+  <LI>MF_DISABLED - nov=EC vytvo=F8en=E1 polo=9Eka je neaktivn=ED, tzn. =
+nep=F8ij=EDm=E1 akce od=20
+  u=9Eivatele=20
+  <LI>MF_ENABLED - nov=E1 polo=9Eka je aktivn=ED=20
+  <LI>MF_GRAYED - nov=E1 polo=9Eka je vykreslena v neaktivn=EDm stavu a =
+nereaguje na=20
+  akce u=9Eivatele=20
+  <LI>MF_MENUBARBREAK - nov=E1 polo=9Eka je um=EDst=ECna do nov=E9ho =
+sloupce, od=20
+  p=F8edchoz=EDho sloupce je odd=EClena svislou =E8arou=20
+  <LI>MF_MENUBREAK - nov=E1 polo=9Eka je um=EDst=ECna do nov=E9ho =
+sloupce bez odd=EClova=E8e=20
+  <LI>MF_POPUP - uIDNewItem specifikuje handle na dal=9A=ED submenu=20
+  <LI>MF_SEPARATOR - nov=E1 polo=9Eka je horizont=E1ln=ED odd=EClova=E8 =
+a nen=ED s n=EDm mo=9En=E9=20
+  prov=E1d=ECt dal=9A=ED akce=20
+  <LI>MF_UNCHECKED - u nov=E9 polo=9Eky nen=ED vykresleno za=9Akrtnut=ED =
+- implicitn=ED=20
+</LI></UL><BR>Na takto vytvo=F8enou polo=9Eku m=F9=9Ee n=E1=9A program =
+reagovat stejn=EC jako=20
+bylo pops=E1no v minul=E9m d=EDle. Pomoc=ED uIDNewItem jsme =
+specifikovali unik=E1tn=ED ID a=20
+ten je n=E1m ve spodn=EDm slov=EC parametru wParam zpr=E1vy WM_COMMAND =
+vr=E1cen v p=F8=EDpad=EC,=20
+=9Ee u=9Eivatel tuto polo=9Eku zvolil.<BR><BR>Pot=F8ebujeme-li n=ECjakou =
+polo=9Eku upravit,=20
+m=F9=9Eeme pou=9E=EDt funkci <FONT color=3D#000077>ModifyMenu</FONT>, =
+kter=E1 se pou=9E=EDv=E1 v=20
+podstat=EC =FApln=EC stejn=EC jako InsertMenu a dokonce i jej=ED =
+parametry jsou stejn=E9.=20
+Chceme-li polo=9Eku menu upravit na vy=9A=9A=ED =FArovni, m=F9=9Eeme =
+pou=9E=EDt funkce <FONT=20
+color=3D#000077>SetMenuItemInfo, GetMenuItemInfo a =
+InsertMenuItem</FONT>. V tomto=20
+p=F8=EDpad=EC v=E1s v=9Aak mus=EDm odk=E1zat na MSDN, pon=ECvad=9E popis =
+t=ECchto funkc=ED je mimo=20
+rozsah tohoto =E8l=E1nku a jsou pou=9Eiteln=E9 jen na Windows 95 a =
+vy=9A=9A=EDch.
+<P>Odstran=ECn=ED polo=9Eky menu se provede pou=9Eit=EDm funkce =
+DeleteMenu: <FONT=20
+color=3D#000077></P><PRE>BOOL DeleteMenu(
+    HMENU hMenu,	// handle na menu
+    UINT uPosition,	// identifik=E1tor menu nebo pozice
+    UINT uFlags		// vlajka (MF_BYCOMMAND nebo MS_BYPOSITION)
+);
+</PRE></FONT>V=FDznam parametr=F9 je op=ECt stejn=FD jako u =
+p=F8ede=9Al=FDch funkc=ED.
+<P>Je-li na=9Ae menu p=F8ipojeno k n=ECjak=E9mu oknu, je nutn=E9 jej =
+p=F8ekreslit, aby=20
+u=9Eivatel vid=ECl zm=ECny, kter=E9 byly v programu provedeny. Toto =
+p=F8ekreslen=ED se=20
+provede pou=9Eit=EDm funkce <FONT color=3D#000077>DrawMenuBar</FONT>, =
+kter=E1 m=E1 jen=20
+jeden parametr, a t=EDm je handle na okno.</P>
+<P><B>Pozn=E1mka: </B>Vytv=E1=F8=EDme-li submenu - podnab=EDdku, je =
+t=F8eba m=EDsto funkce=20
+CreateMenu, pou=9E=EDt funkci CreatePopupMenu. </P>
+<P><FONT color=3D#0033cc><B>Menu na libovoln=E9 pozici</B> </FONT></P>
+<P>Pravd=ECpodobn=EC to zn=E1te. U=9Eivatel v n=ECjak=E9 aplikaci klikne =
+prav=FDm tla=E8=EDtkem=20
+my=9Ai a vysune se mu nab=EDdka s akcemi. Chcete-li podobou nab=EDdku =
+p=F8idat do va=9A=ED=20
+aplikace, nen=ED to probl=E9m.<BR>P=F8i tvorb=EC takov=E9hoto menu je =
+nutn=E9 pou=9E=EDt funkci=20
+CreatePopupMenu a v=FD=9Ae popsan=FDmi funkcemi jej vyplnit. Zobrazit =
+toto menu je=20
+mo=9En=E9 pomoc=ED funkce TrackPopupMenu nebo jej=ED nov=ECj=9A=ED verze =
+TrackPopupMenuEx.=20
+TrackPopupMenu je definov=E1na takto: <FONT =
+color=3D#000077></P><PRE>BOOL TrackPopupMenu(
+    HMENU hMenu,	// handle na menu
+    UINT uFlags,	// vlajky vlastnost=ED menu
+    int x,		// x sou=F8adnice pozice na obrazovce
+    int y,		// y sou=F8adnice pozice na obrazovce
+    int nReserved,	// rezervov=E1no, m=EClo by b=FDt nula
+    HWND hWnd,		// handle na mate=F8sk=E9 okno
+    CONST RECT *prcRect	// ukazatel na oblast obrazovky, mimo
+			// n=ED=9E je menu zneaktivn=ECno
+);=09
+</PRE></FONT><BR>Proto=9Ee v=ECt=9Aina parametr=F9 je =
+samovysv=ECtluj=EDc=EDch, uve=EFme jen to,=20
+=9Ee pokud parametr prcRect nech=E1me NULL, z=EDsk=E1me standardn=ED =
+chov=E1n=ED menu, tj.=20
+menu je uzav=F8eno po kliknut=ED mimo. Parametr uFlags op=ECt definuje =
+n=ECkolik=20
+vlastnost=ED t=E9to nab=EDdky a m=F9=9Ee b=FDt jednou z t=ECchto hodnot =
+nebo jejich kombinac=ED.=20
+<BR>
+<UL>
+  <LI>TPM_CENTERALIGN - pozice menu je horizont=E1ln=EC vycentrov=E1na =
+kolem bodu=20
+  specifikovan=E9ho parametry x a y=20
+  <LI>TPM_LEFTALIGN - menu je vysunuto doprava od bodu x,y=20
+  <LI>TPM_RIGHTALIGN - menu je vysunuto doleva od bodu x,y<BR><BR>
+  <LI>TPM_LEFTBUTTON - chov=E1n=ED menu je d=E1no p=F8edpokladem, =9Ee =
+bylo vyvol=E1no lev=FDm=20
+  tla=E8=EDtkem my=9Ai=20
+  <LI>TPM_RIGHTBUTTON - chov=E1n=ED menu je d=E1no p=F8edpokladem, =9Ee =
+bylo vyvol=E1no=20
+  prav=FDm tla=E8=EDtkem my=9Ai </LI></UL>Menu naleznete snad v =
+ka=9Ed=E9m v=ECt=9A=EDm programu.=20
+Vyu=9Eit=ED zde snad ani nemus=EDm vypisovat, snad jen, =9Ee t=EDmto =
+zp=F9sobem m=F9=9Eete=20
+integrovat n=ECkolik des=EDtek p=F8=EDkaz=F9 pro v=E1=9A program.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:09:56 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Pole tried</h3>
+Podobne ako u štruktúr aj triedy sú často združované do polí. Syntax ako vytvoriť pole tried je podobná ako pri iných poliach
+		<table width="60%" bgcolor="#cccccc" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>#incluse &lt;iostream>
+using namespace std;
+class priklad
+{  int a;
+   public:
+   void set_a(int aa) { a = aa;}
+   int get_a() {return a;}
+};
+int main ()
+{  priklad x[5]; &nbsp; &nbsp;//vztvorí 5 statických tried
+   for (int i = 0; i&lt;5; i++) x[i].a = i;
+   for (int i = 0; i&lt;5; i++) cout &lt;&lt; "trieda:" &lt;&lt; i&lt;&lt;" : "&lt;&lt; x[i].a;
+   cout &lt;&lt;endl;
+   return 0;
+}</pre>
+		</tr></table>
+		<h3>Inicializácia triedy v poli pomocou konštruktora</h3>
+		Ak by sme v triede <b>priklad</b> zadali aj konštruktor, mohli byť triedy inicializovaná pri deklarácii.
+		<table width="60%" bgcolor="#cccccc" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>#include &lt;iostream>
+using namespace std;
+class priklad1
+{  int a;
+   public:
+   void set_a(int aa) { a = aa;}
+   int get_a() {return a;}
+   priklad1(int aa) {a = aa;}
+   priklad1() {a = 100;}
+};
+class priklad2
+{  int a,b;
+   public:
+   int get_a() {return a;}
+   int get_b() {return b;}
+   priklad2(int aa, int bb) {a = aa;b=bb;}
+};
+
+int main ()
+{  priklad1 x[5]={10, 20, 30, 40, 50};
+   priklad2 y[5]={priklad2(10,15), priklad2(10,15), priklad2(10,15), priklad2(10,15), priklad2(10,15)};
+   
+   return 0;
+}</pre>
+		</tr></table>
+     	V pripade ak má trieda v konštruktore zadaný len jeden údaj možno použiť skrátený inicializačný zápis
+		V prípade ak má trieda v konštruktore zadaných viac údajov musíme použiť úplná inicializačný zápis 
+		<h3>Inicializácia triedy v poli vytváranej pomocou new</h3>
+		V predošlom príklade ak by som vytváral triedy príklad1 a príklad2 dynamicky bolo by to nasledovné:
+<pre>
+int main ()
+{  priklad1 *x =new priklad1[5];   //vytvori 5 prvkove pole tried, kde v kazdej triede nastavi a = 100
+   priklad1 *c =new priklad1(5);   //vytvori 1 prvkove pole tried, kde v triede nastavi a = 5
+   ...
+   delete [] x;
+   delete c;
+}
+Prístup ku prvkom poľa jew pomocou operátora <b>-></b> alebo pomocou hviezdičky a bodky
+<br>c->get_a()
+<br>(*c).get_a()
+</pre>		
+</body>
+</html>

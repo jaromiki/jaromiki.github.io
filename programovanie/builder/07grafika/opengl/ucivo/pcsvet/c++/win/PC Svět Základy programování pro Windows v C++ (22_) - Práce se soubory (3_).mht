@@ -1,0 +1,160 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klady_programov=E1n=ED_pro_Windows_v_C+?=
+	=?windows-1250?Q?+_=2822.=29_-_Pr=E1ce_se_soubory_=283.=29?=
+Date: Thu, 12 Jul 2007 10:11:19 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2296
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klady programov=E1n=ED pro =
+Windows v C++ (22.) - Pr=E1ce se soubory (3.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klady programov=E1n=ED pro Windows v C++ (22.) - Pr=E1ce se =
+soubory (3.)</H2>
+<H4>Jak vyu=9E=EDt funkce Win32API k rychl=E9 pr=E1ci se soubory</H4>
+<HR color=3D#777777 SIZE=3D1>
+V p=F8edchoz=ED =E8=E1sti tohoto ob=E8asn=E9ho minitutori=E1lku jsem =
+v=E1m sl=EDbil popis dal=9A=EDch=20
+n=ECkolika funkc=ED, kter=E9 jsou pou=9Eiteln=E9 pro pr=E1ci se soubory. =
+Tady jsou. <FONT=20
+color=3D#000077><PRE>SetEndOfFile( HANDLE hFile );
+</PRE></FONT>Pot=F8ebujete-li prost=EC zm=ECnit velikost souboru, =
+pou=9Eijte tuto=20
+funkci. Pouh=FDm zavol=E1n=EDm t=E9to funkce definujete, =9Ee =
+aktu=E1ln=ED pozice vnit=F8n=EDho=20
+ukazatele je aktu=E1ln=ED d=E9lka souboru. Dan=E9 handle mus=ED m=EDt =
+p=F8=EDstup GENERIC_WRITE.=20
+<FONT color=3D#000077><PRE>DWORD SetFilePointer(
+  HANDLE  hFile,                // handle na soubor
+  LONG  lDistanceToMove,        // po=E8et byt=F9 pro posun
+  // adresa horn=EDho dwordu po=E8tu byt=F9
+  PLONG  lpDistanceToMoveHigh, =20
+  DWORD  dwMoveMethod           // metoda posunu
+);
+</PRE></FONT>Tato funkce ve Win32API je slo=9Eitou verz=ED jednoduch=E9 =
+funkce seek.=20
+Parametry snad nen=ED t=F8eba vysv=ECtlovat, snad jen, =9Ee parametr=20
+lpDistanceToMoveHigh by m=ECl obsahovat horn=ED dword 64-bitov=E9 =
+prom=ECnn=E9 pro pr=E1ci=20
+se soubory v=ECt=9A=EDmi ne=9E 4GB. Tato prom=ECnn=E1 tak=E9 po =
+n=E1vratu z funkce obsahuje=20
+horn=ED dword aktu=E1ln=ED pozice v souboru. Spodn=ED dword je vr=E1cen =
+funkc=ED.<BR>Metodou=20
+specifikujeme odkud bude ukazatel posouv=E1n a m=F9=9Ee b=FDt FILE_BEGIN =
+pro=20
+specifikov=E1n=ED za=E8=E1tku souboru, FILE_CURRENT pro aktu=E1ln=ED =
+pozici a FILE_END pro=20
+konec souboru. <FONT color=3D#000077><PRE>BOOL SetFileAttributes(
+  LPCTSTR  lpFileName,	     // nn=E1zev souboru
+  DWORD  dwFileAttributes    // atributy k nastaven=ED
+);=09
+</PRE></FONT>Pomoc=ED t=E9to funkce je mo=9En=E9 explicitn=EC nastavit =
+atributy dan=E9ho=20
+existuj=EDc=EDho souboru. Atributy je mo=9En=E9 nal=E9zt v referenci k =
+funkci nebo v=20
+=E8l=E1nku =E8=EDslo 20 tohoto seri=E1lu. <FONT =
+color=3D#000077><PRE>SetHandleCount( UINT number );
+</PRE></FONT>Vol=E1n=EDm t=E9to funkce specifikujeme maxim=E1ln=ED =
+po=E8et soubor=F9, kter=E9=20
+m=F9=9Ee m=EDt aktu=E1ln=ED proces otev=F8en=E9 v jednom okam=9Eiku. =
+Maxim=E1ln=ED =E8=EDslo je 255 a=20
+p=F9vodn=ED hodnota je touto funkc=ED vr=E1cena. Pod Win9x je =
+implicitn=ED hodnota 20, pod=20
+Windows NT nem=E1 vol=E1n=ED t=E9to funkce =9E=E1dn=FD efekt a po=E8et =
+soubor=F9 je omezen pouze=20
+dostupnou nestr=E1nkovanou pam=ECt=ED. <FONT color=3D#000077><PRE>BOOL =
+CopyFile(
+  LPCTSTR  lpExistingFileName,  // n=E1zev existuj=EDc=EDho souboru
+  LPCTSTR  lpNewFileName,	// n=E1zev nov=E9ho souboru
+  BOOL  bFailIfExists           // vlajka viz n=ED=9Ee
+);=09
+</PRE></FONT>Tato funkce prov=E1d=ED rychl=E9 a jednoduch=E9 rozhran=ED =
+k rychl=FDm=20
+kop=EDrovac=EDm mechanizm=F9m Windows. Prvn=ED =F8et=ECzec ozna=E8uje =
+n=E1zev souboru, kter=FD m=E1=20
+b=FDt zkop=EDrov=E1n a druh=FD =F8et=ECzec je soubor, kter=FD bude =
+vytvo=F8en jako kopie tohoto=20
+souboru. Vlajku bFailIfExists je nutn=E9 nastavit na FALSE, pokud =
+chceme, aby=20
+p=F8=EDpadn=EC existuj=EDc=ED c=EDlov=FD soubor byl p=F8eps=E1n, na TRUE =
+pak pokud chceme, aby=20
+funkce v takov=E9mto p=F8=EDpad=EC skon=E8ila bez kop=EDrov=E1n=ED. =
+<FONT color=3D#000077><PRE>BOOL MoveFile(
+  LPCTSTR  lpExistingFileName,  // n=E1zev existuj=EDc=EDho souboru
+  LPCTSTR  lpNewFileName,	// n=E1zev c=EDlov=E9ho souboru
+);=09
+</PRE></FONT>Tato funkce je podobn=E1 funkci CopyFile a=9E na to, =9Ee =
+zdrojov=FD soubor=20
+je smaz=E1n. Tato funkce m=F9=9Ee b=FDt mnohokr=E1t rychlej=9A=ED ne=9E =
+funkce v=FD=9Ae a to=20
+p=F8edev=9A=EDm v p=F8=EDpad=EC, =9Ee oba =F8et=ECzce specifikuj=ED =
+n=E1zev souboru na stejn=E9m disku.=20
+V takov=E9mto p=F8=EDpad=EC je pouze upraven z=E1znam v aloka=E8n=ED =
+tabulce soubor=F9 a data=20
+nejsou fyzicky p=F8en=E1=9Aena. <FONT color=3D#000077><PRE>DeleteFile( =
+LPCTSTR lpFileName );
+</PRE></FONT>Zavol=E1n=EDm t=E9to funkce jednodu=9Ae odstran=EDme =
+po=9Eadovan=FD soubor z=20
+disku. <FONT color=3D#000077><PRE>CreateDirectory(
+  LPCTSTR lpPathName,   // n=E1zev adres=E1=F8e
+  LPSECURITY_ATTRIBUTES  lpSecurityAttributes=20
+);
+</PRE></FONT>Zavol=E1n=EDm t=E9to funkce vytvo=F8=EDme adres=E1=F8 s =
+n=E1zvem dan=FDm parametrem=20
+lpPathName. Druh=FDm parametrem je mo=9En=E9 specifikovat =
+bezpe=E8nostn=ED atributy dan=E9ho=20
+adres=E1=F8e, nen=ED to v=9Aak nutn=E9 a posta=E8=ED uv=E9st NULL. Tato =
+funkce nepou=9E=EDv=E1 =9E=E1dn=FD=20
+rekurzivn=ED algoritmus a tud=ED=9E je nutn=E9 aby v=9Aechny =
+nad=F8azen=E9 adres=E1=F8e k tomuto=20
+existovaly. <FONT color=3D#000077><PRE>RemoveDirectory( LPCTSTR lpszDir =
+);
+</PRE></FONT>Odstran=ED uveden=FD adres=E1=F8. Tento mus=ED b=FDt =
+pr=E1zdn=FD a volaj=EDc=ED proces=20
+mus=ED m=EDt pr=E1va k odstra=F2ov=E1n=ED adres=E1=F8=F9. <FONT =
+color=3D#000077><PRE>GetLastError();
+</PRE></FONT>P=F8esto=9Ee se tato funkce nevztahuje p=F8=EDmo k =
+soubor=F9m jej=EDm zavol=E1n=EDm=20
+po selh=E1n=ED libovoln=E9 Win32API funkce, a tud=ED=9E i funkce pro =
+pr=E1ci se soubory,=20
+z=EDsk=E1me =E8=EDslo aktu=E1ln=ED chyby a dle toho m=F9=9Eeme upravit =
+b=ECh programu. Jak p=F8i=20
+v=FDvoji Win32 program=F9 pozn=E1te, je tato funkce velmi velmi =
+u=9Eite=E8n=E1.=20
+<BR><BR>Touto funkc=ED tedy uzav=EDr=E1m tuto =E8=E1st tutori=E1lu o =
+programov=E1n=ED pro=20
+Windows a v n=E1sleduj=EDc=EDch =E8=E1stech se budu v=ECnovat op=ECt =
+n=EC=E8emu jin=E9mu.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:11:03 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,2088 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 1 - Vytvoření OpenGL okna ve Windows</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_01.jpg" class="nehe_maly" alt="Lekce 1" />
+
+<h1>Lekce 1 - Vytvoření OpenGL okna ve Windows</h1>
+
+<p class="nadpis_clanku">Naučíte se jak nastavit a vytvořit OpenGL okno ve Windows. Program, který vytvoříte zobrazí "pouze" prázdné okno. Černé pozadí nevypadá nic moc, ale pokud porozumíte této lekci, budete mít velmi dobrý základ pro jakoukoliv další práci. Zjistíte jak OpenGL pracuje, jak probíhá vytváření okna a také jak napsat jednoduše pochopitelný kód.</p>
+
+<p>Jsem obyčejný kluk s vášní pro OpenGL. Když jsem o něm poprvé slyšel, vydalo 3Dfx zrychlené ovladače pro Voodoo 1. Hned jsem věděl, že OpenGL je něco, co se musím naučit. Bohužel bylo velice těžké najít nějaké informace, jak v knihách, tak na internetu. Strávil jsem hodiny pokusy o napsání funkčního kódu a přesvědčováním lidí emaily a na IRC. Zjistil jsem, že lidé, kteří rozuměli OpenGL, se považovali za elitu a nehodlali se o své vědomosti dělit. Velice frustrující... Vytvořil jsem tyto tutoriály, aby je zájemci o OpenGL mohli použít, když budou potřebovat pomoc. V každém tutoriálu se vše snažím vysvětlit do detailů, aby bylo jasné, co každý řádek dělá. Snažím se svůj kód psát co nejjednodušeji (nepoužívám MFC)! I absolutní nováček, jak v C++, tak v OpenGL, by měl být schopen tento kód zvládnout a mít další dobré nápady, co dělat dál. Je mnoho tutoriálů o OpenGL. Pokud jste hardcorový OpenGL programátor asi Vám budou připadat příliš jednoduché, ale pokud právě začínáte mají mnoho co nabídnout!</p>
+
+<p>Začnu tento tutoriál přímo kódem. První, co se musí udělat, je vytvořit projekt. Pokud nevíte jak to udělat, neměli byste se učit OpenGL, ale Visual C++. Některé verze Visual C++ vyžadují, aby byl bool změněn na BOOL, true na TRUE a false na FALSE. Pokud to budete mít na paměti neměly by být s kompilací žádné problémy. Potom co vytvoříte novou Win32 Application (NE console application) ve Visual C++, budete potřebovat připojit OpenGL knihovny. Jsou dvě možnosti, jak to udělat: Vyberte Project>Settings, pak zvolte záložku Link a do kolonky Object/Library Modules napište na začátek řádku (před kernel32.lib) OpenGL32.lib Glu32.lib Glaux.lib. Potom klikněte na OK. Nebo napište přímo do kódu programu následující řádky.</p>
+
+<p class="src0"><span class="kom">// Vložení knihoven</span></p>
+<p class="src0">#pragma comment (lib,&quot;opengl32.lib&quot;)</p>
+<p class="src0">#pragma comment (lib,&quot;glu32.lib&quot;)</p>
+<p class="src0">#pragma comment (lib,&quot;glaux.lib&quot;)</p>
+
+<p>Nyní jste připraveni napsat svůj první OpenGL program pro Windows. Začneme vložením hlavičkových souborů.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+
+<p>Dále potřebujete deklarovat globální proměnné, které chcete v programu použít. Tento program vytváří prázdné OpenGL okno, proto jich nebudeme potřebovat mnoho. Ty, které nyní použijeme jsou ovšem velmi důležité a budete je používat v každém programu založeném na tomto kódu. Nastavíme Rendering Context. Každý OpenGL program je spojen s Rendering Contextem. Rendering Context říká, která spojení volá OpenGL, aby se spojilo s Device Context (kontext zařízení). Nám stačí vědět, že OpenGL Rendering Context je definován jako hRC. Aby program mohl kreslit do okna potřebujete vytvořit Device Context. Ve Windows je Device Context definován jako hDC. Device Context napojí okno na GDI (grafické rozhraní). Proměnná hWnd obsahuje handle přidělený oknu a čtvrtý řádek vytvoří instanci programu.</p>
+
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+
+<p>První řádek deklaruje pole, které budeme používat na sledování stisknutých kláves. Je mnoho způsobů, jak to udělat, ale takto to dělám já. Je to spolehlivé a můžeme sledovat stisk více kláves najednou. Proměnná active bude použita, aby náš program informovala, zda je jeho okno minimalizováno nebo ne. Když je okno minimalizováno můžeme udělat cokoliv od pozastavení činnosti kódu až po opuštění programu. Já použiji pozastavení běhu programu. Díky tomu zbytečně nepoběží na pozadí, když bude minimalizován. Proměnná fullscreen bude obsahovat informaci, jestli náš program běží přes celou obrazovku - v tom případě bude fullscreen mít hodnotu true, když program poběží v okně bude mít hodnotu false. Je důležité, aby proměnná byla globální a tím pádem každá funkce věděla, jestli program běží ve fullscreenu, nebo v okně.</p>
+
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+<p></p>
+<p class="src0">LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);<span class="kom">// Deklarace procedury okna (funkční prototyp)</span></p>
+
+<p>Následující funkce se volá vždy, když uživatel mění velikost okna. I když nejste schopni změnit velikost okna (například ve fullscreenu), bude tato funkce volána alespoň jednou, aby nastavila perspektivní pohled při spuštění programu. Velikost OpenGL scény se bude měnit v závislosti na šířce a výšce okna, ve kterém je zobrazena.</p>
+
+<p class="src0">GLvoid ReSizeGLScene(GLsizei width, GLsizei height)<span class="kom">// Změna velikosti a inicializace OpenGL okna
+</span></p>
+<p class="src0">{</p>
+<p class="src1">if (height==0)<span class="kom">// Zabezpečení proti dělení nulou</span></p>
+<p class="src1">{</p>
+<p class="src2">height=1;<span class="kom">// Nastaví výšku na jedna</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glViewport(0,0,width,height);<span class="kom">// Resetuje aktuální nastavení</span></p>
+
+<p>Nastavíme obraz na perspektivní pohled. To znamená, že vzdálenější objekty budou menší. glMatrixMode(GL_PROJECTION) ovlivní formu obrazu. Forma obrazu určuje, jak výrazná bude perspektiva. Vytvoříme realisticky vypadající scénu. glLoadIdentity() resetuje matici. Vrátí ji do jejího původního stavu. Po glLoadIdentity() nastavíme perspektivní pohled scény. Perspektiva je vypočítána s úhlem pohledu 45 stupňů a je založena na výšce a šířce okna. Číslo 0.1f je počáteční a 100.0f konečný bod, který říká jak hluboko do obrazovky můžeme kreslit. glMatrixMode(GL_MODELVIEW) oznamuje, že forma pohledu bude znovu změněna. Nakonec znovu resetujeme matici. Pokud předcházejícímu textu nerozumíte, nic si z toho nedělejte, vysvětlím ho celý v dalších tutoriálech. Jediné co nyní musíte vědět je, že následující řádky musíte do svého programu napsat, pokud chcete, aby scéna vypadala pěkně.</p>
+
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Zvolí projekční matici</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1"></p>
+<p class="src1">gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);<span class="kom">// Výpočet perspektivy</span></p>
+<p></p>
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Zvolí matici Modelview</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src0">}</p>
+
+<p>Nastavíme vše potřebné pro OpenGL. Definujeme černé pozadí, zapneme depth buffer, aktivujeme smooth shading (vyhlazené stínování), atd.. Tato funkce se volá po vytvoření okna. Vrací hodnotu, ale tím se nyní nemusíme zabývat, protože naše inicializace není zatím úplně komplexní.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechno nastavení OpenGL</span></p>
+<p class="src0">{</p>
+
+<p>Následující řádek povolí jemné stínování, aby se barvy na polygonech pěkně promíchaly. Více detailů o smooth shading si povíme v jiných tutoriálech.</p>
+
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Povolí jemné stínování</span></p>
+
+<p>Nastavíme barvu pozadí prázdné obrazovky. Rozsah barev se určuje ve stupnici od 0.0f do 1.0f. 0.0f je nejtmavší a 1.0f je nejsvětlejší. První parametr ve funkci glClearColor() je intenzita červené barvy, druhý zelené a třetí modré. Čím bližší je hodnota barvy 1.0f, tím světlejší složka barvy bude. Poslední parametr je hodnota alpha (průhlednost). Když budeme čistit obrazovku, tak se o průhlednost starat nemusíme. Nyní ji necháme na 0.0f. Můžete vytvářet různé barvy kombinováním světlosti tří základních barev (červené, zelené, modré). Pokud budete mít glClearColor(0.0f,0.0f,1.0f,0.0f), bude obrazovka modrá. Když budete mít glClearColor(0.5f,0.0f,0.0f,0.0f), bude obrazovka středně tmavě červená. Abyste udělali bílé pozadí nastavte všechny hodnoty na nejvyšší hodnotu (1.0f), pro černé pozadí zadejte pro všechny složky 0.0f.</p>
+
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+
+<p>Následující tři řádky ovlivňují depth buffer. Depth buffer si můžete představit jako vrstvy/hladiny obrazovky. Obsahuje informace, o tom jak hluboko jsou zobrazované objekty. Tento program sice nebude deep buffer používat (nic nevykreslujeme). Objekty se seřadí tak, aby bližší překrývaly vzdálenější.</p>
+
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolí hloubkové testování</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ hloubkového testování</span></p>
+
+<p>Dále oznámíme, že chceme použít nejlepší korekce perspektivy. Jen nepatrně se sníží výkon, ale zlepší se vzhled celé scény</p>
+
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nejlepší perspektivní korekce</span></p>
+
+<p>Nakonec vrátíme true. Když budeme chtít zjistit zda inicializace proběhla bez problémů, můžeme zkontrolovat, zda funkce vrátila hodnotu true nebo false. Můžete přidat vlastní kód, který vrátí false, když se inicializace nezdaří - např. loading textur. Nyní se tím nebudeme dále zabývat.</p>
+
+<p class="src1">return TRUE;<span class="kom">// Inicializace proběhla v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Do této funkci umístíme všechno vykreslování. Následující tutoriály budou přepisovat především tento a inicializační kód této lekce. ( Pokud již nyní rozumíte základům OpenGL, můžete si zde připsat kreslení základních tvarů (mezi glLoadIdentity() a return). Pokud jste nováček, tak počkejte do dalšího tutoriálu. Jediné co nyní uděláme, je vymazání obrazovky na barvu, pro kterou jste se rozhodli, vymažeme obsah hloubkového bufferu a resetujeme scénu. Zatím nebudeme nic kreslit. Příkaz return true nám říká, že při kreslení nenastaly žádné problémy. Pokud z nějakého důvodu chcete přerušit běh programu, stačí přidat return false před return true - to říká našemu programu, že kreslení scény selhalo a program se ukončí.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Sem můžete kreslit</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vykreslení proběhlo v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Následující část kódu je volána těsně před koncem programu. Úkolem funkce KillGLWindow() je uvolnění renderovacího kontextu, kontextu zařízení a handle okna. Přidal jsem zde nezbytné kontrolování chyb. Když není program schopen něco uvolnit, oznámí chybu, která říká co selhalo. Usnadní složité hledání problémů.</p>
+
+<p class="src0">GLvoid KillGLWindow(GLvoid)<span class="kom">// Zavírání okna</span></p>
+<p class="src0">{</p>
+
+<p>Zjistíme zda je program ve fullscreenu. Pokud ano, tak ho přepneme zpět do systému. Mohli bychom vypnout okno před opuštěním fullscreenu, ale na některých grafických kartách tím způsobíme problémy a systém by se mohl zhroutit.</p>
+
+<p class="src1">if (fullscreen)<span class="kom">// Jsme ve fullscreenu?</span></p>
+<p class="src1">{</p>
+
+<p>K návratu do původního nastavení systému používáme funkci ChangeDisplaySettings(NULL,0). Jako první parametr zadáme NULL a jako druhý 0 - použijeme hodnoty uložené v registrech Windows (původní rozlišení, barevnou hloubku, obnovovací frekvenci, atd.). Po přepnutí zviditelníme kurzor.</p>
+
+<p class="src2">ChangeDisplaySettings(NULL,0);<span class="kom">// Přepnutí do systému</span></p>
+<p class="src2">ShowCursor(TRUE);<span class="kom">// Zobrazí kurzor myši</span></p>
+<p class="src1">}</p>
+
+<p>Zkontrolujeme zda máme renderovací kontext (hRC). Když ne, program přeskočí část kódu pod ním, který kontroluje, zda máme kontext zařízení.</p>
+
+<p class="src1">if (hRC)<span class="kom">// Máme rendering kontext?</span></p>
+<p class="src1">{</p>
+
+<p>Zjistíme, zda můžeme odpojit hRC od hDC. Všimněte si, jak kontroluji chyby. Nejdříve programu řeknu, ať odpojí Rendering Context (s použitím wglMakeCurrent(NULL,NULL)), pak zkontroluji zda akce byla úspěšná. Takto dám více řádku do jednoho.</p>
+
+<p class="src2">if (!wglMakeCurrent(NULL,NULL))<span class="kom">// Jsme schopni oddělit kontexty?</span></p>
+<p class="src2">{</p>
+
+<p>Pokud nejsme schopni uvolnit DC a RC, použijeme zobrazíme zprávu, že DC a RC nelze uvolnit. NULL v parametru znamená, že informační okno nemá žádného rodiče. Text ihned za NULL je text, který se vypíše do zprávy. Další parametr definuje text lišty. Parametr MB_OK znamená, že chceme mít na chybové zprávě jen jedno tlačítko s nápisem OK. MB_ICONINFORMATION zobrazí ikonu.</p>
+
+<p class="src3">MessageBox(NULL,&quot;Release Of DC And RC Failed.&quot;,&quot;SHUTDOWN ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">}</p>
+
+<p>Zkusíme vymazat Rendering Context. Pokud se pokus nezdaří, opět se zobrazí chybová zpráva. Nakonec nastavíme hRC a NULL.</p>
+
+<p class="src2">if (!wglDeleteContext(hRC))<span class="kom">// Jsme schopni smazat RC?</span></p>
+<p class="src2">{</p>
+<p class="src3">MessageBox(NULL,&quot;Release Rendering Context Failed.&quot;,&quot;SHUTDOWN ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">}</p>
+<p class="src2">hRC=NULL;<span class="kom">// Nastaví hRC na NULL</span></p>
+<p class="src1">}</p>
+
+<p>Zjistíme zda má program kontext zařízení. Když ano odpojíme ho. Pokud se odpojení nezdaří, zobrazí se chybová zpráva a hDC bude nastaven na NULL.</p>
+
+<p class="src1">if (hDC &amp;&amp; !ReleaseDC(hWnd,hDC))<span class="kom">// Jsme schopni uvolnit DC</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL,&quot;Release Device Context Failed.&quot;,&quot;SHUTDOWN ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">hDC=NULL;<span class="kom">// Nastaví hDC na NULL</span></p>
+<p class="src1">}</p>
+
+<p>Nyní zjistíme zda máme handle okna a pokud ano pokusíme se odstranit okno použitím funkce DestroyWindow(hWnd). Pokud se pokus nezdaří, zobrazí se chybová zpráva a hWnd bude nastaveno na NULL.</p>
+
+<p class="src1">if (hWnd &amp;&amp; !DestroyWindow(hWnd))<span class="kom">// Jsme schopni odstranit okno?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL,&quot;Could Not Release hWnd.&quot;,&quot;SHUTDOWN ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">hWnd=NULL;<span class="kom">// Nastaví hWnd na NULL</span></p>
+<p class="src1">}</p>
+
+<p>Odregistrováním  třídy okna oficiálně uzavřeme okno a předejdeme zobrazení chybové zprávy &quot;Windows Class already registered&quot; při opětovném spuštění programu.</p>
+
+<p class="src1">if (!UnregisterClass(&quot;OpenGL&quot;,hInstance))<span class="kom">// Jsme schopni odregistrovat třídu okna?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL,&quot;Could Not Unregister Class.&quot;,&quot;SHUTDOWN ERROR&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src2">hInstance=NULL;<span class="kom">// Nastaví hInstance na NULL</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Další část kódu má na starosti vytvoření OpenGL okna. Strávil jsem mnoho času přemýšlením zda mám udělat pouze fullscreen mód, který by vyžadoval méně kódu, nebo jednoduše upravitelnou, uživatelsky příjemnou verzi s variantou jak pro okno tak pro fullscreen, která však vyžaduje mnohem více kódu. Rozhodl jsem se pro druhou variantu, protože jsem dostával mnoho dotazů jako například: Jak mohu vytvořit okno místo fullscreenu? Jak změním popisek okna? Jak změním rozlišení ne formát pixelů? Následující kód dovede všechno. Jak si můžete všimnout funkce vrací bool a přijímá 5 parametrů v pořadí: název okna, šířku okna, výšku okna, barevnou hloubku, fullscreen (pokud je parametr true program poběží ve fullscreenu, pokud bude false program poběží v okně). Vracíme bool, abychom věděli zda bylo okno úspěšně vytvořeno.</p>
+
+<p class="src0">BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscreenflag)</p>
+<p class="src0">{</p>
+
+<p>Za chvíli požádáme Windows, aby pro nás našel pixel format, který odpovídá tomu, který chceme. Toto číslo uložíme do proměnné PixelFormat.</p>
+
+<p class="src1">GLuint PixelFormat;<span class="kom">// Ukládá formát pixelů</span></p>
+
+<p>Wc bude použijeme k uchování informací o struktuře Windows Class. Změnou hodnot jednotlivých položek, lze ovlivnit vzhled a chování okna. Před vytvořením samotného okna se musí zaregistrovat nějaká struktura pro okno.</p>
+
+<p class="src1">WNDCLASS wc;<span class="kom">// Struktura Windows Class</span></p>
+
+<p>DwExStyle a dwStyle ponesou informaci o normálních a rozšířených informacích o oknu. Použiji proměnné k uchování stylů, takže mohu měnit vzhled okna, který potřebuji vytvořit (pro fullscreen bez okraje a pro okno okraj).</p>
+
+<p class="src1">DWORD dwExStyle;<span class="kom">// Rozšířený styl okna</span></p>
+<p class="src1">DWORD dwStyle;<span class="kom">// Styl okna</span></p>
+
+<p>Zjistíme polohu levého horního a pravého dolního rohu okna. Tyto proměnné využijeme k tomu, abychom nakreslili okno v takovém rozlišení, v jakém si ho přejeme mít. Pokud vytvoříme okno s rozlišením 640x480, okraje budou zabírat část našeho rozlišení.</p>
+
+<p class="src1">RECT WindowRect;<span class="kom">// Obdélník okna</span></p>
+<p></p>
+<p class="src1">WindowRect.left = (long)0;<span class="kom">// Nastaví levý okraj na nulu</span></p>
+<p class="src1">WindowRect.right = (long)width;<span class="kom">// Nastaví pravý okraj na zadanou hodnotu</span></p>
+<p class="src1">WindowRect.top = (long)0;<span class="kom">// Nastaví horní okraj na nulu</span></p>
+<p class="src1">WindowRect.bottom = (long)height;<span class="kom">// Nastaví spodní okraj na zadanou hodnotu</span></p>
+
+<p>Přiřadíme globální proměnné fullscreen, hodnotu fullscreenflag. Takže pokud naše okno poběží ve fullscreenu, proměnná fullscreen se bude rovnat true. Kdybychom zavírali okno ve fullscreenu, ale hodnota proměnné fullscreen by byla false místo true, jak by měla být, počítač by se nepřepl zpět do systému, protože by si myslel, že v něm již je. Jednoduše shrnuto, fullscreen vždy musí obsahovat správnou hodnotu.</p>
+
+<p class="src1">fullscreen = fullscreenflag;<span class="kom">// Nastaví proměnnou fullscreen na správnou hodnotu</span></p>
+
+<p>Získáme instanci pro okno a poté definujeme Window Class. CS_HREDRAW a CS_VREDRAW donutí naše okno, aby se překreslilo, kdykoliv se změní jeho velikost. CS_OWNDC vytvoří privátní kontext zařízení. To znamená, že není sdílen s ostatními aplikacemi. WndProc je procedura okna, která sleduje příchozí zprávy pro program. Žádná extra data pro okno nepoužíváme, takže do dalších dvou položek přiřadíme nulu. Nastavíme instanci a hIcon na NULL, což znamená, že nebudeme pro náš program používat žádnou speciální ikonu a pro kurzor myši používáme standardní šipku. Barva pozadí nás nemusí zajímat (to zařídíme v OpenGL). Nechceme, aby okno mělo menu, takže i tuto hodnotu nastavíme na NULL. Jméno třídy může být libovolné. Já použiji pro jednoduchost &quot;OpenGL&quot;.</p>
+
+<p class="src1">hInstance = GetModuleHandle(NULL);<span class="kom">// Získá instanci okna</span></p>
+<p></p>
+<p class="src1">wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;<span class="kom">// Překreslení při změně velikosti a vlastní DC</span></p>
+<p class="src1">wc.lpfnWndProc = (WNDPROC) WndProc;<span class="kom">// Definuje proceduru okna</span></p>
+<p class="src1">wc.cbClsExtra = 0;<span class="kom">// Žádná extra data</span></p>
+<p class="src1">wc.cbWndExtra = 0;<span class="kom">// Žádná extra data</span></p>
+<p class="src1">wc.hInstance = hInstance;<span class="kom">// Instance</span></p>
+<p class="src1">wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);<span class="kom">// Standardní ikona</span></p>
+<p class="src1">wc.hCursor = LoadCursor(NULL, IDC_ARROW);<span class="kom">// Standardní kurzor myši</span></p>
+<p class="src1">wc.hbrBackground = NULL;<span class="kom">// Pozadí není nutné</span></p>
+<p class="src1">wc.lpszMenuName = NULL;<span class="kom">// Nechceme menu</span></p>
+<p class="src1">wc.lpszClassName = &quot;OpenGL&quot;;<span class="kom">// Jméno třídy okna</span></p>
+
+<p>Zaregistrujeme právě definovanou třídu okna. Když nastane chyba a zobrazí se chybové hlášení. Zmáčknutím tlačítka OK se program ukončí.</p>
+
+<p class="src1">if (!RegisterClass(&amp;wc))<span class="kom">// Registruje třídu okna</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL,&quot;Failed To Register The Window Class.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Při chybě vrátí false</span></p>
+<p class="src1">}</p>
+
+<p>Nyní si zjistíme zda má program běžet ve fullscreenu, nebo v okně.</p>
+
+<p class="src1">if (fullscreen)<span class="kom">// Budeme ve fullscreenu?</span></p>
+<p class="src1">{</p>
+
+<p>S přepínáním do fullscreenu, mívají lidé mnoho problémů. Je zde pár důležitých věcí, na které si musíte dávat pozor. Ujistěte se, že šířka a výška, kterou používáte ve fullscreenu je totožná s tou, kterou chcete použít v okně. Další věc je hodně důležitá. Musíte přepnout do fullscreenu předtím než vytvoříte okno. V tomto kódu se o rovnost výšky a šířky nemusíte starat, protože velikost ve fullscreenu i v okně budou stejné.</p>
+
+<p class="src2">DEVMODE dmScreenSettings;<span class="kom">// Mód zařízení</span></p>
+<p></p>
+<p class="src2">memset(&amp;dmScreenSettings,0,sizeof(dmScreenSettings));<span class="kom">// Vynulování paměti</span></p>
+<p></p>
+<p class="src2">dmScreenSettings.dmSize=sizeof(dmScreenSettings);<span class="kom">// Velikost struktury Devmode</span></p>
+<p class="src2">dmScreenSettings.dmPelsWidth= width;<span class="kom">// Šířka okna</span></p>
+<p class="src2">dmScreenSettings.dmPelsHeight= height;<span class="kom">// Výška okna</span></p>
+<p class="src2">dmScreenSettings.dmBitsPerPel= bits;<span class="kom">// Barevná hloubka</span></p>
+<p class="src2">dmScreenSettings.dmFields=DM_BITSPERPEL|DM_PELSWIDTH|DM_PELSHEIGHT;</p>
+
+<p>Funkce ChangeDisplaySettings() se pokusí přepnout do módu, který je uložen v dmScreenSettings. Použiji parametr CDS_FULLSCREEN, protože odstraní pracovní lištu ve spodní části obrazovky a nepřesune nebo nezmění velikost okna při přepínání z fullscreenu do systému nebo naopak.</p>
+
+<p class="src2"><span class="kom">// Pokusí se použít právě definované nastavení</span></p>
+<p class="src2">if (ChangeDisplaySettings(&amp;dmScreenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)</p>
+<p class="src2">{</p>
+
+<p>Pokud právě vytvořený fullscreen mód neexistuje, zobrazí se chybová zpráva s nabídkou spuštění v okně nebo opuštění programu.</p>
+
+<p class="src3"><span class="kom">// Nejde-li fullscreen, může uživatel spustit program v okně nebo ho opustit</span></p>
+<p class="src3">if (MessageBox(NULL,&quot;The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?&quot;,&quot;NeHe GL&quot;,MB_YESNO|MB_ICONEXCLAMATION)==IDYES)</p>
+<p class="src3">{</p>
+
+<p>Když se uživatel rozhodne pro běh v okně, do proměnné fullscreen se přiřadí false a program pokračuje dále.</p>
+
+<p class="src4">fullscreen=FALSE;<span class="kom">// Běh v okně</span></p>
+<p class="src3">}</p>
+<p class="src3">else</p>
+<p class="src3">{</p>
+
+<p>Pokud se uživatel rozhodl pro ukončení programu, zobrazí se uživateli zpráva, že program bude ukončen. Bude vrácena hodnota false, která našemu programu říká, že pokus o vytvoření okna nebyl úspěšný a potom se program ukončí.</p>
+
+<p class="src4"><span class="kom">// Zobrazí uživateli zprávu, že program bude ukončen</span></p>
+<p class="src4">MessageBox(NULL,&quot;Program Will Now Close.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONSTOP);</p>
+<p></p>
+<p class="src4">return FALSE;<span class="kom">// Vrátí FALSE</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Protože pokus o přepnutí do fullscreenu může selhat, nebo se uživatel může rozhodnout pro běh programu v okně, zkontrolujeme ještě jednou zda je proměnná fullscreen true nebo false. Až poté nastavíme typ obrazu.</p>
+
+<p class="src1">if (fullscreen)<span class="kom">// Jsme stále ve fullscreenu?</span></p>
+<p class="src1">{</p>
+
+<p>Pokud jsme stále ve fullscreenu nastavíme rozšířený styl na WS_EX_APPWINDOW, což donutí okno, aby překrylo pracovní lištu. Styl okna určíme na WS_POPUP. Tento typ okna nemá žádné okraje, což je pro fullscreen výhodné. Nakonec vypneme kurzor myši. Pokud váš program není interaktivní, je většinou vhodnější ve fullscreenu kurzor vypnout. Pro co rozhodnete je na vás.</p>
+
+<p class="src2">dwExStyle=WS_EX_APPWINDOW;<span class="kom">// Rozšířený styl okna</span></p>
+<p class="src2">dwStyle=WS_POPUP;<span class="kom">// Styl okna</span></p>
+<p class="src2">ShowCursor(FALSE);<span class="kom">// Skryje kurzor</span></p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src1">{</p>
+
+<p>Pokud místo fullscreenu používáme běh v okně, nastavíme rozšířený styl na WS_EX_WINDOWEDGE. To dodá oknu trochu 3D vzhledu. Styl nastavíme na WS_OVERLAPPEDWINDOW místo na WS_POPUP. WS_OVERLAPPEDWINDOW vytvoří okno s lištou, okraji, tlačítky pro minimalizaci a maximalizaci. Budeme moci měnit velikost.</p>
+
+<p class="src2">dwExStyle=WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;<span class="kom">// Rozšířený styl okna</span></p>
+<p class="src2">dwStyle=WS_OVERLAPPEDWINDOW;<span class="kom">// Styl okna</span></p>
+<p class="src1">}</p>
+
+<p>Přizpůsobíme okno podle stylu, který jsme vytvořili. Přizpůsobení udělá okno v takovém rozlišení, jaké požadujeme. Normálně by okraje překrývaly část okna. S použitím příkazu AdjustWindowRectEx žádná část OpenGL scény nebude překryta okraji, místo toho bude okno uděláno o málo větší, aby se do něj vešly všechny pixely tvořící okraj okna. Ve fullscreenu tato funkce nemá žádný efekt.</p>
+
+<p class="src1">AdjustWindowRectEx(&amp;WindowRect, dwStyle, FALSE, dwExStyle);<span class="kom">// Přizpůsobení velikosti okna</span></p>
+
+<p>Vytvoříme okno a zkontrolujeme zda bylo vytvořeno správně. Použijeme funkci CreateWindowEx() se všemi parametry, které vyžaduje. Rozšířený styl, který jsme se rozhodli použít. Jméno třídy (musí být stejné jako to, které jste použili, když jste registrovali Window Class).Titulek okna. Styl okna. Horní levá pozice okna (0,0 je nejjistější). Šířka a výška okna. Nechceme mít rodičovské okno ani menu, takže nastavíme tyto parametry na NULL. Zadáme instanci okna a konečně přiřadíme NULL na místo posledního parametru. Všimněte si, že zahrnujeme styly WS_CLIPSIBLINGS a WS_CLIPCHILDREN do stylu, který jsme se rozhodli použít. WS_CLIPSIBLINGS a WS_CLIPCHILDREN jsou potřebné pro OpenGL, aby pracovalo správně. Tyto styly zakazují ostatním oknům, aby kreslily do našeho okna.</p>
+
+<p class="src1"><span class="kom">// Vytvoření okna</span></p>
+<p class="src1">if (!(hWnd=CreateWindowEx(dwExStyle,<span class="kom">// Rozšířený styl</span></p>
+<p class="src2">&quot;OpenGL&quot;,<span class="kom">// Jméno třídy</span></p>
+<p class="src2">title,<span class="kom">// Titulek</span></p>
+<p class="src2">dwStyle |<span class="kom">// Definovaný styl</span></p>
+<p class="src2">WS_CLIPSIBLINGS |<span class="kom">// Požadovaný styl</span></p>
+<p class="src2">WS_CLIPCHILDREN,<span class="kom">// Požadovaný styl</span></p>
+<p class="src2">0, 0,<span class="kom">// Pozice</span></p>
+<p class="src2">WindowRect.right-WindowRect.left,<span class="kom">// Výpočet šířky</span></p>
+<p class="src2">WindowRect.bottom-WindowRect.top,<span class="kom">// Výpočet výšky</span></p>
+<p class="src2">NULL,<span class="kom">// Žádné rodičovské okno</span></p>
+<p class="src2">NULL,<span class="kom">// Bez menu</span></p>
+<p class="src2">hInstance,<span class="kom">// Instance</span></p>
+<p class="src2">NULL)))<span class="kom">// Nepředat nic do WM_CREATE</span></p>
+
+<p>Dále zkontrolujeme zda bylo vytvořeno. Pokud bylo, hWnd obsahuje handle tohoto okna. Když se vytvoření okna nepovede, kód zobrazí chybovou zprávu a program se ukončí.</p>
+
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zruší okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Window Creation Error.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Vrátí chybu</span></p>
+<p class="src1">}</p>
+
+<p>Vybereme Pixel Format, který podporuje OpenGL, dále zvolíme double buffering a RGBA (červená, zelená, modrá, průhlednost). Pokusíme se najít formát, který odpovídá tomu, pro který jsme se rozhodli (16 bitů, 24 bitů, 32 bitů). Nakonec nastavíme Z-Buffer. Ostatní parametry se nepoužívají nebo pro nás nejsou důležité.</p>
+
+<p class="src1">static PIXELFORMATDESCRIPTOR pfd=<span class="kom">// Oznámíme Windows jak chceme vše nastavit</span></p>
+<p class="src1">{</p>
+<p class="src2">sizeof(PIXELFORMATDESCRIPTOR),<span class="kom">// Velikost struktury</span></p>
+<p class="src2">1,<span class="kom">// Číslo verze</span></p>
+<p class="src2">PFD_DRAW_TO_WINDOW |<span class="kom">// Podpora okna</span></p>
+<p class="src2">PFD_SUPPORT_OPENGL |<span class="kom">// Podpora OpenGL</span></p>
+<p class="src2">PFD_DOUBLEBUFFER,<span class="kom">// Podpora Double Bufferingu</span></p>
+<p class="src2">PFD_TYPE_RGBA,<span class="kom">// RGBA Format</span></p>
+<p class="src2">bits,<span class="kom">// Zvolí barevnou hloubku</span></p>
+<p class="src2">0, 0, 0, 0, 0, 0,<span class="kom">// Bity barev ignorovány</span></p>
+<p class="src2">0,<span class="kom">// Žádný alpha buffer</span></p>
+<p class="src2">0,<span class="kom">// Ignorován Shift bit</span></p>
+<p class="src2">0,<span class="kom">// Žádný akumulační buffer</span></p>
+<p class="src2">0, 0, 0, 0,<span class="kom">// Akumulační bity ignorovány</span></p>
+<p class="src2">16,<span class="kom">// 16-bitový hloubkový buffer (Z-Buffer)</span></p>
+<p class="src2">0,<span class="kom">// Žádný Stencil Buffer</span></p>
+<p class="src2">0,<span class="kom">// Žádný Auxiliary Buffer</span></p>
+<p class="src2">PFD_MAIN_PLANE,<span class="kom">// Hlavní vykreslovací vrstva</span></p>
+<p class="src2">0,<span class="kom">// Rezervováno</span></p>
+<p class="src2">0, 0, 0<span class="kom">// Maska vrstvy ignorována</span></p>
+<p class="src1">};</p>
+
+<p>Pokud nenastaly problémy během vytváření okna, pokusíme se připojit kontext zařízení. Pokud ho se nepřipojí, zobrazí se chybové hlášení a program se ukončí.</p>
+
+<p class="src1">if (!(hDC=GetDC(hWnd)))<span class="kom">// Podařilo se připojit kontext zařízení?</span></p>
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Can't Create A GL Device Context.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Když získáme kontext zařízení, pokusíme se najít odpovídající Pixel Format. Když ho Windows nenajde formát, zobrazí se chybová zpráva a program se ukončí.</p>
+
+<p class="src1">if (!(PixelFormat=ChoosePixelFormat(hDC,&amp;pfd)))<span class="kom">// Podařilo se najít Pixel Format?</span></p>
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Can't Find A Suitable PixelFormat.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Když Windows najde odpovídající formát, tak se ho pokusíme nastavit. Pokud při pokusu o nastavení nastane chyba, opět se zobrazí chybové hlášení a program se ukončí.</p>
+
+<p class="src1">if(!SetPixelFormat(hDC,PixelFormat,&amp;pfd))<span class="kom">// Podařilo se nastavit Pixel Format?</span></p>
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Can't Set The PixelFormat.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Pokud byl nastaven Pixel Format správně, pokusíme se získat Rendering Context. Pokud ho nezískáme, program zobrazí chybovou zprávu a ukončí se.</p>
+
+<p class="src1">if (!(hRC=wglCreateContext(hDC)))<span class="kom">// Podařilo se vytvořit Rendering Context?</span></p>
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Can't Create A GL Rendering Context.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Pokud nenastaly žádné chyby při vytváření jak Device Context, tak Rendering Context, vše co musíme nyní udělat je aktivovat Rendering Context. Pokud ho nebudeme moci aktivovat, zobrazí se chybová zpráva a program se ukončí.</p>
+
+<p class="src1">if(!wglMakeCurrent(hDC,hRC))<span class="kom">// Podařilo se aktivovat Rendering Context?</span></p>
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Can't Activate The GL Rendering Context.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Pokud bylo okno vytvořeno, zobrazíme ho na obrazovce, nastavíme ho, aby bylo v popředí (vyšší priorita) a pak nastavíme zaměření na toto okno. Zavoláme funkci ResizeGLScene() s parametry odpovídajícími výšce a šířce okna, abychom správně nastavili perspektivu OpenGL.</p>
+
+<p class="src1">ShowWindow(hWnd,SW_SHOW);<span class="kom">// Zobrazení okna</span></p>
+<p class="src1">SetForegroundWindow(hWnd);<span class="kom">// Do popředí</span></p>
+<p class="src1">SetFocus(hWnd);<span class="kom">// Zaměří fokus</span></p>
+<p class="src1">ReSizeGLScene(width, height);<span class="kom">// Nastavení perspektivy OpenGL scény</span></p>
+
+<p>Konečně se dostáváme k volání výše definované funkce InitGL(), ve které nastavujeme osvětlení, loading textur a cokoliv jiného, co je potřeba. Můžete vytvořit svou vlastní kontrolu chyb ve funkci InitGL() a vracet true, když vše proběhne bez problémů, nebo false, pokud nastanou nějaké problémy. Například, nastane-li chyba při nahrávání textur, vrátíte false, jako znamení, že něco selhalo a program se ukončí.</p>
+
+<p class="src1">if (!InitGL())<span class="kom">// Inicializace okna</span></p>
+<p class="src1">{</p>
+<p class="src2">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src2">MessageBox(NULL,&quot;Initialization Failed.&quot;,&quot;ERROR&quot;,MB_OK|MB_ICONEXCLAMATION);</p>
+<p class="src2">return FALSE;<span class="kom">// Ukončí program</span></p>
+<p class="src1">}</p>
+
+<p>Pokud jsme se dostali až takhle daleko, můžeme konstatovat, že vytvoření okna proběhlo bez problémů. Vrátíme true do WinMain(), což říká, že nenastaly žádné chyby. To zabrání programu, aby se sám ukončil.</p>
+
+<p class="src1">return TRUE;<span class="kom">// Vše proběhlo v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Nyní se vypořádáme se systémovými zprávami pro okno. Když máme zaregistrovanou naši Window Class, můžeme podstoupit k části kódu, která má na starosti zpracování zpráv.</p>
+
+<p class="src0">LRESULT CALLBACK WndProc(HWND hWnd,<span class="kom">// Handle okna</span></p>
+<p class="src1">UINT uMsg,<span class="kom">// Zpráva pro okno</span></p>
+<p class="src1">WPARAM wParam,<span class="kom">// Doplňkové informace</span></p>
+<p class="src1">LPARAM lParam)<span class="kom">// Doplňkové informace</span></p>
+<p class="src0">{</p>
+
+<p>Napíšeme mapu zpráv. Program se bude větvit podle proměnné uMsg, která obsahuje jméno zprávy.</p>
+
+<p class="src1">switch (uMsg)<span class="kom">// Větvení podle příchozí zprávy</span></p>
+<p class="src1">{</p>
+
+<p>Po příchodu WM_ACTIVE, zkontrolujeme, zda je okno stále aktivní. Pokud bylo minimalizováno, nastavíme hodnotu active na false. Pokud je naše okno aktivní, proměnná active bude mít hodnotu true.</p>
+
+<p class="src2">case WM_ACTIVATE:<span class="kom">// Změna aktivity okna</span></p>
+<p class="src2">{</p>
+<p class="src3">if (!HIWORD(wParam))<span class="kom">// Zkontroluje zda není minimalizované</span></p>
+<p class="src3">{</p>
+<p class="src4">active=TRUE;<span class="kom">// Program je aktivní</span></p>
+<p class="src3">}</p>
+<p class="src3">else</p>
+<p class="src3">{</p>
+<p class="src4">active=FALSE;<span class="kom">// Program není aktivní</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">return 0;<span class="kom">// Návrat do hlavního cyklu programu</span></p>
+<p class="src2">}</p>
+
+<p>Po příchodu WM_SYSCOMMAND (systémový příkaz) porovnáme wParam s možnými stavy, které mohly nastat. Když je wParam WM_SCREENSAVE nebo SC_MONITORPOWER snaží se systém zapnout spořič obrazovky, nebo přejít do úsporného režimu. Jestliže vrátíme 0 zabráníme systému, aby tyto akce provedl.</p>
+
+<p class="src2">case WM_SYSCOMMAND:<span class="kom">// Systémový příkaz</span></p>
+<p class="src2">{</p>
+<p class="src3">switch (wParam)<span class="kom">// Typ systémového příkazu</span></p>
+<p class="src3">{</p>
+<p class="src4">case SC_SCREENSAVE:<span class="kom">// Pokus o zapnutí šetřiče obrazovky</span></p>
+<p class="src4">case SC_MONITORPOWER:<span class="kom">// Pokus o přechod do úsporného režimu?</span></p>
+<p class="src5">return 0;<span class="kom">// Zabrání obojímu</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">break;<span class="kom">// Návrat do hlavního cyklu programu</span></p>
+<p class="src2">}</p>
+
+<p>Přišlo-li WM_CLOSE bylo okno zavřeno. Pošleme tedy zprávu pro opuštění programu, která přeruší vykonávání hlavního cyklu. Proměnnou done (ve WinMain()) nastavíme na true, hlavní smyčka se přeruší a program se ukončí.</p>
+
+<p class="src2">case WM_CLOSE:<span class="kom">// Povel k ukončení programu</span></p>
+<p class="src2">{</p>
+<p class="src3">PostQuitMessage(0);<span class="kom">// Pošle zprávu o ukončení</span></p>
+<p class="src3">return 0;<span class="kom">// Návrat do hlavního cyklu programu</span></p>
+<p class="src2">}</p>
+
+<p>Pokud byla stisknuta klávesa, můžeme zjistit, která z nich to byla, když zjistíme hodnotu wParam. Potom zadáme do buňky, specifikované wParam, v poli keys[] true. Díky tomu potom můžeme zjistit, která klávesa je právě stisknutá. Tímto způsobem lze zkontrolovat stisk více kláves najednou.</p>
+
+<p class="src2">case WM_KEYDOWN:<span class="kom">// Stisk klávesy</span></p>
+<p class="src2">{</p>
+<p class="src3">keys[wParam] = TRUE;<span class="kom">// Oznámí to programu</span></p>
+<p class="src3">return 0;<span class="kom">// Návrat do hlavního cyklu programu</span></p>
+<p class="src2">}</p>
+
+<p>Pokud byla naopak klávesa uvolněna uložíme do buňky s indexem wParam v poli keys[] hodnotu false. Tímto způsobem můžeme zjistit zda je klávesa ještě stále stisknuta nebo již byla uvolněna. Každá klávesa je reprezentována jedním číslem od 0 do 255. Když například stisknu klávesu číslo 40, hodnota key[40] bude true, jakmile ji pustím její hodnota se vrátí opět na false.</p>
+
+<p class="src2">case WM_KEYUP:<span class="kom">// Uvolnění klávesy</span></p>
+<p class="src2">{</p>
+<p class="src3">keys[wParam] = FALSE;<span class="kom">// Oznámí to programu</span></p>
+<p class="src3">return 0;<span class="kom">// Návrat do hlavního cyklu programu</span></p>
+<p class="src2">}</p>
+
+<p>Kdykoliv uživatel změní velikost okna, pošle se WM_SIZE. Přečteme LOWORD a HIWORD hodnoty lParam, abychom zjistili jaká je nová šířka a výška okna. Předáme tyto hodnoty do funkce ReSizeGLScene(). Perspektiva OpenGL scény se změní podle nových rozměrů.</p>
+
+<p class="src2">case WM_SIZE:<span class="kom">// Změna velikosti okna</span></p>
+<p class="src2">{</p>
+<p class="src3">ReSizeGLScene(LOWORD(lParam),HIWORD(lParam));  <span class="kom">// LoWord=Šířka, HiWord=Výška</span></p>
+<p class="src3">return 0;<span class="kom">// Návrat do hlavního cyklu programu</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Zprávy, o které se nestaráme, budou předány funkci DefWindowProc(), takže se s nimi vypořádá systém.</p>
+
+<p class="src1">return DefWindowProc(hWnd, uMsg, wParam, lParam);<span class="kom">// Předání ostatních zpráv systému</span></p>
+<p class="src0">}</p>
+
+<p>Funkce WinMain() je vstupní bod do aplikace, místo, odkud budeme volat funkce na otevření okna, snímaní zpráv a interakci s uživatelem.</p>
+
+<p class="src0">int WINAPI WinMain(HINSTANCE hInstance,<span class="kom">// Instance</span></p>
+<p class="src1">HINSTANCE hPrevInstance,<span class="kom">// Předchozí instance</span></p>
+<p class="src1">LPSTR lpCmdLine,<span class="kom">// Parametry příkazové řádky</span></p>
+<p class="src1">int nCmdShow)<span class="kom">// Stav zobrazení okna</span></p>
+<p class="src0">{</p>
+
+<p>Deklarujeme dvě lokální proměnné. Msg bude použita na zjišťování, zda se mají zpracovávat nějaké zprávy. Proměnná done bude mít na počátku hodnotu false. To znamená, že náš program ještě nemá být ukončen. Dokud se done rovná false, program poběží. Jakmile se změní z false na true, program se ukončí.</p>
+
+<p class="src1">MSG msg;<span class="kom">// Struktura zpráv systému</span></p>
+<p class="src1">BOOL done=FALSE;<span class="kom">// Proměnná pro ukončení programu</span></p>
+
+<p>Další část kódu je volitelná. Zobrazuje zprávu, která se zeptá uživatele, zda chce spustit program ve fullscreenu. Pokud uživatel vybere možnost Ne, hodnota proměnné fullscreen se změní z výchozího true na false, a tím pádem se program spustí v okně.</p>
+
+<p class="src1"><span class="kom">// Dotaz na uživatele pro fullscreen/okno</span></p>
+<p class="src1">if (MessageBox(NULL,&quot;Would You Like To Run In Fullscreen Mode?&quot;, &quot;Start FullScreen?&quot;, MB_YESNO | MB_ICONQUESTION) == IDNO)</p>
+<p class="src1">{</p>
+<p class="src2">fullscreen=FALSE;<span class="kom">// Běh v okně</span></p>
+<p class="src1">}</p>
+
+<p>Vytvoříme OpenGL okno. Zadáme text titulku, šířku, výšku, barevnou hloubku a true (fullscreen), nebo false (okno) jako parametry do funkce CreateGLWindow(). Tak a je to! Je to pěkně lehké, že? Pokud se okno nepodaří z nějakého důvodu vytvořit, bude vráceno false a program se okamžitě ukončí.</p>
+
+<p class="src1">if (!CreateGLWindow(&quot;NeHe's OpenGL Framework&quot;,640,480,16,fullscreen))<span class="kom">// Vytvoření OpenGL okna</span></p>
+<p class="src1">{</p>
+<p class="src2">return 0;<span class="kom">// Konec programu při chybě</span></p>
+<p class="src1">}</p>
+
+<p>Smyčka se opakuje tak dlouho, dokud se done rovná false.</p>
+
+<p class="src1">while(!done)<span class="kom">// Hlavní cyklus programu</span></p>
+<p class="src1">{</p>
+
+<p>První věc, kterou uděláme, je zkontrolování zpráv pro okno. Pomocí funkce PeekMessage() můžeme zjistit zda nějaké zprávy čekají na zpracování bez toho, aby byl program pozastaven. Mnoho programů používá funkci GetMessage(). Pracuje to skvěle, ale program nic nedělá, když nedostává žádné zprávy.</p>
+
+<p class="src2">if (PeekMessage(&amp;msg,NULL,0,0,PM_REMOVE))<span class="kom">// Přišla zpráva?</span></p>
+<p class="src2">{</p>
+
+<p>Zkontrolujeme, zda jsme neobdrželi zprávu pro ukončení programu. Pokud je aktuální zpráva WM_QUIT, která je způsobena voláním funkce PostQuitMessage(0), nastavíme done na true, čímž přerušíme hlavní cyklus a ukončíme program.</p>
+
+<p class="src3">if (msg.message==WM_QUIT)<span class="kom">// Obdrželi jsme zprávu pro ukončení?</span></p>
+<p class="src3">{</p>
+<p class="src4">done=TRUE;<span class="kom">// Konec programu</span></p>
+<p class="src3">}</p>
+<p class="src3">else<span class="kom">// Předáme zprávu proceduře okna</span></p>
+<p class="src3">{</p>
+
+<p>Když zpráva nevyzývá k ukončení programu, tak předáme funkcím TranslateMessage() a DispatchMessage() referenci na tuto zprávu, aby ji funkce WndProc() nebo Windows zpracovaly.</p>
+
+<p class="src4">TranslateMessage(&amp;msg);<span class="kom">// Přeloží zprávu</span></p>
+<p class="src4">DispatchMessage(&amp;msg);<span class="kom">// Odešle zprávu</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src2">else<span class="kom">// Pokud nedošla žádná zpráva</span></p>
+<p class="src2">{</p>
+
+<p>Pokud zde nebudou již žádné zprávy, překreslíme OpenGL scénu. Následující řádek kontroluje, zda je okno aktivní. Naše scéna je vyrenderována a je zkontrolována vrácená hodnota. Když funkce DrawGLScene() vrátí false nebo je stisknut ESC, hodnota proměnné done je nastavena na true, což ukončí běh programu.</p>
+
+<p class="src3">if (active)<span class="kom">// Je program aktivní?</span></p>
+<p class="src3">{</p>
+<p class="src4">if (keys[VK_ESCAPE])<span class="kom">// Byl stisknut ESC?</span></p>
+<p class="src4">{</p>
+<p class="src5">done=TRUE;<span class="kom">// Ukončíme program</span></p>
+<p class="src4">}</p>
+<p class="src4">else<span class="kom">// Překreslení scény</span></p>
+<p class="src4">{</p>
+
+<p>Když všechno proběhlo bez problémů, prohodíme obsah bufferů (s použitím dvou bufferů předejdeme blikání obrazu při překreslování). Použitím dvojtého bufferingu všechno vykreslujeme do obrazovky v paměti, kterou nevidíme. Jakmile vyměníme obsah bufferů, to co je na obrazovce se přesune do této skryté obrazovky a to, co je ve skryté obrazovce se přenese na monitor. Díky tomu nevidíme probliknutí.</p>
+
+<p class="src5">DrawGLScene();<span class="kom">// Vykreslení scény</span></p>
+<p class="src5">SwapBuffers(hDC);<span class="kom">// Prohození bufferů (Double Buffering)</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+
+<p>Při stisku klávesy F1 přepneme z fullscreenu do okna a naopak.</p>
+
+<p class="src3">if (keys[VK_F1])<span class="kom">// Byla stisknuta klávesa F1?</span></p>
+<p class="src3">{</p>
+<p class="src4">keys[VK_F1]=FALSE;<span class="kom">// Označ ji jako nestisknutou</span></p>
+<p class="src4">KillGLWindow();<span class="kom">// Zruší okno</span></p>
+<p class="src4">fullscreen=!fullscreen;<span class="kom">// Negace fullscreen</span></p>
+<p></p>
+<p class="src4"><span class="kom">// Znovuvytvoření okna</span></p>
+<p class="src4">if (!CreateGLWindow(&quot;NeHe's OpenGL Framework&quot;,640,480,16,fullscreen))</p>
+<p class="src4">{</p>
+<p class="src5">return 0;<span class="kom">// Konec programu pokud nebylo vytvořeno</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Pokud se proměnná done rovná true, hlavní cyklus se přeruší. Zavřeme okno a opustíme program.</p>
+
+<p class="src1">KillGLWindow();<span class="kom">// Zavře okno</span></p>
+<p class="src1">return (msg.wParam);<span class="kom">// Ukončení programu</span></p>
+<p class="src0">}</p>
+
+<p>V této lekci jsem se vám pokoušel co nejpodrobněji vysvětlit každý krok při nastavování a vytváření OpenGL programu. Program se ukončí při stisku klávesy ESC a sleduje, zda je okno aktivní či nikoliv.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Václav Slováček - Wessan <span class="transform_email">&lt;horizont (zavináč) host.sk&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson01.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/asm/lesson01.zip">ASM</a> kód této lekce. ( <a href="mailto:foolman@bigfoot.com">Foolman</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson01_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson01.zip">C#</a> kód této lekce. ( <a href="mailto:joachim_rohde@freenet.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/csgl/lesson01.zip">VB.Net CsGL</a> kód této lekce. ( <a href="mailto:createdbyx@yahoo.com">X</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson01.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson01.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson01.zip">Delphi</a> kód této lekce. ( <a href="mailto:Perry.dj@glo.be">Peter De Jaegher</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson01-2.zip">Delphi</a> kód této lekce. ( <a href="mailto:nelsonnelson@hotmail.com">Nelson Nelson</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson01.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson01.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson01.zip">Irix</a> kód této lekce. ( <a href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson01.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java_swt/lesson01.zip">Java/SWT</a> kód této lekce. ( <a href="mailto:victor@parasoft.com">Victor Gonzalez</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson01.jar">JoGL</a> kód této lekce. ( <a href="mailto:jattier@hotmail.com">Kevin J. Duling</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson01.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson01.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:ulmont@bellsouth.net">Richard Campbell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson01.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson01.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson01.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson01.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson01.zip">MASM</a> kód této lekce. ( <a href="mailto:scalp@bigfoot.com">Nico (Scalp)</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/pbasic/lesson01.zip">Power Basic</a> kód této lekce. ( <a href="mailto:anguslaw@net.ntl.com">Angus Law</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/perl/lesson01.zip">Perl</a> kód této lekce. ( <a href="mailto:cahhmc@yahoo.com">Cora Hussey</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/python/lesson01.gz">Python</a> kód této lekce. ( <a href="mailto:hakuin@voicenet.com">John</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/scheme/lesson01.zip">Scheme</a> kód této lekce. ( <a href="mailto:bcj1980@sbcglobal.net">Jon DuBois</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/solaris/lesson01.zip">Solaris</a> kód této lekce. ( <a href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson01.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:rosscogl@email.com">Ross Dawson</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vfortran/lesson01.zip">Visual Fortran</a> kód této lekce. ( <a href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson01.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_01_big.jpg" class="nehe_velky" alt="Lekce 1" /></div>
+<p class="okolni_lekce"><a href="tut_00.php">&lt;&lt;&lt; Lekce 0</a> | <a href="tut_02.php">Lekce 2 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Honza</div>
+<div class="d_o_datumcas">10.12.2003 - 15:20:45</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=0">opengl bez okna???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">10.12.2003 - 18:32:59</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=1">Re: opengl bez okna???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Honza</div>
+<div class="d_o_datumcas">11.12.2003 - 19:31:30</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=2">Re: opengl bez okna???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">12.12.2003 - 10:12:27</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=3">Re: opengl bez okna???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Honza</div>
+<div class="d_o_datumcas">15.12.2003 - 19:39:49</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=4">Re: opengl bez okna???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kúsař</div>
+<div class="d_o_datumcas">13.01.2004 - 14:49:39</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=5">VisualBasic.Net</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Radim</div>
+<div class="d_o_datumcas">06.02.2004 - 11:02:44</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=6">gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">08.02.2004 - 20:06:09</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=7">Re: gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">30.03.2004 - 20:33:40</div>
+<div>
+<input type="checkbox" name="id_15" id="id_15" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=15">Re: gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Sajmi</div>
+<div class="d_o_datumcas">31.03.2006 - 19:01:50</div>
+<div>
+<input type="checkbox" name="id_90" id="id_90" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=90">Re: gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">zippy</div>
+<div class="d_o_datumcas">11.04.2006 - 14:05:16</div>
+<div>
+<input type="checkbox" name="id_91" id="id_91" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=91">Re: gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">jirka</div>
+<div class="d_o_datumcas">27.08.2006 - 16:18:05</div>
+<div>
+<input type="checkbox" name="id_115" id="id_115" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=115">Re: gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">03.04.2007 - 15:40:13</div>
+<div>
+<input type="checkbox" name="id_133" id="id_133" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=133">Re: gl/glaux.h: No such file or directory</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MOby</div>
+<div class="d_o_datumcas">12.02.2004 - 17:43:54</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=8">WinAPI</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">15.02.2004 - 19:30:52</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=9">Re: WinAPI</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kúsař</div>
+<div class="d_o_datumcas">22.02.2004 - 18:31:48</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=10">Re: WinAPI</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Honza</div>
+<div class="d_o_datumcas">23.02.2004 - 20:36:43</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=11">Visual C++</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.02.2004 - 20:54:34</div>
+<div>
+<input type="checkbox" name="id_12" id="id_12" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=12">Re: Visual C</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Honza</div>
+<div class="d_o_datumcas">10.03.2004 - 11:10:14</div>
+<div>
+<input type="checkbox" name="id_13" id="id_13" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=13">Co nejjednodussi WinApi</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">10.03.2004 - 21:04:22</div>
+<div>
+<input type="checkbox" name="id_14" id="id_14" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=14">Re: Co nejjednodussi WinApi</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">30.03.2004 - 20:40:27</div>
+<div>
+<input type="checkbox" name="id_16" id="id_16" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=16">Registrace souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">31.03.2004 - 16:27:47</div>
+<div>
+<input type="checkbox" name="id_17" id="id_17" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=17">Re: Registrace souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">06.04.2004 - 19:03:17</div>
+<div>
+<input type="checkbox" name="id_18" id="id_18" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=18">Re: Registrace souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">06.04.2004 - 19:16:41</div>
+<div>
+<input type="checkbox" name="id_19" id="id_19" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=19">Re: Registrace souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaff</div>
+<div class="d_o_datumcas">20.04.2004 - 20:05:48</div>
+<div>
+<input type="checkbox" name="id_20" id="id_20" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=20">Re: Registrace souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">killer020</div>
+<div class="d_o_datumcas">19.05.2004 - 21:49:44</div>
+<div>
+<input type="checkbox" name="id_21" id="id_21" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=21">PROBLEM!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.05.2004 - 19:57:42</div>
+<div>
+<input type="checkbox" name="id_22" id="id_22" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=22">Re: PROBLEM!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">serol</div>
+<div class="d_o_datumcas">28.02.2007 - 20:09:51</div>
+<div>
+<input type="checkbox" name="id_124" id="id_124" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=124">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">unnyp</div>
+<div class="d_o_datumcas">28.02.2007 - 23:52:26</div>
+<div>
+<input type="checkbox" name="id_125" id="id_125" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=125">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">oke</div>
+<div class="d_o_datumcas">01.03.2007 - 02:39:25</div>
+<div>
+<input type="checkbox" name="id_126" id="id_126" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=126">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">lupa1</div>
+<div class="d_o_datumcas">01.03.2007 - 14:02:45</div>
+<div>
+<input type="checkbox" name="id_127" id="id_127" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=127">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">bspawne</div>
+<div class="d_o_datumcas">04.03.2007 - 13:33:46</div>
+<div>
+<input type="checkbox" name="id_128" id="id_128" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=128">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">roid</div>
+<div class="d_o_datumcas">07.03.2007 - 18:02:07</div>
+<div>
+<input type="checkbox" name="id_129" id="id_129" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=129">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">new</div>
+<div class="d_o_datumcas">20.03.2007 - 21:16:16</div>
+<div>
+<input type="checkbox" name="id_130" id="id_130" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=130">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">yday</div>
+<div class="d_o_datumcas">21.03.2007 - 03:02:34</div>
+<div>
+<input type="checkbox" name="id_131" id="id_131" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=131">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">yday</div>
+<div class="d_o_datumcas">22.03.2007 - 03:53:06</div>
+<div>
+<input type="checkbox" name="id_132" id="id_132" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=132">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ricane</div>
+<div class="d_o_datumcas">02.05.2007 - 23:22:26</div>
+<div>
+<input type="checkbox" name="id_137" id="id_137" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=137">Re:</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">myspace 1328310970</div>
+<div class="d_o_datumcas">17.08.2007 - 15:00:02</div>
+<div>
+<input type="checkbox" name="id_138" id="id_138" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=138">1</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jiří Novák</div>
+<div class="d_o_datumcas">14.04.2005 - 00:31:04</div>
+<div>
+<input type="checkbox" name="id_65" id="id_65" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=65">Re: PROBLEM!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Malachi</div>
+<div class="d_o_datumcas">11.06.2005 - 12:49:06</div>
+<div>
+<input type="checkbox" name="id_66" id="id_66" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=66">Re: PROBLEM!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">03.04.2007 - 16:57:53</div>
+<div>
+<input type="checkbox" name="id_134" id="id_134" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=134">Re: PROBLEM!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mystery</div>
+<div class="d_o_datumcas">26.05.2004 - 23:12:37</div>
+<div>
+<input type="checkbox" name="id_23" id="id_23" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=23">Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">26.05.2004 - 23:35:56</div>
+<div>
+<input type="checkbox" name="id_24" id="id_24" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=24">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mystery</div>
+<div class="d_o_datumcas">27.05.2004 - 13:05:39</div>
+<div>
+<input type="checkbox" name="id_25" id="id_25" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=25">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">27.05.2004 - 15:05:03</div>
+<div>
+<input type="checkbox" name="id_26" id="id_26" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=26">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mystery</div>
+<div class="d_o_datumcas">27.05.2004 - 16:06:13</div>
+<div>
+<input type="checkbox" name="id_27" id="id_27" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=27">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">27.05.2004 - 17:55:15</div>
+<div>
+<input type="checkbox" name="id_28" id="id_28" value="1" />
+<span class="d_o_nadpis" style="margin-left: 100px;"><a href="d_view.php?f=tut_01.php&j=28">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mystery</div>
+<div class="d_o_datumcas">27.05.2004 - 18:23:06</div>
+<div>
+<input type="checkbox" name="id_29" id="id_29" value="1" />
+<span class="d_o_nadpis" style="margin-left: 120px;"><a href="d_view.php?f=tut_01.php&j=29">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.05.2004 - 10:23:37</div>
+<div>
+<input type="checkbox" name="id_30" id="id_30" value="1" />
+<span class="d_o_nadpis" style="margin-left: 140px;"><a href="d_view.php?f=tut_01.php&j=30">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Nightshejd</div>
+<div class="d_o_datumcas">10.06.2006 - 18:05:14</div>
+<div>
+<input type="checkbox" name="id_101" id="id_101" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=101">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">03.04.2007 - 17:02:17</div>
+<div>
+<input type="checkbox" name="id_135" id="id_135" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=135">Re: Problem se smyčkou</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Petr</div>
+<div class="d_o_datumcas">04.06.2004 - 10:00:26</div>
+<div>
+<input type="checkbox" name="id_31" id="id_31" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=31">Glut</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">01.07.2004 - 21:08:03</div>
+<div>
+<input type="checkbox" name="id_34" id="id_34" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=34">Re: Glut</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jaja</div>
+<div class="d_o_datumcas">15.06.2004 - 12:37:29</div>
+<div>
+<input type="checkbox" name="id_32" id="id_32" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=32">Problem s wglCreateContext</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">tomas</div>
+<div class="d_o_datumcas">25.06.2004 - 12:01:58</div>
+<div>
+<input type="checkbox" name="id_33" id="id_33" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=33">Jednoduchost</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">01.07.2004 - 21:12:35</div>
+<div>
+<input type="checkbox" name="id_35" id="id_35" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=35">Re: Jednoduchost</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mixx</div>
+<div class="d_o_datumcas">21.07.2004 - 22:13:21</div>
+<div>
+<input type="checkbox" name="id_36" id="id_36" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=36">CDS_FULLSCREEN</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.07.2004 - 10:19:49</div>
+<div>
+<input type="checkbox" name="id_37" id="id_37" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=37">Re: CDS_FULLSCREEN</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Yswah</div>
+<div class="d_o_datumcas">11.08.2004 - 20:52:13</div>
+<div>
+<input type="checkbox" name="id_38" id="id_38" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=38">Smycka zprav</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eMan</div>
+<div class="d_o_datumcas">27.08.2004 - 00:01:26</div>
+<div>
+<input type="checkbox" name="id_39" id="id_39" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=39">Re: Smycka zprav</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">martin</div>
+<div class="d_o_datumcas">19.10.2004 - 09:16:30</div>
+<div>
+<input type="checkbox" name="id_40" id="id_40" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=40">jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">19.10.2004 - 14:48:38</div>
+<div>
+<input type="checkbox" name="id_41" id="id_41" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=41">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">martin</div>
+<div class="d_o_datumcas">20.10.2004 - 14:58:03</div>
+<div>
+<input type="checkbox" name="id_42" id="id_42" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=42">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">20.10.2004 - 15:29:39</div>
+<div>
+<input type="checkbox" name="id_43" id="id_43" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=43">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">martin</div>
+<div class="d_o_datumcas">21.10.2004 - 13:06:13</div>
+<div>
+<input type="checkbox" name="id_44" id="id_44" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=44">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">22.10.2004 - 10:01:42</div>
+<div>
+<input type="checkbox" name="id_45" id="id_45" value="1" />
+<span class="d_o_nadpis" style="margin-left: 100px;"><a href="d_view.php?f=tut_01.php&j=45">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">martin</div>
+<div class="d_o_datumcas">22.10.2004 - 14:42:22</div>
+<div>
+<input type="checkbox" name="id_46" id="id_46" value="1" />
+<span class="d_o_nadpis" style="margin-left: 120px;"><a href="d_view.php?f=tut_01.php&j=46">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">22.10.2004 - 15:31:55</div>
+<div>
+<input type="checkbox" name="id_47" id="id_47" value="1" />
+<span class="d_o_nadpis" style="margin-left: 140px;"><a href="d_view.php?f=tut_01.php&j=47">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">martin</div>
+<div class="d_o_datumcas">22.10.2004 - 20:11:56</div>
+<div>
+<input type="checkbox" name="id_48" id="id_48" value="1" />
+<span class="d_o_nadpis" style="margin-left: 160px;"><a href="d_view.php?f=tut_01.php&j=48">Re: jak začít v céčku</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">18.11.2004 - 15:09:41</div>
+<div>
+<input type="checkbox" name="id_49" id="id_49" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=49">LIBLARIES</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">03.01.2005 - 23:22:47</div>
+<div>
+<input type="checkbox" name="id_52" id="id_52" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=52">Re: LIBLARIES</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eMan</div>
+<div class="d_o_datumcas">31.12.2004 - 14:00:27</div>
+<div>
+<input type="checkbox" name="id_50" id="id_50" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=50">bits</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">03.01.2005 - 22:55:34</div>
+<div>
+<input type="checkbox" name="id_51" id="id_51" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=51">Re: bits</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eMan</div>
+<div class="d_o_datumcas">04.01.2005 - 18:13:29</div>
+<div>
+<input type="checkbox" name="id_53" id="id_53" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=53">Re: bits</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">04.01.2005 - 19:36:18</div>
+<div>
+<input type="checkbox" name="id_54" id="id_54" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=54">Re: bits</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eMan</div>
+<div class="d_o_datumcas">06.01.2005 - 14:30:44</div>
+<div>
+<input type="checkbox" name="id_55" id="id_55" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=55">Re: bits</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mig29</div>
+<div class="d_o_datumcas">16.01.2005 - 14:30:25</div>
+<div>
+<input type="checkbox" name="id_56" id="id_56" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=56">Jak na větší rozlíšení a větší barevnou hloubku?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">16.01.2005 - 20:08:23</div>
+<div>
+<input type="checkbox" name="id_57" id="id_57" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=57">Re: Jak na větší rozlíšení a větší barevnou hloubku?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Zeratul</div>
+<div class="d_o_datumcas">14.02.2005 - 18:07:27</div>
+<div>
+<input type="checkbox" name="id_58" id="id_58" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=58">Pomoc!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">14.02.2005 - 19:41:45</div>
+<div>
+<input type="checkbox" name="id_59" id="id_59" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=59">Re: Pomoc!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Zeratul</div>
+<div class="d_o_datumcas">15.02.2005 - 09:11:07</div>
+<div>
+<input type="checkbox" name="id_60" id="id_60" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=60">Re: Pomoc!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">18.02.2005 - 14:25:13</div>
+<div>
+<input type="checkbox" name="id_61" id="id_61" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=61">Re: Pomoc!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Ales</div>
+<div class="d_o_datumcas">01.03.2005 - 20:17:54</div>
+<div>
+<input type="checkbox" name="id_62" id="id_62" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=62">Okno</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">abwickler</div>
+<div class="d_o_datumcas">02.03.2005 - 20:56:50</div>
+<div>
+<input type="checkbox" name="id_63" id="id_63" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=63">ehh</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">02.03.2005 - 22:15:18</div>
+<div>
+<input type="checkbox" name="id_64" id="id_64" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=64">Re: ehh</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">george</div>
+<div class="d_o_datumcas">12.06.2005 - 18:33:17</div>
+<div>
+<input type="checkbox" name="id_67" id="id_67" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=67">PROSIM, POMOZTE</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">nevim</div>
+<div class="d_o_datumcas">13.06.2005 - 14:33:51</div>
+<div>
+<input type="checkbox" name="id_68" id="id_68" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=68">Re: PROSIM, POMOZTE</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">PETER</div>
+<div class="d_o_datumcas">13.12.2005 - 20:26:22</div>
+<div>
+<input type="checkbox" name="id_83" id="id_83" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=83">PROSIM, POMOZTE</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">weerwolf</div>
+<div class="d_o_datumcas">02.03.2006 - 10:16:37</div>
+<div>
+<input type="checkbox" name="id_89" id="id_89" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=89">Re: PROSIM, POMOZTE</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">18.06.2005 - 21:27:20</div>
+<div>
+<input type="checkbox" name="id_69" id="id_69" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=69">Grafika pod Linuxem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">19.06.2005 - 12:36:15</div>
+<div>
+<input type="checkbox" name="id_70" id="id_70" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=70">Re: Grafika pod Linuxem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">19.06.2005 - 12:40:56</div>
+<div>
+<input type="checkbox" name="id_71" id="id_71" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=71">Re: Grafika pod Linuxem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">geon</div>
+<div class="d_o_datumcas">25.08.2005 - 20:09:11</div>
+<div>
+<input type="checkbox" name="id_72" id="id_72" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=72">python</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.09.2005 - 22:01:10</div>
+<div>
+<input type="checkbox" name="id_73" id="id_73" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=73">Re: python</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">promos</div>
+<div class="d_o_datumcas">24.11.2005 - 02:38:19</div>
+<div>
+<input type="checkbox" name="id_74" id="id_74" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=74">Undefined reference</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">24.11.2005 - 09:58:30</div>
+<div>
+<input type="checkbox" name="id_75" id="id_75" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=75">Re: Undefined reference</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">rtghgfhdfgh</div>
+<div class="d_o_datumcas">25.12.2005 - 00:33:33</div>
+<div>
+<input type="checkbox" name="id_85" id="id_85" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=85">Re: Undefined reference</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mysterius</div>
+<div class="d_o_datumcas">04.12.2005 - 23:15:33</div>
+<div>
+<input type="checkbox" name="id_76" id="id_76" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=76">velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mysterius</div>
+<div class="d_o_datumcas">04.12.2005 - 23:24:59</div>
+<div>
+<input type="checkbox" name="id_77" id="id_77" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=77">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">05.12.2005 - 13:43:12</div>
+<div>
+<input type="checkbox" name="id_78" id="id_78" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=78">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mysterius</div>
+<div class="d_o_datumcas">05.12.2005 - 23:28:42</div>
+<div>
+<input type="checkbox" name="id_79" id="id_79" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=79">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">12.12.2005 - 14:36:26</div>
+<div>
+<input type="checkbox" name="id_82" id="id_82" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=82">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Ammon</div>
+<div class="d_o_datumcas">12.12.2005 - 10:36:23</div>
+<div>
+<input type="checkbox" name="id_80" id="id_80" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=80">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">12.12.2005 - 14:34:27</div>
+<div>
+<input type="checkbox" name="id_81" id="id_81" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=81">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mysterius</div>
+<div class="d_o_datumcas">01.01.2006 - 18:16:04</div>
+<div>
+<input type="checkbox" name="id_86" id="id_86" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=86">Re: velký problém ... a záhada..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">PETER</div>
+<div class="d_o_datumcas">13.12.2005 - 20:27:31</div>
+<div>
+<input type="checkbox" name="id_84" id="id_84" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=84">SURNE POMOZTE</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">peter laborecky</div>
+<div class="d_o_datumcas">14.04.2006 - 13:56:07</div>
+<div>
+<input type="checkbox" name="id_92" id="id_92" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=92">Re: SURNE POMOZTE</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Slappy</div>
+<div class="d_o_datumcas">03.02.2006 - 21:01:27</div>
+<div>
+<input type="checkbox" name="id_87" id="id_87" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=87">Visual C++ Link Error</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">04.02.2006 - 11:09:15</div>
+<div>
+<input type="checkbox" name="id_88" id="id_88" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=88">Re: Visual C++ Link Error</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Plautus</div>
+<div class="d_o_datumcas">01.06.2006 - 13:47:05</div>
+<div>
+<input type="checkbox" name="id_93" id="id_93" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=93">Změna obnovovací frekvence</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">01.06.2006 - 19:41:43</div>
+<div>
+<input type="checkbox" name="id_94" id="id_94" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=94">Re: Změna obnovovací frekvence</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Plautus</div>
+<div class="d_o_datumcas">03.06.2006 - 21:11:28</div>
+<div>
+<input type="checkbox" name="id_100" id="id_100" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=100">Změna obnovovací frekvence</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Seto</div>
+<div class="d_o_datumcas">03.06.2006 - 11:51:17</div>
+<div>
+<input type="checkbox" name="id_95" id="id_95" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=95">HELP - nejde buildovat</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">03.06.2006 - 13:24:11</div>
+<div>
+<input type="checkbox" name="id_96" id="id_96" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=96">Re: HELP - nejde buildovat</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Seto</div>
+<div class="d_o_datumcas">03.06.2006 - 13:56:43</div>
+<div>
+<input type="checkbox" name="id_97" id="id_97" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=97">Re: HELP - nejde buildovat</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">03.06.2006 - 14:04:32</div>
+<div>
+<input type="checkbox" name="id_98" id="id_98" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_01.php&j=98">Re: HELP - nejde buildovat</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Seto</div>
+<div class="d_o_datumcas">03.06.2006 - 14:07:58</div>
+<div>
+<input type="checkbox" name="id_99" id="id_99" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_01.php&j=99">Re: HELP - nejde buildovat</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Xennus</div>
+<div class="d_o_datumcas">10.06.2006 - 22:33:06</div>
+<div>
+<input type="checkbox" name="id_102" id="id_102" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=102">can't set the pixelformat</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">jirka</div>
+<div class="d_o_datumcas">06.07.2006 - 22:32:20</div>
+<div>
+<input type="checkbox" name="id_103" id="id_103" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=103">problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">jirka</div>
+<div class="d_o_datumcas">06.07.2006 - 22:35:36</div>
+<div>
+<input type="checkbox" name="id_104" id="id_104" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=104">Re: problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Uiii</div>
+<div class="d_o_datumcas">09.08.2006 - 15:43:56</div>
+<div>
+<input type="checkbox" name="id_105" id="id_105" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=105">Opengl a wxWidgets</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">09.08.2006 - 17:42:17</div>
+<div>
+<input type="checkbox" name="id_106" id="id_106" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=106">Re: Opengl a wxWidgets</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Piskor</div>
+<div class="d_o_datumcas">09.08.2006 - 23:12:19</div>
+<div>
+<input type="checkbox" name="id_107" id="id_107" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=107">Smycka zprav a WM_PAINT</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">10.08.2006 - 08:45:08</div>
+<div>
+<input type="checkbox" name="id_108" id="id_108" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=108">Re: Smycka zprav a WM_PAINT</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">piskor</div>
+<div class="d_o_datumcas">16.08.2006 - 01:44:28</div>
+<div>
+<input type="checkbox" name="id_111" id="id_111" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=111">Re: Smycka zprav a WM_PAINT</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Le Minie</div>
+<div class="d_o_datumcas">15.08.2006 - 11:50:36</div>
+<div>
+<input type="checkbox" name="id_109" id="id_109" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=109">Opengl okno v Delphi</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">15.08.2006 - 11:58:21</div>
+<div>
+<input type="checkbox" name="id_110" id="id_110" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=110">Re: Opengl okno v Delphi</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Almer</div>
+<div class="d_o_datumcas">27.08.2006 - 11:04:15</div>
+<div>
+<input type="checkbox" name="id_112" id="id_112" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=112">MessageBox problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">27.08.2006 - 11:32:50</div>
+<div>
+<input type="checkbox" name="id_113" id="id_113" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=113">Re: MessageBox problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Almer</div>
+<div class="d_o_datumcas">27.08.2006 - 12:01:57</div>
+<div>
+<input type="checkbox" name="id_114" id="id_114" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=114">Re: MessageBox problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.:The_Beast:.</div>
+<div class="d_o_datumcas">07.09.2006 - 16:47:38</div>
+<div>
+<input type="checkbox" name="id_116" id="id_116" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=116">Glaux</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Seto</div>
+<div class="d_o_datumcas">08.09.2006 - 12:51:17</div>
+<div>
+<input type="checkbox" name="id_117" id="id_117" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=117">Re: Glaux</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">DjPhilipe</div>
+<div class="d_o_datumcas">05.10.2006 - 00:53:31</div>
+<div>
+<input type="checkbox" name="id_118" id="id_118" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=118">Problem s kompilaciou..</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">qwert</div>
+<div class="d_o_datumcas">24.11.2006 - 11:37:23</div>
+<div>
+<input type="checkbox" name="id_119" id="id_119" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=119">HDC a HRC</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Le Minie</div>
+<div class="d_o_datumcas">12.01.2007 - 15:13:31</div>
+<div>
+<input type="checkbox" name="id_120" id="id_120" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=120">Vykreslovanie rovno na pracovnú plochu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mata</div>
+<div class="d_o_datumcas">15.01.2007 - 13:03:18</div>
+<div>
+<input type="checkbox" name="id_121" id="id_121" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=121">Vykreslení OpenGL scény do prvku &quot;PICTURE&quot; (DELPHI)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Martel</div>
+<div class="d_o_datumcas">16.01.2007 - 08:48:05</div>
+<div>
+<input type="checkbox" name="id_122" id="id_122" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=122">V programe nie je ostrena klavesova skratka Alt+Enter</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">jobes</div>
+<div class="d_o_datumcas">22.01.2007 - 12:01:49</div>
+<div>
+<input type="checkbox" name="id_123" id="id_123" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=123">Re: V programe nie je ostrena klavesova skratka Alt Enter</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">palo</div>
+<div class="d_o_datumcas">23.04.2007 - 18:19:37</div>
+<div>
+<input type="checkbox" name="id_136" id="id_136" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=136">#include &lt;gl\glaux.h&gt;</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Palmik</div>
+<div class="d_o_datumcas">26.09.2007 - 18:05:51</div>
+<div>
+<input type="checkbox" name="id_139" id="id_139" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_01.php&j=139">Mnoho chyb typu undeclared identifier</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Palo</div>
+<div class="d_o_datumcas">26.09.2007 - 19:18:20</div>
+<div>
+<input type="checkbox" name="id_140" id="id_140" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_01.php&j=140">Re: Mnoho chyb typu undeclared identifier</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Palmik</div>
+<div class="d_o_datumcas">27.09.2007 - 14:37:52</div>
+<div>
+<input type="checkbox" name="id_141" id="id_141" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_01.php&j=141">Re: Mnoho chyb typu undeclared identifier</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_01.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

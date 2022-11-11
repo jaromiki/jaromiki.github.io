@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	  		<script>
+        var canvas; var context;
+		var x; var y;
+		var x1=[0]; var y1=[0]; var pu=0;
+		var x2=[0]; var y2=[0];
+		var farba=[0]; var ff=0;
+		var dole=0;
+function init()
+{		
+   canvas = document.getElementById("platno");
+   if (canvas.getContext) 
+   { context = canvas.getContext("2d");
+   context.fillStyle = "#a8c101";
+    context.fillRect(0, 0, 800, 600); }
+   canvas2 = document.getElementById("platno2");
+   if (canvas2.getContext) 
+   { context2 = canvas2.getContext("2d");
+   context2.fillStyle = "#a8c101";
+    context2.fillRect(0, 0, 800, 600); }
+}		
+        function mdole(xs,ys)
+		{ dole=1;
+		  x1[pu]=xs;y1[pu]=ys; 
+		  
+		}
+		function mhore(xs,ys)
+		{ dole=0;
+		  x2[pu]=xs;y2[pu]=ys;
+		  pu++; 
+		}
+		function dole0()
+		{dole=1; context.strokeStyle=f.style.backgroundColor;
+		}
+		function ciara(xs,ys)
+		{ if(dole)
+		  { 
+		  
+		   context.beginPath();
+		   context.moveTo(x,y);
+		   x=xs; y=ys;
+		   context.lineTo(x,y);
+		   context.closePath();
+		   context.stroke();
+    	  }
+		  else { x=xs; y=ys; }
+		}
+		function usecka(xs,ys)
+		{ if(dole)
+		   {x2[pu]=xs; y2[pu]=ys;
+		     context2.fillRect(0, 0, 800, 600); 
+           for (i=0;i<=pu;i++)
+		   { 
+		   context2.beginPath();
+		   context2.moveTo(x1[i],y1[i]);
+		   context2.lineTo(x2[i],y2[i]);
+		   context2.closePath();
+		   context2.stroke();
+		   }
+		   }
+		   
+		}
+			</script>
+</head>
+
+<body onload="init();">
+<center><h3 class=nadpis>Kreslenie čiar</h3></center>
+<dl><dt class=main>Kreslenie čiar myšou
+	<dd>Určite ste sa stretli s nejakým rastrovým grafickým programom, ktorý umožňuje kresliť obrázky (napr. MsPain).
+		Kreslenie čiary tam prebieha nasledovne:
+		<ul><li>užívateľ zvolí miesto, kde bude čiara začínať a stlačí tam ľavé tlačítko myši
+			<li>ťahaním/posúvaním myši vzniká "dočasná" čiara
+				<br>pri každom posunutí "stará" čiara zanikne a "nová" sa vykreslí
+			<li>po uvoľnení tlačítka myši je čiara definitívna a už sa nedá "naťahovať"
+		</ul>
+		Cieľom tejto lekcie bude ukázať si základné myšlienky, ako tento efekt dosiahnuť a tiež možnosti ako voliť farbu a hrúbku pera	
+	<dt>Udalosti súvisiace s myšou
+	<dd>Na grafickej ploche možno ošetrovať 3 rôzne udalosti súvisiace s myšou: 
+		<ul><li>onMouseDown - zatlačili sme nad plochou niektoré tlačidlo myši 
+			<li>onMouseMove - myš sa hýbe nad plochou 
+			<li>onMouseUp - pustili sme tlačidlo myši 
+		</ul>	
+	<dt>Ťahaním myši kreslíme bodky
+	<dd>Budeme ošetrovať udalosť OnMouseMove a pri každom pohybe myši nakreslíme bodku na mieste kam sme sa posunuli
+		<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   			<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+{   Image1->Canvas->Pixels[X][Y] = clBlack;
+}
+</pre>	
+</div></div></div>
+		Pohybom myši sa vybodkováva cesta po ktorej myš ide.
+		<br>Skúste porozmýšlať prečo sú medzi bodkami medzery
+		<br>Netrpezlivejším tu určite chýba, že v tomto programe, tento bodkovací efekt nemôžme zatiaľ zapínať a vypínať ale to príde za chvíľu.
+		<br>Vidíme že Image1 pri kreslení nepríjemne bliká, tomu možno zabrániť vložením príkazu <b>DoubleBuffered = 1;</b> , ktorý vložíme do FormCreate(); 
+	<dt>Ťahaním myši kreslíme čiaru
+	<dd>Pri rýchlejších pohyboch myši v minulom príklade vznikali medzi bodkami aj dosť veľké medzery, teraz pri presune myši
+		budeme za sebou ťahať čiaru
+		<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.cpp
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   			<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+{   Image1->Canvas->LineTo(X,Y);
+}
+</pre>	
+		</div></div></div>
+		Teraz sa naozaj spájajú čiary podľa pohybu myši, lenže čiary sa kreslia aj keď sa tlačidlo myši nezatlačí.
+		Na testovanie využijeme parameter <b>Shift: je typu TShiftState</b> (čo je vlastne množina zatlačených "významných"
+		 tlačítok)
+		 <br>type TShiftState = set of (ssShift,ssAlt,ssCtrl,ssLeft,ssRight,ssMiddle,ssDouble);
+		 <br>Tlačítko do množiny automaticky patrí ak je zatlačené, ak ho uvoľníme automaticky sa 
+		 z tejto množiny vyradí. My budeme sledovať ľavé tlačítko myši - ssLeft
+		Na testovanie, či prvok patrí do množiny sa používa metóda <b>Contains</b>. 
+		Pozri <a href="../02programujeme/mnoziny.html" target="_blank">množiny</a>
+		Takto vyzerá program, ktorý kreslí len pri stlačenom ľavom tlačítku myši
+		<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.cpp
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   			<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+{   if (Shift.Contains(ssLeft)) Image1->Canvas->LineTo(X,Y);
+    else Image1->Canvas->MoveTo(X,Y);
+}
+</pre>	
+		</div></div></div>
+		Takto nejak v MsPain funguje kreslenie "voľnou rukou". Skúste porozmýšlať ako by program fungoval 
+		ak by sme nedali vetvu else - overte si, či ste "uhádli".
+		<br>A spustený program bude vyzerať nejak takto (na zelenej ploche si môžete vyskúšať kreslenie):
+
+<div style="border-width:3;border-style:outset;width:700px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:700px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:700px;" onmousemove="if (canvas.getContext) ciara(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" onmousedown="dole0();" onmouseup="dole=0">
+<canvas width="650" height="450" id="platno" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<Table width="650"><tr><td>
+<table border="1"><tr><td rowspan="2" colspan="2" id="f" bgcolor="#000000" >&nbsp; &nbsp;<td bgcolor="black" onclick="f.style.background='black'">&nbsp;
+                                                                      <td bgcolor="#880000" onclick="f.style.backgroundColor='#880000'">&nbsp;
+																	  <td bgcolor="#008800" onclick="f.style.background='#008800'">&nbsp;
+																	  <td bgcolor="#555500" onclick="f.style.background='#555500'">&nbsp;
+																	  <td bgcolor="#000088" onclick="f.style.background='#000088'">&nbsp;
+																	  <td bgcolor="#550055" onclick="f.style.background='#550055'">&nbsp;
+																	  <td bgcolor="#005555" onclick="f.style.background='#005555'">&nbsp;
+																	  <td bgcolor="#c0c0c0" onclick="f.style.background='#c0c0c0'">&nbsp;</tr>
+		<tr><td bgcolor="#666666" onclick="f.style.background='#666666'">&nbsp;
+			<td bgcolor="#ee0000" onclick="f.style.background='#ee0000'">&nbsp;
+			<td bgcolor="#00ee00" onclick="f.style.background='#00ee00'">&nbsp;
+			<td bgcolor="#eeee00" onclick="f.style.background='#eeee00'">&nbsp;
+			<td bgcolor="#0000ee" onclick="f.style.background='#0000ee'">&nbsp;
+			<td bgcolor="#ee00ee" onclick="f.style.background='#ee00ee'">&nbsp;
+			<td bgcolor="#00eeee" onclick="f.style.background='#00eeee'">&nbsp;
+			<td bgcolor="#ffffff" onclick="f.style.background='#ffffff'">&nbsp;</tr>
+</table>
+<td><table border="1" bgcolor="White">
+		<tr><td colspan="9" align="center" bgcolor="silver">Hrúbka</tr>
+		<tr><td onclick="context.lineWidth= 1;"> 1 &nbsp;
+		    <td onclick="context.lineWidth= 2;"> 2 &nbsp;
+			<td onclick="context.lineWidth= 3;"> 3 &nbsp;
+			<td onclick="context.lineWidth= 4;"> 4 &nbsp;
+			<td onclick="context.lineWidth= 5;"> 5 &nbsp;
+			<td onclick="context.lineWidth= 6;"> 6 &nbsp;
+			<td onclick="context.lineWidth= 7;"> 7 &nbsp;
+			<td onclick="context.lineWidth= 8;"> 8 &nbsp;
+			<td onclick="context.lineWidth= 9;"> 9 &nbsp;</tr></table></tr>
+</table>
+ 
+
+<input type="Button" value="Clear" onclick="context.fillRect(0, 0, 650, 450);">
+</div>
+<br>
+
+	<dt>Ťahaním myši kreslíme úsečky
+	<dd>Tu potrebujeme kreliť "dočasné" úsečky, ktoré budú pri pohybe myši do nového koncového bodu miznúť.
+		<br>Čo budeme k tomu potrebovať:
+		<ul><li>premenné
+				<br>xx,yy - poloha začiatku našej úsečky (nastaví sa pri stlačení ľavého tlačítka)
+				<br>xs,ys - "stará" poloha koncového bodu úsečky (nastaví sa po vykrelení "dočasnej" 
+				úsečky do nového koncového bodu	
+			<li>techniku ako zotrieť dočasnú usečku bez toho aby sa obrazovka vrátila do stavu v akom bola
+				pred jej nakreslením. Úloha sa zdá byť ťažká, ale pomocou nastavenia Pen.Mode:=pmNot je máme jednoduché
+				riešenie. 
+				<br>Vysvetlenie:
+				<br>Ak kreslíme čiaru v režime pmNot nekreslí sa farbou pera (farba pera nemá na zobrazenú čiaru vplyv)
+				ale robí inverziu/negáciu podkladu (biely podlkad -&gt;čierna farba, zelený podklad -&gt;fialová čiara).
+				Z matematiky vieme, že ak urobíme 2-krát negáciu dostaneme pôvodnú hodnotu.
+				<br>Čiže ak druhý-krát nakreslíme tú istú úsečku tak nám úsečka korektne zmizne.
+		</ul>		
+		<br>A takto nejak by to mohlo byť naprogramované:
+		<div style="border-width:3;border-style:outset;width:800px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:800px; padding:0;border-width:0;color:white">Unit1.cpp
+   		</div>
+   		<div style="background-color:#dddddd; width:800px;" >
+   			<div style="margin:10px">
+<pre>
+//****************** Pohyb myši nad Image *********************************
+void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+{   if (Shift.Contains(ssLeft))
+    {  Image1->Canvas->MoveTo(xx,yy);  //dáme sa načiatok dočasnej úsečky
+       Image1->Canvas->LineTo(xs,ys);  //zotrieme starú dočasnú úsečku
+       Image1->Canvas->MoveTo(xx,yy);  //dáme sa načiatok dočasnej úsečky
+       Image1->Canvas->LineTo(x,y);  //nakreslíme novú dočasnú úsečku
+       xs = X; ys = Y;                 //odpamätáme, aby sme neskôr mohli zmazať
+    }
+//ak nie je stlačené tlačítko myši nerobíme nič
+}
+//****************** Stlačili sme dole *************************************
+void __fastcall TForm1::Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
+{   xx = X; yy = Y;                    //zapamätáme si začiatok novej dočasnej úsečky
+    xs = X;  ys = Y;
+    Image1->Canvas->Pen->Mode = pmNot;   //zapneme dočasný mód
+}
+//****************** Pustili sme tlačítko myši *****************************
+void __fastcall TForm1::Image1MouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
+{     Image1->Canvas->MoveTo(xx,yy);  //dáme sa načiatok dočasnej úsečky
+      Image1->Canvas->LineTo(xs,ys);  //zotrieme starú dočasnú úsečku (pre istotu)
+      Image1->Canvas->Pen->Mode = pmCopy;   //zapneme "normálny" režim kreslenia
+      Image1->Canvas->MoveTo(xx,yy);  //dáme sa načiatok úsečky
+      Image1->Canvas->LineTo(x,y);  //nakreslíme novú trvalú úsečku
+}
+</pre>	
+		</div></div></div>
+		<br>A spustený program bude vyzerať nejak takto (na zelenej ploche si môžete vyskúšať kreslenie):
+
+<div style="border-width:3;border-style:outset;width:700px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:700px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:700px;" 
+	 onmousemove="if (canvas2.getContext) usecka(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );"
+	onmousedown="if (canvas2.getContext) mdole(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" 
+	onmouseup="if (canvas2.getContext) mhore(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );">
+<canvas width="670" height="450" id="platno2" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<input type="Button" value="Clear" onclick="context2.fillRect(0, 0, 670, 450);pu=0;">
+</div>
+<br>
+
+
+
+	<dt>Podporné akcie
+	<dd>Každý grafický program by mal vedieť svoj vytvorený obrázok zapísať na disk, čo možno spraviť
+		cez menu alebo cez tlačítko. Príkaz je nasledovný
+		<br>Image1->Pictures->SaveToFile("subor.bmp");
+		<br><br>Na voľbu farby možno použiť ColorDialog alebo ColorGrid
+		<br><br>Na voľbu hrúbky pera možno použiť RadioGroup alebo si vytvorím grafické pomôcky, kde klikaním
+		zvolím hrúbku pera. Jednoduché (ale nie praktické) je hrúbku zadávať do Editu - grafický program by mal 
+		vystačiť s myšou. Dobrým riešením sa mi zdá aj použitie objektu TrackBar.
+</dl>
+</body>
+</html>

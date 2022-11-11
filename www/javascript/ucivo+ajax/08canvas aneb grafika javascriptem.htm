@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html dir="ltr" xmlns="http://www.w3.org/1999/html" lang="cs-cz"><head>
+	<!-- base href="http://www.devbook.cz/" -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="googlebot" content="index,follow">
+	<meta name="robots" content="index,follow">
+	<meta name="author" content="Devbook">
+		<link rel="stylesheet" href="08Canvas%20aneb%20grafika%20JavaScriptem_subory/style_002.css" type="text/css">
+		<link rel="stylesheet" href="08Canvas%20aneb%20grafika%20JavaScriptem_subory/style.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="08Canvas%20aneb%20grafika%20JavaScriptem_subory/autocomplete.css">
+	<link rel="stylesheet" type="text/css" href="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery.css" media="screen">
+	<link rel="shortcut icon" href="http://www.devbook.cz/icon.ico">
+		<link rel="stylesheet" href="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery-ui.css" type="text/css">
+		<script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/widgets.js" id="twitter-wjs"></script><script async="" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/cbgapi.loaded_0"></script><script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery_003.js"></script>
+	<script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery-ui.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery_002.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jquery_widgets.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/clever_ad.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/flowplayer-3.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/kniha.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/online_checker.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/images.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/rank.js"></script>
+	<script type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/infinite.js"></script>
+	<script gapi_processed="true" type="text/javascript" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/plusone.js">
+		{
+			lang: 'cs'
+		}
+	</script>
+	<script type="text/javascript">
+		window.onload = function () {
+			// zapsání výšky obrázku - chtělo by to něco unikátnějšího než image !!!
+			var img = $("#image img");
+			$("#image").height(img.height());
+		}
+	</script>
+		<title>Canvas aneb grafika JavaScriptem</title>
+		<meta name="description" content="Kreslíme grafiku na HTML5 canvas JavaScriptem">
+	<meta name="keywords" content="Canvas, JavaScript, HTML5, grafika">
+
+	
+			<style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}
+.fb_invisible{display:none}
+.fb_reset{background:none;border-spacing:0;border:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}
+.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}
+.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}
+.fb_dialog_content{background:#fff;color:#333}
+.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yA/x/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/y6/x/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px;top:8px\9;right:7px\9}
+.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}
+.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}
+.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yA/x/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/y6/x/s816eWC-2sl.gif)}
+.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yA/x/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/y6/x/s816eWC-2sl.gif)}
+.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}
+.fb_dialog_top_left,
+.fb_dialog_top_right,
+.fb_dialog_bottom_left,
+.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}
+/* @noflip */
+.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}
+/* @noflip */
+.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}
+/* @noflip */
+.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}
+/* @noflip */
+.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right,
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right{width:10px;height:100%}
+.fb_dialog_vert_left{margin-left:-10px}
+.fb_dialog_vert_right{right:0;margin-right:-10px}
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{width:100%;height:10px}
+.fb_dialog_horiz_top{margin-top:-10px}
+.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}
+.fb_dialog_iframe{line-height:0}
+.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}
+.fb_dialog_content .dialog_title > span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yD/x/Cou7n-nqK52.gif)
+no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}
+body.fb_hidden{-webkit-transform:none;height:100%;margin:0;left:-10000px;overflow:visible;position:absolute;top:-10000px;width:100%
+}
+.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yc/x/3rhSv5V8j3o.gif)
+white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}
+.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}
+#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}
+#fb-root #fb_dialog_ipad_overlay.hidden{display:none}
+.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}
+.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0 0, 0 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}
+.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%
+}
+.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0 0, 0 100%, from(#4966A6),
+color-stop(0.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset,
+rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}
+.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}
+.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yJ/x/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}
+.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}
+#fb_dialog_loader_close{float:left}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{position:relative;display:-moz-inline-block;display:inline-block}
+.fb_iframe_widget iframe{position:absolute}
+.fb_iframe_widget_lift{z-index:1}
+.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify;vertical-align:text-bottom}
+.fb_hide_iframes iframe{position:relative;left:-10000px}
+.fb_iframe_widget_loader{position:relative;display:inline-block}
+.fb_iframe_widget_fluid{display:inline}
+.fb_iframe_widget_fluid span{width:100%}
+.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}
+.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yJ/x/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_button_simple,
+.fb_button_simple_rtl{background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yH/x/eIpbnVKI9lR.png);background-repeat:no-repeat;cursor:pointer;outline:none;text-decoration:none}
+.fb_button_simple_rtl{background-position:right 0}
+.fb_button_simple .fb_button_text{margin:0 0 0 20px;padding-bottom:1px}
+.fb_button_simple_rtl .fb_button_text{margin:0 10px 0 0}
+a.fb_button_simple:hover .fb_button_text,
+a.fb_button_simple_rtl:hover .fb_button_text,
+.fb_button_simple:hover .fb_button_text,
+.fb_button_simple_rtl:hover .fb_button_text{text-decoration:underline}
+.fb_button,
+.fb_button_rtl{background:#29447e url(http://static.ak.fbcdn.net/rsrc.php/v2/yl/x/FGFbc80dUKj.png);background-repeat:no-repeat;cursor:pointer;display:inline-block;padding:0 0 0 1px;text-decoration:none;outline:none}
+.fb_button .fb_button_text,
+.fb_button_rtl .fb_button_text{background:#5f78ab url(http://static.ak.fbcdn.net/rsrc.php/v2/yl/x/FGFbc80dUKj.png);border-top:solid 1px #879ac0;border-bottom:solid 1px #1a356e;color:#fff;display:block;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-weight:bold;padding:2px 6px 3px 6px;margin:1px 1px 0 21px;text-shadow:none}
+a.fb_button,
+a.fb_button_rtl,
+.fb_button,
+.fb_button_rtl{text-decoration:none}
+a.fb_button:active .fb_button_text,
+a.fb_button_rtl:active .fb_button_text,
+.fb_button:active .fb_button_text,
+.fb_button_rtl:active .fb_button_text{border-bottom:solid 1px #29447e;border-top:solid 1px #45619d;background:#4f6aa3;text-shadow:none}
+.fb_button_xlarge,
+.fb_button_xlarge_rtl{background-position:left -60px;font-size:24px;line-height:30px}
+.fb_button_xlarge .fb_button_text{padding:3px 8px 3px 12px;margin-left:38px}
+a.fb_button_xlarge:active{background-position:left -99px}
+.fb_button_xlarge_rtl{background-position:right -268px}
+.fb_button_xlarge_rtl .fb_button_text{padding:3px 8px 3px 12px;margin-right:39px}
+a.fb_button_xlarge_rtl:active{background-position:right -307px}
+.fb_button_large,
+.fb_button_large_rtl{background-position:left -138px;font-size:13px;line-height:16px}
+.fb_button_large .fb_button_text{margin-left:24px;padding:2px 6px 4px 6px}
+a.fb_button_large:active{background-position:left -163px}
+.fb_button_large_rtl{background-position:right -346px}
+.fb_button_large_rtl .fb_button_text{margin-right:25px}
+a.fb_button_large_rtl:active{background-position:right -371px}
+.fb_button_medium,
+.fb_button_medium_rtl{background-position:left -188px;font-size:11px;line-height:14px}
+a.fb_button_medium:active{background-position:left -210px}
+.fb_button_medium_rtl{background-position:right -396px}
+.fb_button_text_rtl,
+.fb_button_medium_rtl .fb_button_text{padding:2px 6px 3px 6px;margin-right:22px}
+a.fb_button_medium_rtl:active{background-position:right -418px}
+.fb_button_small,
+.fb_button_small_rtl{background-position:left -232px;font-size:10px;line-height:10px}
+.fb_button_small .fb_button_text{padding:2px 6px 3px;margin-left:17px}
+a.fb_button_small:active,
+.fb_button_small:active{background-position:left -250px}
+.fb_button_small_rtl{background-position:right -440px}
+.fb_button_small_rtl .fb_button_text{padding:2px 6px;margin-right:18px}
+a.fb_button_small_rtl:active{background-position:right -458px}
+.fb_share_count_wrapper{position:relative;float:left}
+.fb_share_count{background:#b0b9ec none repeat scroll 0 0;color:#333;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;text-align:center}
+.fb_share_count_inner{background:#e8ebf2;display:block}
+.fb_share_count_right{margin-left:-1px;display:inline-block}
+.fb_share_count_right .fb_share_count_inner{border-top:solid 1px #e8ebf2;border-bottom:solid 1px #b0b9ec;margin:1px 1px 0 1px;font-size:10px;line-height:10px;padding:2px 6px 3px;font-weight:bold}
+.fb_share_count_top{display:block;letter-spacing:-1px;line-height:34px;margin-bottom:7px;font-size:22px;border:solid 1px #b0b9ec}
+.fb_share_count_nub_top{border:none;display:block;position:absolute;left:7px;top:35px;margin:0;padding:0;width:6px;height:7px;background-repeat:no-repeat;background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yP/x/bSOHtKbCGYI.png)}
+.fb_share_count_nub_right{border:none;display:inline-block;padding:0;width:5px;height:10px;background-repeat:no-repeat;background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/x/i_oIVTKMYsL.png);vertical-align:top;background-position:right 5px;z-index:10;left:2px;margin:0 2px 0 0;position:relative}
+.fb_share_no_count{display:none}
+.fb_share_size_Small .fb_share_count_right .fb_share_count_inner{font-size:10px}
+.fb_share_size_Medium .fb_share_count_right .fb_share_count_inner{font-size:11px;padding:2px 6px 3px;letter-spacing:-1px;line-height:14px}
+.fb_share_size_Large .fb_share_count_right .fb_share_count_inner{font-size:13px;line-height:16px;padding:2px 6px 4px;font-weight:normal;letter-spacing:-1px}
+.fb_share_count_hidden .fb_share_count_nub_top,
+.fb_share_count_hidden .fb_share_count_top,
+.fb_share_count_hidden .fb_share_count_nub_right,
+.fb_share_count_hidden .fb_share_count_right{visibility:hidden}
+.fb_connect_bar_container div,
+.fb_connect_bar_container span,
+.fb_connect_bar_container a,
+.fb_connect_bar_container img,
+.fb_connect_bar_container strong{background:none;border-spacing:0;border:0;direction:ltr;font-style:normal;font-variant:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal;vertical-align:baseline}
+.fb_connect_bar_container{position:fixed;left:0 !important;right:0 !important;height:42px !important;padding:0 25px !important;margin:0 !important;vertical-align:middle !important;border-bottom:1px solid #333 !important;background:#3b5998 !important;z-index:99999999 !important;overflow:hidden !important}
+.fb_connect_bar_container_ie6{position:absolute;top:expression(document.compatMode=="CSS1Compat"? document.documentElement.scrollTop+"px":body.scrollTop+"px")}
+.fb_connect_bar{position:relative;margin:auto;height:100%;width:100%;padding:6px 0 0 0 !important;background:none;color:#fff !important;font-family:"lucida grande", tahoma, verdana, arial, sans-serif !important;font-size:13px !important;font-style:normal !important;font-variant:normal !important;font-weight:normal !important;letter-spacing:normal !important;line-height:1 !important;text-decoration:none !important;text-indent:0 !important;text-shadow:none !important;text-transform:none !important;white-space:normal !important;word-spacing:normal !important}
+.fb_connect_bar a:hover{color:#fff}
+.fb_connect_bar .fb_profile img{height:30px;width:30px;vertical-align:middle;margin:0 6px 5px 0}
+.fb_connect_bar div a,
+.fb_connect_bar span,
+.fb_connect_bar span a{color:#bac6da;font-size:11px;text-decoration:none}
+.fb_connect_bar .fb_buttons{float:right;margin-top:7px}
+.fb_edge_widget_with_comment{position:relative;*z-index:1000}
+.fb_edge_widget_with_comment span.fb_edge_comment_widget{position:absolute}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget{z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget .FB_Loader{left:0;top:1px;margin-top:6px;margin-left:0;background-position:50% 50%;background-color:#fff;height:150px;width:394px;border:1px #666 solid;border-bottom:2px solid #283e6c;z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.dark .FB_Loader{background-color:#000;border-bottom:2px solid #ccc}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.siderender
+.FB_Loader{margin-top:0}
+.fbpluginrecommendationsbarleft,
+.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}
+/* @noflip */
+.fbpluginrecommendationsbarleft{left:10px}
+/* @noflip */
+.fbpluginrecommendationsbarright{right:10px}</style></head>
+
+<body data-twttr-rendered="true">
+
+
+
+<!-- horní lišta -->
+<header class="layout">
+
+	<div id="logo--" style="width: 25%; height: 50px; float: left;">
+
+		<h1 style="letter-spacing: 0.1em;">
+			<a href="http://www.devbook.cz/">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/logo_cz.png" alt="Programátorská sociální síť a materiálová základna pro C#, Java, PHP, HTML, CSS, JavaScript a další.">
+			</a>
+		</h1>
+
+
+	</div>
+
+
+	<!-- reklamní pozice -->
+	<div style="float: left; height: 60px; width: 50%;">
+		<div style="width: 480px; margin: 0 auto;">
+			<a href="http://www.devbook.cz/devbookator-programatorska-soutez-2013" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/devbookator_banner.gif" alt="Programátorská soutěž devbookátor 2013"></a>
+		</div>
+	</div>
+
+
+	<div style="float: right; width: 25%; height: 50px; text-align: right; padding-top: 10px;">
+
+				<a href="http://www.devbook.cz/prihlaseni-registrovaneho-uzivatele-islandsoft-cz" class="aButton">Přihlásit se</a>
+		<a href="http://www.devbook.cz/registrace-uzivatele-na-islandsoft-cz" class="aButton">Registrace</a>
+				&nbsp;
+	</div>
+
+</header>
+
+
+
+<!-- Navigační menu -->
+<nav id="menu">
+	<ul>
+				<li class="menu-link first-link">
+			<span title="Příručka programátora">Programování</span>
+			<ul style="display: block; left: 432px; width: 998px; height: auto; opacity: 1; overflow: hidden;">
+								<li class="first-link menu-link"><a href="http://www.devbook.cz/c-sharp-programy-hry-zdrojaky"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/csharp_net_black.png" alt="C# (.NET)">C# (.NET)</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/java-programy-zdrojaky-priklady-navody"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/java_black.png" alt="Java">Java</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/android-tipy-triky-programovani-java-sdk-mobilni-zarizeni" title="Vývoj pro mobilní zařízení se systémem Android"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/android_black.png" alt="Android">Android</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/c-plus-plus-tutorialy-navody-programy" title="C++"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/cpp_black.png" alt="C++">C++</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/c-cecko-programy-hry-zdrojaky-priklady" title="Základy klasického céčka, prazákladu dnešních jazyků"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/c_black.png" alt="C">C</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/delphi-programy-hry-komponenty-zdrojaky" title="Tutoriály pro Delphi"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/delphi_black.png" alt="Delphi">Delphi</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/dalsi-vyvojove-nastroje-pro-tvorbu-aplikaci" title="Ostatní programovací jazyky"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/ostatni_black.png" alt="Ostatní">Ostatní</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/uzitecne-programy-zdarma-ke-stazeni-podle-kategorie" title="Programy našich redaktorů"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/nase_programy_black.png" alt="Naše programy">Naše programy</a></li>
+								<li class="last-link menu-link"><a href="http://www.devbook.cz/jak-zacit-programovat-tvorit-aplikace-programy" title="Jak začít programovat"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jak_zacit_black.png" alt="Jak začít">Jak začít</a></li>
+							</ul>
+		</li>
+				<li class="menu-link">
+			<span title="Příručka webmastera">Webtvorba</span>
+			<ul style="display: none; left: 432px; width: 998px; overflow: hidden; opacity: 1; height: auto;">
+								<li class="first-link menu-link"><a href="http://www.devbook.cz/html-a-css-navody-na-tvorbu-webu" title="Základy a online manuály pro HTML &amp; CSS"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/html__css_black.png" alt="HTML &amp; CSS">HTML &amp; CSS</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/online-programy-v-php" title="Dynamické webové stránky v PHP"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/php_black.png" alt="PHP">PHP</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/javascript-programy-hry-zdrojaky-tutorialy" title="Dynamické doplňky webu v JavaScriptu"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/javascript_black.png" alt="JavaScript">JavaScript</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/tvorba-webu-v-asp-dot-net-tutorialy-zdrojove-kody" title="ASP.NET"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/aspnet_black.png" alt="ASP.NET">ASP.NET</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/online-nastroje-pro-tvorbu-webu" title="Online nástroje pro webmastery"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/pro_webmastery_black.png" alt="Pro webmastery">Pro webmastery</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/navstevni-knihy-guestbook-ankety-a-dalsi-sluzby-pro-vas-web" title="Miniaplikace pro vaše první webové stránky"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/knihy_a_ankety_black.png" alt="Knihy a ankety">Knihy a ankety</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/flash-action-script-programy-hry-zdrojaky-priklady" title="Flash (AS3)"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/flash_as3_black.png" alt="Flash (AS3)">Flash (AS3)</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/kritika-webu" title="Naši členové zhodnotí vaše webové stránky"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/kritika_webu_black.png" alt="Kritika webů">Kritika webů</a></li>
+								<li class="last-link menu-link"><a href="http://www.devbook.cz/jak-zacit-programovat-tvorit-webove-stranky-weby" title="Jak začít tvořit webové stránky"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jak_zacit_black.png" alt="Jak začít">Jak začít</a></li>
+							</ul>
+		</li>
+				<li class="menu-link">
+			<span title="Návrh informačních systémů">Návrh</span>
+			<ul style="display: none; left: 432px; width: 998px; overflow: hidden; opacity: 1; height: auto;">
+								<li class="first-link menu-link"><a href="http://www.devbook.cz/uzitecne-algoritmy-pro-programovani" title="Základní třídící, vyhledávací a další důležité algoritmy"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/algoritmy_black.png" alt="Algoritmy">Algoritmy</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/databaze-sql-relacni-navrh-teorie-objektove" title="Návrh, tvorba a optimalizace databází"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/databaze_black.png" alt="Databáze">Databáze</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/navrhove-vzory-objektovy-model-architektura" title="Návrhové vzory, objektový návrh a architektura"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/navrhove_vzory_black.png" alt="Návrhové vzory">Návrhové vzory</a></li>
+								<li class="last-link menu-link"><a href="http://www.devbook.cz/uml-navrh-systemu-pomoci-diagramu" title="Návrh informačních systémů pomocí jazyka UML"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/uml_black.png" alt="UML">UML</a></li>
+							</ul>
+		</li>
+				<li class="menu-link">
+			<span title="Vše o tvorbě her">Tvorba her</span>
+			<ul style="display: none; left: 432px; width: 998px; overflow: hidden; opacity: 1; height: auto;">
+								<li class="first-link menu-link"><a href="http://www.devbook.cz/game-maker-hry-zdrojaky-priklady" title="Snadná tvorba her v nástroji GameMaker"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/gamemaker_black.png" alt="GameMaker">GameMaker</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/c-sharp-xna-game-studio-tutorialy-na-tvorbu-her" title="XNA game studio pro tvorbu her C#"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/xna_black.png" alt="XNA">XNA</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/petr-lite-programovaci-jazyk-hry-zdrojaky-priklady-tutorialy" title="Programování her pro děti v Petrovi"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/petr_black.png" alt="Petr">Petr</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/wintermute-engine-tutorialy-programovani-tvorba-adventur-point-click-2d-3d" title="Tvorba adventur v českém WintermuteEngine"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/wme_black.png" alt="WME">WME</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/3d-rad-programovaci-jazyk-hry-zdrojove-kody-navody-tutorialy" title="3D hry v 3D RAD"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/3d_rad_black.png" alt="3D RAD">3D RAD</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/blender-video-tutorialy-navody-3d-grafika" title="Tvorba 3D grafiky do her"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/3d_grafika_black.png" alt="3D grafika">3D grafika</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/dalsi-vyvojove-nastroje-pro-tvorbu-her" title="Ostatní nástroje pro tvorbu her"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/ostatni_black.png" alt="Ostatní">Ostatní</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/hry-zdarma-ke-stazeni-podle-kategorie" title="Hry našich redaktorů"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/nase_hry_black.png" alt="Naše hry">Naše hry</a></li>
+								<li class="last-link menu-link"><a href="http://www.devbook.cz/jak-zacit-programovat-tvorit-vlastni-hry" title="Jak začít programovat hry"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/jak_zacit_black.png" alt="Jak začít">Jak začít</a></li>
+							</ul>
+		</li>
+				<li class="menu-link">
+			<span title="Další články nejen o programování">Ostatní</span>
+			<ul style="display: none; left: 432px; width: 998px; overflow: hidden; opacity: 1; height: auto;">
+								<li class="first-link menu-link"><a href="http://www.devbook.cz/uzivatel-islandsoft-me-znalosti-kvizy" title="Otestujte své programátorské znalosti v různých okruzích"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/kvizy_black.png" alt="Kvízy">Kvízy</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/fraktaly-algoritmy-teorie-navody-zdrojove-kody" title="Fraktální geometrie a teorie chaosu"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/fraktaly_black.png" alt="Fraktály">Fraktály</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/hardware-technicke-vybaveni-pocitace" title="Technické vybavení počítače"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/hardware_black.png" alt="Hardware">Hardware</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/vypracovane-maturitni-otazky-z-fyziky" title="Základy středoškolské fyziky zejména pro programátory her"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/fyzika_black.png" alt="Fyzika">Fyzika</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/pr-clanky-informacni-technologie" title="PR články o informačních technologiích"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/pr_clanky_black.png" alt="PR články">PR články</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/gimp-tutorialy-2d-grafika-navody" title="2d grafika"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/2d_grafika_black.png" alt="2d grafika">2d grafika</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/zabava-programatorske-a-ajtacke-vtipy" title="I programátoři se umí bavit"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/it_zabava_black.png" alt="IT zábava">IT zábava</a></li>
+								<li class="last-link menu-link"><a href="http://www.devbook.cz/clanky-nejen-o-programovani" title="Nezařazené články nejen o programování"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/nezarazene_clanky_black.png" alt="Nezařazené články">Nezařazené články</a></li>
+							</ul>
+		</li>
+				<li class="menu-link">
+			<span title="Diskuzní fórum a rozhovory">Fórum</span>
+			<ul style="display: none; left: 432px; width: 998px; overflow: hidden; opacity: 1; height: auto;">
+								<li class="first-link menu-link"><a href="http://www.devbook.cz/diskuzni-forum-o-programovani" title="Programátorské diskuzní fórum"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/forum_black.png" alt="Fórum">Fórum</a></li>
+								<li class="menu-link"><a href="http://www.devbook.cz/sprava-uctu-islandsoft-cz" title="Správa tvého uživatelského účtu"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/ucet_black.png" alt="Účet">Účet</a></li>
+								<li class="last-link menu-link"><a href="http://www.devbook.cz/rozhovory-s-ceskymi-a-slovenskymi-vyvojari" title="Rozhovory s našimi redaktory"><img style="width: 48px; height: 48px;" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/rozhovory_black.png" alt="Rozhovory">Rozhovory</a></li>
+							</ul>
+		</li>
+			</ul>
+</nav>
+
+
+
+
+<!-- vnější kontejner s celým webem -->
+<div id="container">
+
+<!-- kontejner s menu a sloupci-->
+
+
+
+
+<div id="whiter" style="float: left; width: 1050px; background-color: white; ">
+
+<!-- placeholder pro itemy v menu -->
+<div id="sublinks"><div id="menu-placeholder"></div></div>
+
+<!-- sloupec s článkem -->
+<section style="width: 790px; float: left;">
+<article style="font: 1em/1.5em Verdana; padding-top: 15px; font-size: 13px;">
+	<h2>Canvas aneb grafika JavaScriptem</h2><a href="http://www.devbook.cz/javascript-programy-hry-zdrojaky-tutorialy" title="Zpět do sekce JavaScript"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/icon_back.png" align="left" width="20">Zpět do sekce JavaScript</a><br clear="left">
+			<div style="float: left; height: 100px; width: 790px; border: 1px solid #dcdcdc; background: #f0f0f0;">
+				<div style="width: 745px; margin: 0 auto;">
+					<a href="http://www.devbook.cz/scripts/abc.php?a=czc_leaderboard&amp;b=http%3A%2F%2Fwww.czc.cz%2Fprestigio-multipad-9-7-ultra-duo-5597%2F122645%2Fprodukt%3Futm_source%3DDevbook%26utm_medium%3Dbext_it%26utm_content%3D745_100%26utm_campaign%3DPrestigio_tabl_122645" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/122645-745x100.jpg" alt=""></a>
+				</div>
+			</div>
+			<br clear="left">
+			
+<p>Možná jste si toho už všimli, možná ještě ne. HTML5 se stává
+standardem, na kterém vzniká stále více aplikací. Této nové technologii
+se nevyhýbají ani velké společnosti, jako třeba Google. Hodně lidí si pod
+pojmem HTML5 představuje novou verzi HTML a je tomu opravdu tak. Avšak
+nejedná se pouze o nové tagy, kterých je tu spousta, ale i o nové
+technologie. Jedním z mnoha nových prvků je právě tag
+<code>&lt;canvas&gt;</code>. Canvas je plátno, na které můžeme kreslit. Jako
+první ho uvedla firma Apple ve svém OS a poté ho zabudovala i do svého
+prohlížeče Safari. Postupem času se canvas dostal i do dalších
+prohlížečů a dnes je již podporován všemi moderními prohlížeči.</p>
+
+<p>Syntaxe, nebo chcete-li zápis, je velmi podobný tagu <code>&lt;img
+/&gt;</code>. Jediný rozdíl je v tom, že canvas je párový tag. Zápis by
+mohl vypadat takto.</p>
+
+<pre class="html"><code><span class="html-tag">&lt;canvas</span><span class="html-tagin"> width=</span><span class="html-quote">"800"</span><span class="html-tagin"> height=</span><span class="html-quote">"600"</span><span class="html-tagin"> id=</span><span class="html-quote">"platno"</span><span class="html-tag">&gt;</span>
+   Váš prohlížeč nepodporuje tag canvas.
+<span class="html-tag">&lt;/canvas&gt;</span></code></pre>
+
+<p>Tento kód vytvoří prázdné plátno o velikosti 800x600 pixelů.
+Nastavíme mu atribut ID, abychom na něj mohli kreslit JavaScriptem. Atributy
+width a height nastaví výšku a šířku kontextu, na který budeme kreslit.
+Tyto rozměry nelze nastavit pomocí CSS, jelikož bychom nastavili rozměry
+plátna, nikoli kontextu. Pokud je ovšem nenastavíme vůbec, budou automaticky
+nastaveny na 300x150 pixelů.</p>
+
+<p>Element je sice podporován moderními prohlížeči, avšak v prohlížeči
+Internet Explorer až od verze 9.0. Abychom upozornili uživatele, můžeme
+použít obsah tagu canvas. Tento obsah bude ignorován všemi prohlížeči,
+které tag podporují a zobrazí se tak jen tam, kde je ho potřeba.</p>
+
+<h4>2D vykreslovací kontext</h4>
+
+<p>Canvas podporuje zatím jen pár vykreslovacích kontextů. Jednak to je
+<em>2d</em>, který umí, jak už asi tušíte, kreslit 2D objekty a pak také
+<em>WebGL</em> (zatím většinou jen <em>experimental-WebGL</em>), který umí
+vykreslovat i 3D objekty. Nás však zatím bude zajímat ten 2D kontext.</p>
+
+<h5>Systém souřadnic</h5>
+
+<p>Ještě než začneme kreslit, řeknu něco málo k systému souřadnic.
+Systém je stejný jako je to v případě CSS tedy souřadnice [0;0] určují
+levý horní roh plátna, nikoli stránky. Jelikož zde funguje většinou
+absolutní pozicování, všechny souřadnice vycházejí z bodu nula. Pozice se
+udává v pixelech.</p>
+
+<h5>Kontext plátna</h5>
+
+<p>Jak už jsem zmínil, kreslíme na kontext plátna. Ten musíme získat z
+elementu canvas. Pro každé plátno je právě jeden kontext. Tady je ukázka,
+jak to udělat v JavaScriptu.</p>
+
+<pre class="javascript"><code><span class="js-comment">// Najdeme náš canvas element</span><span class="js-out">
+</span><span class="js-keywords1">var</span><span class="js-out"> canvas = </span><span class="js-keywords2">document</span><span class="js-out">.</span><span class="js-keywords2">getElementById</span><span class="js-out">(</span><span class="js-quote">"platno"</span><span class="js-out">);
+</span><span class="js-comment">// Získáme kontext plátna</span><span class="js-out">
+</span><span class="js-keywords1">var</span><span class="js-out"> context = canvas.getContext(</span><span class="js-quote">"2d"</span><span class="js-out">);
+
+</span><span class="js-comment">// Syntaxe v jQuery:</span><span class="js-out">
+</span><span class="js-keywords1">var</span><span class="js-out"> canvas = $(</span><span class="js-quote">'#platno'</span><span class="js-out">).get(</span><span class="js-num">0</span><span class="js-out">);
+</span><span class="js-comment">// Kontext</span><span class="js-out">
+</span><span class="js-keywords1">var</span><span class="js-out"> context = canvas.getContext(</span><span class="js-quote">"2d"</span><span class="js-out">);</span></code></pre>
+
+<p>Metoda getContext elementu Canvas získá kontext plátna s daným
+vykreslovacím režimem. U zápisu v jQuery si dejte pozor, abyste metodu volali
+z objektu elementu Canvas a ne z objektu jQuery, proto <code>.get(0)</code>.</p>
+
+<p>Nyní můžeme kreslit. Přidejte následující kód za definici proměnné
+<code>context</code>.</p>
+
+<pre class="javascript"><code><span class="js-out">context.fillRect(</span><span class="js-num">20</span><span class="js-out">, </span><span class="js-num">20</span><span class="js-out">, </span><span class="js-num">100</span><span class="js-out">, </span><span class="js-num">100</span><span class="js-out">);</span></code></pre>
+
+<p>Výsledek bude vypada nějak takto:</p>
+
+<div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAACWUlEQVR4Xu3TsRHEMBDDQKn/ou0aECgAB5/zh8e17uk3vcCdvq7jTsDjH0HAAY8vMH5eLzjg8QXGz+sFBzy+wPh5veCAxxcYP68XHPD4AuPn9YIDHl9g/LxecMDjC4yf1wsOeHyB8fN6wQHjBT6cKPBsgRcvOOBnXPyPA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42YD5ZqpEwCouXjZgvpkqEbCKi5cNmG+mSgSs4uJlA+abqRIBq7h42R8P12QVRmC/2wAAAABJRU5ErkJggg==" alt="Metoda fillRect v&nbsp;Canvasu"></div>
+
+<p>Teď jste nakreslili váš první objekt na canvas. Je to jednoduché,
+ne?</p>
+
+<h3>Základní objekty a tvary</h3>
+
+<p>Základním objektem je obdélník. Máme předdefinované tři metody,
+kterými můžeme obdélník nakreslit. Jsou jimi <strong>fillRect</strong>,
+<strong>strokeRect</strong> a <strong>clearRect</strong>. Všechny tři mají
+stejné argumenty a to x, y, výška a šířka. Funkce fillRect odbélník
+vyplní, strokeRect vykreslí pouze jeho obrys a clearRect vymaže oblast
+daného obdélníku.</p>
+
+<pre class="javascript"><code><span class="js-comment">// Vyplní čtverec o velikosti a = 100 na pozici 20, 20</span><span class="js-out">
+context.fillRect(</span><span class="js-num">20</span><span class="js-out">, </span><span class="js-num">20</span><span class="js-out">, </span><span class="js-num">100</span><span class="js-out">, </span><span class="js-num">100</span><span class="js-out">);
+</span><span class="js-comment">// Vymažeme vevnitř toho čtverce pole 80x80</span><span class="js-out">
+context.clearRect(</span><span class="js-num">30</span><span class="js-out">, </span><span class="js-num">30</span><span class="js-out">, </span><span class="js-num">80</span><span class="js-out">, </span><span class="js-num">80</span><span class="js-out">);
+</span><span class="js-comment">// A vykreslíme si tam obrys</span><span class="js-out">
+context.strokeRect(</span><span class="js-num">40</span><span class="js-out">, </span><span class="js-num">40</span><span class="js-out">, </span><span class="js-num">60</span><span class="js-out">, </span><span class="js-num">60</span><span class="js-out">);</span></code></pre>
+
+<p><strong>Výsledek:</strong></p>
+
+<div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAC70lEQVR4Xu3dMVIjQRBEUTgZuhniZsDFxIjAAicTMdP6xScCr1qdlU9tLM4+PvgzuoHH0du53IPAw78EAgs8vIHh6/mCBR7ewPD1fMECD29g+Hq+YIGHNzB8PV+wwMMbGL6eL1jg4Q0MX88XLPDwBoav5wsWeHgDw9fzBQtcN3CpT3hgtwb2eMEC78bVf7DAfWeoEwKjuPqwAvedoU4IjOLqwwrcd4Y6ITCKqw8rcN8Z6oTAKK4+7ErgPe7uG+CeiP6gtEfJ0cVbr3vczeXqk0c971FydLHAvei3E1HPAt/c87IPEHhZ9cdcLPAxPS+7ReBl1R9zscDH9LzsFoGXVX/MxWOAn4/p625ueQmTjAC+4p6237dwafrY09eu52CRMcDXf6snCwed3P3I9Qud7ivw3XP+DCgwEK2JLHDTFnBWYCBaE1ngpi3grMBAtCaywE1bwFmBgWhNZIGbtoCzAgPRmsgCN20BZwUGojWRBW7aAs4KDERrIgvctAWcFRiI1kQWuGkLOCswEK2JLHDTFnBWYCBaE1ngpi3grMBAtCaywE1bwFmBgWhNZIGbtoCzAgPRmsgCN20BZwUGojWRBW7aAs4KDERrIgvctAWcFRiI1kQWuGkLOCswEK2JLHDTFnBWYCBaE1ngpi3grMBAtCaywE1bwFmBgWhNZIGbtoCzAgPRmsgCN20BZwUGojWRBW7aAs4KDERrIgvctAWcFRiI1kQWuGkLOCswEK2JLHDTFnBWYCBaE1ngpi3grMBAtCaywE1bwFmBgWhNZIGbtoCz/xL4tEG9ArF+E/lpO/S+/Z6Dw5dg5vO/Ufvrn+ji7dL07mTZv95h5eel+0Y9pyU3C0cXF8DN3f9pNupZYO5XQmCuXZRc4Kgm7pDAXLsoucBRTdwhgbl2UXKBo5q4QwJz7aLkdw8cbeHQbQ2s/EPHbck9HTUgcFQTd0hgrl2UXOCoJu6QwFy7KLnAUU3cIYG5dlFygaOauEMCc+2i5B/4RzAkjxSrKAAAAABJRU5ErkJggg==" alt=""></div>
+
+<h5>Shrnutí zápisu:</h5>
+
+<pre class="javascript"><code><span class="js-comment">// Vyplní obdélník na x,y o velikostech width*height</span><span class="js-out">
+context.fillRect(x, y, width, height);
+</span><span class="js-comment">// Vykreslí obrys obdélníku</span><span class="js-out">
+context.strokeRect(x, y, width, height);
+</span><span class="js-comment">// Vymaže oblast obdélníku</span><span class="js-out">
+context.clearRect(x, y, width, height);</span></code></pre>
+
+<h4>Čáry</h4>
+
+<p>Čáry se na plátno kreslí pomocí tzv. cest. Tyto cesty musíme (resp.
+měli bychom) je začít a uzavřít. Pro vytvoření cesty použijeme funkci
+beginPath(), pro uzavření pak closePath(). Samotnou čáru vykreslíme metodou
+lineTo(x, y). Pozice se odvíjí od poslední nastavené pozice kurzoru (zprvu
+0;0), kterou nastavíme funkcí moveTo(x, y). Tato funkce nevykreslí nic, pouze
+přesune kurzor plátna na danou pozici. Cestu vykreslíme buďto metodou
+fill(), která vyplní celou cestu barvou (takto se dají kreslit vlastní tvary
+- proto je třeba cesty uzavírat), nebo funkcí stroke(), která vykreslí
+pouze čáry z dané cesty. Jednoduchý příklad vykreslí čáru z bodu 20;20
+do 20;150.</p>
+
+<pre class="javascript"><code><span class="js-out">context.beginPath();
+context.moveTo(</span><span class="js-num">20</span><span class="js-out">, </span><span class="js-num">20</span><span class="js-out">);
+context.lineTo(</span><span class="js-num">20</span><span class="js-out">, </span><span class="js-num">150</span><span class="js-out">);
+context.closePath();
+context.stroke();</span></code></pre>
+
+<p>Další příklad kreslení čar je třeba toto vykreslení mřížky:</p>
+
+<pre class="javascript"><code><span class="js-out">context.beginPath();
+</span><span class="js-keywords1">for</span><span class="js-out">(</span><span class="js-keywords1">var</span><span class="js-out"> x = </span><span class="js-num">0</span><span class="js-out">; x &lt; canvas.width; x += </span><span class="js-num">40</span><span class="js-out">) {
+        context.moveTo(</span><span class="js-num">0.5</span><span class="js-out"> + x, </span><span class="js-num">0</span><span class="js-out">);
+        context.lineTo(</span><span class="js-num">0.5</span><span class="js-out"> + x, canvas.width);
+}
+</span><span class="js-keywords1">for</span><span class="js-out">(</span><span class="js-keywords1">var</span><span class="js-out"> y = </span><span class="js-num">0</span><span class="js-out">; y &lt; canvas.height; y += </span><span class="js-num">40</span><span class="js-out">) {
+        context.moveTo(</span><span class="js-num">0</span><span class="js-out">, </span><span class="js-num">0.5</span><span class="js-out"> + y);
+        context.lineTo(canvas.height, </span><span class="js-num">0.5</span><span class="js-out"> + y);
+}
+context.closePath();
+context.stroke();</span></code></pre>
+
+<p>Výsledek skriptu:</p>
+
+<div><img src="data:image/png;base64,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" alt="Mřížka&nbsp;– Canvas"></div>
+
+<h5>Shrnutí zápisu:</h5>
+
+<pre class="javascript"><code><span class="js-comment">// Začne cestu</span><span class="js-out">
+context.beginPath();
+</span><span class="js-comment">// Přesune kurzor na x, y</span><span class="js-out">
+context.moveTo(x, y);
+</span><span class="js-comment">// Vykreslí čáru z kurzoru na x, y</span><span class="js-out">
+context.lineTo(x, y);
+</span><span class="js-comment">// Uzavře cestu</span><span class="js-out">
+context.closePath();
+</span><span class="js-comment">// Vykreslí cestu</span><span class="js-out">
+context.stroke();
+</span><span class="js-comment">// Vyplní cestu</span><span class="js-out">
+context.fill();</span></code></pre>
+
+<h4>Kruhy, kružnice a výseče</h4>
+
+<p>Další, co můžeme na plátno kreslit jsou kruhy, kružnice a jejich
+výseče. To vše umí funkce context.arc(), jejíž syntaxe je
+následovná:</p>
+
+<pre class="javascript"><code><span class="js-out">context.arc(x, y, radius, pocatecniUhel, konecnyUhel, smer);</span></code></pre>
+
+<p>Argumenty x a y určují opět absolutní pozici. Radius udává poloměr
+kružnice, pocatecniUhel je úhel, od které se má kružnice resp. výseč
+vykreslit. Je udán v radiánech. Z matematiky všichni samozřejmě víme, že
+obvod kružnice je 2*PI a že stupně se převedou na radiány (PI/180)*stupně.
+Poslední proměnná je smer. Jedná se o logickou hodnotu (true/false), která
+udává, jestli se bude kružnice vykreslovat ve směru hodinových ručiček
+nebo proti němu. Základně je nastaveno true, tedy ve směru hodinových
+ručiček.</p>
+
+<p>Kruh tedy nakreslíme takto:</p>
+
+<pre class="javascript"><code><span class="js-out">context.arc(</span><span class="js-num">100</span><span class="js-out">, </span><span class="js-num">100</span><span class="js-out">, </span><span class="js-num">80</span><span class="js-out">, </span><span class="js-num">0</span><span class="js-out">, Math.PI*</span><span class="js-num">2</span><span class="js-out">);</span></code></pre>
+
+<p>Odměnou za tak složitý skript nám bude takovýto kruh.</p>
+
+<div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAABfCAYAAACOTBv1AAAFfElEQVR4Xu2duZITMRCGlzcAXgDDC3DmmCPmKmJggRQKCkJuCKG4Uo6FnOKIOUzO+QDA7gsAbwD9w6gwtmdG6pbU8kyrSmUvSGrp65bU0siaVQsW1AisUpNsghcMvqIRGHyDr0hAUbRZvsFXJKAo2izf4CsSUBRtlm/wWwmsoxQDihsprqlSD6vP1fS5qfr+iT5/Vt9H1ecP+vxMcZniSqukjAlKtnyAPkIRkB1cKRooB0pZqhQiLU+UvyT4sODtFPdS3Ddm4aIGNmRGj3hG8TnFt2M9JpW8qXJLgX+BanYqA/A6sFDELYpXspEnQdrwD1EdLlFcn7PRDbK+VfV5nKM+WvAxvDwsCPokayhhsRqOkukhN3xMojcp7kjWorgFv6HiTlOEtxQ95IS/h2q/pDiuc+FhPtifohfkgn+SKn+b2/pC8h2mekSdC3LAv0+VPloIQGk1HlABx6SFuPwp4cNvf0VxS6zKFlIO5oEDFN1Kml2tVPAxsT6lWIoLyQZUk/FD1ZtFE3EK+LD49xQ3xG5xYeVBAbskPSAFfIDv2lBTp3cMq7u5RhEbfpcmV1+m7Ek4JvwuuJO+wCfTsdzQWPCxgMLuYJ/DkBqP3VHvEAM+PBu4X+4hh7fwjiXEShjbJt4eUAz490hgtIXHnCsEc95x3zZI4Q9IEHYALfwjgLXNsg8QKfyXJAS+roV/BJ7Q14M+QCTwsSc/8hHSwzRDanPr5CuBb1Zfb1Veiy8ufHMt27szDgK8aErGgd+XvZt2vM0pvtJ/b6VYu/vJgQ+N4siFhXYCOAJTu/jkwDe/vh26S9Ho93Pgf6eS+76a9cWPVe/ausSh8HFs76OvZEv3h8BmijimOBVC4V+nEs4Y1CACNyj12Rjw31UzeJD0nifGw6VtUvgDKsD2cXiWNHO/J2TYGZJcbB1bCCeArebRZLYQ+Cco851wuZaDCOAp310J/HOU+aqhZBE4T7muGXwWO3EmMXzbxeTrYOYuZ8iYb/AV4X8h2V0/hcbH25xzpq8fYvm/UtWsJ+VOsTb4+TQvgo+HA109dZxaBThUiwcr/4UQy7cJl68i83b47MQ5xfBtO5mvA/Eiy7YXFOHbxhofvnhjbUiybUuZpwDxlvKA5NrDFB588cMUiO3T7614mKdzzfTxkSzEz0d683jCVTLT0+HAt6Mj4fCjHR2BaBwEwnlNC+0EcE6z9oBZ6LADcXZcsB26SxH9uKAdlPWHH/2gLIYcuJw29DQrAUMOXMyoR8QhEjN41svg/I2tmJS4tK/xtAdnzHets/39ej1jZGh95CqBj5sBHxVjZ2VVxOs6AAl8NNesf1rpOELvdeuKFL79HHQa/pD+qfVnoMgmhY8y8JRmZ1m9Xq02r0my94/CY8DHxRcjin13PeFSwuqzXnwBM7Ph5y94r+HG9csYlu/K6rP34+XdTA6GMeGjbFx5tag24uoIxp3QrHtDY8Pv2wQcNMGmtnyUj4kXT2+6froN/jy8PPblpiksHwqAB4QrAgY6I0FyqQCP4dXbs5lVo1TwXQ/ArbLwAroURtQY3CrOtngHIyV8J6NLkzB7cs1t+ePyuuCGstzJpi6fw/KdfCzEMA/M20oYwwueSAUtoHzG2Zzw3USMt/LMyzyA8R1vMRJNrHWKyA1/vBcs0R8DHwtRSANvBu9KiW7t423Rgu/qgHH0UkFKWK7qk+UhkTZ8p4SLVffWmg8wrmM4vJyzl5UCH20GeMwF7vV8qRUB4HAAcAcaxnax3x6quJLgT9Ydq2SsIqEQfI8RMHECOBZ/SSbRkEqWDH+8HXglK/aK6l7J6pQDoM6CYc0I7pWsOFGwEgInddp5gZ+ag0r5Bl8F+1+hBt/gKxJQFG2Wrwj/N4/5xmBICxS/AAAAAElFTkSuQmCC" alt="Kruh"></div>
+
+<h4>Styly</h4>
+
+<p>Někdy je třeba, aby kresba nějak vypadala. Na to jsou tu styly.
+Rozlišujeme styly pro vyplnění (fill) a vykreslení obrysu (stroke). Styly
+lze aplikovat na všechny objekty od obdélníků po kruhy. Máme k dispozici
+dvě dvě základní proměnné, se kterými počítají metody stroke() a
+fill(). Jednak je to <code>fillStyle</code> a pak také
+<code>strokeStyle</code>. Jak už jsem říkal, jsou to proměnné a jejich
+hodnoty jsou zápisy barev. Můžeme použít klasický hexadecimální zápis z
+CSS např. #ffffff nebo rgb(255,255,255). Lze použít také
+rgba(255,255,­255,0.5), kde poslední hodnota je tzv. alfa kanál
+(průhlednost) nebo hsl a hsla (stejně jako v CSS3). Jednoduché stylování
+objektů:</p>
+
+<pre class="javascript"><code><span class="js-comment">// Styly musí být vždy před samotným vykreslením (zavoláním metody fill, stroke nebo samovykreslovacích metod, jako jsou fillRect, strokeRect ...)</span><span class="js-out">
+context.fillStyle = </span><span class="js-quote">"#a8c101"</span><span class="js-out">;
+context.fillRect(</span><span class="js-num">10</span><span class="js-out">, </span><span class="js-num">10</span><span class="js-out">, </span><span class="js-num">50</span><span class="js-out">, </span><span class="js-num">50</span><span class="js-out">);</span></code></pre>
+
+<div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA3CAYAAACo29JGAAAAo0lEQVRoQ+3WsQ3AIAwEQNh/kayRyRJRpDbVy0GX2pLBf7GY4+BvHny34XJ/TVdykms4ASwbhrJ1JMmtMV33fLbG1ahoOzmXa5TaOork/HPNSGL5BWJbNqNpW9qWzUjalrZlQ5JYYollfgJeKF4oeXVlRyyxLJHkC7DEMq+u7IglliWSfAGWWObVlR2xxLJEki/AEsu8urIjlliWSPIFWP6V5QtN/GytdjEVCAAAAABJRU5ErkJggg==" alt="Nastylovaný obdélník"></div>
+
+<h5>Styly čar</h5>
+
+<p>Krom barvy vykreslení můžeme stylovat i jiné věci. Například pro styly
+čar jsou dostupné proměnné <code>lineWidth</code> - velikost vykreslených
+čar, <code>lineCap</code> - zakončení čar. Hodnoty jsou "butt", "round",
+"square".</p>
+
+<p>Ukázka stylování čar:</p>
+
+<pre class="javascript"><code><span class="js-comment">// Nastavíme výchozí tloušťku čar</span><span class="js-out">
+context.lineWidth = </span><span class="js-num">10</span><span class="js-out">;
+
+context.beginPath();
+context.moveTo(</span><span class="js-num">10</span><span class="js-out">, </span><span class="js-num">10</span><span class="js-out">);
+context.lineTo(</span><span class="js-num">10</span><span class="js-out">, </span><span class="js-num">50</span><span class="js-out">);
+</span><span class="js-comment">// Zakulacené zakončení</span><span class="js-out">
+context.lineCap = </span><span class="js-quote">"round"</span><span class="js-out">;
+context.stroke();
+
+context.beginPath();
+context.moveTo(</span><span class="js-num">40</span><span class="js-out">, </span><span class="js-num">10</span><span class="js-out">);
+context.lineTo(</span><span class="js-num">40</span><span class="js-out">, </span><span class="js-num">50</span><span class="js-out">);
+</span><span class="js-comment">// Rovné zakončení</span><span class="js-out">
+context.lineCap = </span><span class="js-quote">"square"</span><span class="js-out">;
+context.stroke();
+
+context.beginPath();
+context.moveTo(</span><span class="js-num">70</span><span class="js-out">, </span><span class="js-num">10</span><span class="js-out">);
+context.lineTo(</span><span class="js-num">70</span><span class="js-out">, </span><span class="js-num">50</span><span class="js-out">);
+</span><span class="js-comment">// Rovné zakončení bez přesahu</span><span class="js-out">
+context.lineCap = </span><span class="js-quote">"butt"</span><span class="js-out">;
+context.stroke();</span></code></pre>
+
+<div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA3CAYAAACb4M1PAAABiUlEQVR4Xu2bQWoCQRBF1U2OpaBrV7mBBxByABNw6xG8QkgOkEC8VZb+JgoR7emmf8EwwxNqod3V1b7+VTUM9HTCxyIwtbxxngDQFAEAAWgSMN1LClxr/a1sIZvJfmRvspMZN+f+q4GnirVL+65YImZK10aOCrHJhNnp933MFm5WGQ3ApLyPi+pynJIqo5U4GoBfgrMsKOxb46tgFY4GYF9/pK+4zTrI1cC+/sjg4gLwT3vNBwdAADaXr/+OKNDECEAAmrUIgAA0NQBAAIa0dRNjczfsKy4P0mbpACAAzeQFIAAH3byogaQwKUwKh2jATCVzD80P8NRA8+AACEAzeQEIQLpwiAbMVDL3QBcGIAo0NQBAAA66G5rHRxMBIDXQ1AAAAUgTKWvg7u0Vr7PM0gFAAJbzrmIGz4EVkLqmANAE2Oyeq4E1V73eFfW5OfJjx2YlBO+jerkcwHTZ8FPWdZtzoXEuG3agPmjsJQOR664XcKWLy3PNe5UltaW5SXHpe7Tyruc4uBQ+A3qbljiIqEMuAAAAAElFTkSuQmCC" alt="Styly zakončení čar"></div>
+
+<p>Všimněte si, že neuzavírám cestu metodou closePath(). Je to z důvodů,
+že lineCap platí pouze pro jednotlivé čáry, nikoli pro komplexní cesty.
+Pro ty tu je proměnná lineJoin, která má opět tři možné hodnoty a to:
+"round" - zakulacené, "bevel" - bez přesahu a "miter" - špičaté.</p>
+
+<h3>Externí obrázky</h3>
+
+<p>Kromě toho, že na plátno můžete kreslit, je tu také možnost vykreslit
+i nějaký externí obrázek. Jen můžeme načíst z objektu Image (klidně i z
+tagu img). Nejdřív se ale musíme ujistit, že je obrázek načtený a na to
+slouží v DOM klasicky onload. Na plátno pak obrázek dostaneme metodou
+drawImage(obrazek, x, y).</p>
+
+<p>Uvedu jednoduchý příklad. Je třeba na pozadí opakovat obrázky, které
+jsme si vytvořili. Použijeme proto metodu drawImage:</p>
+
+<pre class="javascript"><code><span class="js-keywords1">var</span><span class="js-out"> obrazek = </span><span class="js-keywords1">new</span><span class="js-out"> Image();
+obrazek.onload = </span><span class="js-keywords1">function</span><span class="js-out">() {
+        </span><span class="js-keywords1">for</span><span class="js-out">(</span><span class="js-keywords1">var</span><span class="js-out"> x = </span><span class="js-num">0</span><span class="js-out">; x &lt; canvas.width; x++) {
+                </span><span class="js-keywords1">for</span><span class="js-out">(</span><span class="js-keywords1">var</span><span class="js-out"> y = </span><span class="js-num">0</span><span class="js-out">; y &lt; canvas.height; y++) {
+                        context.drawImage(</span><span class="js-keywords1">this</span><span class="js-out">, x*</span><span class="js-keywords1">this</span><span class="js-out">.width, y*</span><span class="js-keywords1">this</span><span class="js-out">.height);
+                }
+        }
+};
+obrazek.src = </span><span class="js-quote">"images/pixel.png"</span><span class="js-out">;</span></code></pre>
+
+<p>A výsledek? Obrázek typu <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/pixel.htm" alt=""> se nám bude opakovat
+přes celé plátno, přičemž jsme ho načetli pouze jednou a jen vícekrát
+vykreslili.</p>
+
+<p>Dále je možné obrázku měnit velikost. Jiný způsob zápisu funkce
+drawImage je následující:</p>
+
+<pre class="javascript"><code><span class="js-out">context.drawImage(obrazek, x, y, vyska, sirka);</span></code></pre>
+
+<p>A komu by ani tohle ještě nestačilo, poslední možný zápis je:</p>
+
+<pre class="javascript"><code><span class="js-out">context.drawImage(obrazek, x1, y1, vyska1, sirka1, x2, y2, vyska2, sirka2);</span></code></pre>
+
+<p>Parametry x1, x2 určují pozici výřezu obrázku. vysla1, sirka1 velikost
+výřezu. Dále x2, y2 pozici skutečného obrázku a vyska2, sirka2 určují
+rozměry opět skutečného obrázku. To už je složitější, avšak časem na
+to přijdete.</p>
+
+<h3>Kreslení textu</h3>
+
+<p>Kromě všelijakých tvarů můžeme na plátno vykreslit i text. To se dá
+využít třeba jako watermark na obrázcích ve vaší galerii, popisky ke
+grafům nebo úplně jinak, jak vám to jen vaše fantazie dovolí <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt=":)"> Základní funkce je
+<code>fillText(text, x, y)</code>. Text zde zastupuje textový řetězec, který
+chceme vypsat. X a Y jsou absolutní pozice. Jednoduchý text vykreslíme třeba
+takto:</p>
+
+<pre class="javascript"><code><span class="js-keywords1">var</span><span class="js-out"> text = </span><span class="js-quote">"devbook.cz"</span><span class="js-out">;
+context.fillText(text, </span><span class="js-num">10</span><span class="js-out">, </span><span class="js-num">10</span><span class="js-out">);</span></code></pre>
+
+<p>Text bude ale bez stylů a celkem malý. Proto máme k dispozici proměnnou
+<code>context.font</code>, kterou musíme jako třeba fillStyle volat ještě
+před vykreslením textu. Hodnoty proměnné jsou totožné se zápisem v CSS u
+stejnojmenné vlastnosti <em>font</em>. Nastavíme velikost textu třeba na 30
+pixelů a použijeme font sans-serif.</p>
+
+<pre class="javascript"><code><span class="js-keywords1">var</span><span class="js-out"> text = </span><span class="js-quote">"devbook.cz"</span><span class="js-out">;
+context.font = </span><span class="js-quote">"30px sans-serif"</span><span class="js-out">;
+context.fillText(text, </span><span class="js-num">5</span><span class="js-out">, </span><span class="js-num">35</span><span class="js-out">);</span></code></pre>
+
+<p>A vložili jsme na plátno text.</p>
+
+<div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAAAjCAYAAAAAPEGvAAAEmUlEQVR4Xu2avYpVMRDHdwVLWxE7n0IFQVuxFnwBwdIHsFNrwdJSsFiw1N4HEMR38AXsdhHEGdnoMDtfmSRsLsxC2L17zkkm//mdyUxyj4/qpxTYWIHjjW0r00qBowK0INhagQJ0a/eUcQVoMbC1AgXo1u4p4wrQYmBrBQrQrd1TxhWgxcDWChSgW7unjCtAi4GtFShAt3ZPGVeAFgNbK2ABegUs/wTtIbRTaDeg/Zwwm1X9TjCtqws6j6/w5D1oZ109rL/5KQzxjg3zGD5/XD/0nBEK0LyOuwP6Bqb2XJheAxSvP5sYePJKGk8WoHlZdwb0FkzrO7RrbHq/4PMdaK8WrIx5JZOALhkQOq0lfpWy//u9D39+Of94Ar+fkCEPSv/LKJIOSiCDpZ0jKAWU55wHpX8Bmo9mBWheu/CTozkodRIfVKsWo2/wVejwB7TrwmxewP9eC/+XoPkt9IO52G1o3xylpPm1ih37aLscWhWf0YebJBU7fNluz2iFUbv+Gf54pMxZ09SSSJuf5nvPPj7WyQigdBnRJiFtT3mAWk6l43h9IzTYsFLVfjRH4/3SFk3rB+G8C+0lNNyGkwDN6tPGiDzPQfAAmAmopQ/OQdLWs28aoLxKpA7iwvYm6T2TsPp2guO/y9LbHoEDoy/uCz8QAB3RBw2LjN8mQO33tJsFaNQ+HpU9+6YB2t4ea6lsxvBIZ0VQ6litbzpJq+82WR7dODwccp5a8Oel1IPfM6IP75/P0bvOAZ9dJHn6UHh7D3hoVP6raXaJb5BEczn6ZliAUgMjOSwfn6cH2hJOIeVwWVs0bR58HN7HiD5UA81+Pj6PVCur+Ig+ET/yaHkBTrjhLAsozz+sXI4b4uWgkaVZA4D2bb08VgUehYs6SougbS49+kTHpy8Z738loJHVIeJDeo8adbOAWhU2Dmyd944AynMYK4Ja5+MaoD1bR1SDSBpAHRJZHbzzfcvWlYBqqVsvlFIxeCGoZAHFzrXjNGqoV2lrOYr3ArQxZgNKx/WingdzRh+vz2iqtArQHvsiwLo1xwigzQAPJgsiCVCr0qNfdMAvQuwMaEafHgAuI4L22OcByl9gcVWZASg3RNqCoMuVtcRHEnAcL5KDrl7is86y9Ils/kuFmlXoza7iZyzxIThxoisAlQSkkVIDNOpwqxDK9JGtwK2dAC964HVNh92LpIh9VqrEV1zzBCsDaAaCCKBW0UEdTncQZi/xOI5VnVM7aCqirRDRKE71EbdbGPG7bzNRDSmAXXCORFBrs7xpSe+hBUckgmIfkVOiFYB6G+GRjfoRfXrHl/J4q0iyUqRI5O/ZqKf+8V4qcexMBMWOvMKIDtZTJHnnu9IkaI6Vie7Zc3TrqHNEHx7FPWi8o1rpulSI0khH/SAtwZmjzoxvT7OAomiRbRS8rydJj3xRBIF6D+3tueeogLMA9SDBqHUT2gdo2pdFsvo0ICMO1fZTvQgqAUZXLA9QtNGzj6+A3v3SizgEqCdk5JhO2weVJkPv1ZLwmYBKqQr+r+frdpYjvX1WfFZ7Yb1nPUAlu+hKEgFUs087wUsB+gcHiewm0Ai+UwAAAABJRU5ErkJggg==" alt="Text na plátně"></div>
+
+<p>Tím bych dnešní článek ukončil. Pokud jste byli vytrvalí a dočetli
+jste se až sem, měli byste zvládat základní manipulaci s prvkem canvas. Na
+závěr uvedu nějaké užitečné odkazy:</p>
+
+<ul>
+	<li><a href="http://blog.nihilogic.dk/2009/02/html5-canvas-cheat-sheet.html">Canvas
+	cheat sheet (v angličtině)</a></li>
+
+	<li><a href="http://www.w3.org/TR/2dcontext/">Oficiální dokumentace W3C k 2D
+	kontextu canvasu (v angličtině)</a></li>
+</ul>
+
+<p><strong>Tip na závěr:</strong> Metoda
+<code>canvas.toDataUrl(mimeType)</code> vrací tzv. data URL plátna. Jedná se
+o zakódovaný řetězec hashem Base64 a lze ho použít v img tagu místo
+adresy obrázku nebo v CSS u backgrund-image. Data URL vypadá třeba:</p>
+
+<pre class="javascript"><code><span class="js-out">data:image</span><span class="js-quote">/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAADFBMVEXx9vnw9fj+/</span><span class="js-out">v7</span><span class="js-comment">///+vmeNIAAAAKklEQVQIHQXBAQEAAAjDoHn6dxaqrqpqAAWwMrZRs8EKAzWAshkUDIoZPCvPAOPf77MtAAAAAElFTkSuQmCC</span></code></pre>
+
+<p>Použití v HTML např.:</p>
+
+<pre class="html"><code><span class="html-tag">&lt;img</span><span class="html-tagin"> src=</span><span class="html-quote">"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAADFBMVEXx9vnw9fj+/v7///+vmeNIAAAAKklEQVQIHQXBAQEAAAjDoHn6dxaqrqpqAAWwMrZRs8EKAzWAshkUDIoZPCvPAOPf77MtAAAAAElFTkSuQmCC"</span><span class="html-tagin"> alt=</span><span class="html-quote">"Moje kresba"</span><span class="html-tagin"> </span><span class="html-tag">/&gt;</span></code></pre>
+<br clear="all"> <p>&nbsp;</p><div id="bottombar" style="min-height: 145px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: #E3E3E3; padding: 5px; margin-left: auto; margin-right: auto;">Autor: <a href="http://www.devbook.cz/portfolio/92">Drahoš</a><br><div style="width: 64px; height: 64px; float: left; text-align: center;"><a href="http://www.devbook.cz/portfolio/92"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/92.jpg" style="max-height: 64px; max-width: 64px;"></a></div><div style="float: left; width: 710px; height: 64px; margin-left: 6px;">Jmenuji
+ se Drahomír Hanák a jsem student střední průmyslové školy. Zajímám se o
+ programování a webovou grafiku. Vytvářím interaktivní webové aplikace v
+ jazycích PHP/Nette &amp; JavaScript, ve kterých používám databáze 
+SQLite či MySQL. Vyvíjím také desktopo...</div><hr><div style="height: 50px;">
+
+
+		<div style="width: 370px; float: left; height: 50px;">
+<div style="float: left; width: 170px;">
+<span id="rateStatus">Jak se vám líbí článek?</span>
+<span id="ratingSaved"></span>
+<div id="rateMe" title="Jak se vám líbí článek?" style="float: left;">
+    <a onclick="rateIt(this, 'canvas-aneb-grafika-javascriptem', '')" id="_1" title="Lama" onmouseover="rating(this)" onmouseout="off(this)"></a>
+    <a onclick="rateIt(this, 'canvas-aneb-grafika-javascriptem', '')" id="_2" title="O něco menší lama" onmouseover="rating(this)" onmouseout="off(this)"></a>
+    <a onclick="rateIt(this, 'canvas-aneb-grafika-javascriptem', '')" id="_3" title="Pěkné" onmouseover="rating(this)" onmouseout="off(this)"></a>
+	<a onclick="rateIt(this, 'canvas-aneb-grafika-javascriptem', '')" id="_4" title="Velmi pěkné" onmouseover="rating(this)" onmouseout="off(this)"></a>
+	<a onclick="rateIt(this, 'canvas-aneb-grafika-javascriptem', '')" id="_5" title="Hustodémonskykrutopřísné!" onmouseover="rating(this)" onmouseout="off(this)"></a>
+</div>
+</div>
+
+<div style="float: left;">
+<span>Celkem (2 hlasů):</span><br><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/star_full.png" alt="4.5"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/star_full.png" alt="4.5"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/star_full.png" alt="4.5"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/star_full.png" alt="4.5"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/star_empty.png" alt="4.5"></div><br><br><p>&nbsp;</p></div>
+            	<div style="width: 150px; float: left; height: 50px;">
+            		<div style="float: left; width: 50px; height: 18px;"></div>
+            		<div class=" fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/xd_arbiter.htm" style="border: medium none;" tab-index="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" allowtransparency="true" name="fb_xdm_frame_http" frameborder="0" scrolling="no"></iframe><iframe src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/xd_arbiter_002.htm" style="border: medium none;" tab-index="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" allowtransparency="true" name="fb_xdm_frame_https" frameborder="0" scrolling="no"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/oauth.htm" style="display: none;" allowtransparency="true" name="fb5bc3183963ce" frameborder="0" scrolling="no"></iframe></div></div></div>
+            		<script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/all.js"></script>
+            		<fb:like class="fb_edge_widget_with_comment fb_iframe_widget" fb-xfbml-state="rendered" href="" send="true" layout="button_count" width="10" show_faces="false" font=""><span style="height: 20px; width: 126px;"><iframe src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/like.htm" class="fb_ltr" title="Like this content on Facebook." style="border: medium none; overflow: hidden; height: 20px; width: 126px;" name="f336420f3da1a8c" id="f2fc2cd3c638db4" scrolling="no"></iframe></span></fb:like>
+            	</div>
+            	<div style="width: 90px; float: left; height: 50px;">
+            		<div style="float: left; width: 50px; height: 15px;"></div>
+            		<div id="___plusone_0" style="height: 24px; width: 106px; display: inline-block; text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline;"><iframe title="+1" data-gapiattached="true" allowtransparency="true" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/fastbutton.htm" name="I0_1362045235908" id="I0_1362045235908" vspace="0" tabindex="0" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" marginwidth="0" marginheight="0" hspace="0" frameborder="0" scrolling="no" width="100%"></iframe></div>
+				</div>
+				<div style="width: 90px; float: left; height: 50px;">
+					<div style="float: left; width: 50px; height: 17px;"></div>
+					<iframe data-twttr-rendered="true" title="Twitter Tweet Button" style="width: 109px; height: 20px;" class="twitter-share-button twitter-count-horizontal" src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/tweet_button.htm" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				</div>
+			<div style="float: left; width: 48px; height: 50px; text-align: center;"> <a href="http://www.devbook.cz/tisk/canvas-aneb-grafika-javascriptem" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/print.png" alt="tisk">Tisk</a></div></div></div><br clear="all"><div><div class="related-article-box">Předchozí článek<br><a href="http://www.devbook.cz/javascript-objektove-orientovane-programovani-tutorial"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/Gnome-Edit-Select-All-64.png" alt="" style="max-width: 100px; height: 60px;">Objektově orientované programování v JavaScriptu</a><br clear="left"> Naučte se programovat objektově v JavaScriptu</div>
+				<div class="related-article-box">Všechny články v sekci<br><a href="http://www.devbook.cz/javascript-programy-hry-zdrojaky-tutorialy"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/4db41e8122ef5_image_0_thumb.png" alt="" style="max-width: 100px; height: 60px;">JavaScript</a><br clear="left">JavaScript -  tutoriály, zdrojové kódy, návody, hry, programy</div>
+				<div class="related-article-box">Další článek<br><a href="http://www.devbook.cz/javascript-mandelbrotova-mnozina"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/4f99a4663df9f_image_0_thumb.png" alt="" style="max-width: 100px; height: 60px;">JavaScript &amp; canvas - Mandelbrotova množina</a><br clear="left">Nakreslete si fraktál Mandelbrotovi množiny na plátno (canvas) v JavaScriptu.</div>
+				</div><br clear="all"></article>
+
+<!-- Výpis komentářů -->
+<script type="text/javascript">
+	<!--
+
+	function prispeveksmazat(id) {
+		var answer = confirm("Opravdu si přejete vymazat vybraný příspěvek?")
+		if (answer)
+			window.location.href = "canvas-aneb-grafika-javascriptem//odstranit/" + id;
+		return;
+	}
+
+	// -->
+</script>
+
+
+		<br clear="left"><p>&nbsp;</p>
+	<p align="center">
+	</p><p>&nbsp;</p><a id="komentare"></a><strong>
+		Vaše komentáře:	</strong>
+	<hr>
+			<p></p>
+		
+	
+	<div style="text-align: right; float: left;">
+
+				<a id="goto5772"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 20:40<br>
+									<a href="http://www.devbook.cz/portfolio/298">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/298.jpg" alt="Avatar" width="64"><br>
+				<strong>zelitomas</strong><br>
+									</a>
+					Člen<br>
+				Skill: ZX-Spectrum<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+				
+				
+<p>Super, ale myslím, že v sekci javascript by to nemělo být jako druhý
+návod - spíše bych to zařadil až za jQuery - Neobtruzivní JavaScript a
+události.</p>
+
+<!-- by Texy2! -->
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5772',%20'zelitomas')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5772/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5772/-1"> i--;</a>
+											
+				    			</span>
+			</div>
+		</div>
+				<a id="goto5773"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 20:50<br>
+									<a href="http://www.devbook.cz/portfolio/17">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/17.txt" alt="Avatar" width="64"><br>
+				<strong>sczdavos</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Kvantový počítač<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+								<a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem/#goto5772">
+					<b>Odpovídá na zelitomas:</b>
+				</a><br>
+				
+				
+<p>Jasně, přeuspořádáno. Díky za upozornění <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt=":)"></p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5773',%20'sczdavos')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5773/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5773/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Čím více času dostaneš, tím méně ho máš.</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5774"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 21:41<br>
+									<a href="http://www.devbook.cz/portfolio/5">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/5.gif" alt="Avatar" width="64"><br>
+				<strong>sdraco</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Kvantový počítač<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+				
+				
+<p>Další pěkný tutoriál, koukám, že se s canvasem dělá docela hezky,
+mít více času, tak vezmu nějakou jednoduchou hru a zkusím jí do toho
+přebušit <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt=":)"> Třeba se k tomu
+někdy dostanu, mám takového pacmana nebo arkanoid.</p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5774',%20'sdraco')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5774/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5774/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Pomohli jsme ti? Pomoz i nám a
+ řekni o devbooku svým kolegům, ať již programují, programovat chtějí 
+nebo by se jim mohly hodit naše výtvory a znalosti.</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5775"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 21:46<br>
+									<a href="http://www.devbook.cz/portfolio/5">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/5.gif" alt="Avatar" width="64"><br>
+				<strong>sdraco</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Kvantový počítač<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+				
+				
+<p>Dokonce i 3D engine jsem v tom našel <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/laughing.png" alt=":D"> <a href="http://www.benjoffe.com/code/" rel="nofollow">http://www.benjoffe.com/code/</a></p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5775',%20'sdraco')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5775/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5775/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Pomohli jsme ti? Pomoz i nám a
+ řekni o devbooku svým kolegům, ať již programují, programovat chtějí 
+nebo by se jim mohly hodit naše výtvory a znalosti.</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5777"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 22:02<br>
+									<a href="http://www.devbook.cz/portfolio/92">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/92.jpg" alt="Avatar" width="64"><br>
+				<strong>Drahoš</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Core 2 Duo<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+								<a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem/#goto5775">
+					<b>Odpovídá na sdraco:</b>
+				</a><br>
+				
+				
+<p>3D engine je podle mě lepší Three.js <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt=":)"> Pracuje se mi s nim líp</p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5777',%20'Draho%C5%A1')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5777/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5777/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Deadline je čas, kdy už by se mělo začít pracovat ...</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5778"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 22:08<br>
+									<a href="http://www.devbook.cz/portfolio/92">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/92.jpg" alt="Avatar" width="64"><br>
+				<strong>Drahoš</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Core 2 Duo<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+								<a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem/#goto5777">
+					<b>Odpovídá na Drahoš:</b>
+				</a><br>
+				
+				
+<p>viz. odkaz <a href="https://github.com/mrdoob/three.js/" rel="nofollow">https://github.com/…ob/three.js/</a> a ještě tenhle skvělý
+Chrome Experiment: <a href="http://www.chromeexperiments.com/detail/3-dreams-of-black/" rel="nofollow">http://www.chromeexperiments.com/…ms-of-black/</a> od
+vývojářů z Googlu založen také na Three.js</p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5778',%20'Draho%C5%A1')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5778/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5778/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Deadline je čas, kdy už by se mělo začít pracovat ...</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5779"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				09.04.2012 22:29<br>
+									<a href="http://www.devbook.cz/portfolio/5">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/5.gif" alt="Avatar" width="64"><br>
+				<strong>sdraco</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Kvantový počítač<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+								<a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem/#goto5778">
+					<b>Odpovídá na Drahoš:</b>
+				</a><br>
+				
+				
+<p>Dost dobrý, koukám, že desktopové aplikace jsou již opravdu minulostí,
+je jen otázkou času, než se tohle odladí. Já v JavaScript hrozně věřím,
+díky HTML5 ten jazyk teď zažívá renezanci <img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt=":)"></p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5779',%20'sdraco')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5779/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5779/-1"> i--;</a>
+									( <span style="color: green;">+1</span> )
+												
+									<hr><em style="font-size: 0.8em;">Pomohli jsme ti? Pomoz i nám a
+ řekni o devbooku svým kolegům, ať již programují, programovat chtějí 
+nebo by se jim mohly hodit naše výtvory a znalosti.</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5783"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				10.04.2012 11:32<br>
+									<a href="http://www.devbook.cz/portfolio/39">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/39.txt" alt="Avatar" width="64"><br>
+				<strong>Raiper34</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Core i7 extreme<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+								<a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem/#goto5779">
+					<b>Odpovídá na sdraco:</b>
+				</a><br>
+				
+				
+<p>Možno máš pravdu ale predsa len to ešte potrvá , výkonosť hier sa
+zatiaľ ani zďaleka nerovná výkonu desktop aplikácií. Pri HTML 5 sa mi zdá
+ako by bolo permanentne fps na nejakých 20 FPS obraz šklbe, je mi proste
+"proti očiam". Desktop tak skoro nezmizne .....</p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5783',%20'Raiper34')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5783/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5783/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Posledná vydaná hra: http://www.islandsoft.cz/index.php?art=hra-akcna-space-resistance</em>
+					    			</span>
+			</div>
+		</div>
+				<a id="goto5792"></a>
+		<div style="float: left; margin-bottom: 20px; border-radius: 5px;">
+			<div class="gb-left-column">
+				10.04.2012 17:02<br>
+									<a href="http://www.devbook.cz/portfolio/92">
+								<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/92.jpg" alt="Avatar" width="64"><br>
+				<strong>Drahoš</strong><br>
+									</a>
+					Redaktor<br>
+				Skill: Core 2 Duo<br>
+				<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_filled.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/dot_blank.png" alt="Dot">				
+							</div>
+			<div id="message_content">
+				<div style="width: 40px; height: 16px; float: right; text-align: right; font-size: 0px;">
+																			</div>
+
+								<a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem/#goto5783">
+					<b>Odpovídá na Raiper34:</b>
+				</a><br>
+				
+				
+<p>Ovšemže je výkon zatím horší než u desktopových aplikací. Jde spíš
+o to, že díky HTML5 se vývoj posunul na zcela novou úroveň. A co se ještě
+toho výkonu týče, je to spíš otázka vykreslovacího jádra javascriptu u
+daného prohlížeče. Google Chrome má myslím jedno z těch rychlejších, a
+tak společne s firefoxem, bude zobrazovat aplikace nejlépe. V těchto
+prohlížečích je navíc zabudovaná podpora tzv. Animation Frame ve kterém
+se animace zobrazí krásně čistě. Toho využívá třeba i jQuery.</p>
+
+				
+
+				
+
+				<br><span align="right"><a href="javascript:%20answer('5792',%20'Draho%C5%A1')">
+				Odpovědět
+								</a><a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5792/1"> &nbsp; i++; </a> | <a href="http://www.devbook.cz/canvas-aneb-grafika-javascriptem//palcovat/5792/-1"> i--;</a>
+											
+									<hr><em style="font-size: 0.8em;">Deadline je čas, kdy už by se mělo začít pracovat ...</em>
+					    			</span>
+			</div>
+		</div>
+			</div>
+	<p>&nbsp;</p>
+
+			<p>Zobrazeno 9 z 9 zpráv</p>
+		
+	
+	<!-- pokračování formuláře k přesouvání příspěvků -->
+	
+	
+
+
+
+<!-- zápis -->
+
+
+<!-- chybí uzavírání a otevírání diskuzí -->
+<!-- chybí zobrazování obrázku (udělat přes obrázek příspěvku) a hodnocení -->
+
+<a id="komentuj"></a>
+
+<div style="text-align: center" id="odpovida"><strong>Přidat novou zprávu</strong></div>
+
+<div style="float: left; margin-bottom: 20px; border-radius: 5px; background-color: #F5F5F5;">
+	<div class="gb-left-column">
+		<br>
+		<img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/person.png" alt="Avatar" width="64"><br>
+		<strong>Neregistrovaný</strong><br>
+
+
+		
+
+	</div>
+	<div id="message_content">
+
+				<p align="center">Pro výhody se <a href="http://www.devbook.cz/prihlaseni-registrovaneho-uzivatele-islandsoft-cz">přihlaš</a>. Pokud ještě nemáš účet, <a href="http://www.devbook.cz/registrace-uzivatele-na-islandsoft-cz">zaregistruj se</a>.</p>
+		
+		
+	<form method="post" name="signform" enctype="multipart/form-data">
+
+		
+		
+
+		
+
+		
+		<input name="odpovida_na" id="odpovida_na" value="" type="hidden">
+		<table align="center">
+
+						<tbody><tr>
+				<td width="45">
+					Jméno: 				</td>
+				<td>
+										<input name="nick" maxlength="50" size="55" type="text">
+				</td>
+			</tr>
+			<tr>
+				<td>E-mail:</td>
+				<td>
+					<input name="email" maxlength="50" size="55" type="text"><br>
+				</td>
+			</tr>
+			<tr>
+				<td>Web:</td>
+				<td>
+					<input name="web" maxlength="50" size="55" type="text">
+				</td>
+			</tr>
+			
+
+
+
+
+
+
+			<tr>
+				<td colspan="2">
+					
+
+					<button id="smileys" type="button" style="margin: 0px; width: 32px; height: 32px; padding: 0 2px; float: left;"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt="Smajlík" title="Vložit smajlík"></button>
+					<button id="bold" type="button" style="margin: 0px; width: 32px; height: 32px; padding: 0 2px; float: left;"><b>B</b></button>
+					<button id="italic" type="button" style="margin: 0px; width: 32px; height: 32px; padding: 0 2px; float: left;"><b><i>I</i></b></button>
+					<button id="code" type="button" style="margin: 0px; width: 32px; height: 32px; padding: 0 2px; float: left;"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/source.gif" alt="Zdrojový kód" title="Vložit zdrojový kód"></button>
+
+										<button type="button" style="margin: 0px; width: 32px; height: 32px; padding: 0 2px; float: left;" disabled="disabled" title="Pouze pro registrované"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/new_user.png" alt="Označit člena" title="Označit člena (pouze pro registrované)"></button>
+										<textarea class="autocomplete-target" name="message" id="message" rows="8" placeholder="Na této síti si tykáme :) Odkazy v textu se automaticky zaktivní, fungují jen povolené html tagy." style="width: 625px;"></textarea><br>
+
+					
+
+					<div style="float:left">
+						Vložení obrázků
+												<strong>Obrázky mohou nahrávat pouze registrovaní uživatelé</strong>
+												<br>
+						Vložení dlouhého zdrojáku
+												<strong>Pouze pro registrované</strong>
+											</div>
+
+
+
+											<input name="mailme" checked="checked" value="1" id="mailme" type="checkbox">
+						<label for="mailme">
+							Odpověď zaslat na můj email						</label>
+						<p>&nbsp;</p>
+						<p>Pro ověření prosím zaškrtněte pravdivá tvrzení:<br>Registrovaní uživatelé se tímto zdržovat nemusí. <a href="http://www.devbook.cz/registrace-uzivatele-na-islandsoft-cz">Zaregistrovat se</a></p><input name="answer0" value="1" type="checkbox">Píši zprávu i přesto, že nemá žádný význam <br><input name="answer1" value="1" type="checkbox">Nejsem člověk <br><input name="answer2" value="1" type="checkbox">Jsem člověk <br><input name="answer3" value="1" type="checkbox">Chci porušovat pravidla <br>										<div align="right">
+												<input name="message_submit" value="Odeslat zprávu " type="submit">
+					</div>
+				</td></tr></tbody></table><p align="center"><small>
+			<br></small></p>
+		</form>
+
+		</div>
+</div>
+
+	
+
+
+<!-- Konec zápisu -->
+
+</section>
+
+
+<!-- Pravý sloupec -->
+<aside class="sidebar">
+	<br>
+	<div id="langbar">
+		<a href="http://www.facebook.com/devbookcz" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/icon_fb.png" alt="devbook na Facebooku"></a>
+		<a href="http://www.twitter.com/devbookcz" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/icon_t.png" alt="devbook na twitteru"></a>
+		<a href="http://www.devbook.cz/rss_generator_all.php" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/icon_rss.png" alt="devbook RSS feed"></a>
+		<a href="http://www.devbook.cz/"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/icon_cz.png" alt="devbook Česky"></a>
+		<a href="http://www.devbook.sk/"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/icon_sk.png" alt="devbook Slovensky" id="langbar-last-img"></a>
+	</div>
+
+	<br clear="left">
+
+	<div>
+		<!-- reklamní pozice -->
+		
+			<div style="float: left; height: 250px; width: 250px;  background: #f0f0f0;">
+				<div style="width: 250px; margin: 0 auto;">
+					<a href="http://www.devbook.cz/scripts/abc.php?a=czc_square&amp;b=http%3A%2F%2Fwww.czc.cz%2Fd-link-dir-865l-wireless-ac1750-cloud-router%2F122349%2Fprodukt%3Futm_source%3DDevbook%26utm_medium%3Dbext_it%26utm_content%3D250_250%26utm_campaign%3DD-Link_wifi_122349" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/122349-250x250.jpg" alt=""></a>
+				</div>
+			</div>
+			<br clear="left">
+				</div>
+
+	<br clear="left">
+
+	<div style="width: 248px; height: 50px; float: left;">
+		<!-- Vyhledávač -->
+		<form action="http://www.google.cz/cse" id="cse-search-box">
+			<div>
+				<input name="cx" value="008617562879727931912:ljbco61e1tk" type="hidden">
+				<input name="ie" value="UTF-8" type="hidden">
+				<input name="q" placeholder="Vyhledávání..." style="width: 226px; height: 30px; pading: 5px; padding-left: 10px; padding-right: 10px; margin: 0px;" type="text">
+				<input name="sa" value="Vyhledat" style="display: none;" type="submit">
+			</div>
+		</form>
+	</div>
+
+	<br clear="left">
+
+	<div>
+		<!-- reklamní pozice -->
+		
+			<div style="float: left; height: 250px; width: 250px;  background: #f0f0f0;">
+				<div style="width: 250px; margin: 0 auto;">
+					<a href="http://www.devbook.cz/scripts/abc.php?a=learning_square&amp;b=http%3A%2F%2Fwww.devbook.cz%2Fdoucovani-a-kurzy-programovani-webtvorby-a-databazi" target="_blank"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/learning.gif" alt=""></a>
+				</div>
+			</div>
+			<br clear="left">
+				</div>
+
+	<br clear="left">
+
+	<div id="last-comments">
+				<!-- poslední komentáře -->
+
+		<small>Poslední komentáře</small><br>
+
+		<div style="font-size: 11px; font-family: Arial; line-height: 16px;">
+						<b>			<a href="http://www.devbook.cz/kritika-webu/www-bertuvweb-8u-cz-vyhledavac-512cc22044e8c#goto25777">Ne. Pokud deklaruješ v hl...</a>
+			</b>			<br>
+						<b>			<a href="http://www.devbook.cz/kritika-webu/www-bertuvweb-8u-cz-vyhledavac-512cc22044e8c#goto25776">http://www.kiv.zcu.cz/~he...</a>
+			</b>			<br>
+									<a href="http://www.devbook.cz/kritika-webu/www-bertuvweb-8u-cz-vyhledavac-512cc22044e8c#goto25775">no jasně, ale co teda řik...</a>
+						<br>
+									<a href="http://www.devbook.cz/kritika-webu/www-bertuvweb-8u-cz-vyhledavac-512cc22044e8c#goto25774">Ne - žádné meta není páro...</a>
+						<br>
+									<a href="http://www.devbook.cz/kritika-webu/www-bertuvweb-8u-cz-vyhledavac-512cc22044e8c#goto25773">takže musim mít párovej t...</a>
+						<br>
+						<b>			<a href="http://www.devbook.cz/diskuzni-forum-volna-diskuze/programator-php-5-brno-512f1bec424a8#goto25772">Moonlake, a.s. je brněnsk...</a>
+			</b>			<br>
+						<b>			<a href="http://www.devbook.cz/c-sharp-tutorial-datum-a-cas-datetime-timespan/#goto25771">Jedná se o velmi vysoké č...</a>
+			</b>			<br>
+						<b>			<a href="http://www.devbook.cz/diskuzni-forum-gamemaker-game-maker/poroblem-s-vykreslenim-score-napevno---512ccc7b661d3#goto25770">No hádej, když chceš vykr...</a>
+			</b>			<br>
+									<a href="http://www.devbook.cz/kritika-webu/www-bertuvweb-8u-cz-vyhledavac-512cc22044e8c#goto25769">Musíš mít v UTF-8 nejen h...</a>
+						<br>
+						<b>			<a href="http://www.devbook.cz/diskuzni-forum-php-webtvorba/php--htmlspecialchars-512e7369b9d75#goto25768">Nejlépe přes XSLT.</a>
+			</b>			<br>
+			
+			<a href="http://www.devbook.cz/">Více</a>
+		</div>
+
+
+			</div>
+
+	<br clear="left">
+
+	<div>
+
+	</div>
+
+</aside>
+
+
+
+
+
+
+
+
+
+</div>
+
+<br clear="left">
+<hr>
+
+<!-- Patička -->
+<footer class="layout">
+	Copyright © 2013 devbook.cz. Veškerý obsah webu (pokud není uvedeno jinak) spadá pod autorský zákon. <a href="http://www.devbook.cz/o-komunite-islandsoft">O projektu</a> | <a href="http://www.devbook.cz/inzerce-reklama-it-pr-clanky-bannery">Reklama</a> | <a href="http://www.devbook.cz/loga-a-bannery">Loga a bannery</a><br><br>
+	Projekt devbook.cz vytvořil student vysoké školy <a href="http://www.unicorncollege.cz/" target="_blank">Unicorn College</a>.
+
+</footer>
+
+
+
+</div>
+
+
+<script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/autocomplete.js"></script>
+
+
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
+</script><script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+	try {
+		var pageTracker = _gat._getTracker("UA-11913478-1");
+		pageTracker._trackPageview();
+	} catch(err) {}
+</script>
+
+<script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/menu.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('nav#menu').islandsoftMenu({
+			iconWidth: 48,
+			iconHeight: 48,
+			iconDir: "images/img/menu/icons/",
+			placeholder: "#sublinks"
+		}).islandsoftMenu("open", 0);
+
+
+				
+		$('#infinite').infiniteScroll({
+			// Zpráva zobrazená při načítání
+			loaderMessage: 'Načítám starší příspěvky ...',
+			// Adresa obrázku načítání
+			loaderImage: 'images/loader.gif',
+			// Selektor pro element, který bude spouštět načtení nových příspěvků
+			handle: '#wall-timestamp',
+			// Jméno hlavního parametru (Obsahu: <span>)
+			param: 'timestamp',
+			// URL, kam se má request odeslat
+			url: 'scripts/get_forum_threads.php',
+			// Typ AJAX požadavku
+			type: 'GET',
+			// Další data odeslaná s hlavním parametrem
+			data: {}
+		});
+
+		$('#comment_images a').lightBox();
+
+		
+	});
+</script>
+
+<script src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/message_editor.js"></script>
+
+
+<div style="display: none; opacity: 0; left: 432px; top: 41px;" id="menu-tooltip">On-line učebnice C# a .NET frameworku</div><div aria-labelledby="ui-dialog-title-smiley-dialog" role="dialog" tabindex="-1" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" style="display: none; z-index: 1000; outline: 0px none; position: absolute;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-dialog-title-smiley-dialog" class="ui-dialog-title">Smajlíci</span><a role="button" class="ui-dialog-titlebar-close ui-corner-all" href="#"><span class="ui-icon ui-icon-closethick">close</span></a></div><div class="ui-dialog-content ui-widget-content" id="smiley-dialog">
+						<a href="javascript:%20appendSmiley(':)')" title="Šťastný"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/happy.png" alt="Šťastný"></a>
+						<a href="javascript:%20appendSmiley(':(')" title="Smutný"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/sad.png" alt="Smutný"></a>
+						<a href="javascript:%20appendSmiley(':P')" title="S vyplazeným jazykem"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/tongue.png" alt="S vyplazeným jazykem"></a>
+						<a href="javascript:%20appendSmiley(';)')" title="Mrkající"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/wink.png" alt="Mrkající"></a>
+						<a href="javascript:%20appendSmiley(':D')" title="Smějící se"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/laughing.png" alt="Smějící se"></a>
+						<a href="javascript:%20appendSmiley(';(')" title="Plačící"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/crying.png" alt="Plačící"></a>
+						<a href="javascript:%20appendSmiley('8-)')" title="Cool"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/cool.png" alt="Cool"></a>
+						<a href="javascript:%20appendSmiley(':X')" title="Nemocný"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/sick.png" alt="Nemocný"></a>
+						<a href="javascript:%20appendSmiley(':@')" title="Naštvaný"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/angry.png" alt="Naštvaný"></a>
+						<a href="javascript:%20appendSmiley('8|')" title="S brýlemi"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/glasses.png" alt="S brýlemi"></a>
+						<a href="javascript:%20appendSmiley(':[')" title="Stydící se"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/blushing.png" alt="Stydící se"></a>
+						<a href="javascript:%20appendSmiley(':`')" title="On to nebyl"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/whistle.png" alt="On to nebyl"></a>
+						<a href="javascript:%20appendSmiley(':o')" title="Překvapený"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/surprised.png" alt="Překvapený"></a>
+						<a href="javascript:%20appendSmiley(':O')" title="Hodně překvapený"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/whoot.png" alt="Hodně překvapený"></a>
+						<a href="javascript:%20appendSmiley('o_O')" title="Šokovaný"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/shocked.png" alt="Šokovaný"></a>
+						<a href="javascript:%20appendSmiley('(v)')" title="Srdce"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/heart.png" alt="Srdce"></a>
+						<a href="javascript:%20appendSmiley(']:>')" title="soul_draco"><img src="08Canvas%20aneb%20grafika%20JavaScriptem_subory/evil.png" alt="sdraco"></a>
+					</div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-n"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-e"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-s"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-w"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-sw"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-ne"></div><div style="z-index: 1000;" class="ui-resizable-handle ui-resizable-nw"></div></div></body></html>

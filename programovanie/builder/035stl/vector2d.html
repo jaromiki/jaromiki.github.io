@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Úvod</title>
+<style>
+pre
+{background-color:#c0c0c0; padding:10px;border-style:solid; border-width:1;width:80%;font-family:monotype;}
+</style>
+</head>
+
+<body>
+<h3 style="width:400">Dvojrozmerné polia pomocou štruktúry vector</h3>
+Ako pri poliach aj tu máme viacero možností ako vytvoriť dvojrozmernú tabuľku dát. Všeobecne môžme vytvoriť
+<ul><li>pole vektorov - počet riadkov je pevný ak ide o statické pole
+		<br>vector&lt;int> bar[10]; //vytvori pole 10-tich vektorov, všetky sú prázdne
+  		<br>bar[0].resize(20);  //nultej položke pola zmeníme počet prvkov na 20
+		<br>každému riadku môžme nastaviť iný počet stĺpcov
+	<li>vektor polí - pole je možné použiť len dynamické (nebudeme používať - radšej namiesto poľa použijeme vector
+		<br>vector &lt; int * &gt; v(100, new int[10]);         //100 riadkovy vector, v kazdom smernik na pole o 10-tich prvkoch	
+		<br>každú položku vektora musíme dať vyrobiť cez new, lebo ide o dynamické pole
+		<br>máme premenlivý počet riadkov aj stĺpcov v každom riadku
+		<br>keď takýto vector ideme zmenšovať treba dynamické polia odstraňovaných riadkov najprv odstrániť
+	<li>vector of vector
+		<br>vector &lt; vector&lt;int&gt; &gt; v(100, vector &lt;int&gt; (10,5)); //100 riadkovy vector, v kazdom vector o 10-tich prvkoch vsetky =5
+</ul>	 
+Ďalej sa budem venovať už len prípadu vector of vector.
+<dl>
+<dt class="main">Použitie
+<dd>Pri deklarovaní a zároveň vytváraní vectora môžme dať niekoľko prvkou hneď ak vyrobiť alebo nechať vector prázdny
+	<ul><li>Môžme použiť cez typedef vytvorenie nového typu:
+<pre>
+// **** prázdny vektor 0x0 ********** //
+typedef vector&lt;int&gt; Tvector ;
+vector &lt; Tvector &gt; v;
+Tvector pom(5,1);
+v.push_back(pom); //vector v má už jeden riadok a ten má 5 prvkov - samé 1
+v.resize(10); //  vector v má už 10 riadkov riadky 1-4 sú ale prázdne
+//teraz riadkom 1-4 vytvorím stĺpce (i-ty riadok má i stĺpcov a ich počiatočná hodnota je i+1)
+for (int i=1; i&lt;5; i++) v[i].resize(i,i+1);
+</pre>
+<pre>
+// **** neprázdny vektor 100x0 ********** //
+typedef vector&lt;int&gt; Tvector ;
+vector &lt; Tvector &gt; v(100); //vytvoríme 100 riadkov, v každom je prázdny vektor
+//** každému riadku teraz vytvorím 10 stĺpcov s počiatočnými hodnotami 5
+for (int i=0; i&lt;100; i++) v[i].resize(10,5);
+</pre>
+<pre>
+// **** neprázdny vektor 100x10 ********** //
+typedef vector&lt;int&gt; Tvector ;
+vector &lt; Tvector &gt; v(100, Tvector (10,1)); //vytvoríme 100 riadkov, vkaždom je vektor o 10-tich prvkoch
+</pre>
+
+		<li>Bez použitia typedef
+<pre>
+// **** prázdny vektor 0x0 ********** //
+vector &lt; vector&lt;int&gt; &gt; v; 
+</pre>
+<pre>
+// **** neprázdny vektor 100x0 ********** //
+vector &lt; vector&lt;int&gt; &gt; v(100); 
+</pre>
+<pre>
+// **** neprázdny vektor 100x10 ********** //
+vector &lt; vector&lt;int&gt; &gt; v(100, vector &lt;int&gt; (10,5)); //100 riadkovy vector, v kazdom vector o 10-tich prvkoch vsetky =5
+</pre>
+</ul>
+<dt class="main">Príklady
+<dd><ul>
+	<li>Načítaj n a vytvor n-riadkovú tabuľku čísel pascalského trojuholníka. Vypíš tabuľku.
+	<li>Načítaj n. Vytvor tabuľku nxn náhodných čísel z intervalu &lt;100, 999&gt;
+		<br>vypíš tabuľku
+		<br>utrieď riadky tabuľky podľa prvého stĺpca klesajúco a vypíš ju
+		<br>utrieď stĺpce tabuľky podľa prvého riadku klesajúco a vypíš ju
+		<br> &nbsp; &nbsp; (tu asi sort nepojde, odporúčam naprogramovať triedenie cez max)
+	<li>Máme daný orientovaný graf s n vrcholmi a m hranami, ktorý zapíšeme do 2D vektora v2d tak, 
+		že v v2d[i] bude zapísaný vector kde bude výpis jeho priamych susedov.
+		<br>Načítaj start,ciel ( 0&lt;= start,ciel &lt;n ) a zisti, či existuje cesta zo start do ciel
+		<br> &nbsp; &nbsp; (odporúčam použiť ešte zásobník)
+	</ul>
+
+</dl>
+</body>
+</html>

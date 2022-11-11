@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Úvod</title>
+
+</head>
+
+<body>
+<dl>
+<dt class="main">degue - obojstranná fronta
+<dd>Táto štruktúra je realizovaná ako dynamické poľe, a teda použitie deque je rovnaké ako u vektora. 
+    Oproti poľu môžme v konštantnom čase vkladať/rušiť prvky na oboch koncoch štruktúry (podobne ako pri list),
+	oproti listu máme priamy prístup ku položkám štruktúry. 
+	Týmto vytvoríme štruktúru do ktorej možno sekvenčne zapísať viacero hodnôt a máme k položkám priamy prístup cez index 
+	(ale získame aj ďalšie možnosti, ktoré ďalej popíšem), prvky možno meniť, získavať v konštantnom čase. 
+	Zvyčajne je size deque definovaná pri deklarácii, 
+	je to tak najefektívnejšie (najrýchlejšie), ale nemôžme počet prvkov prispôsobovať aktuálnej potrebe. 
+	Oproti objektu vector má deque jeden rozdiel - dáta nemusia tvoriť v halde súvislú oblasť, preto pri častých zmenách
+	veľkosti (size) je použitie deque rýchlejšie. V prípade ak potrebujeme <b>data</b> poslať nejakej API funkcii, tak tá ich
+	vyžaduje súvislé, čo bude problém. 
+	Hlavné použitie je v metódach:
+	<br>void <b>push_front(hodnota)</b>; &nbsp; &nbsp;//vloží dopredu novú hodnotu (konšt. čas)
+	<br>void <b>push_back(hodnota)</b>; &nbsp; &nbsp;//vloží dozadu novú hodnotu (konšt. čas)
+	<br>void <b>pop_front()</b>; &nbsp; &nbsp;//odstráni prvú hodnotu (konšt. čas)
+	<br>void <b>pop_back()</b>; &nbsp; &nbsp;//odstráni poslednú hodnotu (konšt. čas)
+	<br>typ <b>front()</b>; &nbsp; &nbsp;//funkcia vráti hodnotu prvého prvku (konšt. čas)
+	<br>typ <b>back()</b>; &nbsp; &nbsp;//funkcia vráti hodnotu posledného prvku (konšt. čas)
+	<br><br>Na vkladanie na iné miesto ako je niektorý z koncov nie štruktúra až tak vhodná (lepší je list),
+	ale možme vsúvať v lineárnom čase na danú pozíciu (iterátor)
+	<br>Ak vsúvame jeden prvok použijeme metódu emplace(), ak viac hodnôt naraz metódu insert(), obe pri vsúvaní jedného prvku
+	vrátia iterátor na ten prvok, pri vsúvaní viacerých hodnôt naraz nie je vrátený iterátor validný.
+	<br>iterátor <b>emplace(iterator, hodnota)</b>; &nbsp; &nbsp;//vloží na dané miesto novú hodnotu (lin. čas od vzdialenosti)
+	<br>iterátor <b>insert(iterator, hodnota)</b>; &nbsp; &nbsp;//vloží na dané miesto novú hodnotu (lin. čas od vzdialenosti)
+	<br>iterátor <b>insert(iterator, pocet, hodnota)</b>; &nbsp; &nbsp;//vloží na dané miesto novú hodnotu viackrát (lin. čas od vzdialenosti)
+	<br>iterátor <b>insert(iterator, iterator_zac, iterator_kon)</b>; &nbsp; &nbsp;//vloží na dané miesto viaceré hodnoty (lin. čas od vzdialenosti)
+	<br><br>Na odstránenie prvku/prvkov z iných miest ako koncov môžme v lin. čase použiť metódu erase(), vráti nám iterátor na prvok
+	za posledným zrušeným. 
+	<br>iterátor <b>erase(iterator)</b>; &nbsp; &nbsp;//odstráni z daného miesta prvok (lin. čas od vzdialenosti)
+	<br>iterátor <b>erase(iterator_zac, iterator_kon)</b>; &nbsp; &nbsp;//odstráni z daného miesta prvky zadané iterátormi (lin. čas od vzdialenosti)
+	<br><br>Celá práca s degue je ďalej rovnaká ako s objektom vector a príslušné metódy je možné pozrieť tam.
+</dl>	
+ </body>
+</html>

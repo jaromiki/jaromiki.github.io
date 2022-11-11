@@ -1,0 +1,56 @@
+
+<html>
+
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1250"/>
+        <title>anim</title>
+        
+		<script>
+        var canvas; var context;
+		var x=100; var y=100;
+		var dole=0;
+function init()
+{		
+   canvas = document.getElementById("platno");
+   context = canvas.getContext("2d");
+   context.fillStyle = "#a8c101";
+    context.fillRect(0, 0, 800, 600);
+}		
+		function ciara(xs,ys)
+		{ if(dole)
+		   { 
+		   context.beginPath();
+		   context.moveTo(x,y);
+		   x=xs;
+		   y=ys;
+		   context.lineTo(x,y);
+		   context.closePath();
+		   context.stroke();
+		   }
+		   else
+		   {x=xs;
+		   y=ys;
+		   xxx.value=x;
+		   }
+		}
+			</script>
+</head>
+
+<body onload="init();">
+<div onmousemove="ciara(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" onmousedown="dole=1" onmouseup="dole=0" style="background:#ff3333; "  id="ddd" >
+<canvas width="800" height="600" id="platno" onmousemove="xxx.value=pageX;yyy.value=pageY">
+   Váš prohlížeč nepodporuje tag canvas.
+</canvas>
+<br><br>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+<br><br>
+
+</div>
+<input type="Text" value="?" id="xxx">
+<input type="Text" value="?" id="yyy">
+<input type="Text" value="?" id="aaa">
+<br>
+</body>
+
+</html>
+onmousemove="xxx.value=event.pageX;yyy.value=event.pageY-this.offsetTop; aaa.value=this.offsetTop;"

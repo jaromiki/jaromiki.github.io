@@ -1,0 +1,137 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_pro_Windows_v_C++?=
+	=?windows-1250?Q?_=2817.=29?=
+Date: Thu, 12 Jul 2007 10:09:32 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1564
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED pro =
+Windows v C++ (17.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED pro Windows v C++ (17.)</H2>
+<H4>Standardn=ED ovl=E1dac=ED prvky - progress bar - ukazatel =
+pr=F9b=EChu akce</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Progress bar je prvek, jim=9E informujeme u=9Eivatele programu o =
+stavu=20
+prob=EDhaj=EDc=ED operace. V programech pro Windows jej m=F9=9Eeme =
+nal=E9zt t=E9m=EC=F8 v=9Aude.=20
+Kdy=9E kop=EDrujeme soubory, form=E1tujeme disk nebo instalujeme program =
+=E8i hru. Jak=20
+vypad=E1 jeho obvykl=E1 forma, m=F9=9Eeme vid=ECt nap=F8=EDklad v =
+aplikaci ScanDisk nebo=20
+Defragmentace disku, av=9Aak celkov=E9 schopnosti tohoto prvku jsou o =
+n=ECco =9Air=9A=ED.=20
+<P>P=F8edt=EDm, ne=9E za=E8neme prvek Progress bar pou=9E=EDvat, =
+mus=EDme, jako u minule=20
+popsan=E9ho stavov=E9ho =F8=E1dku, p=F8ipojit knihovnu comctl32.dll. Jak =
+toto prov=E9st, se=20
+m=F9=9Eete do=E8=EDst v minul=E9m d=EDle.=20
+<P>Chceme-li do na=9Aeho okna n=ECjak=FD ten progress bar p=F8idat, =
+pou=9Eijeme klasickou=20
+funkci CreateWindowEx a jako t=F8=EDdu okna pou=9Eijeme hodnotu =
+PROGRESS_CLASS,=20
+p=F8eddefinovanou v hlavi=E8kov=E9m souboru commctrl.h, a to =
+nap=F8=EDklad takto:=20
+<P><TT><FONT color=3D#000099>hwndPB =3D CreateWindowEx(0, =
+PROGRESS_CLASS, (LPSTR)=20
+NULL,</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_CHILD | =
+WS_VISIBLE,=20
+x, y, sirka, vyska,</FONT></TT> <BR><TT><FONT=20
+color=3D#000099>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwndParent, =
+(HMENU) 0,=20
+hThisInstance, NULL);</FONT></TT>=20
+<P>Pokud nepou=9Eijeme =9E=E1dn=FD dal=9A=ED styl, bude stav operace =
+vykreslov=E1n klasick=FDmi=20
+modr=FDmi =E8tvere=E8ky, jejich=9E velikost je relativn=ED k v=FD=9Ace =
+progress baru. Pro=20
+progress bar m=F9=9Eeme d=E1le pou=9E=EDt tyto dva styly:=20
+<UL>
+  <LI><B>PBS_SMOOTH</B> - zp=F9sob=ED, =9Ee stav progress baru nebude =
+vykreslov=E1n=20
+  pomoc=ED obvykl=FDch =E8tvere=E8k=F9, ale p=F8esn=ECj=9A=EDm =
+zp=F9sobem. P=F8esn=ECji, bude plnou=20
+  barvou vybarvena ta =E8=E1st progress baru, reprezentuj=EDc=ED stav v =
+procentech.=20
+  <LI><B>PBS_VERTICAL</B> - zm=ECn=ED orientaci progress baru o 90=B0, =
+tzn. =9Ee se=20
+  hodnoty budou zobrazovat zespoda nahoru, m=EDsto zleva vpravo. =
+</LI></UL>Pr=E1ce s=20
+progress bary m=E1 dva aspekty. Ka=9Ed=FD progress bar si uchov=E1v=E1 =
+hodnotu minim=E1ln=ED a=20
+hodnotu maxim=E1ln=ED a d=E1le pak tzv. krokovou hodnotu, kter=E1 =
+ur=E8uje, o kolik=20
+jednotek se zv=FD=9A=ED jeho stav p=F8i obdr=9Een=ED zpr=E1vy =
+PBM_STEPIT. Po vytvo=F8en=ED nov=E9ho=20
+je minim=E1ln=ED hodnota nastavena na 0 a maxim=E1ln=ED na 100, krok pak =
+na 10. Pro=20
+nastaven=ED nejen t=ECchto hodnot a pro pr=E1ci s progress bary =
+pou=9Eijte tyto zpr=E1vy:=20
+<UL>
+  <LI><B>PBM_STEPIT</B> - parametry =9E=E1dn=E9 - provede nastaven=ED =
+vnit=F8n=EDho stavu=20
+  ukazatele do hodnoty, kter=E1 se rovn=E1 hodnot=EC p=F8edchoz=ED + =
+d=E9lce kroku. Progress=20
+  bar je p=F8ekreslen a zobrazuje nov=FD stav.=20
+  <LI><B>PBM_SETSTEP</B> - wParam=3Dd=E9lka kroku - nastav=ED d=E9lku =
+kroku podle=20
+  parametru.=20
+  <LI><B>PBM_SETRANGE</B> - lParam=3DMAKELPARAM(min, max) - nastav=ED =
+minim=E1ln=ED a=20
+  maxim=E1ln=ED hodnotu.=20
+  <LI><B>PBM_SETPOS</B> - wParam=3Dpozice - nastav=ED nov=FD stav =
+(pozici) bez ohledu=20
+  na nastavenou d=E9lku kroku.=20
+  <LI><B>PBM_DELTAPOS</B> - wParam=3Dposun - zm=ECn=ED stav progress =
+baru o hodnotu=20
+  danou parametrem. </LI></UL>Pro nastaven=ED grafick=E9ho vzhledu je =
+mo=9En=E9 pou=9E=EDt=20
+tyto zpr=E1vy:=20
+<UL>
+  <LI><B>PBM_SETBARCOLOR</B> - nastav=ED barvu pop=F8ed=ED progress baru =
+dle parametru=20
+
+  <LI><B>PBM_SETBKCOLOR</B> - nastav=ED barvu pozad=ED progress baru dle =
+parametru=20
+  </LI></UL>Toto jsou schopnosti standardn=EDho prvku Progress bar. Snad =
+je=9At=EC=20
+uvedu, =9Ee styl PBS_SMOOTH a PBS_VERTICAL je pod Windows 95 mo=9Eno =
+pou=9E=EDt jen v=20
+p=F8=EDpad=EC, =9Ee m=E1te nainstalov=E1n Internet Explorer, =
+minim=E1ln=EC verzi 4.0.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:09:12 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

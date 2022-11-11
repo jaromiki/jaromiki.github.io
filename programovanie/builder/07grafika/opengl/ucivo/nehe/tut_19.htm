@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 19 - Částicové systémy</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_19.jpg" class="nehe_maly" alt="Lekce 19" />
+
+<h1>Lekce 19 - Částicové systémy</h1>
+
+<p class="nadpis_clanku">Chtěli jste už někdy naprogramovat exploze, vodní fontány, planoucí hvězdy a jiné skvělé efekty, nicméně kódování částicových systémů bylo buď příliš těžké nebo jste vůbec nevěděli, jak na to? V této lekci zjistíte, jak vytvořit jednoduchý, ale dobře vypadající částicový systém. Extra přidáme duhové barvy a ovládání klávesnicí. Také se dozvíte, jak pomocí triangle stripu jednoduše vykreslovat velké množství trojúhelníků.</p>
+
+<p>V této lekci vytvoříme téměř komplexní částicový systém. Jakmile jednou pochopíte, jak pracují zvládnete cokoli.</p>
+
+<p>Předem upozorňuji, že dodneška jsem nikdy nic podobného vytvářel. Vždy jsem si myslel, že ty slavné a "komerční" částicové systémy jsou hodně komplexním kusem kódu.</p>
+
+<p>Možná nebudete věřit, když píši, že tento kód je 100% původní. Neměl jsem před sebou žádné technické dokumentace. Onehdy jsem prostě přemýšlel a náhle se mi v hlavě vygenerovala spousta nápadů. Namísto uvažování o částici jako o pixelu přesunujícím se z bodu A do bodu B a dělajícím to či ono jsem každé přiřadil vlastní objekt (strukturu) reagující na prostředí kolem. Zapouzdřuje život, stárnutí, barvu, rychlost, gravitační závislosti a další vlastnosti.</p>
+
+<p>Takže ačkoli program, podle mě, vypadá perfektně a pracuje přesně, jak jsem chtěl, možná není tou správnou cestou k vytváření částicových systémů. Osobně jsem se nestaral, jak dobře pracuje, ale ve svých projektech jsem ho mohl bez problémů používat. Jestliže jste typem lidí, "šťouralů", kteří potřebují poznat správnou cestu, zkuste strávit hodiny prohledáváním internetu. Toto bylo varování.</p>
+
+<p>Použijeme kód z lekce 1. Symbolická konstanta definuje počet vytvářených částic. Rainbow zapíná/vypíná cyklování mezi duhovými barvami. Sp a rp předcházejí opakování kódu při delším stisku mezerníku a enteru.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">#define MAX_PARTICLES 1000<span class="kom">// Počet vytvářených částic</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+<p></p>
+<p class="src0">bool rainbow = true;<span class="kom">// Duhový efekt?</span></p>
+<p class="src0">bool sp;<span class="kom">// Stisknutý mezerník?</span></p>
+<p class="src0">bool rp;<span class="kom">// Stisknutý enter?</span></p>
+
+<p>Následují pomocné proměnné. Slowdown kontroluje rychlost pohybu částic (čím vyšší číslo, tím pomaleji se pohybují). Xspeed a yspeed ovlivňují rychlost na jednotlivých osách. Jsou pouze jedním faktorem implementovaným kvůli ovládání klávesnicí. Zoom používáme pro přesun do/ze scény.</p>
+
+<p class="src0">float slowdown=2.0f;<span class="kom">// Zpomalení částic</span></p>
+<p class="src0">float xspeed;<span class="kom">// Základní rychlost na ose x</span></p>
+<p class="src0">float yspeed;<span class="kom">// Základní rychlost na ose y</span></p>
+<p class="src0">float zoom=-40.0f;<span class="kom">// Zoom</span></p>
+
+<p>Loop využíváme především jako proměnnou cyklu, ve kterých inicializujeme a vykreslujeme částice. Col vychází ze slova color a značí barvu. Pomocí časovače delay při zapnutém duhovém módu cyklujeme mezi barvami.</p>
+
+<p>Poslední proměnná je klasická textura. Rozhodl jsem se pro ni, protože vypadají mnohem lépe než jednobarevné body. Také si můžete vytvořit texturu ohně, sněhu, jakéhokoli objektu.</p>
+
+<p class="src0">GLuint loop;<span class="kom">// Řídící proměnná cyklů</span></p>
+<p class="src0">GLuint col;<span class="kom">// Vybraná barva</span></p>
+<p class="src0">GLuint delay;<span class="kom">// Zpoždění pro duhový efekt</span></p>
+<p class="src0">GLuint texture[1];<span class="kom">// Ukládá texturu</span></p>
+
+<p>Následuje struktura definující vlastnosti částic. Obsahuje spoustu atributů, takže si je popíšeme. Pokud bude active rovno true částice bude aktivní a false logicky značí neaktivnost. V tomto programu se tato vlastnost nepoužívá, ale někdy jindy by mohla být užitečná. Life a fade definují, jak dlouho a jak jasně bude částice zobrazena. Od života (life) budeme odečítat stárnutí (fade). Na začátku je inicializujeme na random, stejně jako téměř všechny ostatní vlastnosti.</p>
+
+<p class="src0">typedef struct<span class="kom">// Vytvoří stukturu pro částici</span></p>
+<p class="src0">{</p>
+<p class="src1">bool active;<span class="kom">// Aktivní?</span></p>
+<p class="src1">float life;<span class="kom">// Život</span></p>
+<p class="src1">float fade;<span class="kom">// Rychlost stárnutí</span></p>
+<p></p>
+<p class="src1">float r;<span class="kom">// Červená složka barvy</span></p>
+<p class="src1">float g;<span class="kom">// Zelená složka barvy</span></p>
+<p class="src1">float b;<span class="kom">// Modrá složka barvy</span></p>
+<p></p>
+<p class="src1">float x;<span class="kom">// X Pozice</span></p>
+<p class="src1">float y;<span class="kom">// Y Pozice</span></p>
+<p class="src1">float z;<span class="kom">// Z Pozice</span></p>
+<p></p>
+<p class="src1">float xi;<span class="kom">// X směr a rychlost</span></p>
+<p class="src1">float yi;<span class="kom">// Y směr a rychlost</span></p>
+<p class="src1">float zi;<span class="kom">// Z směr a rychlost</span></p>
+
+<p>Následující proměnné určují působení gravitace (každá ve své ose). Kladná xg značí působení doprava, záporná doleva. Směry jsou analogické ke směrům souřadnicových os.</p>
+
+<p class="src1">float xg;<span class="kom">// X gravitace</span></p>
+<p class="src1">float yg;<span class="kom">// Y gravitace</span></p>
+<p class="src1">float zg;<span class="kom">// Z gravitace</span></p>
+<p></p>
+<p class="src0">} particles;<span class="kom">// Struktura částice</span></p>
+
+<p>Dále deklarujeme pole datového typu particles (naše struktura) o velikosti MAX_PARTICLES a jménu particle.</p>
+
+<p class="src0">particles particle[MAX_PARTICLES];<span class="kom">// Pole částic</span></p>
+
+<p>Inicializací pole barev si vytvoříme barevnou paletu. Každá z dvanácti položek obsahuje 3 RGB složky v rozmezí od červené do fialové.</p>
+
+<p class="src0">static GLfloat colors[12][3]=<span class="kom">// Barevná paleta</span></p>
+<p class="src0">{</p>
+<p class="src1">{1.0f,0.5f,0.5f},{1.0f,0.75f,0.5f},{1.0f,1.0f,0.5f},{0.75f,1.0f,0.5f},</p>
+<p class="src1">{0.5f,1.0f,0.5f},{0.5f,1.0f,0.75f},{0.5f,1.0f,1.0f},{0.5f,0.75f,1.0f},</p>
+<p class="src1">{0.5f,0.5f,1.0f},{0.75f,0.5f,1.0f},{1.0f,0.5f,1.0f},{1.0f,0.5f,0.75f}</p>
+<p class="src0">};</p>
+
+<p>Do inicializačního kódu jsem oproti kódu z první lekce přidal loading textury, nastavení blendingu a zadání počátečních hodnot částic.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechna nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Nahraje textury</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Povolíme jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f,0.0f,0.0f,0.0f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDisable(GL_DEPTH_TEST);<span class="kom">// Vypne hloubkové testování</span></p>
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapne blending</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA,GL_ONE);<span class="kom">// Typ blendingu</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT,GL_NICEST);<span class="kom">// Perspektiva</span></p>
+<p class="src1">glHint(GL_POINT_SMOOTH_HINT,GL_NICEST);<span class="kom">// Jemnost bodů</span></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D,texture[0]);<span class="kom">// Vybere texturu</span></p>
+
+<p>Inicializujeme jednotlivé částice. Začneme aktivováním. Pamatujte si, že naktivní nezobrazujeme a neaktualizujeme. Potom je oživíme. Nebyl jsem si jistý, zda je zhasínání (zprůhledňování) částic závislé na zkracování života, správnou cestou. Nicméně pracuje skvěle, tak co :-) Maximální život 1.0f dává nejjasnější vykreslení (viz. blending).</p>
+
+<p class="src1">for (loop=0;loop&lt;MAX_PARTICLES;loop++)<span class="kom">// Inicializace částic</span></p>
+<p class="src1">{</p>
+<p class="src2">particle[loop].active=true;<span class="kom">// Aktivace</span></p>
+<p class="src2">particle[loop].life=1.0f;<span class="kom">// Oživení</span></p>
+
+<p>Na randomovou hodnotu nastavíme rychlost stárnutí a postupného zhasínání. Každým vykreslením se život (life) zkracuje o stárnutí (fade). Hodnotu 0 až 99 vydělíme 1000 a tím získáme velmi malé číslo. Aby rychlost stárnutí nikdy nebyla nulová, přičteme 0,003.</p>
+
+<p class="src2">particle[loop].fade=float(rand()%100)/1000.0f+0.003f;<span class="kom">// Rychlost stárnutí</span></p>
+
+<p>Nastavíme barvu částic na některou z výše vytvořené palety. Matematika je jednoduchá: vezmeme řídící proměnnou cyklu a vynásobíme ji podílem počtu barev s celkovým počtem částic. Například při prvním průchodu bude loop = 0, po dosazení a výpočtu získáme 0*(12/1000)=0. Při posledním průchodu (loop = počet částic -1 = 999) vyjde 999*(12/1000)=11,988. Protože předáváme int, výsledek se ořeže na 11, což je poslední barva v paletě.</p>
+
+<p class="src2">particle[loop].r=colors[loop*(12/MAX_PARTICLES)][0];<span class="kom">// Červená</span></p>
+<p class="src2">particle[loop].g=colors[loop*(12/MAX_PARTICLES)][1];<span class="kom">// Zelená</span></p>
+<p class="src2">particle[loop].b=colors[loop*(12/MAX_PARTICLES)][2];<span class="kom">// Modrá</span></p>
+
+<p>Inicializujeme směr a rychlost pohybu částic. Výpočet provedeme opět randomem, který pro počáteční efekt exploze násobíme deseti. Dostaneme kladná nebo záporná čísla určující směr a rychlost pohybu v jednotlivých osách.</p>
+
+<p class="src2">particle[loop].xi=float((rand()%50)-26.0f)*10.0f;<span class="kom">// Rychlost a směr pohybu na ose x</span></p>
+<p class="src2">particle[loop].yi=float((rand()%50)-25.0f)*10.0f;<span class="kom">// Rychlost a směr pohybu na ose y</span></p>
+<p class="src2">particle[loop].zi=float((rand()%50)-25.0f)*10.0f;<span class="kom">// Rychlost a směr pohybu na ose z</span></p>
+
+<p>Nakonec nastavíme gravitační působení. Většinou gravitace strhává věci dolů, ale ta naše bude moci působit všemi směry. Na začátku ovšem klasicky dolů (yg = - 0,8).</p>
+
+<p class="src2">particle[loop].xg=0.0f;<span class="kom">// Gravitace na ose x</span></p>
+<p class="src2">particle[loop].yg=-0.8f;<span class="kom">// Gravitace na ose y</span></p>
+<p class="src2">particle[loop].zg=0.0f;<span class="kom">// Gravitace na ose z</span></p>
+<p class="src1">}</p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>V další funkci se pokusíme o vykreslování, zajistíme působení gravitace ap. Matici ModelView resetujeme pouze jednou a to na začátku. Pozici částic tedy nebudeme určovat složitými posuny a rotacemi, ale pouze souřadnicemi předávanými funkci glVertex3f().</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Vymaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1"></p>
+<p class="src1">for (loop=0;loop&lt;MAX_PARTICLES;loop++)<span class="kom">// Cyklus prochází každou částici</span></p>
+<p class="src1">{</p>
+
+<p>První věcí je zkontrolování, zda je částice aktivní, pokud ne nebudeme ji aktualizovat ani vykreslovat. Nicméně v tomto programu budou aktivní všechny.</p>
+
+<p class="src2">if (particle[loop].active)<span class="kom">// Pokud je částice aktivní</span></p>
+<p class="src2">{</p>
+
+<p>Následující tři proměnné x,y,z jsou spíše pomocné k zpřehlednění kódu. Všimněte si, že k pozici na ose z přičítáme zoom, čímž můžeme jednoduše měnit hloubku v obrazovce.</p>
+
+<p class="src3">float x=particle[loop].x;<span class="kom">// x pozice</span></p>
+<p class="src3">float y=particle[loop].y;<span class="kom">// y pozice</span></p>
+<p class="src3">float z=particle[loop].z+zoom;<span class="kom">// z pozice + zoom</span></p>
+
+<p>Dále obarvíme částici její barvou. Jako alfa kanál (průhlednost) s výhodou využijeme život, který nabývá hodnot od 1.0f (plný) do 0.0f (smrt). Postupným stárnutím se tedy stává průhlednější až vybledne docela.</p>
+
+<p class="src3"><span class="kom">// Barva částice</span></p>
+<p class="src3">glColor4f(particle[loop].r,particle[loop].g,particle[loop].b,particle[loop].life);</p>
+
+<p>Máme pozici i barvu, takže přejdeme k vykreslení. Původně jsem chtěl použít otexturovaný čtverec, ale pak jsem se rozhodl pro otexturovaný &quot;triangle strip&quot;. Většina grafických karet renderuje trojúhelníky mnohem rychleji než čtverce, protože se čtyřúhelníky často konvertují na dva trojúhelníky. K vykreslení klasickým způsobem bychom potřebovali 6 různých bodů, použitím triangle stripu stačí pouze čtyři. Nejprve tedy požádáme OpenGL o vykreslení triangle stripu.</p>
+
+<p class="src3">glBegin(GL_TRIANGLE_STRIP);<span class="kom">// Vytvoří obdélník pomocí triangle stripu</span></p>
+
+<p>Triangle strip vykresluje sérii trojúhelníků užitím bodů V0, V1, V2, potom V2, v1, V3 (všimněte si pořadí), dále V2, V3, V4 atd. Tímto pořadím se zajistí, že se všechny vykreslí se stejnou orientací (viz. pořadí zadávání vrcholů), která je důležitá u některých operací, např. cullingu. Aby se něco vykreslilo musí být zadány alespoň tři body. Pro použití triangle stripu existují dva dobré důvody. První: po inicializaci prvního trojúhelníku stačí pro každý nový trojúhelník jenom jeden bod, který bude skombinován s body toho minulého. Druhý: odstraněním části kódu program poběží rychleji. Zdrojový kód bude kratší a přehlednější. Počet vykreslených trojúhelníku vykreslených na monitor bude o dva menší než počet zadaných bodů.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_19_1.gif" width="128" height="128" alt="triangle_strip" /></div>
+
+<p class="src4">glTexCoord2d(1,1); glVertex3f(x+0.5f,y+0.5f,z);<span class="kom">// Horní pravý</span></p>
+<p class="src4">glTexCoord2d(0,1); glVertex3f(x-0.5f,y+0.5f,z);<span class="kom">// Horní levý</span></p>
+<p class="src4">glTexCoord2d(1,0); glVertex3f(x+0.5f,y-0.5f,z);<span class="kom">// Dolní pravý</span></p>
+<p class="src4">glTexCoord2d(0,0); glVertex3f(x-0.5f,y-0.5f,z);<span class="kom">// Dolní levý</span></p>
+<p></p>
+<p class="src3">glEnd();<span class="kom">// Ukončí triangle strip</span></p>
+
+<p>Po vykreslení přichází na řadu aktualizace částice. Matematika může vypadat strašně, ale je krásně jednoduchá. Vezmeme pozici na konkrétní ose a přičteme k ní pohyb na této ose vydělený slowdown krát tisíc. Např. pokud bude částice uprostřed obrazovky (0,0,0), pohyb xi 10 a slowdown 1 přesuneme ji o 10/(1*1000) - do bodu 0.01f na ose x. Pokud bychom inkrementovali slowdown na 2 přesuneme se pouze na 0.005f. Toto je také důvod násobení startovní hodnoty desítkou. Body se po spuštění programu pohybují mnohem rychleji, takže vytvoří dojem exploze.</p>
+
+<p class="src3">particle[loop].x+=particle[loop].xi/(slowdown*1000);<span class="kom">// Pohyb na ose x</span></p>
+<p class="src3">particle[loop].y+=particle[loop].yi/(slowdown*1000);<span class="kom">// Pohyb na ose y</span></p>
+<p class="src3">particle[loop].z+=particle[loop].zi/(slowdown*1000);<span class="kom">// Pohyb na ose z</span></p>
+
+<p>Po spočítání pohybu aplikujeme gravitační působení. Docílíme toho přičtením "gravitační síly" k rychlosti pohybu. Řekněme, že rychlost pohybu je 10 a gravitace o velikosti 1 působí v opačném směru. Každým překreslením se rychlost pohybu dekrementováním zpomalí. Po deseti překresleních částice změní směr.</p>
+
+<p class="src3">particle[loop].xi+=particle[loop].xg;<span class="kom">// Gravitační působení na ose x</span></p>
+<p class="src3">particle[loop].yi+=particle[loop].yg;<span class="kom">// Gravitační působení na ose y</span></p>
+<p class="src3">particle[loop].zi+=particle[loop].zg;<span class="kom">// Gravitační působení na ose z</span></p>
+
+<p>Snížíme hodnotu života o stárnutí. Kdybychom toto nedělali nikdy by částice neshořela. Každá má nastavenu jinou rychlost stárnutí, tudíž nezemřou ve stejný časový okamžik.</p>
+
+<p class="src3">particle[loop].life-=particle[loop].fade;<span class="kom">// Sníží život o stárnutí</span></p>
+
+<p>V této chvíli musíme otestovat, zda je po zestárnutí stále naživu.</p>
+
+<p class="src3">if (particle[loop].life&lt;0.0f)<span class="kom">// Pokud zemřela</span></p>
+<p class="src3">{</p>
+
+<p>Pokud zemřela &quot;reinkarnujeme&quot; ji nastavením plného života a nové náhodné rychlosti stárnutí.</p>
+
+<p class="src4">particle[loop].life=1.0f;<span class="kom">// Nový život</span></p>
+<p class="src4">particle[loop].fade=float(rand()%100)/1000.0f+0.003f;<span class="kom">// Náhodné stárnutí</span></p>
+
+<p>Resetujeme její pozici na střed obrazovky.</p>
+
+<p class="src4">particle[loop].x=0.0f;<span class="kom">// Vycentrování doprostřed obrazovky</span></p>
+<p class="src4">particle[loop].y=0.0f;<span class="kom">// Vycentrování doprostřed obrazovky</span></p>
+<p class="src4">particle[loop].z=0.0f;<span class="kom">// Vycentrování doprostřed obrazovky</span></p>
+
+<p>Určíme novou rychlost a vlastně i směr. Všimněte si, že jsem zvětšil maximální a minimální rychlost z 50 na 60 oproti funkci InitGL(), ale tentokrát výsledek nenásobím deseti. Už nechceme žádné exploze, ale pomalejší pohyb. Z důvodu ovládání klávesnicí přičítáme k hodnotě i globální rychlost (xspeed, yspeed).</p>
+
+<p class="src4">particle[loop].xi=xspeed+float((rand()%60)-32.0f);<span class="kom">// Nová rychlost a směr</span></p>
+<p class="src4">particle[loop].yi=yspeed+float((rand()%60)-30.0f);<span class="kom">// Nová rychlost a směr</span></p>
+<p class="src4">particle[loop].zi=float((rand()%60)-30.0f);<span class="kom">// Nová rychlost a směr</span></p>
+
+<p>Částici přiřadíme také novou barvu. Proměnná col ukládá číslo 0 až 11 (12 barev). Pomocí ní vybíráme červenou, zelenou a modrou intenzitu z palety vytvořené na začátku programu.</p>
+
+<p class="src4">particle[loop].r=colors[col][0];<span class="kom">// Vybere barvu z palety</span></p>
+<p class="src4">particle[loop].g=colors[col][1];<span class="kom">// Vybere barvu z palety</span></p>
+<p class="src4">particle[loop].b=colors[col][2];<span class="kom">// Vybere barvu z palety</span></p>
+<p class="src3">}</p>
+
+<p>Následující kód aktualizuje působení gravitace. Stisknutím 8 na klávesnici zvětšíme yg (y gravitaci) a částice bude tažena vzhůru. Tato testování jsou vložena do vykreslování z důvodu zjednodušení. Kdyby bylo umístěno někam jinam museli bychom vytvořit nový cyklus dělající úplně stejnou práci. Podobné postupy poskytují skvělé možnosti. Např. se můžete pokusíte o proud vody větrem vystřikující přímo vzhůru. Přidáním gravitace působící dolů vytvoříte fontánu vody.</p>
+
+<p class="src3"><span class="kom">// Pokud je stisknuta 8 a y gravitace je menší než 1.5</span></p>
+<p class="src3">if (keys[VK_NUMPAD8] &amp;&amp; (particle[loop].yg&lt;1.5f)) particle[loop].yg+=0.01f;</p>
+
+<p class="src3"><span class="kom">// Pokud je stisknuta 2 a y gravitace je menší než -1.5</span></p>
+<p class="src3">if (keys[VK_NUMPAD2] &amp;&amp; (particle[loop].yg&gt;-1.5f)) particle[loop].yg-=0.01f;</p>
+<p class="src3"><span class="kom">// Pokud je stisknuta 6 a x gravitace je menší než 1.5</span></p>
+<p class="src3">if (keys[VK_NUMPAD6] &amp;&amp; (particle[loop].xg&lt;1.5f)) particle[loop].xg+=0.01f;</p>
+<p class="src3"><span class="kom">// Pokud je stisknuta 4 a x gravitace je menší než -1.5</span></p>
+<p class="src3">if (keys[VK_NUMPAD4] &amp;&amp; (particle[loop].xg&gt;-1.5f)) particle[loop].xg-=0.01f;</p>
+
+<p>Pro radost připíšeme malou "vychytávku". Můj bratr si myslel, že úvodní výbuch je skvělý efekt. Stisknutím klávesy TAB se všechny částice resetují do centra obrazovky. Rychlost se vynásobí deseti a tím vytvoří explozi.</p>
+
+<p class="src3">if (keys[VK_TAB])<span class="kom">// Způsobí výbuch</span></p>
+<p class="src3">{</p>
+<p class="src4">particle[loop].x=0.0f;<span class="kom">// Vycentrování na střed obrazovky</span></p>
+<p class="src4">particle[loop].y=0.0f;<span class="kom">// Vycentrování na střed obrazovky</span></p>
+<p class="src4">particle[loop].z=0.0f;<span class="kom">// Vycentrování na střed obrazovky</span></p>
+<p class="src4">particle[loop].xi=float((rand()%50)-26.0f)*10.0f;<span class="kom">// Náhodná rychlost</span></p>
+<p class="src4">particle[loop].yi=float((rand()%50)-25.0f)*10.0f;<span class="kom">// Náhodná rychlost</span></p>
+<p class="src4">particle[loop].zi=float((rand()%50)-25.0f)*10.0f;<span class="kom">// Náhodná rychlost</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src1">return TRUE;<span class="kom">// Všechno OK</span></p>
+<p class="src0">}</p>
+
+<p>Funkci WinMain napíši celou, protože je v ní celkem dost změn.</p>
+
+<p class="src0">int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)</p>
+<p class="src0">{</p>
+<p class="src1">MSG msg;</p>
+<p class="src1">BOOL done=FALSE;</p>
+<p></p>
+<p class="src1">if (MessageBox(NULL,&quot;Would You Like To Run In Fullscreen Mode?&quot;, &quot;Start FullScreen?&quot;, MB_YESNO|MB_ICONQUESTION) == IDNO)</p>
+<p class="src1">{</p>
+<p class="src2">fullscreen=FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!CreateGLWindow(&quot;NeHe's Particle Tutorial&quot;,640,480,16,fullscreen))</p>
+<p class="src1">{</p>
+<p class="src2">return 0;</p>
+<p class="src1">}</p>
+
+<p>Toto je první důležitá změna. Při rozhodnutí uživatele použít fullscreen změníme slowdown ze 2.0f na 1.0f. Tato úprava není až tak důležitá - lze ji vypustit. Slouží k urychlení fullscreenu - moje grafická karta pracuje v okně trochu rychleji. Nevím proč.</p>
+
+<p class="src1">if (fullscreen)</p>
+<p class="src1">{</p>
+<p class="src2">slowdown=1.0f;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">while(!done)</p>
+<p class="src1">{</p>
+<p class="src2">if (PeekMessage(&amp;msg,NULL,0,0,PM_REMOVE))</p>
+<p class="src2">{</p>
+<p class="src3">if (msg.message==WM_QUIT)</p>
+<p class="src3">{</p>
+<p class="src4">done=TRUE;</p>
+<p class="src3">}</p>
+<p class="src3">else</p>
+<p class="src3">{</p>
+<p class="src4">TranslateMessage(&amp;msg);</p>
+<p class="src4">DispatchMessage(&amp;msg);</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3">if ((active &amp;&amp; !DrawGLScene()) || keys[VK_ESCAPE])</p>
+<p class="src3">{</p>
+<p class="src4">done=TRUE;</p>
+<p class="src3">}</p>
+<p class="src3">else</p>
+<p class="src3">{</p>
+<p class="src4">DrawGLScene();</p>
+<p class="src4">SwapBuffers(hDC);</p>
+
+<p>Ošetříme vstup z klávesnice (+, -, PageUp, PageDown)</p>
+
+<p class="src4">if (keys[VK_ADD] &amp;&amp; (slowdown&gt;1.0f)) slowdown-=0.01f;<span class="kom">// Urychlení částic</span></p>
+<p class="src4">if (keys[VK_SUBTRACT] &amp;&amp; (slowdown&lt;4.0f)) slowdown+=0.01f;<span class="kom">// Zpomalení částic</span></p>
+<p class="src4">if (keys[VK_PRIOR])zoom+=0.1f;<span class="kom">// Přiblížení pohledu</span></p>
+<p class="src4">if (keys[VK_NEXT])zoom-=0.1f;<span class="kom">// Oddálení pohledu</span></p>
+
+<p>V následujících řádcích testujeme stisk enteru, abychom zapnuli cyklování barvami.</p>
+
+<p class="src4">if (keys[VK_RETURN] &amp;&amp; !rp)<span class="kom">// Stisk enteru</span></p>
+<p class="src4">{</p>
+<p class="src5">rp=true;<span class="kom">// Nastaví příznak</span></p>
+<p class="src5">rainbow = !rainbow;<span class="kom">// Zapne/vypne duhový efekt</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (!keys[VK_RETURN]) rp=false;<span class="kom">// Po uvolnění vypne příznak</span></p>
+
+<p>Operace při tisku mezerníku mohou být trochu matoucí. Stejně jako při enteru otestujeme, zda je zapnut duhový efekt. Pokud je, podíváme e jestli je hodnota počítadla counter větší než 25. Používá se ke změně barvy celých skupin částic. Pokud by se změnila barva při každém framu všechny částice by se obarvily jinak. Vytvořením zpoždění stihneme obarvit stejnou barvou více částic.</p>
+
+<p class="src4">if ((keys[' '] &amp;&amp; !sp) || (rainbow &amp;&amp; (delay&gt;25)))<span class="kom">// Mezerník nebo duhový efekt</span></p>
+<p class="src4">{</p>
+
+<p>Pokud je stisknut mezerník vypne se duhový efekt. Kdybychom ho nedeaktivovali, tak by se dokola měnily barvy dokud by nebyl stisknut enter. Dává smysl, že pokud člověk bouchá do mezerníku namísto do enteru, tak chce barvami procházet sám.</p>
+
+<p class="src5">if (keys[' '])rainbow=false;<span class="kom">// Pokud je stisknut vypne se duhový mód</span></p>
+
+<p>Pokud je mezerník stisknut nebo je zapnut duhový mód a zpoždění je větší než 25, přiřazením true do sp oznámíme počítači, že byl stisknut. Poté nastavíme delay na nulu, takže se může znovu počítat do 25. Nakonec inkrementujeme barvu na další v paletě.</p>
+
+<p class="src5">sp=true;<span class="kom">// Oznámí programu, že byl stisknut mezerník</span></p>
+<p class="src5">delay=0;<span class="kom">// Resetuje zpoždění duhových barev</span></p>
+<p class="src5">col++;<span class="kom">// Změní barvu částice</span></p>
+
+<p>Protože máme pouze 12 barev musíme zamezit přetečení pole a následné zhroucení programu.</p>
+
+<p class="src5">if (col&gt;11) col=0;<span class="kom">// Proti přetečení pole</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (!keys[' ']) sp=false;<span class="kom">// Uvolnění mezerníku</span></p>
+
+<p>Definujeme ovládání částic. Na začátku programu jsme deklarovali dvě proměnné rychlosti (xspeed, yspeed). Když částice vyhoří (zemře) přiřadíme jí novou rychlost závisející na těchto proměnných. Můžeme ovlivňovat jejich směr. Řádek dole testuje stisk šipky nahoru. V takovém případě yspeed inkrementujeme. Částice se bude pohybovat nahoru. Max rychlost je omezena na 200, větší už nevypadá dobře. Analogickým principem pracuje i ovládání ostatními šipkami.</p>
+
+<p class="src4">if (keys[VK_UP] &amp;&amp; (yspeed&lt;200)) yspeed+=1.0f;<span class="kom">// Šipka nahoru</span></p>
+<p class="src4">if (keys[VK_DOWN] &amp;&amp; (yspeed&gt;-200)) yspeed-=1.0f;<span class="kom">// Šipka dolů</span></p>
+<p class="src4">if (keys[VK_RIGHT] &amp;&amp; (xspeed&lt;200)) xspeed+=1.0f;<span class="kom">// Šipka doprava</span></p>
+<p class="src4">if (keys[VK_LEFT] &amp;&amp; (xspeed&gt;-200)) xspeed-=1.0f;<span class="kom">// Šipka doleva</span></p>
+
+<p>Zbývá inkrementovat zpoždění delay, použité pro rychlost změn barev. Ostatní kód znáte z minulých lekcí.</p>
+
+<p class="src4">delay++;<span class="kom">// Inkrementace zpoždění duhového efektu</span></p>
+<p></p>
+<p class="src4">if (keys[VK_F1])</p>
+<p class="src4">{</p>
+<p class="src5">keys[VK_F1]=FALSE;</p>
+<p class="src5">KillGLWindow();</p>
+<p class="src5">fullscreen = !fullscreen;</p>
+<p class="src5">if (!CreateGLWindow(&quot;NeHe's Particle Tutorial&quot;,640,480,16,fullscreen))</p>
+<p class="src5">{</p>
+<p class="src6">return 0;</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">KillGLWindow();</p>
+<p class="src1">return (msg.wParam);</p>
+<p class="src0">}</p>
+
+<p>V této lekci jsem se pokoušel o vysvětlení jednoduchého, ale působivého částicového systému. Jeho nejvýhodnější použití spočívá ve vytvoření efektů typu ohně, vody, sněhu, explozí, hvězd a spousty dalších. Jednoduchým modifikováním kódu lze snadno naprogramovat zcela nový efekt.</p>
+
+<p>Děkuji Richardu Nutmanovi za upozornění, že by bylo výhodnější umisťovat částice použitím glVertex3f() namísto resetováním matice a složitými translacemi. Obě metody vypadají stejně, ale jeho verze snižuje zatížení počítače. Program běží rychleji.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson19.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson19_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson19.zip">C#</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson19.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson19.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson19.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson19.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson19.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson19.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson19.zip">Irix</a> kód této lekce. ( <a href="mailto:christop@fhw.gr">Dimitrios Christopoulos</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson19.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jedisdl/lesson19.zip">Jedi-SDL</a> kód této lekce. ( <a href="mailto:Dominique@SavageSoftware.com.au">Dominique Louis</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson19.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson19.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:kjrockot@home.com">Ken Rockot</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson19.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:miqster@gmx.net">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson19.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson19.sit">Mac OS</a> kód této lekce. ( <a href="mailto:OBorstad@Bowesnet.com">Owen Borstad</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson19.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson19.zip">MASM</a> kód této lekce. ( <a href="mailto:chris.j84@free.fr">Christophe</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson19.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson19.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:fredo@studenten.net">Edo</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson19.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_19_big.jpg" class="nehe_velky" alt="Lekce 19" /></div>
+<p class="okolni_lekce"><a href="tut_18.php">&lt;&lt;&lt; Lekce 18</a> | <a href="tut_20.php">Lekce 20 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_19.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

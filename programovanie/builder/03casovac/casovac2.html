@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Časovač a dialógy</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	  <script>
+	  var dx1=2; var x1=250; var y2=50; var dy2=2; dx2=3; var x2=250;
+	  var dx3=3; var x3=4; var y3=20; var dy3=0;
+	  var y4=220; var h4=100; var block="block"; var none="none"
+	  var c1=1;var c2=2;var c3=3; var kred=50; var c=1; var sstop=0; var dkred=0;
+	  var tra; var trb; var trc;
+	  	function anim0()
+	{	 x1+=dx1; 
+		 if (x1<3) dx1=2;
+		 if (x1>475) dx1=-2; 
+		 pos.style.left=x1;
+	}
+	  	function anim2()
+	{	 x2+=dx2; y2+=dy2;
+		 if (x2<3 || x2>475) dx2=-dx2;
+		 if (y2<3 || y2>120) dy2=-dy2;
+		 pos2.style.left=x2; pos2.style.top=y2;
+	}
+	  	function anim3()
+	{	 x3+=dx3; y3+=dy3;
+		 if (x3<3) dx3=3;
+		 if (x3>475) dx3=-3; 
+		 if (y3>150) dy3=-dy3; else  dy3+=0.2;
+		 if (y3>150) { pos3.style.left=x3; pos3.style.top=y3-6;}
+		 else pos3.style.left=x3; pos3.style.top=y3;
+	}
+	  	function anim4(xx)
+	{   if (h4>300 || h4<25) {window.clearInterval(window.tr4);xx=-xx;}
+	    h4+=xx;
+	    pos4.style.width=h4;
+	}
+function init()
+{ c1=1; c2=2; c3=3;  kred=50;  c=1;
+  kredit.value=kred; cas.value=60;
+  cislo1.value=c1;cislo2.value=c2;cislo3.value=c3
+  sstop=0;
+}
+function Anim2()
+{ c=Math.round(3.7*Math.random()-0.5)+1;
+  switch (c)
+  {
+  case 1: c1=Math.round(9.99*Math.random()-0.5); cislo1.value=c1;break;
+  case 2: c2=Math.round(9.99*Math.random()-0.5); cislo2.value=c2;break;
+  case 3: c3=Math.round(9.99*Math.random()-0.5); cislo3.value=c3;break;
+  case 4: c1=c2=c3=Math.round(9.99*Math.random()-0.5); cislo1.value=cislo2.value=cislo3.value=c3;break;
+  }
+}
+function Anim1()
+{ if (!sstop) cas.value=eval(cas.value)-1;
+  if (cas.value =='0')	 
+  { window.clearInterval(trb);
+    window.clearInterval(trc);
+	 start0.style.display=block;
+	 stop0.style.display=none;
+        alert ('Hra skončila');
+  }		
+}
+function videostart()
+{  stop0.style.display=block;
+   start0.style.display=none;
+    trb=window.setInterval("Anim1()",1000);
+  trc=window.setInterval("Anim2()",400);
+} 
+function test()
+{  sstop=1; dkred=-10;  
+   if (c1==c2 ||c3==c2||c1==c3) dkred+=14;
+   if (c1==c2 &&c3==c2&&c1==c3) dkred+=8;
+   if (dkred==-10) alert (' Smola \nstratil si 10€');
+   if (dkred==4) alert (' Zásah \nzískal si 4€');
+   if (dkred==12) alert (' Bingo \nzískal si 12€');
+   kredit.value = kred+=dkred;
+   if (kred<=0) 
+   { window.clearInterval(trb);
+     window.clearInterval(trc);
+	 start0.style.display=block;
+	 stop0.style.display=none;
+        alert ('Hra skončila');
+   }
+   c1=1; c2=2; c3=3;
+   cislo1.value=c1;cislo2.value=c2;cislo3.value=c3
+   sstop=0;
+} 	
+	
+	</script>
+</head>
+
+<body>
+<h3>Časovač</h3>
+<dl>
+	<dt class=main>Časovač
+	<dd>Animáciu v delphi budeme riešiť pomocou objektu pre prácu s časovačom.
+		Možno ste už robili pokusy aby sa napr. text posúval po formulári pomocou cyklu,
+		no nepodarilo sa vám to. Problém je v tom, že delphi najprv vo svojej pamäti mení obrazovku a až 
+		po skončení práce celého podprogramu špeciálnym procesom zobrazí výslednú obrazovku, takže 
+		zmeny obrazovky počas práce podprogramu nevidíme. Vidíme len posledný stav obrazovky. Na animáciu teda
+		musíme ísť inak. (Ono sa to dá aj cyklom, pozri rekurziu, kde je popísané ako to "špeciálne" prerušenie urobiť)
+		Na animáciu teda použijeme Timer. Ide o nevizuálny objekt (je teda jedno kam na plochu ho vložíme). Jeho úlohou je 
+		v predpísaných intervaloch prerušiť prácu nášho spusteného programu a vykonať v tomto prerušení nami predpísané
+		 príkazy. Výsledný efekt je potom akoby paralelne bežal program aj príkazy prerušenia. V príkazoch timra možno meniť
+		 vlastnosti našich objektov (teda aj polohu) a tiež aj premenných programu.
+		<br>Má nasledovné vlastnosti:
+		<ul><li>Enabled - či má byť aktívny (či bežia hodiny, ktoré robia prerušenia)
+			<li>Interval - v akých časových intervaloch sa má spúšťať, údaj je v tisícinach sekundy
+		</ul>
+		Vlastnosť <b>Enabled</b> možno zapnúť/vypnúť aj za behu programu - týmto možno napr. zastaviť/spustiť animáciu. 
+
+		<br><br>Ukážeme si to na príklade, kde rozpohybujeme edit, ktorý sa bude pohybovať v horizontálnom smere a bude sa odrážať od mantinelov.
+		<br>Vytvorme nasledovný formulár:
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1
+   </div>
+   <div style="background-color:#dddddd; width:450px;" align="center">
+   <br><input type="Text" value="x" size="2">
+   <br><br>
+   <input type="Button" value="Štart"> &nbsp; &nbsp; 
+   <input type="Button" value="Stop" >
+</div>
+<img src="../obr/timer.png" width="37" height="35" border="0" alt="">
+</div>		
+			<br> Stlačením tlačídka Štart sa Edit1 sa spustí Timer1 ktorý v pravidelných intervaloch posunie Edit1 o dx. 
+			Pri "narazení" na mantinel sa odrazí.
+			<br>Po stlačení Stop sa Timer vypne a Edit zastane.
+			<br>Tu je výpis
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>
+unit Unit1;
+interface
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls;
+type
+  TForm1 = class(TForm)
+    Edit1: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    Timer1: TTimer;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+var
+  Form1: TForm1;
+  <font color="Blue">dx:integer;</font>
+implementation
+{$R *.dfm}
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+<font color="Blue">Timer1.Enabled:=True; //zapne casovac</font>
+end;
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+<font color="Blue">  Timer1.Enabled:=False; //zapne casovac</font>
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+<font color="Blue">Edit1.Left:=Edit1.Left+dx; //posunieme Edit
+   if Edit1.Left>=Form1.Width-Edit1.Width then dx:=-dx; //ak pravy mantinel zmena
+   if Edit1.Left<=2 then dx:=-dx;                       //ak lavy mantinel zmena
+</font>
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+<font color="Blue">dx:=2; //počiatočná velkost posunutia Editu
+</font>
+end;
+
+end.
+</pre></div>
+</div></div>	
+<br><br>Program po spustení by mal pracovať nasledovne:<br><br>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:500px;">
+	<input type="Text" value="x" style="width:20; position:relative; left:250px;top:30px;" id="pos" >
+	<br><br><br><br><br>
+	<div align="center">
+	   <input type="Button" value="Štart" onclick="window.clearInterval(window.tr);window.tr=window.setInterval('anim()',10)"> &nbsp; &nbsp; <input type="Button" value="Stop" onclick="window.clearInterval(window.tr);"><br><br>
+	</div>   
+	</div>
+</div>		
+<br><br>
+Vo vlastnostiach Timeru zvolíme interval (asi chceme aby pohyb bol rýchly tak volíme malé číslo 20-50)
+a zvolíme vo vlastnosti Enabled False aby po spustení stál Edit na mieste.
+<br>Pozn. Ak je počítač pomalší, alebo akcia, ktorú časovač vykonáva moc náročná
+	nemusí byť dodržaný časový interval, počítač bude robiť tak rýchlo ako sa dá 
+	(niekedy vznikne aj paradox, že ak to s hustotou volania preženieme môže to ísť pomalšie).
+<br>Otázka ako sa bude program chovať, keď mu počas behu zmeníme veľkosť okna?
+<br>
+<dt class=second>Príklady na precvičenie:
+<dd>Skúste zmeniť program, aby sa Edit pohyboval v oboch smeroch
+<br>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:500px;">
+	<input type="Text" value="x" style="width:20; position:relative; left:250px;top:30px;" id="pos2" >
+	<br><br><br><br><br>
+	<div align="center">
+	   <input type="Button" value="Štart" onclick="window.clearInterval(window.tr2);window.tr2=window.setInterval('anim2()',10);"> &nbsp; &nbsp; 
+	   <input type="Button" value="Stop" onclick="window.clearInterval(window.tr2);"><br><br>
+	</div>   
+	</div>
+</div>		
+<br><hr>
+Teraz budeme simulovať pohyb telesa v gravitačnom poli, ak zanedbáme trenie a zrážka s mantinelmi bude dokonale pružná
+<br>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:500px;">
+	<input type="Text" value="x" style="width:20; position:relative; left:5px;top:20px;" id="pos3" >
+	<br><br><br><br><br><br><br><br><br>
+	<div align="center" style="background-color:green">
+   <input type="Button" value="Štart" onclick="window.clearInterval(window.tr3);window.tr3=window.setInterval('anim3()',20);" style="margin:10"> &nbsp; &nbsp; 
+   <input type="Button" value="Stop" onclick="window.clearInterval(window.tr3);" style="margin:10">
+	</div>   
+	</div>
+</div>		
+<br><hr>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:500px; height">
+	<input type="Text" value="" style="width:100px; position:relative; left:150px;top:220; height:25; background-color:blue" id="pos4">
+	<br><br><br><br><br><br><br><br><br>
+   <input type="Button" value="Rastie" onclick="window.clearInterval(window.tr4);window.tr4=window.setInterval('anim4(1)',10);" style="margin:10"><br>
+<input type="Button" value="Klesá" onclick="window.clearInterval(window.tr4);window.tr4=window.setInterval('anim4(-1)',10);" style="margin:10">
+	</div>   
+</div>		
+<br><hr>
+<div style="border-width:3;border-style:outset;width:590px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:590px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:590px; height">
+<Table cellspacing="10">
+<tr><td colspan="2">
+Po stlačení Štart máš k dispozícii 1 minútu času, kedy sa točia valce. Tlačídkom Stop sa
+valce zastavia a prebehne hodnotenie
+<ul><li>ak sú čísla rôzne ubudne Vám 10€
+	<li>Ak sú dve čísla rovnaké pribudne 4€
+	<li>Ak sú tri čísla rovnaké pribudne 12€
+</ul>	
+Hra končí po vypršaním času alebo minutím kreditu
+</tr>
+<tr bgcolor="Blue"><td align="center">
+<br>
+<input type="Text" style="padding:5; font: bolder 72px monospace;width:60;margin:6" value="0" id="cislo1" readonly>
+<input type="Text" style="padding:5; font: bolder 72px monospace;width:60;margin:6" value="0" id="cislo2" readonly>
+<input type="Text" style="padding:5; font: bolder 72px monospace;width:60;margin:6" value="0" id="cislo3" readonly>
+<br><br>
+<td align="center"><font color="Yellow">čas: &nbsp; &nbsp; </font><input type="Text" value="60" id="cas" readonly>
+	<br><br><font color="Yellow">kredit: </font><input type="Text" value="50" id="kredit" readonly>
+</tr>
+<tr><td colspan="2" align="center" style="padding:0">
+<input type="Button" value=" Štart " onclick="init();tra=setTimeout('videostart()',1000);" style="display:block; width:562px; height:35px;" id="start0">
+<input type="Button" value=" Stop " onclick="test();" style="display:none; width:562px; height:35px;" id="stop0">
+</tr></table>	
+	</div>   
+</div>
+<hr>		
+<ul><li>Naprogramuj <a href="lodz.exe">lod</a> s vlnami
+</ul></tr>
+</dl>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Kopírovací konštruktor</h3>
+Nech chceme vytvoriť triedu B ako kópiu triedy A aby sme mohli v triede B robiť zmeny bez toho aby sa trieda A zmenila.
+Ak vytvoríme kópiu všetkých premenných z A do rovnakých premenných triedy B (urobiť presnú kópiu), tak myšlienka že 
+menením B sa A nebude meniť platí dovtedy, pokiaľ objekty v triede nie sú tvorené odkazmi (smerníkmi ako napr. dyn. pole).
+Ak triedy obsahujú dyn. polia v triede je umiestnená premenná typu pole v ktorej je zapísaná len adresa, kde sa pole nachádza a okopírovaním tejto adresy
+vlastne len sprístupním to isté pole v triede A aj cez triedu B, čo nie je v poriadku. Navyše v deštruktore triedy môže byť zamontované aj zrušenie dynamického objektu 
+a teda zrušením kópie sa zruší aj dynamický objekt v nej vytvorený, čo následne zruší odpovedajúci objekt v triede A, čo prinesie nepredvídatelné správanie. 
+Tento jav automaticky nastáva napr. ak je trieda daná ako parameter funkcie - vieme, že v zásobníku sa vytvorí jej bitová kópia a navyše po ukončení podprogramu sa zavolá
+destruktor, čo prinesie už spomínané problémy.
+<br>Tiež pri klasickom priradení 
+<br>trieda1 = trieda2;
+<br>vzniká problém pri vytváraní kopie triedy trieda2, ak ona obsahuje dynamické objekty
+<br><br>Kopírovací konštruktor je taký, ktorý ako parameter má uvedenú triedu, ktorej dáta majú byť okopírované do dát vznikajúcej triedy
+		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>#include &lt;iostream>
+using namespace std;
+
+class stack_int {
+int *body, n, nn;
+public:
+   int push(int x) {if (n<nn) body[n++] = x; else return 1; return 0;}
+   int pop() {if (n) n--; else return 1; return 0;}
+   int empty(){return n==0;}
+   int top(){return body[n-1];}
+   int get_n(){return n;}
+   stack_int() { nn = 100;n=0; body = new int [nn];}
+   stack_int(int nnn) {nn=nnn;n=0; body = new int [nn];}
+   stack_int(stack_int &a) {nn = a.nn; n=a.n; body = new int [nn]; for (int i=0; i<nn; i++) body[i]=a.body[i];}
+
+   ~stack_int() {delete [] body;}
+ };
+void write(stack_int xx)
+{   for (;!xx.empty();xx.pop()) cout &lt;&lt; xx.top()&lt;&lt;", ";
+     cout &lt;&lt;endl;
+}	 
+
+void main()
+{ stack_int x(100);
+  x.push(10);x.push(20);x.push(30);
+  stack_int z(x);
+  for (;!z.empty();z.pop()) cout &lt;&lt; z.top()&lt;&lt;", ";
+  write(x);
+  cin.get();
+}</pre>
+		</tr></table>
+		Kop9rovac9 konštruktor sa volá dva krát
+		<ul><li>pri vytváraní triedy <b>z</b> pomocou triedy <b>x</b>
+			<li>pri volaní podprogramu write, parameter vzniká v zásobníku 
+			<br>(zdanlivo je to tu zbytočné lebo zásobník sa v tomto podprograme nemení ale po skončení podprogramu sa volá deštruktor a ten by nám zrušil pole)
+		</ul>	
+
+</body>
+</html>

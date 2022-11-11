@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Binárne vyh¾adávanie</title>
+</head>
+
+<body>
+<pre>
+//---------------------------------------------------------------------------
+
+#include &lt;iostream>
+#include &lt;iomanip>
+using namespace std;
+
+//---------------------------------------------------------------------------
+char z;
+int v= 0,a[10000],ii,i,j,c,n=0,p;
+
+void init()
+{
+   cout &lt;&lt;"Menu"&lt;&lt;endl&lt;&lt;endl;
+   cout &lt;&lt;"1...vstup1"&lt;&lt;endl;
+   cout &lt;&lt;"2...vstupk"&lt;&lt;endl;
+   cout &lt;&lt;"3...vypis"&lt;&lt;endl;
+   cout &lt;&lt;"4...najdi"&lt;&lt;endl;
+   cout &lt;&lt;"5...zrus"&lt;&lt;endl;
+   cout &lt;&lt;"6...zrus vsetko"&lt;&lt;endl;
+   cout &lt;&lt;"7...koniec"&lt;&lt;endl;
+   cin>>z;
+}
+void vstup1()
+{ cout &lt;&lt;"zadaj hodnotu: "; cin >>c;
+ for (i=n;i>0 && a[i-1]>c;i--) a[i]=a[i-1];
+ a[i]=c;n++;
+ cout &lt;&lt; "Cislo: " &lt;&lt;c&lt;&lt;" pridane"&lt;&lt;endl;
+}
+void vstup()
+{ cout &lt;&lt;"zadaj pocet: "; cin >>p;
+  for (ii=0;ii&lt;p;ii++)
+  {     c=random(900)+100;
+        for (i=n;i>0 && a[i-1]>c;i--) a[i]=a[i-1];
+        a[i]=c;n++;
+        cout &lt;&lt; "Cislo: " &lt;&lt;c&lt;&lt;" pridane"&lt;&lt;endl;
+  }
+}
+void vypis()
+{ cout&lt;&lt;"pocet:"&lt;&lt;n&lt;&lt;endl;
+  for (i=0; i&lt;n; i++) cout&lt;&lt;setw(4)&lt;&lt;a[i];
+  cout &lt;&lt;endl;
+}
+void najdi()
+{ 
+}
+void zrus1()
+{ }
+void zrusall()
+{ n=0;
+}
+
+int main(int argc, char* argv[])
+{
+  while (init(),z!='7')
+  {  switch (z)
+     {  case '1':vstup1();break;
+        case '2':vstup();break;
+        case '3':vypis();break;
+        case '4':najdi();break;
+        case '5':zrus1();break;
+        case '6':zrusall();break;
+     }
+  }
+//  cin.get();cin.get();
+  return 0;
+}
+//---------------------------------------------------------------------------
+
+</pre>
+
+
+</body>
+</html>

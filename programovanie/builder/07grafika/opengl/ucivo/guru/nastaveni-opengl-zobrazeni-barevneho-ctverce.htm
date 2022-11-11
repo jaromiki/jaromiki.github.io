@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (1.) - Čtverec s interpolací barvy</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="OpenGL je grafické rozhrání, ve kterém se dají naprogramovat docela slušné hry i v Delphi a tak si myslím, že byste se sem měli alespoň podívat. Dnes se zaměřím na nastavení a tvorbu základní aplikace pod Delphi. Všechno je popsáno pěkně krok po kroku včetně příkladů a tak myslím, že se to dá pochopit. "/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/nastaveni-opengl-zobrazeni-barevneho-ctverce&amp;title=OpenGL (1.) - Čtverec s interpolací barvy" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (1.) - Čtverec s interpolací barvy</h1><i>OpenGL je grafické rozhrání, ve kterém se dají naprogramovat docela slušné hry i v Delphi a tak si myslím, že byste se sem měli alespoň podívat. Dnes se zaměřím na nastavení a tvorbu základní aplikace pod Delphi. Všechno je popsáno pěkně krok po kroku včetně příkladů a tak myslím, že se to dá pochopit. </i><br/><hr/><br/><P>Pro zprístupnění kouzel knihovny OpenGL potřebujeme přidat do našeho projektu knihovny GL, Glu, popř. i GLaux</P>
+<PRE><B>uses</B>
+  GL, GLU;</PRE>
+
+
+<P><B>Device context</B> - obsahuje informace potřebné pro GDI (graphics device interface), součást operačního systému</P>
+<P><B>Render kontext</B> (render context) je potřebný pro každý příkaz prováděný OpenGL.</P>
+  
+  
+<P>Prvním krokem inicializace OpenGL je získat device kontext, který obsahuje informace potřebné pro GDI. Pokud bude výstup směřovat do okna, můžeme použít funkci GetDC(Handle). Pak je třeba nastavit pixelový formát získanému device kontextu. Zde specifikujeme vlastnosti OpenGL jako Double buffering, z-buffering, alpha buffering, atd. Když budeme mít device kontext s nastaveným pixelovým formátem, můžeme začít vytvořit rendering kontext, do kterého budou kreslit funkce OpenGL</P>
+
+<PRE><B>procedure</B> TForm1.FormCreate(Sender: TObject);
+<B>begin</B>
+  UhelX := 0;
+  UhelY := 0;
+  UhelZ := 0;
+  X := 0.0; Y := 0; Z := -4.0;
+  DC := GetDC(Handle);
+  SetDCPixelFormat(DC);
+  hrc := wglCreateContext(DC);
+  wglMakeCurrent(DC, hrc);
+  Svetlo;
+  Timer.Enabled := True;
+<B>end;</B></PRE> 
+
+<P>Funkce <B>wglCreateContext</B> nám vytvoří nový <B>Render Context</B>. Funkce <B>wglMakeCurrent</B> nastaví daný Render Context jako aktuální.</P>
+
+<PRE><B>procedure</B> TForm1.SetDCPixelFormat(DC : HDC);
+<B>var</B> PFD : TPixelFormatDescriptor;
+    nPixelFormat : integer;
+<B>begin</B>
+  FillChar(PFD,SizeOf(PFD),0);
+  <B>with</B> PFD <B>do
+    begin</B>
+       nSize := SizeOf(TPixelFormatDescriptor);
+       nVersion := 1;
+       dwFlags := PFD_DRAW_TO_WINDOW or
+                  PFD_SUPPORT_OPENGL or
+                  PFD_DOUBLEBUFFER;
+       iPixelType := PFD_TYPE_RGBA;
+       cColorBits := 24;
+       cDepthBits   := 32;
+       iLayerType   := PFD_MAIN_PLANE;
+    <B>end;</B>
+  nPixelFormat := ChoosePixelFormat(DC,@PFD);
+  Assert(nPixelFormat <> 0,PFDError);
+  SetPixelFormat(DC,nPixelFormat,@PFD)
+<B>end;</B></PRE>	
+
+
+
+<P>Jestliže pracujeme s grafikou, určitě se budeme chtít na něco podívat. Následující procedura nám na plochu vykreslí barevný čtverec:</P>
+
+
+<PRE><B>procedure</B> TForm1.Ctverec;
+<B>begin</B>
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  glTranslatef(X,Y,Z);			//pozice kamery
+  glTranslatef(0,0,0);			//střed rotace objektu
+  glRotatef(UhelX, 1, 0, 0);		//rotace objektu po ose X
+  glRotatef(UhelY, 0, 1, 0);		//rotace objektu po ose Y
+  glRotatef(UhelZ, 0, 0, 1);		//rotace objektu po ose Z
+
+
+    glEnable(GL_COLOR_MATERIAL);
+    glBegin(GL_POLYGON);
+    glNormal3f(0.0, 0.0, 1.0);
+     glColor3b(0,0,127);
+     glVertex3f(1.0, 1.0,0.0);
+     glColor3b(0,127,0);
+     glVertex3f(1.0, -1.0,0.0);
+     glColor3b(127,0,0);
+     glVertex3f(-1.0,-1.0,0.0);
+     glColor3b(127,127,0);
+     glVertex3f(-1.0, 1.0,0.0);
+  glEnd;
+
+
+
+  SwapBuffers(DC);
+<B>end;</B></PRE>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glinterpolace/gl_ctv1.jpg" BORDER=0></TD></TR></TABLE></CENTER>	
+
+	
+<P>Funkcí <B>glClear</B> vyčistíme buffery, potom nastavíme matici zobrazení objektu  <B>glMatrixMode</B> a tuto matici načteme funkcí <B>glLoadIdentity</B>. Dále nastavíme rotaci objektu <B>glRotatef</B> a pozici kamery <B>glTranslatef</B>. Mezi příkazy <B>glBegin</B> a <B>glEnd</B> definujemepožadovaný obrazec. Funkcí <B>glNormal3f</B> nastavíme hodnotu normálového vektoru. Určuje se vlastně bod, do kterého míří světelný paprsek, který se odrazil od stěny objektu. Maximální hodnota je 1, minimální -1. Základní hodnoty jsou (0, 0, 1), což znamená, že se paprsek odráží kolmo od přední stěny objektu. Funkcemi <B>glColor3b</B> a <B>glVertex3f</B> nastavíme pozice a barvy bodů čtverce.</P>
+
+<P><I>Pozn.: Když používáme double buffering, tak OpenGL vše vykresluje na neviditelné místo do paměti (back buffer). Scéna se nezobrazí v okně, dokud my nedáme OpenGL příkaz, který prohodí ukazatel na back a front buffer. To je velmi užitečné, protože se scéna vykresluje mimo obrazovku a celý obraz se objeví naráz a nebliká. Po vykreslení celé tedy stačí napsat:</I><P>
+<PRE>SwapBuffers(DC);</PRE>
+	
+	
+<P>Nastavení prostoru provedeme podle této funkce:</P>
+<PRE><B>procedure</B> TForm1.FormResize(Sender: TObject);
+<B>var</B>
+  PomerStran : GLdouble;
+
+<B>begin</B>
+  PomerStran := Width / Height;
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity;
+  gluPerspective(30.0, PomerStran, 0.1, 400);
+  glViewport(0, 0, Width ,Height);
+  InvalidateRect(Handle, nil, False);
+<B>end;</B></PRE>
+
+<P>Matici zobrazení objektu <B>glMatrixMode</B> nastavíme na GL_PROJECTION a funkcí <B>glLoadIdentity</B> načteme nastavenou matici. Nyní nastavíme prostor tak, jak bude vidět z pozice kamery pomocí funkce <B>gluPerspective</B>(UhelPohledu, PomerStran, Nejbliz, Nejdal), kde úhel pohledu je zorný úhel kamery, poměr stran je poměr výšky a šířky projekčního plátna, nejmenší vzdálenost, od které je objekt viditelný a nejdelší vzdálenost od které již objekt není viditelný. Funkce <B>glViewport</B> nastavuje	velikost zobrazované plochy. Nastavený prostor zobrazíme funkcí <B>InvalidateRect(Handle, nil, False)</B>.</P>
+
+<P>Pro vykreslení scény si vytvoříme další procedulu, kterou pojmenujeme Kreslit. Mezi příkazy <B>BeginPaint</B> a <B>EndPaint</B> vypíšeme vše, co chceme, aby bylo vykresleno. V našem případě je zde uvedena jen procedura ctverec, ale nic nebrání abychom přidali další:</P>
+	
+	
+<PRE><B>procedure</B> TForm1.Kreslit(var Msg: TWMPaint);
+<B>var</B>
+  ps : TPaintStruct;
+
+<B>begin</B>
+  BeginPaint(Handle, ps);
+  Ctverec;
+  EndPaint(Handle, ps);
+<B>end;</B></PRE>
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/glinterpolace/gl_ctv2.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<P>Nyní bychom měli upravit zdroják pro korektní ukončení programu touto procedurou:</P>
+	
+<PRE><B>procedure</B> TForm1.FormDestroy(Sender: TObject);
+<B>begin</B>
+  Timer.Enabled := False;
+  wglMakeCurrent(0, 0);
+  wglDeleteContext(hrc);
+  ReleaseDC(Handle, DC);
+
+  <B>if</B> (Palette <> 0) <B>then</B>
+    DeleteObject(Palette);
+<B>end;</B></PRE>
+
+
+<P>Nakonec jsem do zdrojáku přidal pár funkcí pro pohyb a rotace námi vytvořeného čtverce. Pohybuje se pohybem myši a rotace se provádí pohybem myši se stisknutým levým nebo pravým tlačítkem.</P>
+	
+	
+<PRE><B>procedure</B> TForm1.FormMouseMove(Sender:TObject;Shift:TShiftState;DX,
+  DY: Integer);
+<B>begin</B>
+<B>if</B> bool <B>then begin</B> oldx:=dx;oldy:=dy;bool:=false;<B>end;</B>
+
+<B>if not</B> stisknuto <B>then begin</B>
+x:=x+((oldx-dx));
+z:=z+((oldy-dy));
+<B>end;</B>
+
+<B>if</B> stisknuto <B>then</B> uhely:=uhely+round((oldx-dx));
+<B>if</B> stisknuto <B>then</B> uhelx:=uhelx+round((oldy-dy));
+
+oldx:=dx;oldy:=dy;
+<B>end;</B>
+
+<B>procedure</B> TForm1.FormMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin</B>
+stisknuto:=true;
+<B>end;</B>
+
+<B>procedure</B> TForm1.FormMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+<B>begin</B>
+stisknuto:=false;
+<B>end;</B></PRE>
+
+<P>Nakonec dodám, že všechny použité proměnné a procedury musí být deklarovány. A to je asi tak vše, co jsem vám chtěl dnes ukázat. Ještě dodám, že zdrojový soubor toho, co jsme dnes vytvořili je <A HREF="articles/glinterpolace/gl_ctv.zip"><B>zde</B></A> (40 kB). Už se chystám na pokračování seriálu o tomto Doufám, že jsem vás tímto článkem moc neodradil ale pokud vydržíte, budete moci všem povídat, že jste již programovali v opravdovém 3D prostředí - v OpenGL.</P><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="3d-studio-max-laser">3D Studio MAX (4.) - Jak vytvořit jednoduchý laser</a></li><li><a href="zajimave-zdrojaky-pro-delphi-1">Delphi (4.) - Zajímavé zdrojáky</a></li><li><a href="3d-studio-max-tvorba-krajiny-landscape">3D Studio MAX (3.) - Tvorba 3D krajiny</a></li><li><a href="detekce-typu-procesoru-jeho-frekvence-vytizeni">Delphi (3.) - Detekce typu procesoru, jeho frekvence a využití</a></li><li><a href="ini-soubory-a-registr-windows-v-delphi">Delphi (2.) - Práce se soubory, *.ini soubory a registry</a></li><li><a href="adobe-photoshop-ohniva-koule-fireball">Photoshop tutoriály (1.) - Ohnivé koule</a></li><li><a href="jak-zobrazit-startovaci-obrazek">Delphi (1.) - Jak zobrazit startovací obrázek</a></li><li><a href="3d-studio-max-ohniva-exploze-explosion">3D Studio MAX (2.) - Jak na ohnivé explose</a></li><li><a href="3d-studio-max-panel-nastroju">3D Studio MAX (1.) - Panel nástrojů ve 3D Studiu MAX</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=18&amp;url=%2Fnastaveni-opengl-zobrazeni-barevneho-ctverce" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.1659377412px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12651 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

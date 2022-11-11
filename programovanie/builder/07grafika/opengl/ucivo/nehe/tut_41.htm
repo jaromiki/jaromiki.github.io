@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Volumetrická mlha a nahrávání obrázků pomocí IPicture</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_41.jpg" class="nehe_maly" alt="Lekce 41" />
+
+<h1>Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture</h1>
+
+<p class="nadpis_clanku">V tomto tutoriálu se naučíte, jak pomocí rozšíření EXT_fog_coord vytvořit volumetrickou mlhu. Také zjistíte, jak pracuje IPicture kód a jak ho můžete využít pro nahrávání obrázků ve svých vlastních projektech. Demo sice není až tak komplexní jako některá jiná, nicméně i přesto vypadá hodně efektně.</p>
+
+<p>Pokud demo nebude na vašem systému fungovat, nejdříve se ujistěte, že máte nainstalované nejnovější ovladače grafické karty. Pokud to nepomohlo, zauvažujte o koupi nové (Překl.: :-] ). V současné době už ne zrovna nejnovější GeForce 2 pracuje dobře a ani nestojí tak moc. Pokud vaše grafická karta nepodporuje rozšíření mlhy, kdo může vědět, jaká další rozšíření nebude podporovat?</p>
+
+<p>Pro ty z vás, kterým toto demo nejede a cítí se vyloučeni... mějte na paměti následující: Snad každý den dostávám nejméně jeden email s dotazem na nový tutoriál. Nejhorší z toho je, že většina z nich už je online. Lidé se neobtěžují číst to, co už je napsáno a přeskakují na témata, která je více zajímají. Některé tutoriály jsou příliš komplexní, a proto z mé strany vyžadují někdy i týdny programování. Pak jsou tady tutoriály, které bych sice mohl napsat, ale většinou se jim vyhýbám, protože nefungují na všech kartách. Nyní jsou už karty jako GeForce levné natolik, aby si je mohl dovolit téměř každý, takže už nebudu dále ospravedlňovat nepsání takovýchto tutoriálů. Popravdě, pokud vaše karta podporuje pouze základní rozšíření, budete s největší pravděpodobností chybět! Pokud se vrátím k přeskakování témat jako jsou např. rozšíření, tutoriály se brzy oproti ostatním začnou výrazně opožďovat.</p>
+
+<p>Kód začíná velmi podobně jako starý základní kód a povětšinou je identický s novým NeHeGL kódem. Jediný rozdíl spočívá v inkludování OLECTL hlavičkového souboru, který, chcete-li používat IPicture pro loading obrázků, musí být přítomen.</p>
+
+<p>Překl.: IPicture je podle mě sice hezký nápad a pracuje perfektně, nicméně je kompletně vystavěn na ABSOLUTNĚ NEPŘENOSITELNÝCH technologiích MS, které jdou tradičně používat výhradně pod nejmenovaným OS, všichni víme, o který jde.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Windows</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// OpenGL</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// GLU</span></p>
+<p class="src0">#include &lt;olectl.h&gt;<span class="kom">// Knihovna OLE Controls Library (použita při nahrávání obrázků)</span></p>
+<p class="src0">#include &lt;math.h&gt;<span class="kom">// Matematika</span></p>
+<p></p>
+<p class="src0">#include &quot;NeHeGL.h&quot;<span class="kom">// NeHeGL</span></p>
+<p></p>
+<p class="src0">#pragma comment(lib, &quot;opengl32.lib&quot;)<span class="kom">// Přilinkování OpenGL a GLU</span></p>
+<p class="src0">#pragma comment(lib, &quot;glu32.lib&quot;)</p>
+<p></p>
+<p class="src0">#ifndef CDS_FULLSCREEN<span class="kom">// Některé kompilátory CDS_FULLSCREEN nedefinují</span></p>
+<p class="src0">#define CDS_FULLSCREEN 4</p>
+<p class="src0">#endif</p>
+<p></p>
+<p class="src0">GL_Window* g_window;<span class="kom">// Struktura okna</span></p>
+<p class="src0">Keys* g_keys;<span class="kom">// Klávesnice</span></p>
+
+<p>Deklarujeme čtyř prvkové pole fogColor, které bude ukládat barvu mlhy, v našem případě se jedná o tmavě oranžovou (trocha červené smíchaná se špetkou zelené). Desetinná hodnota camz bude sloužit pro umístění kamery na ose z. Před vykreslením vždy provedeme translaci.</p>
+
+<p class="src0">GLfloat fogColor[4] = {0.6f, 0.3f, 0.0f, 1.0f};<span class="kom">// Barva mlhy</span></p>
+<p class="src0">GLfloat camz;<span class="kom">// Pozice kamery na ose z</span></p>
+
+<p>Ze souboru glext.h převezmeme symbolické konstanty GL_FOG_COORDINATE_SOURCE_EXT a GL_FOG_COORDINATE_EXT. Pokud chcete kód zkompilovat, musí být nastaveny.</p>
+
+<p class="src0"><span class="kom">// Převzato z glext.h</span></p>
+<p class="src0">#define GL_FOG_COORDINATE_SOURCE_EXT 0x8450<span class="kom">// Symbolické konstanty potřebné pro rozšíření FogCoordfEXT</span></p>
+<p class="src0">#define GL_FOG_COORDINATE_EXT 0x8451</p>
+
+<p>Abychom mohli používat funkci glFogCoordfExt(), která bude vstupním bodem pro rozšíření, potřebujeme deklarovat její prototyp. Nejdříve pomocí typedef vytvoříme nový datový typ, ve kterém bude specifikován počet a typ parametrů (jedno desetinné číslo). Vytvoříme globální proměnnou tohoto typu - ukazatel na funkci a prozatím ho nastavíme na NULL. Jakmile mu přiřadíme pomocí wglGetProcAddress() adresu OpenGL ovladače rozšíření, budeme moci zavolat glFogCoordfEXT(), jako kdyby to byla normální funkce.</p>
+
+<p> Takže co už máme... Víme, že PFNGLFOGCOORDFEXTPROC přebírá jednu desetinnou hodnotu (GLfloat coord). Protože je proměnná glFogCoordfEXT stejného typu můžeme říct, že také potřebuje jednu desetinnou hodnotu... tedy glFogCoordfEXT(GLfloat coord). Funkci máme definovanou, ale zatím nic nedělá, protože glFogCoordfEXT se v tuto chvíli rovná NULL. Dále v kódu jí přiřadíme adresu OpenGL ovladače pro rozšíření.</p>
+
+<p>Doufám, že to všechno dává smysl. Pokud jednou víte, jak tento kód pracuje, je velmi jednoduchý, ale jeho popsání je, alespoň pro mě, extrémně složité.</p>
+
+<p class="src0">typedef void (APIENTRY * PFNGLFOGCOORDFEXTPROC) (GLfloat coord);<span class="kom">// Funkční prototyp</span></p>
+<p class="src0">PFNGLFOGCOORDFEXTPROC glFogCoordfEXT = NULL;<span class="kom">// Ukazatel na funkci glFogCoordfEXT()</span></p>
+<p></p>
+<p class="src0">GLuint texture[1];<span class="kom">// Jedna textura</span></p>
+
+<p>Pojďme se podívat na převod obrázků do textury pomocí magické IPicture. Funkci se předává řetězec se jménem obrázku a ID textury. Za jméno se může dosadit buď disková cesta nebo webové URL.</p>
+
+<p>Pro pomocnou bitmapu budeme potřebovat kontext zařízení (hdcTemp) a místo, kam by se dala uložit (hbmpTemp). Ukazatel pPicture představuje rozhraní k IPicture. WszPath a szPath slouží k uložení absolutní cesty k souboru nebo URL. Dále potřebujeme dvě proměnné pro šířku a dvě proměnné pro výšku. LWidth a LHeight ukládají aktuální rozměry obrázku, lWidthpixels a lHeightpixels obsahují šířku a výšku v pixelech upravenou podle maximální velikosti textury, která může být uložena do grafické karty. Hodnotu maximální velikosti uložíme do glMaxTexdim.</p>
+
+<p class="src0">int BuildTexture(char *szPathName, GLuint &amp;texid)<span class="kom">// Nahraje obrázek a konvertuje ho na texturu</span></p>
+<p class="src0">{</p>
+<p class="src1">HDC hdcTemp;<span class="kom">// Pomocný kontext zařízení</span></p>
+<p class="src1">HBITMAP hbmpTemp;<span class="kom">// Pomocná bitmapa</span></p>
+<p class="src1">IPicture *pPicture;<span class="kom">// Rozhraní pro IPicture</span></p>
+<p class="src1">OLECHAR wszPath[MAX_PATH+1];<span class="kom">// Absolutní cesta k obrázku (unicode)</span></p>
+<p class="src1">char szPath[MAX_PATH+1];<span class="kom">// Absolutní cesta k obrázku (ascii)</span></p>
+<p class="src1">long lWidth;<span class="kom">// Šířka v logických jednotkách</span></p>
+<p class="src1">long lHeight;<span class="kom">// Výška v logických jednotkách</span></p>
+<p class="src1">long lWidthPixels;<span class="kom">// Šířka v pixelech</span></p>
+<p class="src1">long lHeightPixels;<span class="kom">// Výška v pixelech</span></p>
+<p class="src1">GLint glMaxTexDim;<span class="kom">// Maximální rozměr textury</span></p>
+
+<p>V další části kódu zjistíme, zda je jméno obrázku diskovou cestou nebo URL. Jedná-li se o URL, zkopírujeme jméno do proměnné szPath. V opačném případě získáme pracovní adresář a spojíme ho se jménem. Děláme to, protože potřebujeme plnou cestu k souboru. Pokud máme např. demo uložené v adresáři C:\WOW\LESSON41 a pokoušíme se nahrát obrázek DATA\WALL.BMP. Uvedená konstrukce přidá doprostřed ještě zpětné lomítko a tak vznikne C:\WOW\LESSON41\DATA\WALL.BMP.</p>
+
+<p class="src1">if (strstr(szPathName, &quot;http://&quot;))<span class="kom">// Obsahuje cesta řetězec &quot;http://&quot;?</span></p>
+<p class="src1">{</p>
+<p class="src2">strcpy(szPath, szPathName);<span class="kom">// Zkopírování do szPath</span></p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Nahrávání ze souboru</span></p>
+<p class="src1">{</p>
+<p class="src2">GetCurrentDirectory(MAX_PATH, szPath);<span class="kom">// Pracovní adresář</span></p>
+<p class="src2">strcat(szPath, &quot;\\&quot;);<span class="kom">// Přidá zpětné lomítko</span></p>
+<p class="src2">strcat(szPath, szPathName);<span class="kom">// Přidá cestu k souboru</span></p>
+<p class="src1">}</p>
+
+<p>Aby funkce OleLoadPicturePath() rozuměla cestě k souboru, musíme ji převést z ASCII do kódování UNICODE (dvoubytové znaky). Pomůže nám s tím MultiByteToWideChar(). První parametr, CP_ACP, znamená Ansi Codepage, druhý specifikuje zacházení s nenamapovanými znaky (ignorujeme ho). SzPath je samozřejmě převáděný řetězec a čtvrtý parametr představuje šířku řetězce s Unicode znaky. Pokud za něj předáme -1, předpokládá se, že bude ukončen pomocí NULL. Do wszPath se uloží výsledek, MAX_PATH je maximální velikostí cesty k souboru (256 znaků).</p>
+
+<p>Po konverzi cesty do kódování Unicode se pokusíme pomocí OleLoadPicturePath nahrát obrázek. Při úspěchu bude pPicture obsahovat ukazatel na data obrázku, návratový kód se uloží do hr.</p>
+
+<p class="src1">MultiByteToWideChar(CP_ACP, 0, szPath, -1, wszPath, MAX_PATH);<span class="kom">// Konverze ascii kódování na Unicode</span></p>
+<p class="src1">HRESULT hr = OleLoadPicturePath(wszPath, 0, 0, 0, IID_IPicture, (void**)&amp;pPicture);<span class="kom">// Loading obrázku</span></p>
+<p></p>
+<p class="src1">if(FAILED(hr))<span class="kom">// Neúspěch</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Konec</span></p>
+<p class="src1">}</p>
+
+<p>Pokusíme se vytvořit kompatibilní kontext zařízení. Pokud se to nepovede uvolníme data obrázku a ukončíme program.</p>
+
+<p class="src1">hdcTemp = CreateCompatibleDC(GetDC(0));<span class="kom">// Pomocný kontext zařízení</span></p>
+<p></p>
+<p class="src1">if(!hdcTemp)<span class="kom">// Neúspěch</span></p>
+<p class="src1">{</p>
+<p class="src2">pPicture-&gt;Release();<span class="kom">// Uvolní IPicture</span></p>
+<p class="src2">return FALSE;<span class="kom">// Konec</span></p>
+<p class="src1">}</p>
+
+<p>Přišel čas na položení dotazu grafické kartě, jakou podporuje maximální velikost textury. Tato část kódu je důležitá, protože díky ní bude obrázek vypadat dobře na všech grafických kartách. Nejen, že umožní upravit velikost na mocninou dvou, ale také ho přizpůsobí podle velikosti paměti grafické karty. Zkrátka: budeme moci nahrávat obrázky s libovolnou šířkou a výškou. Jediná nevýhoda pro majitele málo výkonných grafických karet spočívá v tom, že se při zobrazení obrázků s vysokým rozlišením ztratí spousta detailů.</p>
+
+<p>Funkce glGetIntegerv() vrátí maximální rozměry textur (256, 512, 1024, atd.), potom zjistíme aktuální velikost našeho obrázku a převedeme ji na pixely. Matematiku zde nebudu vysvětlovat.</p>
+
+<p class="src1">glGetIntegerv(GL_MAX_TEXTURE_SIZE, &amp;glMaxTexDim);<span class="kom">// Maximální podporovaná velikost textury</span></p>
+<p></p>
+<p class="src1">pPicture-&gt;get_Width(&amp;lWidth);<span class="kom">// Šířka obrázku a konvertování na pixely</span></p>
+<p class="src1">lWidthPixels = MulDiv(lWidth, GetDeviceCaps(hdcTemp, LOGPIXELSX), 2540);</p>
+<p></p>
+<p class="src1">pPicture-&gt;get_Height(&amp;lHeight);<span class="kom">// Výška obrázku a konvertování na pixely</span></p>
+<p class="src1">lHeightPixels = MulDiv(lHeight, GetDeviceCaps(hdcTemp, LOGPIXELSY), 2540);</p>
+
+<p>Pokud je velikost obrázku menší než maximální podporovaná, změníme velikost na mocninu dvou, která ale bude založená na aktuální velikosti. Přičteme 0.5f, takže se bude vždy zvětšovat na následující velikost. Například rovná-li se šířka 400 pixelům a karta podporuje maximálně 512, bude lepší zvolit 512 než 256, protože by se zbytečně zahodily detaily. Naopak při větší velikosti než maximální musíme zmenšovat na podporovanou velikost. Totéž platí i pro výšku.</p>
+
+<p>Překl.: Opravte mě, jestli se mýlím. Co se stane když např. vezmu obrázek, který má šířku 80 a výšku 300 pixelů? Té matematice sice moc nerozumím :-), ale z toho, co je zde uvedeno, logicky vychází, že vznikne obdélníkový (ne čtvercový!) obrázek o rozměrech 128x512 pixelů. Možná by bylo vhodné ještě přidat něco ve stylu: pokud je jeden rozměr menší než druhý, uprav hodnoty na čtverec.</p>
+
+<p class="src1">if (lWidthPixels &lt;= glMaxTexDim)<span class="kom">// Je šířka menší nebo stejná než maximálně podporovaná</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Změna velikosti na nejbližší mocninu dvou</span></p>
+<p class="src2">lWidthPixels = 1 &lt;&lt; (int)floor((log((double)lWidthPixels)/log(2.0f)) + 0.5f);</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Bude se zmenšovat na maximální velikost</span></p>
+<p class="src1">{</p>
+<p class="src2">lWidthPixels = glMaxTexDim;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (lHeightPixels &lt;= glMaxTexDim)<span class="kom">// Je výška menší nebo stejná než maximálně podporovaná</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Změna velikosti na nejbližší mocninu dvou</span></p>
+<p class="src2">lHeightPixels = 1 &lt;&lt; (int)floor((log((double)lHeightPixels)/log(2.0f)) + 0.5f);</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Bude se zmenšovat na maximální velikost</span></p>
+<p class="src1">{</p>
+<p class="src2">lHeightPixels = glMaxTexDim;</p>
+<p class="src1">}</p>
+
+<p>V tuto chvíli máme data nahraná a také známe požadovanou velikost obrázku, abychom ho mohli dále upravovat, musíme vytvořit pomocnou bitmapu. Bi bude obsahovat informace o hlavičce a pBits bude ukazovat na data obrázku. Požadujeme barevnou hloubku 32 bitů na pixel, správnou šířku i výšku v kódování RGB s jednou bitplane.</p>
+
+<p class="src1"><span class="kom">// Pomocná bitmapa</span></p>
+<p class="src1">BITMAPINFO bi = {0};<span class="kom">// Typ bitmapy</span></p>
+<p class="src1">DWORD *pBits = 0;<span class="kom">// Ukazatel na data bitmapy</span></p>
+<p></p>
+<p class="src1">bi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);<span class="kom">// Velikost struktury</span></p>
+<p class="src1">bi.bmiHeader.biBitCount = 32;<span class="kom">// 32 bitů</span></p>
+<p class="src1">bi.bmiHeader.biWidth = lWidthPixels;<span class="kom">// Šířka</span></p>
+<p class="src1">bi.bmiHeader.biHeight = lHeightPixels;<span class="kom">// Výška</span></p>
+<p class="src1">bi.bmiHeader.biCompression = BI_RGB;<span class="kom">// RGB formát</span></p>
+<p class="src1">bi.bmiHeader.biPlanes = 1;<span class="kom">// 1 Bitplane</span></p>
+
+<p>Převzato z MSDN: Funkce CreateDIBSection() vytváří DIB, do kterého může aplikace přímo zapisovat. Vrací ukazatel na umístění bitů bitmapy, můžeme také nechat systém alokovat paměť.</p>
+
+<p>HdcTemp ukládá pomocný kontext zařízení, bi je hlavička bitmapy. DIB_RGB_COLORS říká programu, že chceme uložit RGB data, která nebudou indexována do logické palety (každý pixel bude mít červenou, zelenou a modrou složku). Ukazatel pBits bude obsahovat adresu výsledných dat a poslední dva parametry budeme ignorovat. Pokud nenastane žádná chyba, pomocí Selectobject() připojíme bitmapu k pomocnému kontextu zařízení.</p>
+
+<p class="src1"><span class="kom">// Touto cestou je možné specifikovat barevnou hloubku a získat přístup k datům</span></p>
+<p class="src1">hbmpTemp = CreateDIBSection(hdcTemp, &amp;bi, DIB_RGB_COLORS, (void**)&amp;pBits, 0, 0);</p>
+<p></p>
+<p class="src1">if(!hbmpTemp)<span class="kom">// Neúspěch</span></p>
+<p class="src1">{</p>
+<p class="src2">DeleteDC(hdcTemp);<span class="kom">// Uvolnění kontextu zařízení</span></p>
+<p class="src2">pPicture-&gt;Release();<span class="kom">// Uvolní IPicture</span></p>
+<p class="src2">return FALSE;<span class="kom">// Konec</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">SelectObject(hdcTemp, hbmpTemp);<span class="kom">// Zvolí bitmapu do kontextu zařízení</span></p>
+
+<p>Nastal čas pro vyplnění pomocné bitmapy daty obrázku. Funkce pPicture->Render() to udělá za nás a navíc upraví obrázek na libovolnou velikost, kterou potřebujeme. HdcTemp představuje pomocný kontext zařízení a další dva následující parametry specifikují vertikální a horizontální offset (počet prázdných pixelů zleva a seshora). My chceme, aby byla celá bitmapa kompletně vyplněna, takže zadáme dvě nuly. Další dva parametry určují požadovanou velikost výsledného obrázku (na kolik pixelů se má roztáhnout popř. zmenšit). Nula na dalším místě je horizontální offset ve zdrojových datech, od kterého chceme začít číst, z čehož plyne, že půjdeme zleva doprava. LHeight určuje vertikální offset, data chceme číst od zdola nahoru. Zadáním lHeight se přesuneme na samé dno zdrojového obrázku. LWidth je množstvím pixelů, které se budou kopírovat ze zdrojového obrázku, v našem případě se jedná o všechna horizontální data. Předposlední parametr, trochu odlišný, má zápornou hodnotu, záporné lHeight, abychom byli přesní. Ve výsledku to znamená, že chceme zkopírovat všechna vertikální data, ale od zdola nahoru. Touto cestou bude při kopírování do cílové bitmapy převrácen. Poslední parametr nepoužijeme.</p>
+
+<p class="src1"><span class="kom">// Vykreslení IPicture do bitmapy</span></p>
+<p class="src1">pPicture-&gt;Render(hdcTemp, 0, 0, lWidthPixels, lHeightPixels, 0, lHeight, lWidth, -lHeight, 0);</p>
+
+<p>Nyní máme k dispozici novou bitmapu se správnými rozměry, ale bohužel je uložena ve formátu BGR. (Překl.: Proč tomu tak je, bylo vysvětlováno v 35. tutoriálu na přehrávání AVI videa.) Pomocí jednoduchého cyklu tyto dvě složky prohodíme a zároveň nastavíme alfu na 255. Dá se říci, že jakákoli jiná hodnota stejně nebude mít nejmenší efekt, protože alfu ignorujeme.</p>
+
+<p class="src1"><span class="kom">// Konverze BGR na RGB</span></p>
+<p class="src1">for(long i = 0; i &lt; lWidthPixels * lHeightPixels; i++)<span class="kom">// Cyklus přes všechny pixely</span></p>
+<p class="src1">{</p>
+<p class="src2">BYTE* pPixel = (BYTE*)(&amp;pBits[i]);<span class="kom">// Aktuální pixel</span></p>
+<p class="src2">BYTE  temp = pPixel[0];<span class="kom">// Modrá složka do pomocné proměnné</span></p>
+<p class="src2">pPixel[0] = pPixel[2];<span class="kom">// Uložení červené složky na správnou pozici</span></p>
+<p class="src2">pPixel[2] = temp;<span class="kom">// Vložení modré složky na správnou pozici</span></p>
+<p class="src2">pPixel[3] = 255;<span class="kom">// Konstantní alfa hodnota</span></p>
+<p class="src1">}</p>
+
+<p>Po všech nutných operacích můžeme z obrázku vygenerovat texturu. Zvolíme ji jako aktivní a nastavíme lineární filtrování. Myslím, že glTexImage2D() už nemusím vysvětlovat.</p>
+
+<p class="src1">glGenTextures(1, &amp;texid);<span class="kom">// Generování jedné textury</span></p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texid);<span class="kom">// Zvolí texturu</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);<span class="kom">// Lineární filtrování</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);</p>
+<p></p>
+<p class="src1"><span class="kom">// Vytvoření textury</span></p>
+<p class="src1">glTexImage2D(GL_TEXTURE_2D, 0, 3, lWidthPixels, lHeightPixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, pBits);</p>
+
+<p>Poté, co je textura vytvořena, můžeme uvolnit zabrané systémové zdroje. Už nebudeme potřebovat pomocnou ani bitmapu ani kontext zařízení ani pPicture.</p>
+
+<p class="src1">DeleteObject(hbmpTemp);<span class="kom">// Smaže bitmapu</span></p>
+<p class="src1">DeleteDC(hdcTemp);<span class="kom">// Smaže kontext zařízení</span></p>
+<p class="src1">pPicture-&gt;Release();<span class="kom">// Uvolní IPicture</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// OK</span></p>
+<p class="src0">}</p>
+
+<p>Následující funkce zjišťuje, jestli grafická karta podporuje rozšíření EXT_fog_coord. Tento kód může být použit pouze, pokud už má program k dispozici renderovací kontext. Jestliže ho zkusíme zavolat před inicializací okna, dostaneme chyby.</p>
+
+<p>Vytvoříme pole obsahující jméno našeho rozšíření. Alokujeme dynamickou paměť, do které následně zkopírujeme seznam všech podporovaných rozšíření. Pokud strstr() mezi nimi najde EXT_fog_coord, vrátíme false. (Překl.: Uvolnit dynamickou paměť!!!)</p>
+
+<p class="src0">int Extension_Init()<span class="kom">// Je rozšíření EXT_fog_coord podporováno?</span></p>
+<p class="src0">{</p>
+<p class="src1">char Extension_Name[] = &quot;EXT_fog_coord&quot;;</p>
+<p></p>
+<p class="src1"><span class="kom">// Alokace paměti pro řetězec</span></p>
+<p class="src1">char* glextstring = (char *)malloc(strlen((char *)glGetString(GL_EXTENSIONS)) + 1);</p>
+<p class="src1">strcpy (glextstring,(char *)glGetString(GL_EXTENSIONS));<span class="kom">// Grabování seznamu podporovaných rozšíření</span></p>
+<p></p>
+<p class="src1">if (!strstr(glextstring, Extension_Name))<span class="kom">// Není podporováno?</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// free(glextstring);// Překl.: Uvolnění alokované paměti !!!</span></p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">free(glextstring);<span class="kom">// Uvolnění alokované paměti</span></p>
+
+<p>Na samém začátku programu jsme deklarovali proměnnou glFogCoordfEXT jako ukazatel na funkci. Protože už s jistotou víme, že grafická karta toto rozšíření podporuje, můžeme ho pomocí wglGetProcAddress() nastavit na správnou adresu. Od této chvíle máme k dispozici novou funkci glFogCoordfEXT(), které se předává jedna GLfloat hodnota.</p>
+
+<p class="src1">glFogCoordfEXT = (PFNGLFOGCOORDFEXTPROC) wglGetProcAddress(&quot;glFogCoordfEXT&quot;);<span class="kom">// Nastaví ukazatel na funkci</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// OK</span></p>
+<p class="src0">}</p>
+
+<p>Při vstupu do Initialize() má program k dispozici renderovací kontext, takže se můžeme dotázat na podporu rozšíření. Pokud není dostupné, ukončíme program. Texturu nahráváme pomocí nového IPicture kódu. Pokud se z nějakého důvodu loading nezdaří, opět ukončíme program. Následuje obvyklá inicializace OpenGL.</p>
+
+<p class="src0">BOOL Initialize(GL_Window* window, Keys* keys)<span class="kom">// Inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">g_window = window;<span class="kom">// Okno</span></p>
+<p class="src1">g_keys = keys;<span class="kom">// Klávesnice</span></p>
+<p></p>
+<p class="src1">if (!Extension_Init())<span class="kom">// Je rozšíření podporováno?</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Konec</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!BuildTexture(&quot;data/wall.bmp&quot;, texture[0]))<span class="kom">// Nahrání textury</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Konec</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nejlepší perspektivní korekce</span></p>
+
+<p>Dále potřebujeme nastavit mlhu. Nejdříve ji zapneme, potom určíme lineární renderovací mód (vypadá lépe) a definujeme barvu na tmavší odstín oranžové. Startovní pozice mlhy je místo, kde bude nejméně hustá. Abychom udrželi věci jednoduché předáme číslo 0.0f. Naopak nejvíce hustá bude s hodnotou 1.0f. Podle všech dokumentací, které jsem kdy četl, nastavení hintu na GL_NICEST způsobí, že se bude působí mlhy určovat zvlášť pro každý pixel. Předáte-li GL_FASTEST, bude se počítat pro jednotlivé vertexy, nicméně nejde vidět žádný rozdíl. Poslední glFogi() příkaz oznámí OpenGL, že chceme nastavovat mlhu v závislosti na koordinátech vertexů. To způsobí, že ji budeme moci umístit kamkoli na scénu bez toho, že bychom tak ovlivnili její zbytek.</p>
+
+<p class="src1"><span class="kom">// Nastavení mlhy</span></p>
+<p class="src1">glEnable(GL_FOG);<span class="kom">// Zapne mlhu</span></p>
+<p class="src1">glFogi(GL_FOG_MODE, GL_LINEAR);<span class="kom">// Lineární přechody</span></p>
+<p class="src1">glFogfv(GL_FOG_COLOR, fogColor);<span class="kom">// Barva</span></p>
+<p class="src1">glFogf(GL_FOG_START, 0.0f);<span class="kom">// Počátek</span></p>
+<p class="src1">glFogf(GL_FOG_END, 1.0f);<span class="kom">// Konec</span></p>
+<p class="src1">glHint(GL_FOG_HINT, GL_NICEST);<span class="kom">// Výpočty na jednotlivých pixelech</span></p>
+<p class="src1">glFogi(GL_FOG_COORDINATE_SOURCE_EXT, GL_FOG_COORDINATE_EXT);<span class="kom">// Mlha v závislosti na souřadnicích vertexů</span></p>
+
+<p>Počáteční hodnotu proměnné camz určíme na -19.0f. Protože chodbu renderujeme od -19.0f do +14.0f, bude to přesně na začátku.</p>
+
+<p class="src1">camz = -19.0f;<span class="kom">// Pozice kamery</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// OK</span></p>
+<p class="src0">}</p>
+
+<p>Funkce zajišťující stisky kláves je dnes opravdu jednoduchá. Pomocí šipek nahoru a dolů nastavujeme pozici kamery ve scéně. Zároveň musíme ošetřit &quot;přetečení&quot;, abychom se neocitli venku z chodby.</p>
+
+<p class="src0">void Update(DWORD milliseconds)<span class="kom">// Aktualizace scény</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_ESCAPE])<span class="kom">// ESC</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication(g_window);<span class="kom">// Konec programu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_F1])<span class="kom">// F1</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen(g_window);<span class="kom">// Změna fullscreen/okno</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_UP] &amp;&amp; camz &lt; 14.0f)<span class="kom">// Šipka nahoru</span></p>
+<p class="src1">{</p>
+<p class="src2">camz+=(float)(milliseconds) / 100.0f;<span class="kom">// Pohyb dopředu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_DOWN] &amp;&amp; camz &gt; -19.0f)<span class="kom">// Šipka dolů</span></p>
+<p class="src1">{</p>
+<p class="src2">camz-=(float)(milliseconds) / 100.0f;<span class="kom">// Pohyb dozadu</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Jsem si jistý, že už netrpělivě čekáte na vykreslování. Smažeme buffery, resetujeme matici a v závislosti na hodnotě camz se přesuneme do hloubky.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, camz);<span class="kom">// Translace v hloubce</span></p>
+
+<p>Kamera je umístěna, takže zkusíme vykreslit první quad. Bude jím zadní stěna, která by měla být kompletně ponořená v mlze. Z inicializace si jistě pamatujete, že nejhustší mlhu nastavuje hodnota GL_FOG_END; určili jsme ji na 1.0f. Mlha se aplikuje podobně jako texturové koordináty, pro nejmenší viditelnost předáme funkci glFogCoordfEXT() číslo 1.0f a pro největší 0.0f. Zadní stěna je kompletně ponořená v mlze, takže předáme všem jejím vertexům jedničku.</p>
+
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Zadní stěna</span></p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.5f,-2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 0.0f);glVertex3f( 2.5f,-2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 1.0f);glVertex3f( 2.5f, 2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.5f, 2.5f,-15.0f);</p>
+<p class="src1">glEnd();</p>
+
+<p>První dva body podlahy navazují na vertexy zadní stěny, a proto také zde uvedeme 1.0f. Přední body jsou už naopak z mlhy venku, tudíž je musíme nastavit na 0.0f. Místa ležící mezi okraji se automaticky interpolují, a tak vznikne plynulý přechod. Všechny ostatní stěny budou analogické.</p>
+
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Podlaha</span></p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.5f,-2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 0.0f);glVertex3f( 2.5f,-2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(1.0f, 1.0f);glVertex3f( 2.5f,-2.5f, 15.0f);</p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.5f,-2.5f, 15.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Strop</span></p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.5f, 2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 0.0f);glVertex3f( 2.5f, 2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(1.0f, 1.0f);glVertex3f( 2.5f, 2.5f, 15.0f);</p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.5f, 2.5f, 15.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Pravá stěna</span></p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(0.0f, 0.0f);glVertex3f( 2.5f,-2.5f, 15.0f);</p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(0.0f, 1.0f);glVertex3f( 2.5f, 2.5f, 15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 1.0f);glVertex3f( 2.5f, 2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 0.0f);glVertex3f( 2.5f,-2.5f,-15.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Levá stěna</span></p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.5f,-2.5f, 15.0f);</p>
+<p class="src2">glFogCoordfEXT(0.0f); glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.5f, 2.5f, 15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.5f, 2.5f,-15.0f);</p>
+<p class="src2">glFogCoordfEXT(1.0f); glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.5f,-2.5f,-15.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">glFlush();<span class="kom">// Vyprázdnění renderovací pipeline</span></p>
+<p class="src0">}</p>
+
+<p>Doufám, že nyní už rozumíte, jak věci pracují. Čím vzdálenější je objekt, tím by měl být více ponořen v mlze a tudíž musí být nastavena hodnota 1.0f. Vždycky si také můžete pohrát s GL_FOG_START a GL_FOG_END a pozorovat, jak ovlivňují scénu. Efekt nebude pracovat podle očekávání, pokud prohodíte hodnoty. Iluze se vytvořila tím, že je zadní stěna kompletně oranžová. nejvýhodnější použití spočívá u temných koutů, kde se hráč nemůže dostat za mlhu.</p>
+
+<p>Plánujete-li tento typ mlhy ve svém 3D enginu, bude možná vhodné upravovat počáteční a koncové hodnoty podle toho, kde hráč stojí, kterým směrem se dívá a podobně.</p>
+
+<p>Doufám, že jste si užili tento tutoriál. Vytvářel jsem ho přes tři dny, čtyři hodiny denně. Většinu času zabralo psaní textů, které právě čtete. Původně jsme chtěl vytvořit kompletní 3D místnost s mlhou v jednom rohu, ale naneštěstí jsem měl velmi málo času na kódování. Přestože zamlžená chodba je velmi jednoduchá, vypadá perfektně a modifikace kódu pro váš projekt by také neměla být moc složitá.</p>
+
+<p>Je důležité poznamenat, že toto je pouze jednou z nejrůznějších možností, jak vytvořit volumetrickou mlhu. Podobný efekt může být naprogramován pomocí blendingu, částicových systémů, maskování a podobných technologií. Pokud modifikujete pohled na scénu tak, aby byla kamera umístěna ne v chodbě, ale venku, zjistíte, že se mlha nachází uvnitř chodby.</p>
+
+<p>Originální myšlenka tohoto tutoriálu ke mně dorazila už hodně dávno, což je jedním z důvodů, že jsem ztratil email. Osobě, která mi nápad zaslala, děkuji.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson41.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson41_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson41.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson41.zip">Dev C++</a> kód této lekce. ( <a href="mailto:rdieffenbach@chello.nl">Rob Dieffenbach</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson41.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:ant@solace.mh.se">Anthony Whitehead</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson41.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_41_big.jpg" class="nehe_velky" alt="Lekce 41" /></div>
+<p class="okolni_lekce"><a href="tut_40.php">&lt;&lt;&lt; Lekce 40</a> | <a href="tut_42.php">Lekce 42 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Martin</div>
+<div class="d_o_datumcas">22.05.2005 - 15:38:18</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_41.php&j=0">Opravdu volumetricka mlha?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.05.2005 - 15:52:48</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_41.php&j=1">Re: Opravdu volumetricka mlha?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">CHIP</div>
+<div class="d_o_datumcas">14.10.2006 - 23:03:04</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_41.php&j=4">Re: Opravdu volumetricka mlha?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">pulcik</div>
+<div class="d_o_datumcas">22.09.2005 - 14:17:28</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_41.php&j=2">Zmena mlhy a display list</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">24.09.2005 - 13:17:22</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_41.php&j=3">Re: Zmena mlhy a display list</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_41.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

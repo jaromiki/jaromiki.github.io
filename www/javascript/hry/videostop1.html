@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>JavaScript DESTINATION - P186</title>
+<style type="text/css">
+BODY {font-family: Arial}
+.cisla {font-size:32pt; background:"#cee7f7"; text-align:center}
+.tlacitko {width:80}
+</style>
+
+<script type="text/javascript">
+<!--
+var init_pokusu=10;
+var zbyva=0;
+var body;
+
+function ted() {
+var x=0;
+var jedna=document.all.tabulka.rows[0].cells[0].innerText;
+var dva=document.all.tabulka.rows[0].cells[1].innerText;
+var tri=document.all.tabulka.rows[0].cells[2].innerText;
+if (jedna==dva) x++;
+if (tri==dva) x++;
+if (jedna==tri) x++;
+switch(x) {
+case 0:
+body=parseInt(body/2+0.5);
+document.all.kolikBodu.innerText=body;
+break;
+case 1:
+body=parseInt(body*2);
+document.all.kolikBodu.innerText=body;
+break;
+case 3:
+body=parseInt(body*8);
+document.all.kolikBodu.innerText=body;
+}
+zbyva--;
+document.all.kolikPokusu.innerText=zbyva;
+if (zbyva==0)
+{
+init();
+document.all.text.innerText="Blahoprajeme! Skore: "+body;
+}
+}
+
+function nahoda() {
+if (zbyva > 0) {
+for (i=0; i < 3; i++) {
+document.all.tabulka.rows[0].cells[i].innerText=parseInt(Math.random()*6);
+}
+setTimeout("nahoda()", (500+250*document.all.vyber.selectedIndex));
+}
+}
+
+function init() {
+zbyva=0;
+document.all.btn1.style.display="";
+document.all.btnTed.style.display="none";
+document.all.text.innerText="Zahrajte sa!";
+document.all.btn2.style.display="none";
+document.all.kolikBodu.innerText=" -";
+document.all.kolikPokusu.innerText=" -";
+document.all.vyberOkoli.style.display="";
+for (i=0; i < 3; i++)
+document.all.tabulka.rows[0].cells[i].innerText="-";
+}
+
+function zacatek() {
+zbyva=init_pokusu;
+document.all.btnTed.style.display="";
+document.all.btn1.style.display="none";
+document.all.btn2.style.display="";
+document.all.vyberOkoli.style.display="none";
+document.all.text.innerText="Ideme!";
+nahoda();
+}
+
+function stisk() {
+zbyva=0;
+document.all.text.innerText="Pripravte se!";
+document.all.kolikBodu.innerText=1;
+body=1;
+document.all.kolikPokusu.innerText=init_pokusu;
+setTimeout("zacatek()", 1500);
+}
+
+function konec() {
+init();
+document.all.text.innerText="Zahrajte sa znova!";
+}
+
+window.onload=init;
+// -->
+</script>
+</head>
+<body text="#000000" bgcolor="#ffffff">
+
+<table border="0" width="450" align="center" cellspacing="30">
+  <tr>
+    <td width="100%" align="center" colspan=2><strong>
+	<font size=5 id="text"></font></strong></td>
+  </tr>
+  <tr>
+    <td width="100%" align="center" colspan=2>
+	<table border="1" cellpadding="5" cellspacing="0" cellspacing="10" cellpadding="10" id="tabulka">
+      <tr>
+        <td width="55" class="cisla">&nbsp;</td>
+        <td width="55" class="cisla">&nbsp;</td>
+        <td width="55" class="cisla">&nbsp;</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+<tr><td align=left>
+<font color="#ff0000"><b>Body: <span id="kolikBodu"></span></b></font></td><td align=right>
+<font color="#ff0000"><b>Pokusy: <span id="kolikPokusu"></span></b></font>
+
+
+</td></tr>
+  <tr>
+    <td width="100%" align="center" colspan=2>
+    <button id="btn1" onclick="stisk()" class="tlacitko"> NOVA HRA
+</button>
+<button id="btnTed" onclick="ted()" class="tlacitko">Teraz!
+</button>
+
+</td>
+  </tr>
+  <tr>
+    <td width="100%" align="center" colspan=2>
+<button id="btn2"  onclick="konec()" class="tlacitko">
+KONIEC
+</button>
+<span id="vyberOkoli">
+Vyberte si obtiaznost:
+<select id="vyber">
+<option>tazka
+<option selected>stredna
+<option>lahka
+</select>
+</span>
+
+</td>
+</tr>
+</table>
+</body>
+</html>
+        

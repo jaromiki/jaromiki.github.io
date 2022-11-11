@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+  	<meta name="Content-language" content="sk">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Rámce</title>
+</head>
+
+<body LINK="#0000ff" BACKGROUND="image15.gif" bgproperties="Fixed">
+<dl>
+<dt class=second>Opakovanie
+<dd>- popíš rozdiely v tagoch &lt;P>, &lt;DIV>, &lt;SPAN>
+<br>- aké parametre používame pri odstavcoch
+<br>- ako písať definície v HTML
+<br>- ako zadávame nečíslované zoznamy
+<br>- ako zadávame číslované zoznamy
+<br>- aké podparametre má parameter style a ako im zadáme hodnotu
+
+<h3 class=main>Rámce</h3>
+Rozdeľuje stránku na niekoľko častí (rámcov) do ktorých možno načítať nejaké stránky (môžu byť aj z iných serverov a môžu tiež obsahovať rámce).
+<br>Rámce sú tvorené niekoľkými susednými riadkami alebo stĺpcami. Definícia rámcov musí byť urobená v hlavičke stránky - na obsahu tela nezáleží.
+<h3 class=second>Frameset</h3>
+Používa sa na definíciu veľkosti oblasti každého rámca. Rozdeluje stránku do dvoch alebo viac obdĺžnikových oblastí (rámcov), do ktorých se načítajú 
+iné stránky. Tag &lt;frameset&gt; se vyskytuje za hlavičkou miesto tagu &lt;body&gt;.  
+Frameset môže obsahovať len tagy &lt;frame&gt; a dalšie &lt;frameset&gt;.
+<table align="center" border="1" border="0" cellpadding="6" cellspacing="0">
+	<caption>Atributy tagu &lt;frameset&gt;</caption>
+	<tr bgcolor="Silver"><th>Atribut</th><th>Význam</th><th>Hodnoty</th></tr>
+	<tr><td>cols</td><td>rozdelenie stránky do sĺpcových rámcov</td><td>čiarkami oddelené dĺžky, percentá alebo * určujúce šírku rámcov</td></tr>
+	<tr><td>rows</td><td>rozdelenie stránky do riadkových rámcov</td><td>čiarkami oddelené dĺžky, percentá alebo * určujúce šírku rámcov</td></tr>
+	<tr><td>border</td><td>šírka rámečku medzi stránkami</td><td>pixely</td></tr>
+	<tr><td>bordercolor</td><td>barva rámečku, funguje len v Exploreru</td><td><a href="02jazyk.html#farba">farba</a></td></tr>
+	<tr><td>frameborder</td><td>zobraziť rámček</td><td>yes | no | 0 | 1</td></tr>
+	<tr><td>framespacing</td><td>ďalšie miesto mezi rámcami, len Explorer</td><td>pixely</td></tr>
+</table>
+<p>Najdôležitejšie parametre sú cols a rows. V jednom tagu &lt;frameset&gt; môže byť použitý len jeden z týchto atributov. 
+	Popisujú vlastne rozmer každého rámca (tagy &lt;frame&gt;). Špeciálna hodnota * znamená, že rám bude mať takú velkosť, 
+	aká zostane (podľa veľkosti okna).
+</p>
+<p >Príklad dvoch rámcov vedla seba, ten ľavý je pevne široký 150, zbytok (*) sa doplní druhým rámcom:
+	<div style="font-family:'sans-serif'; font-weight:600; font-size:x-small" >
+	&lt;frameset cols=&quot;150, *&quot;&gt;<br>
+	&lt;frame name=&quot;stĺpec&quot; src=&quot;menu.html&quot;&gt;<br>
+	&lt;frame name=&quot;obsah&quot; src=&quot;uvod.html&quot;&gt;<br>
+	&lt;/frameset&gt;
+	</div>
+<p class="priklad">Príklad troch rámcov pod sebou (ako rows = riadky), ten rám s hlavičkou má výšku 100 pixelov, patka má výšku 10% a prostredný rám 
+	zaberá zbytok výšky (*). 
+	<div style="font-family:'sans-serif'; font-weight:600; font-size:x-small" >
+	&lt;frameset rows=&quot;100, *, 10%&quot;&gt;<br>
+	&lt;frame name=&quot;hlavicka&quot; src=&quot;hlavicka.html&quot;&gt;<br>
+	&lt;frame name=&quot;obsah&quot; src=&quot;uvod.html&quot;&gt;<br>
+	&lt;frame name=&quot;patka&quot; src=&quot;patka.html&quot;&gt;<br>
+	&lt;/frameset&gt;
+	</div>
+<h2><a name="frame"></a>frame</h2>
+<p>Rám. Ur4uje meno oblasti - dôležité pre načítavanie stránok na danú oblasť. Každý &lt;frame&gt; je vložený v	elemente &lt;frameset&gt;, 
+	kde sú popísané rozmery oblasti. Nepárový tag.</p>
+<table align="center" border="1" border="0" cellpadding="6" cellspacing="0">
+	<caption>Atributy tagu &lt;frame&gt;</caption>
+	<tr bgcolor="Silver"><th>Atribut</th><th>Význam</th><th>Hodnoty</th></tr>
+	<tr><td>src</td><td>zobrazovaná stránka</td><td><a href="05odkazy.html#url">URL</a></td></tr>
+	<tr><td>name</td><td>meno rámca pre zacielenie odkazov</td><td>meno rámca</td></tr>
+	<tr><td>scrolling</td><td>umožnuje rolovanie </td><td>auto | no | yes</td></tr>
+	<tr><td>noresize</td><td>znemožnenie zmeny velikosti rámcov myšou</td><td>bez hodnoty</td></tr>
+	<tr><td>marginheight</td><td>vertikálny prázdny okraj rámca</td><td>pixely</td></tr>
+	<tr><td>marginwidth</td><td>horizontálny prázdny okraj rámca</td><td>pixely</td></tr>
+	<tr><td>frameborder</td><td>či zobraziť rámček</td><td>yes | no | 0 | 1</td></tr>
+	<tr><td>bordercolor</td><td>farba rámčeka</td><td><a href="02jazyk.html#farba">farba</a></td></tr>
+</table>
+<h2>noframes</h2>
+<p>Alternatívny obsah pre zobrazovače. Niektoré zobrazovače nevedia zobraziť rámcovú štruktúru a v týchto je možné zobraziť obsah elementu &lt;noframes&gt;. 
+	</p>
+<p>&lt;noframes&gt; sa má vyskytovať v elemente &lt;frameset&gt;. Element &lt;noframes&gt; môže	obsahovat ľubovolný obsah včítae tagu &lt;body&gt;. 
+	Je zvykom dávat tam stručný obsah stránok s odkazom na nerámovanú verziu. &lt;noframes&gt; nemá žiadné atributy.</p>
+<p class="priklad">Príklad:&nbsp;<br>
+	<div style="font-family:'sans-serif'; font-weight:600; font-size:x-small" >
+	&lt;frameset ...&gt;&lt;frame ...&gt;&lt;frame ...&gt;<br>
+	&lt;noframes&gt;Tento text se zobrazí na prehliadačoch nepodporujúcich rámce ... &lt;/noframes&gt;<br>
+	&lt;/frameset&gt;
+	</div>
+<p>Poznámka: fakt tam nepíšte &quot;Tato stránka používá rámy, ale váš prehliadač to nepodporuje.&quot; Lepšie je tam napísať &quot;Tato stránka je o mne 
+a mojej škole.&quot;. </p>
+ 
+</body>
+</html>

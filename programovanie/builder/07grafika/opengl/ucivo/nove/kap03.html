@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Textura</title>
+</head>
+
+<body>
+V7plne plôch nemusia by tvorené len jednoduchımi farbami a farebnımi prechodmi ale môme si vytvori farebnú "štruktúru",
+ktorú budeme potom na plochu "naahova". Vzorku mono vytvori zadávaním hopdnoty kadého pixla, alebo zobratím nejakého obrázka.
+Obmedzenie na ktoré treba dáva pozor je e rozmery vzorky musia by mocniny 2. (napr. 32, 64, 128, 256).
+<br>V nasledovnom programe vytváram vzorku tvorenú šachovnicovo - kadé druhú políèko je èierne, biele políèka sú tieòované.
+<br>
+<img src="textura1.jpg" width="435" height="320" border="0" alt="">  
+<br><br>
+<h3>Deklarácia textúry</h3>
+(volím systém RGB, kde kadá farba je zadaná hodnotou &lt;0;255&gt; ) 
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+var
+    bmp: array[0..255,0..255] of record r, g, b: byte;  end;
+   // miesto pre texturu 256*256
+</pre></code>
+</table>
+<h3>Vytvorenie textúry</h3>
+Textúra bude tvorená šachovnicou 8x8 kde sa striedajú èierne políèka so svetlımi, prièom vo svetlıch políèkach pribúda 
+èervenej farby smerom doprava a zelenej pribúda smerom nadol
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+   for y:=0 to 255 do           // pro vsechny radky pixmapy
+        for x:=0 to 255 do        // pro vsechny pixely na radku
+        if ((y div 32) +(x div 32)) mod 2 =0 then
+        begin                     // svetle policko     
+            with bmp[y,x] do
+            begin r:= x ;g:=y;b:=0; end;
+        end
+        else
+        begin                     // cierne policko  
+            with bmp[y,x] do
+            begin r:= 0 ;g:=0;b:=0; end;
+        end;
+  glEnable(GL_TEXTURE_2D);       // povolime texturu  
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);      // v smere osi x povolime opakovanie textury
+  glTexParameter(GL_TEXTURE_2D, GL_Texture_WRAP_T, GL_REPEAT);      // v smere osi y povolime opakovanie textury
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spôsob vıpoètu ïalších bodov (textura vacsia)
+  glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexImage2d(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, @bmp);
+		  // 1. par. ........ vdy da GL_TEXTURE_2D
+		  // 2. par. ........ vdy da 0 (má vıznam ak urobíme viac textur pre rôzne detaily)
+		  // 3. par. ........ poèet farieb RGB=3, RGBA=4
+		  // 4. par. ........ rozmer v smere x  
+		  // 5. par. ........ rozmer v smere y
+		  // 6. par. ........ vdy da GL_UNSIGNED_BYTE (typ premennej v texture)
+		  // 7. par. ........ adresa textury
+</pre></code>
+</table>
+<h3>Natiahnutie textúry</h3>
+textúra tım e sa "naahuje" na plochu sa rôzne deformuje
+<table bgcolor="#ccccff"><tr><td>
+<code><pre>
+    glBegin(GL_QUADS);
+        glTexCoord(0.0, 0.0); glVertex3f(-1, +1, -2);
+        glTexCoord(1.0, 0.0); glVertex3f(+1, +1, -2);
+        glTexCoord(1.0, 1.0); glVertex3f(+1, -1, -2);
+        glTexCoord(0.0, 1.0); glVertex3f(-1, -1, -2);
+    glEnd();
+    SwapBuffers(DC);
+</pre></code>
+</table>
+</body>
+</html>

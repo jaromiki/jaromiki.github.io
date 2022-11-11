@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3 class="main">Zoznamy - <b>list</b></h3>
+Bitset je špeciálny kontajner, kde položky takéhoto objektu sú bity - teda hodnoty sú len 0,1 (TRUE, FALSE). Oproti bežnému poľu
+(ktoré má viac možností použitia) teda získame asi 8 násobne menší priestor, čo môže byť niekedy rozhodujúce. Celá práca s položkami bude spočívať v nastavovaní hodnoty a prípadne test hodnoty. Použitie je ako pri množine, vieme prvok vložiť, odstrániť, testovať.
+<dl><dt>pripnutie knižnice
+		<dd>Aby sme mohli používať obojstranné zoznamy musíme pripnúť príslušnú knižnicu
+			<br><b>#include &lt;bitset></b>
+			<br>Po pripnutí môžme začať používať objekty popísané v tejto knižnici a teraz si základ popíšeme.
+	<dt>deklarácia
+	<dd>Je úplne podobné ako pri deklarácii poľa
+		<ul><li><b>bitset &lt;n&gt; bs1;</b> &nbsp; &nbsp; &nbsp;//vytvorí bitset dĺžky n bitov (vynulovaný)
+			<li><b>bitset &lt;8&gt; bs1("00001111");</b> &nbsp; &nbsp; &nbsp;//vytvorí bitset dĺžky 8 bitov s predpísanou hodnotou
+			<li> &nbsp; &nbsp; &nbsp;pri inicializácii stringom je vhodné pripnúť aj knižnicu string (#include &lt;string>)
+		</ul>	
+	<dt>členské funkcie
+	<dd><ul><li><b>any()</b> ... vráti TRUE ak sú všetky bity nastavené na 1
+			<li><b>count()</b> ... vráti počet bitov nastavených na 1
+			<li><b>none()</b> ... vráti TRUE ak sú všetky bity nastavené na 0
+			<li><b>flip()</b> ... zneguje všetky bity
+			<br><b>flip(n)</b> ...   zneguje n-ty bit
+			<li><b>operator [n]</b> ... sprístupní n-tý bit
+			<li><b>reset()</b> ... nastaví všetky bity na 0
+			<br><b>reset(n)</b> ... nastaví n-ty bit na 0
+			<li><b>set()</b> ... nastaví všetky bity na 1
+			<br><b>set(n)</b> ... nastaví n-ty bit na 1
+			<br><b>set(n,0)</b> ... nastaví n-ty bit na 0
+			<li><b>size()</b> ... vráti počet bitov v bitsete
+			<li><b>test(n)</b> ... vráti TRUE/FALSE podľa hodnoty n-tého bitu
+			<li><b>to_string<char,char_traits<char>,allocator<char> >()</b> ... vráti stringovú hodnotu 
+				<br> &nbsp; &nbsp; &nbsp;(trochu komplikované ale treba to napísať presne takto)
+					<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+   					<tr><td bgcolor="White">	
+<pre>// bitset::to_string
+#include &lt;iostream>
+#include &lt;string>
+#include &lt;bitset>
+using namespace std;
+int main ()
+{ string mystring;
+  bitset&lt;4> mybits;     // mybits: 0000
+  mybits.set();         // mybits: 1111
+  mystring=mybits.to_string<char,char_traits<char>,allocator<char> >();
+  cout &lt;&lt; "mystring: " &lt;&lt; mystring &lt;&lt; endl;
+  return 0;
+}
+</pre>
+					</tr></table>
+
+</body>
+</html>

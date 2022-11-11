@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">
+ 	 <LINK href="css/style.css" type="text/css" rel=stylesheet>
+</head>
+<body>
+<h2>Office - vzorce1</h2>
+Používanie vzorcov robí z excelu silný nástroj na spracovanie tabuliek. Veľkou výhodou je, že ak zmeníme hodnotu niektorej bunky
+alebo pridáme/odoberieme bunky sú všetky vzorce prepočítané a teda výsledky výpočtu každého vzorca sú stále aktuálne.
+Pomocou vzorcov a riešiteľa (nástroj, ktorý excel obsahuje) možno riešiť aj niektoré rovnice, optimalizácie atď.
+<br>V tejto časti sa budeme venovať písaniu vzorcov bez používania zabudovaných funkcií. 
+<dl><dt>Opakovanie<dd>
+	<dd><ul><li>Načo je podmienené formátovanie
+			<li>Ktoré vlastnosti bunky možno nastaviť podľa podmienky
+			<li>Ako zadáme podmienku podľa ktorej sa format mení
+			<li>Koľko podmienok môžme zadať
+			<li>Co sa stane, keď vyhovie viac podmienok
+			<li>Čo sa stane ak žiadna podmienka nevyhovie
+		</ul>	
+    <dt style="width: 400; margin-bottom: 10;">Písanie jednoduchých vzorcov - bez použitia funkcií
+	<dd>
+	Vzorce začínajú znakom <span style="border-width:1;border-style:solid">&nbsp;=&nbsp;</span>, ktorý je umiestnený
+	aj hneď vedľa vstupného riadka a možno ho aktivovať myšou. Ak = zabudneme dať možno ho pridať aj dodatočne.
+	<br>Za znakom <span style="border-width:1;border-style:solid">&nbsp;=&nbsp;</span> musí byť umiestnený výraz buď:
+    <ul>
+	<li>aritmetický - výsledkom je číslo - a2+5
+	<li>logický - výsledkom je pravda alebo nepravda - a1>a2
+	<li>textový - výsledkom je text - b5 & " výrobkov"
+	<li>dátumový - výsledkom je dátum 
+	<li>časový - výsledkom je čas 
+	</ul>
+	<dl><dt>Operátory
+	<dd><ul>
+	<li><span style="background-color:#cccccc;padding:3 10 3 10">Aritmetické operátory</span>
+	<br>Povolené operátory sú:
+	<br> <b>+</b> ... súčet
+	<br> <b>-</b> ... rozdiel
+	<br> <b>*</b> ... súčin
+	<br> <b>/</b> ... podiel
+	<br> <b>^</b> ... mocnina
+	<br> <b>%</b> ... percentá (vynásobí výsledok 100-mi)
+	<li><span style="background-color:#cccccc;padding:3 10 3 10">&nbsp;Dátumové operátory</span>
+	<br>Povolené sú všetky aritmetické operáry (dátum je v exceli zapísaný ako číslo) ale praktický význam má
+	<br><b>+</b> ... pripočíta ku dátumu niekoľko dní
+	<br><b>-</b> ... odpočíta od dátumu iný dátum a získame počet dní, alebo odpočíta od dátumu niekoľko dní a získa posunutý dátum
+	<li><span style="background-color:#cccccc;padding:3 10 3 10">&nbsp;Časové operátory</span>
+	<br>Povolené sú všetky aritmetické operáry (čas je v exceli zapísaný ako číslo) ale praktický význam má
+	<br><b>+</b> ... pripočíta ku času na hodinách niekoľko sekúnd a získa nový čas na hodinách
+	<br><b>-</b> ... odpočíta od času iný čas a získame počet sekúnd, alebo odpočíta od času niekoľko seknd a získa posunutý čas
+	<li><span style="background-color:#cccccc;padding:3 10 3 10">&nbsp;Textové operátory</span>
+	<br>Je iba jeden:
+	<br>&amp; ... spojenie dvoch textov do jedného ("bledo" & "modrý" -> bledomodrý
+	<li><span style="background-color:#cccccc;padding:3 10 3 10">&nbsp;Relačné operátory</span>
+		<br> <b>&gt;</b> ... väčší
+		<br> <b>&lt;</b> ... menší
+		<br> <b>=</b> ... rovný
+		<br> <b>&gt;=</b> ... väčší alebo rovný
+		<br> <b>&lt;=</b> ... menší alebo rovný
+		<br> <b>&lt;&gt;</b> ... rôzny
+	</ul>	
+	<dt>Výrazy
+	<dd>Vo výrazoch sa môžu vyskytovať aj adresy buniek.
+	<br>Napr. do bunky B2 zapíšeme nasledujúci vzorec <font  color="Green">=a2^3-2*a2^2-a2+3</font>,
+	keď teraz budeme do A2 zadávať čísla, tak v bunke sa vždy ukáže hodnota polynomu y=x^3-2*x^2-x+3.
+	Zadajme teraz do bunky C2 vzorec =B2/4. Každou zmenou hodnoty bunky A1 sa zmení hodnota bunky B2
+	a to zas vyvolá zmenu bunky C2.
+	</dl>
+	<dt style="width: 400; margin-bottom: 10;">Kopírovanie vzorcov, absolútne a relatívne adresovanie
+	<dd>Pri kopírovaní vzorcov si všimneme, že adresy buniek v nich uvedené sa kopírovaním zmenia.
+		 Ak presúvam-kopírujem vzorec o n stĺpcov a m riadkov adresy vo vzorci sa zmenia o n-stĺpcov a m-riadkov.
+         V tabuľke nákupu zeleniny sú v stĺpci E použité vzorce (v E2 je =c2*d2), stačí ten vzorec napísať raz
+		 je rovnaký pre pre všetky riadky tabuľky 
+		 <br><img src="obr/tab1.jpg" width="415" height="333" border="0" alt="" style="margin: 10 10 0 10;"> <br> Obr.2<br>
+		 <br>Vďaka tomu, že sa vzorec pri kopírovaní mení stačí ho urobiť raz napr. v E2 a potom nakopírovať
+		 do ostatných buniek stĺpca E. Takéto adresovanie voláme <font color="Red">relatívne</font>.
+		 Ak potrebujeme aby sa niektorá adresa vo vzorci pri kopírovaní nemenila môžeme ju "uzamknúť" pomocou 
+		 znakov dolar ($). Uzamknúť možno jak stĺpec, riadok i oboje. Takúto adresu voláme absolútnou a vyzerá 
+		 napr. takto: $A$5, C$5, $AA1
+		 Príklad:
+		 <table>
+		 <tr><td>
+		 <table border="2" cellspacing="1" bgcolor="White">
+		 <tr><td bgcolor="Silver"> <th bgcolor="Silver">A<th bgcolor="Silver">B<th bgcolor="Silver">C </tr>
+		 <tr><td bgcolor="Silver"> 1 <th>Meno<th>Plat<th>NovyPlat<th> </tr> 
+		 <tr><td bgcolor="Silver"> 2 <td>Daniš<td>8500<td> ?</tr>
+		 <tr><td bgcolor="Silver"> 3 <td>Frano<td>7200<td> ?</tr>
+		 <tr><td bgcolor="Silver"> 4 <td>Gábor<td>7800<td> ?</tr>
+		 <tr><td bgcolor="Silver"> 5 <td>Maco<td>6900<td> ?</tr>
+		 <tr><td bgcolor="Silver"> 6 <td>Rak<td>8800<td> ?</tr>
+		 </table>
+         <td valign="top"> 
+		 <table border="1" cellspacing="1" bgcolor="White"> 
+		 <tr><th bgcolor="Silver"> G </tr>
+		 <tr><th>Percento rastu</tr>
+		 <tr><td>18 </tr>
+		 </table>
+		 </tr>
+		 </table>
+		 Do bunky C2 zapíšeme vzorec =B2*(1+$G$2/100) a takýto vzorec je možné kopírovať do ďalších buniek
+		 stĺpca C.
+	<dt>Príklady na precvičenie:
+	<dd><table cellspacing="20"><tr><td>
+	           <img src="obr/problem.gif" height="50" border="0" alt=""> 
+	           <td><a href="priklady/postupnosti1.xls" target="_blank">Príklad na tvorbu postupnosti a vyfarbovanie</a> 
+	               <br><a href="priklady/kratke.xls" target="_blank">Cvičenia</a>
+	               <br><a href="kratke/2_vzorce.xls" target="_blank">Krátke úlohy</a>		
+	               <br><a href="kratke/datum.xls" target="_blank">Príklady na dátum a čas</a>		
+			</tr>	   		   
+	     	</table>
+	
+   	<hr width="80%" size="4">
+</dl>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<meta name="Content-language" content="sk"> 
+	<meta name="keywords" content="programovanie, Delphi, Jaroslav, Mikuláš" >
+	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	<LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Objekt StringGrid </h3>
+<dl>
+	<dt class=main>Popis
+	<dd>StringGrid je objekt podobný objektu memo, len ku údajom možno pristupovať
+		cez riadky alebo aj cez stĺpce. Každý riadok (stĺpec) je typu Tstrings, čo je rovnaký
+		typ ako memo1 a sú to stringy oddelené znakom Enter (#13). Font možno nastaviť pre 
+		celú tabuľku (je možné zobrazovanie iným fontom cez Canvas). Podobne ako v Exceli možno vytvoriť niekoľko prvých stĺpcov
+		aj riadkov ako hlavičky, ktoré budú vymaľované šedou farbou a užívateľ sa do nich nedostane
+		(ich hodnota sa mení len príkazmi programu). Biele bunky možno povoliť editovať alebo nepovoliť.    
+		<br>Jedna bunka je vždy aktívna a je zvýraznená orámovaním, jej poloha je zapísaná vo vlastnostiach
+		Row, Col. Pohyb po tabulke možno robiť klávesovými šipkami.
+	<dt class=main>Premenné - vlastnosti<dd>
+	<ul>
+	<li><b>ColCount</b> - počet stĺpcov tabuľky 
+	<li><b>RowCount</b> - počet riadkov tabuľky
+	<li><b>Col</b> - aktuálny stĺpec
+	<li><b>Row</b> - aktuálny riadok
+	<li><b>FixedCols</b> - počet nepohyblivých stĺpcov (šedých)
+	<li><b>FixedRows</b> - počet nepohyblivých riadkov (šedých)
+	<li><b>LeftCol</b> - Index prvého scrolujúceho stĺpca
+	<li><b>TopRow</b> - Index prvého scrolujúceho riadka
+	<li><b>Cells[s,r]</b> - string v bunke [s,r]
+	<li><b>Cols[s]</b> - stringy v stpci s odelené znakom #13
+	<li><b>Rows[r]</b> - stringy v riadku r oddelené znakom #13
+	<li><b>MouseToCell(x,y,Var s,r)</b> - adresa bunky, kde sme klikli
+	<li><b>Options</b> -<ul>
+		<li>gocolsizing - ručná zmena šírky stĺpca
+		<li>gorowsizing - ručná zmena výšky stĺpca
+		<li>goediting - povoliť ručnú zmenu bunky
+		<li>GoAlwaysShawEditor - ak je true po vojdení do bunky sme hneď v editovacom režime
+		<li>gotabs - povoliť presun medzi bunkami cez tab
+				</ul>
+	</ul>
+	Štandartne nechávame na Builder, aby  
+	<ul><li>zvýrazňovali vybrané bunky
+		<li>vypisovali obsah buniek v bunkách
+	</ul>
+	lebo je to jednoduchšie. Nevýhodou ale je, že všetky texty sú v bunkách zarovnané zľava a použitý bude jeden typ písma, čo môže
+	excelovým odchovancom "trhať žily". Existuje možnosť pomocou udalosti 
+	<br><b>OnDrawCell()</b>
+	<br>zmeniť spôsob zápisu a zapísať text pomocou metódy 
+	<br><b>StringGrid1.Canvas.TextRect()</b>, 
+	<br>kde je možné výpočtom zabezpečiť zarovnanie na stred alebo vpravo.
+	<br>Je možné si vytvoriť ešte jeden StringGrid (neviditelný), kde v bunkách bude zapísaný font akým je 
+	bunka vo viditelnej tabuľke zobrazovaná.
+	<br>Ukážka zarovnania vpravo
+	<div style="border-width:3;border-style:outset;width:910px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:910px; padding:0;border-width:0;color:white">Unit1.cpp
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>
+void __fastcall TForm1::StringGrid1DrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect, TGridDrawState State)
+{  int WidthOfText, WidthOfCell, LeftOffset; 
+   string text;
+   text = StringGrid1->Cells[ACol,ARow];
+   WidthOfText = StringGrid1->Canvas->TextWidth(Cells[ACol,ARow]);
+   WidthOfCell = StringGrid1->ColWidths[ACol];
+   LeftOffset = max(WidthOfCell - WidthOfText,0);
+   StringGrid1->Canvas->TextRect(Rect,Rect.Left+LeftOffset,Rect.Top,Cells[ACol,ARow]);
+}
+</pre></div>
+</div></div>	
+<dt>Save, Load dát tabuľky
+<dd>Na rozdiel od mema, kde existuje metóda SaveToFile(), ktorá zapíše celý obsah mema do súboru, tu takú jednoduchú možnosť
+	nemáme. Najjednoduchšia cesta vyzerá byť použitie textového súboru a zapísať doň obsah tabuľky po riadkoch. Ak sme volili
+	v bunkách rôzne fonty musíme ich samozrejme tiež zapísať (ďalej uvažujem, že celá tabuľka má jeden typ písma).
+	Je potrebné do súboru zapísať aj počet riadkov a stĺpcov tabuľky.
+	<br>Celé to môže vyzerať asi takto:
+	<div style="border-width:3;border-style:outset;width:910px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:910px; padding:0;border-width:0;color:white">Unit1.cpp
+   </div>
+   <div style="background-color:#dddddd; width:690px;" >
+   <div style="margin:10px">
+<pre>
+// Save a TStringGrid to a file
+void SaveStringGrid(StringGrid: TStringGrid; const FileName: TFileName);
+{  ofstream f;
+   f.open(FileName);
+   f &lt;&lt;StringGrid->ColCount &lt;&lt; ' ' &lt;&lt; StringGrid->RowCount&lt;&lt;endl;
+   for (int i=0; i&lt;StringGrid->RowCount; i++)
+      for (int k=0; k&lt;StringGrid->ColCount; k++)
+	      f &lt;&lt; StringGrid->Cells[i,k] &lt;&lt;endl;
+      f.close();	  
+}
+// Load a TStringGrid from a file
+void LoadStringGrid(StringGrid: TStringGrid; const FileName: TFileName);
+{  ifstream f;
+   f.open(FileName);
+   f &gt;&gt;StringGrid->ColCount &gt;&gt; StringGrid->RowCount;
+   f.getline(StringGrid->Cells[0,0],255);
+   for (int i=0; i&lt;StringGrid->RowCount; i++)
+      for (int k=0; k&lt;StringGrid->ColCount; k++)
+	      f.getline(StringGrid->Cells[i,k],255);
+   f.close();	  
+}
+</pre></div></div></div>
+
+	<dt class=main>Príklady na precvičenie:
+	<dd><table cellspacing="20"><tr><td>
+		<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+		<td>1. Vytvor nasledovný program
+		<br><a href="knihy.exe">stiahnuť</a>		
+		<br>2. Vytvor nasledovný program - piškvorky
+		<br><a href="pisk.exe">stiahnuť</a></tr>		
+		</table>		
+</dl>
+
+
+</body>
+</html>

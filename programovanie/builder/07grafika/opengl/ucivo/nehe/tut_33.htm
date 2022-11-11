@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_33.jpg" class="nehe_maly" alt="Lekce 33" />
+
+<h1>Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA</h1>
+
+<p class="nadpis_clanku">V lekci 24 jsem vám ukázal cestu, jak nahrávat nekomprimované 24/32 bitové TGA obrázky. Jsou velmi užitečné, když potřebujete alfa kanál, ale nesmíte se starat o jejich velikost, protože byste je ihned přestali používat. K diskovému místu nejsou zrovna šetrné. Problém velikosti vyřeší nahrávání obrázků komprimovaných metodou RLE. Kód pro loading a hlavičkové soubory jsou odděleny od hlavního projektu, aby mohly být snadno použity i jinde.</p>
+
+<p>Začneme dvěma hlavičkový soubory. Texture.h, první z nich, popisuje strukturu textury. Každý hlavičkový soubor by měl obsahovat ochranu proti vícenásobnému vložení. Zajišťují ji příkazy preprocesoru jazyka C. Pokud není definovaná symbolická konstanta __TEXTURE_H__, nadefinujeme ji a do stejného bloku podmínky vepíšeme zdrojový kód. Při následujícím pokusu o inkludování hlavičkového souboru existence konstanty oznámí preprocesoru, že už byl soubor jednou vložen, a tudíž ho nemá vkládat podruhé.</p>
+
+<p class="src0">#ifndef __TEXTURE_H__</p>
+<p class="src0">#define __TEXTURE_H__</p>
+
+<p>Budeme potřebovat strukturu informací o obrázku, ze kterého se vytváří textura. Ukazatel imageData obsahuje data obrázku, bpp barevnou hloubku, width a height rozměry. TexID je identifikátorem OpenGL textury, který se předává funkci glBindTexture(). Type určuje typ textury - GL_RGB nebo GL_RGBA.</p>
+
+<p class="src0">typedef struct<span class="kom">// Struktura textury</span></p>
+<p class="src0">{</p>
+<p class="src1">GLubyte* imageData;<span class="kom">// Data</span></p>
+<p class="src1">GLuint bpp;<span class="kom">// Barevná hloubka v bitech</span></p>
+<p class="src1">GLuint width;<span class="kom">// Šířka</span></p>
+<p class="src1">GLuint height;<span class="kom">// Výška</span></p>
+<p class="src1">GLuint type;<span class="kom">// Typ (GL_RGB, GL_RGBA)</span></p>
+<p class="src1">GLuint texID;<span class="kom">// ID textury</span></p>
+<p class="src0">} Texture;</p>
+<p></p>
+<p class="src0">#endif</p>
+
+<p>Druhý hlavičkový soubor, tga.h, je speciálně určen pro loading TGA. Opět začneme ošetřením vícenásobného inkludování, poté vložíme hlavičkový soubor textury.</p>
+
+<p class="src0">#ifndef __TGA_H__</p>
+<p class="src0">#define __TGA_H__</p>
+<p></p>
+<p class="src0">#include &quot;texture.h&quot;<span class="kom">// Hlavičkový soubor textury</span></p>
+
+<p>Strukturu TGAHeader představuje pole dvanácti bytů, které ukládají hlavičku obrázku. Druhá struktura obsahuje pomocné proměnné pro nahrávání - např. velikost dat, barevnou hloubku a podobně.</p>
+
+<p class="src0">typedef struct<span class="kom">// Hlavička TGA souboru</span></p>
+<p class="src0">{</p>
+<p class="src1">GLubyte Header[12];<span class="kom">// Dvanáct bytů</span></p>
+<p class="src0">} TGAHeader;</p>
+<p></p>
+<p class="src0">typedef struct<span class="kom">// Struktura obrázku</span></p>
+<p class="src0">{</p>
+<p class="src1">GLubyte header[6];<span class="kom">// Šest užitečných bytů z hlavičky</span></p>
+<p class="src1">GLuint bytesPerPixel;<span class="kom">// Barevná hloubka v bytech</span></p>
+<p class="src1">GLuint imageSize;<span class="kom">// Velikost paměti pro obrázek</span></p>
+<p class="src1"><span class="kom">// GLuint temp;// Překl.: nikde není použitá</span></p>
+<p class="src1">GLuint type;<span class="kom">// Typ</span></p>
+<p class="src1">GLuint Height;<span class="kom">// Výška</span></p>
+<p class="src1">GLuint Width;<span class="kom">// Šířka</span></p>
+<p class="src1">GLuint Bpp;<span class="kom">// Barevná hloubka v bitech</span></p>
+<p class="src0">} TGA;</p>
+
+<p>Deklarujeme instance právě vytvořených struktur, abychom je mohli použít v programu.</p>
+
+<p class="src0">TGAHeader tgaheader;<span class="kom">// TGA hlavička</span></p>
+<p class="src0">TGA tga;<span class="kom">// TGA obrázek</span></p>
+
+<p>Následující dvě pole pomohou určit validitu nahrávaného souboru. Pokud se hlavička obrázku neshoduje s některou z nich, neumíme ho nahrát.</p>
+
+<p class="src0">GLubyte uTGAcompare[12] = { 0,0, 2,0,0,0,0,0,0,0,0,0 };<span class="kom">// TGA hlavička nekomprimovaného obrázku</span></p>
+<p class="src0">GLubyte cTGAcompare[12] = { 0,0,10,0,0,0,0,0,0,0,0,0 };<span class="kom">// TGA hlavička komprimovaného obrázku</span></p>
+
+<p>Obě funkce nahrávají TGA - jedna nekomprimovaný druhá komprimovaný.</p>
+
+<p class="src0">bool LoadUncompressedTGA(Texture*, char*, FILE*);<span class="kom">// Nekomprimovaný TGA</span></p>
+<p class="src0">bool LoadCompressedTGA(Texture*, char*, FILE*);<span class="kom">// Komprimovaný TGA</span></p>
+<p></p>
+<p class="src0">#endif</p>
+
+<p>Přesuneme se k souboru TGALoader.cpp, který implementuje nahrávací funkce. Prvním řádkem kódu vložíme hlavičkový soubor. Inkludujeme pouze tga.h, protože texture.h jsme už vložili v něm.</p>
+
+<p class="src0">#include &quot;tga.h&quot;<span class="kom">// Hlavičkový soubor TGA</span></p>
+
+<p>Funkce LoadTGA() je ta, kterou v programu voláme, abychom nahráli obrázek. V parametrech se jí předává ukazatel na texturu a řetězec diskové cesty. Nic dalšího nepotřebuje, protože si všechny ostatní parametry detekuje sama (ze souboru). Deklarujeme handle souboru a otevřeme ho pro čtení v binárním módu. Pokud něco selže, např. soubor neexistuje, vypíšeme chybovou zprávu a vrátíme false jako indikaci chyby.</p>
+
+<p class="src0">bool LoadTGA(Texture* texture, char* filename)<span class="kom">// Nahraje TGA soubor</span></p>
+<p class="src0">{</p>
+<p class="src1">FILE* fTGA;<span class="kom">// Handle souboru</span></p>
+<p class="src1">fTGA = fopen(filename, &quot;rb&quot;);<span class="kom">// Otevře soubor</span></p>
+<p></p>
+<p class="src1">if(fTGA == NULL)<span class="kom">// Nepodařilo se ho otevřít?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not open texture file&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Zkusíme načíst hlavičku obrázku (prvních 12 bytů souboru), která určuje jeho typ. Výsledek se uloží do proměnné tgaheader.</p>
+
+<p class="src1">if(fread(&amp;tgaheader, sizeof(TGAHeader), 1, fTGA) == 0)<span class="kom">// Načte hlavičku souboru</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not read file header&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src2">if(fTGA != NULL)</p>
+<p class="src2">{</p>
+<p class="src3">fclose(fTGA);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Právě načtenou hlavičku porovnáme s hlavičkou nekomprimovaného obrázku. Jsou-li shodné nahrajeme obrázek funkcí LoadUncompressedTGA(). Pokud shodné nejsou zkusíme, jestli se nejedná o komprimovaný obrázek. V tomto případě použijeme pro nahrávání funkci LoadCompressedTGA(). S jinými typy souborů pracovat neumíme, takže jediné, co můžeme udělat, je oznámení neúspěchu a ukončení funkce.</p>
+
+<p>Překl.: Měla by se ještě testovat návratová hodnota, protože, jak uvidíte dále, funkce v mnoha případech vracejí false. Program by si bez kontroly ničeho nevšiml a pokračoval dále.</p>
+
+<p class="src1">if(memcmp(uTGAcompare, &amp;tgaheader, sizeof(tgaheader)) == 0)<span class="kom">// Nekomprimovaný</span></p>
+<p class="src1">{</p>
+<p class="src2">LoadUncompressedTGA(texture, filename, fTGA);</p>
+<p></p>
+<p class="src2"><span class="kom">// Překl.: Testovat návratovou hodnotu !!!</span></p>
+<p class="src2"><span class="kom">// if(!LoadUncompressedTGA(texture, filename, fTGA))// Test návratové hodnoty</span></p>
+<p class="src2"><span class="kom">// {</span></p>
+<p class="src3"><span class="kom">// return false;</span></p>
+<p class="src2"><span class="kom">// }</span></p>
+<p class="src1">}</p>
+<p class="src1">else if(memcmp(cTGAcompare, &amp;tgaheader, sizeof(tgaheader)) == 0)<span class="kom">// Komprimovaný</span></p>
+<p class="src1">{</p>
+<p class="src2">LoadCompressedTGA(texture, filename, fTGA);</p>
+<p></p>
+<p class="src2"><span class="kom">// Překl.: Testovat návratovou hodnotu !!!</span></p>
+<p class="src2"><span class="kom">// if(!LoadCompressedTGA(texture, filename, fTGA))// Test návratové hodnoty</span></p>
+<p class="src2"><span class="kom">// {</span></p>
+<p class="src3"><span class="kom">// return false;</span></p>
+<p class="src2"><span class="kom">// }</span></p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Ani jeden z nich</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;TGA file be type 2 or type 10 &quot;, &quot;Invalid Image&quot;, MB_OK);</p>
+<p class="src2">fclose(fTGA);</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Pokud dosud nenastala žádná chyba, můžeme oznámit volajícímu kódu, že obrázek byl v pořádku nahrán a že může z jeho dat vytvořit texturu.</p>
+
+<p class="src1">return true;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Přistoupíme k opravdovému nahrávání obrázků, začneme nekomprimovanými. Tato funkce je z velké části založena na té z lekce 24, moc novinek v ní nenajdete. Zkusíme načíst dalších šest bytů ze souboru a uložíme je do tga.header.</p>
+
+<p class="src0">bool LoadUncompressedTGA(Texture* texture, char* filename, FILE* fTGA)<span class="kom">// Nahraje nekomprimovaný TGA</span></p>
+<p class="src0">{</p>
+<p class="src1">if(fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)<span class="kom">// Šest užitečných bytů</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not read info header&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src2">if(fTGA != NULL)</p>
+<p class="src2">{</p>
+<p class="src3">fclose(fTGA);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Máme dost informací pro určení výšky, šířky a barevné hloubky obrázku. Uložíme je do obou struktur - textury i obrázku.</p>
+
+<p class="src1">texture-&gt;width = tga.header[1] * 256 + tga.header[0];<span class="kom">// Šířka</span></p>
+<p class="src1">texture-&gt;height = tga.header[3] * 256 + tga.header[2];<span class="kom">// Výška</span></p>
+<p class="src1">texture-&gt;bpp = tga.header[4];<span class="kom">// Barevná hloubka v bitech</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Kopírování dat do struktury obrázku</span></p>
+<p class="src1">tga.Width = texture-&gt;width;</p>
+<p class="src1">tga.Height = texture-&gt;height;</p>
+<p class="src1">tga.Bpp = texture-&gt;bpp;</p>
+
+<p>Otestujeme, jestli má obrázek alespoň jeden pixel a jestli je barevná hloubka 24 nebo 32 bitů.</p>
+
+<p class="src1"><span class="kom">// Platné hodnoty?</span></p>
+<p class="src1">if((texture-&gt;width &lt;= 0) || (texture-&gt;height &lt;= 0) || ((texture-&gt;bpp != 24) &amp;&amp; (texture-&gt;bpp != 32)))</p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Invalid texture information&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p class="src2"></p>
+<p class="src2">if(fTGA != NULL)</p>
+<p class="src2">{</p>
+<p class="src3">fclose(fTGA);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Nyní nastavíme typ obrázku. V případě 24 bitů je jím GL_RGB, u 32 bitů má obrázek i alfa kanál, takže použijeme GL_RGBA.</p>
+
+<p class="src1">if(texture-&gt;bpp == 24)<span class="kom">// 24 bitový obrázek?</span></p>
+<p class="src1">{</p>
+<p class="src2">texture-&gt;type = GL_RGB;</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// 32 bitový obrázek</span></p>
+<p class="src1">{</p>
+<p class="src2">texture-&gt;type = GL_RGBA;</p>
+<p class="src1">}</p>
+
+<p>Spočítáme barevnou hloubku v BYTECH a celkovou velikost paměti potřebnou pro data. Vzápětí se ji pokusíme alokovat.</p>
+
+<p class="src1">tga.bytesPerPixel = (tga.Bpp / 8);<span class="kom">// BYTY na pixel</span></p>
+<p class="src1">tga.imageSize = (tga.bytesPerPixel * tga.Width * tga.Height);<span class="kom">// Velikost paměti</span></p>
+<p></p>
+<p class="src1">texture-&gt;imageData = (GLubyte *)malloc(tga.imageSize);<span class="kom">// Alokace paměti pro data</span></p>
+<p></p>
+<p class="src1">if(texture-&gt;imageData == NULL)<span class="kom">// Alokace neúspěšná</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not allocate memory for image&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p class="src2">fclose(fTGA);</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Pokud se podařila alokace paměti, nahrajeme do ní data obrázku.</p>
+
+<p class="src1"><span class="kom">// Pokusí se nahrát data obrázku</span></p>
+<p class="src1">if(fread(texture-&gt;imageData, 1, tga.imageSize, fTGA) != tga.imageSize)</p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not read image data&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src2">if(texture-&gt;imageData != NULL)</p>
+<p class="src2">{</p>
+<p class="src3">free(texture-&gt;imageData);<span class="kom">// Uvolnění paměti</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">fclose(fTGA);</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Formát TGA se od formátu OpenGL liší tím, že má v pixelech přehozené R a B složky barvy (BGR místo RGB). Musíme tedy zaměnit první a třetí byte v každém pixelu. Abychom tuto operace urychlili, provedeme tři binární operace XOR. Výsledek je stejný jako při použití pomocné proměnné.</p>
+
+<p class="src1"><span class="kom">// Převod BGR na RGB</span></p>
+<p class="src1">for(GLuint cswap = 0; cswap &lt; (int)tga.imageSize; cswap += tga.bytesPerPixel)</p>
+<p class="src1">{</p>
+<p class="src2">texture-&gt;imageData[cswap] ^= texture-&gt;imageData[cswap+2] ^=</p>
+<p class="src2">texture-&gt;imageData[cswap] ^= texture-&gt;imageData[cswap+2];</p>
+<p class="src1">}</p>
+
+<p>Obrázek jsme úspěšně nahráli, takže zavřeme soubor a vrácením true oznámíme úspěch.</p>
+
+<p class="src1">fclose(fTGA);<span class="kom">// Zavření souboru</span></p>
+<p class="src1">return true;<span class="kom">// Úspěch</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Paměť dat obrázku se uvolňuje až po vytvoření textury</span></p>
+<p class="src0">}</p>
+
+<p>Nyní přistoupíme k nahrávání obrázku komprimovaného metodou RLE (RunLength Encoded). Začátek je stejný jako u nekomprimovaného obrázku - načteme výšku, šířku a barevnou hloubku, ošetříme neplatné hodnoty a spočítáme velikost potřebné paměti, kterou opět alokujeme. Všimněte si, že velikost požadované paměti je taková, aby do ní mohla být uložena data PO DEKOMPRIMOVÁNÍ, ne před dekomprimováním.</p>
+
+<p class="src0">bool LoadCompressedTGA(Texture* texture, char* filename, FILE* fTGA)<span class="kom">// Nahraje komprimovaný obrázek</span></p>
+<p class="src0">{ </p>
+<p class="src1">if(fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)<span class="kom">// Šest užitečných bytů</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not read info header&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src2">if(fTGA != NULL)</p>
+<p class="src2">{</p>
+<p class="src3">fclose(fTGA);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">texture-&gt;width = tga.header[1] * 256 + tga.header[0];<span class="kom">// Šířka</span></p>
+<p class="src1">texture-&gt;height = tga.header[3] * 256 + tga.header[2];<span class="kom">// Výška</span></p>
+<p class="src1">texture-&gt;bpp = tga.header[4];<span class="kom">// Barevná hloubka v bitech</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Kopírování dat do struktury obrázku</span></p>
+<p class="src1">tga.Width = texture-&gt;width;</p>
+<p class="src1">tga.Height = texture-&gt;height;</p>
+<p class="src1">tga.Bpp = texture-&gt;bpp;</p>
+<p></p>
+<p class="src1"><span class="kom">// Platné hodnoty?</span></p>
+<p class="src1">if((texture-&gt;width &lt;= 0) || (texture-&gt;height &lt;= 0) || ((texture-&gt;bpp != 24) &amp;&amp; (texture-&gt;bpp != 32)))</p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Invalid texture information&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p class="src2"></p>
+<p class="src2">if(fTGA != NULL)</p>
+<p class="src2">{</p>
+<p class="src3">fclose(fTGA);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if(texture-&gt;bpp == 24)<span class="kom">// 24 bitový obrázek?</span></p>
+<p class="src1">{</p>
+<p class="src2">texture-&gt;type = GL_RGB;</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// 32 bitový obrázek</span></p>
+<p class="src1">{</p>
+<p class="src2">texture-&gt;type = GL_RGBA;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">tga.bytesPerPixel = (tga.Bpp / 8);<span class="kom">// BYTY na pixel</span></p>
+<p class="src1">tga.imageSize = (tga.bytesPerPixel * tga.Width * tga.Height);<span class="kom">// Velikost paměti</span></p>
+<p></p>
+<p class="src1">texture-&gt;imageData = (GLubyte *)malloc(tga.imageSize);<span class="kom">// Alokace paměti pro data (po dekomprimování)</span></p>
+<p></p>
+<p class="src1">if(texture-&gt;imageData == NULL)<span class="kom">// Alokace neúspěšná</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, &quot;Could not allocate memory for image&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p class="src2">fclose(fTGA);</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Dále potřebujeme zjistit přesný počet pixelů, ze kterých je obrázek složen. Jednoduše vynásobíme výšku obrázku se šířkou. Také musíme znát, na kterém pixelu se právě nacházíme a kam do paměti zapisujeme.</p>
+
+<p class="src1">GLuint pixelcount = tga.Height * tga.Width;<span class="kom">// Počet pixelů</span></p>
+<p class="src1">GLuint currentpixel = 0;<span class="kom">// Aktuální načítaný pixel</span></p>
+<p class="src1">GLuint currentbyte = 0;<span class="kom">// Aktuální načítaný byte</span></p>
+
+<p>Alokujeme pomocné pole tří nebo čtyř bytů (podle barevné hloubky) k uložení jednoho pixelu. Překl.: Měla by se testovat správnost alokace paměti!</p>
+
+<p class="src1">GLubyte* colorbuffer = (GLubyte *)malloc(tga.bytesPerPixel);<span class="kom">// Paměť pro jeden pixel</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Překl.: Test úspěšnosti alokace paměti !!!</span></p>
+<p class="src1"><span class="kom">// if(colorbuffer == NULL)// Alokace neúspěšná</span></p>
+<p class="src1"><span class="kom">// {</span></p>
+<p class="src2"><span class="kom">// MessageBox(NULL, &quot;Could not allocate memory for color buffer&quot;, &quot;ERROR&quot;, MB_OK);</span></p>
+<p class="src2"><span class="kom">// fclose(fTGA);</span></p>
+<p class="src2"><span class="kom">// return false;</span></p>
+<p class="src1"><span class="kom">// }</span></p>
+
+<p>V hlavním cyklu deklarujeme proměnnou k uložení bytu hlavičky, který definuje, jestli je následující sekce obrázku ve formátu RAW nebo RLE a jak dlouhá je. Pokud je byte hlavičky menší nebo roven 127, jedná se o RAW hlavičku. Hodnota v ní uložená, určuje počet pixelů mínus jedna, které vzápětí načteme a zkopírujeme do paměti. Po těchto pixelech se v souboru vyskytuje další byte hlavičky. Pokud je byte hlavičky větší než 127, představuje toto číslo (zmenšené o 127), kolikrát se má následující pixel v dekomprimovaném obrázku opakovat. Hned po něm se bude vyskytovat další hlavičkový byte. Načteme hodnoty tohoto pixelu a zkopírujeme ho do imageData tolikrát, kolikrát potřebujeme.</p>
+
+<p>Podstatu komprese RLE tedy už znáte, podívejme se na kód. Jak jsem již zmínil, založíme cyklus přes celý soubor a pokusíme se načíst byte první hlavičky.</p>
+
+<p class="src1">do<span class="kom">// Prochází celý soubor</span></p>
+<p class="src1">{</p>
+<p class="src2">GLubyte chunkheader = 0;<span class="kom">// Byte hlavičky</span></p>
+<p></p>
+<p class="src2">if(fread(&amp;chunkheader, sizeof(GLubyte), 1, fTGA) == 0)<span class="kom">// Načte byte hlavičky</span></p>
+<p class="src2">{</p>
+<p class="src3">MessageBox(NULL, &quot;Could not read RLE header&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src3">if(fTGA != NULL)</p>
+<p class="src3">{</p>
+<p class="src4">fclose(fTGA);</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if(texture-&gt;imageData != NULL)</p>
+<p class="src3">{</p>
+<p class="src4">free(texture-&gt;imageData);</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3"><span class="kom">// Překl.: Uvolnění dynamické paměti !!!</span></p>
+<p class="src3"><span class="kom">// if(colorbuffer != NULL)</span></p>
+<p class="src3"><span class="kom">// {</span></p>
+<p class="src4"><span class="kom">// free(colorbuffer);</span></p>
+<p class="src3"><span class="kom">// }</span></p>
+<p></p>
+<p class="src3">return false;</p>
+<p class="src2">}</p>
+
+<p>Pokud se jedná o RAW hlavičku, přičteme k bytu jedničku, abychom získali počet pixelů následujících po hlavičce. Potom založíme další cyklus, který načítá všechny požadovaného pixely do pomocného pole colorbuffer a vzápětí je ve správném formátu ukládá do imageData.</p>
+
+<p class="src2">if(chunkheader &lt; 128)<span class="kom">// RAW část obrázku</span></p>
+<p class="src2">{</p>
+<p class="src3">chunkheader++;<span class="kom">// Počet pixelů v sekci před výskytem dalšího bytu hlavičky</span></p>
+<p></p>
+<p class="src3">for(short counter = 0; counter &lt; chunkheader; counter++)<span class="kom">// Jednotlivé pixely</span></p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// Načítání po jednom pixelu</span></p>
+<p class="src4">if(fread(colorbuffer, 1, tga.bytesPerPixel, fTGA) != tga.bytesPerPixel)</p>
+<p class="src4">{</p>
+<p class="src5">MessageBox(NULL, &quot;Could not read image data&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src5">if(fTGA != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">fclose(fTGA);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if(colorbuffer != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">free(colorbuffer);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if(texture-&gt;imageData != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">free(texture-&gt;imageData);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">return false;</p>
+<p class="src4">}</p>
+
+<p>Při kopírování do imageData prohodíme pořadí bytů z formátu BGR na RGB. Pokud je v obrázku i alfa kanál, zkopírujeme i čtvrtý byte. Abychom se přesunuli na další pixel popř. byte hlavičky, zvětšíme aktuální byte o barevnou hloubku (+3 nebo +4). Inkrementujeme také počet načtených pixelů.</p>
+
+<p class="src4"><span class="kom">// Zápis do paměti, prohodí R a B složku barvy</span></p>
+<p class="src4">texture-&gt;imageData[currentbyte] = colorbuffer[2];</p>
+<p class="src4">texture-&gt;imageData[currentbyte + 1] = colorbuffer[1];</p>
+<p class="src4">texture-&gt;imageData[currentbyte + 2] = colorbuffer[0];</p>
+<p></p>
+<p class="src4">if(tga.bytesPerPixel == 4)<span class="kom">// 32 bitový obrázek?</span></p>
+<p class="src4">{</p>
+<p class="src5">texture-&gt;imageData[currentbyte + 3] = colorbuffer[3];<span class="kom">// Kopírování alfy</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">currentbyte += tga.bytesPerPixel;<span class="kom">// Aktualizuje byte</span></p>
+<p class="src4">currentpixel++;<span class="kom">// Přesun na další pixel</span></p>
+
+<p>Zjistíme, jestli je pořadová číslo aktuálního pixelu větší než celkový počet pixelů. Pokud ano, je soubor obrázku poškozen nebo je v něm někde chyba. Jak jsme na to přišli? Máme načítat další pixel, ale defakto je už máme všechny načtené, protože aktuální hodnota je větší než maximální. Nestačila by alokovaná paměť pro dekomprimovanou verzi obrázku. Tuto skutečnost musíme každopádně ošetřit.</p>
+
+<p class="src4">if(currentpixel &gt; pixelcount)<span class="kom">// Jsme za hranicí obrázku?</span></p>
+<p class="src4">{</p>
+<p class="src5">MessageBox(NULL, &quot;Too many pixels read&quot;, &quot;ERROR&quot;, NULL);</p>
+<p></p>
+<p class="src5">if(fTGA != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">fclose(fTGA);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if(colorbuffer != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">free(colorbuffer);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if(texture-&gt;imageData != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">free(texture-&gt;imageData);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">return false;</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p>Vyřešili jsme část RAW, nyní implementujeme sekci RLE. Ze všeho nejdříve od bytu hlavičky odečteme číslo 127, abychom získali kolikrát se má následující pixel opakovat.</p>
+
+<p class="src2">else<span class="kom">// RLE část obrázku</span></p>
+<p class="src2">{</p>
+<p class="src3">chunkheader -= 127;<span class="kom">// Počet pixelů v sekci</span></p>
+
+<p>Načteme jeden pixel po hlavičce a potom ho požadovaně-krát vložíme do imageData. Opět zaměňujeme formát BGR za RGB. Stejně jako minule inkrementujeme aktuální byte i pixel a ošetřujeme přetečení.</p>
+
+<p class="src3">if(fread(colorbuffer, 1, tga.bytesPerPixel, fTGA) != tga.bytesPerPixel)<span class="kom">// Načte jeden pixel</span></p>
+<p class="src3">{</p>
+<p class="src4">MessageBox(NULL, &quot;Could not read from file&quot;, &quot;ERROR&quot;, MB_OK);</p>
+<p></p>
+<p class="src4">if(fTGA != NULL)</p>
+<p class="src4">{</p>
+<p class="src5">fclose(fTGA);</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if(colorbuffer != NULL)</p>
+<p class="src4">{</p>
+<p class="src5">free(colorbuffer);</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if(texture-&gt;imageData != NULL)</p>
+<p class="src4">{</p>
+<p class="src5">free(texture-&gt;imageData);</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">return false;</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">for(short counter = 0; counter &lt; chunkheader; counter++)<span class="kom">// Kopírování pixelu</span></p>
+<p class="src3">{</p>
+<p class="src4"><span class="kom">// Zápis do paměti, prohodí R a B složku barvy</span></p>
+<p class="src4">texture-&gt;imageData[currentbyte] = colorbuffer[2];</p>
+<p class="src4">texture-&gt;imageData[currentbyte + 1] = colorbuffer[1];</p>
+<p class="src4">texture-&gt;imageData[currentbyte + 2] = colorbuffer[0];</p>
+<p></p>
+<p class="src4">if(tga.bytesPerPixel == 4)<span class="kom">// 32 bitový obrázek?</span></p>
+<p class="src4">{</p>
+<p class="src5">texture-&gt;imageData[currentbyte + 3] = colorbuffer[3];<span class="kom">// Kopírování alfy</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">currentbyte += tga.bytesPerPixel;<span class="kom">// Aktualizuje byte</span></p>
+<p class="src4">currentpixel++;<span class="kom">// Přesun na další pixel</span></p>
+<p></p>
+<p class="src4">if(currentpixel &gt; pixelcount)<span class="kom">// Jsme za hranicí obrázku?</span></p>
+<p class="src4">{</p>
+<p class="src5">MessageBox(NULL, &quot;Too many pixels read&quot;, &quot;ERROR&quot;, NULL);</p>
+<p></p>
+<p class="src5">if(fTGA != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">fclose(fTGA);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if(colorbuffer != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">free(colorbuffer);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if(texture-&gt;imageData != NULL)</p>
+<p class="src5">{</p>
+<p class="src6">free(texture-&gt;imageData);</p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">return false;</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p>Hlavní cyklus opakujeme tak dlouho, dokud v souboru zbývají nenačtené pixely. Po konci loadingu soubor zavřeme a vrácením true indikujeme úspěch.</p>
+
+<p class="src1">} while(currentpixel &lt; pixelcount);<span class="kom">// Pokračuj dokud zbývají pixely</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Překl.: Uvolnění dynamické paměti !!!</span></p>
+<p class="src1"><span class="kom">// if(colorbuffer != NULL)</span></p>
+<p class="src1"><span class="kom">// {</span></p>
+<p class="src2"><span class="kom">// free(colorbuffer);</span></p>
+<p class="src1"><span class="kom">// }</span></p>
+<p></p>
+<p class="src1">fclose(fTGA);<span class="kom">// Zavření souboru</span></p>
+<p class="src1">return true;<span class="kom">// Úspěch</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Paměť dat obrázku se uvolňuje až po vytvoření textury</span></p>
+<p class="src0">}</p>
+
+<p>Nyní jsou data obrázku připravena pro vytvoření textury a to už jistě zvládnete sami. V tomto tutoriálu nám šlo především o nahrávání TGA obrázků. Ukázkové demo bylo vytvořeno jen proto, abyste viděli, že kód opravdu funguje.</p>
+
+<p>A jak je to s úspěšností komprimace metody RLE? Je jasné, že nejmenší paměť bude zabírat obrázek s rozsáhlými plochami stejných pixelů (na řádcích). Pokud chcete čísla, tak si vezmeme na pomoc obrázky použité v tomto demu: oba jsou 128x128 pixelů veliké, nekomprimovaný zabírá na disku 48,0 kB a komprimovaný pouze 5,29 kB. Na obou je sice něco jiného, ale devítinásobné zmenšení velikosti mluví za vše.</p>
+
+<p class="autor">napsal: Evan Pipho - Terminate <span class="transform_email">&lt;terminate (zavináč) gdnmail.net&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson33.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson33_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson33.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson33.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson33.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Schubert_P@Yahoo.de">Patrick Schubert</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson33.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson33.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_33_big.jpg" class="nehe_velky" alt="Lekce 33" /></div>
+<p class="okolni_lekce"><a href="tut_32.php">&lt;&lt;&lt; Lekce 32</a> | <a href="tut_34.php">Lekce 34 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">GereG</div>
+<div class="d_o_datumcas">01.04.2005 - 16:54:28</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_33.php&j=0">editor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">10.04.2005 - 16:36:53</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_33.php&j=1">Re: editor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jan16</div>
+<div class="d_o_datumcas">27.07.2007 - 16:18:26</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_33.php&j=3">Re: editor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Xennus</div>
+<div class="d_o_datumcas">20.10.2006 - 15:56:48</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_33.php&j=2">Could not read info header</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_33.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

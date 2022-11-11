@@ -1,0 +1,308 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C+?=
+	=?windows-1250?Q?+_=285.=29?=
+Date: Thu, 12 Jul 2007 10:03:19 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=682
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (5.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (5.)</H2>
+<H4>V=FDb=ECr n=ECkolika z=E1kladn=EDch zpr=E1v (2.) - tentokr=E1t pro =
+pr=E1ci s prvky ve=20
+formul=E1=F8i (tla=E8=EDtka, objekty)</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Ka=9Ed=E9 tla=E8=EDtko a ka=9Ed=E1 objekt v okn=EC aplikace by m=ECl =
+u v=ECt=9Ainy aplikac=ED k=20
+n=EC=E8emu slou=9Eit. Zde nav=E1=9Eu na minul=FD d=EDl. Jako v minul=E9 =
+=E8=E1sti tohoto tutori=E1lu,=20
+zde m=E1te seznam nejd=F9le=9Eit=ECj=9A=EDch zpr=E1v pro interakci s =
+t=ECmito prvky.=20
+<P>K dialogov=FDm prk=F9m jsou tyto zpr=E1vy pouze roz=9A=ED=F8en=EDm k =
+t=ECm z minul=E9 =E8=E1sti. Ve=20
+v=ECt=9Ain=EC p=F8=EDpad=F9 lze pou=9E=EDt zpr=E1vy pro okna pro =
+dialogov=E9 prvky apod. <BR>&nbsp;=20
+<CENTER>
+<TABLE cellSpacing=3D6 cols=3D3 cellPadding=3D0 width=3D"98%" =
+border=3D0>
+  <TBODY>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2><B>Zpr=E1vy pro pr=E1ci s dialogov=FDmi =
+prvky</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_NEXTDLGCTL&nbsp;</TD>
+    <TD>Pos=EDl=E1 se dialogov=E9mu oknu, aby zm=ECnilo prvek, kter=FD =
+vlastn=ED fokus.=20
+      Pokud je lParam nenulov=FD, wParam ur=E8uje ID prvku, kter=FD m=E1 =
+z=EDskat fokus.=20
+      Je-li lParam roven nule, wParam obsahuje vlajku posunu, tzn. je-li =
+wParam=20
+      nula, z=EDsk=E1 fokus n=E1sleduj=EDc=ED prvek, je-li nenulov=FD, =
+fokus z=EDsk=E1 p=F8edchoz=ED=20
+      prvek.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>WM_SETFONT</TD>
+    <TD>Nastav=ED font pro kreslen=ED textu. wParam obsahuje handle na =
+font, pokud=20
+      je NULL, pak je pou=9Eit syst=E9mov=FD font. Pokud je lParam =
+nastaven na TRUE je=20
+      prvek p=F8ekreslen okam=9Eit=EC.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop></TD>
+    <TD></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2><B>Zpr=E1vy pro tla=E8=EDtka (button, =
+checkbox,=20
+      radio)</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>BM_GETCHECK</TD>
+    <TD>Pos=EDl=E1 se prvku, p=F8i zji=9A=9Dov=E1n=ED stavu. Funkce =
+SendDlgItemMessage vr=E1t=ED=20
+      TRUE, pokud je checkbox zak=F8=ED=9Ekov=E1n.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>BM_GETSTATE</TD>
+    <TD>Vr=E1t=ED TRUE, pokud je stisknuto</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>BM_SETCHECK&nbsp;</TD>
+    <TD>Ozna=E8=ED nebo odzna=E8=ED checkbox nebo radiobutton. Pokud je =
+wParam=20
+      nenulov=FD, je ozna=E8en, jinak je odzna=E8en. Pro =
+t=F8=EDstavov=E9 checkboxy: pokud=20
+      je wParam roven 1 je ozna=E8eno, pokud je 2 pak je checkbox =
+za=9Aednut.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>BM_SETSTATE</TD>
+    <TD>Pokud je wParam nenulov=FD je prvek vykreslen v inverzn=ED =
+grafice.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>BM_SETSTYLE</TD>
+    <TD>Nastav=ED pro prvek nov=FD styl. wParam obsahuje nov=E9 =
+nastaven=ED stylu.=20
+      lParam obsahuje vlajku zda m=E1 b=FDt prvek p=F8ekreslen. Styl je =
+sou=E8et=20
+      parametr=F9 (viz n=ECkter=FD p=F8=ED=9At=ED d=EDl o =
+zdroj=EDch)</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>DM_GETDEFID</TD>
+    <TD>Vr=E1t=ED ID implicitn=EDho tla=E8=EDtka</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>DM_SETDEFID</TD>
+    <TD>Dle wParam nastav=ED tla=E8=EDtko jako implicitn=ED.</TD></TR>
+  <TR>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+  <TR>
+    <TD colSpan=3D2><B>Zpr=E1vy pro edita=E8n=ED pole</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>EM_GETLINECOUNT</TD>
+    <TD>Vr=E1t=ED po=E8et =F8=E1dek.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>EM_LIMITTEXT</TD>
+    <TD>Nastav=ED limit v po=E8tu znak=F9, kter=E9 m=F9=9Ee u=9Eivatel =
+vepsat. wParam=20
+      obsahuje max. po=E8et znak=F9.&nbsp;</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>EM_REPLACESEL&nbsp;</TD>
+    <TD>Vym=ECn=ED aktu=E1ln=EC vybran=FD text za textov=FD =F8et=ECzec =
+na kter=FD ukazuje=20
+      lParam.</TD></TR>
+  <TR>
+    <TD>EM_SETPASSWORDCHAR</TD>
+    <TD>Nastav=ED, kter=FD znak se bude zobrazovat m=EDsto p=EDsmen. =
+Implicitn=EC je=20
+      hv=ECzdi=E8ka.</TD></TR>
+  <TR>
+    <TD>WM_CLEAR</TD>
+    <TD>Sma=9Ee obsah edita=E8n=EDho pole</TD></TR>
+  <TR>
+    <TD></TD>
+    <TD></TD></TR>
+  <TR>
+    <TD colSpan=3D2><B>ListBox - seznam</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_ADDSTRING&nbsp;</TD>
+    <TD>P=F8id=E1 do seznamu nulou ukon=E8en=FD =F8et=ECzec, na kter=FD =
+ukazuje lParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_DELETESTRING&nbsp;</TD>
+    <TD>Odstran=ED ze seznamu =F8et=ECzec s indexem uveden=FDm v =
+wParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_DIR</TD>
+    <TD>Vypln=ED seznam seznamem soubor=F9 v aktu=E1ln=EDm adres=E1=F8i. =
+wParam obsahuje=20
+      atribut v=FDb=ECru (DOS 4+). lParam obsahuje =
+hv=ECzdi=E8ko-otazn=EDkovou notaci=20
+      v=FDb=ECru soubor=F9, kter=E9 maj=ED b=FDt zobrazeny.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_GETCOUNT&nbsp;</TD>
+    <TD>Vr=E1t=ED po=E8et polo=9Eek v seznamu.</TD></TR>
+  <TR>
+    <TD>LB_GETSEL&nbsp;</TD>
+    <TD>Vr=E1t=ED index vybran=E9 polo=9Eky</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_GETTEXT</TD>
+    <TD>Zkop=EDruje polo=9Eku specifikovanou ve wParam do =F8et=ECzce =
+specifikovan=E9ho=20
+      ukazatelem ve lParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_GETTEXTLEN</TD>
+    <TD>Vr=E1t=ED d=E9lku =F8et=ECzce specifikovan=E9ho indexem ve =
+wParam</TD></TR>
+  <TR>
+    <TD>LB_GETTOPINDEX</TD>
+    <TD>Vr=E1t=ED index prvn=ED viditeln=E9 polo=9Eky v =
+seznamu</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_INSERTSTRING</TD>
+    <TD>Vlo=9E=ED do polo=9Eky specifikovan=E9 wParam =F8et=ECzec, na =
+kter=FD ukazuje=20
+    lParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_SETCOLUMNWIDTH</TD>
+    <TD>Nastav=ED =9A=ED=F8ku sloupc=F9 ve v=EDcesloupcov=E9m seznamu na =
+wParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>LB_SETCURSEL</TD>
+    <TD>Polo=9Eka wParam je vybr=E1na. Pokud je wParam -1, pak nen=ED =
+vybr=E1na =9E=E1dn=E1=20
+      polo=9Eka.</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop></TD>
+    <TD></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2><B>ComboBox - roletka</B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>CB_ADDSTRING</TD>
+    <TD>P=F8id=E1 do seznamu nulou ukon=E8en=FD =F8et=ECzec na kter=FD =
+ukazuje lParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>CB_DELETESTRING</TD>
+    <TD>Odstran=ED ze seznamu =F8et=ECzec s indexem uveden=FDm v =
+wParam</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop>CB_SHOWDROPDOWN</TD>
+    <TD>Pokud je wParam TRUE, pak je roletka vysunuta jinak se =
+schov=E1</TD></TR>
+  <TR>
+    <TD colSpan=3D2>Pro combobox je mo=9En=E9 vyu=9E=EDt v=ECt=9Ainu ze =
+zpr=E1v pou=9Eiteln=FDch u=20
+      listboxu, pouze se zm=ECn=ED prefix z LB_ na =
+CB_</TD></TR></TBODY></TABLE></CENTER>
+<P>Pokud u=9Eivatel n=ECco d=ECl=E1 s kter=FDmkoliv dialogov=FDm prvkem, =
+va=9Ae aplikace se to=20
+samoz=F8ejm=EC dozv=ED pomoc=ED notifika=E8n=EDho k=F3du.=20
+<P>V=9Ae co pot=F8ebujeme je klasick=E1 zpr=E1va WM_COMMAND, kterou =
+na=9Ae aplikace=20
+obdr=9Eela, wParam obsahuje ID prvku, LOWORD lParamu obsahuje handle na =
+okno, a=20
+HIWORD lParamu obsahuje ji=9E n=ECkter=FD z t=ECchto notifika=E8n=EDch =
+k=F3d=F9: <BR>&nbsp;=20
+<CENTER>
+<TABLE cellSpacing=3D6 cols=3D3 cellPadding=3D0 width=3D"98%" =
+border=3D0>
+  <TBODY>
+  <TR>
+    <TD colSpan=3D2><B>K=F3dy pro tla=E8=EDtka</B></TD></TR>
+  <TR>
+    <TD>BN_CLICKED&nbsp;</TD>
+    <TD>Indikuje, =9Ee na tla=E8=EDtko bylo kliknuto</TD></TR>
+  <TR>
+    <TD>BN_DOUBLECLICKED&nbsp;</TD>
+    <TD>Indikuje, =9Ee u=9Eivatel dvojkliknul na radiobutton</TD></TR>
+  <TR>
+    <TD colSpan=3D2><B>K=F3dy pro EditBoxy</B></TD></TR>
+  <TR>
+    <TD>EN_CHANGE&nbsp;</TD>
+    <TD>Indikuje, =9Ee u=9Eivatel zm=ECnil obsah pol=ED=E8ka</TD></TR>
+  <TR>
+    <TD>EN_ERRSPACE&nbsp;</TD>
+    <TD>Indikuje, =9Ee m=EDsto v pam=ECti pro EditBox&nbsp; =
+do=9Alo.</TD></TR>
+  <TR>
+    <TD>EN_KILLFOCUS&nbsp;</TD>
+    <TD>Indikuje, =9Ee editbox ztratil fokus</TD></TR>
+  <TR>
+    <TD>EN_SETFOCUS&nbsp;</TD>
+    <TD>Indikuje, =9Ee editbox z=EDskal fokus</TD></TR>
+  <TR>
+    <TD colSpan=3D2><B>K=F3dy pro seznamy</B></TD></TR>
+  <TR>
+    <TD>LBN_DBLCLK&nbsp;</TD>
+    <TD>Indikuje, =9Ee u=9Eivatel dvojkliknul na =
+polo=9Eku.&nbsp;</TD></TR>
+  <TR>
+    <TD>LBN_SELCHANGE</TD>
+    <TD>Indikuje, =9Ee u=9Eivatel zm=ECnil v=FDb=ECr.</TD></TR>
+  <TR>
+    <TD>LBN_KILLFOCUS</TD>
+    <TD>Indikuje, =9Ee seznam ztratil fokus</TD></TR>
+  <TR>
+    <TD>LBN_SETFOCUS&nbsp;</TD>
+    <TD>Indikuje, =9Ee seznam z=EDskal fokus</TD></TR>
+  <TR>
+    <TD colSpan=3D2>K=F3dy pro comboboxy</TD></TR>
+  <TR>
+    <TD>CBN_DROPDOWN</TD>
+    <TD>Informuje, =9Ee combobox bude vysunut.</TD></TR>
+  <TR>
+    <TD>CBN_EDITCHANGE</TD>
+    <TD>Informuje, =9Ee u=9Eivatel zm=ECnil text v edita=E8n=EDm =
+poli.</TD></TR>
+  <TR>
+    <TD>CBN_SELCHANGE</TD>
+    <TD>Indikuje, =9Ee u=9Eivatel zm=ECnil v=FDb=ECr.</TD></TR>
+  <TR>
+    <TD>CBN_KILLFOCUS</TD>
+    <TD>Indikuje, =9Ee combobox ztratil fokus</TD></TR>
+  <TR>
+    <TD>CBN_SETFOCUS</TD>
+    <TD>Indikuje, =9Ee combobox z=EDskal =
+fokus</TD></TR></TBODY></TABLE></CENTER>
+<P>Zde jsou uvedeny jen n=ECkter=E9 nejd=F9le=9Eit=ECj=9A=ED k=F3dy a =
+seznam nen=ED zdaleka =FApln=FD.=20
+Jak vid=EDte, v=ECt=9Aina k=F3d=F9 je pro r=F9zn=E9 prvky podobn=E1.=20
+<P>V p=F8=ED=9At=EDm d=EDle nav=E1=9Eu na tento d=EDl seznamem =
+dal=9A=EDch zpr=E1v. Potom se pod=EDv=E1me=20
+na zdroje a ve fin=E1le vytvo=F8=EDme n=ECjakou funk=E8n=ED aplikaci. =
+Pokud sledujete m=F9j=20
+tutori=E1lek, m=E1te se na co t=EC=9Ait. Jestli=9Ee n=EC=E8emu =
+nerozum=EDte, nezoufejte, v=20
+dal=9A=EDch d=EDlech to snad objasn=EDm a jinak je zde board nebo m=F9j =
+mail.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:03:06 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

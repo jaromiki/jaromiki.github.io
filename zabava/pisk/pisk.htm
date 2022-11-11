@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//SK">
+<HTML>
+<Head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<Title>Piškvorky prvá verzia</Title>
+</Head>
+<script language="javascript">
+<!--
+prazdno = new Image(20,20);
+prazdno.src = "images/prazdno.gif";
+okraj = new Image(20,20);
+okraj.src = "images/okraj.gif";
+krizek = new Image(20,20);
+krizek.src = "images/krizek.gif";
+kolecko = new Image(20,20);
+kolecko.src = "images/kolecko.gif";
+pole = new Array(225);
+tahy = new Array(225);
+prav = new Array(225);
+ctahu = 0;
+smer = new initArray(1,-1,15,-15,16,-16,14,-14);
+function initArray()
+{
+  this.length=initArray.arguments.length;
+  for (var i=0;i<this.length;i++)
+  {
+    this[i]=initArray.arguments[i];
+  }
+}
+function JeJichPet()
+{
+  tah=tahy[ctahu];
+  ktera=pole[tah];
+  for(i=0;i<8;i+=2)
+  {
+    pocet=1;
+    konst=1;
+    while (pole[tah+(konst++)*smer[i]]==ktera) pocet++;
+    konst=1;
+    while (pole[tah+(konst++)*smer[i+1]]==ktera) pocet++;
+    if (pocet>=5) return true;
+  }
+  return false;
+}
+function VytvorTah()
+{
+  if (ctahu==0)
+  {
+    tahni=65+Math.floor(6*Math.random())+15*Math.floor(6*Math.random());
+  }
+  else
+  {
+    max=0;
+    tahni=0;
+    for(i=0;i<225;i++) prav[i]=0;
+    ictahu=ctahu;
+    while (ictahu>0)
+    {
+    tah=tahy[ictahu--];
+    ktera=pole[tah];
+    for(sm=0;sm<8;sm+=2)
+    {
+      pocet=1;
+      konst=1;
+      while (pole[tah+(konst++)*smer[sm]]==ktera) pocet++;
+      konsu=1;
+      while (pole[tah+(konsu++)*smer[sm+1]]==ktera) pocet++;
+      if(pole[tah+(konst-1)*smer[sm]]==0)
+      {
+        prav[tah+(konst-1)*smer[sm]]+=pocet;
+      }
+      if(pole[tah+(konsu-1)*smer[sm+1]]==0)
+      {
+        prav[tah+(konsu-1)*smer[sm+1]]+=pocet;
+      }
+      if((pole[tah+(konst-1)*smer[sm]]==0)&&(pole[tah+(konsu-1)*smer[sm+1]]==0))
+      {
+        prav[tah+(konst-1)*smer[sm]]+=0.76;
+        prav[tah+(konsu-1)*smer[sm+1]]+=0.76;
+      }
+    }
+    }
+    for(i=0;i<225;i++)
+    {
+      if(prav[i]>max) { max=prav[i]; tahni=i; }
+      if(prav[i]==max) { if(Math.random()>0.7) tahni=i; }
+    }
+  }
+  document.images[tahni].src=kolecko.src;
+  pole[tahni]=2;
+  tahy[++ctahu]=tahni;
+}
+function Odpovez()
+{
+  if(JeJichPet()==true)
+  {
+    alert('Zvitazil si / You won !');
+    Vynuluj();
+  }
+  VytvorTah();
+  if(JeJichPet()==true) 
+  {
+    alert('Vyhral som / You lose !');
+    Vynuluj();
+  }
+}
+function Vynuluj()
+{
+  for(i=0;i<225;i++)
+  {
+    document.images[i].src=prazdno.src;
+    pole[i]=0;
+  }
+  for(i=0;i<15;i++)
+  {
+    document.images[i].src=okraj.src;
+    pole[i]=3;
+    document.images[i+210].src=okraj.src;
+    pole[i+210]=3;
+    document.images[i*15].src=okraj.src;
+    pole[i*15]=3;
+    document.images[i*15+14].src=okraj.src;
+    pole[i*15+14]=3;
+  }
+  ctahu=0;
+}
+function Zakresli(co,kam)
+{
+  if (pole[kam]==0)
+  {
+    if (co==1) document.images[kam].src=krizek.src;
+    if (co==2) document.images[kam].src=kolecko.src;
+    pole[kam]=co;
+    tahy[++ctahu]=kam;
+    Odpovez();
+  }
+}
+function Plocha()
+{
+  s="";
+  for(i=0;i<225;i++)
+  {
+    if(Math.floor(i/15)==(i/15)) s+="<br>";
+    s+="<a href=\"#\" onClick=\"Zakresli(";
+    s+="1,"+i;
+    s+=")\"><img src=\"images/prazdno.gif\" border=0></a>";
+  }
+  document.write(s);
+}
+//-->
+</script>
+<BODY>
+<body text="#000000" bgcolor="#E6E6E6" link="#005555" vlink="#007777" alink="#009999">
+<center>
+<h3> Piškvorky </h3>
+<table width="90%"  border="1" align="center" ><tr><td align="center">Ak sa vám hra páči, ďakovné listy
+listy zasielajte na adresu <a href="mailto:skola@gympd.sk">skola@gympd.sk</a>.<br>
+Prípadné navrhy na vylepšenie sú vítané.
+</td></tr></table>
+<script language="javascript">
+<!--
+Plocha();
+Vynuluj();
+//-->
+</script>
+
+</BODY>
+</HTML>

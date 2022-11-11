@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	<title>string - number</title>
+	<script>
+	function vypocet()
+	{ 	var a=parseFloat(aa.value);
+		var b=parseFloat(bb.value);
+		var x=0;
+		var fx=0;
+		var fa,fb;
+		with (Math)
+		{x=a; fa=eval(LS.value)-eval(PS.value);
+		 x=b; fb=eval(LS.value)-eval(PS.value);
+		while  (b-a > parseFloat(eps.value)) 
+		{ x=(b+a)/2;
+		  fx=eval(LS.value)-eval(PS.value);
+		  if (fx*fa<0) { b=x; fb=fx;} else { a=x; fa=fx;}
+		}
+		kor.value=(b+a)/2;	
+		}
+	}
+	</script>
+</head>
+
+<body>
+<dl><dtNumber - èísla
+	<dd>Èíselné hodnoty sú celoèíselné i reálne spolu v jednom type. Celoèíselnı i reálny typ je 8 bajtovı
+		a mono do neho zapísa celé èíslo z intervalu &lt;-2<sup>53</sup>;+2<sup>53</sup>&gt; a reálne z
+		intervalu &lt;10<sup>-308</sup>;10<sup>308</sup>&gt; - kladné a podobne aj záporné.
+		<br>Celé èísla pri inıch základoch: 
+		<br>... èíslo zaèínajúce 0 je osmièkové
+		<br>... èíslo zaèínajúce 0x je šestnastkové
+		<br>V objekte Number je definované:
+		<dl><dt>Konštanty
+			<dd><dl><dt><font color="Green">MIN_VALUE, MAX_VALUE </font>
+					<dd>minimálna hodnota kladného reálneho èísla, resp. maximálna
+					<dt>POSITIVE_INFINITY,NEGATIVE_INFINITY
+					<dd>plus resp mínus nekoneèno (plus nekoneèno je väèšie ako max. hodnota)
+				</dl>	
+			<dt>Metódy
+			<dd><dl><dt>Number.toString()
+					<dd>prevod èíselnej hodnoty na string. Rovnakı vısledok získame vırazom èíslo+"" a tie 
+						pretypovaním string(èíslo). Ak toString voláme s parametrom, parameter je základ èíselnej
+						sústavy. (10).toString(2) - vypíše 1010
+					<dt>Number.toFixed()
+					<dd>Prevod na reazec. Bez parametra zaokrúhli na celé, parametrom môme urèi poèet desatinnıch miest.
+						Ak je desatinnıch miest menej doplní nulami.
+					<dt>Number.toExponential()
+					<dd>Prevod na reazec. Bez parametra vypíše všetky desatinné, parametrom môme urèi poèet desatinnıch miest.
+						<br>Vıpis v tvare x.xxe&plusmn;xx.
+					<dt>Number.toLocaleString()
+					<dd>prevedie na text pod¾a nastavenia windows (des. èiarka, oddelovaè tisícov)
+			</dl>
+	</dl>
+<dtVšeobecné funkcie
+<dd><dl><dt>eval( text ) - nepatrí objektu Number
+		<dd>vıpoèet textového zápisu èíselného vırazu - vısledkomje èíslo
+		<dt>ParseInt(text, základ) - nepatrí objektu Number
+		<dd>prevod textu na celé èíslo, môe by uvedenı základ. V texte za èíslom môe by hocièo.
+		<dt>ParseFloat(text) - nepatrí objektu Number
+		<dd>prevod textu na èíslo. V texte za èíslom môe by hocièo. Ak neúspech vráti NaN.
+			<br>Je monı test isNaN( èíslo ).
+	</dl>
+<dtMath - matematické funkcie
+<dd><dl><dt>Funkcie
+		<dd>Pri práci s èíslami potrebujeme niektoré matematické funkcie, konštanty.	 
+			<dl><dt>Math.abs( èíslo )
+				<dd>Vypoèíta absolútnu hodnotu èísla
+				<dt>Math.acos( èíslo ), Math.asin( èíslo), Math.atan( èíslo)
+				<dd>Vypoèíta arccos, arcsin, arctan
+				<dt>Math.cos( èíslo ), Math.sin( èíslo), Math.tan( èíslo)
+				<dd>Vypoèíta cos, sin, tan
+				<dt>Math.exp( èíslo ), Math.log( èíslo)
+				<dd>Vypoèíta e na x, resp. ln
+				<dt>Math.pow(základ, exponent)
+				<dd>Vypoèíta základ na exponent
+				<dt>Math.sqrt(èíslo)
+				<dd>Vypoèíta druhú odmocninu
+				<dt>Math.min(a, b), Math.max(a, b)
+				<dd>Vypoèíta minimum resp. maximum z a,b
+				<dt>Math.random(èíslo)
+				<dd>Vypoèíta náhodné reálne èíslo z intervalu &lt;0;1&gt;
+			</dl>	
+	<dt>Konštanty
+	<dd><dl><dt>Math.PI
+			<dd>Konštanta pi
+			<dt>Math.E
+			<dd>Konštanta e
+		</dl>
+	<dt>Úlohy
+	<dd><ul><li>Naprogramuj:
+			<br><br>Rovnica: <input type="text" value="cos(x)*cos(x)" id="LS">=<input type="text" value="sin(x)" id="PS">
+			<br>Interval: (<input type="text" value="0" id="aa"> ;  <input type="text" value="2" id="bb"> ) &nbsp; &nbsp;Presnos: <input type="Text" value="0.001" id="eps" size="7">
+			<br><br><input type="Button" value="Vıpoèet" onclick="vypocet()"> &nbsp; &nbsp;Koreò: <input type="text" value="" id="kor">
+</dl>
+</body>
+</html>

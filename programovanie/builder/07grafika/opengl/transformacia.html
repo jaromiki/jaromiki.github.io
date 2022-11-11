@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+<dt>Transformácia súradníc
+<dd>Transformáciou súradníc môžeme pomocou zmeny "modelovej" matice: 
+	<ul><li>otáčať všetky vykreslované objekty (prípadne len niektoré) okolo priamky prechádzajúcej počiatkom
+		<li>posúvať vykreslované objekty o zadaný vektor
+		<li>zväčšovať vykreslované objekty
+	</ol>
+	Teraz si ukážeme ako transformácie aplikovať na celú vykreslovanú scénu.	
+    <br>Štandartný pohľad na objekt je pri nulových natočeniach, teda ak dáme vykresliť súradné osi x,y,z budeme vidieť naskreslené osi x a y ale os z nevidno
+	lebo smeruje kolmo z obrazu smerom ku nám. Aby sme mohli voliť iný pohľad na zobrazovaný priestor používame transformácie. Transformácie sa zapisujú do
+	modelovej matice už vieme, že ak chceme meniť niektorú transformačnú maticu musíme systému najprv povedať v ktorej matici chceme robiť zmeny 
+	(v tomto prípade modelovú maticu), to urobíme príkazom:
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glMatrixMode(GL_MODELVIEW);</font>
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glLoadIdentity();</font> &nbsp; &nbsp;//načítanie základnej matice
+	<br>po zadaní týchto príkazov možno zadávať trasformačné príkazy:
+	<ul><li>rotačné ... glRotate
+		<li>posuvné ... glTranslate
+		<li>mierkové ... glScale
+		<li>priblíženie (má význam pri perspektíve) ... gluLookAt
+	</ul>	  
+	<dl><dt>glTranslate(dx,dy,dz); 
+		<dd>Hodnota dx bude pripočítaná ku x-ovej súradnici všetkých vykreslovaných objektov. Pri perspektíve si musíme uvedomiť pravidlá perspektívy - pri priblížení
+			sa objekt na obrazovke zväčšuje a naopak. 
+			Pri Ortho zobrazení nám teleso alebo jeho časť môžu vybehnúť zo zobrazovaného priestoru a teleso teda nebudeme vidieť prípadne bude orezané.
+			<br>Posunutia sú reálne a je možné to aj určiť upresnením v názve podrogramu glTranslatef(), glTranslated().
+		<dt>glRotatef(uhol, vektorx, vektory, vektorz)
+		<dd>uhol ... reálne číslo udáva uhol o ktorý chceme otáčať (uhol je zadaný v stupňoch)
+			<br>vektor zadaný svojimi zložkami určuje os okolo ktorej budeme otáčať, smer určujeme pravidlom pravej ruky. 
+			Otáčať teda vieme okolo priamok prechádzajúcich počiatkom.
+			<br>Príklady
+			<br>glRotatef(30, 0, 1, 0); &nbsp; &nbsp;//otočenie okolo osi y o 30 stupňov
+		<dt>glScalef(mx,my,mz)
+		<dd>parametre udávajú koeficient, ktorým budú "akoby" všetkým objektom prepočítané súradnice (x:= x*mx, ...). V prípade ak je parameter väčší ako 1 ide o zväčšovanie a naopak.
+			V prípade perspektívy je potrebné si uvedomiť rozdiel medzi priblížením a mierkovaním/zväčšením
+	</dl>
+	Este treba povedať, že ak chceme použiť viacero transformačných príkazov tak ich vykonávanie bude vykonávané v opačnom poradí
+	<dt>Kreslíme prvý obrázok
+	<dd>Už na tomto jednoduchom obrázku využijeme niektoré výhody systému
+		<ul><li>nemusíme robiť prevod medzi reálnymi a obrazovkovými súradniciami
+			<li>pri otáčaní nemusíme robiť výpočty, kam sa ten ktorý bod presunie
+		</ul>
+	No na tentoraz už dosť teórie a ideme kresliť. Zvolíme ortogonálne zobrazenie lebo je jednoduchšie. Celá kresba bude spočívať v kreslení súradných osí a navyše nakreslíme 
+	<ol><li>trojuholník majúci vrcholy na osiach vo vzdialenosti 6 od počiatku farby modrej
+		<li>štvouholník-obdĺžnik majúci farbu žltú polovičnej priesvitnosti a vrcholy [3,0,0],[0,0,3],[3,7,0],[0,7,3] 
+	</ol>		
+	Ešte sa vrátim ku spôsobu zobrazenia, kde máme určiť zobrazovaný priestor, zvolím pre každú súradnicu interval &lt;-10; +10&gt;, čo evidentne bude stačiť aby mi žiadny bod pri ľubovoňom otáčaní
+	z neho nevybehol. Aby sme mali ten správny priestorový dojem nechám objekty rotovať okolo osi y (zvislá os). (Použijem Timer)
+	<br>Aby sme transformácie dobre pochopili urobíme postupnú tvorbu programu
+	<br>1. Obrázok sa nebude hýbať len bude otočený
+	<br> &nbsp; &nbsp; pridáme dve globálne premenné int uholx=30; uholy=30;
+	<br> &nbsp; &nbsp; na začiatok kreslenia (podprogram ogl_draw()) pridáme príkazy 
+	<br> &nbsp; &nbsp; glMatrixMode(GL_MODELVIEW);
+  	<br> &nbsp; &nbsp; glLoadIdentity();
+  	<br> &nbsp; &nbsp; glRotate(uholx,1,0,0);
+  	<br> &nbsp; &nbsp; glRotate(uholy,0,1,0);
+	<br>(týmto bude kreslenie prebiehať už v otočených súradniciach)
+	<br>(aby zvislá os bola stále zvislá je dôležité poradie otáčania - najprv zadáme otočenie okolo x a potom y)
+	<br>(vyskúšaj ako to zobrazí keď ich prehodíme)
+	
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.cpp
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+void TForm1::ogl_draw()
+{ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//tu zadávame príkazy na kreslenie
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glRotatef(uholx,1,0,0);
+  glRotatef(uholy,0,1,0);
+
+  glColor4f(1.0f, 1.0f, 1.0f,1.0f);
+  glBegin(GL_LINES);
+  glVertex3i(0,0,0);glVertex3i(7,0,0);
+  glVertex3i(0,0,0);glVertex3i(0,7,0);
+  glVertex3i(0,0,0);glVertex3i(0,0,7);
+   glEnd();
+   glBegin(GL_TRIANGLES);
+  glColor3f(0.5,0.5,1.0);
+  glVertex3i(6,0,0);glVertex3i(0,6,0);glVertex3i(0,0,6);
+   glEnd();
+  glColor4f(1.0,1.0,0.2,0.7);
+   glBegin(GL_POLYGON);
+  glVertex3i(3,0,0);glVertex3i(0,0,3);glVertex3i(0,7,3);glVertex3i(3,7,0);
+   glEnd();
+  glFlush();
+  SwapBuffers(hdc);
+}
+</pre></div></div></div>
+Keď pred spustením meníme inicializačné hodnoty uholx, uholy, tak môžme vidieť ako sa mení poloha vykreslovaných objektov.
+<br>Skúste sami zmeniť program, aby bral hodnoty z Editov a tlačídkom to vykreslíte
+<br><br>Teraz to ukážem ako spustíme otáčanie okolo zvislej osi
+(všetko necháme tak ako v predošlom prípade, len pridáme časovač, ktorý bude meniť uholy, prípadne aj uholx)
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.cpp
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+//  uholx:=(uholx+2) mod 360;
+   uholy=(uholy+1) % 360;
+   ogl_draw();
+}
+</pre></div></div></div>
+A predsa sa točí :-)
+<br><br>
+Iný spôsob ako zvýrazniť, že ide o 3D priestor spočíva v tom, že necháme užívateľa aby si myšou natáčal priestor podľa svojich potrieb. Časovač je tu ponechaný aby sa okno prekrytím, alebo zbalením dole samo "opravilo".
+	<br>Rotácia sa bude vykonávať ošetrovaním udalostí 
+	<br>OnMousedown - tu si zapíšeme, kde sa to stalo a premennú mdole nastavíme na 1
+	<br>OnMouseUp - tu zapíšeme do premennej mdole 0 a vypočítame nové základné otočenie uholx0 a uholy0 
+	<br>OnMouseMove - tu podľa pohybu myši určíme o koľko treba treba otočiť okolo osi y a koľko okolo x
+	<div style="border-width:3;border-style:outset;width:800px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:800px; padding:0;border-width:0;color:white">Unit1.cpp
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+int uholx=30, uholy=30, mx,my,uholx0=30, uholy0=30;
+
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+   ogl_draw(); //len na vykreslovanie, či sme myšou pohli alebo nie
+}
+
+void __fastcall TForm1::dole(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
+{
+  mx=X; my=Y;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::pohzb(TObject *Sender, TShiftState Shift, int X, int Y)
+{
+  if (Shift.Contains(ssLeft))
+  {
+  uholx=uholx0-(my-Y) / 2; uholy=uholy0-(mx-X) / 2;
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::hore(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
+{
+  uholx0=uholx;     uholy0=uholy;
+}
+</pre></div></div></div>
+a výsledok by mohol vyzerať nasledovne
+<br><img src="obr/u1.png" width="692" height="460" border="0" alt="">
+<br>obrázok možno chytením myšou otáčať okolo osi x (vodorovnej osi) a okolo osi y (zvislá os)		
+<br><br>A teraz ešte pridáme zväčšovanie. Zväčšovať budeme ošetrovaním udalosti 
+<br>OnMouseWheelDown (potočil koliečkom nadol)
+<br>OnMouseWheelUp (potočil koliečkom nahol)
+<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+double koef=1;
+void TForm1::ogl_draw()
+{ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//tu zadávame príkazy na kreslenie
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glScaled(koef,koef,koef);
+  glRotatef(uholx,1,0,0);
+  glRotatef(uholy,0,1,0);
+
+  glColor4f(1.0f, 1.0f, 1.0f,1.0f);
+  glBegin(GL_LINES);
+  glVertex3i(0,0,0);glVertex3i(7,0,0);
+  glVertex3i(0,0,0);glVertex3i(0,7,0);
+  glVertex3i(0,0,0);glVertex3i(0,0,7);
+   glEnd();
+   glBegin(GL_TRIANGLES);
+  glColor3f(0.5,0.5,1.0);
+  glVertex3i(6,0,0);glVertex3i(0,6,0);glVertex3i(0,0,6);
+   glEnd();
+  glColor4f(1.0,1.0,0.2,0.7);
+   glBegin(GL_POLYGON);
+  glVertex3i(3,0,0);glVertex3i(0,0,3);glVertex3i(0,7,3);glVertex3i(3,7,0);
+   glEnd();
+
+  glFlush();
+  SwapBuffers(hdc);
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+   ogl_draw();  //používame len na vykreslovanie
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::kolieskodole(TObject *Sender, TShiftState Shift,
+      TPoint &MousePos, bool &Handled)
+{
+   koef/=1.05;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::kolieskohore(TObject *Sender, TShiftState Shift,
+      TPoint &MousePos, bool &Handled)
+{
+     koef*=1.05;
+}
+</pre></div></div></div>
+<br>
+<dt>Kreslíme druhý obrázok
+<dd>Našou úlohou bude vykresliť pravidelný šesťboký ihlan, ktorý má podstavu v rovine xy a počiatok súradnej sústavy je v jeho strede.
+    Vrcholy ihlana na podstave budú mať postupne farbu (r,rg,g,gb,b,rb) a vrchol ihlana bude farby 0 (čierna).
+	<ol><li>Vytvoríme si štruktúry na zadanie súradníc a farby vrcholov, niektoré hodnoty vieme zadať priamo no súradnice vrcholov
+			podstavy radšej vypočítam vo FormCreate. 
+			<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+			<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+			</div>
+			<div style="background-color:#dddddd; width:690px;" >
+			<div style="margin:10px">
+<pre>
+  single vrcholy[7][6]=((0,0,0,1,0,0),(0,0,0,1,1,0),(0,0,0,0,1,0),
+  							  (0,0,0,0,1,1),(0,0,0,0,0,1),(0,0,0,1,0,1),(0,0,0,0,0,0); 	
+//x,y,z,r,g,b							  
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+  for (int i=0;i<6;i++)
+  {  vrcholy[i][0]=cos(i*60/180*3.1415);
+     vrcholy[i][2]=sin(i*60/180*3.1415);
+  }
+}  
+</pre>
+</div></div></div>
+		<li>Teraz si pripravím štruktúru pre zadávanie stien, každá stena je určená poradím vrcholov, ktoré ju tvoria.
+			<br>Naplnenie som riešil priamo v deklarácii.
+				<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+  int steny[6][3]=((1, 2, 7),(2, 3, 7),(3, 4, 7),(4, 5, 7),(5, 6, 7),(6, 1, 7)));
+</pre>
+</div></div></div>
+		<li>vykreslovanie bude robiť Timer (interval som volil 20ms)
+			<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+			<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+			</div>
+			<div style="margin:10px">
+<pre>
+void TForm1::ogl_draw()
+{ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//tu zadávame príkazy na kreslenie
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glScaled(koef,koef,koef);
+  glRotatef(uholx,1,0,0);
+  glRotatef(uholy,0,1,0);
+  for (s=0;i&lt;6;s++)
+  {
+    glBegin(GL_Triangles);
+    for( v=0;v&lt;3;v++)
+	{ i=steny[s][v];
+      glColor(vrcholy[i][3], vrcholy[i][4], vrcholy[i][5]);
+      glVertex(vrcholy[i][0], vrcholy[i][1], vrcholy[i][2]);
+    }
+    glEnd;
+  }
+  SwapBuffers(DC);
+  }
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+  Uhol:=Uhol+1;ogl_draw();
+}
+</pre>
+</div></div></div>
+<br>A po spustení by to vyzeralo asi takto
+<br><img src="obr/u2.png" width="512" height="524" border="0" alt="">
+	</ol>
+</body>
+</html>

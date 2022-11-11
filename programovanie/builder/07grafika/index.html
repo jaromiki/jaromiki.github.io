@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body LINK="#0000ff" BACKGROUND="../image15.gif">
+<center><h3 class=nadpis>Grafika</h3></center>
+Na kreslenie na plochu je viacero možností, je vhodné si do formulára vložiť
+objekt IMAGE (karta Additional), niečo ako stôl na kreslenie, vkladanie obrazkov. Jeden z objektov patriacich IMAGE
+je CANVAS, čo je ako maliarske plátno a naň už možno umiestňovať grafické obekty - kresliť,
+podobne ako v jednotke graph v Borland Pascale. Hlavnou výhodou je
+<ul><li>väčšie množstvo farieb
+    <li>"ľubovoľná" veľkosť maliarskeho plátna (rozlíšenie XxY)
+	<li>podstatne väčšia množina grafických príkazov
+	<li>animácie neblikajú
+	<li>možnosť používať časovač v animáciách
+</ul>
+Nevýhodou stále ostáva pomalosť vykreslovania - máloktorá hra je písaná v takejto základnej grafike - ak chceme
+vykreslovať 3D objekty v reálnom čase aj s viditelnosťou, musíme siahnuť po nástrojoch OpenGl alebo DirectX.	
+<dl>
+	<dt class=main>Začíname
+	<dd>Vložíme grafický objekt Image1 na plochu a určíme mu nami určenú veľkosť. Ak teraz spustíme aplikáciu
+		budeme zaskočený, že sa nám na ploche neobjavil. Treba si zapamätať, že objekt Image1 sa zobrazí až po 
+		nakreslení nejakej čiary alebo plochy. Ja to riešim tak, že vo FormCreate dám príkaz na zotretie kresliacej plochy
+		(v skutočnosti cez celú kresliacu plochu nakreslím biely obdĺžnik).
+		<br>Image1.Canvas.FillRectangle(Image1.ClientRect);
+		<br>Podrobnejšie tento príkaz bude popísaný v časti Kreslenie plôch.
+		<br>Keď teraz pustíme aplikáciu vidíme objekt Image1 ako biely obdĺžnik položený na Forme.
+		<br><img src="../obr/image1.png" width="235" height="192" border="0" alt="">
+		<br>Polohu bodu v Image1 možno zadávať pomocou dvojíc [x,y] kde x udáva vodorovnú 
+		vzdialenosť bodu od ľavého okraja Image1. 
+		<br>a y udáva zvislú vzdialenosť od horného okraja Image1 
+	<dt class=main>Počiatočné hodnoty
+	<dd>Základné kreslené prvky majú nastavené počiatočné vlastnosti:
+	     Počiatočná poloha gr. kurzora: [0;0]
+	     Čiary - farba-čierna, hrúbka-1, style-solid (súvislá)	
+		 Plochy- farba-biela, style-solid (súvislá)
+
+	<dt class=main>Práca s farbami
+	<dd>Na určenie farby objektov v štádiu tvorby projektu využijeme vlastnosť Color
+		a vyberieme si z ponúkaných farieb.
+		<br>Ak chceme meniť farbu za behu programu, môžeme použiť nasledovné postupy:
+		<ol>
+		<li>Vlastnosti Color priradíme slovné označenie farby (napr. clred)
+		<li>Vlastnosti Color priradíme číselné označenie farby - $00bbggrr, ide o štvoricu bajtov
+		<li>Vlastnosti Color priradíme funkciu RGB(r,g,b), kde r,g,b sú čísla 0..255 
+		<li>Použijeme objekt ColorBox, kde si užívateľ môže vybrať farbu,  vybraná farba je vo vlastnosti  Selected
+		<li>Použijeme objekt ColorDialog, zvolená farba je vo vlastnosti Color
+		<li>Použijeme 3 objekty ScrollBar, na každom necháme užívateľa, aby nastavil jas farby a pomocou RGB vytvoríme výslednú farbu.  
+		</ol>
+	<dt class=main>Nastavenie vlastností pera
+	<dd><dl><dt class=second>Pen.Color
+			<dd>farba čiary. Farbu možno zadať:
+				<ol>
+				<li>číslom - $bbggrr, kde  bb - množstvo modrej, gg - množstvo zelenej, rr - množstvo červenej
+				<li>menom - napr clYellow
+				<li>RGB(0..255,0..255, 0..255)
+				</ol> 
+			<dt class=second>Pen.Width
+			<dd>hrúbka čiary. Ak chceme čiarkované čiary musíme dať hrúbku 1.
+			<dt class=second>Pen.Style
+			<dd>zvolíme tvar čiary (len pre hrúbku 1) 
+				<ul>		
+					<li>psSolid	- plná čiara.
+					<li>psDash	- čiarkovaná. 
+					<li>psDot	- bodkovaná.
+					<li>psDashDot - bodko-čiarkovana.
+					<li>psDashDotDot - bodko-bodko-čiarkovana. 
+					<li>psClear	- žiadna čiara.	
+				</ul>
+				Niektoré plošné príkazy (ellipse, chord,...) kreslia perom (pen) čiaru okolo plochy a ak ju chceme vypnúť
+				je "psClear" dobrá možnosť.
+			<dt class=second>Pen.Mode
+			<dd>zvolíme spôsob položenia čiary na plochu. Implicitne je pmCopy - zvolenou farbou namaľuje.
+				Používame napr. pri "jednoduchej" animácii, čiaru položíme v režime not (alebo xor), kedy 
+				opätovné kreslenie čiary čiaru zotrie ako undo.
+				<ul>		
+				<li>pmBlack	Always black
+				<li>pmWhite	Always white
+				<li>pmNop	Unchanged
+				<li>pmNot	Inverse of canvas background color
+				<li>pmCopy	Pen color specified in Color property
+				<li>pmNotCopy	Inverse of pen color
+				<li>pmMergePenNot	Combination of pen color and inverse of canvas background
+				<li>pmMaskPenNot	Combination of colors common to both pen and inverse of canvas background.
+				<li>pmMergeNotPen	Combination of canvas background color and inverse of pen color
+				<li>pmMaskNotPen	Combination of colors common to both canvas background and inverse of pen
+				<li>pmMerge	Combination of pen color and canvas background color
+				<li>pmNotMerge	Inverse of pmMerge: combination of pen color and canvas background color
+				<li>pmMask	Combination of colors common to both pen and canvas background
+				<li>pmNotMask	Inverse of pmMask: combination of colors common to both pen and canvas background
+				<li>pmXor	Combination of colors in either pen or canvas background, but not both
+				<li>pmNotXor	Inverse of pmXor: combination of colors in either pen or canvas background, but not both   
+				</ul>
+				Asi najčastejšie sa používa "pmcopy" na obyčajné kreslenie zvolenou farbou, na kreslenie dočasnej čiary
+				je vhodné používať "pmxor" alebo pmnot (2x nakreslená tá istá čiara "zmizne").
+		</dl>
+	<dt class=main>Kresba čiar
+	<dd><ul>
+		<li><font color="Green">LineTo(x1,y1)</font> - spojí aktuálny bod s uvedeným predvolenou čiarou (implicitne tenká súvislá čierna).
+			Tvar čiary určíme pomocou Pen.Color, Pen.Width, Pen.Style.
+		<li><font color="Green">MoveTo(x1,y1)</font> - presunie kurzor bez kreslenia na novú pozíciu.
+		<li><font color="Green">Polyline()</font> - na kreslenie lomenej čiary, údaje sú brané z pola - pozri help
+		<li><font color="Green">Rectangle(x1,y1,x2,y2)</font> - orámuje obdĺžnik predpísanou čiarou
+		<li><font color="Green">RoundRect(X1, Y1, X2, Y2, X3, Y3)</font> - nakreslí obdĺžnik so zaoblenými rohmi
+			<br>x3 - šírka elipsy
+			<br>y3 - výška elipsy
+		</ul>
+		Rectangle, RoundRect a Polyline sú plošné objekty a ak ich chceme používať na kreslenie čiar, musíme vypnúť 
+		vykreslovanie výplne:
+		<br><b>Image1.Canvas.Brush.style:=BsClear;</b>
+		<br>ak chceme opätovne zapnúť vykreslovanie plochy (napríklad chceme zotrieť Image1) vložíme
+		<br><b>Image1.Canvas.Brush.style:=BsSolid;</b>
+		<br>
+	<dt class=main>Príklady na precvičenie:
+		<dd><table cellspacing="20"><tr><td>
+			<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+			<td>1. Vytvor nasledovné obrázky
+			<br><img src="../obr/u1.png" width="195" height="155" alt="" border="1" >&nbsp;
+				<img src="../obr/u2.png" width="195" height="155" alt="" border="1">&nbsp;
+				<img src="../obr/u3.png" width="195" height="155" alt="" border="1">
+			<tr><td> <td>2. Naprogramuj	
+			<br><a href="prikl/ciary0.exe">kreslenie myšou</a>		
+			<br><a href="prikl/ciary1.exe">animácia - stiahnuť</a>		
+			<br><a href="prikl/ciary2.exe">hra s farbami - stiahnuť</a>		
+			</table>
+	<dt class=main>Krivky-plochy
+	<dd>Ako krivku možno vykresliť kružnicu, elipsu a ich časti. Pri kreslení len čiar musíme vypnúť kreslenie výplne
+	    <br>Image1.Cancas.Brush.Style:=bsClear;
+		<dl>
+		<dt class=second>Ellipse(x1,y1,x2,y2)<dd>- vykreslí kruh (kružnicu) alebo elipsu
+		<dt class=second>Arc(x1,y1,x2,y2,x3,y3,x4,y4)<dd> - vykreslí časť kružnice- elipsy 
+			<br>x1,y1,x2,y2 - súradnice rámika pre elipsu
+			<br>x3,y3 - priesečníkom polpriamky stredu elipsy a [x3,z3] s elipsou získame štartový bod
+			<br>x4,y4 - priesečníkom polpriamky stredu elipsy a [x4,z4] s elipsou získame koncový bod
+			<br>(tento príkaz nekreslí plochu)
+		<dt class=second>Arc(X, Y, W, H, Angle, AngleLength)<dd>	
+			x,y - súradnice ľavého horného bodu rámika
+			<br>w,h - rozmery rámika
+			<br>Angle, AngleLength - štartový a koncový uhol - v 1/16 stupňa
+		<dt class=second>Chord(x1,y1,x2,y2,x3,y3,x4,y4)<dd>- vykreslí časť kružnice- elipsy a spojí úsečkou
+			<br>x1,y1,x2,y2 - súradnice rámika pre elipsu
+			<br>x3,y3 - priesečníkom polpriamky stredu elipsy a [x3,z3] s elipsou získame štartový bod
+			<br>x4,y4 - priesečníkom polpriamky stredu elipsy a [x4,z4] s elipsou získame koncový bod
+		<dt class=second>Chord(X, Y, W, H, Angle, AngleLength)
+		<dt class=second>Pie(x1,y1,x2,y2,x3,y3,x4,y4)<dd> - vykreslí výsek kružnice- elipsy a spojí úsečkou
+			<br>x1,y1,x2,y2 - súradnice rámika pre elipsu
+			<br>x3,y3 - priesečníkom polpriamky stredu elipsy a [x3,z3] s elipsou získame štartový bod
+			<br>x4,y4 - priesečníkom polpriamky stredu elipsy a [x4,z4] s elipsou získame koncový bod
+		<dt class=second>Pie(X, Y, W, H, Angle, AngleLength)
+		</dl>
+	<dt class=main>Farby a štýly výplne
+	<dd>Vlastnost výplne možno nastaviť vo vlastnosti Brush, ktorá má tieto možnosti:
+		<dl>
+		<dt class=second>Bitmap
+		<dd>- na vlozenie obrazka do pozadia (bude prisť neskôr)
+		<dt class=second>Color
+		<dd>- farba výplne, máme k dispozícii tie iste možnosti ako pri čiarach
+		<dt class=second>Style
+		<dd>bsSolid-plné, bsCross-šachovnicovo, bsClear-žiadne, bsDiagCross-šikmá šachovnica, 	
+			bsBDiagonal-šikmo/, bsFDiagonal-šikmo\, bsHorizontal-vodorovne,	bsVertical-zvislo,	
+			bsDense1, bsDense2,	bsDense3, bsDense4, bsDense5, bsDense6, bsDense7-šeď 
+		</dl>
+	<dt class=main>Plošné objekty
+	<dd>
+		<ul>
+		<li><font color="Green">Rectangle(x1,y1,x2,y2), Rectangle(Rect:Trect)</font> 
+		Trect-je záznam buď štvorice čísel, alebo dvojice bodov (Pomocou funkcie Rect(a,b,c,d))
+		<li><font color="Green">FillRect(Rect:Trect)</font> - obdĺžnik bez ohraničenia 
+		<li><font color="Green">Ellipse(x1,y1,x2,y2)</font> - vykreslí kruh (kružnicu) alebo elipsu
+		<li><font color="Green">Arc, Chord, Pie</font> - časti elipsy - kružnice
+		<li><font color="Green">CopyRect(const Dest: TRect; Canvas: TCanvas; const Source: TRect)</font>
+		 	- používa sa na: 
+			<ul>
+			<li>kopírovanie obdĺžnikovej oblasti z jedného canvasu na iný
+			<li>odloženie obdĺžnikovej oblasti do premennej
+			<li>vrátenie obdĺžnikovej oblasti z premennej do canvasu
+			</ul>
+		</ul>
+	<dt class=main>Príklady na precvičenie:
+		<dd><table cellspacing="20"><tr><td>
+			<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+			<td>1. Vytvor nasledovné programy
+			<br><a href="pruzina.exe">skladanie na seba kolmých kmitov</a>		
+			</table>
+
+	<dt class=main>Text
+	<dd>Podobne ako v pascale aj tu môžme pridávať do grafiky text.
+		<ul>
+	<li>TextOut(x,y:integer; text:string) - vypíše na udané miesto text
+	<li>TextHeight(const Text: String): Integer -  Zistí výšku textu v bodoch
+	<li>TextWidth(const Text: String): Integer -  Zistí šírku textu v bodoch
+	<li>TextRect(Rect: TRect; X, Y: Integer; Text: String;) - Umožní zápis textu do vymedzenej oblasti
+		<li>
+	</ul>
+    <dt class=second>Príklady</dt>	
+	<dd><ol>
+		<li>Namaľuj kovovú rúru
+		<li>Namaľuj snehuliaka 
+		<li>Namaľuj kvietok s 8-mimi červenými lupeňmi
+		<li>Namaluj korálkový náhrdelník, na modrej niti v tvare elipsy budú modré korálky
+		<li>Namaluj slnečnú oblohu s niekoľkými obláčikmi
+		<li>Namaľuj vyšrafované ozubené koleso o polomere r a počte zubov z, výške zubov vz.
+			<br>Pomôcka:Súradnice bodov základne rovnostr. trojuholníkov získame pomocou vzťahov:
+			<br>x<sub>i</sub>=xs+r*cos(2*pi/z*i)
+			<br>y<sub>i</sub>=ys+r*sin(2*pi/z*i)
+			<br>Súradnice vrcholov budú na kružnici o polomere (r+vz) a počiatočný uhol bude posunutý o (pi/z)
+		<li>Namaluj nasledovný obrázok na modrom podklade
+			<img src="kruh1.gif"  border="0" alt="kruh1.bmp" align="middle"> 
+		<li>Namaluj kocku, pričom farby stien sú rôzne a uhly otočenia sa načítajú z klávesnice
+		<li>Namaluj kocku, podľa predošlého príkladu a cez polovice hlán "odrež" jeden roh kocky, rovinu rezu vyšrafuj
+		<li>Namaľuj tvár s očami a ústami. Na stlačenie kláves sa postave pohýbu oči, ukážu zuby, pohnú uši 
+		<li>Naprogramuj pohybujúcu sa žltú loptu odrážajúcu sa od stien obrazovky
+		<li>Naprogramuj hru pre dvoch hráčov, ktorý sa striedajú pri klávesnici a snažia sa pomocou dela súpera zneškodniť
+			Na mieste dopadu náboja sa najprv zobrazí malý žltý kruh potom väčší červený a napokon ešte väčší farmou pozadia.
+			Každý hráč volí uhol a rýchlosť strely.
+		<li>Naprogramuj grafický editor, ktorý dovolí klásť na plochu grafické objekty, tieto objekty evidovať v poli, editovať objety, pridávať, odstraňovať a zapisovať a čítať z disku.
+		<li>Naprogramuj pohybujúce sa autíčka na križovatke riadenej svetelnými semaformi, autíčka prichádyajú náhodne z rôznych smerov.
+ 		</ol>
+</dl>
+
+</body>
+
+</dl>  
+
+
+</body>
+</html>

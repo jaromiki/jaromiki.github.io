@@ -1,0 +1,863 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Datove struktury</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+
+<h1>10 Dátové štruktúry</h1>
+
+
+<ul>
+<li><a href="#ZOZNAM">Lineárny zoznam</a></li>
+
+<li><a href="#STROM">Strom</a></li>
+</ul>
+
+
+
+<p align="justify">Každý program má dve základné časti, ktoré profesor Wirth zhrnul do známej rovnice</p>
+
+<pre>
+     Programy = Datové štruktúry + Algoritmy.
+</pre>
+
+<p align="justify">Zdá sa, že jedným zo základných princípov moderných technológií vytvárania programov je práve oddelenie časti, zaoberajúcej sa údržbou informácií v&nbsp;datových štruktúrach od vlastného algoritmu riešenia úlohy . Obidve časti môžu byť v&nbsp;programe v&nbsp;rôznej miere rozptýlené. Sústredením pamäťových prostriedkov a&nbsp;kódu pre manipuláciu s&nbsp;nimi do samostatných modulov získame prehľadnejšie, čitateľnejšie, modifikovateľnejšie, lepšie dokumentované a&nbsp; predovšetkým spoľahlivejšie programy, ktoré sú aj efektívnejšie, lebo nedochádza napr. k&nbsp;opakovaniu kódu. Dá sa povedať, že vhodným návrhom dátovej štruktúry pre danú úlohu je spravidla aj algoritmus riešenia úlohy jednoduchší a&nbsp;prehľadnejší.</p>
+
+<p>V ďalšej časti sa budeme zaoberať základnými dátovými štruktúrami. Podrobnejšie preberieme lineárne zoznamy. Kapitolu uzavrieme stručným popisom stromových štruktúr.</p>
+
+<p>Slovo lineárny udáva, že počet predchodcov aj nasledníkov hociktorej položky zoznamu je maximálne 1. To znamená, že v&nbsp;lineárnom zozname existuje maximálne jedna predchádzajúca a&nbsp;jedna nasledujúca položka. Z&nbsp;toho dôvodu lineárne zoznamy slúžia pre reprezentáciu úplného usporiadania. Podľa spôsobu vkladania a&nbsp; vyberania položiek rozoznávame tri typy lineárnych dátových štruktúr: front, zásobník a&nbsp;zoznam.</p>
+
+<h2><a id="ZOZNAM" name="ZOZNAM"><b>10.1 Lineárny zoznam</b></a></h2>
+
+
+<p align="justify">Pre vzájomné pospájanie položiek danej množiny stačí jediný spojovací článok, ktorý ukazuje na nasledujúcu položku množiny. Týmto článkom je smerník, pričom smerník poslednej položky má hodnotu NULL. Pridanie, resp. zrušenie položky v&nbsp;zozname sa potom jednoducho realizuje príslušnou zmenou jednotlivých smerníkov. Pre pridanie položky 3 do zoznamu medzi položku 1 a&nbsp;2 značí zmeniť smerník položky 1 tak, aby ukazoval na položku 3 a&nbsp;smerník položky 3 bude ukazovať na položku 2 (nadobudne predchádzajúcu hodnotu smerníka položky 1).</p>
+
+<p><b>Front</b> je spôsob organizácie, ktorý sa používa vtedy, ak potrebujeme spracovať položky v&nbsp;takom poradí, v&nbsp;akom prichádzajú. Spôsob vkladania a&nbsp; vyberania položiek sa označuje ako FIFO (first-in, first-out).</p>
+
+<p>Front je obyčajne charakterizovaný</p>
+
+<ul>
+<li>typom položiek</li>
+
+<li>maximálnym počtom položiek, ktoré je možné do frontu vložiť</li>
+
+<li>operáciami
+
+      <ul>
+        <li>vytvorenie frontu</li>
+        <li>vložiť položku do frontu (na koniec)</li>
+        <li>vrátiť prvú položku</li>
+        <li>odobrať prvú položku (všetky ostatné posunúť)</li>
+        <li>test na prázdnosť frontu</li>
+        <li>test na plnosť frontu</li>
+        <li>vrátiť dĺžku frontu</li>
+      </ul>
+
+</li>
+</ul>
+
+<p align="justify">Je zrejmé, že vložiť položku je možné len do frontu, ktorý nie je plný, a&nbsp;naopak, odobrať prvú položku je možné len z&nbsp;neprázdneho frontu. Odobranie položky znamená skrátenie frontu.</p>
+
+<p>Prvá položka prázdneho frontu nie je definovaná. Dĺžka frontu je daná počtom všetkých položiek. Ak tento počet je rovný maximálnemu počtu položiek, front je plný.</p>
+
+<p>Chybové stavy : pridanie položky do plného frontu výber položky z&nbsp;prázdneho frontu</p>
+
+<p>Programová realizácia frontu môže vychádzať z&nbsp;implementácie pomocou</p>
+
+<ul>
+<li>poľa (pri odobraní prvej položky presun ostatných položiek)</li>
+
+<li>kruhového poľa (spojenie prvej a&nbsp;poslednej položky, odobranie prvej položky znamená iba presun začiatku frontu)</li>
+
+<li>spojových štruktúr (realizované smerníkmi, odobranie prvej položky znamená iba zmenu smerníka na začiatok frontu).</li>
+</ul>
+
+<p><b>Zásobník</b> je front typu LIFO (last-in first-out) - posledná vložená položka bude vybraná ako prvá. Používa sa tam, kde potrebujeme odložiť informácie a&nbsp;cestou späť sa k&nbsp;nim vrátiť (stack pri volaní funkcií, riešenie rekurzívnych problémov).</p>
+
+<p><b>Zásobník</b> je obyčajne charakterizovaný</p>
+
+<ul>
+<li>typom položiek</li>
+
+<li>max. počtom položiek, ktoré je možné do zásobníka vložiť</li>
+
+<li>operáciami
+
+      <ul>
+        <li>vytvorenie zásobníka</li>
+        <li>vložiť položku do zásobníka (na vrchol)</li>
+        <li>vrátiť položku z vrcholu zásobníka</li>
+        <li>odobrať položku z vrcholu zásobníka</li>
+        <li>test na prázdnosť zásobníka</li>
+        <li>test na plnosť zásobníka</li>
+        <li>vrátiť dĺžku zásobníka</li>
+      </ul>
+
+</li>
+</ul>
+
+<p align="justify">Ak máme pre zásobník vyhradenú dostatočne veľkú pamäť, môžu byť maximálny počet položiek a&nbsp;test na plnosť zásobníka nezaujímavé. Z&nbsp; uvedeného je zrejmé, že vrchol zásobníka tvorí posledná vložená položka. Odobraním položky z&nbsp;neprázdneho zásobníka sa jeho dĺžka skráti (vložením zvýši) o&nbsp;1. Prázdny zásobník nemá vrchol. Položky sú zo zásobníka vyberané v&nbsp; opačnom poradí, ako sú vkladané.</p>
+
+<p>Chybové stavy : výber položky z&nbsp;prázdneho zásobníka vloženie položky do plného zásobníka</p>
+
+<p>Programová realizácia zásobníka môže vychádzať z&nbsp;implementácie pomocou</p>
+
+<ul>
+<li>poľa</li>
+
+<li>spojových štruktúr.</li>
+</ul>
+
+<p>Implementácia pomocou poľa sa používa vtedy, ak poznáme maximálny počet položiek. Na aktuálny vrchol zásobníka ukazuje premenná index, ktorá sa modifikuje príslušným spôsobom pri každom vložení, resp. výbere zo zásobníka.</p>
+
+<p>Implementácia pomocou spojových štruktúr využíva smerníkové spojenie položiek. Pri vložení, resp. výbere sa tu namiesto premennej index príslušným spôsobom modifikuje smerník na vrchol zásobníka. V&nbsp;tomto prípade je výhodné používať trojicu smerníkov, ktoré indikujú aktuálny vrchol zásobníka (ako premenná index) a&nbsp;začiatok i&nbsp;koniec pamäte pre zásobník (analógia s&nbsp; deklaráciou poľa).</p>
+
+<p><b>Zoznam</b> predstavuje takú postupnosť, do ktorej môžeme pridávať, resp. rušiť položky na ľubovoľnom mieste, ktoré je označené premennou index (tzv. ukazovateľ, ktorý označuje ľubovoľné miesto práce so zoznamom od začiatku až po koniec). Tým sa zoznam líši od frontu, resp. zásobníka, kde je možná aktualizácia iba na koncoch postupnosti. Zoznam je teda všeobecným prípadom lineárnej dátovej štruktúry. Je charakterizovaný</p>
+
+<ul>
+<li>typom položiek</li>
+
+<li>maximálnym počtom položiek</li>
+
+<li>operáciami
+
+   <ul>
+     <li>vytvoriť zoznam</li>
+     <li>vložiť položku do zoznamu na miesto označené ukazovateľom</li>
+     <li>nastaviť ukazovateľ na začiatok zoznamu</li>
+     <li>nastaviť ukazovateľ na koniec zoznamu</li>
+     <li>nastaviť ukazovateľ na ďalšiu položku zoznamu</li>
+     <li>nastaviť ukazovateľ na predchádzajúcu položku zoznamu</li>
+     <li>vrátiť položku zoznamu, označenú ukazovateľom</li>
+     <li>vrátiť dĺžku zoznamu</li>
+     <li>test na prázdnosť zoznamu</li>
+     <li>test na plnosť zoznamu</li>
+   </ul>
+</li>
+</ul>
+
+<p align="justify">Rovnako ako v&nbsp;predchádzajúcom platí pri dostatočne veľkej vyhradenej pamäti, že maximálny počet položiek a&nbsp;test na plnosť zoznamu môžu byť nezaujímavé. Je zrejmé, že vkladať novú položku je možné len do rozsahu zoznamu a&nbsp;rušiť položku je možné len v&nbsp;neprázdnom zozname. Každým vložením, resp. rušením položky sa príslušne mení dĺžka zoznamu.</p>
+
+<p>Chybové stavy : výber položky z&nbsp;prázdneho zoznamu vloženie položky do plného zoznamu</p>
+
+<p>Programová realizácia môže rovnako ako v&nbsp;predchádzajúcich prípadoch vychádzať z&nbsp;implementácie pomocou</p>
+
+<ul>
+<li>poľa</li>
+
+<li>spojových štruktúr.</li>
+</ul>
+
+<p>Implementáciu pomocou poľa ilustruje príklad p10_1, ktorý rieši veľmi jednoduchý telefónny zoznam s&nbsp;dvoma základnými funkciami <b>vloz a&nbsp;zrus</b>. Položka zoznam je reprezentovaná štruktúrou ex1, pozostávajúcou z&nbsp;mena a&nbsp;telefónneho čísla účastníka. Zoznam je tvorený poľom p. Pri práci s&nbsp;poľom sa využívajú premenné ukaz na pohyb po zozname a&nbsp;dĺžka. V&nbsp;prvej časti programu sa generujú mená účastníkov a&nbsp;ich telefónne číslo, v&nbsp;druhej časti sa zruší prvá položka zoznamu a&nbsp;nová položka sa vloží na druhé a&nbsp;pred posledné miesto zoznamu. Všimnite si, že tak pri vkladaní, ako aj pri rušení položky vo funkciách vloz a&nbsp;zrus, dochádza k&nbsp;fyzickému presunu príslušnej časti poľa p jedným alebo druhým smerom.</p>
+
+<pre>
+/*   p10_1.c zoznam pomocou pola tel. zoznam   */
+
+#include &lt;STDIO.H&gt;
+#include &lt;STDLIB.H&gt;
+#include &lt;STRING.H&gt;
+#define N 9
+
+struct ex1{
+   char m[8];
+   float cislo;
+   } p[N],t;
+int ukaz,dlzka;
+
+void vloz(struct ex1 q);
+void zrus();
+struct ex1 read();
+
+main()
+{
+ int i,j;
+
+ randomize();
+ printf("\Telefonny zoznam povodny\n");
+ for(dlzka=0;dlzka&lt;N;DLZKA++){ i for(i="dlzka;" *
+   prvok novy pre miesto uvolni } return; plny\n?);
+   je printf(?Zoznam N){ if(dlzka="=" i;
+   int { ukaz="dlzka-2;" danu poziciu na polozku vlozit q)
+   ex1 vloz(struct void }; %.0f\n?,ukaz-1,t.m,t.cislo);
+   %s printf(?%d. t="read();" ){ for(ukaz="0;ukaz&gt;dlzka;"
+   upraveny\n?); zoznam printf(?\nTelefonny vloz(t); zrus();
+   dlzka--; t.cislo="100000+100*random(90)+random(10000);"
+   sprintf(t.m,?Meno%03d?,N+100); %.0f\n?,dlzka,p[dlzka].m,
+   p[dlzka].cislo); p[dlzka].cislo="100000+100*random(90)+
+   random(10000);" sprintf(p[dlzka].m,?Meno%03d?,
+   dlzka);&gt;ukaz; ) p[i]=p[--i];
+  p[ukaz++] = q;
+  dlzka++;
+}
+
+void zrus()
+/*   zrusit polozku na pozicii danej ukaz   */
+{
+   register int i;
+
+   for(i=ukaz; i&lt;DLZKA; * }
+     { polozku ex1 dlzka--;
+      if(ukaz pozicie danej z citat 
+      read() struct p[i]="p[++i]; " )&gt;= dlzka){
+     printf("V zozname uz nie je ziadny prvok\n");
+     return (p[0]);
+   }
+   return p[ukaz++];
+}
+</pre>
+
+<p align="justify">Príklad p10_2 ilustruje implementáciu zoznamu pomocou spojových štruktúr, pričom sa využíva zreťazenie v&nbsp;<b>jednom</b> smere (jeden smerník na ďalšiu položku zoznamu). Náplňou je ten istý jednoduchý telefónny zoznam. Reťazenie zoznamu si vyžiadalo doplniť v&nbsp;strukture ex1 smerník ďalší a&nbsp;ďalšiu pomocnú štruktúru POM, ktorá obsahuje tri smerníky na zoznam, a&nbsp;to na začiatok zoznamu - <b>prvy</b>, na aktuálnu pozíciu v&nbsp;zozname - <b>aktual</b> a&nbsp;na poslednú položku v&nbsp;zozname - <b>posledny</b>. Položky zoznamu nie sú uložené v&nbsp;poli, ale v&nbsp;dynamicky prideľovanej pamäti, čím sa činnosť funkcií pre pridávanie do zoznamu <b>pridaj</b>, vkladanie do zoznamu <b>vloz</b> a&nbsp;pre zrušenie položky zoznamu <b>zrus</b> mení (vzhľadom na príklad p10_1) a&nbsp;spočíva v&nbsp;príslušnej úprave smerníkov a&nbsp;alokácii, resp. uvoľnení pamäte. Vo funkciách musia byť správne ošetrené situácie pre prázdny zoznam, zoznam s&nbsp;jednou položkou a&nbsp;s&nbsp;viacerými položkami, a&nbsp;taktiež vkladanie, resp. rušenie prvej, bežnej aj poslednej položky zoznamu. Výhodou takéhoto prístupu k&nbsp;riešeniu problému je to, že pri zostavovaní programu nepotrebujeme poznať presný počet položiek zoznamu (odpovedajúce deklarácie polí). V&nbsp;hlavnom programe je preverené tak vkladanie, ako aj rušenie položiek v&nbsp;rôznych miestach zoznamu. Všimnite si, že každej manipulácii so zoznamom predchádza nastavenie smerníka ,<b>aktual</b>. Počiatočné generovanie zoznamu je rovnaké, ako v&nbsp;predchádzajúcom príklade.</p>
+
+<pre>
+/*   p10_2.c  zoznam pomocou smernikov
+              zretazenie v jednom smere
+              tel. zoznam   */
+
+#include &lt;STDIO.H&gt;
+#include &lt;STDLIB.H&gt;
+#include &lt;STRING.H&gt;
+#define N 9
+
+struct ex1{
+   char m[8];
+   float cislo;
+   struct ex1 *dalsi;
+   } p,t;
+
+struct POM{
+   struct ex1 *prvy;
+   struct ex1 *aktual;
+   struct ex1 *posledny;
+   int dlzka;
+   } POM;
+
+void pridaj(struct POM *s, struct ex1 *q);
+void vloz(struct POM *s, struct ex1 *q);
+void zrus(struct POM *s);
+
+main()
+{
+  int i;
+  struct ex1 *pex=&amp;p, *t, *tp;
+  struct POM *pp=&amp;POM;
+
+  randomize();
+  printf("\Telefonny zoznam povodny\n");
+  for(i=0;i&lt;N;I++){ * 4)pp- if(i="=" pridaj(pp,pex);
+    p.cislo="100000+100*random(90)+random(10000);
+        " sprintf(p.m,?Meno%03d?,i);
+        strukturu naplnit&gt;aktual = pp-&gt;posledny;
+   printf("%2d. %s %.0f\n",i,p.m,p.cislo);
+   }
+   sprintf(tp-&gt;m,"Meno%03d",N+100);
+   tp-&gt;cislo=100000+100*random(90)+random(10000);
+   pridaj(pp,tp);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 1. pridat posledny\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+   getchar();
+   zrus(pp);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 2. zrusit 5. polozku\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+   getchar();
+   vloz(pp,pex);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 3. vloz za 6. polozku\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+   getchar();
+   pp-&gt;aktual = pp-&gt;prvy;
+   vloz(pp,pex);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 4. vloz za 1. polozku\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+   getchar();
+   zrus(pp);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 5. zrus 1. polozku\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+   getchar();
+   pp-&gt;aktual = pp-&gt;posledny;
+   vloz(pp,pex);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 6. vloz za posl. polozku\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+   getchar();
+   pp-&gt;aktual = pp-&gt;posledny;
+   zrus(pp);
+   i=0;
+   t=pp-&gt;prvy;
+   printf("\nTel. zoznam 7. zrus posl. polozku\n");
+   while(t){
+   printf("%2d. %s %.0f\n",i++,t-&gt;m,t-&gt;cislo);
+   t=t-&gt;dalsi;
+   };
+}
+
+void pridaj(struct POM *s, struct ex1 *q)
+/*   pridaj novu polozku na koniec zoznamu   */
+{
+   register struct ex1 *h;
+
+   h = malloc(sizeof(struct ex1));   /*    pamat   */
+   if(h == NULL){
+      printf("\nMalo pamate\n");
+      return;
+      };
+   h-&gt;cislo = q-&gt;cislo;      /*   kopia   */
+   strcpy(h-&gt;m,q-&gt;m);
+   if(s-&gt;dlzka++==0)      /* 1. polozka   */
+      s-&gt;prvy = h;
+   else
+      s-&gt;posledny-&gt;dalsi = h;
+   h-&gt;dalsi = NULL;   /* posledna polozka     */
+   s-&gt;posledny = h;       /* pripoj polozku   */
+}
+
+void vloz(struct POM *s, struct ex1 *q)
+/* vloz polozku na poziciu aktual      */
+{
+   register struct ex1 *h;
+
+   h = malloc(sizeof(struct ex1));    /* pamat   */
+   if(h == NULL){
+      printf("\nMalo pamate\n");
+      return;
+      };
+   h-&gt;cislo = q-&gt;cislo;         /* kopia   */
+   strcpy(h-&gt;m,q-&gt;m);
+
+   if(s-&gt;dlzka++ == 0){   /* prazdny zoznam   */
+   /*   vloz na zaciatok      */
+      s-&gt;prvy = s-&gt;aktual = s-&gt;posledny = h;
+      h-&gt;dalsi = NULL;
+      }
+   if(s-&gt;aktual == s-&gt;posledny){ /* vloz na koniec   */
+      s-&gt;posledny-&gt;dalsi = h;
+      h-&gt;dalsi = NULL;
+      s-&gt;posledny = h;
+      }
+   else{     /* vloz na poziciu aktual   */
+      h-&gt;dalsi = s-&gt;aktual-&gt;dalsi;
+      s-&gt;aktual-&gt;dalsi = h;
+      };
+}
+
+void zrus(struct POM *s)
+/*   zrus polozku aktual      */
+{
+   register struct ex1 *h, *t;
+   int prvy=1;         /* sprac. 1. polozky   */
+
+   if(s-&gt;dlzka == 0)   /* prazdny zoznam   */
+      return NULL;
+   t = s-&gt;aktual;
+   if(s-&gt;dlzka == 1)   /* zoznam s 1 polozkou   */
+     s-&gt;prvy = s-&gt;aktual = s-&gt;posledny = NULL;
+   else{
+     if(s-&gt;aktual == s-&gt;prvy){   /* 1. polozka   */
+      s-&gt;prvy = s-&gt;prvy-&gt;dalsi;
+      prvy = 0;
+      };
+     if(s-&gt;aktual == s-&gt;posledny){
+      /* posledna polozka   */
+      s-&gt;posledny = s-&gt;prvy;
+      while(s-&gt;posledny-&gt;dalsi != s-&gt;aktual)
+         s-&gt;posledny = s-&gt;posledny-&gt;dalsi;
+      };
+     if((s-&gt;aktual != s-&gt;prvy)&amp;&amp;prvy){
+      h = s-&gt;prvy;    /* najst predchadzajucu   */
+      while(h-&gt;dalsi != s-&gt;aktual)
+         h = h-&gt;dalsi;
+      h-&gt;dalsi = s-&gt;aktual-&gt;dalsi;
+      };       /* spojit s nasledujucou */
+     s-&gt;aktual = s-&gt;aktual-&gt;dalsi;
+     }
+   s-&gt;dlzka--;        /* znensit dlzku   */
+   free(t);          /* uvolnit pamat   */
+   return ;
+}
+</pre>
+
+<p align="justify">V príklade p10_3 sa naďalej zaoberáme spomenutým jednoduchým telefónnym zoznamom, realizovaným pomocou spojových štruktúr, ktoré sú zreťazené v&nbsp;<b>obidvoch</b> smeroch. Toto zreťazenie je realizované pomocou dvoch smerníkov v&nbsp;štruktúre ex1. Prvý smerník pred ukazuje na predchádzajúcu položku zoznamu (v prípade 1. položky má hodnotu NULL), druhý smerník dalši ukazuje na nasledujúcu položku zoznamu (v prípade poslednej položky má hodnotu NULL). Zreťazenie položiek zoznamu v&nbsp;obidvoch smeroch umožňuje, resp. zjednodušuje ďalšie operácie so zoznamom (funkcia <b>vypis2</b> pre výpis zoznamu od konca po začiatok). V&nbsp;tomto príklade pracujeme s&nbsp;tzv. usporiadaným zoznamom (podľa mien), ktorý je výhodný najmä pri vyhľadávaní informácií. Realizáciu usporiadania má na starosti funkcia <b>sortvloz</b>, ktorá vkladá každú novú položku na odpovedajúce miesto v&nbsp;zozname (s využitím lexikografického porovnania reťazcov pomocou štandardnej funkcie <b>strcmp</b>). Pridávanie nových položiek obstaráva funkcia vstup (alokácia pamäte pre položku) pomocou funkcie input pre načítanie reťazca s&nbsp;kontrolou jeho dĺžky. Zrušenie položky (funkcia <b>zrus</b>) spočíva v&nbsp;príslušnej úprave smerníkov susedných položiek (ak je potrebné, aj smerníkov štruktúry POM) a&nbsp;uvoľnení pamäte alokovanej pre položku. Všimnime si, že tak vo funkcii <b>sortvloz</b>, ako aj vo funkcii <b>zrus</b> musia byť ošetrené všetky možné polohy položky v&nbsp;zozname (na začiatku, uprostred a&nbsp;na konci). Funkcia <b>hladaj a&nbsp;najdi</b> slúži pre vyhľadanie položky v&nbsp;zozname podľa mena, resp. podľa čísla. Samotnú realizáciu výpisu údajov danej položky zabezpečuje funkcia <b>display</b>. Pre naznačenie spôsobu praktického využívania takéhoto zoznamu sú uvedené aj funkcie pre zápis všetkých položiek zoznamu do súboru na disk a&nbsp; pre spätné načítanie položiek zoznamu zo súboru do pamäte. Funkcia vstup je navrhnutá pre opakovaný <b>vstup</b> položiek. Zadávanie sa ukončí stlačením klávesa Enter. Celý program je riadený veľmi jednoduchým "menu".</p>
+
+<pre>
+/*   p10_3.c  zoznam pomocou smernikov
+              zretazenie v dvoch smeroch
+              tel. zoznam    */
+
+#include &lt;STDIO.H&gt;
+#include &lt;STDLIB.H&gt;
+#include &lt;STRING.H&gt;
+
+struct ex1{
+   char m[8];
+   float cislo;
+   struct ex1 *pred;
+   struct ex1 *dalsi;
+   } p;
+
+struct POM{
+   struct ex1 *prvy;
+   struct ex1 *aktual;
+   struct ex1 *posledny;
+   int dlzka;
+   } a,*sa=&amp;a;
+
+int menu(void);
+struct ex1 *sortvloz(struct POM *sa, struct ex1 *q);
+void vstup(void);
+void input(char *vyzva, char *s, int count);
+void zrus(void);
+struct ex1 *najdi(struct ex1 h1, int druh);
+void vypis1(void);
+void vypis2(void);
+void display(struct ex1 *q);
+void hladaj(int druh);
+void zapis(void);
+void citaj(void);
+
+main()
+{
+
+  for(;;){
+  switch(menu()){
+   case 1 : vstup(); break;  /* vloz polozku   */
+   case 2 : zrus(); break;  /* zrus polozku   */
+   case 3 : vypis1(); /* vypis zoznamu od zac.   */
+       break;
+   case 4 : vypis2(); /* vypis zoznamu od konca   */
+       break;
+   case 5 : hladaj(0); /* hladanie mena v zozname   */
+       break;
+   case 6 : hladaj(1); /* hlad. cisla v zozname   */
+       break;
+   case 7 : zapis();   /* zapis na disk   */
+       break;
+   case 8 : citaj();   /* citanie z disku   */
+       break;
+   default : exit(0);   /* koniec      */
+       break;
+   }
+  }
+}
+
+int menu(void)
+{
+  char s[80];
+  int c;
+
+   printf("1. Vlozit polozku\n");
+   printf("2. Zrusit polozku\n");
+   printf("3. Vypis zoznamu vpred\n");
+   printf("4. Vypis zoznamu odzadu\n");
+   printf("5. Hladanie mena\n");
+   printf("6. Hladanie cisla\n");
+   printf("7. Zapis na disk\n");
+   printf("8. Citanie z disku\n");
+   printf("9. Koniec\n");
+   do{
+     printf("Volba cinnosti &lt;1-9&gt; : ");
+     gets(s);
+     c = atoi(s);
+     } while ( c&lt; 1 || c &gt; 9);
+   return c;
+}
+
+struct ex1 *sortvloz(struct POM *sa, struct ex1 *q)
+/* vloz polozku do zotriedeneho zoznamu   */
+{
+   struct ex1 *old, *top, *beg;
+
+   beg = sa-&gt;prvy;
+   if(sa-&gt;dlzka++==0){   /* 1. polozka   */
+      q-&gt;pred = q-&gt;dalsi = NULL;
+      sa-&gt;prvy = sa-&gt;aktual = sa-&gt;posledny = q;
+      return q;
+      };
+   old = NULL;
+   top = beg;
+   while(top){
+    if(strcmp(top-&gt;m,q-&gt;m) &lt; 0){
+      old = top;   /* najdi kam zaradit   */
+      top = top-&gt;dalsi;
+      }
+     else {     /* zarad medzi old a top   */
+      q-&gt;dalsi = top;
+      q-&gt;pred = old;
+      top-&gt;pred = q;
+      if(!old)
+        sa-&gt;prvy = q;
+      if(old){
+        old-&gt;dalsi = sa-&gt;aktual = q;
+        };
+      return q;
+      };
+     };
+   old-&gt;dalsi = q;     /* posledna polozka   */
+   sa-&gt;posledny = q;
+   q-&gt;dalsi = NULL;
+   q-&gt;pred = old;
+   return q;
+}
+
+
+void vstup(void)
+{
+   struct ex1 *h;
+   char p[20];
+
+   for(;;){
+   h = malloc(sizeof(struct ex1));    /* pamat   */
+   if(h == NULL){
+      printf("\nMalo pamate\n");
+      return;
+      };
+   input("Meno : ",h-&gt;m,8);      /* kopia   */
+   if(!h-&gt;m[0]) break;    /* koniec vstupov   */
+   input("Telefonne cislo : ",p,6);
+   h-&gt;cislo = atof(p);
+   a.aktual = sortvloz(sa,h);
+   }
+}
+
+void input(char *vyzva, char *s, int count)
+/* vstup retazca o max. dlzke count s vyzvou   */
+{
+   char p[80];
+
+     printf(vyzva);
+     gets(p);
+     if(strlen(p) &gt; count){
+      printf(" prilis dlhy vstup\n");
+      p[count] ='\0';
+      };
+     strcpy(s,p);
+}
+
+void zrus(void)
+/*   zrusenie polozky   */
+{
+   struct ex1 *h,h1;
+
+   printf("Meno pre zrusenie : ");
+   gets(h1.m);
+   h = najdi(h1,0);
+   if(h){
+     if(sa-&gt;prvy == h){
+      sa-&gt;prvy = h-&gt;dalsi;
+      if(sa-&gt;prvy) sa-&gt;prvy-&gt;pred = NULL;
+      else sa-&gt;posledny = NULL;
+      }
+     else{
+      h-&gt;pred-&gt;dalsi = h-&gt;dalsi;
+      if(h != sa-&gt;posledny)
+        h-&gt;dalsi-&gt;pred = h-&gt;pred;
+      else
+        sa-&gt;posledny = h-&gt;pred;
+      };
+     free(h);
+     a.dlzka--;
+     }
+   else printf("sa nenaslo\n");
+}
+
+struct ex1 *najdi(struct ex1 h1, int druh)
+/*   najst vyskyt 0 - mena, 1- cisla v zozname */
+{
+   struct ex1 *h;
+
+   h = sa-&gt;prvy;
+   while(h){
+     if(!druh)     /* hladaj meno   */
+      if(!strcmp(h1.m,h-&gt;m))
+      return h;
+     if(druh)       /* hladaj cislo   */
+      if(h1.cislo == h-&gt;cislo)
+      return h;
+     h = h-&gt;dalsi;
+     };
+   return NULL;
+}
+
+void vypis1(void)
+/*   vypis poloziek zoznamu vpred      */
+{
+   register struct ex1 *h;
+
+   h = sa-&gt;prvy;
+   while(h){
+      display(h);
+      h = h-&gt;dalsi;
+      };
+}
+
+void vypis2(void)
+/*   vypis poloziek od konca zoznamu      */
+{
+   register struct ex1 *h;
+
+   h = sa-&gt;posledny;
+   while(h){
+      display(h);
+      h = h-&gt;pred;
+      };
+}
+
+void display(struct ex1 *q)
+/*   zobrazit jednu polozku      */
+{
+   printf("%s  %.0f\n",q-&gt;m,q-&gt;cislo);
+}
+
+void hladaj(int druh)
+/* najdenie polozky podla 0 - mena, 1 - cisla   */
+{
+  char p[80];
+  struct ex1 *h,h1;
+
+   if(!druh){
+     printf("Meno pre hladanie : ");
+     gets(h1.m);
+     }
+   else{
+     printf("Cislo pre hladanie : ");
+     gets(p);
+     h1.cislo = atoi(p);
+     }
+   if(!(h=najdi(h1,druh))) printf(" sa nenaslo\n");
+   else display(h);
+}
+
+void zapis(void)
+/*   zapis suboru na disk      */
+{
+  int t,size;
+  struct ex1 *h;
+  char *c;
+  FILE *fp;
+
+   if((fp=fopen("Zoznam","w")) == 0){
+      perror("Zoznam");
+      exit(0);
+      };
+   printf("\nZapis na disk...\n");
+   size = sizeof(struct ex1);
+   h = sa-&gt;prvy;
+   while(h){
+     c = (char *)h; /* prevod na ukazatel na char */
+     for(t=0;t&lt;SIZE;++T) h="h-" putc(*c++,fp);&gt;dalsi;
+     };
+   putc(EOF,fp);
+   fclose(fp);
+}
+
+void citaj(void)
+/*   citanie suboru z disku      */
+{
+  int t,size;
+  struct ex1 *h,*tmp=NULL;
+  char *c,cc[16];
+  FILE *fp;
+
+   if((fp=fopen("Zoznam","r")) == 0){
+      perror("Zoznam");
+      exit(0);
+      };
+   printf("\nCitanie z disku...\n");
+   sa-&gt;dlzka = 0;
+   size = sizeof(struct ex1);
+   sa-&gt;prvy = malloc(size);
+   if(!sa-&gt;prvy){
+      printf("\nNedostatok pamate\n");
+      return;
+      };
+   h = sa-&gt;prvy;
+   c = (char*)h;
+   while( (*c++ = getc(fp)) != EOF){
+     for(t=0;t&lt;SIZE-1;++T) sa- *c++="getc(fp);"&gt;dlzka++;
+     h-&gt;dalsi = malloc(size);   /* priestor
+         na dalsiu polozku      */
+     if(!h-&gt;dalsi){
+      printf("\nMalo pamate\n");
+      return;
+      };
+     h-&gt;pred = tmp;
+     tmp = h;
+     h = h-&gt;dalsi;
+     c = (char *)h;
+     *c='\0';
+     };
+   tmp-&gt;dalsi = NULL;
+   sa-&gt;aktual = sa-&gt;prvy;
+   sa-&gt;posledny = tmp;
+   sa-&gt;prvy-&gt;pred = NULL;
+   fclose(fp);
+}
+</pre>
+
+<h2><a id="STROM" name="STROM">10.2 Strom</a></h2>
+
+
+<p align="justify">Strom je nelineárna dátová štruktúra, ktorá má vrchol s&nbsp; konečným počtom pripojených stromových štruktúr, ktoré sa nazývajú podstromy. Vrchol stromu sa nazýva aj <b>koreň</b> stromu. V&nbsp;stromovej štruktúre teda každý prvok má jedného bezprostredného predchodcu (okrem koreňa stromu) a&nbsp;žiadneho, jedného či viacerých nasledovníkov. Prvok, ktorý nemá nasledovníkov, je koncový prvok alebo <b>list</b> stromu. Prvok, ktorý nie je listom ani koreňom, je vnútorným <b>vrcholom</b> stromu. Ak je počet nasledovníkov rovný dvom, hovoríme o&nbsp;<b>binárnom</b> strome, pri väčšom počte o&nbsp;viaccestnom strome. Počet nasledovníkov udáva stupeň stromu. Lineárny zoznam je z&nbsp;tohoto hľadiska stromová štruktúra s&nbsp;jedným nasledovníkom, ktorá sa preto tiež nazýva <b>degenerovaný</b> strom. Najbežnejší spôsob zobrazenie stromu je v&nbsp;tvare grafu.</p>
+
+<p>V ďalšom sa budeme zaoberať binárnymi stromami. Typickým príkladom binárneho stromu je rodokmeň človeka (s tým, že rodičia sú nasledníkmi). Každý vrchol stromu obsahuje vlastnú informáciu (kľúč) a&nbsp;môže mať dvoch nasledovníkov, ktoré sa označujú ako ľavý a&nbsp;pravý.</p>
+
+<p>Binárne stromy sa často používajú pre reprezentáciu čiastočného usporiadania množiny údajov, ktorej prvky sa majú vyberať na základe daného kľúča. Strom, v&nbsp;ktorom všetky kľúče ľavého podstromu sú menšie ako kľúč vrcholu a&nbsp;kľúče pravého podstromu zase väčšie (pre všetky vrcholy), sa nazýva vyhľadávací, resp. usporiadaný strom. Vyhľadanie prvku v&nbsp;takomto strome je jednoduché a&nbsp;pritom efektívne : začneme pri koreni stromu a&nbsp;pokračujeme v&nbsp; príslušnom podstrome (o druhý podstrom sa viac nestaráme), až kým prvok nenájdeme alebo nedôjdeme na koniec (list) stromu.</p>
+
+<p>Problematika vyhľadávania, pridávania a&nbsp;rušenia vrcholov v&nbsp;strome tvorí náplň základných operácií so stromami. Je obdobná ako u lineárneho zoznamu s&nbsp; tým, že musí zohľadňovať a&nbsp;ošetrovať viac možných situácií, ako napr.:</p>
+
+<ul>
+<li>prvok s&nbsp;kľúčom sa v&nbsp;strome nenachádza</li>
+
+<li>prvok s&nbsp;kľúčom má jedného nasledovníka</li>
+
+<li>uprvok s&nbsp;kľúčom má dvoch nasledovníkov</li>
+</ul>
+
+<p align="justify">Príklad p10_4 ilustruje použitie binárneho stromu na zotriedenie poľa reťazcov. Východzie pole reťazcov vytvára s&nbsp;použitím generátora náhodných čísiel funkcia <b>vytvor</b>. Funkcia <b>vlož</b> realizuje rekurzívne vkladanie prvkov do binárneho stromu. Pre nový vrchol (v programe označený ako uzol) alokuje príslušnú pamäť. Usporiadanie stromu je zabezpečené porovnaním nového a&nbsp; starého reťazca (kľúča) s&nbsp;následným uložením nového reťazca vľavo alebo vpravo (podľa výsledku porovnania strcmp). Ak by sme pracovali s&nbsp;číslami ako s&nbsp;kľúčmi, bolo by to obyčajné porovnanie menší, väčší. Funkcia <b>zobraz</b> vykonáva prezeranie vrcholov usporiadaného binárneho stromu.</p>
+
+<pre>
+/*   p10_4.c  binarny strom pomocou pola
+              triedenie poli retazcov   */
+
+#include &lt;STDIO.H&gt;
+#include &lt;STDLIB.H&gt;
+#include &lt;STRING.H&gt;
+#include &lt;CONIO.H&gt;
+#define POCET 30
+#define RET 50
+
+typedef struct bstrom uzol;
+typedef struct bstrom* puzol;
+struct bstrom{
+   char* m;
+   puzol lavy;
+   puzol pravy;
+   } ;
+
+puzol vloz(puzol, char *);
+void vytvor(char [][], int *);
+void zobraz(puzol);
+
+main()
+{
+  int i,n;
+  char ret[POCET][RET+1];
+  puzol koren = NULL;
+
+   printf("Pocet retazcov &lt;MAX. %d&gt; : ",POCET);
+   scanf("%d",&amp;n);
+   if( n &lt; 1 || n &gt; POCET)
+   n = POCET;
+   vytvor(ret, &amp;n);
+   puts("vytvaram binarny strom");
+   for (i=0; i&lt;N; * }
+    { koren- koren="vloz(koren," NULL)
+    { if(koren="=" stromu binarneho
+                      do prvkov vkladanie rekurzivne *m)
+     char koren, vloz(puzol puzol zobraz(koren); :\n?);
+    retazcov pole puts(?zotriedene ret[i]); i++)&gt;m = m;
+   koren-&gt;lavy = koren-&gt;pravy = NULL;
+   }
+  else{
+   if(strcmp(m,koren-&gt;m) &lt; 0)
+     koren-&gt;lavy = vloz(koren-&gt;lavy,m);
+   else
+     koren-&gt;pravy = vloz(koren-&gt;pravy,m);
+   }
+  return(koren);
+}
+
+void vytvor(char x[][RET+1], int *n)
+/*  generovanie pola nahodnych retazcov   */
+{
+   int i,j;
+   char pom[RET+1];
+
+   randomize();
+   if(*n &lt; 1 || *n &gt; POCET)
+      *n = POCET;
+   for(i=0; i&lt;*n; i++){
+     for(j=0; j&lt;RET; * } { void stromu rekurzivne
+         if(koren- bin. uzlov prezeranie koren)
+             zobraz(puzol ; *(x+i)+j)="\0" *( j);
+             pom, strncpy(*(x+i), j="random(RET-1);" 0)
+             (j="=" if pom[RET]="\0" random(26);
+              + *(pom+j)="a" j++)&gt;lavy != NULL)
+   zobraz(koren-&gt;lavy);
+  printf("\t %s \n",koren-&gt;m);
+  if(koren-&gt;pravy != NULL)
+   zobraz(koren-&gt;pravy);
+}
+</pre>
+
+<p align="justify">Obvykle sa pri práci so stromami jednotlivé vrcholy vytvárajú dynamicky a&nbsp;môže byť potrebné vytvoriť celý rad rôznych pomocných funkcií, ako sme to uviedli v&nbsp;príklade p10_3 (hľadať, rušiť, zápis a&nbsp;čítanie stromu a&nbsp;pod.).</p>
+</div>
+
+
+</body>
+
+</html>
+

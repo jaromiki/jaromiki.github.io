@@ -1,0 +1,226 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk"> 
+ 	 <title>Excel - práca s databázou - zoznamy</title>	
+ 	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	 
+</head>
+
+<body>
+<h3>Excel - práca s databázou - zoznamy</h3>
+<H3>Opakovanie</h3>
+<ul><li>Ako sa zadávajú vzorce do bunky
+	<li>Čo je absolútna a čo relatívna adresa
+	<li>Aké aritmetické operátory máme k dispozícii
+	<li>Aké relačné operátory máme k dispozícii
+	<li>Čo sa stane, ak bunku na ktorú ukazuje nejaký vzorec premiestnim inam?
+	<li>Aké sú možnosti zadať do bunky funkciu SUMA
+	<li>Ako fungujú funkcie SUMIF a COUNTIF
+	<li>Použitie logických funkcií
+	<li>Dátumové funkcie
+</ul>	
+Ak užívateľovi nepostačuje nástroje pre prácu s bunkami, blokmi, listami a potrebuje ďalšie
+nástroje môže siahnuť po databázových nástrojoch, ktoré sú podobné s nástrojmi v databázových
+systémoch. Oproti "exceláckym" sú komfortnejšie" a mohutnejšie, ale užívateľ musí údaje v tabuľke
+prispôsobiť databázovým požiadavkám. 
+<br>Čo získame - lepšie vyhľadávanie, sumarizovanie, filtrovanie.
+<h2>Pojmy</h2>
+<dl><dt>Databáza
+	<dd>Databáza je oblasť buniek s hlavnými dátami (zoznamom) a pomocnými dátami (kritéria, formuláre). 
+	<dt>Zoznam
+	<dd>Hlavné dáta v súvislom celku, kde riadky predstavujú záznamy a stĺpce údajov sú polia. 
+		Prvý riadok zoznamu obsahuje popisky-hlavičky polí. Údaje v jednom stĺpci by mali byť 
+		rovnakého typu. Excel chápe pole ako oblasť od hlavičky	po prvý prázdny údaj.
+		<br>Názvy stĺpcov (popisky) sa používajú ako parametre funkcií. Databázové funkcie pracujú s celými poliami.
+	<dt>Kritéria
+	<dd>V databázových funkciách sa kritéria pre podmienené súčty, vyhľadávanie nepíšu do vzorca ale sú súčasťou
+		databázy a sú zapísané na niektorom liste (väčšinou nad zoznamom) 
+	<dt><font size="+1" color="Blue"><B>Pravidlá pre vytváranie zoznamu na liste</b></font>
+	<dd>Na jednom liste používajte len jeden zoznam - niektoré funkcie to vyžadujú (napríklad filtrovanie).
+		<br>Podobné položky usporiadajte do jedného stĺpca.
+		<br>Oddelte zoznam od ostatných dát, medzi zoznamom a ostatnými údajmi v liste nechajte aspoň jeden 
+		prázdny stĺpec a jeden prázdny riadok. Aplikácia Excel môže potom pri triedení, filtrovaní a vkladaní 
+		automatických súhrnov omnoho ľahšie určiť zoznam.
+		<br>ďalšie údaje na liste (okrem zoznamu) umiestňujte nad zoznam alebo pod, predídeme problémom pri
+		vyhadzovaní riadkov resp. ich vkladaní. Tiež pri filtrovaní zoznamu takto zostanú viditelné.
+		<br>Hlavičky neoddeľujte od dát prázdnymi riadkami ale ohraničením buniek.
+		<br>Stĺpce zoznamu neoodeľujte prázdnymi stĺpcami ale ohraničením buniek.
+		<br>V bunkách nevkladajte pred a za dáta medzery - kôli triedenie, vyhľadávaniu,...
+</dl>  
+<hr>
+<h2>Práca s databázou</h2>
+<dl><dt>Triedenie podľa jedného stĺpca
+	<dd>Majme nasledovnú tabuľku:<br><br>
+		<table border="2" bgcolor=#ccffcc>
+		<tr><td colspan="5" bgcolor=#ccffcc align="center">Beh na 1km</tr>
+		<tr bgcolor=#99ff99><td> číslo <td> meno <td> priezvisko <td> kraj <td> čas</tr>
+		<tr><td bgcolor=#99ff99> 6 <td> Richard <td> Tomaj <td> Banskobystrický <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 1 <td> Anton <td> Hrdý <td> Bratislavský <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 2 <td> Peter <td> Maroš <td> Bratislavský <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 7 <td> Martin <td> Baroš <td> Košický <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 5 <td> Michal <td> Gašpar <td> Nitriansky <td>0:00	</tr>
+		<tr><td bgcolor=#99ff99> 8 <td> Juraj <td> Sépeši <td> Prešovský <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 3 <td> Ján <td> Puchý <td> Trenčiansky <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 4 <td> Peter <td> Raška <td> Trnavský <td>0:00</tr>
+		<tr><td bgcolor=#99ff99> 9 <td> Martin <td> Jánošík <td> Žilinský <td>0:00</tr>
+		</table>	
+		Nakoľko máme splnené podmienky pre zoznam (súvislosť, pomenované stĺpce) môžme celú
+		tabuľku triediť nasledovne:
+		<ol>
+		<li>Presunieme kurzor na pole podľa ktorého ideme triediť
+		<li>Stlačíme tlačidlo <img src="obr/a-z.gif" width="30" height="29" border="0" alt="" align="middle">,
+			ktoré poprehadzuje riadky v zozname tak, aby vo zvolenom poli boli utriedené vzostupne. Obdobne tlačidlom
+			<img src="obr/z-a.gif" width="30" height="29" border="0" alt=""> dosiahneme popreskupovanie riadkov tabuľky
+			, že pole je utriedené zostupne. 
+		</ol>
+	<dt>Triedenie podľa viacerých stĺpcov
+	<dd>Triediť možno podľa viacerých úrovní - ak podľa jedného kľúča sú rovnaké hodnoty nastúpi pravidlo druhého atd.
+		<br>Postup:
+		<ol>
+		<li>Presunieme kurzor do zoznamu
+		<li>Údaje -> Zoradiť a filtrovať -> Zoradiť 
+		<li>Zvolím poradie kľúčov podľa ktorých sa tabuľka utriedi
+		</ol>
+		V prípade ak je obsah kľúča špeciálny (dni v týždni, mesiace, nejaký vlastný...) zvolím v stĺpci PORADIE zoznam
+		podľa ktorého sa bude triediť.
+
+	<dt>Vyhľadávanie/filtrovanie	
+	<dd>Na vyhľadávanie záznamov (riadkov) spĺňajúcich určité pravidlá používame filtre. 
+		Údaje, ktoré podmienku nespĺňajú, vidieť nebudeme.
+		<br>Postup:
+		<ol>
+		<li>Presuniem kurzor do zoznamu (tabuľky)
+		<li>Zvolím cez menu Údaje -> Zoradiť a filtrovať -> Filter 
+		</ol>
+		Pri každej hlavičke poľa sa zjaví malá šipka, cez ktorú môžme určovať, aké záznamy
+		sa majú zobraziť. Ak nastavíme kritéria vo viacerých poliach zobrazia sa len tie záznamy
+		ktoré vyhovujú všetkým pravidlám. Ak zvolím kritérium "Filter textu" resp. "Filter čísel" môžem nastaviť aj iné pravidlá
+		ako pravidlá na rovnosť. Ak chcem kritéria určovať len v jednom/niektorých stĺpci tak zvolený stĺpec označím do bloku pred voľbou filtra.
+		<dl>
+		<dt>Úlohy na precvičenie:
+		<dd><table cellspacing="20"><tr><td>
+	       	<img src="obr/stastny.gif" border="0" alt="" height="50">
+			<td><ol><li>Načítajte tieto <a href="priklady/z1992.xls" target="_blank">data</a> a pomocou filtra zistite
+						<ul type="disc"><li>ktorí žiaci 22. mája maturovali na samé 1
+							<li>ktorí žiaci (žiak) narodený v Handlovej prišiel zo ZŠ S.Chal. 1
+							<li>ktorí žiaci z tried B,C,E nedostali na mature ani jednu jednotku
+						</ul>
+				</ol></tr>		
+			</table>		
+		</dl>	
+</dl>
+Pomocou jednoduchého filtra možno kombinovať podmienky pre viaceré stĺpce ale len spojkou AND. Pokiaľ potrebujeme vytvoriť podmienku, ktorá obsahuje 
+spojku OR musíme ísť do rozšíreného filtra.
+<dl>
+	<dt>Rozšírený filter:
+	<dd>V rozšírenom filtri sa používajú oblasti kritérií. Aktivujeme ho cez menu Údaje -> Zoradiť a filtrovať -> Rozšírené,
+		zvolíme zoznam (ten by mal excel nájsť sám) a oblasť kritérií. Funguje ako automatický filter, len možnosti kombinovania podmienok sú bohatšie.
+		<br>Pozn. 1 
+		<br>Ak pri aktívnom filtri zmeníme položky kritérií na filtrovaný zoznam to nemá vplyv (musíme filter nanovo otvoriť).
+		<br>Pozn. 2 
+		<br>V rámci listu možno vyfiltrované záznamy kopírovať a vytvoriť ďalší zoznam alebo vymazať.
+					
+	<dt><font size="+1" color="Blue"><B>Tvorba kritérií:</b></font>
+	<dd>1. ... Nad tabuľkou-zoznamom vytvoríme niekoľko prázdnych riadkov
+		<br>2. ... Do voľných riadkov okopírujeme popisy polí - hlavičky
+		<br>3. ... Pod hlavičky zadávame kritéria
+		<br>...... kritériom môže byť hodnota (Trenčiansky) alebo podmienka (>Banskobystrický)
+		<br>4. ... Kombinovanie kritérií
+		<br>...... Viaceré kritéria uvedené v jednom riadku sa spájajú operátorom AND 
+		<br>...... Kritéria uvedené v riadkoch sa spájajú operátorom OR
+		<br>...... Ak v niektorej bunke podmienka nie je (prázdna bunka) tak takejto podmienke vyhovujú všetky záznamy
+		<br><br>Príklady kritérií pre tabuľku "Beh na 1 km" uvedenú hore:   	
+		<table><tr><td>
+					<table border="2" bgcolor=#999999>
+					<tr bgcolor=#cccccc><td> číslo <td> meno <td> priezvisko <td> kraj <td width="36"> čas</tr>
+							<tr bgcolor=#eeeeee><td>       <td>      <td>            <td> T* <td> &nbsp; &nbsp; &nbsp; </tr>
+					</table>
+					<td>Tomuto kritériu vyhovujú záznamy s krajom začínajúcim na T</tr>
+				<tr><td>	
+					<table border="2" bgcolor=#999999>
+					<tr bgcolor=#cccccc><td> číslo <td> meno <td> priezvisko <td> kraj <td width="25"> čas</tr>
+					<tr bgcolor=#eeeeee><td> >5      <td>      <td>            <td><td> &lt;3:00 </tr> 
+					</table>
+					<td>Tomuto kritériu vyhovujú záznamy s číslom > 5 <br><b>a zároveň</b> časom &lt; 3min</tr>
+				<tr><td>	
+					<table border="2" bgcolor=#999999>
+					<tr bgcolor=#cccccc><td> číslo <td> meno <td> priezvisko <td> kraj <td width="36"> čas</tr>
+							<tr bgcolor=#eeeeee><td> <td> <td> <td> T* <td> &nbsp; &nbsp; &nbsp;</tr> 
+							<tr bgcolor=#eeeeee><td> <td> <td> <td> B* <td> &nbsp; &nbsp; &nbsp; </tr>
+					</table>
+					<td>Tomuto kritériu vyhovujú záznamy s krajom začínajúcim na T <b>alebo</b> B</tr>
+				<tr><td>	
+					<table border="2" bgcolor=#999999>
+					<tr bgcolor=#cccccc><td> číslo <td> meno <td> priezvisko <td> kraj <td width="36"> čas</tr>
+							<tr bgcolor=#eeeeee><td> <td>M* <td> <td> <td> &nbsp; &nbsp; &nbsp;</tr>
+							<tr bgcolor=#eeeeee><td> <td>   <td>M* <td> <td> &nbsp; &nbsp; &nbsp;</tr>
+					</table>
+					<td>Tomuto kritériu vyhovujú záznamy  
+						<br>s menom <b>alebo</b> priezviskom začínajúcim na M </tr>
+			</table>
+
+		<dl><dt>Úlohy na precvičenie:
+    			<dd><table cellspacing="20"><tr><td>
+	        	<img src="obr/stastny.gif" border="0" alt="" height="50">
+				<td><ol><li>Načítajte tieto <a href="priklady/z1992.xls" target="_blank">data</a> a pomocou filtra okopírujte záznamy
+							<ul type="disc"><li>chlapcov ktorí maturovali 22. mája alebo 23. mája na samé 1
+								<li>ktorí žiaci narodený v Handlovej prišli zo ZŠ S.Chal. 1 alebo 2 
+								<li>ktorí žiaci z tried B,C,E nedostali na mature ani jednu jednotku alebo dostali štvorku
+							</ul>
+							na pomocný list Výber.
+					</ol></tr>		
+					</table>		
+		</dl>					
+	<dt>Formulár:
+	<dd>Pomocou formulára je možné databázu prezerať, editovať záznamy, rušiť a pridávať záznamy. Je možné nastaviť si filter.	Nakoľko
+		od verzie 2007 už nie súčasťou ponuky, nebudem ho podrobnejšie popisovať. Pre užívateľov, ktorý si na prácu so vstupným formulárom
+		zvykli, je možnosť aktivovať formulár len postup je dosť "čudesný".
+		<ol><li>prejdeme do "prispôsobenia rýchleho prístupu"
+			<li>zvolíme "Ďalšie príkazy"
+			<li>v rozbaľovacej ponuke zvolíme "Všetky príkazy"
+			<li>nájdeme text "Formulár"
+			<li>na paneli "Rýchly prístup" pribudne ikonka "Formulár"
+			<li>keď sme v zozname nejakej databázy a aktivujeme formulár, môžme prezerať, filtrovať, editovať zoznam databázy
+		</ol>	  
+	<dt><font size="+1" color="Blue"><B>Databázové funkcie:</b></font>
+	<dd>Databázové funkcie (skrátene nazývané Dfunkcie) nám rozširujú možnosti na matematické výpočty
+		s tabuľkou databázy. Syntax Dfunkcií je podobný: <font color="Blue">názov( databáza; pole; kritéria)</font>
+		<br><font color="Blue">názov</font> ... je meno excelom definovane funkcie (napr. Dmax)
+		<br><font color="Blue">databáza</font> ... je oblasť dát s hlavičkami polí - nemusí ísť o celú tabuľku - obyčajne je zadaná menom (pozri pomenovávanie oblastí v úvode) alebo napíšeme slovo Databaza a on sa s tym nejak zrovná (ak sme v zozname databázy)
+		<br><font color="Blue">pole</font> ... názov stĺpca ako text (v úvodzovkách) alebo poradové číslo stĺpca v databáze, ktorého sa funkcia bude týkať 
+		<br><font color="Blue">kritéria</font> ... oblasť kritérií, môže ukazovať aj na prázdne bunky, alebo celý zoznam (pravidlá pre kritéria pozri hore)
+		<h3>Dfunkcie</h3>
+		<dl><dt><font color="Red">Dmax, Dmin</font>
+			<dd>Z daného stĺpca vráti maximum, minimum (len zo záznamov vyhovujúcich kritériám)
+				<br>Dmax(tabulka;"plat";tabulka) ... vráti maximálny plat zo stĺpca plat 
+				<br>Dmin(tabulka;"plat";tabulka) ... vráti minimálny plat zo stĺpca plat 
+		    <dt><font color="Red">DCount</font>
+			<dd>Z daného stĺpca vráti počet číselných položiek, pole môže byť vynechané, potom sa skúma celá databáza 
+				<br>DCount(tabulka;"plat";tabulka) ... vráti počet ľudí so zadaným platom 
+		    <dt><font color="Red">DCounta</font>
+			<dd>Z daného stĺpca vráti počet neprázdnych položiek, pole môže byť vynechané, potom sa skúma celá databáza 
+				<br>DCounta(tabulka;"meno";tabulka) ... vráti počet ľudí so zadaným menom 
+		    <dt><font color="Red">Dsum, DAverage</font>
+			<dd>Z daného stĺpca vráti súčet, priemer 
+				<br>DSum(tabulka;"plat";tabulka) ... vráti súčet platov 
+				<br>DAverage(tabulka;"plat";tabulka) ... vráti priemerný plat
+			<dt>Úlohy na precvičenie:
+    		<dd><table cellspacing="20"><tr><td>
+		       	<img src="obr/stastny.gif" border="0" alt="" height="50">
+				<td><ol><li><a href="kratke/7_zoznamy.xls">Príklady</a>
+						<li>Načítajte tieto <a href="priklady/z1992.xls" target="_blank">data</a> a vytvorte na ďalšom liste nasledovnú súhrnnú tabuľku
+							<table bgcolor=#eeeeee border="2">
+								<tr><th colspan="6" bgcolor=#cccccc>Informatika</tr>
+								<tr bgcolor=#cccccc><th>Trieda<th>20. mája<th>21. mája<th>22. mája<th>23. mája<th>Spolu</tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>A<td> <td> <td> <td> <td> </tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>B<td><td><td><td><td> </tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>C<td><td><td><td><td> </tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>D<td><td><td><td><td> </tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>E<td><td><td><td><td> </tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>F<td><td><td><td><td> </tr>
+								<tr bgcolor=#ffffff><th bgcolor=#cccccc>Spolu<td><td><td><td><td> </tr>
+				</table>		
+		</dl>					
+</dl>
+</body>
+</html>

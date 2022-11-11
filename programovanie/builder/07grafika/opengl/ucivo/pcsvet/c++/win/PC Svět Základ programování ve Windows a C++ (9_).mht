@@ -1,0 +1,267 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C+?=
+	=?windows-1250?Q?+_=289.=29?=
+Date: Thu, 12 Jul 2007 10:06:10 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=832
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (9.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (9.)</H2>
+<H4>Okna, procesy oken a jak na n=EC.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P><FONT face=3D"Arial CE"><FONT size=3D-1>Ve Windows rozezn=E1v=E1me =
+dva typy proces=F9 a=20
+to thready (vl=E1kna) a okna (windows). Z=E1sadn=ED rozd=EDl je v tom, =
+=9Ee okno lze=20
+vid=ECt, thread nikoliv. V tomto d=EDle si trochu p=F8ibl=ED=9E=EDme =
+okna, pr=E1ci s nimi a s=20
+jim ur=E8en=FDmi zpr=E1vami. Tuto t=E9matiku jsem ji=9E v n=ECkter=E9m z =
+p=F8edchoz=EDch d=EDl=F9=20
+nakousnul, ale te=EF se k n=ED vr=E1t=EDm podrobn=ECji.</FONT></FONT> =
+<BR><FONT=20
+face=3D"Arial CE"><FONT size=3D-1>Pokud =E8tete tento tutori=E1lek od =
+za=E8=E1tku, jist=EC=20
+v=EDte jak vytvo=F8it klasick=E9 dialogov=E9 okno pomoc=ED =
+p=F8eddefinovan=E9 =9Aablony ve=20
+zdroj=EDch a pracovat s n=EDm pomoc=ED zpr=E1v. Av=9Aak mnohdy je =
+t=F8eba pracovat s oknem=20
+na mnohem ni=9E=9A=ED =FArovni ne=9E na t=E9, kterou n=E1m poskytuje =
+klasick=E9 vyvol=E1n=ED=20
+dialogu. Cesta, kterou bych zde cht=ECl p=F8ibl=ED=9Eit je obvykle =
+uv=E1d=ECna na za=E8=E1tc=EDch=20
+tutori=E1lk=F9 k Windows C=E9=E8ku (++), ale pro v=FDvoj jednoduch=FDch =
+a=9E m=EDrn=EC slo=9Eit=FDch=20
+aplikac=ED nen=ED t=F8eba a v=9Ae lze zajistit pomoc=ED dialog=F9, a=9D =
+mod=E1ln=EDch =E8i=20
+nemod=E1ln=EDch.</FONT></FONT> <BR><BR><FONT face=3D"Arial CE"><FONT =
+size=3D-1>P=F8i=20
+programov=E1n=ED pro Windows je za okno pova=9Eov=E1n jak=FDkoli prvek =
+viditeln=FD na=20
+obrazovce a to a=9D u=9E okno jako =9Aed=FD podklad s titulkov=FDm =
+pruhem a obt=E1hnut=E9=20
+sv=ECtlej=9A=EDmi =E8i tmav=9A=EDmi =E8=E1rami k vytvo=F8en=ED efektu =
+3D, nebo prost=E9 tla=E8=EDtko,=20
+r=E1me=E8ek atd.</FONT></FONT> <BR><BR><FONT face=3D"Arial CE"><FONT=20
+size=3D-1>Vytv=E1=F8=EDme-li toto v=9Ae pomoc=ED =9Aablony ze zdroj=F9, =
+obstaraj=ED Windows za n=E1s=20
+v=9Aechny pot=F8ebn=E9 akce a to jak vytvo=F8en=ED a odstran=ECn=ED =
+t=ECchto objekt=F9, tak skoky=20
+tabul=E1toru a dal=9A=ED minoritn=ED akce. Pokud chceme tyto prvky =
+n=ECjak speci=E1ln=EC=20
+ovl=E1dat, mus=EDme je spravovat ru=E8n=EC. Zvl=E1=9At=EC je to t=F8eba =
+p=F8i programov=E1n=ED=20
+aplikac=ED, komunikuj=EDc=EDch s u=9Eivatelem na z=E1klad=EC dynamicky =
+m=ECn=ECn=FDch=20
+oken.</FONT></FONT> <BR><BR><FONT face=3D"Arial CE"><FONT size=3D-1>Jak =
+na=20
+to?</FONT></FONT> <BR><BR><FONT face=3D"Arial CE"><FONT size=3D-1>V =
+z=E1klad=EC budeme=20
+pot=F8ebovat spoustu prom=ECnn=FDch typu HWND, tedy rukojet=ED na =
+jednotliv=E9 okna. Podle=20
+t=ECchto rozpozn=E1vaj=ED Windows jednotliv=E1 okna. Jedno HWND pro =
+ka=9Ed=E9 okno, kter=E9=20
+budeme pou=9E=EDvat (okno, tla=E8=EDtka, posuvn=EDky, atd...). =
+Statick=E9 okna, kter=E9=20
+nebudeme upravovat (nap=F8. r=E1me=E8ky) nemus=ED m=EDt svou rukoje=9D, =
+pokud je nebudeme=20
+m=ECnit. Ke tvorb=EC a likvidaci oken vyu=9Eijeme funkce CreateWindow, =
+CreateWindowEx=20
+a DestroyWindow.</FONT></FONT> <BR><BR><FONT face=3D"Arial CE"><FONT=20
+size=3D-1>Dal=9A=EDm rozd=EDlem je, =9Ee pro celou instanci aplikace =
+reprezentovan=E9=20
+hlavn=EDm oknem (kter=E9 je mimochodem t=F8eba vytv=E1=F8et dle =
+t=F8=EDdy okna, kterou si=20
+mus=EDme vytvo=F8it a zaregistrovat) mus=ED n=E1=9A program =
+zpracov=E1vat smy=E8ku, tj.=20
+testovat p=F8=EDtomnost zpr=E1vy, jej=ED p=F8elo=9Een=ED a odesl=E1n=ED =
+procedu=F8e hlavn=EDho okna.=20
+Procedura okna je podobn=E1 procedur=E1m dialogov=FDch oken. Rozd=EDl =
+je, =9Ee m=EDsto=20
+vr=E1cen=ED TRUE nebo FALSE vrac=EDme co chceme (skoro), tud=ED=9E pokud =
+pot=F8ebujeme aby=20
+se pro n=ECkterou zpr=E1vu provedla implicitn=ED akce vol=E1me funkci =
+DefWndProc s=20
+dan=FDmi parametry.</FONT></FONT> <BR><BR><FONT face=3D"Arial CE"><FONT =
+size=3D-1>Ve=20
+skute=E8nosti nen=ED pr=E1ce s t=ECmito okny zase tak slo=9Eit=E1, jak =
+by se mohlo na prvn=ED=20
+pohled zd=E1t. V=9Ae pot=F8ebn=E9 k vytvo=F8en=ED jednoduch=E9ho okna =
+dostanete k dispozici,=20
+pokud v Dev-C++ vytvo=F8=EDte nov=FD projekt podle =9Aablony Windows =
+Application a sem=20
+ji=9E m=F9=9Eete vlo=9Eit vlastn=ED k=F3d. Pokud ovl=E1d=E1te =
+angli=E8tinu, vy=E8tete toho spoustu v=20
+koment=E1=F8=EDch, zde uvedu pouze tu =E8=E1st k=F3du, kter=E1 =
+zprost=F8edkuje zobrazen=ED textu=20
+uprost=F8ed okna i p=F8i zm=ECn=EC jeho velikosti.</FONT></FONT><FONT=20
+face=3D"Arial CE"><FONT size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Arial CE"><FONT size=3D-1>Mimo funkce vytvo=F8=EDme =
+glob=E1ln=ED prom=ECnnou=20
+textik, kter=E1 bude obsahovat ukazatel na statick=FD objekt textu a =
+prom=ECnnou do=20
+kter=E9 si ulo=9E=EDme instanci aplikace.</FONT></FONT><FONT=20
+face=3D"Courier New CE"><FONT size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>HWND textik =3D=20
+NULL;</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>HINSTANCE =
+hInst;</FONT></FONT></FONT><FONT=20
+face=3D"Arial CE"><FONT size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Arial CE"><FONT size=3D-1>Samoz=F8ejm=EC n=ECkam na =
+za=E8=E1tek funkce=20
+WinMain vlo=9E=EDme =F8=E1dek:</FONT></FONT><FONT face=3D"Arial =
+CE"><FONT=20
+size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>::hInst =3D=20
+hThisInstance;</FONT></FONT></FONT><FONT face=3D"Arial CE"><FONT=20
+size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Arial CE"><FONT size=3D-1>A do procedury okna, =
+p=F8esn=ECji do switche,=20
+vlo=9E=EDme n=E1sleduj=EDc=ED bloky:</FONT></FONT><FONT face=3D"Arial =
+CE"><FONT=20
+size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>case WM_CREATE:=20
+// m=EDsto WM_INITDIALOG (u procedur dialog=F9) zpracov=E1v=E1me=20
+WM_CREATE</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp;&nbsp; textik =3D CreateWindow( =
+"STATIC",=20
+"libovoln=FD text",</FONT></FONT></FONT> <BR><FONT face=3D"Courier New =
+CE"><FONT=20
+color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;=20
+SS_CENTER | WS_CHILD, // styl centrovaneho textu</FONT></FONT></FONT> =
+<BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;=20
+0,0,0,0, // pro rozmery zatim pouzijeme 0</FONT></FONT></FONT> <BR><FONT =
+
+face=3D"Courier New CE"><FONT color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;=20
+hwnd,NULL,hInst,NULL);</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp;=20
+ShowWindow(textik,SW_SHOW); // Okno (text) =
+zobraz=EDme</FONT></FONT></FONT>=20
+<BR><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT=20
+size=3D-1>break;</FONT></FONT></FONT><FONT face=3D"Courier New CE"><FONT =
+
+color=3D#000099><FONT size=3D-1></FONT></FONT></FONT>=20
+<P><FONT face=3D"Arial CE"><FONT color=3D#000000><FONT size=3D-1>Styl =
+SS_CENTER m=EDsto=20
+SS_LEFT jsem zvolil z=E1m=ECrn=EC. Usnadn=ED n=E1m to programov=E1n=ED =
+centrov=E1n=ED=20
+textu.</FONT></FONT></FONT><FONT face=3D"Courier New CE"><FONT =
+color=3D#000099><FONT=20
+size=3D-1></FONT></FONT></FONT>=20
+<P><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>case WM_PAINT:=20
+{</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT =
+color=3D#000099><FONT=20
+size=3D-1>&nbsp; // Zajistime provedeni standartni sluzby pro kresleni=20
+okna</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp;&nbsp; DefWindowProc(hwnd, =
+message, wParam,=20
+lParam);</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp; // Potrebujeme rozmery=20
+okna</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp;&nbsp; RECT =
+okno;</FONT></FONT></FONT>=20
+<BR><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp;=20
+GetWindowRect(hwnd, &amp;okno);</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp; int sirka =3D=20
+okno.right - okno.left;</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp; int vyska =3D=20
+okno.bottom - okno.top;</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp; // Tipnem=20
+si kolik pixelu asi bude ten textik</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp; // Zbytek=20
+za nas udela SS_CENTER</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp; int tip =3D=20
+200;</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp;&nbsp; int posy =3D (vyska/2) - =
+10; // 10=3D=20
+polovina vysky znaku</FONT></FONT></FONT> <BR><FONT face=3D"Courier New =
+CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp;&nbsp; int posx =3D (sirka/2) -=20
+(tip/2);</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT=20
+color=3D#000099><FONT size=3D-1>&nbsp;</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp;=20
+MoveWindow(textik, posx, // pozice X</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+posy, //&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+Y</FONT></FONT></FONT>=20
+<BR><FONT face=3D"Courier New CE"><FONT color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+tip,&nbsp; // sirka</FONT></FONT></FONT> <BR><FONT face=3D"Courier New =
+CE"><FONT=20
+color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+20,&nbsp;&nbsp; // vyska</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT=20
+size=3D-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+TRUE);// vlajka prekresleni</FONT></FONT></FONT> <BR><FONT=20
+face=3D"Courier New CE"><FONT color=3D#000099><FONT =
+size=3D-1>&nbsp;&nbsp;=20
+}</FONT></FONT></FONT> <BR><FONT face=3D"Courier New CE"><FONT =
+color=3D#000099><FONT=20
+size=3D-1>break;</FONT></FONT></FONT><FONT face=3D"Arial CE"><FONT=20
+size=3D-1></FONT></FONT>=20
+<P><FONT face=3D"Arial CE"><FONT size=3D-1>Spr=E1va takov=FDchto oken a =
+jejich prvk=F9=20
+nen=ED jednoduch=E1, av=9Aak jakmile si ji dostanete do podv=ECdom=ED, =
+budete okna ovl=E1dat=20
+bez probl=E9m=F9.</FONT></FONT>=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:05:56 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

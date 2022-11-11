@@ -1,0 +1,439 @@
+<html>
+<head>
+	 <title>Animácia</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<center><h3 class=nadpis>Zobrazovanie obrazkov</h3></center>
+<h3>Bitmapy</h3>
+
+<P>v tejto časti môžete použiť nasledovné súbory 
+   <br><A href="obr/obrazky.zip">obrazky.zip</A> 
+   <br><A href="obr/obrazky2.zip">obrazky2.zip</A>
+</P>
+
+<UL type=disc>
+    <LI>zatiaľ sme poznali jeden spôsob, ako vložiť obrázok (súbor.BMP) do grafickej plochy: pomocou LoadFromFile 
+	</LI></UL>
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc>
+    	<P><I>prečítanie obrázka zo súboru&nbsp;do grafickej plochy Image:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button1Click(TObject *Sender)
+{   Image1->Picture-><B>LoadFromFile</B>("tiger.bmp");
+}
+</PRE>
+</TABLE>
+
+<UL type=disc><LI>pomocou tohto spôsobu sa zapíše obrázok od súradníc (0,0) a bude nepoužiteľný, keď potrebujeme bitmapu 
+					umiestniť nie do ľavého horného rohu, ale na nejaké iné konkrétne súradnice 
+				<LI>na odstránenie spomenutého problému budeme pracovať s novým objektom - <B>bitmapa</B> - môžeme si 
+					všimnúť istú podobnosť s objektom korytnačka: 
+			        <UL type=disc>
+        				<LI>deklarovaním premennej <B>TBitmap *tmp</B> objekt (inštancia) ešte nevzniká - nový objekt treba ešte vytvoriť 
+        				<LI><B>bmp=new Graphics::TBitmap();</B> - vytvorí sa nová bitmapa (obrázok), ktorý je zatiaľ prázdny - má rozmery 0x0 
+				        <LI>do existujúceho objektu&nbsp;bitmapa môžeme prečítať obrázok zo súboru pomocou <B>LoadFromFile()</B> 
+							(ak už bitmapa mala nejaký obsah, tento sa stráca a nahradí sa prečítaným obrázkom - zmení sa jej veľkosť) 
+				        <LI>teraz môžeme "opečiatkovať" náš nový objekt bitmapa do grafickej plochy Image1 pomocou metódy <B>Draw</B> 
+        				<LI>a mali by sme si na záver zvyknúť na jedno dôležité pravidlo: <B>vždy</B>, keď skončíme pracovať 
+							s objektom bitmapa, tak je potrebné ju <B><I><FONT color=red>uvoľniť</FONT></I></B> zo systému pomocou 
+							metódy <B>delete Bitmap;</B> - bitmapa je totiž taký špeciálny objekt, ktorý odčerpáva zdroje z Windows a ak takýchto 
+							zdrojov Windows minieme priveľa, systém sa môže zrútiť... 
+</UL>
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>bitmapa do pozadia grafickej plochy:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button1Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap();
+    bmp-><B>LoadFromFile</B>("tiger.bmp");
+    Image1->Canvas-><B>Draw</B>(0,0,<B>bmp</B>);
+    delete bmp;
+(	 
+</PRE> 
+</TABLE>
+
+<UL type=disc><LI>metóda <B>Draw</B> opečiatkuje bitmapu do Canvasu na súradnice zadané dvoma prvými parametrami - tieto 
+					určujú ľavý horný roh kladeného obrázka - pritom môže&nbsp;nejaká časť obrázka z plochy vypadnúť; niekedy 
+					sa môžu hodiť aj záporné súradnice obrázka ...    
+			  <LI>existuje ešte špeciálny prípad metódy Draw - položenie obrázka do plochy so zmenou veľkosti <B>StretchDraw</B> 
+					- obrázok môžeme ľubovoľne zmenšiť alebo zväčšiť, môžeme ho napríklad natiahnuť na celú grafickú plochu 
+    <LI>			<B>StretchDraw</B> má dva parametre: prvým je obdĺžnik (rectangle), do ktorého treba umiestniť obrázok a druhým je 
+           			samotná bitmapa; na definovanie obdĺžnika často použijeme konštrukciu <B>Rect(<I>x1,y1,x2,y2</I>)</B>, v ktorej zadáme 
+           			súradnice ľavého horného a pravého dolného rohu oblasti, napr. 
+</UL>
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>natiahnutie obrázka na celú plochu:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button2Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap();
+    bmp-><B>LoadFromFile</B>("tiger.bmp");
+    Image1->Canvas-><B>StretchDraw</B>(Rect(0,0,Image1->Width,Image1->Height),bmp);
+    delete bmp;
+(	 
+</PRE>
+</TABLE>
+
+<UL type=disc><LI>ukážeme typickú prácu s bitmapou - opečiatkujeme obrázok viackrát vedľa seba a pod seba tak, 
+	aby presne vyplnil celé pozadie grafickej plochy</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>okachličkovanie plochy:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button2Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap();
+    int x,y=0,w=Image1.Width,h=Image1.Height;
+    bmp-><B>LoadFromFile</B>("pozadie.bmp");
+  while (y&lt;h) 
+  {  x:=0;
+     while (x&lt;w) 
+     { Image1.Canvas.Draw(x,y,bmp);
+       x+=bmp.Width;
+     {
+     y+=bmp.Height;
+  {
+  delete bmp;
+}
+</PRE>
+</TABLE>
+
+<H3 class=main>NDÚ</H3>
+    <UL type=disc>
+    <LI>vycentrujete bitmapu do grafickej plochy 
+    <LI>vykachličkujte plochu dvojnásobne zväčšeným (zmenšeným) obrázkom 
+    <LI>natiahnite obrázok tak, aby pokryl celú plochu, ale pritom, aby ostal pomer strán obrázka zachovaný 
+		- pravdepodobne obrázok v jednom rozmere môže vypadnúť z plochy
+    <LI>predpokladajme, že máme pripravených 8 súborov .BMP - bitmáp malých obrázkov bmp1.bmp, bmp2.bmp, ...; 
+		po zatlačení tlačidla sa na náhodnom mieste plochy položí náhodne vybraný jeden z obrázkov 
+    </UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>náhodný obrázok na náhodnú pozíciu plochy:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button4Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap();
+    bmp->LoadFromFile("bmp"+IntToStr(random(8)+1)+".bmp");
+  Image1.Canvas.Draw(random(Image1->Width-bmp->Width),
+                     random(Image1->Height-bmp->Height),bmp);
+  delete bmp;
+}
+</PRE>
+</TABLE>
+
+<UL type=disc><LI>ak použije obrázky zo súboru <A href="obrazky2.zip">obrazky2.zip</A>, môžete si všimnúť, že niektoré 
+				časti obrázkov sú biele, ale bolo by krajšie, keby boli priesvitné - bitmapám môžeme jednu farbu určiť 
+				ako priesvitnú a potom kladenie obrázka do plochy pomocou <B>Draw</B> alebo <B>StretchDraw</B> ponechá 
+				priesvitné časti nezmenené - bitmape musíme zadefinovať dve stavové premenné (vlastnosti) <B>TransparentColor</B> 
+				a <B>Transparent</B> - prvou definujeme farbu, ktorá sa stane priesvitnou a druhou zapíname (môžeme aj vypnúť) 
+				režim priesvitnej farby, napr.
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>obrázky s priesvitnými časťami:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button5Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap();
+    bmp->LoadFromFile("bmp"+IntToStr(random(8)+1)+".bmp");
+  bmp-><B>TransparentColor</B> = clWhite;
+  bmp-><B>Transparent</B> = 1;
+  Image1.Canvas.Draw(random(Image1->Width-bmp->Width),
+                     random(Image1->Height-bmp->Height),bmp);
+  delete bmp;
+}
+</PRE>
+</TABLE>
+
+<UL type=disc><LI>môžeme pracovať nielen s bitmapami, ktoré sme prečítali zo súboru, ale bitmapu si môžeme nakresliť aj sami: 
+				bitmapa má rovnaký <B>Canvas</B> ako grafická plocha Image1 a teda do nej môžeme kresliť rovnakým spôsobom 
+    		  <LI>ak nebudeme do práve vytvorenej bitmapy čítať súbor pomocou <B>LoadFromFile</B>, 
+        		ale chystáme sa kresliť do jej <B>Canvas</B>u, musíme jej najprv určiť veľkosť (<B>bmp->Width</B> a <B>bmp->Height</B>) 
+				a tiež Canvas najprv vyfarbiť nejakou farbou (napr. pomocou <B>FillRect</B>) 
+</ul>	
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>programom vytvorený obrázok:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button6Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap();
+    int i;
+    bmp->Width = 100; bmp->Height = 100;
+    bmp->Canvas->Brush.Color = clWhite;
+    bmp->Canvas->FillRect(Rect(0,0,bmp->Width,bmp->Height));
+    for (i=10;i;i--)
+    {   if (odd(i))  bmp->Canvas->Brush->Color = clYellow;
+        else bmp->Canvas->Brush->Color = clRed;
+        bmp->Canvas->Ellipse(50-5*i,50-5*i,50+5*i,50+5*i);
+    }
+  bmp->TransparentColor = clWhite;
+  bmp->Transparent = 1;
+  Image1->Canvas->Draw(random(Image1->Width-100),random(Image1->Height-100),bmp);
+  delete bmp;
+}
+</PRE>
+</TABLE>
+
+<UL type=disc><LI>do bitmapy môžeme opečiatkovať aj iné bitmapy -&nbsp;vytvoríme bitmapu so žltým kruhom a do nej opečiatkujeme 
+					náhodne vybranú bitmapu, napr.
+</UL>
+<P align=center><IMG height=220 src="subory/pz10_1.jpg" width=303 border=0></P>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>použitie dvoch bitmáp:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button6Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap(),Graphics::TBitmap *bmp1 = new Graphics::TBitmap() ;
+    bmp->Width = 100; bmp->Height = 100;
+    bmp->Canvas->Brush.Color = clWhite;
+    bmp->Canvas->FillRect(Rect(0,0,bmp->Width,bmp->Height));
+    bmp->Canvas->Brush->Color = clYellow;
+    bmp->Canvas->Ellipse(0,0,100,100);
+    bmp->TransparentColor = clWhite;
+    bmp->Transparent = 1;
+  
+    <B>bmp1</B>->LoadFromFile("bmp"+IntToStr(random(5)+1)+".bmp");
+    <B>bmp1</B>->TransparentColor = clWhite;
+    <B>bmp1</B>->Transparent = 1;
+    bmp->Canvas->Draw((100-bmp1->Width) div 2,(100-bmp1->Height) div 2,<B>bmp1</B>);
+    <B>delete bmp1</B>;
+    Image1->Canvas->Draw(random(Image1->Width-100),random(Image1->Height-100),bmp);
+    delete bmp;
+}
+</PRE>
+</TABLE>
+
+<UL type=disc><LI>je ešte veľa iných možností, ako pracovať s bitmapami, napr. 
+		        <UL type=disc>
+        			<LI>namiesto <FONT face="Courier New"><B>bmp->LoadFromFile("bmp.bmp");</B></FONT> môžeme pomocou <B><FONT face="Courier New">
+						bmp->Assign(Image1->Picture);</FONT></B> načítať-prekopírovať obsah celej grafickej plochy do bitmapy 
+			        <LI>z grafickej plochy môžeme do bitmapy prekopírovať len časť, napr. <B><FONT face="Courier New">
+						bmp->Canvas->Draw(-200,-100,Image1->Picture->Graphic);</FONT></B> opečiatkuje celú grafickú plochu do Canvasu bitmapy 
+						- tá časť, ktorá sa nezmestí, bude odrezaná - zrejme bitmapa už musí mať pred týmto volaním nastavenú veľkosť, napr. 
+						<B><FONT face="Courier New">bmp->Width = 100; bmp->Height = 100;</FONT></B> - podobne by sme mohli použiť aj <B>StretchDraw</B> 
+        			<LI>metóda <B>CopyRect</B> je podobná <B>StretchDraw</B>, len môžeme zadať nielen obdĺžnik kam sa kopíruje, ale aj obdĺžnik 
+            			(výrez), ktorý sa bude kopírovať; <B>CopyRect</B> má tri parametre: 
+            			<UL type=disc>
+            				<LI>obdĺžnik kam sa kopíruje (rovnako ako pre <B>StretchDraw</B>) 
+            				<LI>Canvas obrázka/plochy, ktorý sa kopíruje (napr. <B>bmp->Canvas</B>, <B>Image1->Canvas</B>, ...) 
+				            <LI>obdĺžnik výrezu obrázka, ktorý sa bude kopírovať, napr. 
+				                Rect(100,100,200,150); 
+						</UL>
+				</UL>
+    		<LI>použitie <B>CopyRect</B> na jednoduchom príklade: z bitmapy tigra "vystrihneme" len hlavu
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>opečiatkovanie len časti obrázka:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::Button6Click(TObject *Sender)
+{   Graphics::TBitmap *bmp = new Graphics::TBitmap(),Graphics::TBitmap *bmp1 = new Graphics::TBitmap() ;
+    int x1,y1,x2,y2,w,h;
+    bmp->LoadFromFile("tiger.bmp");
+   x1 = random(Image1->Width); y1 = random(Image1->Height); <I><FONT color=navy>// kam </FONT></I>
+   x2 = 64; y2 = 51;   <I><FONT color=navy>// odkiaľ</FONT></I>
+   w = 130; h = 152;   <I><FONT color=navy>// veľkosť toho, čo vystrihnem </FONT></I>
+   Image1->Canvas->CopyRect(Rect(x1,y1,x1+w,y1+h),bmp->Canvas,Rect(x2,y2,x2+w,y2+h));
+   delete bmp;
+}
+</PRE>
+</TABLE>
+
+<UL type=disc>
+    <LI>ak vám pri práci s grafickou plochou (nielen pri práci s bitmapami) bliká celá plocha, môžeme formuláru nastaviť takúto 
+        stavovú premennú (môže kvôli tomu sa mierne spomaliť zobrazovanie v Image) 
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>aby grafická plocha neblikala:</I></P>
+<TR><TD vAlign=top>
+<PRE>void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+   DoubleBuffered = 1;
+}
+</PRE>
+</TABLE>
+
+<H3 class=main>Bitmapa ako globálna premenná</H3>
+
+<UL type=disc>
+    <LI>často sa nám môže hodiť, aby sme nemuseli často používanú bitmapu (ale aj viac bitmáp - možno aj pole bitmáp) tesne pred 
+        použitím vytvoriť a&nbsp;prečítať zo súboru a po použití (napr. po <B>Draw</B>) ju pomocou <B>Free</B> uvoľniť 
+    <LI>najjednoduchším spôsobom&nbsp;je vytvorenie globálnych premenných pri štarte formulára - <B>FormCreate</B> 
+    <LI>potom je dobre&nbsp;nezabudnúť uvoľniť takéto bitmapy pri konci aplikácie - <B>FormDestroy</B>
+</UL>
+
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>bitmapa ako globálna premenná:</I></P>
+<TR><TD vAlign=top>
+<PRE>
+Graphics::TBitmap *bmp = new Graphics::TBitmap();
+
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+   bmp->LoadFromFile("tiger.bmp");
+   DoubleBuffered = 1;
+}
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{   int x,y,w,h;
+    w = 50+random(200); h = 50+random(200);
+    x = random(Image1->Width-w); y = random(Image1->Height-h);
+    Image1->Canvas->StretchDraw(Rect(x,y,x+w,y+h),bmp);
+}
+
+void __fastcall TForm1::FormDestroy(TObject *Sender)
+{
+   delete bmp;
+}
+</PRE>
+</TABLE>
+
+<H3 class=main>Kópia bitmapy</H3>
+<UL type=disc>
+    <LI>ak potrebujeme prekopírovať obsah jednej bitmapy do druhej, nikdy nesmieme použiť "obyčajné" priradenie, napr.
+</UL>
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><B><I>!!! chybné riešenie !!!</I></B></P>
+<TR><TD vAlign=top>
+<PRE>Graphics::TBitmap *b1 = new Graphics::TBitmap(),Graphics::TBitmap *b2 = new Graphics::TBitmap() ;
+     b1->LoadFromFile("miri.bmp");
+
+     b2 = b1;    <I><FONT color=navy>// tá istá bitmapa dostala druhé meno - b2</FONT></I>
+    <I><FONT color=navy>// ... požívanie bitmapy b2 ...</FONT></I>
+    delete b1; delete b2;
+  </PRE>
+</TABLE>
+
+<UL type=disc>
+    <LI>táto časť programu spadne, lebo po <B>delete b1</B> už neexistuje ani <B>b2</B> a teda sa nedá urobiť <B>delete b2</B> ... 
+    <LI>prvé správne riešenie
+</UL>
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>kopírovanie jednej bitmapy do Canvasu druhej bitmapy:</I></P>
+<TR><TD vAlign=top>
+<PRE>Graphics::TBitmap *b1 = new Graphics::TBitmap(),Graphics::TBitmap *b2 = new Graphics::TBitmap() ;
+     b1->LoadFromFile("miri.bmp");
+
+     b2->Width = b1->Width; b2->Height = b1->Height;
+     b2->Canvas->Draw(0,0,b1);
+    <I><FONT color=navy>// ... požívanie bitmapy b2 ...</FONT></I>
+    delete b1; delete b2;
+  </PRE>
+</TABLE>
+
+<UL type=disc>
+    <LI>druhé správne riešenie
+</UL>
+<TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
+<TR><TD vAlign=" top" bgColor=#99cccc><P><I>použitie metódy <B>Assign</B>:</I></P>
+<TR><TD vAlign=top>
+<PRE>Graphics::TBitmap *b1 = new Graphics::TBitmap(),Graphics::TBitmap *b2 = new Graphics::TBitmap() ;
+     b1->LoadFromFile("miri.bmp");
+
+    <B>b2.Assign(b1);</B>
+    <I><FONT color=navy>// ... požívanie bitmapy b2 ...</FONT></I>
+    delete b1; delete b2;
+ </PRE>
+</TABLE>
+
+<H3 class=main>Zhrnutie triedy TBitmap</H3>
+<P><B>TBitmap</B> je preddefinovaná trieda, ktorá slúži na manipuláciu s obrázkami - môžeme si ju predstaviť ako obsah súboru s 
+       príponou .BMP (dá sa s ním pracovať napr. v programe Paint/Skicár). Táto trieda má niekoľko užitočných stavových premenných 
+	   (vlastnosti - property) a metód. 
+</P>
+<H3 class=main>niektoré stavové premenné: </H3>
+<UL>
+    <LI><B>Width</B>, <B>Height</B> - momentálna šírka a výška obrázka (môžeme ju zmeniť priradením nových hodnôt do týchto premenných) 
+    <LI><B>Canvas</B> - grafická plocha obrázka 
+    <LI><B>Transparent</B> - či má nejaké priesvitné časti (inak je to nepriesvitný obdĺžnik) 
+    <LI><B>TransparentColor</B> - ktorá farba v obrázku je považovaná za priesvitnú
+</UL>
+
+<H3 class=main>niektoré metódy: </H3>
+<UL>
+    <LI>operátor <B>new Graphics::TBitmap()</B> - vytvorí zatiaľ prázdny obrázok 
+    <LI>operátor <B>delete bitmap </B> - uvoľní bitmapu z pamäti Windows 
+    <LI><B>LoadFromFile()</B> - načíta obrázok zo súboru vo formáte .BMP 
+    <LI><B>SaveToFile()</B> - uloží obrázok do súboru vo formáte .BMP 
+    <LI><B>Assign()</B> - urobí kópiu obrázka z inej bitmapy
+</UL>
+<P>Môžeme pracovať s Canvasom bitmapy, t.j. s dvojrozmerným poľom farebných Pixelov (bodov) - do bitmapy môžeme kresliť, môžeme 
+   pracovať s jednotlivými pixelmi - úplne rovnako ako v "obyčajnej" grafickej ploche (TImage)
+</P>
+<UL>
+    <LI>Canvas->FillRect 
+    <LI>Canvas->Pixels[riadok,stĺpec] 
+    <LI>Canvas->Rectangle, Ellipse, TextOut, ... 
+    <LI>Canvas->MoveTo, LineTo, Polygon, Polyline, FloodFill, 
+        ...
+</UL>
+<P>a teda môžeme týmto metódam nastaviť pero, štetec, font, ..., napr. Canvas->Pen->Color = ...</P>
+<UL>
+   	<LI><B>Canvas->Draw()</B> - "opečiatkuje" inú bitmapu 
+   	<LI><B>Canvas->StretchDraw()</B> - "opečiatkuje" inú bitmapu, pričom ju môže zväčšiť/zmenšiť 
+   	<LI><B>Canvas->CopyRect()</B> - "opečiatkuje" výrez iného <B>Canvas</B>u (bitmapy alebo grafickej plochy) 
+   	<LI><B>Canvas->BrushCopy()</B> - podobný <B>CopyRect()</B> - jednu z farieb pri kopírovaní vie nahradiť inou 
+</UL>
+</TABLE>
+<HR width=550 SIZE=1>
+<dl><dt class=main>Príklady na precvičenie:
+	<dd><table cellspacing="20">
+		<tr><td><img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+			<td>
+			<ol>
+			<li>Naprogramuj <a href="lodz.exe">stiahni</a>
+			</ol>
+		</table>
+
+<dl>
+<dt class=main>Pohyb obrázkov na obrazovke
+<dd>Postup:
+<ol>
+	<li>animovaný objekt - obrázok si pripravíme v premennej obr typu Tpicture, ak treba určíme priehľadnú farbu
+	<li>odloženie oblasti Canvasu, ktorá bude zasiahnutá novým ojektom - príkaz CopyRect
+	<li>položenie objektu - príkaz draw resp. StretchDraw - na zmenu veľkosti
+	<li>pauza, ktorá je na "vychutnanie" pohľadu na zobrazený objekt
+	<li>výpočet nových súradníc objektu
+	<li> odložené pozadie nazad na canvas - náš objekt zmizne
+	<li>a môžme začať od začiatku - bodu 2
+</ol>
+V prípade že chceme pohybovať viacerými objektami (úloha2), je vhodné radšej zotrieť okno a nakresliť objekty v nových pozíciách.
+   <dl> <dt class=second>Úlohy:
+		<dd><ol><li><a href="anim4.exe">uloha1</a>
+	    				  <li><a href="anim5.exe">uloha2</a>
+			    	  </ol>
+   </dl>   				   	  
+<hr>
+<dt class=main>Animované obrázky
+<dd>Niekedy chceme aby sa obrázok pri pohybe menil - vtáci mávajú krídlami, roboti hýbu nohami atď. Predpokladám, že máme obrázky
+	obr1, ... ,obrn, kde je rozfázovaný pohyb objektu. Zavedieme si bajtovú premennú <font color="red">fáza</font>, kde bude zapísané
+	koľký obrázok - faza -  sa má aktuálne zobraziť.
+	<br>Postup:
+	<br>- obrázky si cyklom načítame do poľa obrázkov (array of Tpicture) 
+	<br>- časovač robí nasledné  - zotrie obrazovku - zmení fázu a súradnice obrázka a zobrazí ho 
+   <dl>
+   <dt><font color="green">Úlohy:</font>
+   <dd><ol><li><a href="anim6.exe">uloha1</a></ol>
+   </dl>
+ <hr>
+<dt class=main>Pohyb pozadia
+<dd>Niekedy potrebujeme posúvať pozadie, napr. hráč prišiel ku kraju okna a zobrazí sa mu ďalší priestor alebo
+	pre efekt letu nad krajinou sa pozadie plynule posúva nabok.
+	<br>Postup:
+	<ol>
+	<li>pripravíme si do premennej velký obrázok (resp. opakujúci sa obrázok, niečo ako kachličky)
+	<li>parametrami príkazu draw - x,y určíme ktorá časť veľkého obrázku bude vlastne viditelná
+		(x, y môžu byť súradnice mimo canvasu). 
+	<li>menením x,y vznikne dojem pohybujúceho sa pozadia
+	</ol>	 
+   <dl>
+   <dt class=second>Úlohy:
+   <dd><ol><li><a href="anim7.exe">uloha1</a></ol>
+   </dl>
+ <hr>
+</dl>
+</body>
+</html>

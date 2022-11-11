@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (2.) - Čtverec s texturou</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="anotaceMinule jsme si vysvětlili, jak napsat základní aplikaci využívající OpenGL. Dnes tyto znalosti trochu rozšíříme přidáním textury na náš čtverec. Vždyť bez textur bychom se vlastně nikam nedostali. "/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/opengl-ctverec-s-texturou&amp;title=OpenGL (2.) - Čtverec s texturou" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (2.) - Čtverec s texturou</h1><i>anotaceMinule jsme si vysvětlili, jak napsat základní aplikaci využívající OpenGL. Dnes tyto znalosti trochu rozšíříme přidáním textury na náš čtverec. Vždyť bez textur bychom se vlastně nikam nedostali. </i><br/><hr/><br/><P>K vysvětlení dnešního tématu jsem využil zdroják z minulého dílu. Všechny změny průběžně vysvětlím, nebude jich však mnoho. Výsledku se dá dosáhnout za okamžik, leč psaní článku zabere celé odpoledne... Při spuštění programu se zavolá procedura <B>TForm1.create</B>, ve které provedeme inicializaci OpenGL.</P>
+
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/gltextura/gl_tex1.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+	
+<PRE><B>procedure</B> TForm1.FormCreate(Sender: TObject);
+<B>beginj</B>
+  UhelX := 0;
+  UhelY := 0;
+  UhelZ := 0;
+  X := 0.0; Y := 0; Z := -4.0;
+  SetcursorPos(left+round(width/2),top+70);
+  bool:=true;
+  Model := 1;
+
+  //inicializace OpenGL
+  SetDCPixelFormat(Canvas.Handle);
+  hRC := wglCreateContext(Canvas.Handle);
+  wglMakeCurrent(Canvas.Handle,hRC);
+  glClearColor(0.0,0.0,0.0,0.0);
+  glShadeModel(GL_FLAT);
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_Texture_2D);
+  glPixelStorei(GL_Unpack_Alignment,2);
+  glTexParameterf(GL_Texture_2D,GL_Texture_Wrap_S,GL_Repeat);
+  glTexParameterf(GL_Texture_2D,GL_Texture_Wrap_T,GL_Repeat);
+  glTexParameterf(GL_Texture_2D,GL_Texture_Mag_Filter,GL_Linear);
+  glTexParameterf(GL_Texture_2D,GL_Texture_Min_Filter,GL_Linear);
+  glTexEnvf(GL_Texture_Env, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  Ctverec;
+  NastaveniProstoru;
+  wglMakeCurrent(0,0)
+<B>end;</B></PRE>
+
+
+<P>Funkcí <B>glClearColor</B> vymažeme buffery základních barev (RGBA). Funkce <B>glShadeModel</B> slouží k přepínání typu stínování. <B>GL_FLAT</B> - je obyčejné stínování. Stín je znázorňován pomocí hrubě odstupňovaných širokých pruhů. Další vlastnost je (GL_SMOOTH). Je to dokonalejší typ stínování. Zde je stín již reprezentován plynulým, hladkým přechodem, využívajícím širokou část dostupné barevné palety. Dále otestujeme velikost bufferu a zapneme zobrazení 2D textury příkazem <B>glEnable</B>. funkcemi <B>glTexParameterf</B> nastavíme vlastnosti 2D textury. Nakonec zavoláme další procedury <B>ctverec</B> a <B>nastavení prostoru</B>.</P>
+
+	
+	
+<PRE><B>procedure</B> TForm1.Ctverec;
+<B>var</B> Cesta : string;
+<B>begin</B>
+  Cesta := ExtractFilePath(Application.ExeName);
+
+  glNewList(Model,GL_COMPILE_AND_EXECUTE);
+  LoadBitmap(Cesta + 'Image1.bmp');
+  glTexImage2d(GL_Texture_2D,0,3,Velikost,Velikost,
+  	0,GL_RGB,GL_Unsigned_byte,@buffer);
+  glBegin(GL_POLYGON);
+    glTexCoord2f(0,0);
+    glVertex3f( 0.5,-0.5,0.0);
+    glTexCoord2f(1,0);
+    glVertex3f(-0.5,-0.5,0.0);
+    glTexCoord2f(1,1);
+    glVertex3f(-0.5, 0.5,0.0);
+    glTexCoord2f(0,1);
+    glVertex3f( 0.5, 0.5,0.0);
+  glEnd;
+  glEndList
+<B>end;</B></PRE>
+	
+<P>V proceduře <B>ctverec</B> je funkce <B>glNewList</B>. Ta spolu s funkcí <B>glEndList</B> vytváří nebo nahrazují seznam příkazů. Tyto seznamy jsou skupiny OpenGL příkazů, které jsou připravené pro následné spuštění. Všechny následující příkazy jsou uloženy do seznamu. <B>Model</B> je číslo integer, které specifikuje jméno daného seznamu. Slouží jako jednoznačná identifikace daného seznamu. <B>GL_COMPILE</B> specifikuje mód kompilace. V tomto případě jsou příkazy jen zkompilovány. Další možná hodnota je (GL_COMPILE_AND_EXECUTE). </P>
+
+<P>Funkcí <B>LoadBitmap</B> natáhneme bitmapu do seznamu a funkcí <B>glTexImage</B> specifikujeme vlastnosti dvourozměrné bitmapy: Barevná textura s max. detailem velikosti 256*256. Mezi funkcemi <B>glBegin</B> a <B>glEnd</B> definujeme trar a vlastnosti objektu. Parametry funkce <B>glBegin</B> mohou být (GL_POLYGON, GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP, GL_TRIANGLES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_QUADS, GL_QUAD_STRIP).<BR><BR> Dále zavoláme proceduru <B>Nastaveni prostoru</B>, kterou jsme minule měli obsaženou přímo v proceduře <B>Create</B>. </P>
+	
+<PRE><B>procedure</B> TForm1.NastaveniProstoru;
+<B>begin</B>
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity;
+  gluPerspective(30.0,ClientWidth / ClientHeight,0.01,50.0);
+  glViewport(0,0,ClientWidth,ClientHeight);
+<B>end;</B></PRE>
+
+<P>Matici zobrazení prostoru nastavíme příkazem <B>glMatrixMode</B> na <B>GL_PROJECTION</B> a tuto nastavenou matici načteme příkazem <B>glLoadIdentity</B>. Nyní nastavíme prostor tak, jak se bude jevit z pozice kamery funkcí <B>gluPerspective</B> a velikost zobrazované plochy nastavíme funkcí <B>glViewport</B>.</P>
+
+
+<PRE><B>procedure</B> TForm1.FormPaint(Sender: TObject);
+<B>begin</B>
+  wglMakeCurrent(Canvas.Handle,hRC);
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  VlastnostiObjektu;
+  glCallList(Model);
+  glFlush;
+  SwapBuffers(Canvas.Handle);
+  wglMakeCurrent(0,0)
+<B>end;</B></PRE>
+
+<P>Tato procedura slouží ke zobrazení scény. funkcí <B>wglMakeCurrent</B> Nastavíme daný <B>RC</B> jako aktuální. Funkcí <B>glClear</B> vymažeme buffery. GL_COLOR_BUFFER_BIT - maže buffer, který je právě vybrán pro barevné kreslení. GL_DEPTH_BUFFER_BIT - maže hloubku bufferu. GL_ACCUM_BUFFER_BIT - maže akumulační buffer, GL_STENCIL_BUFFER_BIT - maže buffer barvy na malování šablonou. Nyní zavoláme funkci vlastnosti objektu a příkazem <B>glCallList</B> načteme námi definovaný seznam příkazů pro náš objekt. Následuje funkce <B>SwapBuffers</B>, kterou vyměníme buffery a funkcí <B>wglMakeCurrent</B> vynulujeme handlery.</P>
+
+
+<PRE><B>procedure</B> TForm1.VlastnostiObjektu;
+<B>begin</B>
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  glTranslatef(X,Y,Z);	//pozice kamery
+  glTranslatef(0,0,0);	//střed rotace objektu
+  glRotatef(UhelX, 1, 0, 0);	//rotace objektu v ose X
+  glRotatef(UhelY, 0, 1, 0);	//rotace objektu v ose Y
+  glRotatef(UhelZ, 0, 0, 1);	//rotace objektu v ose Z
+<B>end;</B></PRE>
+
+<P>Příkazem <B>glMatrixMode</B> nastavíme matici zobrazení objektu a příkazem <B>glLoadIdentity</B> tuto matici načteme. Nastavíme pozici kamery - <B>glTranslatef(x,y,z)</B> a střed rotace objektu - <B>glTranslatef(0,0,0)</B>. Funkcí <B>glRotatef</B> nastavíme rotaci objektu v osách x, y a z.
+
+<CENTER><TABLE class=image CELLPADDING=0 CELLSPACING=0><TR><TD><IMG SRC="articles/gltextura/gl_tex2.jpg" BORDER=0></TD></TR></TABLE></CENTER>
+
+<PRE><B>procedure</B> TForm1.LoadBitmap(Path : string);
+<B>var</B>
+ X : TImage;
+ bih : TBitmapInfoHeader;
+ bi : TBitmapInfo;
+ b : byte;
+ i,j : word;
+<B>begin</B>
+  X := TImage.Create(Self);
+  X.Picture.LoadFromFile(Path);
+  <B>with</B> bih <B>do
+    begin</B>
+      biSize := SizeOf(bih);
+      biWidth := Velikost;
+      biHeight := Velikost;
+      biPlanes := 1;
+      biBitCount := 24;
+      biCompression := BI_RGB;
+      biSizeImage := Velikost;
+      biXPelsPerMeter := 0;
+      biYPelsPerMeter := 0;
+      biClrImportant := 0;
+      biClrUsed := 0;
+    <B>end;</B>
+  bi.bmiHeader := bih;
+  GetDIBits(X.Picture.Bitmap.Canvas.Handle,X.Picture.Bitmap.Handle,
+            0,Velikost,@buffer,bi,dib_rgb_colors);
+  <B>for</B> i := 1 <B>to</B> Velikost <B>do
+    for</B> j := 1 <B>to</B> Velikost <B>do
+      begin</B>
+        b := buffer[i,j].red;
+        buffer[i,j].red := buffer[i,j].blue;
+        buffer[i,j].blue := b;
+      <B>end;</B>
+  X.Free
+<B>end;</B></PRE>	
+
+<P>Tato funkce načte bitmapu o velikosti 256*256 pixelů ze souboru a prohodí červenou a modrou složku. Bitmapu jiné velikosti je nutno upravit tak, aby její šířka a výška byly mocninou dvou.<BR><BR> Procedury pro pohyb a rotaci našeho čtverce s texturou jsem použil ty samé jako v minulém dílu našeho seriálu, stejně jako procedury pro ukončení a změnu velikosti okna aplikace.<BR><BR>
+
+<P><A HREF="articles/gltextura/gl_tex.zip"><B>Odtud</B></A> (230 kB) si můžete stáhnout zdroják toho, co jsme dnes vytvořili i s texturou.</P><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="nastaveni-opengl-zobrazeni-barevneho-ctverce">OpenGL (1.) - Čtverec s interpolací barvy</a></li><li><a href="3d-studio-max-laser">3D Studio MAX (4.) - Jak vytvořit jednoduchý laser</a></li><li><a href="zajimave-zdrojaky-pro-delphi-1">Delphi (4.) - Zajímavé zdrojáky</a></li><li><a href="3d-studio-max-tvorba-krajiny-landscape">3D Studio MAX (3.) - Tvorba 3D krajiny</a></li><li><a href="detekce-typu-procesoru-jeho-frekvence-vytizeni">Delphi (3.) - Detekce typu procesoru, jeho frekvence a využití</a></li><li><a href="adobe-photoshop-ohniva-koule-fireball">Photoshop tutoriály (1.) - Ohnivé koule</a></li><li><a href="ini-soubory-a-registr-windows-v-delphi">Delphi (2.) - Práce se soubory, *.ini soubory a registry</a></li><li><a href="jak-zobrazit-startovaci-obrazek">Delphi (1.) - Jak zobrazit startovací obrázek</a></li><li><a href="3d-studio-max-ohniva-exploze-explosion">3D Studio MAX (2.) - Jak na ohnivé explose</a></li><li><a href="3d-studio-max-panel-nastroju">3D Studio MAX (1.) - Panel nástrojů ve 3D Studiu MAX</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=17&amp;url=%2Fopengl-ctverec-s-texturou" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.1659377412px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12651 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

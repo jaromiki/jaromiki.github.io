@@ -1,0 +1,76 @@
+//---------------------------------------------------------------------
+// Ukazkovy priklad cislo 1
+// Autor: Pavel Tisnovsky
+//
+// Program otevre jedno hlavni okno a vykresli do nej zeleny
+// trojuhelnik. Okno (a tim i celou aplikaci) lze ukoncit stiskem
+// klavesy ESC.
+//---------------------------------------------------------------------
+
+#include <GL/glut.h>                            // hlavickovy soubor funkci GLUTu
+
+
+
+//---------------------------------------------------------------------
+// Nastaveni souradneho systemu v zavislosti na velikosti okna
+//---------------------------------------------------------------------
+void onResize(int w, int h)                     // w a h reprezentuje novou velikost okna
+{
+    glViewport(0, 0, w, h);                     // viditelna oblast pres cele okno
+    glMatrixMode(GL_PROJECTION);                // zacatek modifikace projekcni matice
+    glLoadIdentity();                           // vymazani projekcni matice (=identita)
+    glOrtho(0, w, 0, h, -1, 1);                 // mapovani abstraktnich souradnic do souradnic okna
+}
+
+
+
+//---------------------------------------------------------------------
+// Tato funkce je volana pri kazdem prekresleni okna
+//---------------------------------------------------------------------
+void onDisplay(void)
+{
+    glClearColor(0.0, 0.0, 0.0, 0.0);           // nastaveni mazaci barvy na cernou
+    glClear(GL_COLOR_BUFFER_BIT);               // vymazani bitovych rovin barvoveho bufferu
+    glColor3f(0.0f, 1.0f, 0.0f);                // nastaveni zelene barvy pro kresleni
+    glBegin(GL_TRIANGLES);                      // ted se zacnou vykreslovat trojuhelniky
+        glVertex2i(200,  50);                   // souradnice prvniho vrcholu trojuhelnika
+        glVertex2i( 50, 250);                   // souradnice druheho vrcholu trojuhelnika
+        glVertex2i(350, 250);                   // souradnice tretiho vrcholu trojuhelnika
+    glEnd();                                    // konec vykreslovani trojuhelniku
+    glFlush();                                  // provedeni a vykresleni zmen
+}
+
+
+
+//---------------------------------------------------------------------
+// Tato funkce je volana pri stlaceni ASCII klavesy
+//---------------------------------------------------------------------
+void onKeyboard(unsigned char key, int x, int y)
+{
+    if (key==27) exit(0);                       // pokud byla stlacena klavesa ESC, konec programu
+}
+
+
+
+//---------------------------------------------------------------------
+// Hlavni funkce konzolove aplikace
+//---------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+    glutInit(&argc, argv);                      // inicializace knihovny GLUT
+    glutCreateWindow("Priklad na OpenGL cislo 1");// vytvoreni okna pro kresleni
+    glutReshapeWindow(400, 400);                // zmena velikosti okna
+    glutPositionWindow(100, 100);               // pozice leveho horniho rohu okna
+    glutDisplayFunc(onDisplay);                 // registrace funkce volane pri prekreslovani okna
+    glutReshapeFunc(onResize);                  // registrace funkce volane pri zmene velikosti okna
+    glutKeyboardFunc(onKeyboard);               // registrace funkce volani pri stlaceni klavesy
+    glutMainLoop();                             // nekonecna smycka, kde se volaji zaregistrovane funkce
+    return 0;                                   // navratova hodnota vracena operacnimu systemu
+}
+
+
+
+//---------------------------------------------------------------------
+// Konec zdrojoveho souboru
+//---------------------------------------------------------------------
+

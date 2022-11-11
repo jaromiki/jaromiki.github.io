@@ -1,0 +1,45 @@
+Pole - jednorozmerne
+1. Postupnost celych cisel - najdi max suvislu podpostupnost - lin. zlozitost
+
+akt:=maxi:=-32000;
+for i:=1 to N DO
+Begin akt := max(akt+A[i];A[i]);
+      maxi := max(maxi,akt);
+End;
+--------------------------------------------
+2. Postupnost kladnych cisel - najdi max vyber, taky ze vo vybere su maximalne dvaja susedia
+(nemozno vybrat 3 za sebou iduce cisla)
+
+const N=20;
+Var A: array[1..N] of word;
+    B: array[2..N,1..4] of word;
+    i,sum:word;
+    function max(a,b:word):word;
+    begin
+    if a>b then max:=a else max:=b;
+    end;
+    Begin
+         for i:=1 to N do a[i]:=1+random(5);
+         b[2,1]:=0; b[2,2]:=a[2];  b[2,3]:=a[1];  b[2,4]:=a[1]+a[2];
+         for i:=3 to N do
+         Begin
+          b[i,1]:=b[i-1,3];          b[i,2]:=max(b[i-1,1],b[i-1,3])+a[i];
+          b[i,3]:=max(b[i-1,2],b[i-1,4]); b[i,4]:= b[i-1,2]+a[i];
+         End;
+         sum:= max(max(b[N,1],b[N,2]),max(b[N,3],b[N,4]));
+         Writeln('Max. sucet:',sum);
+         for i:=2 to N do
+           writeln(b[i,1]:4, b[i,2]:4,b[i,3]:4,b[i,4]:4);
+         writeln;
+         for i:=N downto 2 do
+         Begin
+           if b[i,1]=sum then continue;
+           if b[i,3]=sum then continue;
+ if b[i,2]=sum then Begin sum:=sum-a[i]; writeln(i:4,',',a[i]);continue;end;
+ if b[i,4]=sum then Begin sum:=sum-a[i]; writeln(i:4,',',a[i]);continue;end;
+          End;
+          if sum>0 then writeln(1:4,',',sum);
+          Readln;
+   End.
+--------------------------------------------------------------------------------
+3. rotacia pola o N poloziek

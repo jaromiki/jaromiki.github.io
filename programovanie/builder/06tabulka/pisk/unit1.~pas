@@ -1,0 +1,298 @@
+unit Unit1;
+
+interface
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    sg1: TStringGrid;
+    Button1: TButton;
+    Button2: TButton;
+    Label1: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure Hladanie(var k,l:integer);
+    procedure Prepocet(r,s:integer);
+    procedure Prepocet2(r,s:integer);
+    procedure tah(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+const
+  utoc:Array[0..4] of real=(1,4,10,200,2000);
+  bran:Array[0..4] of real=(1,2,7,65,500);
+var
+  hod: Array[0..19,0..19] of real;
+  koniec:Boolean;
+{$R *.dfm}
+
+{********************* PREPOCET ************************}
+procedure Tform1.Prepocet(r,s:integer);
+var i,j,k,x1,x2,y1,y2: integer;
+    sum:integer;
+begin
+// vodorovne
+  x1:=s-4; if x1<0 then x1:=0;
+  x2:=s; if x2+4>19 then x2:=19-4;
+  for j:=x1 to x2 do
+  begin
+    sum:=0;
+    for k:=0 to 4 do
+    begin
+      if sg1.Cells[k+j,r]='X' then sum:=sum+1;
+      if sg1.Cells[k+j,r]='O' then sum:=sum+10;
+    end;
+    case sum of
+    4: Begin koniec:=True; showMessage('Computer won'); label1.Caption:='PoËÌtaË vyhral';sg1.Enabled:=False; end;
+    0..3: for k:=0 to 4 do if sg1.Cells[k+j,r]='' then hod[k+j,r]:=hod[k+j,r]-utoc[sum]+utoc[sum+1]
+                                                  else hod[k+j,r]:=0;
+    10,20,30,40: for k:=0 to 4 do if sg1.Cells[k+j,r]='' then hod[k+j,r]:=hod[k+j,r]-bran[sum div 10]
+                                                         else hod[k+j,r]:=0;
+    end;
+  end;
+// zvisle
+  y1:=r-4; if y1<0 then y1:=0;
+  y2:=r; if y2+4>19 then y2:=19-4;
+  for i:=y1 to y2 do
+  begin
+    sum:=0;
+    for k:=0 to 4 do
+    begin
+      if sg1.Cells[s,k+i]='X' then sum:=sum+1;
+      if sg1.Cells[s,k+i]='O' then sum:=sum+10;
+    end;
+    case sum of
+    4: Begin koniec:=True; showMessage('Computer won'); label1.Caption:='PoËÌtaË vyhral';sg1.Enabled:=False; end;
+    0..3: for k:=0 to 4 do if sg1.Cells[s,k+i]='' then hod[s,k+i]:=hod[s,k+i]-utoc[sum]+utoc[sum+1]
+                                                  else hod[s,k+i]:=0;
+    10,20,30,40: for k:=0 to 4 do if sg1.Cells[s,k+i]='' then hod[s,k+i]:=hod[s,k+i]-bran[sum div 10]
+                                                  else hod[s,k+i]:=0;
+    end;
+  end;
+
+  // 3ikmo dole
+  for i:=0 to 4 do
+  begin
+    if (r-i>=0) and (s-i>=0) and (r+4-i<20) and (s+4-i<20) then
+    begin
+      sum:=0;
+      for k:=0 to 4 do
+      begin
+        if sg1.Cells[s-i+k,r-i+k]='X' then sum:=sum+1;
+        if sg1.Cells[s-i+k,r-i+k]='O' then sum:=sum+10;
+      end;
+      case sum of
+      4: Begin koniec:=True; showMessage('Computer won'); label1.Caption:='PoËÌtaË vyhral';sg1.Enabled:=False; end;
+      0..3: for k:=0 to 4 do if sg1.Cells[s-i+k,r-i+k]='' then hod[s-i+k,r-i+k]:=hod[s-i+k,r-i+k]-utoc[sum]+utoc[sum+1]
+                                                  else hod[s-i+k,r-i+k]:=0;
+      10,20,30,40: for k:=0 to 4 do if sg1.Cells[s-i+k,r-i+k]='' then hod[s-i+k,r-i+k]:=hod[s-i+k,r-i+k]-bran[sum div 10]
+                                                  else hod[s-i+k,r-i+k]:=0;
+      end;
+    end;
+  end;
+  // 3ikmo hore
+  for i:=0 to 4 do
+  begin
+    if (r+i<20) and (s-i>=0) and (r+i-4>=0) and (s+4-i<20) then
+    begin
+      sum:=0;
+      for k:=0 to 4 do
+      begin
+        if sg1.Cells[s-i+k,r+i-k]='O' then sum:=sum+10;
+        if sg1.Cells[s-i+k,r+i-k]='X' then sum:=sum+1;
+      end;
+      case sum of
+      4: Begin koniec:=True; showMessage('Computer won'); label1.Caption:='PoËÌtaË vyhral';sg1.Enabled:=False; end;
+      0..3: for k:=0 to 4 do if sg1.Cells[s-i+k,r+i-k]='' then hod[s-i+k,r+i-k]:=hod[s-i+k,r+i-k]-utoc[sum]+utoc[sum+1]
+                                                  else hod[s-i+k,r+i-k]:=0;
+      10,20,30,40: for k:=0 to 4 do if sg1.Cells[s-i+k,r+i-k]='' then hod[s-i+k,r+i-k]:=hod[s-i+k,r+i-k]-bran[sum div 10]
+                                                  else hod[s-i+k,r+i-k]:=0;
+      end;
+    end;
+  end;
+end;
+
+{********************* PREPOCET2 ************************}
+procedure Tform1.Prepocet2(r,s:integer);
+var i,j,k,x1,x2,y1,y2: integer;
+    sum:integer;
+begin
+// vodorovne
+  x1:=s-4; if x1<0 then x1:=0;
+  x2:=s; if x2+4>19 then x2:=19-4;
+  for j:=x1 to x2 do
+  begin
+    sum:=0;
+    for k:=0 to 4 do
+    begin
+      if sg1.Cells[k+j,r]='X' then sum:=sum+1;
+      if sg1.Cells[k+j,r]='O' then sum:=sum+10;
+    end;
+    case sum of
+    1..4: for k:=0 to 4 do if sg1.Cells[k+j,r]='' then hod[k+j,r]:=hod[k+j,r]-utoc[sum]
+                                                  else hod[k+j,r]:=0;
+    40: Begin koniec:=True; showMessage('Player won'); label1.Caption:='ZvÌùazil si!'; sg1.Enabled:=False;end;
+    0,10,20,30: for k:=0 to 4 do if sg1.Cells[k+j,r]='' then hod[k+j,r]:=hod[k+j,r]-bran[sum div 10]+bran[sum div 10 +1]
+                                                  else hod[k+j,r]:=0;
+    end;
+  end;
+// zvisle
+  y1:=r-4; if y1<0 then y1:=0;
+  y2:=r; if y2+4>19 then y2:=19-4;
+  for i:=y1 to y2 do
+  begin
+    sum:=0;
+    for k:=0 to 4 do
+    begin
+      if sg1.Cells[s,k+i]='X' then sum:=sum+1;
+      if sg1.Cells[s,k+i]='O' then sum:=sum+10;
+    end;
+    case sum of
+    1..4: for k:=0 to 4 do if sg1.Cells[s,k+i]='' then hod[s,k+i]:=hod[s,k+i]-utoc[sum]
+                                                  else hod[s,k+i]:=0;
+    40: Begin koniec:=True; showMessage('Player won'); label1.Caption:='ZvÌùazil si!';sg1.Enabled:=False; end;
+    0,10,20,30: for k:=0 to 4 do if sg1.Cells[s,k+i]='' then hod[s,k+i]:=hod[s,k+i]-bran[sum div 10]+bran[sum div 10 +1]
+                                                  else hod[s,k+i]:=0;
+    end;
+  end;
+
+  // 3ikmo dole
+  for i:=0 to 4 do
+  begin
+    if (r-i>=0) and (s-i>=0) and (r+4-i<20) and (s+4-i<20) then
+    begin
+      sum:=0;
+      for k:=0 to 4 do
+      begin
+        if sg1.Cells[s-i+k,r-i+k]='X' then sum:=sum+1;
+        if sg1.Cells[s-i+k,r-i+k]='O' then sum:=sum+10;
+      end;
+      case sum of
+      1..4: for k:=0 to 4 do if sg1.Cells[s-i+k,r-i+k]='' then hod[s-i+k,r-i+k]:=hod[s-i+k,r-i+k]-utoc[sum]
+                                                  else hod[s-i+k,r-i+k]:=0;
+      40: Begin koniec:=True; showMessage('Player won'); label1.Caption:='ZvÌùazil si!';sg1.Enabled:=False; end;
+      0,10,20,30: for k:=0 to 4 do if sg1.Cells[s-i+k,r-i+k]='' then hod[s-i+k,r-i+k]:=hod[s-i+k,r-i+k]-bran[sum div 10]+bran[sum div 10 +1]
+                                                  else hod[s-i+k,r-i+k]:=0;
+      end;
+    end;
+  end;
+  // 3ikmo hore
+  for i:=0 to 4 do
+  begin
+    if (r+i<20) and (s-i>=0) and (r+i-4>=0) and (s+4-i<20) then
+    begin
+      sum:=0;
+      for k:=0 to 4 do
+      begin
+        if sg1.Cells[s-i+k,r+i-k]='O' then sum:=sum+10;
+        if sg1.Cells[s-i+k,r+i-k]='X' then sum:=sum+1;
+      end;
+      case sum of
+      1..4: for k:=0 to 4 do if sg1.Cells[s-i+k,r+i-k]='' then hod[s-i+k,r+i-k]:=hod[s-i+k,r+i-k]-utoc[sum]
+                                                  else hod[s-i+k,r+i-k]:=0;
+      40: Begin koniec:=True; showMessage('Player won'); label1.Caption:='ZvÌùazil si!';sg1.Enabled:=False; end;
+      0,10,20,30: for k:=0 to 4 do if sg1.Cells[s-i+k,r+i-k]='' then hod[s-i+k,r+i-k]:=hod[s-i+k,r+i-k]-bran[sum div 10]+bran[sum div 10 +1]
+                                                  else hod[s-i+k,r+i-k]:=0;
+      end;
+    end;
+  end;
+end;
+
+
+Procedure TForm1.Hladanie(Var k,l:integer);
+var i,j: byte; max:real;
+Begin
+  max:=-1;
+  for i:=0 to 19 do
+    for j:=0 to 19 do
+      if (sg1.cells[i,j]='') and (hod[i,j]>max) then
+      Begin
+        max:=hod[i,j]; l:=i; k:=j;
+      End;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var i,j,k:integer;
+begin
+for i:=0 to 19 do
+    for j:=0 to 15 do
+       for k:=0 to 4 do
+       begin
+          hod[i,j +k]:=hod[i,j +k]+1;
+          hod[j+k,i]:= hod[j+k,i]+1;
+       end;
+  // sikmo hore
+ for i:=4 to 19 do
+    for j:=0 to 15 do
+       for k:=0 to 4 do hod[i-k,j+k]:=hod[i-k,j+k]+1;
+  // sikmo dole
+  for i:=0 to 15 do
+    for j:=0 to 15 do
+       for k:=0 to 4 do hod[i+k,j+k]:=hod[i+k,j+k]+1;
+ // uprava
+{  for i:=1 to 19 do
+    for j:=1 to 10 do
+    begin hod[i,j]:=hod[i,j]+i*j/100;
+          hod[21-i,j]:=hod[21-i,j]+i*j/100;
+          hod[i,21-j]:=hod[i,21-j]+i*j/100;
+          hod[21-i,21-j]:=hod[21-i,21-j]+i*j/100;
+    end;
+ }
+end;
+
+procedure TForm1.tah(Sender: TObject);
+var r,s,i,j: integer ;
+    a:Tgridrect;
+begin
+  if not koniec then
+  Begin
+  s:=sg1.Col; r:=sg1.Row;
+  prepocet2(r,s);
+  hod[s,r]:=0;
+  sg1.Cells[s,r]:='O';
+  if not koniec then
+  Begin
+  hladanie(r,s);
+  prepocet(r,s);
+  hod[s,r]:=0;
+  sg1.Cells[s,r]:='X';
+  a.Left:=s; a.Right:=s;
+  a.Top:=r; a.Bottom:=r;
+  sg1.Selection:=a;
+  End;
+  End;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var i,j: integer;
+begin
+  for i:=0 to 19 do
+  Begin
+    sg1.Cols[i].Clear;
+    for j:=0 to 19 do hod[i,j]:=0;
+  End;
+  i:=10+random(2); j:=10+random(2);
+  Prepocet(i,j);
+  hod[i,j]:=0;
+  sg1.Cells[10,10]:='X';
+  Koniec:=False;
+  Label1.Caption:='';
+  sg1.Enabled:=True;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  close;
+end;
+
+end.

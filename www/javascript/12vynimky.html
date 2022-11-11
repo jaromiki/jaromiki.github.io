@@ -1,0 +1,59 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Ošetrovanie chýb</title>
+	 <STYLE>
+		h3.main {background:#ddddff; color:#0000cc; border-color:silver; border-width:3;  width:330; height:30; border-style:ridge; padding:5}
+		dt.main {background:#ddddff; color:#0000cc; width:330; height:30; padding:5; margin:20 0 0 0}
+		h3.second {color: blue}
+		dt.second {color: blue}
+	</STYLE>
+	<script language="JScript">
+	function vypocet()
+	{ 	;
+		try {
+			var nn=parseInt(n.value)*1;
+			if (nn<1) throw new Error('fakt: Chzba');
+			for (var i=nn-1;i>0;i--) {nn*=i;}
+			fa.value=nn;
+		  }	
+	  catch(e) 
+	    {alert(e.name+":"+e.message); fa.value=e;}
+	 }
+	</script>
+	  
+</head>
+
+<body bgcolor="#ffffdd">
+<h2 style="background:#ddddff; color:'red'; border-widh: 'medium'">Výnimky</h2> 
+Výnimky slúžia na ošetrenie chýb. Normálne, ak nastane chyba, prezerač oznámi, že na stránke nastala chyba a často tým
+zobrazovanie končí, preto je vhodné, aby program mal možnosť riskantnú operáciu robiť "opatrne" a ak nastala chyba
+nenechať reagovať systém, ale situáciu vyriešiť vo vlastnej réžii.
+<dl><dt class=main>Try/catch/finaly
+	<dd><dl><dt class=second>Try 
+			<dd>toto kľúčové slovo uvádza blok v ktorom sa budú chyby=výnimky spracovávať vo vlastnej réžii a nemali
+				by vyvolať systémovú chybu.
+			<dt class=second>Catch
+			<dd>ukončuje sledovaný blok a začína blok príkazov, ktoré sa vykonajú v tom prípade ak niekde v sledovanom bloku
+				nastane chyba.
+			<dt class=second>Finally
+			<dd>Ukončuje blok catch. V tomto bloku sú príkazy, ktoré sa vykonajú vždy nech vykonávanie bloku try dopadne akokoľvek.
+		</dl>
+	<dt class=main>Postup spracovania
+	<dd>Ak program obsahuje časť <b>try</b> musí obsahovať aspoň jeden z blokov catch, finally.	Program vykonáva príkazy
+		bloku try. Ak nastane chyba hľadá blok catch a ak ho nájde vykoná ho, blok finally (ak existuje) vykoná potom.
+		Ak catch nenájde pokračuje v jeho hľadaní o úroveň vyššie (skade bol náš blok volaný), ak ho nájde urobí ho ak
+		nie pokračuje v hľadaní zas vyššie. Ak catch vôbec nenájde vyvolá sa chyba.
+		<br>Ak v časti finally nastane výnimka (a časť catch tu nie je) je výnimka nahradená touto. Ak je finally ukončená
+		príkazom return výnimka sa zruší.
+	<dt class=main>Príklad 1 try/catch
+	<dd><div style="border-width:3; height:70; border-style:outset; padding:10; margin:10; background:#ddddff" >
+		<center>
+	     Sem zapíš číslo N: <input  type="Text" value="1" id=n  onchange="vypocet()"> a tu sa zobrazí N!: <input  type="Text" value="1" size="16" readonly id='fa'>
+		 </center>
+		 </div>
+</dl>			
+
+
+</body>
+</html>

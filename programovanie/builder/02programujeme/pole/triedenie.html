@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">    
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>	<title>Triedenie</title>
+</head>
+
+<body>
+<center><h3 class=nadpis>Triedenie</h3></center>
+Znalosť triediacich algoritmov pri programovaní v C-čku nie je nutná, lebo existujú knižničné podprogramy na utriedenie rôznych objektov.
+Viac možno nájst v kapitole venujúcej sa štandartnej knižnici STL. Tu je to z dôvodu precvičenia algoritmického myslenia, resp. vycibrenie programátorskej techniky.
+Nech A je množina n prvkov {a<sub>i</sub>} na ktorej je definovaná relácia usporiadania t. j. 
+<ul><li>pre všetky 0 &lt; j, k &lt;= n platí niektorý z nasledovných vzťahov: a<sub>j</sub> = a<sub>k</sub>; a<sub>j</sub> > a<sub>k</sub>; a<sub>j</sub> &lt; a<sub>k</sub>
+	<li>pre všetky 0 &lt; j, k, l &lt;= n platí: a<sub>j</sub> > a<sub>k</sub>  a a<sub>k</sub> > a<sub>l</sub> => a<sub>j</sub> > a<sub>l</sub>
+</ul>
+Takúto množinu voláme lineárne usporiadateľná. Problém triedenia je nájsť takú permutáciu, aby pre všetky j,k &lt;= n platilo: j>k => a<sub>j</sub> >= a<sub>k</sub>. 	 
+<br>
+Relácia usporiadania je určená nejakou vlastnosťou prvkov množiny a voláme ju kľúč. V C môžme triediť podľa číselných, 
+znakových a textových kľúčov, princíp je rovnaký. Myšlienka triedenia bude vysvetlená na triedení celých čísel 
+(zoradenie čísel od najmenšieho po najväčšie), použitie na triedenie podľa iných kľúčov je analogické)                   
+<dl><dt class=main>M A X  -  S O R T
+	<DD>Je základným a najjednoduchším triedením. Táto jednoduchá myšlienka je až prekvapujúco rýchla. Myšlienka je nasledovná.
+	<br>Chceme usporiadať n žiakov stojacich za sebou podľa veľkosti. Porovnávaním nájdeme najväčšieho a vymeníme ho s posledným. 
+	Teraz rovnako budeme usporiadavať (n-1) žiakov a takto budeme hľadať max. v stále menšej skupine. Keď nám ostane už iba jeden prvok, 
+	je skupina utriedená.
+<TABLE cellSpacing=0 width="80%" align=center bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie cez maximum</I> </P>
+         <TR><TD vAlign=top><PRE>procedure Max;
+{ for (i=n-1; i>0; i--)  //i ...na ktore miesto pojde max
+  { im=0;              //kde býva maximum
+    for (j=1; i<=i;i++)   
+	if (a[im] &lt; a[j]) im=j;
+	vymen(a,im,i);     //vymeni v poli a prvky im-ty a i-ty 
+  }
+{</pre>
+ </table>		 
+Nevýhoda tejto metódy je, že triedenie trvá vždy rovnako dlho - ak je pole skoro alebo úplne utriedené, tak jej to nepomôže. Táto metóda triedenia sa nedá vylepšovať.
+
+	<dt class=main>BUBLE-SORT
+	<dd>Toto triedenie si vysvetlíme na príklade.  Predstavte si  takúto situáciu.  Na hodine telocviku  ste sa celá
+	trieda postavili do radu tak, ako ste prichádzali. Keď prišiel učiteľ,  začal vás  zoradovať. Zobral prvého zľava,
+	ak bol jeho pravý sused menší, vymenil ich. Toho, čo bol predtým najľavejší, zase porovnal s jeho  pravým susedom. 
+	Ak nový pravý sused bol opäť menší, tak aj ich navzájom vymenil.  Ale ak bol pravý sused väčší, tak svojho obľúbenca 
+	ponechal tak a začal opakovať tie isté operácie s tým väčším pravým susedom. Keď došiel opäť na pravý koniec radu, 
+	pozrel sa na vás, či ste už zoradení. Ak ste ešte neboli, tak opäť  začal rovnako z ľavého konca. Keď došiel opäť 
+	na pravý koniec radu, tak sa zasa pozrel, či už ste zoradení ...  Ak ste boli, tak skončil a dal vám rozcvičku.
+	Teraz si to zopakujeme s kartami.  Majme 20 pomiešaných kariet, na ktorých sú čísla od 1 do 15.  Prv než ich začneme triediť, 
+	uložíme ich pekne do radu v takom poradí, v akom sme ich našli.  Budeme postupovať podľa učiteľovho algoritmu. 
+	Teda najprv zoberieme najľavejšiu a porovnáme ju s kartou,  ktorá je od nej hneď napravo.  Ak tá naša ( v tomto
+	prípade prvá a ďalej to bude vždy  väčšia z posledného porovnania ) je väčšia, tak ich obe vymeníme, ináč svoju pozornosť 
+	zameriame na tú väčšiu a ďalšie  operácie  budeme  prevádzať  s ňou.  Takže opäť ju porovnáme s kartou  po jej pravici, ...  
+	Keď dôjdeme  na pravý koniec radu je jedna karta zaručene už na správnom mieste.
+	Určite ste na to prišli, že posledná karta je najvyššia. Teraz nám treba ešte usporiadať N-1 kariet. Po prebehnutí zľava doprava
+	sa zas zaručene na posledné miesto (N-1) dostane najvyššia karta a ostane nám ešte N-2 kariet.
+	<br>Takto budeme pokračovať, až budeme mať len 2 karty, ktoré treba usporiadať - porovnáme ich a ak treba zameníme a je jasné,
+	že teraz sú už všetky karty utriedené.
+<TABLE cellSpacing=0  width="80%" align='center' bgColor='white' border=1>
+    <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Prvé bubliny</I> </P>
+    <TR><TD vAlign=top><PRE>void buble(int *a, int n)   //do podprogramu prenesieme pole a pocet prvkov
+{  for(i=n-1; i>0; i--)           //i ... kolko prvkov este triedime
+      for(j=1; i&lt;=n; j++)       //j ... adresa praveho prvku z dvojice, ktorú porovnávam
+         if (a[j-1]>a[j]) vymen(a,j,j-1);
+}</pre>
+ </table>		 
+	Vidíme, že program je krátky a celkom zrozumitelný. Skúsme hľadať nedostatky algoritmu:
+	<ol><li>algoritmus sa nestará, či náhodov už pole nie je utriedené (každé pole triedi rovnako dlho)
+		<li>prvky sa premiestňujú len o 1 políčko, čiže celá cesta každého políčka na svoje správne miesto trvá dlho
+	</ol>	
+	Skúsme teraz upraviť algoritmus tak, aby utriedené pole zbytočne netriedil. Vieme zistiť, že pole je už utriedené?
+	<br><br>Áno
+	<br>Ak sme pri prechode zľava doprava nič nevymieňali, tak je nielen "posledný" prvok už správne umiestnený ale aj ostatné.
+	<br>Pozn. Kedže podprogram "ničí" premennú n je počet prvkov prenesený cez parameter a premenná n v hlavnom programe je ochránená.
+<TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Druhé - lepšie bubliny</I> </P>
+         <TR><TD vAlign=top><PRE>void buble2(int *a,int n)
+{ for (int este=1;n>0 && este; n--)
+  {  este=0;
+     for (int j=1; j&lt;=n; j++)
+	   if (a[j-1]>a[j]) 
+	   {  vymen(a,j,j-1); este=1; }</pre>
+ </table>		 
+	<br>Tento algoritmus je lepší najmä ak triedené pole nie je moc poprehadzované a možnosť, že bude utriedené skôr je reálna.
+	Pre náhodne zamiešané polia, však môže byť efekt aj opačný - t. j. triedenie bude trvať dlhšie.
+	<br><br>
+	Pri sledovaní výmen určite prídete na myšlienku, že prvky umiestnené nad poslednou výmenou sú už na svojich miestach a teda
+	pri znižovaní premennej n môžme byť niekedy "smelší". 
+<TABLE cellSpacing=0 width="80%" align=center bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Tretie - lepšie bubliny</I> </P>
+         <TR><TD vAlign=top><PRE>void buble3(int *a,int n)
+{  int k;
+   for (n--;n>0;n--)
+   {  k=1;
+      for (j=1;j&lt;=n; n--)
+	    if (a[j-1]>a[j]) { vymen(a,j,j-1); k:=j-1; }
+	  n=k;
+    }</pre>
+ </table>
+	<br>No a to sú už bublinky v plnej dokonalosti. Napriek tomu, že sme ich 2 krát vylepšovali nedosahujú kvalít lepších triedení
+	(asi platí, že čím je niečo horšie, tým sa to ľahšie vylepšuje)
+	Ďalšie vylepšenie je už radikálne - pozri Dobosievicz, poprípade už nasledovné pretriasanie.
+
+    <dt class=main>S H A K E R  -  S O R T
+	<dd>Na úvod jedno  dôležité upozornenie! Pred skúmaním tohto triedenia si najprv prezrite BUBBLE-SORT.  
+		Toto triedenie sa totiž zakladá práve na ňom, je totiž jeho vylepšením. Jeden z problémov bubliniek je,
+		že zatiaľ čo veľké prvky vcelku rýchlo putujú doprava, tie malé postupujú len veľmi pomaly.
+		<br>Príklad1: Utriedenú postupnosť "pokazíme tak, že najväčší prvok prehodíme na druhý koniec. Bublinky na jeden
+		beh túto chybu opravia.
+		<br>Príklad2: Utriedenú postupnosť "pokazíme tak, že najmenší prvok prehodíme na druhý koniec. Bublinky musia urobiť
+		až n-1 behov, aby to napravili.
+		<br>Tento nedostatok (pomalý posun malých prvkov) napráva triedenie pretriasaním, kde raz ideme zľava doprava 
+		a potom sprava doľava. Zároveň budeme robiť "smelé" kroky, keď zistíme že dlhšie úseky na začiatku, resp. na konci sú už utriedené
+		(pozri predošlý príklad)
+
+<TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie pretriasanim</I> </P>
+         <TR><TD vAlign=top><PRE>void shaker(int *a, int n);
+for (int i1=0, int i2=n-1; i1&lt;i2; i2=i4,i1=i3)
+{  i4=i1;                    //i4 ... kam sa bude posuvat i2
+   for (i=i1; i&lt;i2; i++) if (a[i]>a[i+1]){ i4=i; vymen(a,i,i+1); }
+   i3=i2;                    //i3 ... kam sa bude posuvat i1
+   for (i=i4; i>i1; i--) if (a[i]&lt;a[i-1]){ i3=i; vymen(a,i,i-1); }
+}</pre>
+ </table>
+Toto zlepšenie budí dojem, že triedenie značne urýchli ale väčšinou žiadny výrazný pokrok nepobadáme. 
+
+    <dt class=main>I N S E R T  -  S O R T
+	<dd>Triedenie vsúvaním je založené na myšlienke:
+	<br>Máme utriedených žiakov a príde nový žiak. Najprv mu nájdeme miesto (medzi ktorých sa má zaradiť), žiakov od tohto miesta
+	do konca odsunieme a na uvolnené miesto príde nový žiak. Tento postup môžme viackrát opakovať. Toto triedenie je veľmi rýchle
+	ak prichádzajúce prvky sú približne usporiadané (netreba veľa presúvať). Pri náhodnom usporiadaní je porovnatelné s bublinkami.
+	<br>Algoritmus
+	<br>Pri programovaní je výhodné hľadanie miesta a odsúvanie robiť naraz - usporiadané prvky od konca porovnávame s novým a ak
+		je nový menší prvok v zozname posunieme doprava. 
+	<br>Myšlienka programu je takáto:
+	<br> &nbsp; &nbsp; na začiatku si zvolíme pole jednoprvkové (a[0]), ktor0 je utriedené.
+	<br> &nbsp; &nbsp; príde druhý prvok a nájdeme mu miesto kam sa má zaradiť (za prvého menšieho alebo na začiatok) a zaradíme ho
+	<br> &nbsp; &nbsp; už máme dvojprvkové pole utriedené a príde tretí atď.
+<TABLE cellSpacing=0 width="80%" align=center bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Insert - triedenie vkladaním</I> </P>
+         <TR><TD vAlign=top><PRE>void insert(int *a, int n);
+{  for (i=1;i&lt;n;i++)                 //i ... kto je novy
+   {  k=a[i];                            //noveho odlozime nabok, aby sa ostatni mohli posuvat doprava 
+      for (int j=i-1; j>=0 && k&lt; a[j]; j--) a[j+1] = a[j]; //vacsi sa posuvaju doprava 
+	  a[j]=k;                            //nasli sme miesto kam patri a je tak volno 
+   }
+}    
+  </pre>
+ </table>
+    <dt class=main>S H E L L  -  S O R T
+	<dd>Prečo shell ?  Lebo  ho vymyslel  jeden pán  menom Shell.  Na úvod vás chcem poprosiť : kto neovláda ešte insertsort 
+		( triedenie vkladaním ), nech si ho najprv detailne pozrie. Budeme ho totiž využívať. Pán Shell  prišiel na jednu  
+		supergeniálnu vec.  Myslel si, že dobré a rýchle  triedenie musí  robiť čo najviac  výmen na veľké vzdialenosti.
+		Poďme na to prakticky. Opäť sme na hodine telocviku. Tentoraz sa omeškala skoro polovica triedy. Zvyšná už bola nastúpená. 
+		Učiteľ ich chcel zoradiť klasickým vkladaním, ale všimol si, že tí, čo prišli neskôr sú zväčša menší ako tí, čo prišli včas. 
+		A tu dostal nápad. Aký ?
+		<br>Uvedomil si, že vkladaním by to  trvalo príliš dlho. Tí menší by totiž museli prísť až dopredu.  
+		Jeho napadlo povymieňať  ich pred vkladaním. Ale ako ?  Mal dve skupiny :  prvú tvorili tí, čo prišli načas;  
+		druhú oneskorenci. A tak porovnal prvých z oboch skupín,  a usporiadal ich. Ako ? Napríklad výmenou. 
+		Tak isto porovnal druhých zo skupín. Rovnako  tretích, štvrtých, ...  Čo dosiahol ? 
+		Väčšina  menších sa ocitla v prvej skupine. Teraz však  na prekvapenie mnohých obe skupiny spojil a znova ich rozdelil na 
+		tri skupiny !  A zase  pokračoval podobne :  zobral prvých zo všetkých troch skupín.  Ich troch usporiadal takto : 
+		prvého porovnal s druhým. Ak bol prvý väčší, vymenil ich.  Ak nie, nechal ich tak. Na to porovnal druhého s tretím. 
+		Zase :  ak bol druhý väčší, vymenil ich; ak nie, nechal. Rovnako aj druhých zo všetkých troch skupín usporiadal vkladaním. 
+		Podobne tretích, štvrtých, ...  A zase ich spojil. Čo urobil potom ?
+		<br>Tentoraz ich už nerozdeľoval,  ale usporiadal ich všetkých vkladaním. Prečo asi tak urobil ?
+		Jednoducho preto, že keby ich rozdelil na päť skupín, v každej by boli iba dvaja. A to už je jednoduhšie urobiť insertsort 
+		na celej triede.  Prvok sa totiž posunie maximálne o jedno miesto smerom dopredu ( k menším ). To však dokáže aj insertsort.
+		<br>Teraz si to môžme zopakovať s kartami. Máme neusporiadané karty. Rozdelíme ich na tri kôpky pokiaľ možno s rovnakým 
+		počtom prvkov. Na každej z nich vidíme vrchnú kartu. Vrchné karty utriedime vkladaním. Potom ich položíme pred jednotlivé 
+		kôpky rubom nahor. Takto na kôpkach vidíme iné karty, ktoré zase utriedime vkladaním. Opäť ich preložíme pred kôpky rubom 
+		nahor na tie, čo tam už boli. Takto pokračujeme až sa nám nevyčerpajú karty. Ak nám na konci nezostanú tri karty, ale dve;
+		tak utriedime len tie dve a preložíme. Ak jedna, iba preložíme. Teraz spojíme kôpky nasledovne. Na ľavú položíme strednú 
+		a na to ešte priložíme pravú. Tak dostaneme jednu kopu. Čo urobíme ďalej ?
+		<br>
+		Teraz opäť rozdelíme kopu na kôpky, napríklad na päť. Kôpky rozložíme zľava doprava tak, aby vrchná karta bola lícom nahor. 
+		Vrchné karty zase utriedíme vkladaním a odložíme pred kôpky. Takto postupujeme až do vyčerpania kariet. 
+		Kôpky poskladáme takto : najpravejšiu dáme na jej ľavého suseda, to čo sme dostali dáme opäť na ľavého suseda, ...  
+		Až napokon celú kopu otočíme lícom nahor. Znova rozdelíme kopu tentoraz na deväť kôpok, ...
+		Takto postupujeme kým to je výhodné. Kedy je to nevýhodné ?  Keď sa karta môže posunúť smerom dopredu len o jedno, dve miesta. V tom prípade utriedime celú kopu vkladaním.
+		Otázku ideálneho návrhu parametrov (kroku) vyriešil pán Knuth. Krok je vlastne vzdialenosť porovnávaných prvkov.
+		Našiel aj vzorec na ich jednoduchý výpočet : 
+		k<sub>0</sub>=1, k<sub>i</sub>=3*k<sub>i-1</sub>, pričom k<sub>i</sub> &lt; n div 6.
+		Začína sa tým najväčším k<sub>i</sub>, potom k<sub>i-1</sub>, ... až po k<sub>0</sub>=1, čo však je obyčajný insertsort.
+		Všeobecne sa dá povedať, že zmenšujúci krok treba voliť tak aby sa neporovnávali stále tie isté skupiny. Dobré výsledky dáva
+		postupnosť
+		<br>k1=n / 5
+		<br>k2=k1 / 3 + k1 / 5 - 1
+		<br>Tento algoritmus  sa nazýva  shellsort  alebo  insertsort s ubúdajúcim krokom.
+		Zaujímavosťou je, že robíme zdanlivo viac ako pri vsuvaní (ved klasické vsúvanie sa napokon aj zavolá) a napriek tomu
+		je výsledok opačný a čas výpočtu pri použití Shell triedenia je podstatne kratší. Tu sa ukazuje aké je triedenie vsúvaním
+		rýchle, ak je postupnosť "skoro" utriedená.
+
+
+<TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie Shell</I> </P>
+         <TR><TD vAlign=top><PRE>void shell(int *a, int n);
+{ h= n/5;
+  while (h>2) 
+  {  i=0; j=h+1;
+     while (j&lt;n)
+	 {  p=a[j]; k=i;
+	    while (k>0 &amp;&amp; p&lt;a[k])
+		{  a[k+h] = a[k];
+		   k-=h;
+		}
+		a[k+h] = p;
+		i++; j++;
+	 }
+	 h= h/3 + h/5 - 1;
+  }	 	   		
+  for {i=1; i&lt;n; i++)
+  {  p=a[i]; j= i-1;
+     while(p &lt; a[j])
+	 {  a[j+1] = a[j];
+	    j--;
+	 }
+	 a[j+1] = p;
+  }	 	
+}</pre>
+</table>
+
+	<dt class=main>Q U I C K  -  S O R T
+	<dd>Quick je anglické slovo a znamená asi toľko ako rýchly. Teda podľa mena by mal byť tento algoritmus rýchly. 
+	On aj vskutku je, mnohí ho považujú za najrýchlejšie triedenie vôbec. Dokonca aj prax to často potvrdí.
+	<br>Myšlienka:
+	<br>Tentoraz nebude hodina telocviku, ale si povieme rozprávku.
+	Kde bolo, tam bolo, bola raz jedna krajina menom Putánia. V tej krajine sa piesok sypal a voda sa liala. 
+	Nezvyčajné tu bolo niečo iné. Žili tu totiž dva národy : liliputáni a maxiputáni.  Liliputáni boli malí, kým maxiputáni zase veľkí.
+	<br>
+	Liliputáni  sa vždy  sťažovali,  že sú oproti  maxiputánom v nevýhode. Chceli mať väčšie práva,  ale menšie povinnosti.  
+	To sa však nepáčilo maxiputánom, ktorým sa zdali požiadavky liliputánov prehnané. Niekoľko rokov sa osočovali, až sa napokon 
+	rozhodli, že sa rozdelia a vytvoria dve krajiny : krajinu liliputánov a krajinu maxiputánov. Pôvodnú krajinu rozdelili na 
+	dve polovice a vypočítali výšku, ktorá bude rozhodujúcim deliacim kritériom. Výšku vypočítali tak, aby existovali aspoň
+	dvaja tej výšky. Tých určili za policajtov.  Po vytýčení hranice však zistili, že nie všetci sa presťahovali. Tak prišli 
+	k slovu policajti. Jeden odišiel  do krajiny liliputánov  a tam hľadal špiónov.  Ako ich spoznal ?  Jednoducho, boli od neho 
+	vyšší. Ten druhý šiel zase do krajiny maxiputánov. Tam tiež hľadal špiónov. Tí boli od neho nižší. Keď jeden z nich našiel 
+	špióna, chcel ho dať vyhostiť. Ale colníci mu oznámili, že cez hranice nemožno chodiť len tak, a už vôbec nie špióni.
+	Jedine vtedy, ak by šlo o výmenu.  Tak musel počkať,  kým aj ten druhý policajt nájde špióna. Potom si ich mohli vzájomne vymeniť.
+	<br>
+	Keď si ich vymenili, zase odišli každý do svojej krajiny hľadať špiónov. Ak jeden našiel, počkal kým nájde aj ten druhý 
+	a zase si ich vymenili. Takto pokračovali, až kým sa v jednej krajine neminuli špióni. Ak ale v tej druhej ešte boli, 
+	presťahovali ich ku hraniciam a posunuli hranicu tak, aby špióni zostali za hranicou. Takýmto spôsobom vznikli dve nové krajiny : 
+	Liliputánia a Maxiputánia. Stala sa však pritom takáto vec. Liliputánia mala raz toľko obyvateľov ako Maxiputánia. 
+	To sa ukázalo dramatickým pri voľbách do vlády. Kým v Maxiputánii bol každý tretí ministrom, v Liliputánii to bol iba každý
+	šiesty. Keďže však všetci si chceli dobre žiť, tak aj chceli byť ministrami. To ale nebolo možné, iba ak by sa Liliputánia 
+	rozdelila na dve krajiny, povedal ktosi. A toho sa ľudia chytili. Ešte donedávna pevná a jednotná Liliputánia sa rozdelila. 
+	<br>Ako ?  
+	<br>Podobne ako sa rozdelila  bývalá Putánia. Tak vznikli Lilililiputánia a Maxililiputánia. V snahe všetkých byť ministrami 
+	sa rozdelili nielen tie, ale aj Maxiputánia.
+	<br>
+	Tak to šlo až dovtedy kým každý nebol predsedom vlády. Pritom si však nevšimol, že je aj jediným obyvateľom krajiny, ktorej vládne. 
+	Tu prišiel cudzinec a všimol si jednu vec.  Postavil obyvateľov krajín v takomto poradí : Lililililililili...putánec, 
+	Maxilililililili...putánec, Lililililili...putánec,  Maxilililili...putánec,  Lililili...putánec, Maxilili...putánec, 
+	Lili...putánec, Maxi...putánec až Maximaximaximaxi...putánec. A oni stáli usporiadaní podľa veľkosti !
+	<br>
+	A rozprávke je koniec. 
+	<br>Hovorí sa, že každá rozprávka má mravné ponaučenie. Táto nás okrem mnohého iného naučila aj novú metódu ako utriediť prvky.
+	Teraz si to vysvetlíme na paličkách. Sú neutriedené. Vypočítame medián ( prvok veľkosti, podľa ktorej budeme rozdeľovať ).  
+	Policajti pôjdu sprava a zľava. Ten, čo ide sprava, hľadá väčších od seba.
+	Ten, čo ide zľava, hľadá menších od seba. Ak jeden z nich nájde paličku zlej výšky, počká kým nájde aj ten druhý. 
+	Potom si ich vymenia a hľadajú ďalej, až kým sa nestretnú. Tam, kde sa stretnú, vytvoria hranicu. Tým vzniknú dve
+	skupiny, z ktorých každú utriedime tak ako tú prvú. Čiže znova vypočítame medián a rozdeľujeme ... Toto delenie robíme, 
+	kým má naša skupina viac ako jednu paličku. Takú skupinu už totiž netreba triediť.
+	Zvláštnosťou tohto triedenia je to, že je rekurzívne. To znamená zvýšené nároky na pamäť počítača. Ukázalo sa, že rozhodujúcim
+	činiteľom úspešnosti triedenia je správny výber mediána. Ak totiž zoberieme ako medián najmenší prvok, tak dostaneme prvú 
+	skupinu jednoprvkovú. A našou snahou je rozdeliť postupnosť pokiaľ možno na polovice. Výber správneho mediána je ale rovnako 
+	zložitý problém ako samotné triedenie, preto sa medián volí náhodne, napr. aritmetický priemer prvého a posledného prvku,
+	prípadne hodnota nejakého prvku (prvého, posledného, stredného)
+<TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie Quick</I> </P>
+         <TR><TD vAlign=top><PRE>void rozdel(int *a, int left,int right);
+{  i = left; j = right;
+   x = a[(left+right+)/2];
+   while (i<=j)
+   {  while (a[i] &lt; x) i++;
+      while (a[j] &gt; x) j--
+	  if (i&lt;=j)
+	  {  p=a[i]; a[i]=a[j]; a[j]=p;
+	     i++; j--;
+	  }
+   }
+   if (left &lt;j) quick(left,j);
+   if (i&lt; right) quick(imright);
+}
+				   
+void quick(int *a,int n);
+{
+    rozdel(a,1,n)
+}</pre>   	
+</table>
+Program je jednoduchý. Zavolá iba rekurzívnu procedúru rozdeľ, ktorá miesto neho všetko urobí.
+
+	<dt class=main>D O B O S I E W I C Z  -  S O R T
+	<dd>Toto triedenie je založené na triedení pretriasaním, alebo shakersorte. Bolo by dobré pozrieť si najprv to.
+	Ak ste to zvládli, môžme sa venovať dobosiewiczsortu. Odkiaľ také ťažké meno ?  Po autorovi triedenia, pánovi poľského pôvodu, 
+	menom Dobosiewicz. Čím takým sa preslávil ?  Vymyslel triedenie, ktoré sa veľmi podobá triedeniu pretriasaním s ubúdajúcim krokom. 
+	Teda jednoducho povedané využil myšlienku výmen na dlhé vzdialenosti v triedení pretriasaním. Pritom neobjavil nič nové, 
+	iba spojil to, čo využili iní. To však nebol koniec. On ešte takéto triedenie vylepšil ekonomickejšou réžiou. Čo to znamená, 
+	uvidíme neskôr.
+	<br>
+	Ste na prvej hodine telocviku a  postavili ste sa do radu ako prišlo. Je vás, dajme tomu, 32. Učiteľ vás začal usporadúvať. 
+	Porovnal prvého s dvadsiatympiatym. Ak bol prvý väčší, vymenil ich; ak nie nechal tak.
+	Potom vybral 2. a 26. Rovnakým spôsobom ich porovnal, prípadne vymenil. Obdobne 3. a 27., ... Nakoniec porovnal 8. a 32.
+	Teraz vypočítal tri štvrtiny z 24 = 18. A začal zasa s porovnávaním : 14. s 32., 13. s 31., 12. s 30., 11. s 29., ... , 2. s 20. 
+	a nakoniec 1. s 19. Prečo postupoval opačným smerom ?  Aby aj tí malí mali šancu dostať sa rýchlo dopredu.
+	Znova vypočítal krok  ( 18 : 4 ) x 3 = 12 a porovnával tentoraz od začiatku : 1. s 13., 2. s 14., 3. s 15., ... , 19. s 31. 
+	až napokon 20. s 32. ďalej pokračoval s krokom 9 od konca : 23. s 32., 22. s 31., ... , 2. s 11. a 1. s 10.
+	<br>Kedy skončil ?  Vtedy, keď krok bol rovný 1 !
+	Aké odlišnosti od shakersortu s ubúdajúcim krokom ste zistili ?
+	<br>
+	Vysvetlíme si to  na situácii s krokom 9.  V shakersorte s ubúdajúcim krokom by sme prvky : 1., 10., 19. a 28. utriedili shakersortom. 
+	No my namiesto toho porovnáme a keď treba vymeníme 1. s 10., 10. s 19. a 19.s 28. Nič viac !  Podobnosť na shakersort s ubúdajúcim 
+	krokom je len povrchná. Vskutku originálnym spôsobom je tu využitá myšlienka výmen na veľké vzdialenosti. 
+	Pri zachovaní koeficientu 3/4 sa zdá byť toto triedenie najúčinnejšie (porovnateľné  výsledky  sa dajú  dosiahnuť s koeficientom 2/3).
+    <TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
+    <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie dobosievicz</I> </P>
+    <TR><TD vAlign=top><PRE>
+Procedure dobosievicz;
+Var p,i,j,k:integer;
+    h,m,s,ss:WORD;
+Begin
+  h:=Pocet div 3;
+  while h>2 do
+  begin
+    i:=pocet;
+    j:=i-h;
+    while j>0 do
+    BEGIN
+      if a[i]&lt;a[j] then
+      Begin
+        p:=a[i]; a[i]:=a[j]; a[j]:=p;
+      End;
+      dec(i);dec(j);
+    END;
+     h:=3*h div 4;
+
+    i:=1+h;
+    j:=1;
+    while i&lt;=Pocet do
+    BEGIN
+      if a[i]&lt;a[j] then
+      Begin
+        p:=a[i]; a[i]:=a[j]; a[j]:=p;
+      End;
+      inc(i);inc(j);
+    END;
+     h:=3*h div 4;
+  end;
+
+  a[0]:=0;
+  for i:=2 to Pocet do
+  BEGIN
+    p:=a[i];j:=i-1;
+    while p&lt;a[j] do
+    Begin
+      a[j+1]:=a[j];
+      dec(j);
+    End;
+    a[j+1]:=p;
+  END;
+End;
+
+</pre>
+</table>
+<br>V jednoduhšej variante namiesto pretriasania môžme dať bublinky len jednosmerové, program sa skráti a na čase sa to moc neprejaví.
+
+	<dt class=main>M E R G E  -  S O R T
+	<dd>Alebo triedenie zlučovaním. Dôvod tohto názvu pobadáme za chvíľu. Teraz poďme na hodinu telocviku. Učiteľ béčkarov ochorel, 
+	tak ste mali telocvik spolu s nimi. Na začiatku ste sa postavili obidve triedy osve. Áčka na jedno miesto a béčka na druhé, 
+	ale obe skupiny boli zoradené podľa veľkosti. Ako ich čo najrýchlejšie usporiadať do jednej skupiny podľa veľkosti?  
+	Učiteľ to urobil takto :  zobral najmenších ( prvých ) z oboch skupín,  porovnal ich; menšieho postavil  na začiatok nového 
+	radu a  k väčšiemu zavolal ďalšieho ( druhého ) z tej skupiny, do ktorej on nepatril. Týchto dvoch  opäť porovnal a menšieho 
+	zaradil  na druhé miesto novej skupiny. K tomu, čo zostal, zasa pridal ďalšieho z tej skupiny, do ktorej nepatril. 
+	Takto vytváral novú skupinu bez problémov až do chvíle, keď sa mu chalani z jednej skupiny minuli. S tým si však poradil bez
+	problémov. Jednoducho ich všetkých rad radom presunul do novej skupiny presne v tom poradí, v akom stáli. A mal ich usporiadaných.
+	Takýto postup sa nazýva zlučovanie. Ide tu v podstate o zlúčenie dvoch usporiadaných skupín tak, aby sa zachovalo usporiadanie. 
+	Táto metóda je jednoduchá, ale ako ju využiť na triedenie ?  Veď jej predpokladom je existencia utriedených skupín. 
+	Ako vyriešiť tento problém si vysvetlíme na triedení kariet. Máme kopu neutriedených kariet. Rozdelíme ju trebárs na polovice. 
+	Ak by boli usporiadané, vedeli by sme ich zlúčiť a neporušiť usporiadanie. Ale to sa nestalo. Tak zoberieme prvú skupinu 
+	a znova ju rozdelíme na polovice.  Tu si môžeme zopakovať :  ak by boli utriedené obe skupiny, vedeli by sme ich zlúčiť ...
+	<br>Keďže však nie sú, pokračujeme v rozdeľovaní. Vzniká vážna námietka : budeme mať po nejakom n-tom rozdelení už usporiadané 
+	obe skupiny ?  Ja tvrdím, že áno ! Bude to vtedy, keď obe skupiny budú najviac jednoprvkové. Je bez pochybností, 
+	že každá jednoprvková skupina je utriedená, teda vtedy skončíme rozdeľovanie a začneme zlučovanie. Po zlúčení dostaneme 
+	napr. dvojprvkovú skupinu. Mali by sme ju zlúčiť s ďaľšou dvojprvkovou z predchádzajúceho delenia. Tá však ešte nie usporiadaná. 
+	Tak rozdelíme aj ju na dve jednoprvkové. Tie sú už utriedené, tak ich môžeme zlúčiť. Výsledok zasa zlúčime podľa učiteľovej 
+	metódy na štvorprvkovú skupinu. Atď...
+
+	Problémom zostáva už len aplikácia postupu v programe. Jednotlivé činnosti si môžme rozdeliť na tieto základné : 
+	<br>rozdeľ, zlúč. 
+	<br>To budú aj názvy dvoch podstatných procedúr. Zostal už len jeden vážny problém.  Kam ukladať postupnosť, ktorú vytvárame 
+	pri zlučovaní ?   Riešenie :  využijeme nejaké iné pole, napr. k tomu nášmu zrkadlovo obrátené. Presnejšie to bude pole a(-1), a(-2),
+	a(-3), ...  Teda na zápornom úseku vytvoríme zlúčené pole a potom ho len prenesieme do kladnej časti.
+</dl>
+<br><a href="p-demo.html" target="obsah">Demo</a>
+
+</body>
+</html>

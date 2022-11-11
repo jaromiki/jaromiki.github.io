@@ -1,0 +1,50 @@
+
+<HTML>
+<HEAD>
+<TITLE>Dynamické HTML -- svìtelné zdroje</TITLE>
+<STYLE TYPE="text/css">
+<!--
+BODY    { color: white;
+          background-color: black;
+          text-align: center }
+#napis  { position: relative;
+          width: 700px;
+          height: 80px;
+          font: bold 60px Arial;
+          filter: Light() }
+-->
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var MinX=0, 
+    MaxX=700,
+    X=0,
+    Y=40,
+    Step=10,
+    id;
+    
+function Move()
+{
+    // Pøesun zdroje svìtla
+    document.all.napis.filters.Light.moveLight(0, X, Y, 0, true);
+    // Aktualizace 
+    X += Step;      
+    if (X >= MaxX) { Step = -Step; };
+    if (X <= MinX) { Step = -Step; };
+}
+
+function Init()
+{	document.all.napis.filters.Light.addCone((MinX+MaxX)/2, Y, 150, X, Y,
+        255, 180, 180, 100, 20);    // Kuželový zdroj svìtla
+    document.all.napis.filters.Light.addAmbient(0, 0, 127, 100);
+                                    // Rovnomìrný zdroj svìtla
+	napis.filters.Light.addPoint(100, 50, 50, 255, 0, 0, 100)								
+    id = setInterval("Move()", 100);    // Aktivace pohybu
+}
+// -->
+</SCRIPT>
+</HEAD>
+<BODY onLoad="Init()">
+<DIV ID=napis>Uèíme sa javaScript</DIV>
+</BODY>
+</HTML>

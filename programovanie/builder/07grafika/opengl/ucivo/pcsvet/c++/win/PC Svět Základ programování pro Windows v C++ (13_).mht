@@ -1,0 +1,300 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_pro_Windows_v_C++?=
+	=?windows-1250?Q?_=2813.=29?=
+Date: Thu, 12 Jul 2007 10:07:53 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1471
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED pro =
+Windows v C++ (13.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED pro Windows v C++ (13.)</H2>
+<H4>Standardn=ED ovl=E1dac=ED prvky - tla=E8=EDtka, r=E1me=E8ky, =
+za=9Akrt=E1vac=ED pol=ED=E8ka,=20
+p=F8ep=EDna=E8e</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Jak jsme si v p=F8edchoz=EDch d=EDlech seri=E1lu uk=E1zali, nen=ED =
+probl=E9m vytvo=F8it okno=20
+aplikace pomoc=ED resource (zdroj=F9). Pro tvorbu takov=FDchto dialog=F9 =
+m=F9=9Eeme na=20
+internetu naj=EDt i n=ECkolik kvalitn=EDch program=F9, nap=F8. =
+<B>Weditres</B>. Pokud=20
+chceme vytvo=F8it slo=9Eit=ECj=9A=ED aplikaci, mohou n=E1m takov=E9to =
+dialogy v mnoh=E9m pomoci,=20
+ale z=E1kladn=ED hlavn=ED okno aplikace takto vytv=E1=F8et ur=E8it=EC =
+nebudeme. Zapome=F2me nyn=ED=20
+na chv=EDli na dialogy a poj=EFme se to v=9Ae nau=E8it d=EClat =
+ru=E8n=EC. Jak jste se mohli=20
+do=E8=EDst v d=EDle 9, pro vlastn=ED tvorbu okna pou=9Eijeme funkci =
+CreateWindow, p=F8=EDpadn=EC=20
+CreateWindowEx. Funkce CreateWindowEx je definov=E1na takto:=20
+<P><TT>HWND CreateWindowEx(</TT> <BR><TT>&nbsp;&nbsp;&nbsp; DWORD&nbsp;=20
+dwExStyle,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =
+roz=9A=ED=F8en=E9 styly=20
+okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; LPCTSTR&nbsp;=20
+lpClassName,&nbsp;&nbsp;&nbsp;&nbsp; // n=E1zev t=F8=EDdy okna</TT>=20
+<BR><TT>&nbsp;&nbsp;&nbsp; LPCTSTR&nbsp; lpWindowName,&nbsp;&nbsp;&nbsp; =
+//=20
+jm=E9no okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; DWORD&nbsp;=20
+dwStyle,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =
+styly=20
+okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; int&nbsp;=20
+x,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+// horizont=E1ln=ED pozice okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+int&nbsp;=20
+y,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+// vertik=E1ln=ED pozice okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; int&nbsp;=20
+nWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;=20
+// =9A=ED=F8ka okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; int&nbsp;=20
+nHeight,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;=20
+// v=FD=9Aka okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; HWND&nbsp;=20
+hWndParent,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // handle na =
+
+rodi=E8ovsk=E9 okno</TT> <BR><TT>&nbsp;&nbsp;&nbsp; HMENU&nbsp;=20
+hMenu,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;=20
+// handle na menu okna</TT> <BR><TT>&nbsp;&nbsp;&nbsp; HINSTANCE&nbsp;=20
+hInstance,&nbsp;&nbsp;&nbsp;&nbsp; // handle instance b=EC=9E=EDc=ED =
+aplikace</TT>=20
+<BR><TT>&nbsp;&nbsp;&nbsp; LPVOID&nbsp;=20
+lpParam&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // =
+dal=9A=ED=20
+data pro tvorbu okna</TT> <BR><TT>&nbsp;&nbsp; );</TT>=20
+<P>T=F8=EDdu okna vytvo=F8=EDme a registrujeme podobn=EC jako v =
+p=F8=EDkladu v d=EDle =E8.3, jm=E9no=20
+okna specifikuje vnit=F8n=ED n=E1zev okna, kter=FD r=F9zn=E9 t=F8=EDdy =
+oken pou=9E=EDvaj=ED jinak.=20
+Standardn=ED okna, jak je zn=E1 u=9Eivatel, jej interpretuj=ED jako =
+n=E1zev v titulkov=E9m=20
+pruhu. LPVOID lpParam pro dal=9A=ED data pro tvorbu okna vyu=9E=EDvaj=ED =
+p=F8edev=9A=EDm MDI=20
+aplikace, v jednoduch=FDch programech nen=ED pot=F8eba.=20
+<P>V tomto =E8l=E1nku se ov=9Aem nebudeme v=ECnovat samotn=E9mu oknu, =
+n=FDbr=9E jeho prvk=F9m.=20
+Jak ji=9E bylo vysv=ECtleno v minul=FDch d=EDlech, jsou v=9Aechny prvky =
+okna v podstat=EC=20
+tak=E9 okny, jedin=FD rozd=EDl je v tom, =9Ee tato okna maj=ED =
+p=F8i=F8azen styl WS_CHILD,=20
+kter=FDm toto okno p=F8i=F8azujeme jin=E9mu (mate=F8sk=E9mu neboli =
+top-level) oknu. Pro=20
+v=9Aechny b=EC=9En=EC pou=9E=EDvan=E9 prvky definuj=ED Windows v=9Edy =
+jednu t=F8=EDdu okna, kterou=20
+m=F9=9Eeme pou=9E=EDvat bez nutnosti vytv=E1=F8et si jinou.=20
+<P>V ka=9Ed=E9m programu nalezneme tla=E8=EDtko. Pro v=9Aechna =
+tla=E8=EDtka je definov=E1na=20
+t=F8=EDda "BUTTON". Pokud tento specifikujeme ve funkci CreateWindow a =
+jako styl=20
+specifikujeme minim=E1ln=EC WS_CHILD a WS_VISIBLE, vytvo=F8=ED n=E1m =
+Windows klasick=E9=20
+tla=E8=EDtko. Vzhled tohoto tla=E8=EDtka m=F9=9Eeme d=E1le specifikovat =
+styly:=20
+<UL>
+  <LI>BS_PUSHBUTTON - vytvo=F8=ED klasick=E9 tla=E8=EDtko - nen=ED =
+t=F8eba jej specifikovat=20
+  <LI>BS_DEFPUSHBUTTON - vytvo=F8=ED tla=E8=EDtko je=9E je =
+zv=FDrazn=ECno a m=EClo by b=FDt=20
+  aktivn=ED pro vstup z kl=E1vesnice=20
+  <LI>BS_GROUPBOX - nevytvo=F8=ED klasick=E9 tla=E8=EDtko ale jakousi =
+dr=E1=9Eku pro=20
+  ohrani=E8en=ED ur=E8it=E9 oblasti okna, dan=FD n=E1zev tla=E8=EDtka je =
+pou=9Eit jako nadpis=20
+  tohoto r=E1me=E8ku=20
+  <LI>BS_CHECKBOX - vytvo=F8=ED m=EDsto tla=E8=EDtka za=9Akrt=E1vac=ED =
+pol=ED=E8ko, vhodn=E9 do=20
+  formul=E1=F8=F9, kde m=F9=9Ee b=FDt zvoleno v=EDce voleb. U tohoto =
+stylu obrd=9E=ED aplikace=20
+  informaci o kliknut=ED, ale zm=ECnu stavu ji=9E mus=ED prov=E9st =
+program. Text je=20
+  zarovn=E1n vpravo od tohoto pol=ED=E8ka, nen=ED-li specifikov=E1no =
+jinak.=20
+  <LI>BS_AUTOCHECKBOX - vytvo=F8=ED za=9Akrt=E1vac=ED pol=ED=E8ko jako =
+BS_CHECKBOX ale na=20
+  rozd=EDl od BS_CHECKBOX nech=E1 na Windows spr=E1vu =
+za=9Akrt=E1v=E1n=ED.=20
+  <LI>BS_3STATE - podobn=EC jako BS_CHECKBOX av=9Aak pol=ED=E8ko =
+m=F9=9Ee m=EDt i neur=E8it=FD=20
+  stav (za=9Aedl=E9).=20
+  <LI>BS_AUTO3STATE - podobn=EC jako BS_AUTOCHECKBOX av=9Aak pol=ED=E8ko =
+m=F9=9Ee m=EDt i=20
+  neur=E8it=FD stav (za=9Aedl=E9).=20
+  <LI>BS_RADIOBUTTON - m=EDsto tla=E8=EDtka je vytvo=F8en kruhov=E9 =
+pol=ED=E8ko, kter=E9 je=20
+  ur=E8eno p=F8edev=9A=EDm do seznam=F9, kdy jen jedna polo=9Eka =
+m=F9=9Ee b=FDt za=9Akrtnuta. Funkce=20
+  je podobn=E1 jako u BS_CHECKBOX.=20
+  <LI>BS_AUTORADIOBUTTON - podobn=EC jako u BS_RADIOBUTTON ale spr=E1va =
+reakce na=20
+  kliknut=ED je ponech=E1na na Windows. </LI></UL>U radio nebo check =
+box=F9 m=F9=9Eeme d=E1le=20
+specifikovat tyto styly:=20
+<UL>
+  <LI>BS_LEFTTEXT - zarovn=E1 text vlevo od dan=E9ho prvku=20
+  <LI>BS_LEFT - zarovn=E1 text zleva na prav=E9 stran=EC prvku =
+(implicitn=ED)=20
+  <LI>BS_PUSHLIKE - checkbox, 3statebox nebo radiobutton z=EDskaj=ED =
+t=EDmto stylem=20
+  vzhled jako klasick=E9 tla=E8=EDtko.=20
+  <LI>BS_RIGHT - zarovn=E1 text zprava na prav=E9 stran=EC prvku =
+(implicitn=ED)=20
+  <LI>BS_RIGHTBUTTON - stejn=E1 funkce jako BS_LEFTTEXT =
+</LI></UL>Klasick=E1 tla=E8=EDtka=20
+mohou m=EDt d=E1le tyto styly:=20
+<UL>
+  <LI>BS_BITMAP - specifikuje, =9Ee tla=E8=EDtko bude zobrazovat bitmapu =
+
+  <LI>BS_BOTTOM - um=EDst=ED text na doln=ED okraj tla=E8=EDtka=20
+  <LI>BS_CENTER - horizont=E1ln=EC vycentruje text v tla=E8=EDtku=20
+  <LI>BS_ICON - specifikuje, =9Ee tla=E8=EDtko zobrazuje ikonu=20
+  <LI>BS_MULTILINE - v p=F8=EDpad=EC pot=F8eby bude text na tla=E8=EDtku =
+zalomen do v=EDce=20
+  =F8=E1dk=F9=20
+  <LI>BS_TEXT - specifikuje, =9Ee tla=E8=EDtko zobrazuje text=20
+  <LI>BS_TOP - um=EDst=ED text k horn=EDmu okraji tla=E8=EDtka=20
+  <LI>BS_VCENTER - vertik=E1ln=EC vycentruje text na tla=E8=EDtku=20
+  <LI>d=E1le lze pou=9E=EDt styly BS_LEFT, BS_RIGHT, v tomto =
+p=F8=EDpad=EC v=9Aak umis=9Duj=ED=20
+  text k dan=E9mu okraji tla=E8=EDtka </LI></UL>Pro v=9Aechny typy =
+tla=E8=EDtek lze d=E1le=20
+specifikovat styly:=20
+<UL>
+  <LI>BS_NOTIFY - tla=E8=EDtko pos=EDl=E1 mate=F8sk=E9mu oknu =
+notifika=E8n=ED zpr=E1vy jako=20
+  BN_DBLCLK, BN_KILLFOCUS, BN_SETFOCUS a dal=9A=ED=20
+  <LI>BS_OWNERDRAW - tla=E8=EDtko je vykreslov=E1no aplikac=ED (na =
+uk=E1zku ru=E8n=EDho=20
+  kreslen=ED tla=E8=EDtek se m=F9=9Eete t=EC=9Ait do n=ECkter=E9ho z =
+p=F8=ED=9At=EDch d=EDl=F9). </LI></UL>
+<P><BR>N=ECkter=E9 styly je mo=9En=E9 kombinovat a t=EDm dos=E1hnout =
+zaj=EDmav=FDch v=FDsledk=F9.=20
+Zkuste si t=F8eba p=F8i=F8adit tla=E8=EDtku WS_DLGFRAME. Z=EDsk=E1te tak =
+velice zaj=EDmav=FD okraj=20
+pro dan=E9 tla=E8=EDtko.=20
+<P>A je=9At=EC posledn=ED detail. Pokud se v=E1m nel=EDb=ED klasick=FD =
+styl textu na tla=E8=EDtku,=20
+nen=ED =9E=E1dn=FD probl=E9m z=EDskat pomoc=ED funkce CreateFont handle =
+na font a p=F8i=F8adit jej=20
+dan=E9mu tla=E8=EDtku funkc=ED SendMessage( hwnd, WM_SETFONT, =
+(WPARAM)hfFont,=20
+MAKELPARAM(1, 0) ); kde hwnd je handle na dan=E9 tla=E8=EDtko a hfFont =
+je handle=20
+p=F8i=F8azovan=E9ho fontu.=20
+<P>Ono je sice hezk=E9 m=EDt p=ECkn=E9 tla=E8=EDtko, jen=9Ee pokud s =
+n=EDm neum=EDme komunikovat,=20
+je n=E1m na nic. Windows definuj=ED pro komunikaci s tla=E8=EDtky tyto =
+zpr=E1vy:=20
+<UL>
+  <LI>BM_CLICK - parametry =9E=E1dn=E9 - posl=E1n=EDm t=E9to zpr=E1vy =
+tla=E8=EDtku m=F9=9Eete=20
+  nasimulovat stisk tla=E8=EDtka, jako by bylo stisknuto u=9Eivatelem.=20
+  <LI>BM_GETCHECK - parametry =9E=E1dn=E9 - vr=E1t=ED stav checkboxu =
+nebo radiobuttonu.=20
+  BST_CHECKED =3D tla=E8=EDtko je za=9Akrtnuto, BST_UNCHECKED =3D =
+tla=E8=EDtko nen=ED=20
+  za=9Akrtnuto, BST_INDETERMINATE =3D tla=E8=EDtko je v mezistavu, je =
+za=9Aedl=E9=20
+  <LI>BM_GETIMAGE - parametry =9E=E1dn=E9 - vr=E1t=ED handle na ikonu =
+nebo bitmapu=20
+  pou=9Eitou pro dan=E9 tla=E8=EDtko=20
+  <LI>BM_GETSTATE - parametry =9E=E1dn=E9 - vr=E1t=ED aktu=E1ln=ED stav =
+tla=E8=EDtka. Vr=E1cen=E1=20
+  hodnota je bitov=FDm sou=E8tem hodnot uveden=FDch v BM_GETCHECK a =
+BST_FOCUS m=E1-li=20
+  tla=E8=EDtko fokus, p=F8=EDpadn=EC BST_PUSHED je-li tla=E8=EDtko =
+stisknuto.=20
+  <LI>BM_SETCHECK - wParam =3D stav tla=E8=EDtka (jako BM_GETCHECK) - =
+nastav=ED nov=FD=20
+  stav tla=E8=EDtka=20
+  <LI>BM_SETIMAGE - lParam =3D handle na novou ikonu nebo bitmapu - =
+nastav=ED=20
+  tla=E8=EDtku ikonu nebo bitmapu=20
+  <LI>BM_SETSTATE - wParam =3D stav tla=E8=EDtka (jako BM_GETSTATE) - =
+nastav=ED nov=FD=20
+  stav tla=E8=EDtka=20
+  <LI>BM_SETSTYLE - wParam =3D nov=FD styl tla=E8=EDtka; lParam =3D =
+MAKELPARAM(fRedraw, 0)=20
+  - fRedraw je nenulov=FD m=E1-li b=FDt tla=E8=EDtko nov=EC =
+p=F8ekresleno - nastav=ED nov=FD styl=20
+  tla=E8=EDtka </LI></UL>D=E1le bychom od tla=E8=EDtek m=ECli =
+odchyt=E1vat notifika=E8n=ED zpr=E1vy,=20
+abychom tak z=EDskali p=F8ehled o tom, co s oknem aplikace prov=E1d=ED =
+u=9Eivatel.=20
+Notifika=E8n=ED zpr=E1vy od tla=E8=EDtek mimo BN_CLICKED obdr=9E=EDme v =
+p=F8=EDpad=EC, =9Ee je=20
+definov=E1n styl BS_NOTIFY. BN_CLICKED obdr=9E=ED aplikace v=9Edy. =
+V=9Aechny notifika=E8n=ED=20
+zpr=E1vy jsou pos=EDl=E1ny v kontextu zpr=E1vy WM_COMMAND, a to jako =
+horn=ED slovo=20
+parametru wParam (HIWORD(wParam)). V parametru lParam dostaneme v=9Edy =
+handle na=20
+dan=FD prvek, a ve spodn=EDm slovu parametru wParam m=F9=9Eeme nal=E9zt =
+identifika=E8n=ED=20
+=E8=EDslo dan=E9ho prvku v okn=EC.=20
+<P>Notifika=E8n=ED zpr=E1vy od tla=E8=EDtek jsou: </P>
+<UL>
+  <LI>BN_CLICKED - ji=9E zmi=F2ovan=E1, mate=F8sk=E9 okno ji obdr=9E=ED =
+poka=9Ed=E9, kdy=9E u=9Eivatel=20
+  na n=ECkter=E9 tla=E8=EDtko klikl.=20
+  <LI>BN_DBLCLK - oznamuje, =9Ee u=9Eivatel provedl dvojklik nad dan=FDm =
+tla=E8=EDtkem. Je=20
+  pos=EDl=E1no pouze radiobutton=F9m a aplikac=ED kreslen=FDm =
+tla=E8=EDtk=F9m.=20
+  <LI>BN_DISABLE - oznamuje, =9Ee tla=E8=EDtko bylo znefunk=E8n=ECno.=20
+  <LI>BN_HILITE, BN_PUSHED - oznamuje, =9Ee nad tla=E8=EDtkem je kurzor =
+my=9Ai a=20
+  u=9Eivatel stiskl tla=E8=EDtko my=9Ai.=20
+  <LI>BN_KILLFOCUS - oznamuje, =9Ee tla=E8=EDtko ji=9E nem=E1 fokus=20
+  <LI>BN_SETFOCUS - oznamuje, =9Ee tla=E8=EDtko z=EDskalo fokus a =
+reaguje nyn=ED na=20
+  p=F8=EDkazy z kl=E1vesnice=20
+  <LI>BN_UNHILITE, BN_UNPUSHED - oznamuje, =9Ee stisk tla=E8=EDtka byl =
+uvoln=ECn=20
+</LI></UL>Tla=E8=EDtko je v GUI Windows asi nejpou=9E=EDvan=ECj=9A=EDm =
+prvkem a =9E=E1dn=E1 aplikace=20
+by se bez n=ECj neobe=9Ala. V =9E=E1dn=E9m p=F8=EDpad=EC v=9Aak pr=E1ce =
+s n=EDm nen=ED tak n=E1ro=E8n=E1, jak=20
+se m=F9=9Ee z tohoto =E8l=E1nku zd=E1t. Pomoc=ED t=E9to stru=E8n=E9 =
+reference nyn=ED m=F9=9Eete pracovat=20
+s klasick=FDmi tla=E8=EDtky, za=9Akrt=E1vac=EDmi pol=ED=E8ky, =
+p=F8ep=EDnac=EDmi tla=E8=EDtky=20
+(radiobuttony) a r=E1me=E8ky pro tyto objekty. V p=F8=ED=9At=EDch =
+d=EDlech si uk=E1=9Eeme podobnou=20
+stru=E8nou referenci pro dal=9A=ED standardn=ED prvky oken.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:07:39 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

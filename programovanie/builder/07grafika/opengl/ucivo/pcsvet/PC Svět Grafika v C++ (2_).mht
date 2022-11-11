@@ -1,0 +1,521 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Grafika_v_C++_=282.=29?=
+Date: Thu, 12 Jul 2007 09:50:34 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2461
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Grafika v C++ (2.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Grafika v C++ (2.)</H2>
+<H4>V druh=E9m d=EDle si pov=EDme v=EDce o v=FDpln=EDch a barv=E1ch. =
+Taky se zam=EC=F8=EDme na text=20
+a form=E1tov=E1n=ED textu pro na=9Ae programy.</H4>
+<HR color=3D#777777 SIZE=3D1>
+<STRONG><FONT size=3D+1>Barvy</FONT></STRONG>=20
+<P>My pou=9E=EDv=E1me pro na=9Ae programy rozli=9Aen=ED 640 x 480 =
+pixel=F9 v 16 barv=E1ch.=20
+Seznam barev v Borland C++ je n=E1sleduj=EDc=ED:</P>
+<P>0 - =E8ern=E1 (BLACK)<BR>1 - modr=E1 (BLUE)<BR>2 - zelen=E1 =
+(GREEN)<BR>3 - tyrkysov=E1=20
+(CYAN)<BR>4 - =E8erven=E1 (RED)<BR>5 - fialov=E1 (MAGENTA)<BR>6 - =
+hn=ECd=E1 (BROWN)<BR>7 -=20
+sv=ECtle =9Aed=E1 (LIGHTGRAY)<BR>8 - tmav=EC =9Aed=E1 (DARKGRAY)<BR>9 - =
+sv=ECtle modr=E1=20
+(LIGHTBLUE)<BR>10 - sv=ECtle zelen=E1 (LIGHTBLUE)<BR>11 - sv=ECtle =
+tyrkysov=E1=20
+(LIGHTCYAN)<BR>12 - sv=ECtle =E8erven=E1 (LIGHTRED)<BR>13 - sv=ECtle =
+fialov=E1=20
+(LIGHTMAGENTA)<BR>14 - =9Elut=E1 (YELLOW)<BR>15 - b=EDl=E1 =
+(WHITE)<BR></P>
+<P>V z=E1vorce jsou anglick=E9 n=E1zvy tak, jak je pou=9E=EDv=E1 Borland =
+C++, ale o tom jsme=20
+si =F8ekli ji=9E v <A href=3D"http://www.pcsvet.cz/r-art.asp?id=3D1806"=20
+target=3D_blank>minul=E9m d=EDle</A>. Kr=E1tce p=F8ipomenu, =9Ee m=EDsto =
+=E8=EDsla lze tedy napsat=20
+nap=F8. RED a v=FDsledek je stejn=FD, jako kdybychom napsali =E8=EDslo =
+4.=20
+</P><STRONG><FONT size=3D+1>Vzory</FONT></STRONG>=20
+<P>V dne=9An=EDm d=EDle se pod=EDv=E1me bl=ED=9Ee na p=F8eddefinovan=E9 =
+vzory nebo l=E9pe v=FDpln=EC,=20
+kter=E9 m=E1me k dispozici. M=EDsto =E8=EDsel se daj=ED pou=9E=EDvat i =
+jako n=E1zvy podobn=EC jako u=20
+barev. V=FD=E8et v=FDpln=ED vid=EDte zde: </P>
+<P>0 - pr=E1zdn=E1 (EMPTY_FILL)<BR>1 - pln=E1 (SOLID_FILL)<BR>2 - =
+=E8=E1rkovan=E1=20
+(LINE_FILL)<BR>3 - jemn=E1 =FAhlop=F8=ED=E8kovan=E1 (LTSLASH_FILL)<BR>4 =
+- =FAhlop=F8=ED=E8kovan=E1=20
+(SLASH_FILL)<BR>5 - zp=ECtn=E1 =FAhlop=F8=ED=E8kovan=E1 =
+(BKSLASH_FILL)<BR>6 - jemn=E1 zp=ECtn=E1=20
+=FAhlop=F8=ED=E8kovan=E1 (LTBKSLASH_FILL)<BR>7 - =E8tvere=E8kovan=E1 =
+(HATCH_FILL)<BR>8 -=20
+koso=E8tvercov=E1 (XHATCH_FILL)<BR>9 - =9Aachovnicov=E1 =
+(INTERLEAVE_FILL)<BR>10 - =F8=EDdce=20
+bodovan=E1 (WIDE_DOT_FILL)<BR>11 - hust=EC tyrkysov=E1 =
+(CLOSE_DOT_FILL)<BR>12 -=20
+u=9Eivatelsky definovan=E1 (USER_FILL)<BR></P>
+<P>Tyto definice bere jako prvn=ED parametr funkce setfillstyle a jako =
+druh=FD=20
+parametr barvu. Program, kter=FD demonstruje uk=E1zku vykreslen=ED =
+v=9Aech styl=F9, vypad=E1=20
+n=E1sledovn=EC. Jenom podotknu, =9Ee vynech=E1v=E1 u=9Eivatelsky =
+definovan=FD styl a prvn=ED=20
+pr=E1zdn=FD styl, to znamen=E1, =9Ee z=F9stane barva pozad=ED. =
+</P><STRONG><FONT=20
+size=3D+1>Program STYLE.CPP</FONT></STRONG><BR><FONT =
+face=3DCourier><CODE><PRE>#include &lt;graphics.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+int main(void)
+{
+   /* request auto detection */
+   int gdriver =3D DETECT, gmode, errorcode;
+   int i; // pro cyklus
+
+   /* initialize graphics mode */
+   initgraph(&amp;gdriver, &amp;gmode, "");
+
+   /* read result of initialization */
+   errorcode =3D graphresult();
+
+   if (errorcode !=3D grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1);             /* return with error code */
+   }
+
+   for (i=3D0; i&lt;12; i++) {
+     // jiny styl
+     setfillstyle(i,RED);
+     bar(0, (i-1)*40, 400, (i-1)*40+20);
+   }
+
+   /* clean up */
+   getch();
+   closegraph();
+   return 0;
+}
+</PRE></CODE></FONT>
+<P>Nejprve jako v=9Edy se inicializuje grafika s pat=F8i=E8n=FDm =
+o=9Aet=F8en=EDm. P=F8i v=FDskytu=20
+probl=E9mu, by se program ukon=E8il s chybou a v=FDpisem co se to =
+vlastn=EC stalo.=20
+V=9Aechna chybov=E1 hl=E1=9Aen=ED jsou ps=E1na anglicky (to se dalo =
+=E8ekat). Samoz=F8ejm=EC, =9Ee=20
+bychom si mohli ud=EClat pole, do kter=E9ho bychom v=9Aechny texty =
+p=F8elo=9Eili. Pot=E9=20
+bychom pomoc=ED switch vypisovali p=F8elo=9Een=E9 n=E1mi definovan=E9 =
+chybov=E9 hl=E1=9Aen=ED, ale=20
+mysl=EDm si, =9Ee je to zbyte=E8n=E9.</P><STRONG>Fonty a =
+form=E1tov=E1n=ED textu</STRONG>=20
+<P>Nakonec dne=9An=EDho d=EDlu si pov=EDme o form=E1tov=E1n=ED textu a =
+mo=9Enostech, kter=E9 n=E1m=20
+nab=EDz=ED grafick=E1 knihovna graphics.h. Nejprve si ale je=9At=EC =
+p=F8edstav=EDme n=ECkolik=20
+funkc=ED, kter=E9 budeme pot=F8ebovat a pak si uk=E1=9Eeme na v=9Aechno =
+p=F8=EDklad.</P>
+<P><STRONG>cleardevice();</STRONG> vyma=9Ee obrazovku a nastav=ED =
+aktu=E1ln=ED=20
+sou=F8adnice na 0,0 </P>
+<P><STRONG>settextstyle(int font, int direction, int charsize);</STRONG> =
+bere=20
+jako prvn=ED parametr typ fontu, kter=FD chceme pou=9E=EDt. Mo=9Enosti =
+jsou tyto:=20
+DEFAULT_FONT, TRIPLEX_FONT, SMALL_FONT, SANS_SERIF_FONT, GOTHIC_FONT. =
+Druh=FD=20
+parametr je sm=ECr v=FDpisu, jestli horizont=E1ln=ED nebo =
+vertik=E1ln=ED. Op=ECt mo=9Enosti:=20
+HORIZ_DIR nebo VERT_DIR. Prvn=ED p=ED=9Ae zleva doprava a druh=FD zdola =
+nahoru. A=20
+kone=E8n=EC t=F8et=ED parametr je velikost p=EDsma. Nap=F8. 0,1,2,3 =
+atd.</P>
+<P><STRONG>settextjustify(int horiz, int vert);</STRONG> nastavuje zda =
+pozice=20
+x,y ve funkci outtextxy se bude vztahovat ke st=F8edu textu nebo nap=F8. =
+ke lev=E9mu=20
+horn=EDmu rohu. Prvn=ED parametry m=E1 tyto mo=9Enosti: LEFT_TEXT, =
+CENTER_TEXT,=20
+RIGHT_TEXT a druh=FD parametr tyto: BOTTOM_TEXT, CENTER_TEXT a nakonec =
+TOP_TEXT.=20
+V=9Ae demostruje n=E1sleduj=EDc=ED p=F8=EDklad.</P><STRONG><FONT =
+size=3D+1>P=F8=EDklad=20
+TEXT.CPP</FONT></STRONG> <FONT face=3DCourier><CODE><PRE>#include =
+&lt;graphics.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+/* prototyp funkce */
+void xat(int x, int y);
+
+/* horizontalni nastaveni */
+char *hjust[] =3D { "LEFT_TEXT",
+		  "CENTER_TEXT",
+		  "RIGHT_TEXT"
+		};
+
+/* vertikalni nastaveni */
+char *vjust[] =3D { "LEFT_TEXT",
+		  "CENTER_TEXT",
+		  "RIGHT_TEXT"
+		};
+
+char *fname[] =3D { "DEFAULT font",
+		  "TRIPLEX font",
+		  "SMALL font",
+		  "SANS SERIF font",
+		  "GOTHIC font"
+		};
+
+int main(void)
+{
+   /* request auto detection */
+   int gdriver =3D DETECT, gmode, errorcode;
+   int midx, midy, hj, vj;
+   int style;
+   int size =3D 1;
+   char msg[80];
+
+   /* initialize graphics and local variables */
+   initgraph(&amp;gdriver, &amp;gmode, "");
+
+   /* read result of initialization */
+   errorcode =3D graphresult();
+   if (errorcode !=3D grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1); /* terminate with an error code */
+   }
+
+   // vypocte presny stred
+   // PRVNI CAST
+   midx =3D 400;
+   midy =3D 50;
+
+   setcolor(YELLOW);
+
+   for (hj=3DLEFT_TEXT; hj&lt;=3DRIGHT_TEXT; hj++)
+      for (vj=3DLEFT_TEXT; vj&lt;=3DRIGHT_TEXT; vj++)
+      {
+//	 cleardevice();
+	 settextjustify(hj, vj);
+	 sprintf(msg, "%s  %s", hjust[hj], vjust[vj]);
+	 xat(midx, midy);
+	 outtextxy(midx, midy, msg);
+	 midy +=3D 50;
+      }
+
+   // DRUHA CAST
+   midx =3D 150;
+   midy =3D 10;
+
+   setcolor(GREEN);
+
+   settextjustify(CENTER_TEXT, CENTER_TEXT);
+
+   for (style=3DDEFAULT_FONT; style&lt;=3DGOTHIC_FONT; style++)
+   {
+      midy +=3D 50;
+      if (style =3D=3D TRIPLEX_FONT)
+	 size =3D 4;
+
+      /* vyber patricneho stylu */
+      settextstyle(style, HORIZ_DIR, size);
+
+      /* vztisknuti na obrazovku */
+      outtextxy(midx, midy, fname[style]);
+   }
+
+   getch();
+   /* clean up */
+   closegraph();
+   return 0;
+}
+
+/* nakresli krizek na pozici x,y*/
+void xat(int x, int y)
+{
+  line(x-4, y, x+4, y);
+  line(x, y-4, x, y+4);
+}
+</PRE></CODE></FONT>
+<P>Prvn=ED =E8=E1st ukazuje pou=9Eit=ED pozice textu p=F8i v=FDpisu. =
+Druh=E1 =E8=E1st se zam=EC=F8uje na=20
+pou=9Eit=ED styl=F9 p=EDsma, velikosti font=F9 a na sm=ECru v=FDpisu. U =
+obou p=F8=EDklad=F9 je=20
+vid=ECt, =9Ee nejprve mus=EDme v=9Ae nastavit jako barvu a =
+po=9Eadovan=E9 parametry a a=9E pak=20
+m=F9=9Eeme zavolat funkci outtextxy, kter=E1 se zachov=E1 p=F8esn=EC =
+podle toho, jak jsme si=20
+p=F8=E1li. Pokud jsme samoz=F8ejm=EC neud=EClali n=ECkde chybu.</P>
+<P>Zdrojov=E9 k=F3dy obou p=F8=EDklad=F9 si m=F9=9Eete st=E1hnout <A=20
+href=3D"http://www.pcsvet.cz/art/climg/2461/src.rar">zde</A>=20
+[http://www.pcsvet.cz/r-art.asp?id=3D1806" =
+target=3D"_blank"&gt;minul=E9m d=EDle</A>.=20
+Kr=E1tce p=F8ipomenu, =9Ee m=EDsto =E8=EDsla lze tedy napsat nap=F8. RED =
+a v=FDsledek je stejn=FD,=20
+jako kdybychom napsali =E8=EDslo 4. </P><STRONG><FONT =
+size=3D+1>Vzory</FONT></STRONG>=20
+<P>V dne=9An=EDm d=EDle se pod=EDv=E1me bl=ED=9Ee na p=F8eddefinovan=E9 =
+vzory nebo l=E9pe v=FDpln=EC,=20
+kter=E9 m=E1me k dispozici. M=EDsto =E8=EDsel se daj=ED pou=9E=EDvat i =
+jako n=E1zvy podobn=EC jako u=20
+barev. V=FD=E8et v=FDpln=ED vid=EDte zde: </P>
+<P>0 - pr=E1zdn=E1 (EMPTY_FILL)<BR>1 - pln=E1 (SOLID_FILL)<BR>2 - =
+=E8=E1rkovan=E1=20
+(LINE_FILL)<BR>3 - jemn=E1 =FAhlop=F8=ED=E8kovan=E1 (LTSLASH_FILL)<BR>4 =
+- =FAhlop=F8=ED=E8kovan=E1=20
+(SLASH_FILL)<BR>5 - zp=ECtn=E1 =FAhlop=F8=ED=E8kovan=E1 =
+(BKSLASH_FILL)<BR>6 - jemn=E1 zp=ECtn=E1=20
+=FAhlop=F8=ED=E8kovan=E1 (LTBKSLASH_FILL)<BR>7 - =E8tvere=E8kovan=E1 =
+(HATCH_FILL)<BR>8 -=20
+koso=E8tvercov=E1 (XHATCH_FILL)<BR>9 - =9Aachovnicov=E1 =
+(INTERLEAVE_FILL)<BR>10 - =F8=EDdce=20
+bodovan=E1 (WIDE_DOT_FILL)<BR>11 - hust=EC tyrkysov=E1 =
+(CLOSE_DOT_FILL)<BR>12 -=20
+u=9Eivatelsky definovan=E1 (USER_FILL)<BR></P>
+<P>Tyto definice bere jako prvn=ED parametr funkce setfillstyle a jako =
+druh=FD=20
+parametr barvu. Program, kter=FD demonstruje uk=E1zku vykreslen=ED =
+v=9Aech styl=F9, vypad=E1=20
+n=E1sledovn=EC. Jenom podotknu, =9Ee vynech=E1v=E1 u=9Eivatelsky =
+definovan=FD styl a prvn=ED=20
+pr=E1zdn=FD styl, to znamen=E1, =9Ee z=F9stane barva pozad=ED. =
+</P><STRONG><FONT=20
+size=3D+1>Program STYLE.CPP</FONT></STRONG><BR><FONT =
+face=3DCourier><CODE><PRE>#include &lt;graphics.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+int main(void)
+{
+   /* request auto detection */
+   int gdriver =3D DETECT, gmode, errorcode;
+   int i; // pro cyklus
+
+   /* initialize graphics mode */
+   initgraph(&amp;gdriver, &amp;gmode, "");
+
+   /* read result of initialization */
+   errorcode =3D graphresult();
+
+   if (errorcode !=3D grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1);             /* return with error code */
+   }
+
+   for (i=3D0; i&lt;12; i++) {
+     // jiny styl
+     setfillstyle(i,RED);
+     bar(0, (i-1)*40, 400, (i-1)*40+20);
+   }
+
+   /* clean up */
+   getch();
+   closegraph();
+   return 0;
+}
+</PRE></CODE></FONT>
+<P>Nejprve jako v=9Edy se inicializuje grafika s pat=F8i=E8n=FDm =
+o=9Aet=F8en=EDm. P=F8i v=FDskytu=20
+probl=E9mu, by se program ukon=E8il s chybou a v=FDpisem co se to =
+vlastn=EC stalo.=20
+V=9Aechna chybov=E1 hl=E1=9Aen=ED jsou ps=E1na anglicky (to se dalo =
+=E8ekat). Samoz=F8ejm=EC, =9Ee=20
+bychom si mohli ud=EClat pole, do kter=E9ho bychom v=9Aechny texty =
+p=F8elo=9Eili. Pot=E9=20
+bychom pomoc=ED switch vypisovali p=F8elo=9Een=E9 n=E1mi definovan=E9 =
+chybov=E9 hl=E1=9Aen=ED, ale=20
+mysl=EDm si, =9Ee je to zbyte=E8n=E9.</P><STRONG>Fonty a =
+form=E1tov=E1n=ED textu</STRONG>=20
+<P>Nakonec dne=9An=EDho d=EDlu si pov=EDme o form=E1tov=E1n=ED textu a =
+mo=9Enostech, kter=E9 n=E1m=20
+nab=EDz=ED grafick=E1 knihovna graphics.h. Nejprve si ale je=9At=EC =
+p=F8edstav=EDme n=ECkolik=20
+funkc=ED, kter=E9 budeme pot=F8ebovat a pak si uk=E1=9Eeme na v=9Aechno =
+p=F8=EDklad.</P>
+<P><STRONG>cleardevice();</STRONG> vyma=9Ee obrazovku a nastav=ED =
+aktu=E1ln=ED=20
+sou=F8adnice na 0,0 </P>
+<P><STRONG>settextstyle(int font, int direction, int charsize);</STRONG> =
+bere=20
+jako prvn=ED parametr typ fontu, kter=FD chceme pou=9E=EDt. Mo=9Enosti =
+jsou tyto:=20
+DEFAULT_FONT, TRIPLEX_FONT, SMALL_FONT, SANS_SERIF_FONT, GOTHIC_FONT. =
+Druh=FD=20
+parametr je sm=ECr v=FDpisu, jestli horizont=E1ln=ED nebo =
+vertik=E1ln=ED. Op=ECt mo=9Enosti:=20
+HORIZ_DIR nebo VERT_DIR. Prvn=ED p=ED=9Ae zleva doprava a druh=FD zdola =
+nahoru. A=20
+kone=E8n=EC t=F8et=ED parametr je velikost p=EDsma. Nap=F8. 0,1,2,3 =
+atd.</P>
+<P><STRONG>settextjustify(int horiz, int vert);</STRONG> nastavuje zda =
+pozice=20
+x,y ve funkci outtextxy se bude vztahovat ke st=F8edu textu nebo nap=F8. =
+ke lev=E9mu=20
+horn=EDmu rohu. Prvn=ED parametry m=E1 tyto mo=9Enosti: LEFT_TEXT, =
+CENTER_TEXT,=20
+RIGHT_TEXT a druh=FD parametr tyto: BOTTOM_TEXT, CENTER_TEXT a nakonec =
+TOP_TEXT.=20
+V=9Ae demostruje n=E1sleduj=EDc=ED p=F8=EDklad.</P><STRONG><FONT =
+size=3D+1>P=F8=EDklad=20
+TEXT.CPP</FONT></STRONG> <FONT face=3DCourier><CODE><PRE>#include =
+&lt;graphics.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+/* prototyp funkce */
+void xat(int x, int y);
+
+/* horizontalni nastaveni */
+char *hjust[] =3D { "LEFT_TEXT",
+		  "CENTER_TEXT",
+		  "RIGHT_TEXT"
+		};
+
+/* vertikalni nastaveni */
+char *vjust[] =3D { "LEFT_TEXT",
+		  "CENTER_TEXT",
+		  "RIGHT_TEXT"
+		};
+
+char *fname[] =3D { "DEFAULT font",
+		  "TRIPLEX font",
+		  "SMALL font",
+		  "SANS SERIF font",
+		  "GOTHIC font"
+		};
+
+int main(void)
+{
+   /* request auto detection */
+   int gdriver =3D DETECT, gmode, errorcode;
+   int midx, midy, hj, vj;
+   int style;
+   int size =3D 1;
+   char msg[80];
+
+   /* initialize graphics and local variables */
+   initgraph(&amp;gdriver, &amp;gmode, "");
+
+   /* read result of initialization */
+   errorcode =3D graphresult();
+   if (errorcode !=3D grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1); /* terminate with an error code */
+   }
+
+   // vypocte presny stred
+   // PRVNI CAST
+   midx =3D 400;
+   midy =3D 50;
+
+   setcolor(YELLOW);
+
+   for (hj=3DLEFT_TEXT; hj&lt;=3DRIGHT_TEXT; hj++)
+      for (vj=3DLEFT_TEXT; vj&lt;=3DRIGHT_TEXT; vj++)
+      {
+//	 cleardevice();
+	 settextjustify(hj, vj);
+	 sprintf(msg, "%s  %s", hjust[hj], vjust[vj]);
+	 xat(midx, midy);
+	 outtextxy(midx, midy, msg);
+	 midy +=3D 50;
+      }
+
+   // DRUHA CAST
+   midx =3D 150;
+   midy =3D 10;
+
+   setcolor(GREEN);
+
+   settextjustify(CENTER_TEXT, CENTER_TEXT);
+
+   for (style=3DDEFAULT_FONT; style&lt;=3DGOTHIC_FONT; style++)
+   {
+      midy +=3D 50;
+      if (style =3D=3D TRIPLEX_FONT)
+	 size =3D 4;
+
+      /* vyber patricneho stylu */
+      settextstyle(style, HORIZ_DIR, size);
+
+      /* vztisknuti na obrazovku */
+      outtextxy(midx, midy, fname[style]);
+   }
+
+   getch();
+   /* clean up */
+   closegraph();
+   return 0;
+}
+
+/* nakresli krizek na pozici x,y*/
+void xat(int x, int y)
+{
+  line(x-4, y, x+4, y);
+  line(x, y-4, x, y+4);
+}
+</PRE></CODE></FONT>
+<P>Prvn=ED =E8=E1st ukazuje pou=9Eit=ED pozice textu p=F8i v=FDpisu. =
+Druh=E1 =E8=E1st se zam=EC=F8uje na=20
+pou=9Eit=ED styl=F9 p=EDsma, velikosti font=F9 a na sm=ECru v=FDpisu. U =
+obou p=F8=EDklad=F9 je=20
+vid=ECt, =9Ee nejprve mus=EDme v=9Ae nastavit jako barvu a =
+po=9Eadovan=E9 parametry a a=9E pak=20
+m=F9=9Eeme zavolat funkci outtextxy, kter=E1 se zachov=E1 p=F8esn=EC =
+podle toho, jak jsme si=20
+p=F8=E1li. Pokud jsme samoz=F8ejm=EC neud=EClali n=ECkde chybu.</P>
+<P>Zdrojov=E9 k=F3dy obou p=F8=EDklad=F9 si m=F9=9Eete st=E1hnout <A=20
+href=3D"http://www.pcsvet.cz/art/climg/2461/src.rar].%3C/p%3E%3Cp%3EP=F8=ED=
+=9At=EC%20si%20budeme%20pov=EDdat%20o%20vyst=F8ihov=E1n=ED%20obr=E1zk=F9,=
+%20lepen=ED%20a%20r=F9zn=E9%20pr=E1ce%20s%20nimi.%20Nakonec%20v=9Ae%20zak=
+on=E8=EDme%20dem=ED=E8kem,%20kter=E9%20bude%20op=ECt%20demonstrovat%20to,=
+%20co%20jsme%20se%20nau=E8ili.%3C/p%3E%3Chr%20size=3D"=20
+1?>Autor: <B>Pavel Matou=9Aek</B>, <A=20
+href=3D"mailto:pavelmmm@seznam.cz">pavelmmm@seznam.cz</A><BR>Rubrika: =
+<B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 9:50:21 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

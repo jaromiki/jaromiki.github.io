@@ -1,0 +1,140 @@
+<html>
+<head>
+	<title>Pole</title>
+	 <STYLE>
+	 	h3.nadpis {background:#ffdddd; color:#cc0000; border-color:silver; border-width:3;  width:350; height:30; border-style:ridge; padding:5; margin:0 0 40 0}
+		h3.main {background:#ddddff; color:#0000cc; border-color:silver; border-width:3; width:350; height:30; border-style:ridge; padding:5; margin:20 0 0 0}
+		dt.main {background:#ddddff; color:#0000cc; border-color:silver; border-width:3; width:350; height:30; border-style:ridge; padding:5; margin:20 0 0 0}
+		h3.second {color: red}
+		dt.second {background:#ddddff; color:#0000cc; width:350; height:30; padding:5; margin:20 0 0 0}
+	</STYLE>
+</head>
+
+<body>
+Pole je štruktúrovaná premenná, kde poloky pola sú indexované. Prístup ku polokám je pomocou indexu
+v hranatıch zátvorkách. Narozdiel od typovıch jazykov v JS poloky po¾a nemusia by rovnakého typu.
+<br>Ïalší rozdiel je v tom, e aj indexy nemusia by rovnakého typu (cie nemusia by ordinálne).
+<br>Ak pouijeme neèíselnı index, tak to nemá vplyv na dåku po¾a - vytvorí sa len ïalšia vlastnos objektu.
+<br>Napriek tomu, e pole vypíše dåku o jednu viac ako je maximálny èíselnı index pamä zaberajú
+len definované prvky.
+<br>Ak pouijeme zápornı index tak sa premení na textovı.
+<dl><dt class=main>Deklarácia
+	<dd>Pole je objekt a tak ho vytvoríme pomocou konstruktora <b>new</b>
+		<br>máme 3 monosti
+		<ul><li>var p = new Array(); &nbsp; &nbsp; //vytvorí prázdne pole p (jeho dlzka je 0)
+			<li>var p = new Array(1,,'Ahoj',1.5); &nbsp; &nbsp; //vytvori pole s polozkami p[0],p[2],p[3]
+			<li>var p = new Array(10); &nbsp; &nbsp; //vytvorí 10 prvkové pole s nedefinovanımi hodnotami
+		</ul>
+		Iná metóda sa zaobíde bez konštruktora, pole vytvoríme pomocou <b>literálu</b>, po¾a urèeného 
+		vymenovaním - aj tu mou by prvky napríklad polia, záznamy, stringy.
+		<ul><li>var p = [1,,2,,3];
+			<li>var p = ['a', true, 3.14];
+			<li>var p = [[1,{x:1,y:2}],[2,{x:3,y:4];
+		</ul>
+		Ak chceme zväèši poèet prvkov staèí len zapísa do ïalšieho prvku hodnotu a prvok je automaticky
+		vytvorenı.
+		<br>Je vıhodné ma pole súvislé aby sa ¾ahko prechádzalo cyklom.
+	<dt class=main>dåka po¾a - length
+	<dd>Pole je objekt a length je jeho vlastnos. Vıhodne sa pouije vo for cykle pri naplnení a vıpise po¾a.
+		<ul><li>for(var i=0;i&quot;pole.length;i++) {pole[i]:=i*i;} &nbsp; &nbsp; //súvislé pole
+			<li>for(var i=0;i&lt;pole.length;i++) {if (pole[i] != undefined) {document.write(pole[i]+'&lt;br>');
+		</ul>	
+	<dt class=main>Metódy po¾a
+	<dd>Okrem operátora [] a vlastnosti length máme ešte k dispozícii metódy objektu array.
+		<dl><dt class=second>join()
+			<dd>prevedie všetky prvky po¾a do jedného reazca, prièom budú oddelené zvolenım odde¾ovacím
+				reazcom. Ak reazec neurèíme bude odde¾ovaèom èiarka. Funkcia môe ma jeden parameter
+				v ktorom je odde¾ovací reazec.
+				<ul><li>var a=[1,2,3];
+					<br>var s=a.join(); &nbsp; &nbsp; //s='1,2,3'
+					<li>var s=a.join(' '); &nbsp; &nbsp; //s='1 2 3'	
+				</ul>
+			<dt class=second>reverse()
+			<dd>Táto procedura otoèí pole, nemá parameter.
+				<br>a.reverse() &nbsp; &nbsp; //poprehadzuje prvky po¾a
+				<br>var a = [1,,3,,5,6];
+				<br>alert(a.join(' , ')); &nbsp; &nbsp; //vypise ... 1 , , 3 , , 5 , 6 
+				<br>a.reverse();
+				<br>alert(a.join(' , ')); &nbsp; &nbsp; //vypise ... 6 , 5 , , 3 , , 1
+			<dt class=second>sort()
+			<dd>Táto procedúra utriedi prvky pod¾a abecedy
+				<br> - men9 poradie prvkov
+				<br> - návratová hodnota je utriedené pole. 
+				<br>Ak prvky nie sú textové tak ich doèasne	na text prevedie. Nedefinované prvky 
+				sa zoradia nakoniec. Funkcia môe ma jeden	argument a to porovnávaciu funkciu, 
+				ktorá má dva parametre napr. a,b
+				<br>Funkcia musí vráti èíslo &lt;0 ak a&lt;b 
+				<br>Funkcia musí vráti èíslo 0 ak a=b 
+				<br>Funkcia musí vráti èíslo &gt;0 ak a&gt;b
+				<br>Pozn.
+				<br>Funkcia nemusí ma meno staèí jej popis:
+				<table border="1"><tr><td>
+				<code><pre>
+var a = [33, 4, 111, 222];
+a.sort();   // pole a sa abecedne utriedi 111, 222, 33, 4
+b = a.sort(function(a,b) {return a-b;})   
+//pole a i pole b bude èíselne utriedené				 
+</pre></code>
+				</table>
+			<dt class=second>concat()
+			<dd>Funkcia na spájanie polí, vytvorí nové pole a vısledok vráti ako návratovú hodnotu
+			<br>Príklady
+			<table border="1">
+			<tr><td valign="top">
+<code><pre>
+var a=new Array(1,2,3);
+var b=new Array(11,12);
+	alert(a.join());
+// 1. vıpis zobrazí 1,2,3
+    b=a.concat(b);
+	alert(b.join());
+// 2. vıpis zobrazí 1,2,3,11,12
+</pre></code>
+				<td valign="top"> 
+<code><pre>
+var a=new Array(1,2,3);
+	alert(a.join());
+// 1. vıpis zobrazí 1,2,3
+    a=a.concat(5,a);
+	alert(b.join());
+// 2. vıpis zobrazí 1,2,3,5,1,2,3
+			<tr><td valign="top"> 
+<code><pre>
+var a=new Array(1,2,3);
+	alert(a.join());
+// 1. vıpis zobrazí 1,2,3
+    b=a.concat(5,a,5,a);
+	alert(b.join());
+// 2. vıpis zobrazí 1,2,3,5,1,2,3,5,1,2,3
+</table>
+			<dt class=second>slice()
+			<dd>Táto metóda vráti èas po¾a. Ak má jeden argument metóda vráti pole zaèínajúce tımto
+				indexom. Ak má dva parametre tak vráti pole od indexu1 po index2 (prvok s indexom2 
+				u do vráteného po¾a nepatrí)
+			<table border="1">
+			<tr><td valign="top">
+<code><pre>
+var a=new Array(1,2,3,4,5);
+var b=a.slice(0,3);
+	alert(b.join());        //vypise 1,2,3
+	alert(a.slice(2).join());     //vypise 3,4,5
+</pre></code>
+			</table>				
+			<dt class=second>splice()
+			<dd>Táto metóda dokáe pridáva nové prvky do po¾a a tie odstraòova prvky z po¾a.
+				<br>Prvı parameter ... index kam sa vkladá alebo od kade odstraòuje
+				<br>Druhı parameter ... poèet odstranenıch prvkov (ak chıba odstránia sa všetky dokonca)
+				<br>ïalšie parametre ... prvky, ktoré sa majú od zvoleného indexu vloi
+				<br>(ak je ïalším parametrom pole vloí sa celé do jedného prvku)
+				<br>Èinnos ... zmení pole, odstáni z neho poadovanı poèet prvkov, pridá nové prvky
+				<br>Návratová hodnota ... funkcia vráti pole odstránenıch prvkov 
+			<dt class=second>push(),pop()
+			<dd>tieto metódy umoòujú pouíva pole ako zásobník
+				<br>push ... pridá novı prvok/ky (parametre) na koniec po¾a a vráti novú dåku po¾a. 
+				<br>pop ... odoberie poslednı prvok, návratová hodnota je odoberanı prvok
+			<dt class=second>shift(),unshift()
+		</dl>
+</dl>	
+	
+</body>
+</html>

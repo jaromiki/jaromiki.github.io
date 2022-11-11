@@ -1,0 +1,414 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Výpis funkcií podľa vlastností</h3>
+<ul><li>Nemeniace algoritmy
+		<ul>
+		<li>adjacent find()... vyhladá dvojicu po sobe idúcich hodnôt
+		<li>count()... počet výskytov hodnoty v kontajnery
+		<li>count_if() ... počet výskytov hodnoty spĺňajúcej podmienku v kontajnery
+		<li>equal() ... testuje zhodu dvoch postupností
+		<li>find() ... vyhľadá prvý výskyt hodnoty
+		<li>find_end() ... vyhľadá posledný výskyt hodnoty
+		<li>find_first_of() ... vyhľada hodnotu z jednej postupnosti v druhej
+		<li>find_if() ... vyhľadá prvý odpovedajúci prvok
+		<li>for_each() ... urobí operáciu pre kazdý prvok
+		<li>lexicographical_compare() ... porovnanie dvoch postupností
+		<li>max_element() ... vracia prvok s nejväčšou hodnotou
+		<li>min_element() ... vracia prvok s nejmenšou hodnotou
+		<li>mismatch() ... vyhľadá prvný rozdiel v dvoch postupnostiach
+		<li>search() ... vyhľadá prvý výskyt postupnosti v druhej postupnosti
+		<li>search_n() ... vyhľadá n-tý výskyt hodnoty v sekvenci 
+		</ul>
+	<li>Algoritmy meniace kontajner/premenné
+		<ul>
+		<li>copy() ... vytvorí kopiu postupnosť
+		<li>copy backward() ... kópia od posledného prvku
+		<li>reverse() ... invertuje poradie prvkov
+		<li>reverse_copy() ... kopíruje v inverznom poradí
+		<li>unique() ... nahradí postupnosť rovnakých prvkov jedným prvkom
+		<li>unique_copy() ... kópia s nahradením
+		<li>rotate() ... rotuje prvky v postupnosti
+		<li>rotate_copy() ... kopíruje s rotáciou
+		<li>random_shuffle() ... premiešanie prvkov
+		<li>iter_swap() ... výmena dvoch prvkov
+		<li>swap() ... výmena dvoch prvkov
+		<li>swap_ranges() ... výmena dvoch postupností prvkov
+		<li>transform() ... operácia nad všetkými prvkami post. 
+		<li>fill() ... vyplnenie rozsahu hodnotou
+		<li>fill_n() ... vyplnenie n prvku hodnotou
+		<li>generate(odkade, pokade, funkcia) ... vyplnenie rozsahu výsledkom funkcie
+			<br>funkcia nesmie mať parameter
+			<br>odkade, pokade ... smernik alebo iterátor na objekt
+		<li>generate_n() ... vyplnenie n hodnot vysledkom funkcie
+		<li>remove() ... odstránenie prvkov
+		<li>remove_copy() ... kopia s vynechaním prvkov
+		<li>remove_copy if() ... kopia s vynechaním podľa podmienky
+		<li>remove if() ... zrušenie podle podmienky
+		<li>replace() ... nahradenie prvku zadanou hodnotou
+		<li>replace_if() ... nahradenie prvku spĺňajúceho podmienku
+		<li>replace_copy() ... kópia s nahradením hodnôt
+		<li>replace_copy if() ... kópia s nahradením podľa podmienky
+		</ul>	
+	<li>Množinové operátory
+		<ul>
+		<li>includes() ... vracia true pokiaľ je podmnožinou
+		<li>set_difference() ... prvky z 1. množiny, ktoré nie sú v 2.množine
+		<li>set_intersection() ... prienik množín
+		<li>set_symmetric_difference() ... prvky, které nie sú v oboch množinách
+		<li>set_union() ... zjednotenie množín
+		</ul>	
+</ul>		
+Niektoré (z môjho pohľadu najpotrebnejšie/najzaujímavejšie) sú teraz viac popísané, prípadne je urobená aj
+ukážka použitia. Všetky možno nájsť na www.cplusplus.com. 
+<dl>
+	<dt class="main">Operácie s poľom pomocou algoritmov
+	<dd>Všetky tieto podprogramy sa nachádzajú v knižnici algorithm a možno použiť jak na klasické pole, tak aj štruktúry knižnice STL (vektory).
+		<ul><li><b>sort()</b>
+				<br>vektor/pole nemusíme triediť vlastným programom, je výhodnejšie použiť hotový algoritmus v unite algorithm
+				<br>ak pre prvky vektora/pola existuje operátor menší (&lt;) a vyhovuje nám - môžme použiť základný tvar <b>sort(vector.iterator1, vector.iterator2)</b> a zvolená časť poľa sa utriedi
+				<br>ak chceme môžme vytvoriť vlastnú porovnávajúcu funkciu, ktorá vráti TRUE, ak prvý parameter je menší ako druhý, inak vráti FALSE
+				<br><b>sort(vector.iterator1, vector.iterator2, adresa_funkcie)</b>
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// sort algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::sort
+#include &lt;vector>       // std::vector
+using namespace std;
+
+bool myfunction1 (int i,int j) { return (i&lt;j); }        //triedi od najmenšieho po najväčšie
+bool myfunction2 (int i,int j) { return (i&gt;j); }        //triedi od najväčšieho po najmenšie
+bool myfunction3 (int i,int j) { return (i%3&lt;j%3); }    //triedi podľa zvyšku po delení 3
+bool myfunction4 (int i,int j) { return (i%3==j%3 ? i&lt;j:i%3&lt;j%3); }    triedi podľa zvyšku po delení 3 ak rovnaké potom podľa veľkosti
+
+int main () 
+{ int pole[] = {32,71,12,45,26,80,53,33};         // vytvoríme pole 8 int
+  vector&lt;int> myvector (pole, pole+8);         // vektor 8-mich prvkov
+
+  // using default comparison (operator &lt;):
+  sort (myvector.begin(), myvector.begin()+4);        //(12 32 45 71)26 80 53 33 - triedi 4 prvky vektora podla standartneho porovnavania
+  sort (pole+0, pole+4);        //(12 32 45 71)26 80 53 33 - triedi 4 prvky pola podla standartneho porovnavania
+
+  // using function as comp
+  sort (myvector.begin()+4, myvector.end(), myfunction1);    // 12 32 45 71(26 33 53 80)
+  sort (pole+4, pole+8, myfunction2);                        // 12 32 45 71(80 53 33 26)
+  sort (pole+0, pole+8, myfunction4);                        // 12 33 45 26 32 53 71 80
+  return 0;
+}
+</pre>
+				</tr></table>
+			<li><b>reverse()</b>
+				<br>pomocou príkazu reverse môžme otočiť pole (alebo jeho časť)	
+				<br><b>reverse(vector.iterator1, vector.iterator2)</b>
+				<br><b>reverse(pole+i, pole+j)</b>    //otočenie sa bude týkať prvkov [i..(j-1)]
+				<br>vo vektore sa prvky od iterator1 po iterator2 preklopia 
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// reverse algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::reverse
+#include &lt;vector>       // std::vector
+using namespace std;
+vector&lt;int> myvector(10);
+int pole[]={0,1,2,3,4,5,6,7,8,9}
+int main () 
+{ // set some values:
+  for (int i=0; i&lt;10; ++i) myvector[i]=i;   // 0 1 2 3 4 5 6 7 8 9
+  reverse(myvector.begin(),myvector.end());    // 9 8 7 6 5 4 3 2 1 0
+  reverse(pole+0,pole+5);    // 4 3 2 1 0 5 6 7 8 9 
+  return 0;
+}
+</pre>
+ 				</tr></table>
+			<li><b>count()</b>
+				<br>táto funkcia vráti počet výskytov prvku X vo vektore
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// count algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::count
+#include &lt;vector>       // std::vector
+using namespace std;
+
+int main () {
+  // counting elements in array:
+  int pole[] = {10,20,30,30,20,10,10,20};   // 8 elements
+  std::vector&lt;int> myvector (pole+0, pole+8);
+  cout &lt;&lt; "10 sa v poli vyskytuje " &lt;&lt; count (pole, pole+8, 10) &lt;&lt; " krat.\n";
+  cout &lt;&lt; "20 sa vo vektori vyskytuje " &lt;&lt; count (myvector.begin(), myvector.end(), 20) &lt;&lt; " krat.\n";
+
+  return 0;
+}							
+</pre>
+				</tr></table>
+			<li><b>count_if()</b>
+				<br>táto funkcia vráti počet výskytov čísel majúcich nejakú spoločnú vlastnosť
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// count_if algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::count_if
+#include &lt;vector>       // std::vector
+using namespace std;
+
+int fun1(int x)
+{ return (x%2);} // pre nepárne vráti pravdu 
+int fun2(int x)
+{ return (x>20&&x&lt;60);} // pre čísla 21,22,...,59 vráti pravdu 
+int main () {
+  // counting elements in array:
+  int pole[] = {10,20,30,30,20,10,10,20};   // 8 elements
+  std::vector&lt;int> myvector (pole+0, pole+8);
+  cout &lt;&lt; "neparne cislo sa v poli vyskytuje " &lt;&lt; count_if (pole, pole+8, fun1) &lt;&lt; " krat.\n";
+  cout &lt;&lt; "20~60 sa vo vektori vyskytuje " &lt;&lt; count_if (myvector.begin(), myvector.end(), fun2) &lt;&lt; " krat.\n";
+
+  return 0;
+}							
+</pre>
+				</tr></table>
+			<li><b>find_if(vector.iterator1, vector.iterator2, fun)</b> // hľadá v zadanej časti vektora hodnotu, ktor8 vo funkcii fun vracia pravdu a vráti iterátor prvej nájdenej hodnoty, ak nenájde vráti druhý zadaný parameter
+				<b>find_if(pole+i, pole+j, fun)</b> // hľadá v zadanej časti pola zadané hodnoty a vráti adresu prvej nájdenej, ak nenájde vráti (pole+j)
+				<br>Hľadá v poli zadané hodnoty popísané vo funkcii fun a vráti iterátor na prvú nájdenú
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// find algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::count
+#include &lt;vector>       // std::vector
+using namespace std;
+int fun1(int x)
+{ return (x%2);} // pre nepárne vráti pravdu 
+int fun2(int x)
+{ return (x>20&&x&lt;60);} // pre čísla 21,22,...,59 vráti pravdu 
+int main () {
+  // counting elements in array:
+  int pole[] = {10,20,30,30,20,10,10,20};   // 8 elements
+  int index;
+  std::vector&lt;int> myvector (pole+0, pole+8);
+  if ((index=find_if(pole+0, pole+8, fun1)- pole) == 8) cout &lt;&lt;"nepárne sa v poli nenachadza";
+  else                                   cout &lt;&lt; "nepárne sa v poli vyskytuje na indexe " &lt;&lt; index;
+  if ((index=find_if(pole+0, pole+8, fun2)- pole) == 8) cout &lt;&lt;"číslo z intervalu (20 až 60)  sa v poli nenachadza";
+  else                                   cout &lt;&lt; "číslo z intervalu (20 až 60) sa v poli vyskytuje na indexe " &lt;&lt; index;
+  return 0;
+}							
+</pre>
+				</tr></table>
+			<li><b>find(vector.iterator1, vector.iterator2, hodnota)</b> // hľadá v zadanej časti vektora zadanú hodnotu a vráti iterátor prvej nájdenej hodnoty, ak nenájde vráti druhý zadaný parameter
+				<b>find(pole+i, pole+j, hodnota)</b> // hľadá v zadanej časti pola zadanú hodnotu a vráti adresu prvej nájdenej, ak nenájde vráti (pole+j)
+				<br>Hľadá v poli zadanú hodnotu a vráti iterátor na prvú nájdenú
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// find algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::find
+#include &lt;vector>       // std::vector
+using namespace std;
+
+int main () {
+  // counting elements in array:
+  int pole[] = {10,20,30,30,20,10,10,20};   // 8 elements
+  int index;
+  std::vector&lt;int> myvector (pole+0, pole+8);
+  if ((index=find(pole+0, pole+8, 20)- pole) == 8) cout &lt;&lt;"cislo 20 sa v poli nenachadza";
+  else                                   cout &lt;&lt; "20 sa v poli vyskytuje na indexe " &lt;&lt; index;
+  return 0;
+  // vystup:  20 sa v poli vyskytuje na indexe 1
+}							
+</pre>
+				</tr></table>
+			<li><b>fill(vector.iterator1, vector.iterator2, hodnota)</b>
+				<br><b>fill(pole+i, pole+j, hodnota)</b>
+							<br>časť pola/vektora (alebo celé pole) zaplní predpísanou hodnotou
+			<li>generate (iter1, iter2, funkcia)
+				<br>časť vektora zaplní predpísanou hodnotou podľa funkcie
+				<br>funkcia nesmie mať parameter, môže používať premenné programu, ktoré vidí
+				<br>napr. funkcia: int nahoda() {return 10+random(90);}
+				<br> generate (myvector.begin(), myvector.end(), nahoda);
+
+			<li><b>max_element(vector.iterator1, vector.iterator2)</b>; //funkcia vráti iterátor na prvý maximálny prvok
+				<br><b>max_element(pole+i, pole+j)</b>; //funkcia vráti smerník na prvý maximálny prvok
+				<br><b>max_element(vector.iterator1, vector.iterator2, funkcia)</b>; // to isté ale predpíšeme porovnávaciu funkciu
+				<br><b>max_element(pole+i, pole+j, funkcia)</b>; // to isté ale predpíšeme porovnávaciu funkciu
+				<br><b>min_element(vector.iterator1, vector.iterator2)</b>; //funkcia vráti iterátor na prvý minimálny prvok
+				<br><b>min_element(pole+i, pole+j)</b>; //funkcia vráti iterátor na prvý minimálny prvok
+				<br><b>min_element(vector.iterator1, vector.iterator2, funkcia)</b>; // to isté ale predpíšeme porovnávaciu funkciu
+				<br><b>min_element(pole+i, pole+j, funkcia)</b>; // to isté ale predpíšeme porovnávaciu fukciu
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// min_element/max_element example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::min_element, std::max_element
+using namespace std;
+bool myfn(int i, int j) { return i%3&lt;j%3; }
+
+int main () 
+{ int pole[] = {3,7,2,5,6,4,9};             //3,7,2,5,6,4,9
+  vector&lt;int> v (pole, pole+7);   //3,7,2,5,6,4,9
+  vector&lt;int>::iterator it;
+  int index;
+  // using default comparison:
+  it = min_element(v.begin(),v.end());
+  cout &lt;&lt; "The smallest element is " &lt;&lt; *it &lt;&lt;"na adrese " &lt;&lt; it-v.begin() &lt;&lt;'\n';
+  index = min_element(pole+0,pole+7)-pole;
+  cout &lt;&lt; "The smallest element is " &lt;&lt; pole[index] &lt;&lt;"na adrese " &lt;&lt; index &lt;&lt;'\n';
+
+  // using function myfn as comp:
+  it = min_element(v.begin(),v.end(), myfn);
+  cout &lt;&lt; "The smallest element is " &lt;&lt; *it &lt;&lt;"na adrese " &lt;&lt; it-v.begin() &lt;&lt;'\n';
+  index = min_element(pole+0,pole+7, myfn)-pole;
+  cout &lt;&lt; "The smallest element is " &lt;&lt; pole[index] &lt;&lt;"na adrese " &lt;&lt; index &lt;&lt;'\n';
+  return 0;
+}							
+</pre>
+				</tr></table>
+			<li><b>next_permutation(vector.iterátor1,vector.iterátor2)</b>; //funkcia vytvorí vo vektore najbližšiu lexikograficky väčšiu permutáciu a vráti true ak sa podarí permutáciu spraviť
+				<br><b>next_permutation(pole+i,pole+j)</b>; //funkcia vytvorí v poli najbližšiu lexikograficky väčšiu permutáciu a vráti true ak sa podarí permutáciu spraviť				
+				<br> &nbsp; &nbsp;preusporiada vektor/pole, aby vznikla lexikograficky nasledujúca postupnosť
+				<br> &nbsp; &nbsp;(ak začneme na usporiadanom poli vypíše nám všetky permutácie lexikograficky usporiadané)
+				<br><b>prev_permutation(vector.iterátor1,vector.iterátor2)</b>; //funkcia vráti true ak sa podarí permutáciu spraviť
+				<br><b>prev_permutation(pole+i,pole+j)</b>; //funkcia vráti true ak sa podarí permutáciu spraviť
+				<br> &nbsp; &nbsp;podobne ako next, ale hľadá predošlú postupnosť
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// next_permutation example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::next_permutation, std::sort
+using namespace std;
+int main () {
+  int myints[] = {3,1,2};
+  vector&lt;int> v (myints, myints+7);   //3,1,2
+  sort (v.begin(),v.end());           //chceme vsetky permutacie tak pole usporiadame
+  cout &lt;&lt; "The 3! possible permutations with 3 elements:\n";
+  do {
+    cout &lt;&lt; v[0] &lt;&lt; ' ' &lt;&lt; v[1] &lt;&lt; ' ' &lt;&lt; v[2] &lt;&lt; '\n';
+  } while ( next_permutation(v.begin(),v.end()));
+  cout &lt;&lt; "After loop: " &lt;&lt; v[0] &lt;&lt; ' ' &lt;&lt; v[1] &lt;&lt; ' ' &lt;&lt; v[2] &lt;&lt; '\n';
+  return 0;
+}
+</pre>
+    			</tr></table>
+			<li><b>merge(vekt1.iterator1, vekt1.iterator2, vekt2.iterator1, vekt2.iterator2, vekt3.iterator1)</b>; //podprogram, ktorý robí triedenie zlučovaním zlučovani
+				<br> &nbsp; &nbsp;(vekt2 musí mať rozsah rovný súčtu prvkov vektora1 a vektora2
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// merge algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::merge, std::sort
+#include &lt;vector>       // std::vector
+using namespace std;
+int main () {
+  int first[] = {5,10,15,20,25};
+  int second[] = {50,40,30,20,10};
+  std::vector&lt;int> v(10);
+
+  std::sort (first,first+5);
+  std::sort (second,second+5);
+  std::merge (first,first+5,second,second+5,v.begin());
+
+  std::cout &lt;&lt; "The resulting vector contains:";
+  for (std::vector&lt;int>::iterator it=v.begin(); it!=v.end(); ++it)
+    std::cout &quot;&quot; ' ' &lt;&lt; *it;
+  std::cout &lt;&lt; '\n';
+
+  return 0;
+}
+</pre>
+    			</tr></table>
+			<li><b>remove(vekt.iterator1, vekt.iterator2, hodnota)</b>; //v danom intervale odstráni všetky prvky, ktoré sú rovné hodnote
+				<br> &nbsp; &nbsp;a vráti iterátor na nový koniec tohoto vektora/pola
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// remove algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::remove
+using namespace std;
+int main () 
+{ int pole[] = {10,20,30,30,20,10,10,20};      // 10 20 30 30 20 10 10 20
+  int index;
+  // bounds of range:
+  index = remove (pole+0, pole+8, 20)-pole;    // 10 30 30 10 10 ?  ?  ?
+                                               //do indexu zapise pocet prvkov v poli = 5 (tri boli zmazane)  
+  std::cout &lt;&lt; "range contains:";
+  for (int i=0; i&lt;index; i++) cout &lt;&lt; ' ' &lt;&lt; pole[i];
+  cout &lt;&lt; '\n';
+  return 0;
+}
+</pre>
+				</tr></table>
+			<li><b>remove_if(vekt.iterator1, vekt.iterator2, funkcia)</b>; //v danom intervale odstráni všetky prvky, ktoré sú popísané funkciou
+				<br> &nbsp; &nbsp;a vráti iterátor na nový koniec tohoto vektora/pola
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// remove algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::remove_if
+using namespace std;
+
+int fun1(int x)
+{ return (x%2);} // pre nepárne vráti pravdu 
+int fun2(int x)
+{ return (x>20&&x&lt;60);} // pre čísla 21,22,...,59 vráti pravdu 
+
+int main () 
+{ int pole[] = {10,20,30,30,20,10,10,20};      // 10 20 30 30 20 10 10 20
+  int index;
+  // bounds of range:
+  index = remove_if (pole+0, pole+8, fun2)-pole;    // 10 20 20 10 10 20  ?  ?
+                                               //do indexu zapise pocet prvkov v poli = 6 (dve boli zmazane)  
+  std::cout &lt;&lt; "range contains:";
+  for (int i=0; i&lt;index; i++) cout &lt;&lt; ' ' &lt;&lt; pole[i];
+  cout &lt;&lt; '\n';
+  return 0;
+}
+</pre>
+				</tr></table>
+			<li><b>rotate(vekt.iterator1, vekt.iterator2, vekt.iterator3);</b> //rotuje vektor v rozsahu iterator1 - iterator3 
+				<br> &nbsp; &nbsp;iterator2 sa pri rotacii presúva do iteratora1
+				<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// rotate algorithm example
+#include &lt;iostream>     // std::cout
+#include &lt;algorithm>    // std::rotate
+#include &lt;vector>       // std::vector
+using namespace std;
+int main () {
+  vector&lt;int> myvector;
+
+  // set some values:
+  for (int i=1; i&lt;10; ++i) myvector.push_back(i); // 1 2 3 4 5 6 7 8 9
+
+  rotate(myvector.begin(),myvector.begin()+3,myvector.end());
+                                                  // 4 5 6 7 8 9 1 2 3
+  // print out content:
+  cout &lt;&lt; "myvector contains:";
+  for (vector&lt;int>::iterator it=myvector.begin(); it!=myvector.end(); ++it)
+    std::cout &lt;&lt; ' ' &lt;&lt; *it;
+  cout &lt;&lt; '\n';
+  return 0;
+}
+</pre>
+				</tr></table>
+		</ul>
+</dl>
+</body>
+</html>

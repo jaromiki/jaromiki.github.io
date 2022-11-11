@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Priateľské funkcie</h3>
+Ak potrebujeme aby funkcia mala prístup ku privátnym údajom triedy môžme ju zadefinovať ako priateľskú funkciu. Priateľská funkcia teda nie je členskou funkciou
+ale napriek tomu má právo priameho prístupu ku privátnym objektom tiedy. Priateľská funkcia musí byť však deklarovaná (aspoň popis hlavičky) vo vnútri triedy s kľúčovým slovom <b>frend</b>.
+Jedna funkcia môže byť uvedená ako priateľská vo viacerých triedach.
+<br>Ukážka:
+		<table width="60%" bgcolor="#cccccc" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>// Deklarácia triedy
+#include &lt;iostream>
+using namespace std;
+
+class mojatrieda
+{   int n, d;
+    public:
+	  mojatrieda(int nn, int dd)
+	  {  n = nn; d = dd; }
+	  friend bool rovnake(mojatrieda x);
+};
+
+//teraz zadefinujeme priatelsku fukciu
+bool rovnake(mojatrieda x)
+{ return x.n == x.d;}
+
+int main()
+{  mojatrieda x(1,2), y(5,5);
+   cout &lt;&lt; rovnake(x)?"v triede x su rovnake": "v triede x nie su rovnake" &lt;&lt;endl;
+   cout &lt;&lt; rovnake(y)?"v triede y su rovnake": "v triede y nie su rovnake" &lt;&lt;endl;
+}</pre>
+		</tr></table>
+Poznámky:
+<br>*  Priateľská fukcia nie je členskou funkciou a teda nemôže sa odvolávať na premenné n, d bez uvedenia mena inštancie triedy.
+<br>*  Tak ako je zadeklarovaná mojatrieda je priateľská funkcia ako sa dostať ku privátnym dátam/objektom triedy.
+<br>*  Nakoľko f. rovnake() nie je členskou funkciou nie je možný zápis x.rovnae - zahlási chybu
+<br>*  Priateľská funkcia sa nededí!
+Použitie:
+Majme triedy
+<br>automobil
+<br>tir
+<br>kde v každej je zadefinovaný atribút <b>max_rych</b>. Ak potrebujeme tieto hodnoty porovnávať zadefinujeme v oboch triedach rovakú spriatelenú funkciu aby sme
+sa ku týmto údajom rýchlo dostali.
+		<table width="60%" bgcolor="#cccccc" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>// Predbežná deklarácia triedy tir
+class tir;
+class automobil
+{ ...
+ friend int porovnaj(automobil a, tir t);
+}
+class tir
+{ ...
+ friend int porovnaj(automobil a, tir t);
+}
+</pre>
+		</tr></table>
+		Predbe6ná deklarácia triedy tir musí byť použitá aby sme v triede mohli použiť identifikátor typu tir.
+		<br>Je možné aby členská fukncia jednej triedy bola priateľskou funkciou inej triedy.
+ 
+
+</body>
+</html>

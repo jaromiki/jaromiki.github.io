@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 44 - Čočkové efekty</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_44.jpg" class="nehe_maly" alt="Lekce 44" />
+
+<h1>Lekce 44 - Čočkové efekty</h1>
+
+<p class="nadpis_clanku">Čočkové efekty vznikají po dopadu paprsku světla např. na objektiv kamery nebo fotoaparátu. Podíváte-li se na záři vyvolanou čočkou, zjistíte, že jednotlivé útvary mají jednu společnou věc. Pozorovateli se zdá, jako by se všechny pohybovaly skrz střed scény. S tímto na mysli můžeme osu z jednoduše odstranit a vytvářet vše ve 2D. Jediný problém související s nepřítomností z souřadnice je, jak zjistit, jestli se zdroj světla nachází ve výhledu kamery nebo ne. Připravte se proto na trochu matematiky.</p>
+
+<p>Ahoj všichni, jsem tu s dalším tutoriálem. Rozšíříme naši třídu glCamera o čočkové efekty (Překl.: v originále Lens Flare - čočková záře), které jsou sice náročné na množství výpočtů, ale vypadají opravdu realisticky. Jak už jsem napsal, do třídy kamery přidáme možnost, jak zjistit, jestli se bod nebo koule nachází ve výhledu kamery na scénu. Neměli bychom však při tom odrovnat procesor.</p>
+
+<p>Jsem na rozpacích, ale musím zmínit, že třída kamery obsahuje chybu. Před tím, než začneme, musíme ji záplatovat. Funkci SetPerspective() upravte podle následujícího vzoru.</p>
+
+<p class="src0">void glCamera::SetPerspective()</p>
+<p class="src0">{</p>
+<p class="src1">GLfloat Matrix[16];<span class="kom">// Pole pro modelview matici</span></p>
+<p class="src1">glVector v;<span class="kom">// Směr a rychlost kamery</span></p>
+<p></p>
+<p class="src1">glRotatef(m_HeadingDegrees, 0.0f, 1.0f, 0.0f);<span class="kom">// Výpočet směrového vektoru</span></p>
+<p class="src1">glRotatef(m_PitchDegrees, 1.0f, 0.0f, 0.0f);</p>
+<p></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX, Matrix);<span class="kom">// Získání matice</span></p>
+<p></p>
+<p class="src1">m_DirectionVector.i = Matrix[8];<span class="kom">// Směrový vektor</span></p>
+<p class="src1">m_DirectionVector.j = Matrix[9];</p>
+<p class="src1">m_DirectionVector.k = -Matrix[10];<span class="kom">// Musí být invertován</span></p>
+<p></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glRotatef(m_PitchDegrees, 1.0f, 0.0f, 0.0f);<span class="kom">// Správná orientace scény</span></p>
+<p class="src1">glRotatef(m_HeadingDegrees, 0.0f, 1.0f, 0.0f);</p>
+<p></p>
+<p class="src1">v = m_DirectionVector;<span class="kom">// Aktualizovat směr podle rychlosti</span></p>
+<p class="src1">v *= m_ForwardVelocity;</p>
+<p></p>
+<p class="src1">m_Position.x += v.i;<span class="kom">// Inkrementace pozice vektorem</span></p>
+<p class="src1">m_Position.y += v.j;</p>
+<p class="src1">m_Position.z += v.k;</p>
+<p></p>
+<p class="src1">glTranslatef(-m_Position.x, -m_Position.y, -m_Position.z);<span class="kom">// Přesun na novou pozici</span></p>
+<p class="src0">}</p>
+
+<p>Před tím, než se pustíme do kódování, si nakreslíme čtyři textury pro čočkovou záři. První představuje mlhavou záři nebo sálání a bude vždy umisťována na pozici světelného zdroje. Pomocí další můžeme vytvářet záblesky zářící ven ze světla. Opět ji umístíme na jeho pozici. Třetí se vzhledem podobá první textuře, ale uprostřed je mnohem více definovaná. Budeme jí dynamicky pohybovat přes scénu. Poslední textura je zářící, dutě vypadající kruh, který budeme přesunovat v závislosti na pozici a orientaci kamery. Existují samozřejmě i další typy textur; pro další informace se podívejte na reference uvedené na konci tutoriálu.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_44_big_glow.jpg" width="128" height="128" alt="Big Glow" />
+<img src="images/nehe_tut/tut_44_streaks.jpg" width="128" height="128" alt="Streaks" />
+<img src="images/nehe_tut/tut_44_glow.jpg" width="64" height="64" alt="Glow" />
+<img src="images/nehe_tut/tut_44_halo.jpg" width="64" height="64" alt="Halo" />
+</div>
+
+<p>Teď byste už měli mít alespoň představu, co budeme vykreslovat. Obecně se dá říci, že se čočkový efekt nikdy neobjeví, dokud se nepodíváme do zdroje světla nebo alespoň jeho směrem, a proto potřebujeme najít cestu, jak zjistit, jestli se daný bod (pozice světla) nachází ve výhledu kamery nebo ne. Můžeme vynásobit modelview a projekční matici a potom nalézt ořezávací roviny, které OpenGL používá. Druhá možnost je použít rozšíření GL_HP_occlusion_test nebo GL_NV_occlusion_query, ale ne každá grafická karta je implementuje. My použijeme věc, která funguje vždy a všude - matematiku.</p>
+
+<p>Překl.: Občas, když je něco málo vysvětlené, přidávám vlastní texty, ale teď to po mně prosím nechtějte :-)</p>
+
+<p class="src0">void glCamera::UpdateFrustum()<span class="kom">// Získání ořezávacích rovin</span></p>
+<p class="src0">{</p>
+<p class="src1">GLfloat clip[16];<span class="kom">// Pomocná matice</span></p>
+<p class="src1">GLfloat proj[16];<span class="kom">// Projekční matice</span></p>
+<p class="src1">GLfloat modl[16];<span class="kom">// Modelview matice</span></p>
+<p class="src1">GLfloat t;<span class="kom">// Pomocná</span></p>
+<p></p>
+<p class="src1">glGetFloatv(GL_PROJECTION_MATRIX, proj);<span class="kom">// Získání projekční matice</span></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX, modl);<span class="kom">// Získání modelview matice</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vynásobí projekční matici pomocí modelview</span></p>
+<p class="src1">clip[ 0] = modl[ 0] * proj[ 0] + modl[ 1] * proj[ 4] + modl[ 2] * proj[ 8] + modl[ 3] * proj[12];</p>
+<p class="src1">clip[ 1] = modl[ 0] * proj[ 1] + modl[ 1] * proj[ 5] + modl[ 2] * proj[ 9] + modl[ 3] * proj[13];</p>
+<p class="src1">clip[ 2] = modl[ 0] * proj[ 2] + modl[ 1] * proj[ 6] + modl[ 2] * proj[10] + modl[ 3] * proj[14];</p>
+<p class="src1">clip[ 3] = modl[ 0] * proj[ 3] + modl[ 1] * proj[ 7] + modl[ 2] * proj[11] + modl[ 3] * proj[15];</p>
+<p></p>
+<p class="src1">clip[ 4] = modl[ 4] * proj[ 0] + modl[ 5] * proj[ 4] + modl[ 6] * proj[ 8] + modl[ 7] * proj[12];</p>
+<p class="src1">clip[ 5] = modl[ 4] * proj[ 1] + modl[ 5] * proj[ 5] + modl[ 6] * proj[ 9] + modl[ 7] * proj[13];</p>
+<p class="src1">clip[ 6] = modl[ 4] * proj[ 2] + modl[ 5] * proj[ 6] + modl[ 6] * proj[10] + modl[ 7] * proj[14];</p>
+<p class="src1">clip[ 7] = modl[ 4] * proj[ 3] + modl[ 5] * proj[ 7] + modl[ 6] * proj[11] + modl[ 7] * proj[15];</p>
+<p></p>
+<p class="src1">clip[ 8] = modl[ 8] * proj[ 0] + modl[ 9] * proj[ 4] + modl[10] * proj[ 8] + modl[11] * proj[12];</p>
+<p class="src1">clip[ 9] = modl[ 8] * proj[ 1] + modl[ 9] * proj[ 5] + modl[10] * proj[ 9] + modl[11] * proj[13];</p>
+<p class="src1">clip[10] = modl[ 8] * proj[ 2] + modl[ 9] * proj[ 6] + modl[10] * proj[10] + modl[11] * proj[14];</p>
+<p class="src1">clip[11] = modl[ 8] * proj[ 3] + modl[ 9] * proj[ 7] + modl[10] * proj[11] + modl[11] * proj[15];</p>
+<p></p>
+<p class="src1">clip[12] = modl[12] * proj[ 0] + modl[13] * proj[ 4] + modl[14] * proj[ 8] + modl[15] * proj[12];</p>
+<p class="src1">clip[13] = modl[12] * proj[ 1] + modl[13] * proj[ 5] + modl[14] * proj[ 9] + modl[15] * proj[13];</p>
+<p class="src1">clip[14] = modl[12] * proj[ 2] + modl[13] * proj[ 6] + modl[14] * proj[10] + modl[15] * proj[14];</p>
+<p class="src1">clip[15] = modl[12] * proj[ 3] + modl[13] * proj[ 7] + modl[14] * proj[11] + modl[15] * proj[15];</p>
+<p></p>
+<p class="src1">m_Frustum[0][0] = clip[ 3] - clip[ 0];<span class="kom">// Získání pravé roviny</span></p>
+<p class="src1">m_Frustum[0][1] = clip[ 7] - clip[ 4];</p>
+<p class="src1">m_Frustum[0][2] = clip[11] - clip[ 8];</p>
+<p class="src1">m_Frustum[0][3] = clip[15] - clip[12];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[0][0] * m_Frustum[0][0] + m_Frustum[0][1] * m_Frustum[0][1] + m_Frustum[0][2] * m_Frustum[0][2] ));</p>
+<p class="src1">m_Frustum[0][0] /= t;</p>
+<p class="src1">m_Frustum[0][1] /= t;</p>
+<p class="src1">m_Frustum[0][2] /= t;</p>
+<p class="src1">m_Frustum[0][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[1][0] = clip[ 3] + clip[ 0];<span class="kom">// Získání levé roviny</span></p>
+<p class="src1">m_Frustum[1][1] = clip[ 7] + clip[ 4];</p>
+<p class="src1">m_Frustum[1][2] = clip[11] + clip[ 8];</p>
+<p class="src1">m_Frustum[1][3] = clip[15] + clip[12];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[1][0] * m_Frustum[1][0] + m_Frustum[1][1] * m_Frustum[1][1] + m_Frustum[1][2] * m_Frustum[1][2] ));</p>
+<p class="src1">m_Frustum[1][0] /= t;</p>
+<p class="src1">m_Frustum[1][1] /= t;</p>
+<p class="src1">m_Frustum[1][2] /= t;</p>
+<p class="src1">m_Frustum[1][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[2][0] = clip[ 3] + clip[ 1];<span class="kom">// Získání dolní roviny</span></p>
+<p class="src1">m_Frustum[2][1] = clip[ 7] + clip[ 5];</p>
+<p class="src1">m_Frustum[2][2] = clip[11] + clip[ 9];</p>
+<p class="src1">m_Frustum[2][3] = clip[15] + clip[13];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[2][0] * m_Frustum[2][0] + m_Frustum[2][1] * m_Frustum[2][1] + m_Frustum[2][2] * m_Frustum[2][2] ));</p>
+<p class="src1">m_Frustum[2][0] /= t;</p>
+<p class="src1">m_Frustum[2][1] /= t;</p>
+<p class="src1">m_Frustum[2][2] /= t;</p>
+<p class="src1">m_Frustum[2][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[3][0] = clip[ 3] - clip[ 1];<span class="kom">// Získání horní roviny</span></p>
+<p class="src1">m_Frustum[3][1] = clip[ 7] - clip[ 5];</p>
+<p class="src1">m_Frustum[3][2] = clip[11] - clip[ 9];</p>
+<p class="src1">m_Frustum[3][3] = clip[15] - clip[13];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[3][0] * m_Frustum[3][0] + m_Frustum[3][1] * m_Frustum[3][1] + m_Frustum[3][2] * m_Frustum[3][2] ));</p>
+<p class="src1">m_Frustum[3][0] /= t;</p>
+<p class="src1">m_Frustum[3][1] /= t;</p>
+<p class="src1">m_Frustum[3][2] /= t;</p>
+<p class="src1">m_Frustum[3][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[4][0] = clip[ 3] - clip[ 2];<span class="kom">// Získání zadní roviny</span></p>
+<p class="src1">m_Frustum[4][1] = clip[ 7] - clip[ 6];</p>
+<p class="src1">m_Frustum[4][2] = clip[11] - clip[10];</p>
+<p class="src1">m_Frustum[4][3] = clip[15] - clip[14];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[4][0] * m_Frustum[4][0] + m_Frustum[4][1] * m_Frustum[4][1] + m_Frustum[4][2] * m_Frustum[4][2] ));</p>
+<p class="src1">m_Frustum[4][0] /= t;</p>
+<p class="src1">m_Frustum[4][1] /= t;</p>
+<p class="src1">m_Frustum[4][2] /= t;</p>
+<p class="src1">m_Frustum[4][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[5][0] = clip[ 3] + clip[ 2];<span class="kom">// Získání přední roviny</span></p>
+<p class="src1">m_Frustum[5][1] = clip[ 7] + clip[ 6];</p>
+<p class="src1">m_Frustum[5][2] = clip[11] + clip[10];</p>
+<p class="src1">m_Frustum[5][3] = clip[15] + clip[14];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[5][0] * m_Frustum[5][0] + m_Frustum[5][1] * m_Frustum[5][1] + m_Frustum[5][2] * m_Frustum[5][2] ));</p>
+<p class="src1">m_Frustum[5][0] /= t;</p>
+<p class="src1">m_Frustum[5][1] /= t;</p>
+<p class="src1">m_Frustum[5][2] /= t;</p>
+<p class="src1">m_Frustum[5][3] /= t;</p>
+<p class="src0">}</p>
+
+<p>Tato funkce byla opravdu náročná! Jsem si jistý, že už víte, proč vznikají nejrůznější OpenGL rozšíření. Ačkoli je matematika celkem přímočará, její strašná délka zobrazuje věci složitě. Použili jsme celkem 190 základních operací (násobení, dělení, sčítání, odčítání), plus šest druhých odmocnin. Protože ji budeme volat při každém překreslení scény, mohla by se snaha o optimalizaci vyplatit. Dokud nemodifikujeme projekční matici translací nebo rotací, můžeme používat její rychlejší ekvivalent UpdateFrustumFaster().</p>
+
+<p class="src0">void glCamera::UpdateFrustumFaster()<span class="kom">// Získání ořezávacích rovin (optimalizovaná funkce)</span></p>
+<p class="src0">{</p>
+<p class="src1">GLfloat clip[16];<span class="kom">// Pomocná matice</span></p>
+<p class="src1">GLfloat proj[16];<span class="kom">// Projekční matice</span></p>
+<p class="src1">GLfloat modl[16];<span class="kom">// Modelview matice</span></p>
+<p class="src1">GLfloat t;<span class="kom">// Pomocná</span></p>
+<p></p>
+<p class="src1">glGetFloatv(GL_PROJECTION_MATRIX, proj);<span class="kom">// Získání projekční matice</span></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX, modl);<span class="kom">// Získání modelview matice</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vynásobí projekční matici pomocí modelview (nesmí být před tím použita rotace ani translace)</span></p>
+<p class="src1">clip[ 0] = modl[ 0] * proj[ 0];</p>
+<p class="src1">clip[ 1] = modl[ 1] * proj[ 5];</p>
+<p class="src1">clip[ 2] = modl[ 2] * proj[10] + modl[ 3] * proj[14];</p>
+<p class="src1">clip[ 3] = modl[ 2] * proj[11];</p>
+<p></p>
+<p class="src1">clip[ 4] = modl[ 4] * proj[ 0];</p>
+<p class="src1">clip[ 5] = modl[ 5] * proj[ 5];</p>
+<p class="src1">clip[ 6] = modl[ 6] * proj[10] + modl[ 7] * proj[14];</p>
+<p class="src1">clip[ 7] = modl[ 6] * proj[11];</p>
+<p></p>
+<p class="src1">clip[ 8] = modl[ 8] * proj[ 0];</p>
+<p class="src1">clip[ 9] = modl[ 9] * proj[ 5];</p>
+<p class="src1">clip[10] = modl[10] * proj[10] + modl[11] * proj[14];</p>
+<p class="src1">clip[11] = modl[10] * proj[11];</p>
+<p></p>
+<p class="src1">clip[12] = modl[12] * proj[ 0];</p>
+<p class="src1">clip[13] = modl[13] * proj[ 5];</p>
+<p class="src1">clip[14] = modl[14] * proj[10] + modl[15] * proj[14];</p>
+<p class="src1">clip[15] = modl[14] * proj[11];</p>
+<p></p>
+<p class="src1">m_Frustum[0][0] = clip[ 3] - clip[ 0];<span class="kom">// Získání pravé roviny</span></p>
+<p class="src1">m_Frustum[0][1] = clip[ 7] - clip[ 4];</p>
+<p class="src1">m_Frustum[0][2] = clip[11] - clip[ 8];</p>
+<p class="src1">m_Frustum[0][3] = clip[15] - clip[12];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[0][0] * m_Frustum[0][0] + m_Frustum[0][1] * m_Frustum[0][1] + m_Frustum[0][2] * m_Frustum[0][2] ));</p>
+<p class="src1">m_Frustum[0][0] /= t;</p>
+<p class="src1">m_Frustum[0][1] /= t;</p>
+<p class="src1">m_Frustum[0][2] /= t;</p>
+<p class="src1">m_Frustum[0][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[1][0] = clip[ 3] + clip[ 0];<span class="kom">// Získání levé roviny</span></p>
+<p class="src1">m_Frustum[1][1] = clip[ 7] + clip[ 4];</p>
+<p class="src1">m_Frustum[1][2] = clip[11] + clip[ 8];</p>
+<p class="src1">m_Frustum[1][3] = clip[15] + clip[12];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[1][0] * m_Frustum[1][0] + m_Frustum[1][1] * m_Frustum[1][1] + m_Frustum[1][2] * m_Frustum[1][2] ));</p>
+<p class="src1">m_Frustum[1][0] /= t;</p>
+<p class="src1">m_Frustum[1][1] /= t;</p>
+<p class="src1">m_Frustum[1][2] /= t;</p>
+<p class="src1">m_Frustum[1][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[2][0] = clip[ 3] + clip[ 1];<span class="kom">// Získání spodní roviny</span></p>
+<p class="src1">m_Frustum[2][1] = clip[ 7] + clip[ 5];</p>
+<p class="src1">m_Frustum[2][2] = clip[11] + clip[ 9];</p>
+<p class="src1">m_Frustum[2][3] = clip[15] + clip[13];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[2][0] * m_Frustum[2][0] + m_Frustum[2][1] * m_Frustum[2][1] + m_Frustum[2][2] * m_Frustum[2][2] ));</p>
+<p class="src1">m_Frustum[2][0] /= t;</p>
+<p class="src1">m_Frustum[2][1] /= t;</p>
+<p class="src1">m_Frustum[2][2] /= t;</p>
+<p class="src1">m_Frustum[2][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[3][0] = clip[ 3] - clip[ 1];<span class="kom">// Získání horní roviny</span></p>
+<p class="src1">m_Frustum[3][1] = clip[ 7] - clip[ 5];</p>
+<p class="src1">m_Frustum[3][2] = clip[11] - clip[ 9];</p>
+<p class="src1">m_Frustum[3][3] = clip[15] - clip[13];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[3][0] * m_Frustum[3][0] + m_Frustum[3][1] * m_Frustum[3][1] + m_Frustum[3][2] * m_Frustum[3][2] ));</p>
+<p class="src1">m_Frustum[3][0] /= t;</p>
+<p class="src1">m_Frustum[3][1] /= t;</p>
+<p class="src1">m_Frustum[3][2] /= t;</p>
+<p class="src1">m_Frustum[3][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[4][0] = clip[ 3] - clip[ 2];<span class="kom">// Získání zadní roviny</span></p>
+<p class="src1">m_Frustum[4][1] = clip[ 7] - clip[ 6];</p>
+<p class="src1">m_Frustum[4][2] = clip[11] - clip[10];</p>
+<p class="src1">m_Frustum[4][3] = clip[15] - clip[14];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[4][0] * m_Frustum[4][0] + m_Frustum[4][1] * m_Frustum[4][1] + m_Frustum[4][2] * m_Frustum[4][2] ));</p>
+<p class="src1">m_Frustum[4][0] /= t;</p>
+<p class="src1">m_Frustum[4][1] /= t;</p>
+<p class="src1">m_Frustum[4][2] /= t;</p>
+<p class="src1">m_Frustum[4][3] /= t;</p>
+<p></p>
+<p class="src1">m_Frustum[5][0] = clip[ 3] + clip[ 2];<span class="kom">// Získání přední roviny</span></p>
+<p class="src1">m_Frustum[5][1] = clip[ 7] + clip[ 6];</p>
+<p class="src1">m_Frustum[5][2] = clip[11] + clip[10];</p>
+<p class="src1">m_Frustum[5][3] = clip[15] + clip[14];</p>
+<p></p>
+<p class="src1"><span class="kom">// Normalizace výsledku</span></p>
+<p class="src1">t = GLfloat(sqrt( m_Frustum[5][0] * m_Frustum[5][0] + m_Frustum[5][1] * m_Frustum[5][1] + m_Frustum[5][2] * m_Frustum[5][2] ));</p>
+<p class="src1">m_Frustum[5][0] /= t;</p>
+<p class="src1">m_Frustum[5][1] /= t;</p>
+<p class="src1">m_Frustum[5][2] /= t;</p>
+<p class="src1">m_Frustum[5][3] /= t;</p>
+<p class="src0">}</p>
+
+<p>Operací se provádí stále mnoho, ale oproti předchozí verzi, je jich pouze něco přes polovinu (102). Optimalizace byla celkem jednoduchá, odstranil jsem pouze všechna násobení, která se díky nule vykrátí. Pokud chcete kompletní optimalizaci, použijte již zmíněná rozšíření, která za vás udělají stejnou práci a navíc mnohem rychleji, protože všechny výpočty proběhnou na hardwaru grafické karty. Ačkoli volání obou UpdateFrustum() funkcí navyšuje výkonnostní ztrátu, můžeme nyní snadno zjistit, jestli se libovolný bod nachází ve výhledu kamery. Obsahuje-li scéna více objektů náročných na rendering, bude určitě výhodné vykreslovat pouze ty, které půjdou vidět - například u rozsáhlého terénu.</p>
+
+<p>PointInFrustum() vrácením true oznámí, že se bod předaný v parametru nachází ve viditelné oblasti okna. Druhá funkce je prakticky stejná, ale jedná se o kouli.</p>
+
+<p class="src0">BOOL glCamera::PointInFrustum(glPoint p)<span class="kom">// Bude bod vidět na scéně?</span></p>
+<p class="src0">{</p>
+<p class="src1">int i;</p>
+<p></p>
+<p class="src1">for(i = 0; i &lt; 6; i++)<span class="kom">// Bod se musí nacházet mezi všemi šesti ořezávacími rovinami</span></p>
+<p class="src1">{</p>
+<p class="src2">if(m_Frustum[i][0] * p.x + m_Frustum[i][1] * p.y + m_Frustum[i][2] * p.z + m_Frustum[i][3] &lt;= 0)</p>
+<p class="src2">{</p>
+<p class="src3">return FALSE;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">BOOL glCamera::SphereInFrustum(glPoint p, GLfloat Radius)<span class="kom">// Bude koule vidět na scéně?</span></p>
+<p class="src0">{</p>
+<p class="src1">int i;</p>
+<p></p>
+<p class="src1">for(i = 0; i &lt; 6; i++)<span class="kom">// Koule se musí nacházet mezi všemi šesti ořezávacími rovinami</span></p>
+<p class="src1">{</p>
+<p class="src2">if(m_Frustum[i][0] * p.x + m_Frustum[i][1] * p.y + m_Frustum[i][2] * p.z + m_Frustum[i][3] &lt;= -Radius)</p>
+<p class="src2">{</p>
+<p class="src3">return FALSE;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src1"></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Ve funkci IsOccluded() požádáme gluProject() o zjištění, do které části viewportu bude zadaný bod projektován. Pozice ve viewportu odpovídá souřadnicím v depth bufferu. Pokud bude hloubka pixelu v bufferu menší než hloubka našeho bodu, je jasné, že se už něco nachází před ním.</p>
+
+<p class="src0">bool glCamera::IsOccluded(glPoint p)<span class="kom">// Je před bodem něco vykresleno?</span></p>
+<p class="src0">{</p>
+<p class="src1">GLint viewport[4];<span class="kom">// Data viewportu</span></p>
+<p class="src1">GLdouble mvmatrix[16], projmatrix[16];<span class="kom">// Transformační matice</span></p>
+<p class="src1">GLdouble winx, winy, winz;<span class="kom">// Výsledné souřadnice</span></p>
+<p class="src1">GLdouble flareZ;<span class="kom">// Hloubka záře v obrazovce</span></p>
+<p class="src1">GLfloat bufferZ;<span class="kom">// Hloubka z bufferu</span></p>
+<p></p>
+<p class="src1">glGetIntegerv(GL_VIEWPORT, viewport);<span class="kom">// Získání viewportu</span></p>
+<p class="src1">glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);<span class="kom">// Získání modelview matice</span></p>
+<p class="src1">glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);<span class="kom">// Získání projekční matice</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Kam do viewportu (2D) se vykreslí bod (3D)</span></p>
+<p class="src1">gluProject(p.x, p.y, p.z, mvmatrix, projmatrix, viewport, &amp;winx, &amp;winy, &amp;winz);</p>
+<p class="src1">flareZ = winz;</p>
+<p></p>
+<p class="src1">glReadPixels(winx, winy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &amp;bufferZ);<span class="kom">// Hloubka v depth bufferu</span></p>
+<p></p>
+<p class="src1">if (bufferZ &lt; flareZ)<span class="kom">// Před bodem se nachází objekt</span></p>
+<p class="src1">{</p>
+<p class="src2">return true;</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Nic před bodem není</span></p>
+<p class="src1">{</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Všechny obdélníky objektů čočkového efektu by měly být vykreslovány na rovinu rovnoběžnou s obrazovkou monitoru, ale může se stát, že budou kvůli rotacím nakloněné. To je problém, protože by se měly zobrazit ploché i v případě, že se díváme na zdroj světla ze strany. Namísto otexturovaného quadu bychom mohli s výhodou využít point sprity. Když chceme nakreslit &quot;klasický&quot; obdélník, předáme OpenGL souřadnice čtyř bodů, texturovací koordináty a normálové vektory. Na rozdíl od toho point sprite vyžaduje pouze x, y, z souřadnice a nic jiného. Grafická karta vykreslí kolem těchto souřadnic obdélník, který bude vždy orientován k obrazovce. Možná se vám při programování částicových systémů stalo, že po natočení scény o 90 stupňů všechny částice zmizely, protože byly vykreslovány kolmo k ploše obrazovky. Právě pro ně se hodí point sprity nejvíce, ale pro čočkové efekty také. Jejich velká nevýhoda spočívá v implementaci, existují pouze jako rozšíření (GL_NV_point_sprite), takže se může stát, že je grafická karta nebude podporovat. Ani zde tedy rozšíření nepoužijeme. Řešení může spočívat v invertování všech rotací, nicméně problémy nastanou, pokud se kamera dostane za zdroj světla. Proto, abychom tomu předešli, budeme při pohybu kamerou zároveň měnit také polohu světla. Získáme i vedlejší efekt, zdroj světla se bude jevit jakoby stále ve stejné vzdálenosti a také dovolí čočkovým efektům o trochu vylepšit pohybování po přímé lince.</p>
+
+<p>Vypočteme vzdálenost kamery od světla a přes směrový vektor kamery získáme průsečík, jehož vzdálenost od kamery musí být stejná jako vzdálenost kamery a světla. Máme-li průsečík, můžeme nalézt vektor, přes který vykreslíme všechny části čočkového efektu. Obrázek bude možná názornější...</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_44_diag.jpg" width="512" height="512" alt="Grafické znázornění jak se získá vektor" /></div>
+
+<p class="src0">void glCamera::RenderLensFlare()<span class="kom">// Vykreslení čočkových objektů</span></p>
+<p class="src0">{</p>
+<p class="src1">GLfloat Length = 0.0f;</p>
+<p></p>
+<p class="src1">if(SphereInFrustum(m_LightSourcePos, 1.0f) == TRUE)<span class="kom">// Pouze pokud kamera směřuje ke světlu</span></p>
+<p class="src1">{</p>
+<p class="src2">vLightSourceToCamera = m_Position - m_LightSourcePos;<span class="kom">// Vektor od kamery ke světlu</span></p>
+<p class="src2">Length = vLightSourceToCamera.Magnitude();<span class="kom">// Vzdálenost kamery od světla</span></p>
+<p></p>
+<p class="src2">ptIntersect = m_DirectionVector * Length;<span class="kom">// Bod průsečíku</span></p>
+<p class="src2">ptIntersect += m_Position;</p>
+<p></p>
+<p class="src2">vLightSourceToIntersect = ptIntersect - m_LightSourcePos;<span class="kom">// Vektor mezi světlem a průsečíkem</span></p>
+<p class="src2">Length = vLightSourceToIntersect.Magnitude();<span class="kom">// Vzdálenost světla a průsečíku</span></p>
+<p class="src2">vLightSourceToIntersect.Normalize();<span class="kom">// Normalizace vektoru</span></p>
+
+<p>Na získaném směrovém vektoru vykreslíme záblesky. Posuneme se o x jednotek dolů po vektoru vLightSourceToIntersect a následným přičtením k pozici světla získáme nový požadovaný bod.</p>
+
+<p class="src2"><span class="kom">// Nastavení OpenGL</span></p>
+<p class="src2">glEnable(GL_BLEND);</p>
+<p class="src2">glBlendFunc(GL_SRC_ALPHA, GL_ONE);</p>
+<p class="src2">glDisable(GL_DEPTH_TEST);</p>
+<p class="src2">glEnable(GL_TEXTURE_2D);</p>
+<p></p>
+<p class="src2">if (!IsOccluded(m_LightSourcePos))<span class="kom">// Před středem záře nesmí být žádný objekt</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Vykreslení záře</span></p>
+<p class="src3">RenderBigGlow(0.60f, 0.60f, 0.8f, 1.0f, m_LightSourcePos, 16.0f);</p>
+<p class="src3">RenderStreaks(0.60f, 0.60f, 0.8f, 1.0f, m_LightSourcePos, 16.0f);</p>
+<p class="src3">RenderGlow(0.8f, 0.8f, 1.0f, 0.5f, m_LightSourcePos, 3.5f);</p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.1f);<span class="kom">// Bod ve 20% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.9f, 0.6f, 0.4f, 0.5f, pt, 0.6f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.15f);<span class="kom">// Bod ve 30% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderHalo(0.8f, 0.5f, 0.6f, 0.5f, pt, 1.7f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.175f);<span class="kom">// Bod ve 35% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderHalo(0.9f, 0.2f, 0.1f, 0.5f, pt, 0.83f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.285f);<span class="kom">// Bod ve 57% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderHalo(0.7f, 0.7f, 0.4f, 0.5f, pt, 1.6f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.2755f);<span class="kom">// Bod ve 55.1% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.9f, 0.9f, 0.2f, 0.5f, pt, 0.8f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.4775f);<span class="kom">// Bod ve 95.5% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.93f, 0.82f, 0.73f, 0.5f, pt, 1.0f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.49f);<span class="kom">// Bod ve 98% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderHalo(0.7f, 0.6f, 0.5f, 0.5f, pt, 1.4f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.65f);<span class="kom">// Bod ve 130% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.7f, 0.8f, 0.3f, 0.5f, pt, 1.8f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.63f);<span class="kom">// Bod ve 126% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.4f, 0.3f, 0.2f, 0.5f, pt, 1.4f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.8f);<span class="kom">// Bod ve 160% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderHalo(0.7f, 0.5f, 0.5f, 0.5f, pt, 1.4f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.7825f);<span class="kom">// Bod ve 156.5% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.8f, 0.5f, 0.1f, 0.5f, pt, 0.6f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 1.0f);<span class="kom">// Bod ve 200% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderHalo(0.5f, 0.5f, 0.7f, 0.5f, pt, 1.7f);<span class="kom">// Vykreslení záře</span></p>
+<p></p>
+<p class="src3">pt = vLightSourceToIntersect * (Length * 0.975f);<span class="kom">// Bod ve 195% vzdálenosti od světla ve směru průsečíku</span></p>
+<p class="src3">pt += m_LightSourcePos;</p>
+<p></p>
+<p class="src3">RenderGlow(0.4f, 0.1f, 0.9f, 0.5f, pt, 2.0f);<span class="kom">// Vykreslení záře</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Obnovení nastavení OpenGL</span></p>
+<p class="src2">glDisable(GL_BLEND);</p>
+<p class="src2">glEnable(GL_DEPTH_TEST);</p>
+<p class="src2">glDisable(GL_TEXTURE_2D);</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Následuje výpis kódu pro rendering čočkové záře. Máme celkem čtyři různé funkce, které se ale liší pouze texturou objektu, jinak jsou identické.</p>
+
+<p class="src0">void glCamera::RenderHalo(GLfloat r, GLfloat g, GLfloat b, GLfloat a, glPoint p, GLfloat scale)<span class="kom">// Vykreslení záře</span></p>
+<p class="src0">{</p>
+<p class="src1">glPoint q[4];<span class="kom">// Pomocný bod</span></p>
+<p></p>
+<p class="src1">q[0].x = (p.x - scale);<span class="kom">// Výpočet pozice</span></p>
+<p class="src1">q[0].y = (p.y - scale);</p>
+<p></p>
+<p class="src1">q[1].x = (p.x - scale);</p>
+<p class="src1">q[1].y = (p.y + scale);</p>
+<p></p>
+<p class="src1">q[2].x = (p.x + scale);</p>
+<p class="src1">q[2].y = (p.y - scale);</p>
+<p></p>
+<p class="src1">q[3].x = (p.x + scale);</p>
+<p class="src1">q[3].y = (p.y + scale);</p>
+<p></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uložení matice</span></p>
+<p class="src2">glTranslatef(p.x, p.y, p.z);<span class="kom">// Přesun na pozici</span></p>
+<p class="src2">glRotatef(-m_HeadingDegrees, 0.0f, 1.0f, 0.0f);<span class="kom">// Odstranění rotací</span></p>
+<p class="src2">glRotatef(-m_PitchDegrees, 1.0f, 0.0f, 0.0f);</p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, m_HaloTexture);<span class="kom">// Textura</span></p>
+<p class="src2">glColor4f(r, g, b, a);<span class="kom">// Nastavení barvy</span></p>
+<p></p>
+<p class="src2">glBegin(GL_TRIANGLE_STRIP);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex2f(q[0].x, q[0].y);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex2f(q[1].x, q[1].y);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex2f(q[2].x, q[2].y);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex2f(q[3].x, q[3].y);</p>
+<p class="src2">glEnd();</p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení matice</span></p>
+<p class="src0">}</p>
+
+<p>Tak to by z kódu bylo všechno. Pomocí kláves W, S, A, D můžete v programu měnit směr kamery. Klávesy 1 a 2 zapínají/vypínají výpisy informací. Z a C nastavují kameře konstantní rychlost a X ji zastavuje.</p>
+
+<p>Samozřejmě nejsem první člověk, který vytvářel čočkové efekty, a proto můžete dole najít pár odkazů, které mi při psaní pomohly. Chtěl bych také poděkovat Davu Steerovi, Cameron Tidwell, Bertu Sammonsovi a Brannon Martidale za zpětnou vazbu a testování kódu na rozličném hardware.</p>
+
+<ul>
+<li><a href="http://www.gamedev.net/reference/articles/article874.asp" target="_blank">http://www.gamedev.net/reference/articles/article874.asp</a></li>
+<li><a href="http://www.gamedev.net/reference/articles/article813.asp" target="_blank">http://www.gamedev.net/reference/articles/article813.asp</a></li>
+<li><a href="http://www.opengl.org/developers/code/mjktips/lensflare/" target="_blank">http://www.opengl.org/developers/code/mjktips/lensflare/</a></li>
+<li><a href="http://www.markmorley.com/opengl/frustumculling.html" target="_blank">http://www.markmorley.com/opengl/frustumculling.html</a></li>
+<li><a href="http://oss.sgi.com/projects/ogl-sample/registry/HP/occlusion_test.txt" target="_blank">http://oss.sgi.com/projects/ogl-sample/registry/HP/occlusion_test.txt</a></li>
+<li><a href="http://oss.sgi.com/projects/ogl-sample/registry/NV/occlusion_query.txt" target="_blank">http://oss.sgi.com/projects/ogl-sample/registry/NV/occlusion_query.txt</a></li>
+</ul>
+
+<p class="autor">napsal: Vic Hollis <span class="transform_email">&lt;vichollis (zavináč) comcast.netVic&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3>Poznámky Daria Corna - rIO ze Spinning Kids</h3>
+
+<p>Přidal jsem několik testů pro zjištění objektů ve scéně před čočkovým efektem (na pozici zdroje světla). V takovém případě se záře vypíná. Nový kód by měl být dobře okomentován a je označen řetězcem # New Stuff #. Jeho případné odstranění by nemělo činit problémy. Modifikace jsou následující:</p>
+
+<ul>
+<li>Nová metoda třídy glCamera nazvaná IsOccluded(), která vrací true v případě, že se před světlem nachází nějaký objekt</li>
+<li>Několik proměnných pro gluCylinder (použit jako objekt stínící světlu)</li>
+<li>Změny v glDraw() pro vykreslení stínícího objektu</li>
+<li>Deinicializační kód pro quadratic</li>
+</ul>
+
+<p>Doufám, že se vám modifikovaná verze bude líbit více. Jako domácí úkol si můžete zkusil testovat více než jeden bod na souřadnicích světla, aby se záře skokově nevypínala, ale postupně mizela.</p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson44.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson44_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson44.zip">Dev C++</a> kód této lekce. ( <a href="mailto:michael@mudsplat.com">Michael Small</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson44.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson44.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/extras/lesson44/lesson44_with_extensions.zip">Lesson 44 - With Extension Support</a> (VC++).</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_44_big.jpg" class="nehe_velky" alt="Lekce 44" /></div>
+<p class="okolni_lekce"><a href="tut_43.php">&lt;&lt;&lt; Lekce 43</a> | <a href="tut_45.php">Lekce 45 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_44.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

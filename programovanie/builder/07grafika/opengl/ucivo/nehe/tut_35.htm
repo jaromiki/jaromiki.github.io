@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 35 - Přehrávání videa ve formátu AVI</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_35.jpg" class="nehe_maly" alt="Lekce 35" />
+
+<h1>Lekce 35 - Přehrávání videa ve formátu AVI</h1>
+
+<p class="nadpis_clanku">Přehrávání AVI videa v OpenGL? Na pozadí, povrchu krychle, koule, či válce, ve fullscreenu nebo v obyčejném okně. Co víc si přát...</p>
+
+<p>Na začátku bych chtěl poděkovat Fredsterovi za AVI animaci, Maxwellu Saylesovi za rady při programování, Jonathanu Nixovi a Johnu F. MCGowanovi, Ph. D. za skvělé články/dokumenty o AVI formátu. Moc jste mi pomohli.</p>
+
+<p>Musím říci, že jsem na tento tutoriál opravdu pyšný. když mě Jonathan F. Blok přivedl na nápad AVI přehrávače v OpenGL, neměl jsem nejmenší potuchu, jak AVI otevřít, natož jak by mohl video přehrávač fungovat. Začal jsem listováním ve svých knihách o programování - vůbec nic. Poté jsem zkusil MSDN. Našel jsem spoustu užitečných informací, ale bylo jich potřeba mnohem, mnohem více. Po hodinách prolézání internetu jsem měl poznamenány pouze dva weby. Nemohu říct, že moje vyhledávací postupy jsou úplně nejlepší, ale v cca. 99,9% případů jsem nikdy neměl nejmenší problémy. Byl jsem absolutně šokován, když jsem zjistil, jak málo příkladů na přehrávání videa tam bylo. Většina z nich navíc nešla zkompilovat, některé byly komplexní (alespoň pro mě) a plnily svůj účel, nicméně byly programovány ve VB, Delphi nebo podobně (ne VC++).</p>
+
+<p>První z užitečných stránek, které jsem našel, byl článek od Janathana Nixe nadepsaný <a href="http://www.gamedev.net/reference/programming/features/avifile/" target="_blank" title="http://www.gamedev.net/reference/programming/features/avifile/">AVI soubory</a>. Jonathan má u mě obrovský respekt za tak extrémně brilantní dokument. Ačkoli jsem se rozhodl jít jinou cestou než on, vnesl mě do problematiky. Druhý web, tentokrát od Johna F. MCGowana, Ph. D., má titulek The AVI Overview. Mohl bych teď začít popisovat, jak úžasné jsou Johnovi stránky, ale snadnější bude, když se <a href="http://www.jmcgowan.com/avi.html" target="_blank" title="http://www.jmcgowan.com/avi.html">sami podíváte</a>. Soustředil na nich snad vše, co je o AVI známo.</p>
+
+<p>Poslední věcí, na kterou chci upozornit, je, že žádná část z celého kódu NEBYLA vypůjčena a nic nebylo okopírováno. Kódování mi zabralo plné tři dny, používal jsem pouze informace z výše uvedených zdrojů. Zároveň cítím, že by bylo vhodné poznamenat, že můj kód nemusí být nejlepším způsobem pro přehrávání AVI souborů. Dokonce nemusí být ani vhodnou cestou, ale funguje a snadno se používá. Nicméně pokud se vám můj styl a kód nelíbí, nebo cítíte-li, že uvolněním tohoto tutoriálu dokonce zraňuji programátorskou komunitu, máte několik možností: 1) zkuste si na internetu najít jiné zdroje, 2) napište si svůj vlastní AVI přehrávač nebo 3) napište lepší tutoriál. Každý, kdo navštíví tento web, by měl vědět, že kóduji pro zábavu. Hlavním účelem těchto stránek je ulehčit život ne-elitním programátorům, kteří začínají s OpenGL. Tutoriály ukazují, jak jsem !já! dokázal vytvořit specifický efekt... nic více, nic méně.</p>
+
+<p>Pojďme ale ke kódu. Jako první věc vložíme a přilinkujeme knihovnu Video For Windows. Obrovské díky Microsoft&reg;u (Nikdy bych nevěřil, že to řeknu). Pomocí této knihovny bude otevírání a přehrávání AVI pouhou banalitou.</p>
+
+<p class="src0">#include &lt;vfw.h&gt;<span class="kom">// Hlavičkový soubor knihovny Video pro Windows</span></p>
+<p class="src0">#pragma comment(lib, &quot;vfw32.lib&quot;)<span class="kom">// Přilinkování VFW32.lib</span></p>
+
+<p>Deklarujeme proměnné. Angle je úhel natočení zobrazovaného objektu. Next představuje celé číslo, které použijeme pro spočítání množství uplynulého času (v milisekundách), abychom mohli udržet framerate na správné hodnotě. Více o tomto dále. Frame bude samozřejmě obsahovat číslo aktuálně zobrazovaného snímku animace. Effect představuje druh objektu na obrazovce (krychle, koule, válec, žádný). Bude-li env rovno true, budou se automaticky generovat texturové souřadnice. Bg představuje flag, který definuje, jestli se má pozadí zobrazovat nebo ne. Sp, ep a bp slouží pro ošetření delšího stisku kláves.</p>
+
+<p class="src0">float angle;<span class="kom">// Úhel rotace objektu</span></p>
+<p class="src0">int next;<span class="kom">// Pro animaci</span></p>
+<p class="src0">int frame = 0;<span class="kom">// Aktuální snímek videa</span></p>
+<p class="src0">int effect;<span class="kom">// Zobrazený objekt</span></p>
+<p></p>
+<p class="src0">bool env = TRUE;<span class="kom">// Automaticky generovat texturové koordináty?</span></p>
+<p class="src0">bool bg = TRUE;<span class="kom">// Zobrazovat pozadí?</span></p>
+<p></p>
+<p class="src0">bool sp;<span class="kom">// Stisknut mezerník?</span></p>
+<p class="src0">bool ep;<span class="kom">// Stisknuto E?</span></p>
+<p class="src0">bool bp;<span class="kom">// Stisknuto B?</span></p>
+
+<p>Struktura psi bude udržovat informace o AVI souboru. Pavi představuje ukazatel na buffer, do kterého po otevření AVI obdržíme handle nového proudu. Pgf, pointer na objekt GetFrame, použijeme pro získávání jednotlivých snímků, které pomocí bmih zkonvertujeme do formátu, který potřebujeme pro vytvoření textury. Lastframe ukládá číslo posledního snímku animace. Width a height definují rozměry AVI proudu, pdata je ukazatel na data obrázku vrácené po požadavku na snímek. Mpf (Miliseconds Per Frame) použijeme pro výpočet doby zobrazení snímku. Předpokládám, že nemáte nejmenší ponětí, k čemu všechny tyto proměnné vlastně slouží... vše byste měli pochopit dále.</p>
+
+<p class="src0">AVISTREAMINFO psi;<span class="kom">// Informace o datovém proudu videa</span></p>
+<p class="src0">PAVISTREAM pavi;<span class="kom">// Handle proudu</span></p>
+<p class="src0">PGETFRAME pgf;<span class="kom">// Ukazatel na objekt GetFrame</span></p>
+<p class="src0">BITMAPINFOHEADER bmih;<span class="kom">// Hlavička pro DrawDibDraw dekódování</span></p>
+<p></p>
+<p class="src0">long lastframe;<span class="kom">// Poslední snímek proudu</span></p>
+<p class="src0">int width;<span class="kom">// Šířka videa</span></p>
+<p class="src0">int height;<span class="kom">// Výška videa</span></p>
+<p class="src0">char* pdata;<span class="kom">// Ukazatel na data textury</span></p>
+<p class="src0">int mpf;<span class="kom">// Doba zobrazení jednoho snímku (Milliseconds Per Frame)</span></p>
+
+<p>Pomocí knihovny GLU budeme moci vykreslit dva quadratic útvary, kouli a válec. Hdd je handle na DIB (Device Independent Bitmap) a hdc je handle na kontext zařízení. HBitmap představuje handle na bitmapu závislou na zařízení (DDB - Device Dependent Bitmap), použijeme ji dále při konverzích. Data je pointer, který bude ukazovat na data obrázku použitelná pro vytvoření textury. Opět - více pochopíte dále.</p>
+
+<p class="src0">GLUquadricObj *quadratic;<span class="kom">// Objekt quadraticu</span></p>
+<p></p>
+<p class="src0">HDRAWDIB hdd;<span class="kom">// Handle DIBu</span></p>
+<p class="src0">HBITMAP hBitmap;<span class="kom">// Handle bitmapy závislé na zařízení</span></p>
+<p class="src0">HDC hdc = CreateCompatibleDC(0);<span class="kom">// Kontext zařízení</span></p>
+<p class="src0">unsigned char* data = 0;<span class="kom">// Ukazatel na bitmapu o změněné velikosti</span></p>
+
+<p>Nyní malý úvod do jazyka Assembler (ASM). Pokud jste ho ještě nikdy dříve nepoužili, nelekejte se. Může vypadat složitě, ale vše je velmi jednoduché. Při programování tohoto tutoriálu jsem se dostal před velký problém. Aplikace běžela v pořádku, ale barvy byly divné. Vše, co mělo být červené bylo modré, a vše co mělo být modré bylo červené - klasické prohození R a B složky pixelů. Byl jsem absolutně šokovaný. Myslel jsem si, že jsem v kódu udělal nějakou šílenou chybu typu &quot;čárka sem, znaménko tam...&quot;. Po pečlivém prostudování všeho, co jsem do té doby napsal, jsem nebyl schopen bug najít. Začal jsem znovu pročítat MSDN. Proč byla červená a modrá složka barvy prohozená?! V MSDN bylo přece jasně napsáno, že 24 bitové bitmapy jsou ve formátu RGB!!! Po spoustě dalšího čtení jsem problém objevil. Ve Windows se RGB data ukládají pozpátku a RGB uložené pozpátku je přeci BGR! Takže si jednou pro vždy zapamatujte, že v OpenGL RGB znamená RGB a ve Windows RGB znamená BGR - jak jednoduché.</p>
+
+<p>Po stížnostech od fanoušků Microsoft&reg;u (Překl.: Ono něco takového existuje?!): Rozhodl jsem se přidat krátké vysvětlení... Nepomlouvám Microsoft kvůli tomu, že označil BGR formát barvy za RGB. Jestli se mu převrácená zkratka líbí více, ať si ji používá. Nicméně nalezení chyby může být pro cizího programátora velice frustrující (zvlášť když žádná neexistuje).</p>
+
+<p>Blue přidal: Má to co dělat s konvencemi little endian a big endian. Intel a Intel kompatibilní systémy používají little endian, u kterého se méně významné byty ukládají dříve než více významné. Specifikaci OpenGL vytvořila firma SGI (Silicon Graphic), jejíž systémy pravděpodobně používají big endian, a tudíž OpenGL standardně vyžadují bitmapy ve formátu big endian.</p>
+
+<p>Skvělý! Takže jsem vytvořil přehrávač, který je absolutně k ničemu (Překl.: v originále absolute crap - zkuste si toto slovo najít ve slovníku, já chci být slušný :-). Prvním řešením, které mě napadlo, bylo prohodit byty manuálně pomocí cyklu for. Pracovalo to v pořádku, ale strašně pomalu. Měl jsem všeho po krk. Zkusil jsem modifikoval generování textury na GL_BGR_EXT místo GL_RGB. Obrovský nárůst rychlosti a barvy vypadají skvěle! Takže jsem problém konečně vyřešil... alespoň jsem si to myslel. Některé OpenGL ovladače mají s GL_BGR_EXT problémy :-( Maxwell Sayles mi doporučil prohození bytů pomocí ASM. O minutku později mi ICQ-oval kód uvedený níže, který je rychlý a plní dokonale svou funkci.</p>
+
+<p>Každý snímek animace se ukládá do bufferu, obrázek má vždy čtvercovou velikost 256 pixelů a 3 barevné složky ve formátu BGR (speciálně pro Billa Gatese: RGB). Funkce flipIt() prochází tento buffer po tří bytových krocích a zaměňuje červenou složku za modrou. R má být uloženo na pozici abx+0 a B na abx+2. Cyklus se opakuje tak dlouho, dokud nejsou všechny pixely ve formátu RGB.</p>
+
+<p>Předpokládám, že většina z vás není z ASM moc nadšená. Jak už jsem psal, původně jsem plánoval použít GL_BGR_EXT. Funguje, ale ne na všech kartách. Potom jsem se rozhodl jít cestou minulých tutoriálů a swapovat byty pomocí bitových operací XOR, které pracují na všech počítačích, ale ne extrémně rychle. Dokud jsme nepracovali s real-time videem, stačily, ale tentokrát potřebujeme co možná nejrychlejší metodu. Zvážíme-li všechny možnosti, je ASM podle mého názoru nejlepší volbou. Pokud máte ještě lepší způsob, prosím... POUŽIJTE HO! Neříkám vám, jak co MÁTE dělat, já pouze ukazuji, jak jsem problémy vyřešil já. Vše proto také vysvětluji do detailů, abyste můj kód, pokud znáte lepší, mohli nahradit.</p>
+
+<p class="src0">void flipIt(void* buffer)<span class="kom">// Prohodí červenou a modrou složku pixelů v obrázku</span></p>
+<p class="src0">{</p>
+<p class="src1">void* b = buffer;<span class="kom">// Ukazatel na buffer</span></p>
+<p></p>
+<p class="src1">__asm <span class="kom">// ASM kód</span></p>
+<p class="src1">{</p>
+<p class="src3">mov ecx, 256*256 <span class="kom">// Řídící &quot;proměnná&quot; cyklu</span></p>
+<p class="src3">mov ebx, b <span class="kom">// Ebx ukazuje na data</span></p>
+<p></p>
+<p class="src2">label: <span class="kom">// Návěští pro cyklus</span></p>
+<p class="src3">mov al, [ebx+0] <span class="kom">// Přesune B složku do al</span></p>
+<p class="src3">mov ah, [ebx+2] <span class="kom">// Přesune R složku do ah</span></p>
+<p class="src3">mov [ebx+2], al <span class="kom">// Vloží B na správnou pozici</span></p>
+<p class="src3">mov [ebx+0], ah <span class="kom">// Vloží R na správnou pozici</span></p>
+<p></p>
+<p class="src3">add ebx, 3 <span class="kom">// Přesun na další tři byty</span></p>
+<p class="src3">dec ecx <span class="kom">// Dekrementuje čítač</span></p>
+<p class="src3">jnz label <span class="kom">// Pokud se čítač nerovná nule skok na návěští</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Jak už z názvu funkce OpenAVI() vyplývá, otevírá AVI soubor. Parametr szFile je řetězec s diskovou cestou k souboru. Řetězec title použijeme pro zobrazení informací o AVI do titulku okna.</p>
+
+<p class="src0">void OpenAVI(LPCSTR szFile)<span class="kom">// Otevře AVI soubor</span></p>
+<p class="src0">{</p>
+<p class="src1">TCHAR title[100];<span class="kom">// Pro vypsání textu do titulku okna</span></p>
+
+<p>Abychom inicializovali knihovnu AVI file, zavoláme AVIFileInit(). Existuje mnoho způsobů, jak otevřít video soubor. Rozhodl jsem se použít AVIStreamOpenFromFile(), která otevře jeden datový proud. Pavi představuje ukazatel na buffer, kam funkce vrací handle nového proudu, szFile označuje diskovou cestu k souboru. Třetí parametr určuje typ proudu, který si přejeme otevřít. V tomto projektu nás zajímá pouze video. Nula, další parametr, oznamuje, že se má použít první výskyt proudu streamtypeVIDEO - v AVI jich může být více. OF_READ definuje, že nám stačí otevření pouze pro čtení a NULL na konci je ukazatel na třídní identifikátor handleru (Překl.: class identifier of the handler). Abych byl upřímný nemám nejmenší představu, co to znamená, proto pomocí NULL nechávám knihovnu, aby vybrala za mě.</p>
+
+<p>Nastanou-li při otevírání jakékoli problémy, zobrazí se uživateli informační okno, nicméně ukončení programu není implementováno. Přidání nějakého druhu chybových testů by pro vás nemělo být moc těžké, já jsem byl příliš líný.</p>
+
+<p class="src1">AVIFileInit();<span class="kom">// Připraví knihovnu AVIFile na použití</span></p>
+<p></p>
+<p class="src1">if (AVIStreamOpenFromFile(&amp;pavi, szFile, streamtypeVIDEO, 0, OF_READ, NULL) != 0)<span class="kom">// Otevře AVI proud</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Chybová zpráva</span></p>
+<p class="src2">MessageBox (HWND_DESKTOP, &quot;Failed To Open The AVI Stream&quot;, &quot;Error&quot;, MB_OK | MB_ICONEXCLAMATION);</p>
+<p class="src1">}</p>
+
+<p>Pokud jsme se dostali až sem, můžeme předpokládat, že se soubor otevřel v pořádku a video proud byl lokalizován. U deklarace proměnných jsme vytvořili objekt struktury AVISTREAMINFO a nazvali ho psi. Voláním funkce AVIStreamInfo() do něj nagrabujeme různé informace o AVI, s jejichž pomocí spočítáme šířku a výšku snímku v pixelech. Potom funkcí AVIStreamLength() získáme číslo posledního snímku videa, které zároveň označuje celkový počet všech snímků.</p>
+
+<p>Výpočet framerate je snadný. Počet snímků za sekundu se rovná psi.dwRate děleno psi.dwScale. Tato hodnota by měla odpovídat číslu, které lze získat kliknutím na AVI soubor a zvolením vlastností. Ptáte se, co to má co společného s mpf (čas zobrazení jednoho snímku)? Když jsem poprvé psal kód pro animaci, zkoušel jsem pro zvolení správného snímku animace použít FPS. Dostal jsem se do problémů... všechna videa se přehrávala příliš rychle. Proto jsem nahlédl do vlastností video souboru face2.avi. Je dlouhé 3,36 sekund, framerate činí 29,974 FPS a má celkem 91 snímků. Pokud vynásobíme 3,36 krát 29,976 dostaneme 100 snímků - velmi nepřesné.</p>
+
+<p>Proto jsem se rozhodl dělat věci trochu jinak. Namísto počtu snímků za sekundu spočítáme, jak dlouho by měl být snímek zobrazen. Funkce AVIStreamSampleToTime() zkonvertuje pozici v animaci na čas v milisekundách, než se video dostane do této pozice. Získáme tedy čas posledního snímku, vydělíme ho jeho pozicí (=počtem všech snímků) a výsledek vložíme do proměnné mpf. Stejné hodnoty byste dosáhli nagrabováním množství času potřebného pro jeden snímek. Příkaz by vypadal takto: AVIStreamSampleToTime(pavi, 1). Oba způsoby jsou možné. Děkuji Albertu Chaulkovi za nápad.</p>
+
+<p class="src1">AVIStreamInfo(pavi, &amp;psi, sizeof(psi));<span class="kom">// Načte informace o proudu</span></p>
+<p></p>
+<p class="src1">width = psi.rcFrame.right - psi.rcFrame.left;<span class="kom">// Výpočet šířky</span></p>
+<p class="src1">height = psi.rcFrame.bottom - psi.rcFrame.top;<span class="kom">// Výpočet výšky</span></p>
+<p></p>
+<p class="src1">lastframe = AVIStreamLength(pavi);<span class="kom">// Poslední snímek proudu</span></p>
+<p class="src1">mpf = AVIStreamSampleToTime(pavi, lastframe) / lastframe;<span class="kom">// Počet milisekund na jeden snímek</span></p>
+
+<p>OpenGL požaduje, aby rozměry textury byly mocninou čísla 2, ale většina videí mívá velikost 160x120, 320x240 nebo jiné nevhodné hodnoty. Pro konverzi na potřebné rozměry použijeme Windows funkce pro práci s DIB obrázky. Jako první věc specifikujeme hlavičku bitmapy a to tak, že vyplníme BITMAPINFOHEADER proměnnou bmih. Nastavíme velikost struktury a biPlanes. Barevnou hloubku určíme na 24 bitů (RGB), obrázek bude mít rozměry 256x256 pixelů a nebude komprimovaný.</p>
+
+<p class="src1">bmih.biSize = sizeof(BITMAPINFOHEADER);<span class="kom">// Velikost struktury</span></p>
+<p class="src1">bmih.biPlanes = 1;<span class="kom">// BiPlanes</span></p>
+<p class="src1">bmih.biBitCount = 24;<span class="kom">// Počet bitů na pixel</span></p>
+<p class="src1">bmih.biWidth = 256;<span class="kom">// Šířka bitmapy</span></p>
+<p class="src1">bmih.biHeight = 256;<span class="kom">// Výška bitmapy</span></p>
+<p class="src1">bmih.biCompression = BI_RGB;<span class="kom">// RGB mód</span></p>
+
+<p>Funkce CreateDibSection() vytvoří obrázek DIB, do kterého budeme moci přímo zapisovat. Pokud vše proběhne v pořádku měl by hBitmap obsahovat nově vytvořený obrázek. Hdc představuje handle kontextu zařízení, druhý parametr je ukazatel na strukturu, kterou jsme právě inicializovali. Třetí parametr specifikuje RGB typ dat. Do proměnné data se uloží ukazatel na data vytvořeného obrázku. Nastavíme-li předposlední parametr na NULL, funkce za nás sama alokuje paměť. Poslední parametr budeme jednoduše ignorovat. Příkaz SelectObject() zvolí obrázek do kontextu zařízení.</p>
+
+<p class="src1">hBitmap = CreateDIBSection(hdc, (BITMAPINFO*)(&amp;bmih), DIB_RGB_COLORS, (void**)(&amp;data), NULL, NULL);</p>
+<p class="src1">SelectObject(hdc, hBitmap);<span class="kom">// Zvolí bitmapu do kontextu zařízení</span></p>
+
+<p>Předtím než budeme moci načítat jednotlivé snímky, musíme připravit program na dekomprimaci videa. Zavoláme funkci AVIStreamGetFrameOpen() a předáme jí ukazatel na datový proud videa. Za druhý parametr se může předat struktura podobná té výše, pomocí které lze specifikovat vrácený video formát. Bohužel jedinou věcí, kterou lze ovlivnit je šířka a výška obrázku. V MSDN se také uvádí, že se může předat AVIGETFRAMEF_BESTDISPLAYFMT, který automaticky zvolí nejlepší formát zobrazení. Nicméně můj kompilátor nemá pro tuto symbolickou konstantu žádnou definici. Dopadne-li vše dobře, získáme GETFRAME objekt potřebný pro čtení dat jednotlivých snímků. Při problémech se zobrazí chybové okno.</p>
+
+<p class="src1">pgf = AVIStreamGetFrameOpen(pavi, NULL);<span class="kom">// Vytvoří PGETFRAME použitím požadovaného módu</span></p>
+<p></p>
+<p class="src1">if (pgf == NULL)<span class="kom">// Neúspěch?</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox (HWND_DESKTOP, &quot;Failed To Open The AVI Frame&quot;, &quot;Error&quot;, MB_OK | MB_ICONEXCLAMATION);</p>
+<p class="src1">}</p>
+
+<p>Jako třešničku na dortu zobrazíme do titulku okna šířku, výšku a počet snímků videa.</p>
+
+<p class="src1"><span class="kom">// Informace o videu (šířka, výška, počet snímků)</span></p>
+<p class="src1">wsprintf (title, &quot;NeHe's AVI Player: Width: %d, Height: %d, Frames: %d&quot;, width, height, lastframe);</p>
+<p class="src1">SetWindowText(g_window-&gt;hWnd, title);<span class="kom">// Modifikace titulku okna</span></p>
+<p class="src0">}</p>
+
+<p>Otevírání AVI proběhlo bez problémů, následující funkce nagrabuje jeho jeden snímek, zkonvertuje ho do použitelné formy (velikost, barevná hloubka RGB) a vytvoří z něj texturu. Proměnná lpbi bude ukládat informace o hlavičce bitmapy snímku. Příkaz na dalším řádku plní hned několik funkcí. Nagrabuje snímek specifikovaný pomocí frame a vyplní lpbi informacemi o hlavičce snímku. Přeskočením hlavičky (lpbi-&gt;biSize) a informací o barvách (lpbi-&gt;biClrUsed * sizeof(RGBQUAD)) získáme ukazatel na opravdová data obrázku.</p>
+
+<p class="src0">void GrabAVIFrame(int frame)<span class="kom">// Grabuje požadovaný snímek z proudu</span></p>
+<p class="src0">{</p>
+<p class="src1">LPBITMAPINFOHEADER lpbi;<span class="kom">// Hlavička bitmapy</span></p>
+<p></p>
+<p class="src1">lpbi = (LPBITMAPINFOHEADER)AVIStreamGetFrame(pgf, frame);<span class="kom">// Grabuje data z AVI proudu</span></p>
+<p class="src1">pdata = (char *)lpbi + lpbi-&gt;biSize + lpbi-&gt;biClrUsed * sizeof(RGBQUAD);<span class="kom">// Ukazatel na data</span></p>
+
+<p>Kvůli textuře musíme zkonvertovat právě získaný obrázek na použitelnou velikost a barevnou hloubku. Pomocí funkce DrawDibDraw() můžeme kreslit přímo do našeho DIBu. Její první parametr je DrawDib DC, další parametr představuje handle na kontext zařízení. Nuly definují levý horní a 256 pravý dolní roh výsledného obdélníku. Lpbi je ukazatel na hlavičku snímku, který jsme právě načetli, a pdata ukazuje na data obrázku. Následuje levý horní a pravý dolní roh zdrojového obrázku (čili šířka a výška snímku). Poslední parametr necháme na nule. Touto cestou můžeme zkonvertovat obrázek o jakékoli šířce, výšce a barevné hloubce na obrázek 256x256x24.</p>
+
+<p class="src1"><span class="kom">// Konvertování obrázku na požadovaný formát</span></p>
+<p class="src1">DrawDibDraw(hdd, hdc, 0, 0, 256, 256, lpbi, pdata, 0, 0, width, height, 0);</p>
+
+<p>V současné chvíli už v rukách držíme data, ze kterých lze vygenerovat texturu. Nicméně její R a B složky jsou prohozeny. Proto zavoláme naši ASM funkce, která jednotlivé byty umístí na korektní pozice v obrázku.</p>
+
+<p class="src1">flipIt(data);<span class="kom">// Prohodí R a B složku pixelů</span></p>
+
+<p>Původně jsem texturu aktualizoval jejím smazáním a znovuvytvořením. Několik lidí mi nezávisle na sobě poradilo, abych zkusil použít glTexSubImage2D(). Uvádím citaci z OpenGL Red Book: &quot;Vytvoření textury může být mnohem náročnější než modifikace už existující. V OpenGL Release 1.1 přibyly nové rutiny pro nahrazení všech částí textury za nové informace. Toto může být užitečné pro programy, které např. v real-timu snímají obrázky videa a vytvářejí z nich textury. Aplikace pak za běhu vytvoří pouze jednu texturu a pomocí glTexSubImage2D() bude postupně nahrazovat její data za nové snímky videa.&quot;</p>
+
+<p>Osobně jsem nezaznamenal větší nárůst rychlosti, ale na pomalejších kartách může být vše jinak. Parametry funkce jsou následující: typ výstupu, úroveň detailů pro mipmapping, x a y offset počátku kopírované oblasti (0, 0 - levý dolní roh), šířka a výška oblasti, RGB formát pixelů, typ dat a ukazatel na data.</p>
+
+<p>Kevin Rogers přidal: Chtěl bych poukázat na další důležitou vlastnost glTexSubImage2d(). Nejen, že je rychlejší na mnoha OpenGL implementacích, ale cílová oblast obrázku nemusí být nutně mocninou čísla 2. Toto je především užitečné pro přehrávání videa, jehož rozlišení bývá mocninou dvojky opravdu zřídka (většinou 320x200). Dostáváme tak flexibilní možnost přehrávat video v jeho originální velikosti než jej složitě měnit, někdy i dvakrát (do textury, zpět na obrazovku).</p>
+
+<p>Není možné aktualizovat texturu, pokud jste ji ještě nevytvořili! My ji vytváříme v kódu funkce Initialize(). Druhá důležitá věc spočívá v tom, že pokud váš projekt obsahuje více než jednu texturu, musíte před aktualizací zvolit jako aktivní (glBindTexture()) tu správnou, protože byste mohli přepsat texturu, kterou nechcete.</p>
+
+
+<p class="src1">glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGB, GL_UNSIGNED_BYTE, data);<span class="kom">// Aktualizace textury</span></p>
+<p class="src0">}</p>
+
+<p>Následující funkce je volána při ukončování programu. Má za úkol smazat DrawDib DC a uvolnit alokované zdroje. Zavírá také GetFrame zdroj, odstraňuje souborový proud a ukončuje práci s AVI souborem.</p>
+
+<p class="src0">void CloseAVI(void)<span class="kom">// Zavření AVI souboru</span></p>
+<p class="src0">{</p>
+<p class="src1">DeleteObject(hBitmap);<span class="kom">// Smaže bitmapu</span></p>
+<p class="src1">DrawDibClose(hdd);<span class="kom">// Zavře DIB</span></p>
+<p class="src1">AVIStreamGetFrameClose(pgf);<span class="kom">// Dealokace GetFrame zdroje</span></p>
+<p class="src1">AVIStreamRelease(pavi);<span class="kom">// Uvolnění proudu</span></p>
+<p class="src1">AVIFileExit();<span class="kom">// Uvolnění souboru</span></p>
+<p class="src0">}</p>
+
+<p>Inicializace je hezky přímočará. nastavíme počáteční úhel na nulu a pomocí knihovny DrawDib nagrabujeme DC. Pokud se vše zdaří, tak by se mělo hdd stát handlem na nově vytvořený kontext zařízení. Dále určíme černé pozadí, zapneme hloubkové testování atd.</p>
+
+<p class="src0">BOOL Initialize (GL_Window* window, Keys* keys)<span class="kom">// Inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">g_window = window;</p>
+<p class="src1">g_keys = keys;</p>
+<p></p>
+<p class="src1">angle = 0.0f;<span class="kom">// Na počátku nulový úhel</span></p>
+<p class="src1">hdd = DrawDibOpen();<span class="kom">// Kontext zařízení DIBu</span></p>
+<p></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testů hloubky</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Perspektivní korekce</span></p>
+
+<p>V další části kódu zapneme mapování 2D textur, nastavíme filtr GL_NEAREST a definujeme kulové mapování, které umožní automatické generování texturových koordinátů. Pokud máte výkonný systém, zkuste použít lineární filtrování, bude vypadat lépe.</p>
+
+<p class="src1">quadratic = gluNewQuadric();<span class="kom">// Vytvoří objekt quadraticu</span></p>
+<p class="src1">gluQuadricNormals(quadratic, GLU_SMOOTH);<span class="kom">// Normály</span></p>
+<p class="src1">gluQuadricTexture(quadratic, GL_TRUE);<span class="kom">// Texturové koordináty</span></p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturování</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);<span class="kom">// Filtry textur</span></p>
+<p class="src1">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);</p>
+<p></p>
+<p class="src1">glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);<span class="kom">// Automatické generování koordinátů</span></p>
+<p class="src1">glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);</p>
+
+<p>Po obvyklé inicializaci otevřeme AVI soubor. Jistě jste si všimli, že jsem se snažil udržet rozhraní v co nejjednodušší formě, takže stačí předat pouze řetězec se jménem souboru. Na konci vytvoříme texturu a ukončíme funkci.</p>
+
+<p class="src1">OpenAVI(&quot;data/face2.avi&quot;);<span class="kom">// Otevření AVI souboru</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vytvoření textury</span></p>
+<p class="src1">glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, data);</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše OK</span></p>
+<p class="src0">}</p>
+
+<p>Při deinicializaci zavoláme CloseAVI(), čímž kompletně ukončíme práci s videem.</p>
+
+<p class="src0">void Deinitialize(void)<span class="kom">// Deinicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">CloseAVI();<span class="kom">// Zavře AVI</span></p>
+<p class="src0">}</p>
+
+<p>Ve funkci Update() zjišťujeme případné stisky kláves a v závislosti na uplynulém čase aktualizujeme poměry ve scéně. Jako vždy ESC ukončuje program a F1 přepíná mód fullscreen/okno. Mezerníkem inkrementujeme proměnnou efekt, jejíž hodnota určuje, jestli se ve scéně zobrazuje krychle, koule, válec, popř. nic (pouze pozadí).</p>
+
+<p class="src0">void Update(DWORD milliseconds)<span class="kom">// Aktualizace scény</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_ESCAPE] == TRUE)<span class="kom">// ESC</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication (g_window);<span class="kom">// Konec programu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_F1] == TRUE)<span class="kom">// F1</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen (g_window);<span class="kom">// Zamění mód fullscreen/okno</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if ((g_keys-&gt;keyDown[' ']) &amp;&amp; !sp)<span class="kom">// Mezerník</span></p>
+<p class="src1">{</p>
+<p class="src2">sp = TRUE;</p>
+<p class="src2">effect++;<span class="kom">// Následující objekt v řadě</span></p>
+<p></p>
+<p class="src2">if (effect &gt; 3)<span class="kom">// Přetečení?</span></p>
+<p class="src2">{</p>
+<p class="src3">effect = 0;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!g_keys-&gt;keyDown[' '])<span class="kom">// Uvolnění mezerníku</span></p>
+<p class="src1">{</p>
+<p class="src2">sp = FALSE;</p>
+<p class="src1">}</p>
+
+<p>Pomocí klávesy B zapínáme/vypínáme pozadí. Generování texturových koordinátů určuje flag env, který negujeme po stisku klávesy E.</p>
+
+<p class="src1">if ((g_keys-&gt;keyDown['B']) &amp;&amp; !bp)<span class="kom">// Klávesa B</span></p>
+<p class="src1">{</p>
+<p class="src2">bp = TRUE;</p>
+<p class="src2">bg = !bg;<span class="kom">// Nastaví flag pro zobrazování pozadí</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!g_keys-&gt;keyDown['B'])<span class="kom">// Uvolnění B</span></p>
+<p class="src1">{</p>
+<p class="src2">bp = FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if ((g_keys-&gt;keyDown['E']) &amp;&amp; !ep)<span class="kom">// Klávesa E</span></p>
+<p class="src1">{</p>
+<p class="src2">ep = TRUE;</p>
+<p class="src2">env = !env;<span class="kom">// Nastaví flag pro automatické generování texturových koordinátů</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!g_keys-&gt;keyDown['E'])<span class="kom">// Uvolnění E</span></p>
+<p class="src1">{</p>
+<p class="src2">ep = FALSE;</p>
+<p class="src1">}</p>
+
+<p>V závislosti na uplynulém čase zvětšíme úhel natočení objektu.</p>
+
+<p class="src1">angle += (float)(milliseconds) / 60.0f;<span class="kom">// Aktualizace úhlu natočení</span></p>
+
+<p>V originální verzi tutoriálu byla všechna videa přehrávána vždy stejnou rychlostí a to nebylo příliš vhodné. Proto jsem kód přepsal tak, aby jeho rychlost byla vždy korektní. Obsah proměnné next zvětšíme o počet uplynulých milisekund od milého volání. Jistě si pamatujete, že mpf obsahuje čas, jak dlouho má být každý snímek zobrazen. Vydělíme-li tedy číslo next hodnotou mpf, získáme správný snímek. Nakonec se ujistíme, že nově vypočtený snímek nepřetekl přes maximální hodnotu. V takovém případě začneme video přehrávat znovu od začátku.</p>
+
+<p>Asi vás nepřekvapí, že pokud je počítač příliš pomalý, některé snímky se automaticky přeskakují. Pokud chcete, aby byl každý snímek zobrazen, přičemž nezávisí na tom, jak pomalu program běží, můžete otestovat, jestli je next vyšší než mpf a pokud ano, inkrementujte snímek o jedničku a resetujte next zpět na nulu. Oba způsoby pracují, ale pro rychlé počítače je vhodnější uvedený kód.</p>
+
+<p>Cítíte-li se plni síly a energie, zkuste implementovat obvyklé funkce video přehrávačů - např. rychlé převíjení, pauzu nebo zpětný chod.</p>
+
+<p class="src1">next += milliseconds;<span class="kom">// Zvětšení next o uplynulý čas</span></p>
+<p class="src1">frame = next / mpf;<span class="kom">// Výpočet aktuálního snímku</span></p>
+<p></p>
+<p class="src1">if (frame &gt;= lastframe)<span class="kom">// Přetečení snímků?</span></p>
+<p class="src1">{</p>
+<p class="src2">frame = 0;<span class="kom">// Přetočí video na začátek</span></p>
+<p class="src2">next = 0;<span class="kom">// Nulování času</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Už máme téměř vše, zbývá pouze vykreslování scény. Jako vždy na začátku smažeme obrazovku a hloubkový buffer. Potom nagrabujeme požadovaný snímek animace. Pokud byste chtěli současně používat více videí, museli byste přidat i ID textury - další práce pro vás.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže buffery</span></p>
+<p></p>
+<p class="src1">GrabAVIFrame(frame);<span class="kom">// Nagrabuje požadovaný snímek videa</span></p>
+
+<p>Chceme-li kreslit pozadí, resetujeme modelview matici a na obyčejný obdélník namapujeme daný snímek videa. Aby se objevil až za všemi objekty, umístíme ho dvacet jednotek do scény a samozřejmě ho roztáhneme na požadovanou velikost.</p>
+
+<p class="src1">if (bg)<span class="kom">// Zobrazuje se pozadí?</span></p>
+<p class="src1">{</p>
+<p class="src2">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src2">glBegin(GL_QUADS);<span class="kom">// Vykreslování obdélníků</span></p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f( 11.0f, 8.3f,-20.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f(-11.0f, 8.3f,-20.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f(-11.0f,-8.3f,-20.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f( 11.0f,-8.3f,-20.0f);</p>
+<p class="src2">glEnd();</p>
+<p class="src1">}</p>
+
+<p>Resetujeme matici a přesuneme se deset jednotek do scény. Pokud se env rovná TRUE, zapneme automatické generování texturových koordinátů.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -10.0f);<span class="kom">// Posun do scény</span></p>
+<p></p>
+<p class="src1">if (env)<span class="kom">// Zapnuto generování souřadnic textur?</span></p>
+<p class="src1">{</p>
+<p class="src2">glEnable(GL_TEXTURE_GEN_S);</p>
+<p class="src2">glEnable(GL_TEXTURE_GEN_T);</p>
+<p class="src1">}</p>
+
+<p>Na poslední chvíli jsem přidal i rotaci objektu na osách x, y a následné přiblížení na ose z. Objekt se bude pohybovat po scéně. Bez těchto tří řádků by pouze rotoval na jednom místě uprostřed obrazovky.</p>
+
+<p class="src1">glRotatef(angle*2.3f, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace</span></p>
+<p class="src1">glRotatef(angle*1.8f, 0.0f, 1.0f, 0.0f);</p>
+<p class="src1">glTranslatef(0.0f, 0.0f, 2.0f);<span class="kom">// Přesun na novou pozici</span></p>
+
+<p>Pomocí větvení do více směrů vykreslíme objekt, který je právě aktivní. Jako první možnost máme krychli.</p>
+
+<p class="src1">switch (effect)<span class="kom">// Větvení podle efektu</span></p>
+<p class="src1">{</p>
+<p class="src2">case 0:<span class="kom">// Krychle</span></p>
+<p class="src3">glRotatef(angle*1.3f, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace</span></p>
+<p class="src3">glRotatef(angle*1.1f, 0.0f, 1.0f, 0.0f);</p>
+<p class="src3">glRotatef(angle*1.2f, 0.0f, 0.0f, 1.0f);</p>
+<p></p>
+<p class="src3">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníků</span></p>
+<p class="src4"><span class="kom">// Čelní stěna</span></p>
+<p class="src4">glNormal3f(0.0f, 0.0f, 0.5f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src4"><span class="kom">// Zadní stěna</span></p>
+<p class="src4">glNormal3f(0.0f, 0.0f,-0.5f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src4"><span class="kom">// Horní stěna</span></p>
+<p class="src4">glNormal3f(0.0f, 0.5f, 0.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src4"><span class="kom">// Spodní stěna</span></p>
+<p class="src4">glNormal3f(0.0f,-0.5f, 0.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src4"><span class="kom">// Pravá stěna</span></p>
+<p class="src4">glNormal3f(0.5f, 0.0f, 0.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src4"><span class="kom">// Levá stěna</span></p>
+<p class="src4">glNormal3f(-0.5f, 0.0f, 0.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src4">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src3">glEnd();</p>
+<p class="src3">break;</p>
+
+<p>Jak vykreslit kouli, už jistě dávno víte, nicméně pro jistotu přidávám krátký komentář. Její poloměr činí 1.3f jednotek, skládá se z dvaceti poledníků a dvaceti rovnoběžek. Používám číslo 20, protože chci, aby nebyla perfektně hladká, ale trochu segmentovaná - bude vidět náznak její rotace.</p>
+
+<p class="src2">case 1:<span class="kom">// Koule</span></p>
+<p class="src3">glRotatef(angle*1.3f, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace</span></p>
+<p class="src3">glRotatef(angle*1.1f, 0.0f, 1.0f, 0.0f);</p>
+<p class="src3">glRotatef(angle*1.2f, 0.0f, 0.0f, 1.0f);</p>
+<p></p>
+<p class="src3">gluSphere(quadratic, 1.3f, 20, 20);<span class="kom">// Vykreslení koule</span></p>
+<p class="src3">break;</p>
+
+<p>Válec vykreslíme pomocí funkce gluCylinder(). Bude mít průměr 1.0f a jeho výška bude činit tři jednotky.</p>
+
+<p class="src2">case 2:<span class="kom">// Válec</span></p>
+<p class="src3">glRotatef(angle*1.3f, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace</span></p>
+<p class="src3">glRotatef(angle*1.1f, 0.0f, 1.0f, 0.0f);</p>
+<p class="src3">glRotatef(angle*1.2f, 0.0f, 0.0f, 1.0f);</p>
+<p class="src3">glTranslatef(0.0f,0.0f,-1.5f);<span class="kom">// Vycentrování</span></p>
+<p></p>
+<p class="src3">gluCylinder(quadratic, 1.0f, 1.0f, 3.0f, 32, 32);<span class="kom">// Vykreslení válce</span></p>
+<p class="src3">break;</p>
+<p class="src1">}</p>
+
+<p>Pokud je env v jedničce, vypneme generování texturových koordinátů.</p>
+
+<p class="src1">if (env)<span class="kom">// Zapnuto generování souřadnic textur?</span></p>
+<p class="src1">{</p>
+<p class="src2">glDisable(GL_TEXTURE_GEN_S);</p>
+<p class="src2">glDisable(GL_TEXTURE_GEN_T);</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glFlush();<span class="kom">// Vyprázdní OpenGL pipeline</span></p>
+<p class="src0">}</p>
+
+<p>Doufám, že jste si, stejně jako já, užili tento tutoriál. Za chvíli budou 2 hodiny ráno... už na něm pracuji přes šest hodin. Zní to šíleně, ale psaní textu, aby dával smysl, není lehký úkol. Vše jsem třikrát přečetl a snažil se objasnit věci co nejlépe. Věřte nebo ne, pro mě je důležité, abyste pochopili, jak věci pracují a proč vůbec pracují. Bez čtenářů bych brzy skončil.</p>
+
+<p>Jak už jsem napsal, toto je můj první pokus o přehrávání videa. Normálně nepíši o předmětu, který jsem se právě naučil, ale myslím, že mi to pro jednou odpustíte. Faktem je, že jsem si od cizích lidí půjčil opravdu absolutní minimum kódu, vše je původní. Doufám, že se mi podařilo otevřít dveře povodni přehrávání AVI ve vašich kvalitních demech. Možná se tak stane, možná ne. Každopádně ukázkový tutoriál už máte.</p>
+
+<p>Obrovské díky patří Fredsterovi, který vytvořil ukázkové video tváře. Byla to jedna z celkem šesti animací, které mi poslal. Žádné dotazy, žádné požadavky. Poslal jsem mu email s prosbou a on mi pomohl. Obrovský respekt.</p>
+
+<p>Největší dík však patří Jonathanu de Blok. Nebýt jeho, tento tutoriál by nevznikl. Právě on ve mně vzbudil zájem o AVI formát. Poslal mi totiž část kódu z jeho přehrávače. Trpělivě odpovídal na všechny otázky ohledně jeho kódu. Nic jsem si však nepůjčil, můj kód pracuje na úplně jiném základu.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson35.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson35_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson35.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson35.zip">Dev C++</a> kód této lekce. ( <a href="mailto:zealouselixir@mchsi.com">Warren Moore</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson35.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:matthias.haack@epost.de">Matthias Haack</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson35.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_35_big.jpg" class="nehe_velky" alt="Lekce 35" /></div>
+<p class="okolni_lekce"><a href="tut_34.php">&lt;&lt;&lt; Lekce 34</a> | <a href="tut_36.php">Lekce 36 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">05.02.2005 - 10:44:11</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_35.php&j=0">Texture problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eMan</div>
+<div class="d_o_datumcas">03.04.2005 - 18:51:32</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_35.php&j=1">jasne ze jde</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">05.04.2005 - 14:31:07</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_35.php&j=2">Re: jasne ze jde</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_35.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

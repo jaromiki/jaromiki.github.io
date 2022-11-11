@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Uvod</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link href="../style/udpc.css" rel="stylesheet" type="text/css" />
+
+
+
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+<h1>1 Úvod</h1>
+
+<ol>
+<li><a href="#history">Z&nbsp;histórie jazyka C</a></li>
+
+<li><a href="#struct">Štruktúra programu v&nbsp;jazyku C</a></li>
+</ol>
+
+
+<h2><a id="history" name="history">1.1 Z histórie jazyka C</a></h2>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Programovací jazyk C vznikol na začiatku sedemdesiatych rokov v&nbsp;Bellových laboratóriách firmy AT&amp;T (American Telephone and Telegraph). Autorom prvotného návrhu C je Dennis Ritchie, ktorý v&nbsp;tej dobe spolupracoval s&nbsp;Kenom Thompsonom na návrhu operačného systému UNIX. Pre jeho implementáciu sa autori rozhodli použiť jazyk dostatočne efektívny z&nbsp;hľadiska kódu a&nbsp;pritom nezávislý na konkrétnom procesore. Najprv uvažovali o&nbsp;použití jazyka BCPL (Basic Combined Programming Language), neskôr navrhol K. Thompson variant pod označením jazyk B (1970). V&nbsp;tomto jazyku boli implementované prvé časti OS UNIX. Tento jazyk bol efektívny z&nbsp;hľadiska prekladu, ale nebol dostatočne univerzálny - vyhovoval len na riešenie určitého okruhu problémov. D. Ritchie navrhol preto jazyk s&nbsp;označením C, v&nbsp;ktorom bolo neskôr zapísané asi 90 % kódu OS UNIX (zvyšná časť závisí na hardware konkrétneho počítača a&nbsp;musí byť napísaná v&nbsp;asembleri).</p>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Jazyk C nie je rozsiahly, ale nepatrí pritom medzi jazyky, vyznačujúce sa dobrou čitateľnosťou. Svojím pôvodom je zameraný na systémové programovanie. Na jednej strane je ho možné zaradiť do skupiny vyšších programovacích jazykov, na druhej strane je možné program napísaný v&nbsp;jazyku C preložiť do veľmi efektívneho strojového kódu (niekedy sa preto o&nbsp;ňom hovorí ako o&nbsp;štruktúrovanom asembleri). Jazyk C má pomerne málo jednoduchých pravidiel, pomocou ktorých je možné vytvárať a&nbsp;skladať jednotlivé úseky programov do väčších a&nbsp;väčších celkov.</p>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Jazyk C sa ďalej mierne vyvíjal. V&nbsp; roku 1978 napísali Ritchie a&nbsp;Kernighan knihu <em>Programovací jazyk C</em>, ktorá sa stala štandardom staršej verzie jazyka. V&nbsp;dnešnej literatúre sú na tento štandard referencie pod označením Kernighan - Ritchie C, resp. K&nbsp;&amp; R. V&nbsp;roku 1984 vzniká prvá verzia americkej národnej normy jazyka pod označením ANSI C, ktorá mala nevýhodu najmä v&nbsp;slabšej typovej kotrole Od tejto chvíle dochádza k&nbsp;určitému oddeleniu jazyka C od OS UNIX a&nbsp;jazyk sa začína vyvíjať ako samostatný produkt. Definitívna verzia normy ANSI C vyšla vo februári 1990 pod označením X3J11 / 90 - 013 [Richta93]. Zavedením prísnejšej typovej kontroly pri volaní funkcií a&nbsp;vyhodnocovaní výrazov nie je možné napr. volať funkciu skôr, ako sa uvedie jej deklarácia alebo priamo definícia.</p>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Jazyk C je implementovaný pre všetky typy procesorov a&nbsp;spolu so systémom UNIX predstavuje dnes jeden z&nbsp;hlavných trendov vo svete. Vznikol tiež celý rad rozšírení jazyka C - napr. Objective C pre objektové programovanie, Concurrent C pre paralelné programovanie, ale najperspektívnejším sa zdá byť objektovo orientované rozšírenie jazyka pod označením C ++ (označenie vychádza zo syntaxe jazyka C a&nbsp;znamená prechod na nasledujúci prvok), ktoré navrhol Bjarne Stroustrup z&nbsp;AT&amp;T pri vývoji riadiaceho systému pre telefónne ústredne [Mareš94]. Do jazyka boli pridané konštrukcie pre tvorbu obecných funkcií a&nbsp;tried (šablony) a&nbsp;pre spracovanie výnimočných stavov. V&nbsp;súčasnej dobe ešte nie je oficiálne vydaná norma C++ a&nbsp;ako štandardná implementácia pre ostatné kompilátory slúži prekladač použitý na systéme USL firmy AT&amp;T. Je to len preprocesor, ktorého výstupom je kód v&nbsp;jazyku C; preto sa tento preprocesor označuje ako Cfront. Komisie ANSI a&nbsp;ISO, ktoré pripravujú normu jazyka C++ (označuje sa ako ANSI/ISO C++), sa opierajú predovšetkým o&nbsp;knihu <em>The Annotated C++ Reference Manual</em> od Ellisa a&nbsp; Stroustrupa, vydanú v&nbsp;r. 1990 nakladateľstvom Addison - Wesley. Táto norma bola oficiálne prijatá až okolo roku 1996. Kompilátory jazyka C++ dnes ponúkajú všetky významné firmy (Borland - <em>Borland C++</em>, Microsoft - <em>Microsoft Visual C++</em>). V&nbsp;súčastnosti sa kladie veľký dôraz na objektovo orientované programovanie (OOP), podporu databáz priamo cez ovládač v&nbsp;operačnom systéme ODBC (Open Database Connectivity), poprípade DAO (Data Access Object) a&nbsp;taktiež na podporu výmeny objektov medzi aplikáciami OLE (Object Link Embedding) alebo DDE (Dynamic Data Exchange).</p>
+
+<h2><a id="struct" name="struct">1.2 Štruktúra programu v jazyku C</a></h2>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Základnou programovou jednotkou v&nbsp;jazyku C je funkcia. Veľké množstvo štandardných funkcií je predom pripravených v&nbsp;knižniciach prekladača. Tieto funkcie vychádzajú na jednej strane z&nbsp;príslušnej normy ANSI, na druhej strane z&nbsp;"kuchyne" firmy - autora kompilátora. Každá štandardná funkcia je spravidla sprevádzaná svojím tzv. include - súborom (jedným alebo viacerými). Tento súbor má príponu .h od slova header (hlavička) a&nbsp; obsahuje súhrn informácií o&nbsp;určitej skupine štandardných funkcií (ich definície, globálne premenné a&nbsp;pod). Do zdrojového textu programu sú tieto súbory zaradené pomocou príkazu preprocesora <em><b>#include</b></em> (podrobnejšie viď kap. 2). Rovnakým spôsobom môžu byť do zdrojového textu programu zaradené užívateľom definované funkcie (podprogramy), ktoré je tiež možné združovať do knižnice.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Ďalším objektom, ktorý sa môže vyskytovať v&nbsp;štruktúre programu v&nbsp;jazyku C, sú globálne dátové objekty, ktoré sú dostupné vo všetkých funkciách daného programu. Doporučujeme však použitie týchto globálnych premenných vynechať, resp. obmedziť, pretože zhoršujú možnosti štruktúrovania programu.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Program v&nbsp;jazyku C je teda súhrnom definícií funkcií a&nbsp;deklarácií globálnych objektov. Jedna z&nbsp;funkcií sa musí volať <em><b>main</b></em> (označuje hlavný program). Jazyk C je typický svojou blokovou štruktúrou (napr. telo každej funkcie tvorí jeden blok). Blokom je zdrojový text, uzavretý v&nbsp;dvojici zátvoriek <em><b>{</b></em>, <em><b>}</b></em>. V&nbsp;rámci bloku je možné pracovať s&nbsp;globálnymi i&nbsp;lokálnymi premennými, ktoré sú definované len v&nbsp;rámci bloku (lokálne môžu byť len dátové objekty, všetky funkcie sú vždy globálne).<br />
+<br />
+</p>
+
+<p>Štruktúra programu v&nbsp;jazyku C má teda obecný tvar :</p>
+
+<ol type="I">
+<li>Skupina hlavičkových súborov štandardných funkcií.</li>
+
+<li>Definície užívateľských funkcií.</li>
+
+<li>Deklarácie globálnych premenných.</li>
+
+<li>Funkcia main.</li>
+
+<li>Ostatné užívateľské funkcie.</li>
+</ol>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Štandardné knižničné funkcie, ktoré sa vyskytujú v&nbsp;zdrojovom texte programu (časť IV, resp. V), sú v&nbsp;celkovej štruktúre programu reprezentované svojimi hlavičkovými súbormi, spravidla uvedenými na začiatku programu (časť I).<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Najjednoduchší úvodný <a href="Zdrojaky/Pr1_1.c.html">program</a> pre výpis textu na obrazovku má tvar :</p>
+
+<pre>
+<code>
+<font color="green"><i>/*  priklad p1_1.c  uvodny program  */</i></font>
+#include <font color="blue" size="+1">&lt;</font>stdio<font color="blue" size="+1"><b>.</b></font>h<font color="blue" size="+1">&gt;</font>
+
+main<font color="blue" size="+1"><b>(</b></font><font color="blue" size="+1"><b>)</b></font>
+<font color="blue" size="+1"><b>{</b></font>
+  printf<font color="blue" size="+1"><b>(</b></font><font color="purple">"ahoj\n"</font><font color="blue" size="+1"><b>)</b></font><font color="blue" size="+1"><b>;</b></font>
+<font color="blue" size="+1"><b>}</b></font>
+</code>
+</pre>
+
+<p align="justify">a pozostáva teda len z&nbsp;časti I (1. riadok) a&nbsp;časti IV, ktorá je tvorená jedinou štandardnou funkciou printf. Jej definícia je uvedená v&nbsp;súbore stdio.h. Pred programom je jeden riadok komentára.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Ďalší príklad vykonáva kopírovanie znaku zadaného z&nbsp;klávesnice (štandardný vstup) na obrazovku (štandardný výstup). Kopírovanie je ukončené zadaním znaku medzera na vstupe. Príklad je uvedený v&nbsp;piatich postupne sa vyvíjajúcich verziách, ktoré dokumentujú základné črty a&nbsp;spôsoby práce v&nbsp;jazyku C (viď príklady pr1_2.c až pr1_6.c). Čítanie znaku zo vstupu vykonáva štandardná funkcia getchar, výstup znaku funkcia putchar. Obidve sú popísané v&nbsp;súbore stdio.h. Prvá verzia príkladu využíva opakovanie pomocou príkazu goto, druhá využíva štandardný príkaz while. V&nbsp;tretej verzii je vytvorený podprogram - funkcia copy, ktorá vykonáva samotné kopírovanie a&nbsp;v&nbsp;hlavnom programe je iba vyvolaná (bez prenosu parametrov). V&nbsp;štvrtej verzii sa okrem toho spočítavajú kopírované znaky a&nbsp;v&nbsp;hlavnom programe sa vypíše ich počet. Posledná verzia je doplnená ešte pomocnými výpismi na obrazovku. Kopírované znaky sú vypísané dvakrát (raz príkazom printf, druhý krát príkazom putchar).</p>
+
+<a href="Zdrojaky/Pr1_2.c.html">príklad pr1_2.c</a>
+
+<pre>
+<code><font color="#000000"><font color="#0000a0"><em>/*  pr1_2.c  kopirovanie znaku z klavesnice na obrazovku   */</em></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><strong>void</strong></font> main<font color="#800000">(<strong>void</strong>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><strong>char</strong></font> z<font color="#800000">;</font>
+
+znovu<font color="#800000">:</font>
+  z<font color="#800000">=</font>getchar<font color="#800000">();</font>
+  <font color="#800000"><strong>if</strong>(</font>z <font color="#800000">!=</font> <font color="#ff8080">' '</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+    <font color="#800000"><strong>goto</strong></font> znovu<font color="#800000">;</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code>
+</pre>
+
+<br />
+<a href="Zdrojaky/Pr1_3.c.html">príklad pr1_3.c</a>
+
+<pre>
+<code><font color="#000000"><font color="#0000a0"><i>/*  priklad pr1_3.c  kopirovanie znaku z klavesnice na obrazovku   */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> z<font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>((</font>z<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">' '</font><font color="#800000">)</font> putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code>
+</pre>
+
+<br />
+<a href="Zdrojaky/Pr1_4.c.html">príklad pr1_4.c</a>
+
+<pre>
+<code><font color="#000000"><font color="#0000a0"><i>/*  priklad pr1_4.c  kopirovanie znaku z klavesnice na obrazovku</i></font>
+
+<font color="#0000a0"><i>podprogram copy  */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> copy<font color="#800000">(<b>void</b>);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+ copy<font color="#800000">();</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>void</b></font> copy<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> z<font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>((</font>z<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">' '</font><font color="#800000">)</font> putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code>
+</pre>
+
+<br />
+<a href="Zdrojaky/Pr1_5.c.html">príklad pr1_5.c</a>
+
+<pre>
+<code><font color="#000000"><font color="#0000a0"><i>/*  priklad pr1_5.c  kopirovanie znaku z klavesnice na obrazovku</i></font>
+
+<font color="#0000a0"><i>podprogram copy + pocitanie znakov  */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>int</b></font> copy<font color="#800000">(<b>void</b>);</font>
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  printf<font color="#800000">(</font><font color="#0080c0">"Pocet nacitanych znakov:%d\n"</font><font color="#800000">,</font>copy<font color="#800000">());</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> copy<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> z<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>((</font>z<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">' '</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    pocet<font color="#800000">++;</font>
+    putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>if</b>(</font>z<font color="#800000">==</font><font color="#ff8080">' '</font><font color="#800000">)</font>putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+  <font color="#800000"><b>return</b>(</font>pocet<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code>
+</pre>
+
+<br />
+<a href="Zdrojaky/Pr1_6.c.html">príklad pr1_6.c</a>
+
+<pre>
+<code><font color="#000000"><font color="#0000a0"><i>/*  priklad pr1_6.c  kopirovanie znaku z klavesnice na obrazovku</i></font>
+
+<font color="#0000a0"><i>podprogram copy + pocitanie znakov + texty */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>int</b></font> copy<font color="#800000">(<b>void</b>);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  printf<font color="#800000">(</font><font color="#0080c0">"\nPocet nacitanych znakov:%d\n"</font><font color="#800000">,</font>copy<font color="#800000">());</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> copy<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> z<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">"Zadaj znaky (koniec medzera a Enter):\n"</font><font color="#800000">);</font>
+  <font color="#800000"><b>while</b>((</font>z<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">' '</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    pocet<font color="#800000">++;</font>
+    printf<font color="#800000">(</font><font color="#0080c0">"\n%d. znak:%c"</font><font color="#800000">,</font>pocet<font color="#800000">,</font>z<font color="#800000">);</font>
+    putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>if</b>(</font>z<font color="#800000">==</font><font color="#ff8080">' '</font><font color="#800000">)</font>putchar<font color="#800000">(</font>z<font color="#800000">);</font>
+  <font color="#800000"><b>return</b>(</font>pocet<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code>
+</pre>
+
+</div>
+
+
+</body>
+</html>
+

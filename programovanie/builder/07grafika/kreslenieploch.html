@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<script>
+        var canvas; var context;
+		var x; var y;
+		var x1=[0]; var y1=[0]; var pu=0;
+		var x2=[0]; var y2=[0];
+		var farba=[0];
+		var dole=0;
+		function init()
+		{	canvas = document.getElementById("platno");
+   			if (canvas.getContext) 
+   			{ context = canvas.getContext("2d");
+				context.fillStyle = "#a8c101";
+    			context.fillRect(0, 0, 800, 600); }
+			f.style.backgroundColor="#000000";	
+		}		
+        function mdole(xs,ys)
+		{ dole=1;
+		  x1[pu]=xs;y1[pu]=ys;
+		  farba[pu]=f.style.backgroundColor; 
+		}
+		function mhore(xs,ys)
+		{ dole=0;
+		  x2[pu]=xs;y2[pu]=ys;
+		  pu++; 
+		}
+		function rect(xs,ys)
+		{ if(dole)
+		   {x2[pu]=xs; y2[pu]=ys;
+		    context.fillStyle = "#a8c101";
+		     context.fillRect(0, 0, 800, 600); 
+           for (i=0;i<=pu;i++)
+		   { 
+		    context.fillStyle = farba[i];
+		     context.fillRect(x1[i],y1[i],x2[i]-x1[i],y2[i]-y1[i]); 
+		   }
+		   }
+		}
+		</script>  
+</head>
+
+<body  onload="init();">
+<center><h3 class=nadpis>Kreslenie plôch myšou</h3></center>
+<dl><dt class=main>Úvod
+	<dd>Určite ste sa stretli s nejakým rastrovým grafickým programom, ktorý umožňuje kresliť obrázky (napr. MsPain).
+		Kreslenie plôch (kruhou, obdĺžnikov, ...) tam prebieha nasledovne:
+		<ul><li>užívateľ zvolí miesto, kde bude plocha začínať a stlačí tam ľavé tlačítko myši
+			<li>ťahaním/posúvaním myši vzniká "dočasný" plošný útvar
+				<br>pri každom posunutí "starý" plošný objekt zanikne a "nový" sa vykreslí
+			<li>po uvoľnení tlačítka myši je plošný útvar nakreslený definitívne a už sa nedá "naťahovať"
+		</ul>
+		Cieľom tejto lekcie bude ukázať si základné myšlienky, ako tento efekt dosiahnuť 
+	<dt>Udalosti súvisiace s myšou
+	<dd>Na grafickej ploche možno ošetrovať 3 rôzne udalosti súvisiace s myšou: 
+		<ul><li>onMouseDown - zatlačili sme nad plochou niektoré tlačidlo myši 
+			<li>onMouseMove - myš sa hýbe nad plochou 
+			<li>onMouseUp - pustili sme tlačidlo myši 
+		</ul>	
+	<dt>Jednoduchým ťahaním myši kreslíme obdĺžnik
+	<dd>Kreslenie "na prvý pokus" sa v praxi používa menej ale jednoducho sa programuje. Myšlienka je nasledovná:
+	<br>stlačíme myš a natiahneme obdĺžnik - zväčšovať moožno ale zmenšiť nejde - po pustení myši je obdĺžnik ukončený.
+		Na testovanie využijeme parameter Shift: je typu TShiftState (čo je vlastne množina zatlačených "významných" tlačítok)
+		 <br>type TShiftState = set of (ssShift,ssAlt,ssCtrl,ssLeft,ssRight,ssMiddle,ssDouble);
+		 <br>Tlačítko do množiny automaticky patrí ak je zatlačené, ak ho uvoľníme automaticky sa 
+		 z tejto množiny vyradí. My budeme sledovať ľavé tlačítko myši - ssLeft
+		Na testovanie, či prvok patrí do množiny sa používa metóda  <b>Contains</b>. 
+		Pozri <a href="../02programujeme/mnoziny.html" target="_blank">množiny</a>
+		Takto vyzerá program, ktorý kreslí len pri stlačenom ľavom tlačítku myši
+		<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   			<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+{
+  if (Shift.Contains(ssLeft)) Image1->Canvas->Rectangle(xx,yy,X,Y) 
+  else 
+  { xx=X; yy:=Y; 
+  }
+}
+</pre>	
+		</div></div></div>
+		Obdĺžnik je hneď krelený farbou výplne a pera a nie je ho možné "naťahovaním zmenšovať. Skúste porozmýšlať ako by program fungoval, 
+		ak by sme nedali vetvu else - overte si, či ste "uhádli".
+	<dt>Ťahaním myši kreslíme obdĺžnik
+	<dd>Treba upozorniť, že nasledovný postup funguje pri použití príkazu Rectangle ale pri FillRect nefunguje
+	Tu potrebujeme kresliť "dočasné" plochy, ktoré budú pri pohybe myši do nového koncového bodu miznúť a nové sa zas kresliť.
+	<br>Na dočasné obdĺžniky nemáme požiadavky, že by mal byť jednofarebné, hlavné aby sme ich vedeli odstrániť 
+		<br>Čo budeme k tomu potrebovať:
+		<ul><li>premenné
+				<br>xx,yy - poloha začiatku našej plochy - napr. súradnica ľavého horného rohu - (nastaví sa pri stlačení ľavého tlačítka)
+				<br>xs,ys - "stará" poloha koncového bodu úsečky napr. súradnica pravého dolného rohu - (nastaví sa po vykrelení "dočasnej" 
+				plochy do nového koncového bodu	
+			<li>techniku ako zotrieť dočasnú plochu s tým, že sa obrazovka vráti do stavu v akom bola pred jej nakreslením. 
+				Táto úloha sa zdá byť ťažká, ale pomocou nastavenia Pen.Mode:=pmNot je to jednoduché riešenie.
+				<br>(Je zvláštne, že nastavenie vlastnosti pera má vplyv na výplň, ale funguje to) 
+				<br>Vysvetlenie:
+				<br>Ak kreslíme plochu v režime pmNot nekreslí sa farbou výplne a pera (navolená farba výplne a pera nemá na zobrazenú plochu vplyv)
+				ale robí inverziu/negáciu podkladu (biely podlkad -&gt;čierna farba, zelený podklad -&gt;fialová čiara).
+				Z matematiky vieme, že ak urobíme 2-krát negáciu dostaneme pôvodnú hodnotu.
+				<br>Čiže ak druhý-krát nakreslíme tú istú plochu tak nám plocha korektne zmizne.
+		</ul>		
+		<br>A takto nejak by to mohlo byť naprogramované:
+		<div style="border-width:3;border-style:outset;width:800px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:800px; padding:0;border-width:0;color:white">Unit1.pas
+   		</div>
+   		<div style="background-color:#dddddd; width:800px;" >
+   			<div style="margin:10px">
+<pre>
+//****************** Pohyb myši nad Image *********************************
+void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+{
+  if (Shift.Contains(ssLeft)) 
+  {   Image1->Canvas->Rectangle(xx,yy,xs,ys);    //zotrieme starú dočasnú úsečku
+      Image1->Canvas->Rectangle(xx,yy,X,Y);  //nakreslíme novú dočasnú úsečku
+      xs:=X; ys:=Y;                 		//odpamätáme, aby sme neskôr mohli zmazať
+  {
+//ak nie je stlačené tlačítko myši nerobíme nič
+}
+//****************** Stlačili sme dole *************************************
+void __fastcall TForm1::Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
+{   xx = X; yy = Y;                    //zapamätáme si začiatok novej dočasnej úsečky
+    xs = X;  ys = Y;
+    Image1->Canvas->Pen->Mode = pmNot;   //zapneme dočasný mód
+}
+//****************** Pustili sme tlačítko myši *****************************
+void __fastcall TForm1::Image1MouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
+{     Image1->Canvas->Rectangle(xx,yy,xs,ys);  //zotrieme starú plochu (pre istotu)
+      Image1->Canvas->Pen->Mode = pmCopy;   //zapneme "normálny" režim kreslenia
+      Image1->Canvas->Rectangle(xx,yy,x,y);  //nakreslíme novú trvalú PLOCHU
+}
+/pre>	
+		</div></div></div>
+
+<div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:850px;" 
+	 onmousemove="if (canvas.getContext) rect(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );"
+	onmousedown="if (canvas.getContext) mdole(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" 
+	onmouseup="if (canvas.getContext) mhore(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );">
+<canvas width="800" height="600" id="platno" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<table border="1"><tr><td rowspan="2" colspan="2" id="f" bgcolor="#000000" >&nbsp; &nbsp;<td bgcolor="black" onclick="f.style.background='black'">&nbsp;
+                                                                      <td bgcolor="#880000" onclick="f.style.background='#880000'">&nbsp;
+																	  <td bgcolor="#008800" onclick="f.style.background='#008800'">&nbsp;
+																	  <td bgcolor="#555500" onclick="f.style.background='#555500'">&nbsp;
+																	  <td bgcolor="#000088" onclick="f.style.background='#000088'">&nbsp;
+																	  <td bgcolor="#550055" onclick="f.style.background='#550055'">&nbsp;
+																	  <td bgcolor="005555" onclick="f.style.background='#005555'">&nbsp;
+																	  <td bgcolor="#c0c0c0" onclick="f.style.background='#c0c0c0'">&nbsp;</tr>
+		<tr><td bgcolor="#666666" onclick="f.style.background='#666666'">&nbsp;
+			<td bgcolor="#ee0000" onclick="f.style.background='#ee0000'">&nbsp;
+			<td bgcolor="#00ee00" onclick="f.style.background='#00ee00'">&nbsp;
+			<td bgcolor="#eeee00" onclick="f.style.background='#eeee00'">&nbsp;
+			<td bgcolor="#0000ee" onclick="f.style.background='#0000ee'">&nbsp;
+			<td bgcolor="#ee00ee" onclick="f.style.background='#ee00ee'">&nbsp;
+			<td bgcolor="#00eeee" onclick="f.style.background='#00eeee'">&nbsp;
+			<td bgcolor="#ffffff" onclick="f.style.background='#ffffff'">&nbsp;</tr>
+</table>		
+<input type="Button" value="Clear" onclick="context.fillStyle = '#a8c101';context.fillRect(0, 0, 800, 600);pu=0;">
+</div>
+<br>
+
+	<dt>Podporné akcie
+	<dd>Každý grafický program by mal vedieť svoj vytvorený obrázok zapísať na disk, čo možno spraviť
+		cez menu alebo cez tlačítko. Príkaz je nasledovný
+		<br>Image1.Pictures.SaveToFile('subor.bmp');
+		<br><br>Na voľbu farby možno použiť ColorDialog alebo ColorGrid
+</dl>
+</body>
+</html>

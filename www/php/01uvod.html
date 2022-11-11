@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Úvod</title>
+</head>
+
+<body>
+<h2>Úvod</h2>
+Čo v prípade ak chceme aby sa stránka menila podľa želania návštevníka alebo v závislosti od času (napr. jedálny lístok na aktuálny deň).
+Existujú technológie, ktoré riešia daný problém, niektoré to riešia na strane prehliadača (napr. JavaScript), niektoré na strane servera (PHP). 
+PHP je hypertextový preprocesor, ktorý číta php súbor, nájde c ňom "svoje" časti a nahrádza ich html textom.
+Toto sa odohrá na strane servera pred odoslaním súbora klientovi. Užívateľ teda často nemá šancu vidieť ako
+vyzerá php súbor zapísaný na serveri ale vidí len zmenený tvar, kde sú už php časti nahradené html textom.
+V PHP častiach sa nachádzajú príkazy jazyka PHP.
+<br>PHP je interpreter - čo znamená, že príkazy číta postupne a hneď vykonáva. Nevýhodou je pomalšia realizácia.
+<dl><dt>Čo PHP dokáže 
+	<dd>PHP beží na serveri, vstup do programu (naplnenie premenných) môže urobiť z výstupu inej PHP stránky (formulár)
+		alebo zo súboru, ktorý je samozrejme tiež na serveri. PHP vie s premennými vykonávať rôzne operácie 
+		a má príkazy na výstup, ktorý smeruje na to miesto kde sa PHP príkazy v dokumente nachádzajú.
+		<br>Stránky takto získané voláme dynamické, lebo sa vytvárajú až v čase požiadavky na server a výsledok
+		závisí od stavu premenných (od požiadaviek užívateľa)
+	<dt>Rozdiel oproti JavaScriptu
+	<dd>JavaScript beží na strane klienta a jeho odozva na požiadavku klienta je okamžitá - je vhodný na animáciu stránky
+		jednoduché www hry, nemôže však nič zapísať na disk.
+		<br>PHP beží na strane servera - každá požiadavka užívateľa musí byť odoslaná na server, podľa nej vytvorená 
+		stránka a tá následne odoslaná klientovi - dáta môže zapisovať na disk a tieto môžu slúžiť ako vstup pre iné
+		PHP stránky.
+	<dt>Editor
+	<dd>Podobne ako pre HTML existuje viac možností, je možné používať aj "Poznámkový blok" ale existuje aj viacero editorov
+		ktoré farebne zvýrazňujú PHP príkazy (PHPeD, PSPad-český produkt, Home-site). Dôležitejšie ako editor je však možnosť
+		prezerať si vytvorené stránky *.php, tu máme 3 možnosti.
+		<ul><li>nainštalovať Apache s podporou PHP
+			<li>nahranie mini servera - naozaj stačí nakopírovať a spustiť server_start
+			<li>prezeranie stránok na nejakom serveri, ktorý má podporu PHP
+		</ul>	  
+	<dt>Zahniezdenie PHP 
+	<dd>PHP preprocesor musí jednoznačne vedieť identifikovať časti, ktoré "patria" jemu. Máme niekoľko možností:
+		<ul><li>&lt;? ... príkazyPHP ... ?&gt;
+				<br>je najkratšia cesta ako vložiť PHP príkazy do súboru *.php. 
+			<li>&lt;?php ... príkazyPHP ... ?&gt;
+				<br>je presnejší spôsob a vyhneme sa ním možným problémom pri XML. 
+		</ul>		
+<dt>Nutné podmienky
+	<dd>Aby to celé mohlo fungovať, musíme mať http server (napr. Apache) so zabudovanou podporou PHP.
+		<br>(ľahko sa presvedčíme, či náš server podporuje PHP a tiež ako je PHP nakonfigurované, 
+		vytvorením stránky napr. php.php s nasledovným obsahom:
+		<div style="background-color:'silver';width:80%;border-style:outset;padding-left:15;padding-top:15;">
+		<pre>
+&lt;?
+phpinfo()
+?>
+</pre></div>
+	Ak náš server podporuje PHP zobrazí nám informácie o inštalovanej verzii PHP.
+	<br><br>Aby naše dynamické stránky prešli preprocesorom PHP musia mať koncovku php, inak sa na stránke php príkazy neuplatnia.
+	<dt>Komentáre v PHP
+	<dd>Komentáre nemajú žiaden vplyv na vykonávanie príkazov PHP a slúžia len na lepšiu orientáciu pre tvorcu stránky.
+		<br>Máme k dispozícii viacriadkový komentár: <br>
+		/* ľubovoľný text<br>
+		   ..............<br>
+		*/<br><br>
+		a jednoriadkový komentár:<br>
+		// ľubovoľný text ukončený enterom - všetko za dvojicou lomítok až do konca riadku (z jazyka C)
+		#  ľubovoľný text ukončený enterom - všetko za dvojicou lomítok až do konca riadku (z OS Linux)
+</dl>		   
+</body>
+</html>

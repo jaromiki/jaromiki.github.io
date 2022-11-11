@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	  <style>
+	  code {color:green; font-weight:700;}
+	  </style>
+</head>
+
+<body>
+<h3 class="main"><b>priority_queue</b></h3>
+Priority_queue je objekt na dočasné odloženie nejakej hodnoty a jej opätovné získanie, pričom najväčší prvok je vždy navrchu. 
+Na zisťovanie poradia prvkov je použitá porovnávacia funkcia, v prípade potreby možno vytvoriť svoju porovnávaciu funkciu
+<br>bool moja_f(typ a, typ b)
+<br>ktorá vráti pravdu ak <b>a</b> je pred <b>b</b>. (takto možno napr. urobiť opačné poradie v halde)
+<br>Napr.
+<br>Ľudia vchádzajú do čakárne a majú časenku na nejaký čas a nahlásia ten čas, systém vždy vie kto prvý pôjde ku lekárovi.
+<br>K dispozícii máme hlavne operátory: back, push, pop. Implementácia je haldou umiestnenou vo poli/vektore.
+<dl><dt>pripnutie knižnice
+		<dd>Aby sme mohli používať haldu musíme pripnúť príslušnú knižnicu
+			<br><b>#include &lt;queue></b>
+			<br>Po pripnutí môžme začať používať objekty popísané v tejto knižnici a teraz si základ popíšeme.
+	<dt>deklarácia
+	<dd>Je úplne podobné ako pri deklarácii poľa.
+		<ul><li>priority_queue &lt;typ> v1; //vytvorí prázdnu haldu
+			<li>priority_queue &lt;typ> v2(iterátor1, iterátor2); //prvky z nejakého objektu (pole, vektor, list) vloží do haldy
+			<li>priority_queue &lt;typ, vector&lt;typ>, porov_funkcia> v3;
+				<br> &nbsp; //druh7 parameter určuje, v čom bude halda implementovaná (nechať vector)
+				<br> &nbsp; //tretí parameter určuje, porovnávaciu fukciu
+				<br> &nbsp; &nbsp; &nbsp;// napr. preddefinovaná f. greater&lt;int&gt; urobí v halde celých čísel opačné poradie
+				<br> &nbsp; &nbsp; &nbsp;//ale môžme dať aj svoju (už skôr zadefinovanú)
+		</ul>
+	<dt>členské funkcie
+	<dd><ul><li><b>size()</b>; // vráti počet prvkov vo fronte v konšt. čase
+			<li><b>empty();</b> // funkcia vráti TRUE ak je halda prázdna
+			<li><b>push(hodnota)</b>; //vloží hodnotu do haldy O(ln n)
+			<li><b>pop()</b>; // odstráni hodnotu z vrchola haldy (najväčšiu) O(ln n)
+			<li><b>top()</b>; // vráti hodnotu z vrchola haldy
+			<li><b>swap()</b>; // vymení obsah dvoch háld v konšt. čase
+		</ul>	
+	<dt>Jednoduchá ukážka
+	<dd>	
+	<table border="3">
+	<tr><th width="550">Zadanie<th>Riešenie</tr>
+	<tr><td><pre>
+    Máme vrece čísel, ktoré je na začiatku prázdne. Postupne s vrecom robíme nasledovné: buď do neho nejaké
+číslo vložíme, alebo z neho vyberieme najväčšie číslo. Po každej operácii chceme vedieť, aké najväčšie číslo sa
+vo vreci nachádza (ak nie je vrece prázdne).
+
+<b>Vstup</b>
+Prvý riadok obsahuje počet operácii n. Platí 1 &lt;= n &lt;= 2*10^5.
+Nasleduje n riadkov, i-ty z nich popisuje i-tu operáciu a má tvar t x. Ak t je 0, tak z vreca vyberáme
+najväčšie číslo a x ignorujeme. Ak t je 1, tak do vreca vkladáme číslo x. Platí |x| &lt;= 10^9.
+Je zaručené, že z vreca vyberáme iba ak nie je prázdne.
+
+<b>Výstup</b>
+Na i-ty riadok vypíšte jedno celé číslo: najväčšie číslo nachádzajúce sa vo vreci po i-tej operácii. Ak je po
+i-tej operácii vrece prádzne, vypíšte namiesto toho ‘empty‘. 
+</pre><td><pre>
+#include &lt;iostream>
+//#include &lt;vector>
+#include &lt;queue>
+using namespace std;
+priority_queue &lt;long> h;
+long n,m,t,i,x;
+int main(int argc, char* argv[])
+{  cin  >>n;
+   for(i=0;i&lt;n;i++)
+   {  cin >>t>>x;
+      if (t) h.push(x);
+      else  if (!(h.empty()))  h.pop();
+      if (h.empty()) cout &lt;&lt; "empty"&lt;&lt;endl; else cout &lt;&lt; h.top()&lt;&lt;endl;
+   }
+//   system("pause");   
+        return 0;
+}</pre>
+    </tr>
+    </table>
+	<dt>porovnávacia funkcia
+	<dd>Halda je implicitne objekt pre prvky ktoré je možné porovnávať/utriediť a vždy má max. prvok navrchu. Niekedy však potrebujeme
+	zvoliť iné porovnávacie kritérium (napríklad chceme mať navrchu číslo najmenšie alebo napr. číslo s najväčšou poslednou cifrou)
+	a je dobré vedieť ako realizovať. Navyše niekedy môžeme chcieť do haldy vkladať prvky, ktoré ani porovnávať nevieme (štruktúry a pod.)
+	<br>Tu si ukážeme, ako zaviesť porovnávaciu funkciu
+	<br>Nech do cakarne chodia pacienti a o každom evidujeme 
+	<br>- stav - tu je zapisany stupen choroby (cim väčšie číslo tým je viac chorý)
+	<br>- pc - poradové číslo príchodu - každý pacient dostane po príchode jedinečné číslo 1,2,3, ...
+	<br>- meno - meno pacienta
+	<br>Na vstupe je postupnosť riadkov riadky môžu byť tvorené 0, -1,meno stav
+	<br> 0 ... koniec programu
+	<br>-1 ... pacient s najväčšou chorobou ide k lekárovi (v prípade rovnosti ide pacient s menším číslom pc)
+	<br>meno, stav ... do čakárne pridáme ďalšieho pacienta
+	<br>-----------------------------------------------------
+	<br>Pacienta budem zapisovať do štruktúry typu Tpacient
+	<code>
+	<br>typedef struct { string meno; long stav; long pc;} Tpacient;   
+	</code>
+	<br>Čakáreň bude reprezentovaná haldou s prvkami typu Tpacient
+	<br><code>
+	priority_queue &lt;Tpacient, vector&lt;Tpacient>, bool (*)(Tpacient,Tpacient)> h(compare);
+	</code>
+	<br>Poznámky:
+	<br>Ak chcem do haldy zadať svoju porovnávaciu funkciu musím uviesť, že halda bude zapísaná v objekte vector (vector&lt;Tpacient>)
+	<br>3. parameter musí byť popísaná porovnávacia funkcia (typ musí byť bool, parametre musia byť typu aký je použitý v halde 
+	<br>za názvom objektu typu halda v okrúhlych zátvorkách musí byť názov funkcie popísanej vyššie
+	<br>-----------------------------------------------------
+	<br>Porovnávacia funkcia múže vyzerať nejak takto:
+	<br><code>bool compare(Tpacient a, Tpacient b)
+	<br>{return (a.stav == b.stav? a.pc>b.pc : a.stav &lt; b.stav);} </code>
+	<br><br>Ak porovnávacia funkcia vracia TRUE ak prvý parameter funcie je menší ako druhý bude navrchu haldy maximum
+	<br>Ak porovnávacia funkcia vracia TRUE ak prvý parameter funcie je väčší ako druhý bude navrchu haldy minimum
+	<br>Ak je stav rovnaký rozhodne pc (navrchu bude min) inak rozhodne stav (navrchu bude max)
+	<br>Ukážka
+	<table border="3">
+	<tr><th width="600">Zadanie<th>Riešenie</tr>
+	<tr><td>
+	V Nalomenej Trieske majú zdravotné stredisko. V tomto zimnom období doňho prichádza veľa pacientov.
+Dennodenne si niekto vytkne členok alebo zlomí nohu. V škole vyhlásili chrípkové prázdniny. Hrozí chrípková
+epidémia. Aj choroba šialených tiav vyčíňa ako besná...
+V zdravotnom stredisku na pohotovosti nepretržite ordinuje jeden doktor. Čakáreň plná a noví pacienti
+prichádzajú a prichádzajú... A každému treba pomôcť – ale komu skôr? Na tejto pohotovosti to riešia tak, že
+vždy, keď doktor ošetrí jedného pacienta, sestrička zavolá z čakárne dnu toho, kto vyzerá byť najviac chorý. (Ak
+je takých pacientov viac, tak toho z nich, ktorý čaká najdlhšie.)
+Tvojou úlohou je spraviť simuláciu zdravotného strediska. Na začiatku je čakáreň prázdna. Tvoj program má
+postupne spracovávať tieto príkazy: 
+<dl><dt class="nic">pacient cislo stav 
+<dd>– do čakárne prišiel nový pacient, jeho evidenčné číslo je <b>cislo</b> a číslo <b>stav</b> udáva, ako chorý tento pacient vyzerá (čím je väčšie, tým viac je pacient chorý). 
+Obe čísla sú nezáporné celé a neprevyšujú 1 000 000 000. 
+<dt class="nic">dalsi 
+<dd>– do ordinácie má ísť ďalší pacient. 
+<dt class="nic">koniec 
+<dd>– na dnes končíme, odteraz má službu pohotovosť na opačnom konci mesta, presuňte sa tam.
+</dl>
+<br><b>Vstup</b><br>
+Vstup obsahuje niekoľko riadkov, v každom z nich je jeden z vyššie popísaných príkazov. Môžeš predpokladať,
+že žiadni dvaja pacienti nemajú rovnaké evidenčné číslo. Príkazov bude vo vstupnom súbore najviac 250 000.
+<br><b>Výstup</b><br>
+Vždy, keď prečítaš zo vstupu príkaz dalsi, vypíš jeden riadok a v ňom evidenčné číslo pacienta, ktorý sa
+práve dostal do ordinácie. V prípade, že je čakáreň práve prázdna, namiesto čísla pacienta vypíš -1.
+	<td><pre>
+#include &lt;iostream>
+#include &lt;queue>
+#include &lt;string>
+using namespace std;
+typedef struct { long pc;    long stav; int i;
+               } Tpacient;
+bool compare(Tpacient a, Tpacient b)
+{return (a.stav == b.stav? a.i>b.i : a.stav &lt; b.stav);}
+
+priority_queue &lt;Tpacient, vector&lt;Tpacient>, bool (*)(Tpacient,Tpacient)> h(compare);
+string s;
+long pc,stav,i;
+Tpacient p;
+int main(int argc, char* argv[])
+{   do
+    {  cin >>s;
+       if (s == "dalsi")
+       {  if (h.empty()) cout &lt;&lt;-1&lt;&lt;endl;
+          else
+          { p=h.top();
+            cout &lt;&lt; p.pc &lt;&lt; endl;
+            h.pop();
+          }
+       }
+       else if (s == "pacient")
+            { cin >>p.pc>>p.stav;
+              p.i=i++;
+              h.push(p);
+            }
+    }
+    while (s != "koniec");
+        return 0;
+}	
+</pre></tr>
+<tr><th>vstup<th>výstup</tr>
+<tr>
+<td>
+<pre>
+dalsi
+pacient 1 10
+pacient 2 2
+pacient 3 5
+dalsi
+pacient 17 0
+pacient 999 100
+dalsi
+pacient 13 5
+dalsi
+koniec</pre>
+<td>
+-1<br>
+1<br>
+999<br>
+3
+</tr>
+	</table>
+
+</dl>			
+
+
+
+</body>
+</html>

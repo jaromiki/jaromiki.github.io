@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Vıstup na štandartné vıstupné zariadenie</title>
+</head>
+
+<body>
+V kadom OS je urèené štandartné vstupné zariadenie <font color="Green">stdin</font> (implicitne klávesnica)
+a štandartné vıstupné zariadenie <font color="Green">stdout</font> (implicitne systémová konzola), ešte existuje
+štandartné chybové zariadenie na chybové hlásenia <font color="Green">stderr</font>. 
+<br> premerovanie do súboru urobíme pomocou znaku &gt;
+<br> premerovanie na pripísanie na koniec súboru pomocou dvojice znakov &gt;&gt;
+<dl><dt>Štandartné vıstupné zariadenie v OS DOS
+	<dd>- zadajme v DOSe prikaz dir, tento príkaz vypíše obsah aktuálneho adresára na stdout
+	<br> &nbsp; teraz zadajme <font color="Green">dir &gt; subor.txt</font> celı vıpis je presmerovanı do súboru.  
+<dt>Štandartné vıstupné zariadenie v OS Unix
+	<dd>- zadajme v Unixe prikaz ls, tento príkaz vypíše obsah aktuálneho adresára na stdout
+	<br> &nbsp; teraz zadajme <font color="Green">ls 1&gt; subor.txt</font> celı vıpis je presmerovanı do súboru.  
+	<br> &nbsp; obdobne <font color="Green">ls 2&gt; err.txt</font>prípadné chybové hlášky zapíše do súboru.
+	<br> &nbsp; presmerovanie mono aj kombinova mono <font color="Green">ls 1&gt; subor.txt 2&gt; err.txt</font>
+</dl>
+ 
+Pomocou systémovıch príkazov mono systémovı vstup i vıstup presmerova napr. do súboru, resp. nejaké rozhranie.
+<dl><dt>Vıstup na štandartnı vıstup
+	<dd><dl><dt>int printf( form_ret, zoznam_vyr)
+			<dd><dl><dt>form_ret
+					<dd>¾ubovolnı text, ktorı môe obsahova formátovacie špecifikácie zaèínajúce znakom %
+					<br>tie môe obsahova špeciálne znaky (\n, \r, \b, \\, \", %%)
+					<br>form. špecifikácia môe ma nasledovnı tvar:
+					<br>- ... (mínus) ak je prvı znak mínus bude reazec zarovnávanı z¾ava
+					<br>+ ... ak je uvedené bude kladné èíslo so znam. +
+					<br>dlzka ... èíslo uèujúce poèet znakov na obrazovke pre premennú
+					<br>.des  ... za bodkou èíslo urèujúce pri reálnych èíslach poèet desatinnıch
+					<br>modifikátor ...malé l na vıpis premennıch long, ve¾ké L na vıpis prem. long double
+					<br>typ ... d,i desiatkovı integer
+					<br> &nbsp; &nbsp; &nbsp;... o (malé o) osmièkovı integer
+					<br> &nbsp; &nbsp; &nbsp;... x,X integer v tvare hexa
+					<br> &nbsp; &nbsp; &nbsp;... u neznamienkovı integer
+					<br> &nbsp; &nbsp; &nbsp;... u neznamienkovı integer
+					<br> &nbsp; &nbsp; &nbsp;... c na vıpis znaku
+					<br> &nbsp; &nbsp; &nbsp;... s na vıpis stringu
+					<br> &nbsp; &nbsp; &nbsp;... f reálne desiatkové èíslo
+					<br> &nbsp; &nbsp; &nbsp;... e,E reálne desiatkové èíslo vo vedeckom tvare
+					<dt>zoznam_vyr
+					<dd>vırazy oddelené èiarkou
+					<br>poèet vırazov musí by rovnakı ako je form. špecifikácií
+					<dt>návratová hodnota
+					<dd>nako¾ko ide o funkciu, vracia celoèíselnú hodnotu
+					<br>ak sa vıstup podaril vráti poèet bajtov zaslanıch na št. vıstup
+					<br>ak sa vıstup nepodaril vráti preddefinovanú konštantu EOF 
+					<dt>Poznámka
+					<dd>Pri vıpise reálnych èísel nezaokrúh¾uje, ale odsekáva
+				</dl>
+	        <dt>int fprintf(zar, form_ret, zoznam_vyr)
+			<dd>je rovnaké ako printf, ale môme urèi kam chceme vıstup zasla
+			<br>zar ... stdout, stderr, subor
+			<dt>int putchar(int c) ... makro
+			<dt>int fputchar(int c) ...funkcia
+			<dd>Na miesto kurzora sa zapíše poadovanı znak.
+			<br>Návratová hodnota ... ak je vıstup OK vráti zapisovanı znak, inak vráti EOF
+			<dt>int puts (int c) 
+			<dd>Vypíše reazec a odriadkuje. Návratová hodnota:
+			<br>ak OK je hodnota &gt; 0
+			<br>ak sa nepodarí je vıstupná hodnota EOF
+			
+		</dl>
+	<dt>Vstup zo štandartného vstupu
+	<dd><dl><dt>int scanf( form_ret, zoznam_adr)
+			<dd><dl><dt>zoznam_adr
+					<dd>Sú to premenné s operátorom &amp; oddelené èiarkou
+					<dt>form_ret
+					<dd>¾ubovolnı text, ktorı môe obsahova formátovacie špecifikácie zaèínajúce znakom %. Podobne 
+						ako pascal implicitne oèakáva, e dáta budú oddelené bielymi znakmi (medzera, TAB, Enter),
+						ale tu mono urèi aké odde¾ovaèe budú oèakávané. Tie mono naèíta aj èísla, ktoré nie sú 
+						vôbec oddelené zadaním dåky.
+						<br>napr. scanf("%i,%i",a,b); umoní zada vstup, kde èísla budú oddelené èiarkou (12,5)
+						<br>napr. scanf("%2,%2i",a,b); umoní zada èísla neoddelené (125) ale aj oddelené (1,55)
+						<br>napr. scanf("%2pondelok%2i",a,b);umoní zada èísla oddelené slovom pondelok (medzery sú dovolené)
+						<br>form. špecifikácia môe ma nasledovnı tvar:
+						<br>dlzka ... èíslo uèujúce poèet znakov na obrazovke pre premennú
+						<br>modifikátor ...malé l na vıpis premennıch long, ve¾ké L na vıpis prem. long double
+						<br>typ ... d,i desiatkovı integer
+						<br> &nbsp; &nbsp; &nbsp;... o (malé o) osmièkovı integer
+						<br> &nbsp; &nbsp; &nbsp;... O (ve¾ké O) osmièkovı long
+						<br> &nbsp; &nbsp; &nbsp;... x int v tvare hexa
+						<br> &nbsp; &nbsp; &nbsp;... X long v tvare hexa
+						<br> &nbsp; &nbsp; &nbsp;... u neznamienkovı int
+						<br> &nbsp; &nbsp; &nbsp;... U neznamienkovı long
+						<br> &nbsp; &nbsp; &nbsp;... c na vstup znaku
+						<br> &nbsp; &nbsp; &nbsp;... s na vstup stringu
+						<br> &nbsp; &nbsp; &nbsp;... f,F,e,E reálne desiatkové èíslo
+						<dt>Návratová hodnota
+						<dd>ak OK vráti poèet naplnenıch premennıch, ak narazí na koniec súboru vráti EOF
+						<dt>Sémantika
+						<dd>program zastane a èíta vstup pokia¾ nenaplní všetky premenné, alebo nepríde znak konca súboru
+							pod DOSom to je CTRL Z, a pod UNIXom to je CTRL D
+				</dl>
+	        <dt>int getchar( void)
+	        <dt>int fgetchar( void)
+			<dd>zo vstupného reazca ukonèeného Enterom zoberie prvı (¾ubovo¾nı okrem konca súboru). Vıstupná 
+				hodnota je naèítanı znak
+		</dl>
+ 	<dt>Príklady:
+	<dd><ol>
+	<li> vytvorte v UNIXe subor pokus.txt a zrušte v òom právo zápisu
+		<br>vytvorte program, ktorı píše na št. zar. pozdrav "AHOJ"
+		<br>ak sa vıpis nepodarí vypíšte na chybové zar. oznam: "ERROR pri pokuse o vıstup na štandartné zar."
+		<br>spustite program s premerovaním št. zar. do suboru pokus.txt
+		<br>spustite program s premerovaním št. zar. do suboru pokus.txt a chybového hlásenia do súboru pokus.err
+	<li>Napíš program pod DOS, ktorı vypíše 'A', ak sa nepodarí vzpíše na chybové oznam: Chyba
+	<li>Naèítaj znak a vypíš znak pred i za ním 
+	<li>Naèítaj ve¾ké písmeno a napíš nasledovníka, nasledovník 'Z' nech je 'A' 
+	<li>Na vstupe je vıraz: cislo1 cislo2=, naèítaj ho a vypoèítaj, vısledok vypíš
+	<li>Naèítaj písmeno, ak je malé vypíš ve¾ké a naopak (bez pomocnıch premennıch)
+	<li>Naèítaj dve reálne èísla a vypíš ich usporiadané
+	<li>Riadite¾ka školy sa rozhodla kadému maturantovi so samımi 1 udeli diplom. Naèítajte štyri maturitné známky a podla ich hodnoty napíšte
+		<br>Prospel s diplomom
+		<br>Prospel
+		<br>Neprospel
+</ol>	
+</dl>
+</body>
+</html>

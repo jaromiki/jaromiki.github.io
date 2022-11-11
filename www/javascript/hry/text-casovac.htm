@@ -1,0 +1,77 @@
+<html>
+<head><title>Fading the typewriting-text style</title>
+
+<script language="JavaScript">
+
+function assignArray(text,delay) {
+     this.text=text
+     this.delay=delay
+}
+
+function createArray() {
+//set color HERE
+     fadecolor=new Array("#000000","#333333","#666666","#999999","#CCCCCC","#FFFFFF")
+/* set phrases HERE ... you can add new phrases by following the format below 
+eg. msg[3]=new assignArray("PHRASES", delay between phrase)
+*/
+     msg=new Array()
+     msg[0]=new assignArray("WINDOWS",1000)
+     msg[1]=new assignArray("MAGAZINE",1000)
+     msg[2]=new assignArray("THAILAND", 1000)
+     msg[3]=new assignArray("D-H-T-M-L",1000)
+     setTimeout("typeIt()", 3000)
+}
+
+var msgNo=0
+var characterSplit=0
+var character=1
+var colorNo=0
+
+
+function typeIt() {
+var insertHTML=""
+
+     if(msgNo <= msg.length-1) {
+        if(character <= msg[msgNo].text.length) {
+            if(colorNo<6){
+                if(character != 1){
+                var insertHTML = '<SPAN style="font-family:Arial Black; font-size:50pt; color:white">' + msg[msgNo].text.substring(0, character-1) + '</SPAN>'
+                }
+
+                insertHTML += '<SPAN style="font-family:Arial Black; font-size:50pt; color:'+fadecolor[colorNo]+'">' + msg[msgNo].text.substring(characterSplit, character) + '</SPAN>'
+
+                if(document.layers) {
+                    document.typeWriter.document.write(insertHTML)
+                    document.typeWriter.document.close()
+                } else if (document.all) {
+                    document.all.typeWriter.innerHTML = insertHTML
+                }
+            setTimeout("typeIt()", 50)
+            colorNo++
+            }
+            else{
+                colorNo=0
+                character++
+                characterSplit++
+                setTimeout("typeIt()", 100)}
+            }
+        else {
+            character=1
+            characterSplit=0
+            setTimeout("typeIt()", msg[msgNo].delay)
+            msgNo++
+        }
+     }
+}
+
+
+</script>
+</head>
+
+<body bgcolor=#000000 onLoad="createArray()">
+<div ID="typeWriter" style="position:absolute; left:100; top:100; width:700">
+</div>
+
+</body>
+</html>
+

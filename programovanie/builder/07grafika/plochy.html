@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<center><h3 class=nadpis>Grafika - plochy</h3></center>
+<dl>
+	<dt class=main>Obdĺžnikové plochy
+	<dd>S niektorými sme sa stretli už v časti o kreslení čiar (dajú sa použiť aj na kreslenie len čiar), niektoré zas čiary nerobia
+		<ul>
+		<li><font color="Green">Rectangle(x1,y1,x2,y2)</font> - Kreslí obdĺžnik predpísanou čiarou a plochou
+		<li><font color="Green">RoundRect(X1, Y1, X2, Y2, X3, Y3)</font> - nakreslí obdĺžnik so zaoblenými rohmi
+			<br>x3 - šírka elipsy
+			<br>y3 - výška elipsy
+		<li><font color="Green">FillRect(x1,y1,x2,y2)</font> - kreslí plochu obdĺžnika predpísanou farbou výplne
+		</ul>
+		Rectangle a RoundRect sú plošné objekty a ak ich chceme používať bez čiar okolo, musíme vypnúť 
+		vykreslovanie čiary:
+		<br><b>Image1->Canvas->Pen->Style = psClear;</b>
+		<br>ak chceme opätovne zapnúť vykreslovanie čiar vložíme
+		<br><b>Image1->Canvas->Pen->Style = psSolid;</b>
+		<br>ak ich chceme používať bez výplne musíme vypnúť výplň
+		<br><b>Image1->Canvas->Brush->Style = bsClear;</b>
+		<br>ak chceme opätovne zapnúť vykreslovanie čiar vložíme
+		<br><b>Image1->Canvas->Brush->Style = bsSolid;</b>
+
+	<dt class=main>Kruhové plochy
+	<dd>Ako plochy možno vykresliť kruh, elipsu a ich časti. Pri kreslení niektorých týchto plôch bez čiar musíme vypnúť kreslenie čiar
+		<dl>
+		<dt class=second>Ellipse(x1,y1,x2,y2)<dd>- vykreslí kruh, elipsu s čiarou okolo plochy
+		<dt class=second>Arc(x1,y1,x2,y2,x3,y3,x4,y4)<dd> - vykreslí časť kružnice- elipsy 
+			<br>x1,y1,x2,y2 - súradnice rámika pre elipsu
+			<br>x3,y3 - priesečníkom polpriamky stredu elipsy a [x3,z3] s elipsou získame štartový bod
+			<br>x4,y4 - priesečníkom polpriamky stredu elipsy a [x4,z4] s elipsou získame koncový bod
+			<br>(tento príkaz nekreslí plochu)
+		<dt class=second>Arc(X, Y, W, H, Angle, AngleLength)<dd>	
+			x,y - súradnice ľavého horného bodu rámika
+			<br>w,h - rozmery rámika
+			<br>Angle, AngleLength - štartový a koncový uhol - v 1/16 stupňa
+		<dt class=second>Chord(x1,y1,x2,y2,x3,y3,x4,y4)<dd>- vykreslí časť kružnice/elipsy - kruhový odsek
+			<br>x1,y1,x2,y2 - súradnice rámika pre elipsu
+			<br>x3,y3 - priesečníkom polpriamky stredu elipsy a [x3,z3] s elipsou získame štartový bod
+			<br>x4,y4 - priesečníkom polpriamky stredu elipsy a [x4,z4] s elipsou získame koncový bod
+		<dt class=second>Chord(X, Y, W, H, Angle, AngleLength)
+		<dt class=second>Pie(x1,y1,x2,y2,x3,y3,x4,y4)<dd> - vykreslí výsek kružnice/elipsy - tortový koláč
+			<br>x1,y1,x2,y2 - súradnice rámika pre elipsu
+			<br>x3,y3 - priesečníkom polpriamky stredu elipsy a [x3,z3] s elipsou získame štartový bod
+			<br>x4,y4 - priesečníkom polpriamky stredu elipsy a [x4,z4] s elipsou získame koncový bod
+		<dt class=second>Pie(X, Y, W, H, Angle, AngleLength)
+		</dl>
+	<dt class=main>Farby a štýly výplne
+	<dd>Vlastnosť výplne možno nastaviť vo vlastnosti Brush, ktorá má tieto možnosti:
+		<dl>
+		<dt class=second>Bitmap
+		<dd>- na vlozenie obrazka do pozadia (bude prisť neskôr)
+		<dt class=second>Color
+		<dd>- farba výplne, máme k dispozícii tie iste možnosti ako pri čiarach
+		<dt class=second>Style
+		<dd>bsSolid-plné, bsCross-šachovnicovo, bsClear-žiadne, bsDiagCross-šikmá šachovnica, 	
+			bsBDiagonal-šikmo/, bsFDiagonal-šikmo\, bsHorizontal-vodorovne,	bsVertical-zvislo,	
+			bsDense1, bsDense2,	bsDense3, bsDense4, bsDense5, bsDense6, bsDense7-šeď 
+		</dl>
+</dl>
+
+</body>
+</html>

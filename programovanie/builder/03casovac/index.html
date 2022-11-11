@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Časovač a dialógy</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Časovač</h3>
+<dl>
+	<dt class=main>Časovač
+	<dd>Animáciu v delphi budeme riešiť pomocou objektu pre prácu s časovačom.
+		Možno ste už robili pokusy aby sa napr. text posúval po formulári pomocou cyklu,
+		no nepodarilo sa vám to. Problém je v tom, že delphi najprv vo svojej pamäti mení obrazovku a až 
+		po skončení práce celého podprogramu špeciálnym procesom zobrazí výslednú obrazovku, takže 
+		zmeny obrazovky počas práce podprogramu nevidíme. Vidíme len posledný stav obrazovky. Na animáciu teda
+		musíme ísť inak. (Ono sa to dá aj cyklom, pozri rekurziu, kde je popísané ako to "špeciálne" prerušenie urobiť)
+		Na animáciu teda použijeme Timer. Ide o nevizuálny objekt (je teda jedno kam na plochu ho vložíme). Jeho úlohou je 
+		v predpísaných intervaloch prerušiť prácu nášho spusteného programu a vykonať v tomto prerušení nami predpísané
+		 príkazy. Výsledný efekt je potom akoby paralelne bežal program aj príkazy prerušenia. V príkazoch timra možno meniť
+		 vlastnosti našich objektov (teda aj polohu) a tiež aj premenných programu.
+		<br>Má nasledovné vlastnosti:
+		<ul><li>Enabled - či má byť aktívny (či bežia hodiny, ktoré robia prerušenia)
+			<li>Interval - v akých časových intervaloch sa má spúšťať, údaj je v tisícinach sekundy
+		</ul>
+		Vlastnosť <b>Enabled</b> možno zapnúť/vypnúť aj za behu programu - týmto možno napr. zastaviť/spustiť animáciu. 
+
+		<br><br>Ukážeme si to na príklade, kde rozpohybujeme edit, ktorý sa bude pohybovať v horizontálnom smere a bude sa odrážať od mantinelov.
+		<br>Vytvorme nasledovný formulár:
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1" align="center">
+   <br><input type="Text" value="x" size="2">
+   <br><br>
+   <input type="Button" value="Štart" onclick=""> &nbsp; &nbsp; 
+   <input type="Button" value="Stop">
+</div>
+<img src="../obr/timer.png" width="37" height="35" border="0" alt="">
+</div>		
+			<br> Stlačením tlačídka Štart sa Edit1 sa spustí Timer1 ktorý v pravidelných intervaloch posunie Edit1 o dx. 
+			Pri "narazení" na mantinel sa odrazí.
+			<br>Po stlačení Stop sa Timer vypne a Edit zastane.
+			<br>Tu je výpis
+<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Unit1.pas
+   </div>
+   <div style="background-color:silver; width:450px;" id="back1" >
+<pre>
+unit Unit1;
+interface
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls;
+type
+  TForm1 = class(TForm)
+    Edit1: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    Timer1: TTimer;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+var
+  Form1: TForm1;
+  dx:integer;
+implementation
+{$R *.dfm}
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+<font color="Blue">Timer1.Enabled:=True; //zapne casovac</font>
+end;
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+<font color="Blue">  Timer1.Enabled:=False; //zapne casovac</font>
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+<font color="Blue">   
+Edit1.Left:=Edit1.Left+dx; //posunieme Edit
+   if Edit1.Left>=Form1.Width-Edit1.Width then dx:=-dx; //ak pravy mantinel zmena
+   if Edit1.Left<=2 then dx:=-dx;                       //ak lavy mantinel zmena
+</font>
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+<font color="Blue">dx:=2; //počiatočná velkost posunutia Editu</font>
+end;
+
+end.
+</pre>
+</div></div>	
+		
+<br><br>
+Vo vlastnostiach Timeru zvolíme interval (asi chceme aby pohyb bol rýchly tak volíme malé číslo 20-50)
+a zvolíme vo vlastnosti Enabled False aby po spustení stál Edit na mieste.
+<br>Pozn. Ak je počítač pomalší, alebo akcia, ktorú časovač vykonáva moc náročná
+	nemusí byť dodržaný časový interval, počítač bude robiť tak rýchlo ako sa dá 
+	(niekedy vznikne aj paradox, že ak to s hustotou volania preženieme môže to ísť pomalšie).
+<br>Otázka ako sa bude program chovať, keď mu počas behu zmeníme veľkosť okna?
+<dl><dt class=second>Príklady na precvičenie:
+			<dd><table cellspacing="20"><tr><td>
+				<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+   				<td><ul><li>vytvor Edit, ktorý sa bude pohybovať šikmo a odrážať sa od štyroch mantinelov.
+				<li>Vytvor program na simuláciu hry "Videostop"
+				<br> &nbsp; &nbsp;Na obrazovke budú 3 číslice 0..9, ktoré sa náhodne menia. Úlohou 
+				hráča je zastavovať ich tlačítkom. 
+				<br> &nbsp; &nbsp;Hráč má na začiatku 100Sk 
+				<br> &nbsp; &nbsp;Pri dvoch rovnakých mu pribudne 10Sk, pri troch 50Sk, pri rôznych ubudne 20Sk
+				<br> &nbsp; &nbsp;Hra sa zrýchľuje
+				<br> &nbsp; &nbsp;Hra končí pri konte &lt;=0
+				<br> &nbsp; &nbsp;Hra si pamätá dosiahnutý rekord		
+				<br>2. Napis program na trening hry pexeso. 
+				<br> &nbsp; &nbsp;Hracia plocha - 6x6, 18-písmen z velkej abecedy
+				<br> &nbsp; &nbsp;Na zaciatku zamiesať a na 2 sek. ukázať
+				<li>Naprogramuj <a href="lodz.exe">lod</a> s vlnami
+				</ul>
+				</table>		
+		</dl>
+</body>
+</html>

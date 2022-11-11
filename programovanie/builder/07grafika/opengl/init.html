@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<META http-equiv=Content-Language content=sk>
+<META http-equiv=Content-Type content="text/html; charset=windows-1250">
+<html>
+<head>
+	<title>Základné grafické objekty</title>
+</head>
+
+<body>
+<h2>Grafická primitiva knihovny OpenGL</h2>
+Pomocí příkazů OpenGL lze vykreslovat pouze základní geometrické prvky, které nazýváme primitiva. 
+Z těchto primitiv se potom skládají složitější tělesa a celé scény. Existuje celkem deset typů primitiv, 
+mezi něž patří: izolovaný bod, úsečka zadaná dvěma koncovými body, řetězec úseček (polyčára), 
+smyčka vytvořená z úseček (uzavřená polyčára), trojúhelník, trs trojúhelníků, pás trojúhelníků, 
+rovinný čtyřúhelník, pás rovinných čtyřúhelníků a rovinný konvexní polygon.
+Při vykreslování každého primitiva musíme nejdříve zadat příkaz 
+<dl><dt>glBegin(typ primitiva), 
+    <dd>kterým knihovně OpenGL sdělujeme, že se začínají zadávat jednotlivé vrcholy primitiva, popř. i vlastnosti těchto vrcholů. 
+	Vykreslování se ukončí párovým příkazem 
+	<dt>glEnd(), 
+	<dd>který nemá žádné parametry. 
+</dl>
+Mezi příkazy glBegin() a glEnd() lze zadat libovolný počet vrcholů primitiva příkazem glVertex*(). 
+Vrcholy jsou zadané svými souřadnicemi, a to buď dvěma (x, y), třemi (x, y, z), nebo čtyřmi (x, y, z, w).
+Pro 2D scény zadáváme pouze souřadnice (x, y) a vrcholy se zadávají příkazem glVertex2*(), 
+kde se za znak * dosadí příznak udávající datový typ (i-GLint, f-GLfloat apod.) parametrů. 
+Souřadnice (z) se automaticky nastaví na nulu a souřadnice (w) na jedničku.
+Pro 3D scény zadáváme buď souřadnice (x, y, z), nebo celou čtveřici (x, y, z, w). 
+Pro trojici souřadnic se pro zadání vrcholů používá příkaz glVertex3*(), pro čtveřici souřadnic potom glVertex4*(). 
+Pokud je zadána pouze trojice souřadnic, dosadí se za souřadnici w automaticky jednička. 
+Souřadnice w je použita při perspektivní projekci a udává váhu vrcholu (weight). 
+Pro běžné použití ji vždy nastavujeme na jedničku, protože se touto souřadnicí dělí zbylé tři souřadnice, 
+tedy x'=x/w, y'=y/w a z'=z/w.
+
+<h2>Geometrické vlastnosti a zadání primitiv OpenGL</h2>
+<dl><dt>Jednotlivé body
+	<dd>Nejjednoduššími primitivy jsou v OpenGL jednotlivé (izolované) body. 
+	Zadávání bodů začíná příkazem glBegin(GL_POINTS). Každý bod je zadán jedním příkazem glVertex*(). 
+	Bod je zobrazen buď jako jeden pixel (při velikosti rovné jedničce), nebo jako čtverec či kruh 
+	při velikosti větší než jedna (vlastnostem jednotlivých primitiv se budeme věnovat v dalším dílu tohoto seriálu).
+	<dl><dt>Vlastnosti:
+		<dd><ul><li>FARBA glcolor3f(r,g,b:float); glcolor4f(r,g,b,a);
+				<li>VEĽKOSŤ glPointSize(velkosť:float)
+				<li>ANTIALIASING glEnable(GL_POINT_SMOOTH) - glDisable(GL_POINT_SMOOTH)
+			</ul>
+		</dl>	
+	<dt>Úsečka
+	<dd>Úsečka je v OpenGL popsána svými dvěma koncovými body (vrcholy). Zadávání úseček začíná příkazem glBegin(GL_LINES), 
+	po němž může následovat libovolné množství příkazů glVertex*(). Vždy dva po sobě jdoucí vrcholy reprezentují jednu úsečku. 
+	Pokud je zadán lichý počet vrcholů, je přebývající vrchol ignorován. Samozřejmě musí být zadány alespoň dva vrcholy, 
+	jinak se žádná úsečka nevykreslí.
+	<dl><dt>Vlastnosti čiar:
+		<dd><ul><li>FARBA glcolor3f(r,g,b:float); glcolor4f(r,g,b,a); ... pri rôznych farbách far. prechod
+				<li>HRÚBKA glLineWidth(hrúbka:float)
+				<li>ANTIALIASING glEnable(GL_LINE_SMOOTH) - glDisable(GL_LINE_SMOOTH) ... upraví konce úsečiek
+				<li>MASKA  GlLineStipple(násobok, maska)
+					<br>GLEnable(GL_LINE_STIPPLE) - glDisable(GL_LINE_STIPPLE)
+			</ul>
+	</dl>
+	<dt>Řetězec úseček
+	<dd>Toto primitivum reprezentující lomenou úsečku (polyčáru, polyline) je rozšířením jednotlivých úseček. 
+	Zadávání začíná příkazem gbBegin(GL_LINE_STRIP), po němž může následovat libovolné množství příkazů glVertex*(). 
+	První dva vrcholy definují počáteční část (segment) polyčáry a každý další vrchol přidá jeden segment. 
+	Musí být zadány alespoň dva vrcholy, jinak se polyčára nevykreslí. Pro n vrcholů se tedy vykreslí n-1 úsečkových segmentů.
+	Výhodou polyčar je, že se při kreslení různých kontinuálních hranic složených z lomených úseček ušetří témeř polovina 
+	volání příkazů glVertex*(), což může v některých případech znamenat výrazné urychlení vykreslování.
+
+	<dt>Smyčka vytvořená z úseček
+	<dd>Jde o mírnou modifikaci předchozího primitiva. Opět se jedná o lomenou čáru (polyčáru), 
+	ale navíc je poslední vrchol spojen s vrcholem prvním. Pro n vrcholů se tedy vykreslí n úsečkových segmentů. 
+	Oblast zadaná vrcholy se však nevyplňuje, je vykreslena pouze hranice.
+	Výhodou smyčky úseček je další ušetření jednoho volání funkce glVertex*() a v mnoha případech i zjednodušení 
+	algoritmu vykreslování (když se například příkazy pro definici jednotlivých vrcholů zadávají v programové smyčce).
+
+	<dt>Trojúhelník
+	<dd>Toto primitivum představuje nejjednodušší plošku, kterou lze vykreslit. 
+	Trojúhelník je zadaný třemi vrcholy, které by neměly ležet v jedné přímce. Zadávání začíná příkazem glBegin(GL_TRIANGLES), 
+	po kterém následuje libovolné množství příkazů glVertex*(). Vždy tři po sobě následující příkazy glVertex*() 
+	definují jeden trojúhelník. Pokud není zadaný počet vrcholů dělitelný třemi, zbývající jeden nebo dva vrcholy jsou ignorovány. 
+	Aby byl vykreslen alespoň jeden trojúhelník, musí být zadány minimálně tři vrcholy.
+	Použití trojúhelníků (narozdíl od primitiv popsaných dále) je bezproblémové, protože trojúhelník je vždy konvexní 
+	a jeho vrcholy vždy leží v jedné rovině (definují rovinu). Proto mnoho souborových formátů popisuje tělesa rozložená 
+	na trojúhelníkové plošky. Na druhou stranu je pro každý trojúhelník zapotřebí zadat tři vrcholy, což představuje 
+	značný datový tok mezi procesorem a grafickou kartou. Proto OpenGL podporuje další primitiva, která tento problém 
+	částečně eliminují.
+
+	<dt>Trs trojúhelníků
+	<dd>Toto primitivum je určeno pro snížení datového toku při zadávání vrcholů trojúhelníků. 
+	Používá se například při vykreslování vrchlíků koule. Zadávání začíná příkazem glBegin(GL_TRIANGLE_FAN), 
+	po němž následují jednotlivé vrcholy. První tři vrcholy definují první trojúhelník. Každý další vrchol definuje 
+	další trojúhelník, protože ostatní dva vrcholy trojúhelníku jsou shodné vždy s prvním zadaným vrcholem 
+	a s předposledním vrcholem. Tvoří se tak jakýsi deštník, v němž mají všechny trojúhelníky společný jeden vrchol. 
+	Na obrázku je vidět, že všechny trojúhelníky mají společný vrchol V0 a další vrcholy jsou zadávány proti směru 
+	hodinových ručiček. Použitím tohoto primitiva lze ušetřit až dvě třetiny volání funkce glVertex*().
+	<dl><dt>Vlastnosti plôch:
+		<dd><ul><li>FARBA glcolor3f(r,g,b:float); glcolor4f(r,g,b,a); ... pri rôznych farbách far. prechod
+				<li>ANTIALIASING glEnable(GL_POLYGON_SMOOTH) - glDisable(GL_POLYGON_SMOOTH) ... upraví konce úsečiek
+				<li>MASKA VÝPLNE  GlPolygonStipple( maska:@pole:array[1..32,1..4] of byte) ... 32x32 bit
+					<br>GLEnable(GL_POLYGON_STIPPLE) - glDisable(GL_POLYGON_STIPPLE)
+			</ul>
+	</dl>
+
+	<dt>Pás trojúhelníků
+	<dd>Toto často používané primitivum představuje souvislý pás složený z trojúhelníků. 
+	Použít ho lze například při vykreslování stěn složitějších těles. Toto primitivum je univerzálnější než trs trojúhelníků. 
+	Zadávání začíná příkazem glBegin(GL_TRIANGLE_STRIP), po němž následují jednotlivé vrcholy. 
+	První tři vrcholy definují první trojúhelník. Každý další vrchol definuje další trojúhelník, 
+	jenž má s předchozím trojúhelníkem společnou hranu. Na obrázku si všimněte, jak jsou vrcholy u pásu zadávány na přeskáčku. 
+	Použitím tohoto primitiva lze ušetřit až dvě třetiny volání funkce glVertex*().
+
+	<dt>Rovinný čtyřúhelník
+	<dd>Toto primitivum umožňuje zadávat rovinné konvexní čtyřúhelníky. 
+	Zadávání začíná příkazem glBegin(GL_QUADS), po němž následují jednotlivé vrcholy. Použití je podobné jako u trojúhelníků, 
+	ale musíme zaručit, že vrcholy čtyřúhelníku budou ležet v jedné rovině a čtyřúhelník bude konvexní 
+	(to je u trojúhelníku zaručeno vždy). Pokud tyto podmínky nebudou splněny, nemusí být (a pravděpodobně ani nebude) 
+	vykreslení korektní, protože interpolátory v grafickém akcelerátoru většinou nedovedou detekovat hranici, 
+	kde se má vykreslování přerušit.
+
+	<dt>Pás rovinných čtyřúhelníků
+	<dd>Toto primitivum je podobné pásu trojúhelníků. 
+	Zadávání začíná příkazem glBegin(GL_QUAD_STRIP). Vrcholy jsou zadávány "na přeskáčku" tak, jak je ukázáno na obrázku. 
+	Všechny čtyři vrcholy každého čtyřúhelníku musí ležet v jedné rovině a musí definovat konvexní čtyřúhelník, 
+	jinak není zaručena korektnost vykreslení.
+
+	<dt>Rovinný konvexní polygon
+	<dd>Jedná se o nejsložitější primitivum, pomocí něhož lze kreslit polygony zadané větším počtem vrcholů. 
+	Musíme však zaručit, že všechny vrcholy budou ležet v jedné rovině a výsledný polygon bude konvexní. 
+	V mnoha případech je tato podmínka těžko splnitelná, a proto se polygon rozděluje na jednotlivé trojúhelníky (tesselace). 
+	Zadávání polygonu začíná příkazem glBegin(GL_POLYGON), po němž následují souřadnice jednotlivých vrcholů.
+</dl>
+
+Způsob použití výše popsaných grafických primitiv je předveden na ukázkovém příkladu, pro který je k dispozici zdrojový kód 
+i zdrojový kód s obarvenou syntaxí. Ukázka příkladu je na dalším obrázku. 
+<br>Popis zobrazených primitiv:
+Třetí řádek: primitiva GL_POINTS, GL_LINES, GL_LINE_STRIP, GL_LINE_LOOP
+Druhý řádek: primitiva GL_TRIANGLES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN
+První řádek: primitiva GL_QUADS, GL_QUADS_STRIP, GL_POLYGON
+
+</body>
+</html>

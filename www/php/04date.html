@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>PHP - funkcia date</title>
+</head>
+
+<body>
+<h2>Podprogrami pre prácu s časom</h2>
+Jazyk PHP má množstvo zadefinovaných funkcií-podprogramov. Teraz si ukážeme funkcie
+pre prácu s dátumom a časom.
+<dl>
+<dt>date(reťazec,dátum) ... funkcia typu text
+<dd>Funkcia vráti vložený reťazec ale niektoré znaky nahradí časovými údajmi, dátum je nepovinný par. 
+	ak nie je uvedený berie sa aktuálny dátum a čas. Namiesto neho možno použiť napr. time()+pocet_sek (pozri nizsie).
+	Parameter dátum sa zadáva v sek.
+	<table>
+	<tr><td>Y ... rok xxxx<td>y ... rok xx</tr>  
+	<tr><td width="150">M ... mes text<td width="150">m ... mes xx<td width="150">n ...mes x </tr>  
+	<tr><td>D ... den text<td>d ... den xx<td>j ...den x </tr>  
+	<tr><td>H ... hodina 01-24<td>h ... hodina 01-12</tr>  
+	<tr><td>i ... minúty 00-59<td>s ... sekundy</tr>
+	<tr><td>w ... p.č. dňa 0-6</tr>  
+	</table>  
+<dt>time() funkcia typu celé číslo
+<dd>funkcia vracajúca aktuálny čas v sek. Používa sa ako druhý par. vo funkcii date ak chceme zobraziť dátum nie dnešného dňa (hodiny).
+	<br>Príklad:
+	<ul>
+	<li>echo date("j.n.Y"); // zapíše aktuálny dátum v tvare d.m.rrrr
+	<li>echo date("j.n.Y",time()+24*60*60); // zapíše zajtrajší dátum v tvare d.m.rrrr
+	<li>if (date("w",time()-24*60*60)==5 && date("d",time()-24*60*60)==13) echo "Včera bol piatok 13-teho, máme to za sebou";
+	</ul> 
+	<br>Úlohy:
+	<ul>
+	<li>vytvor tabuľku od najbližšieho pondelka
+		<table border="1">
+		<tr align="center"><th width="100">Deň<th width="100">Dátum<th>Odrobené hodiny</tr>
+		<tr align="center"><td>Pondelok<td width="100">dátum<td> x</tr>
+		<tr align="center"><td>...<th width="100">...<td>...</tr>
+		<tr align="center"><td>Piatok<td width="100">dátum<td> x</tr>
+		</table>
+	</ul>	
+<dt>mktime(hod,min,sek,mes,den,rok):celé číslo 
+<dd>Vráti datum/čas v sekundách. Používa sa na vytvorenie dátumu v sekundách zo zadaných parametrov. Môžme použiť ako druhý par. vo funkcii date().
+	Zadané parametre môžu byť aj záporné.		
+	<br>Príklad:
+	<ul>
+	<li>echo date("j.n.Y",mktime(0,0,0,3,-1,2009); // zapíše dátum posledného februára tvare d.m.rrrr
+	</ul>
+</body>
+</html>

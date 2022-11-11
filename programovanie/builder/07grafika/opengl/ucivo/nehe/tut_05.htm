@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 5 - Pevné objekty</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_05.jpg" class="nehe_maly" alt="Lekce 5" />
+
+<h1>Lekce 5 - Pevné objekty</h1>
+
+<p class="nadpis_clanku">Rozšířením poslední části vytvoříme skutečné 3D objekty. Narozdíl od 2D objektů ve 3D prostoru. Změníme trojúhelník na pyramidu a čtverec na krychli. Pyramida bude vybarvena barevným přechodem a každou stěnu krychle vybarvíme jinou barvou.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Vymaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(-1.5f,0.0f,-6.0f);<span class="kom">// Posun doleva a do hloubky</span></p>
+<p class="src1">glRotatef(rtri,0.0f,1.0f,0.0f);<span class="kom">// Otočí pyramidu okolo osy y</span></p>
+
+<p>Část kódu vezmeme z předchozí části a vyrobíme pomocí něj 3D objekt. Je jedna věc na kterou jsem často dotazován. Proč se objekty neotáčejí okolo své osy. Vypadá to jako by se létaly po celé obrazovce. Pokud objektu řeknete, aby se otočil okolo osy, otočí se okolo osy souřadnicového systému. Pokud chcete, aby se rotoval okolo své osy, musíte dát počátek souřadnic do jeho středu nebo aspoň tak, aby se souřadnicová osa, okolo které otáčíte, kryla s osou objektu okolo které chcete otočit.</p>
+
+<p>Následující kód vytvoří pyramidu okolo centrální osy. Vrcholek pyramidy je o jednu nahoře od středu, spodek o jednu dolů. Vrchní bod je vpravo uprostřed a dolní body jsou vpravo a vlevo od středu. Všimněte si, že všechny trojúhelníky jsou kresleny ve směru proti hodinovým ručičkám. Je to důležité a bude to vysvětleno v dalších lekcích - např. lekce 11. Teď si pouze zapamatujte, že je dobré kreslit po směru nebo proti směru hodinových ručiček a pokud k tomu nemáte důvod, neměli byste dvě osy prohodit. Začneme kreslením čelní stěny. Protože všechny sdílí horní bod, uděláme jej u všech stěn červený. Barvy na spodních vrcholech se budou střídat. Čelní stěna bude mít levý bod zelený a pravý modrý. Trojúhelník na pravé straně bude mít levý bod modrý a pravý zelený. Prohozením dolních dvou barev na každé stěně uděláme společně vybarvené vrcholy na spodku každé stěny.</p>
+
+<p class="src1">glBegin(GL_TRIANGLES);<span class="kom">// Začátek kreslení pyramidy</span></p>
+<p class="src2">glColor3f(1.0f,0.0f,0.0f);<span class="kom">// Červená</span></p>
+<p class="src2">glVertex3f(0.0f,1.0f,0.0f);<span class="kom">// Horní bod (čelní stěna)</span></p>
+<p class="src2">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Zelená</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f, 1.0f);<span class="kom">// Levý spodní bod (čelní stěna)</span></p>
+<p class="src2">glColor3f(0.0f,0.0f,1.0f);<span class="kom">// Modrá</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, 1.0f);<span class="kom">// Pravý spodní bod (čelní stěna)</span></p>
+
+<p>Vykreslíme pravou stěnu. Spodní body kreslíme vpravo od středu a horní bod je kreslen o jedna na ose y od středu a pravý střed na ose x. To způsobuje, že se stěna svažuje od horního bodu doprava dolů. Levý bod je tentokrát modrý stejně jako pravý dolní bod čelní stěny, ke kterému přiléhá.
+Zbylé tři trojúhelníky kresleny ve stejném glBegin(GL_TRIANGLES) a glEnd() jako první trojúhelník. Protože dělám celý objekt z trojúhelníků, OpenGL ví, že každé tři body tvoří trojúhelník. Jakmile nakreslíte tři body a přidáte další body, OpenGL předpokládá, že je třeba kreslit další trojúhelník. Pokud zadáte čtyři body místo tří, OpenGL použije první tři a bude předpokládat, že čtvrtý je začátek dalšího trojúhelníku. Nevykreslí čtverec. Proto si dávejte pozor, aby jste náhodou nepřidali nějaký bod navíc.</p>
+
+<p class="src2">glColor3f(1.0f,0.0f,0.0f);<span class="kom">// Červená</span></p>
+<p class="src2">glVertex3f( 0.0f, 1.0f, 0.0f);<span class="kom">// Horní bod (pravá stěna)</span></p>
+<p class="src2">glColor3f(0.0f,0.0f,1.0f);<span class="kom">// Modrá</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, 1.0f);<span class="kom">// Levý bod (pravá stěna)</span></p>
+<p class="src2">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Zelená</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, -1.0f);<span class="kom">// Pravý bod (pravá stěna)</span></p>
+
+<p>Teď vykreslíme zadní stěnu. Opět prohození barev. Levý bod je opět zelený, protože odpovídající pravý bod je zelený.</p>
+
+<p class="src2">glColor3f(1.0f,0.0f,0.0f);<span class="kom">// Červená</span></p>
+<p class="src2">glVertex3f( 0.0f, 1.0f, 0.0f);<span class="kom">// Horní bod (zadní stěna)</span></p>
+<p class="src2">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Zelená</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, -1.0f);<span class="kom">// Levý bod (zadní stěna)</span></p>
+<p class="src2">glColor3f(0.0f,0.0f,1.0f);<span class="kom">// Modrá</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f, -1.0f);<span class="kom">// Pravý bod (zadní stěna)</span></p>
+
+<p>Nakonec nakreslíme levou stěnu pyramidy. Protože pyramida rotuje okolo osy Y, nikdy neuvidíme podstavu. Pokud chcete experimentovat, zkuste přidat ji přidat. Potom pootočte pyramidu okolo osy x a uvidíte zda se vám to povedlo.</p>
+
+
+<p class="src2">glColor3f(1.0f,0.0f,0.0f);<span class="kom">// Červená</span></p>
+<p class="src2">glVertex3f( 0.0f, 1.0f, 0.0f);<span class="kom">// Horní bod (levá stěna)</span></p>
+<p class="src2">glColor3f(0.0f,0.0f,1.0f);<span class="kom">// Modrá</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f,-1.0f)<span class="kom">// Levý bod (levá stěna)</span></p>
+<p class="src2">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Zelená</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f, 1.0f);<span class="kom">// Pravý bod (levá stěna)</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení pyramidy</span></p>
+
+<p>Teď vykreslíme krychli. Je tvořena šesti čtverci, které jsou kresleny opět proti směru hodinových ručiček. To znamená, že první bod je pravý horní, druhý levý horní, třetí levý dolní a čtvrtý pravý dolní. Když kreslíme zadní stěnu, může to vypadat, že kreslíme ve směru hodinových ručiček, ale pamatujte, že jsme za krychlí a díváme se směrem k čelní stěně. Takže levá strana obrazovky je pravou stranou čtverce. Tentokrát posouváme krychli trochu dál. Tím velikost více odpovídá velikosti pyramidy a části mohou být oříznuty okraji obrazovky. Můžete si pohrát s nastavením počátku a uvidíte, že posunutím dále se zdá menší a naopak. Důvodem je perspektiva. Vzdálenější objekty se zdají menší.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(1.5f,0.0f,-7.0f);<span class="kom">// Posun počátku vpravo a dozadu</span></p>
+<p class="src1">glRotatef(rquad,1.0f,1.0f,1.0f);<span class="kom">// Rotace okolo x, y, a z</span></p>
+
+<p>Začneme kreslením vrcholku krychle. Všimněte si, že souřadnice y je vždy jedna. Tím kreslíme stěnu rovnoběžně s rovinou xz. Začneme pravým horním bodem. Ten je o jedna vpravo a o jedna dozadu. Další bod je o jedna vlevo a o jedna dozadu. Poté vykreslíme spodní část čtverce směrem k pozorovateli. Abychom toho dosáhli, narozdíl od posunu do obrazovky, posuneme se o jeden bod z obrazovky.</p>
+
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Začátek kreslení krychle</span></p>
+<p class="src2">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Modrá</span></p>
+<p class="src2">glVertex3f( 1.0f, 1.0f,-1.0f);<span class="kom">// Pravý horní (horní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f, 1.0f,-1.0f);<span class="kom">// Levý horní (horní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f, 1.0f, 1.0f);<span class="kom">// Levý dolní (horní stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f, 1.0f, 1.0f);<span class="kom">// Pravý dolní (horní stěna)</span></p>
+
+<p>Spodní část krychle se kreslí stejným způsobem, jen je posunuta na ose y do -1. Další změna je, že pravý horní bod je tentokrát bod bližší k vám, narozdíl od horní stěny, kde to byl bod vzdálenější. V tomto případě by se nic nestalo pokud by jste pouze zkopírovali předchozí čtyři řádky a změnili hodnotu y na -1, ale později by vám to mohlo přinést problémy například u textur.</p>
+
+<p class="src2">glColor3f(1.0f,0.5f,0.0f);<span class="kom">// Oranžová</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, 1.0f);<span class="kom">// Pravý horní bod (spodní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f, 1.0f);<span class="kom">// Levý horní (spodní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f,-1.0f);<span class="kom">// Levý dolní (spodní stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f,-1.0f);<span class="kom">// Pravý dolní (spodní stěna)</span></p>
+
+<p>Teď vykreslíme čelní stěnu.</p>
+
+<p class="src2">glColor3f(1.0f,0.0f,0.0f);<span class="kom">// Červená</span></p>
+<p class="src2">glVertex3f( 1.0f, 1.0f, 1.0f);<span class="kom">// Pravý horní (čelní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f, 1.0f, 1.0f);<span class="kom">// Levý horní (čelní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f, 1.0f);<span class="kom">// Levý dolní (čelní stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, 1.0f);<span class="kom">// Pravý dolní (čelní stěna)</span></p>
+
+<p>Zadní stěna.</p>
+
+<p class="src2">glColor3f(1.0f,1.0f,0.0f);<span class="kom">// Žlutá</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f,-1.0f);<span class="kom">// Pravý horní (zadní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f,-1.0f);<span class="kom">// Levý horní (zadní stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f, 1.0f,-1.0f);<span class="kom">// Levý dolní (zadní stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f, 1.0f,-1.0f);<span class="kom">// Pravý dolní (zadní stěna)</span></p>
+
+<p>Levá stěna.</p>
+
+<p class="src2">glColor3f(0.0f,0.0f,1.0f);<span class="kom">// Modrá</span></p>
+<p class="src2">glVertex3f(-1.0f, 1.0f, 1.0f);<span class="kom">// Pravý horní (levá stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f, 1.0f,-1.0f);<span class="kom">// Levý horní (levá stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f,-1.0f);<span class="kom">// Levý dolní (levá stěna)</span></p>
+<p class="src2">glVertex3f(-1.0f,-1.0f, 1.0f);<span class="kom">// Pravý dolní (levá stěna)</span></p>
+
+<p>Pravá stěna. Je to poslední stěna krychle. Pokud chcete tak ji vynechejte a získáte krabici. Nebo můžete zkusit nastavit pro každý roh jinou barvu a vybarvit ji barevným přechodem.</p>
+
+<p class="src2">glColor3f(1.0f,0.0f,1.0f);<span class="kom">// Fialová</span></p>
+<p class="src2">glVertex3f( 1.0f, 1.0f,-1.0f);<span class="kom">// Pravý horní (pravá stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f, 1.0f, 1.0f);<span class="kom">// Levý horní (pravá stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f, 1.0f);<span class="kom">// Levý dolní (pravá stěna)</span></p>
+<p class="src2">glVertex3f( 1.0f,-1.0f,-1.0f);<span class="kom">// Pravý dolní (pravá stěna)</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení krychle</span></p>
+<p></p>
+<p class="src1">rtri+=0.2f;<span class="kom">// Inkrementace úhlu pootočení pyramidy</span></p>
+<p class="src1">rquad-=0.15f;<span class="kom">// Inkrementace úhlu pootočení krychle</span></p>
+<p></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Na konci tohoto tutoriálu byste měli lépe rozumět jak jsou vytvářeny 3D objekty. Můžete přemýšlet o OpenGL scéně jako o kusu papíru s mnoha průsvitnými vrstvami. Jako gigantická krychle tvořená body. Pokud si dokážete představit v obrazovce hloubku, neměli byste mít problém s vytvářením vlastních 3D objektů.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Milan Turek <span class="transform_email">&lt;nalim.kerut (zavináč) email.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson05.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/asm/lesson05.zip">ASM</a> kód této lekce. ( <a href="mailto:foolman@bigfoot.com">Foolman</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson05_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson05.zip">C#</a> kód této lekce. ( <a href="mailto:sugarbee@gmx.net">Sabine Felsinger</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/csgl/lesson05.zip">VB.Net CsGL</a> kód této lekce. ( <a href="mailto:createdbyx@yahoo.com">X</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson05.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson05.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson05.zip">Delphi</a> kód této lekce. ( <a href="mailto:Perry.dj@glo.be">Peter De Jaegher</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson05.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson05.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson05.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/glut/lesson05.zip">GLUT</a> kód této lekce. ( <a href="mailto:lordrustad@hotmail.com">Andy Restad</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson05.zip">Irix</a> kód této lekce. ( <a href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson05.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java_swt/lesson05.zip">Java/SWT</a> kód této lekce. ( <a href="mailto:victor@parasoft.com">Victor Gonzalez</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jedisdl/lesson05.zip">Jedi-SDL</a> kód této lekce. ( <a href="mailto:Dominique@SavageSoftware.com.au">Dominique Louis</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson05.jar">JoGL</a> kód této lekce. ( <a href="mailto:jattier@hotmail.com">Kevin J. Duling</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson05.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson05.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:ulmont@bellsouth.net">Richard Campbell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson05.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson05.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson05.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson05.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson05.zip">MASM</a> kód této lekce. ( <a href="mailto:scalp@bigfoot.com">Nico (Scalp)</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/pbasic/lesson05.zip">Power Basic</a> kód této lekce. ( <a href="mailto:anguslaw@net.ntl.com">Angus Law</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/perl/lesson05.zip">Perl</a> kód této lekce. ( <a href="mailto:cahhmc@yahoo.com">Cora Hussey</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/python/lesson05.gz">Python</a> kód této lekce. ( <a href="mailto:acolston@midsouth.rr.com">Tony Colston</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/realbasic/lesson05.rb.hqx">REALbasic</a> kód této lekce. ( <a href="mailto:mauitom@maui.net">Thomas J. Cunningham</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/scheme/lesson05.zip">Scheme</a> kód této lekce. ( <a href="mailto:bcj1980@sbcglobal.net">Jon DuBois</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/solaris/lesson05.zip">Solaris</a> kód této lekce. ( <a href="mailto:lakmal@gunasekara.de">Lakmal Gunasekara</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson05.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:rosscogl@email.com">Ross Dawson</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vfortran/lesson05.zip">Visual Fortran</a> kód této lekce. ( <a href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson05.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_05_big.jpg" class="nehe_velky" alt="Lekce 5" /></div>
+<p class="okolni_lekce"><a href="tut_04.php">&lt;&lt;&lt; Lekce 4</a> | <a href="tut_06.php">Lekce 6 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Pajahu</div>
+<div class="d_o_datumcas">21.02.2005 - 21:43:30</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_05.php&j=0">Jehlan</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">21.06.2005 - 19:49:43</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_05.php&j=1">Jehlan</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">22.06.2005 - 15:59:15</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_05.php&j=2">Problém vyřešen, otázky zůstávají</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.06.2005 - 17:06:31</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_05.php&j=3">Re: Problém vyřešen, otázky zůstávají</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">28.06.2005 - 10:54:38</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_05.php&j=4">Re: Problém vyřešen, otázky zůstávají</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.06.2005 - 14:40:35</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_05.php&j=5">Re: Problém vyřešen, otázky zůstávají</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">28.06.2005 - 19:38:58</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_05.php&j=6">Re: Problém vyřešen, otázky zůstávají</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">496</div>
+<div class="d_o_datumcas">27.11.2005 - 09:17:08</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_05.php&j=7">rotace :-)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Seto</div>
+<div class="d_o_datumcas">06.09.2006 - 18:44:06</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_05.php&j=9">Re: rotace :-)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">jarda52005</div>
+<div class="d_o_datumcas">15.08.2006 - 20:10:56</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_05.php&j=8">Vykreslení koule</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">JanS</div>
+<div class="d_o_datumcas">02.11.2006 - 17:05:40</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_05.php&j=10">Re: VykreslenĂ­ koule</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">zikurat</div>
+<div class="d_o_datumcas">20.11.2006 - 00:59:57</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_05.php&j=11">rotace jen okolo x = divne</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">zikurat</div>
+<div class="d_o_datumcas">20.11.2006 - 01:03:33</div>
+<div>
+<input type="checkbox" name="id_12" id="id_12" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_05.php&j=12">Re: rotace jen okolo x = divne</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">lp</div>
+<div class="d_o_datumcas">08.05.2007 - 11:40:37</div>
+<div>
+<input type="checkbox" name="id_13" id="id_13" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_05.php&j=13">Re: rotace jen okolo x = divne</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_05.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

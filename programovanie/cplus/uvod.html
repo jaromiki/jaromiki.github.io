@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Programovanie v C++ - Úvod</title>
+</head>
+
+<body>
+<dl>
+	<dt><font size="+1" color="Blue">Jazyk C</font><dd>patrí ku niším programovım jazykom (je vhodnı aj na systémové úlohy)
+		je spojenı s operaènım systémom UNIX, ktorı je v òom celı napísanı a aj jeho príkazy
+		sú C-èku podobné.C++ je nastavba jazyka C, ktorá umoòuje písa objektovo-orientované programy.
+		<dl><dt>Vıhody
+			<dd>- je nezávislı na platforme, zdrojáky sú prenosné medzi rôznymi OS. Èasto sa aj
+			 ladí na inom OS ako sa potom spúša.
+			<br>- malé mnostvo príkazov -&gt; jednoduchı, rıchly kompilátor
+			<br> - C++ je flexibilnı jazyk - umoòuje prekrıvanie funkcií i operátorov
+		<dt>Nevıhody
+		<dd>- ašie èitatelné programy (jeden príkaz má viac efektov)
+		<br>- je uívate¾sky menej príjemnı a je urèenı hlavne pre profesionálov
+		<dt>Vlastnosti, odlišnosti od pascalu
+		<dd> - rozlišuje malé a ve¾ké písmená podobne ako LINUX
+		<br> - nemá hlavnı program ako je v pascale
+		<br> - celı program sa skladá len z funkcií, ktoré sa nemôu vnára
+		<br> - bodkoèiarka nie je oddelovaè príkazov ale je jeho súèas
+		<br> - stringy sú reprezentované odlišne
+		<br> - práca so smerníkmi je podstatne vylepšená 
+		</dl>
+	<dt><font size="+1" color="Blue">Stavba programu</font><dd>
+		<dl>
+		<dt>metapríkazy<dd>direktívy pre prekladaè <font color="Green">#include</font> - ako uses v pascale, 
+							<font color="Green">#define</font> - na def. konštánt, makier
+		<dt>definovanie globálnych typov<dd><font color="Green">typedef</font>- podobné ako TYPE v pascale
+		<dt>definovanie globálnych premennıch<dd>&lt; typ&gt; zoznam_premennıch ;
+		<dt>definovanie funkcií<dd>skladá sa z hlavièky a bloku. Jedna funkcia musí ma meno <font color="Green">main</font>
+			Kadı program v jazyku C sa skladá z jednej alebo viacerıch funkcií
+		</dl>		
+	<dt><font size="+1" color="Blue">Stavba funkcie</font><dd>
+		<dl>
+		<dt>hlavièka<dd>zaèína urèením typu a za medzerou nasleduje názov funkcie. Za názvom <font color="Red">sú vdy</font> okrúhle zátvorky
+						v ktorıch môu by deklarované parametre. Za hlavièkou <font color="Red">nikdy nie je</font>bodkoèiarka
+		<dt>blok<dd>telo funkcie. Tu mono opä zada metapríkazy, zadeklarova lokálne typy, lokálne konštanty, lokálne makrá, lokálne premenné.
+					Na rozdiel od pascalu môu by deklarácie aj vnútri tela (medzi príkazmi). Nie je moné deklarova podprogram.
+		</dl>
+	<dt><font size="+1" color="Blue">Prvı program</font><dd>Na rozdiel od pascalu nie sú príkazy vstupu a vıstupu štandartnımi príkazmi jazyka a sú v kniniciach,
+		ktoré musíme pripoji ku nášmu programu (podobne ako v pascale príkaz uses crt). 
+		<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff" align="center">
+		<tr><th bgcolor="Blue" align="left"> Prvy.cpp</th></tr>
+		<tr><td>
+			<code><pre>
+  #include &lt;stdio.h&gt;         //pripojenie kniznice
+  #define POCET 5                
+    //zadefinuje konstantu POCET s hodnotou 5 (nedavame ;), za 5 je hned enter
+  #typedef integer int;      //definovanie noveho typu integer
+  integer sucet;             //vytvori celociselnu premennu sucet
+  void pripocitaj(int);      //dopredna deklaracia funkcie (podobne ako forward v pascale)
+  void main(void)            //hlavicka "hlavneho podprogramu" - bez bodkociarky
+  {                          //zaciatok bloku
+   integer c,i;              //lokalne premenne
+   for (i=1;i&lt;=POCET; i++)   //cyklus
+   {                         //zacina zlozeny prikaz 
+      printf("Zadaj %d. cele cislo:", i);   //napise text na obrazovku
+      scanf("%d",&amp;c);        //nacita z klavesnice 
+      pripocitaj(c);	     //zavola podprogram s parametrom c
+   }
+   printf("Vysledny sucet = %d\n",sucet);
+  }
+  void pripocitaj(int cislo)  //hlavicka podprogramu
+  { sucet+=cislo; }	 
+			</pre></code>
+		</td></tr>
+		</table>
+		<br>
+		<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff" align="center">
+		<tr><th bgcolor="Blue" align="left"> Ahoj.cpp</th></tr>
+		<tr><td>
+			<code><pre>
+  #include &lt;stdio.h&gt;         //pripojenie kniznice
+  void main(void)            //hlavicka "hlavneho podprogramu" - bez bodkociarky 
+  {                          //zaciatok bloku
+    puts("Ahoj");            //vypis textu na obrazovku
+  }	
+			</pre></code>
+		</td></tr>
+		</table>
+	<dt><font size="+1" color="Blue">Základné prvky jazyka</font>
+	<dd>Ako v kadom programovacom jazyku i tu je zdrojovı program tvorenı postupnosou znakov.
+		Prípustné sú znaky:
+		<br>písmená:  A-Z, a-z  ... program rozlišuje malé a ve¾ké písmená
+		<br>èíslice:  0-9   
+		<br>špec. znaky:  + - * / % ... aritmetické operátory (% je ako mod)
+		<br> [] ... na indexy po¾a
+		<br> () ... zátvorky funkcií, arimetické zátvorky, cykly
+		<br> {} ... urèenie bloku, zloenı príkaz 
+		<br> = ... operátor priradenia
+		<br> &lt;&gt; ... porovnávacie operátory
+		<br> . ... na prístup ku polokám záznamu
+		<br> & ... zistenie adresy premennej (ako operátor @ v pascale)
+		<br> ! ... na negáciu
+		<br> ~ ... na bitovú negáciu
+		<br> ^ ... na bitové XOR
+		<br> | ... na logické a binárne OR
+		<br> % ... na operáciu MOD
+		<br> # ... metapríkazy
+		<br> " ... na textové konštanty (narozdiel od ' pascalskıch)
+		<br> ' ... na znakové konštanty 
+		<br> ; ... napísanie príkazov, for cyklu
+		<br> , ... operátor èiarka (oddelovanie vırazov)
+		<br> ? ... operátor otáznik
+		<br> \ ... na zadávanie špeciálnych znakov
+	<dt><font size="+1" color="Blue">Komentáre</font>
+	<dd>/* komentár */ ... komentár moe presiahnu riadku (ako v pascale)
+	<br>// ... komentár od tohto dvojznaku po prvı enter
+	<dt><font size="+1" color="Blue">Identifikátory</font> 
+	<dd>povolené znaky sú èíslice, písmená, podèiarkovník prièom èíslica nesmie by prvá
+	<br>rezervované slová sú zakázané
+	<br>max. dåka je 32 znakov (dá sa nastavi aj viac)
+	<dl><dt>príklady
+		<dd>Nesprávne: 1jano, Peter 01, ja-ty, pom!
+		<br>Správne: Jano, pEtEr, _chyba, i352, a_1b_3, j___bb____X, SUMA
+	</dl>
+	<dt><font size="+1" color="Blue">Konštanty</font>
+	<dd><dl><dt>Celoèíselné 
+			<dd>1, 0, 12345, -58 ... implicitne sa konštante priradí typ int (integer) (2B pod DOSom)
+			<br>10L, -1L, 123456 ... konštanta získala typ Long int (longint) (4B pod DOSom)
+			<br>1U, 150u, 12345u ... konštanta získala typ unsigned int (word) (2B pod DOSom)
+			<br>061, 07, 010, 03 ... oktálové èíslo
+			<br>0xA, 0x1AC9, 0x1 ... hexa èíslica
+			<dt>Reálne
+			<dd>implicitne sú typu double
+			<br>-35.12, .12, 1., 1E5, -2.E-2 ... typ double (8B)
+			<br>0.2f, -.5f, +1E+3f, 15.1E-1f ... typ float (4B ako single v pascale)
+			<br>0.2L, -.5L, +1E+3L, 15.1E-1L ... typ long double (10B) 
+			<dt>Znakové
+			<dd>C odlišuje konštantu textovú v " " a konštantu znakovú v ' '
+			<br>zobrazitelné znaky ... 'A', '5', '.', '.'
+			<br>znaky zadávané pomocou osmièkového èísla '\d' kde d je osmiè., èíslo
+			<br>\a ... bell
+			<br>\b ... back space
+			<br>\n ... novı riadok
+			<br>\r ... Enter (Návrat vozíka CR)
+			<br>\\ ... spätné lomítko
+			<br>\0 ... nulovı znak 
+			<dt>Reazcové
+			<dd>text vkladáme medzi úvodzovky
+			<br>vloenie úvodzoviek do textu - zdvojenie v C++ pomocou \
+			<br>vkladanie špec. znakov do textu ... pomocou \  
+</dl>
+	<dt><font size="+1" color="Blue">Prostredie</font>
+	<dd>V Borland C++ je IDE prostredie podobné ako v pascale so zabudovanım kompilátorom a debugerom. 
+		Rozdiel od pascalu je v tom, e kompiluje na disk do aktuálneho adresára (implicitne bin), kde vytvorí súbory
+		meno.obj, a meno.exe. Preto je vhodnejšie pred prekladom nastavi aktuálny adresár do svojho adresára a tam aj
+		zapísa svoj zdroják aby tieto súbory boli pokope. Ak chceme vytvára programy *.com, musíme siahnu po externom
+		prekladaèi. 
+		<br>Pod UNIXom nemáme zakúpené iadne prívetivé prostredie a preto postup bude takı, e napíšeme a odladíme program pod 
+		DOSom (samoyrejme pouívame len objekty dostupné jak pod DOSom tak pod UNIXom), po odladení si ho prenesieme na LINUX
+		a tam ho preloíme pomocou príkazu <font color="Green">gcc meno.cpp</font>. Ak sme šikovnı vznikne súbor <font color="Green">a.out</font>.
+		Potom si a.out premenujeme na poadované meno. Spustenie takéhoto programu pod UNIXom je nasledovné:
+		1. súbor má nastavené práva x (spustenie) - staèí zada ./a.out
+		2. súbor nemá nastavené práva x - zadáme bash ./a.out //musíme zavola bash, ktorı nam ho spustí.
+
+	<dt><font size="+1" color="Blue">Úlohy</font>
+	<dd> 1. Napíš program, ktorı jednım príkazom napíše:
+	<br> &nbsp; &nbsp;"Pascal je dobry"
+	<br> &nbsp; &nbsp;\C-cko je lepsie\
+	<br> 2. Prenes tento program na OS LINUX
+</dl>
+
+</body>
+</html>

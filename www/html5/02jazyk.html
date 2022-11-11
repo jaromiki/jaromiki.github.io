@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+  	<meta name="Content-language" content="sk">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	 <title>Jazyk HTML</title>
+</head>
+
+<body >
+<h2 style="white-space:nowrap;width:550" align="center" >Štruktúra HTML dokumentu, formátovanie textu</h2>
+
+<dl>
+<dt>Opakovanie
+<dd>- ako a kde vznikol internet
+	<br>- popíš myšlienku klient-server aplikácie
+	<br>- vlastnosti html dokumentu
+	<br>- aké typy editorov sa používajú na tvorbu html dokumentov
+	<br>- ktoré dve firmy majú (zatiaľ) najväčší vplyv na vývoj html jazyka
+	<br>- ako sa volajú prehliadače týchto firiem
+	<br>- je zaručené, že stránka bude vo všetkých prehliadačoch vyzerať rovnako?
+</dd>	
+</dl>	
+<h3>Základná syntax dokumentu html</h3>
+<ul><li>Dokument sa skladá zo zobrazovaného textu a príkazov - tagov. Prehliadač pozná že sa jedná o tag podľa toho, že je zapísaný medzi "zobákmi &lt;&gt; 
+		resp. &lt;/&gt; Tagy/príkazy určujú ako má byť ďalší text zobrazený alebo aký objekt sa má do textu vložiť.
+	<li>Nekorektný (neznámy) tag nesposobí chybu, len sa nevykoná. Existuje veľa stránok napísaných s chybami ale zobrazujú sa bez hlásenia chyby.
+	<li>Tagy delíme na párové a nepárové. Párové určujú začiatok i koniec platnosti nejakej vlastnosti napr. textu, 
+		nepárové vkladajú nejaký objekt do dokumentu (čiaru, obrázok,...)
+</ul>
+<h3>Štruktúra dokumentu html</h3>
+<pre><code>
+&lt;!DOCTYPE html&gt; ..........................  nepárový tag, určuje, že táto stránka bude napísaná v html5 
+&lt;HTML>  .................................. párový tag, začiatok HTML dokumentu
+     &lt;HEAD> .............................. párový tag, začiatok hlavičky dokumentu
+        &lt;TITLE> Názov &lt;/TITLE> ........... párový tag, zobrazované meno dokumentu (je tu aj začiatok i koniec) najznámejší príkaz hlavičky
+    &lt;/HEAD> .............................. koniec hlavičky
+    &lt;BODY>  .............................. párový tag, začiatok tela dokumentu, tu je celý obsah
+	              text s tagmi
+    &lt;/BODY> .............................. koniec tela dokumentu
+&lt;/HTML>     .............................. koniec html dokumentu				   											
+</code></pre>
+<a name="farba">&nbsp;</a>
+<h3>Práca s farbami</h3>
+Asi každý chce aby jeho napísané www stránky boli aj pekné a preto je dôležité aby sme vedeli zadávať farbu. Základné farby majú svoje meno (zadáva sa anglicky) napr. red, blue, ...
+Pri určovaní farby objektu je v HTML viac možností:
+<ol>
+	<li>ak vieme názov zvolenej farby, môžme farbu zadať menom (red, blue, ...)
+	<li>ak nevieme číslo farby, musíme farbu namiešať - #rrggbb
+		kde rr,gg,bb sú hexa číslice od 00 po FF. Čím väčšie čísla použijeme, tým
+		bude zvolenej farby viac a farba bude jasnejšia
+		<br>#000099 ... tmavomodrá <span style="width:24; height:8; border-size:2; border-style:ridge; border-color:silver; background:#000099 ">&nbsp; &nbsp;</span>
+		<br>#0000FF ... kriklavomodrá <span style="width:24; height:2; border-size:2; border-style:ridge; border-color:silver; background:#0000FF ">&nbsp; &nbsp;</span>
+		<br>#9999FF ... svetlomodrá <span style="width:24; height:10; border-size:2; border-style:ridge; border-color:silver; background:#9999ff ">&nbsp; &nbsp;</span>
+		<br>#CCCCFF ... svetulinkomodrá <span style="width:24; height:10; border-size:2; border-style:ridge; border-color:silver; background:#CCCCFF ">&nbsp; &nbsp;</span>
+		<br>#FF00FF ... fialová <span style="width:24; height:10; border-size:2; border-style:ridge; border-color:silver; background:#FF00FF ">&nbsp; &nbsp;</span>
+		<br>#C0C0C0 ... strieborná <span style="width:24; height:10; border-size:2; border-style:ridge; border-color:silver; background:#C0C0C0 ">&nbsp; &nbsp;</span>
+		<br>S ohľadom na používatelov s grafikou na 256 farbách uprednostňujeme za rr,gg,bb nasledovné farby
+		<br>00,33,66,99,cc,ff,c0
+	<li>použitie funkcie rgb(červená, zelená, modrá)
+		<br>použitie je rovnaké ako v predošlom prípade, len nemusíme farby zadávať v hexa sústave. 3 parametre sú buď desiatkové čísla
+		alebo čísla s percentami. Čísla môžu nadobúdať hodnoty 0-255, percentá 0%-100%. Používa sa aj pri programovaní - napríklad plynulé stmievanie.
+	<li>V HTML5 je možné určiť farbe aj priesvitnosť
+		<br>rgba(červená, zelená, modrá, priesvitnosť), kde priesvitnosť volíme od 0 po 1	
+</ol>
+<table border="1" width="60%">
+<tr><th bgcolor=#cccccc colspan="2">Oblasť na precvičenie farieb</tr>
+<tr><td width="60%">
+<table><tr>
+       	<td width="50%">Sem zadaj farbu 
+		<td width="50%"><input type="Text" id="vstupfarba"></tr>
+</table>		
+<td id="tdfarba" width="40%" onclick="this.style.background=vstupfarba.value"> a potom sem klikni </tr>
+</table>
+<table border="1" width="60%">
+<tr><th bgcolor=#cccccc colspan="4">Oblasť na precvičenie farieb</tr>
+<tr><td>Namiešaj túto farbu <td  width="25%" style="background-color:#006699">&nbsp;<td width="30%">Sem zadaj farbu: <input type="Text" id="vstupfarba1" ><td onclick="this.style.background=vstupfarba1.value"> a potom sem klikni 
+<tr><td>Namiešaj túto farbu <td  width="25%" style="background-color:#996699">&nbsp;<td>Sem zadaj farbu: <input type="Text" id="vstupfarba2" ><td onclick="this.style.background=vstupfarba2.value"> a potom sem klikni 
+<tr><td>Namiešaj túto farbu <td  width="25%" style="background-color:#eeddcc">&nbsp;<td>Sem zadaj farbu: <input type="Text" id="vstupfarba3" ><td onclick="this.style.background=vstupfarba3.value"> a potom sem klikni 
+<tr><td>Namiešaj pomocou rgba() túto farbu <td width="25%" style="background-image:url('obr/homer2.gif');height:200" ><div style="width:100%;height:100;background:rgba(200,100,100,0.5)">&nbsp;</div><td>Sem zadaj farbu: <input type="Text" id="vstupfarba4">
+                                           <td width="25%" background="obr/homer2.gif" ><div style="width:100%;height:100; background:rgba(200,200,200,0.5)" onclick="this.style.background=vstupfarba4.value">&nbsp;</div> 
+</table>
+
+<h3>Tag</h3>
+Už pri štruktúre HTML dokumentu sme sa stretli s prvými tagmi - BODY, TITLE. Teraz si ukážeme syntax tagov.
+Každý príkaz má nasledovný tvar:
+<ul><li>&lt; nazov parameter1=hodnota1 parameter2=hodnota2 ...> ... začiatok platnosti tagu
+		<br> - prvý údaj je názov tagu (napr. H1, Table, HR, BR)
+		<br> - parametre sa uvádzajú len tie, ktorým chceme nastaviť inú hodnotu ako je implicitne dané
+		<br> - je vhodné textové hodnoty uvádzať v uvodzovkách ("red") alebo apostrofoch ('blue')
+	<li>&lt; /nazov> ... koniec platnosti tagu
+		<br>Ak ide o párový tag treba ukončiť jeho platnosť. Tag, kde pred menom je lomítko ukončuje platnosť
+			tagu s týmto menom. Parametre neuvádzame. (napr. <font color="Green">&lt;/BODY</font>>	
+</ul>
+<a name="style">&nbsp;</a>
+<h3 style="-moz-border-image:url("border.png") 30 30 stretch; /* Firefox */">Parameter style</h3>
+Parameter style je najmohutnejší parameter prakticky všetkých tagov, navyše v HTML5 už by sme iné parametre ani nemali používať a tak ho preberieme osve. 
+<br>style="výraz"
+<br>Celý výraz musí byť v úvodzovkách! 
+<br>V tomto parametri môžme nastaviť hodnotu viacerým "podparametrom". Hodnotu im nepriraďujeme pomocou 
+= ale dvojbodkou : (napr. style="color:'red'; background:#ddddff"), <b>oddeľujeme ich bodkočiarkou</b> ;.  
+<br>Podparametrov je veľmi veľa a tu sú hlavné:
+<ul><li>color:farba ... farba písma
+	<li>background - podklad
+		<ul><li>background-color:farba|transparent ... farba podkladu - papiera, resp. priesvitná farba - žiadna 
+				<br>štandartne: transparent
+			<li>background-image:none|url('obrazok') ... obrázok sa dá do pozadia
+				<br>štandartne: none
+			<li>background-position:horiz._poloha vertik._poloha ... dvoma hodnotami určíme polohu obrázka v pozadí   
+				<br>(horiz. poloha - left,center,right,cis%,cispx
+				<br>vert. poloha - top,center,bottom,cis%,cispx)
+				<br>štandartne: 0% 0%
+			<li>background-repeat:no|repeat|repeat-x|repeat-y ... určuje, či sa obrázok v pozadí má opakovať
+				<br>štandartne: repeat
+		</ul>				
+	<li>border - orámovanie
+		<ul><li>border-width:číslo|thin|medium|thick ... hrúbka rámika (ak chcem rámik okolo je tento param. nutný)	
+				<br>štandartne: medium
+				<br>Môžme zadať 1 hodnotu (platí pre všetky čiary) alebo vymenovať všetky štyrioddelené medzerou 
+
+			<li>border-style:none|dotted|dashed|solid|double|groove|ridge|inset|outset
+				<br>význam - žiadne, bodkované, čiarkované, plné, dvojité, kanál, kopec, osvetlené vyduté, osvetlené vpadnuté 
+				<br> ... ak chcem rámik okolo je tento par. nutný 
+				<br>implicitne je none	
+			<li>border-color:farba ... farba rámika
+		</ul>		
+	<li>padding:číslo|4čísla ... medzera medzi textom a rámikom zvnútra, 
+		<br>implicitne je 0
+	<li>margin:číslo|4čísla ... medzera medzi objektom a okolím zvonku 0
+		<br>implicitne je 0
+	<li>width: číslo|číslo%|auto ... šírka objektu v bodoch alebo v percentách
+		<br>implicitne auto
+	<li>height: číslo|auto ... výška objektu v bodoch alebo v percentách
+		<br>implicitne auto
+	<li>display: inline|block|list|none ... objekt má|nemá byť zobrazený
+	<li>font - písmo
+		<ul><li>font-size: číslo ... veľkosť písma, preddefinované hodnoty: 
+				<br>xx-small, x-small, small,medium, large, x-large, xx-large 
+				<br>alebo veľkosť určíme pomocou číslo pt (napr. 20pt), čo je podobné zadávaniu písma vo worde 
+			<li>font-family: nazov1, nazov2,...  ... typ písma, prípadne aj alternatívne typy
+				<ul><li>'serif' (e.g. Times) 
+                    <li>'sans-serif' (e.g. Helvetica) 
+					<li>'cursive' (e.g. Zapf-Chancery) 
+					<li>'fantasy' (e.g. Western) 
+					<li>'monospace' (e.g. Courier) 
+				</ul>
+			<li>font-weight:číslo|nazov ... 100-900 s krokom 100 určuje hrúbku písma, 
+					<br> 400=normal, 700=bold	
+			<li>font-style:normal|italic
+		</ul>			
+	<li>position: absolute|relative|static ... polohu objektu chcem určovať absolutne (vzhľadom na okno)
+		<br>relativne (vzhľadom na rodičovský objekt)
+		<br>static (poloha je ur4ená vlastnosťou margin - objekt je v toku stránky)
+	<li>left: číslo ... určuje vzdialenosť od ľavého okraja (len s position absolute|relative)		
+	<li>top: číslo ... určuje vzdialenosť od horného okraja (len s position absolute|relative)		
+</ul>
+Pre "fanatikov" chtivých ďalších podrobností odkazujem na učivo Java-Script.
+<h3>tag HEAD</h3>
+Tento tag má význam hlavne na vkladanie štýlov (pozri kap CSS) a na vkladanie príkazov pre tvorbu dyn. stránok. (Pozri učivo JavaScript). Pre "našu" úroveň stačí poznať tieto dva tagy:
+<ul><li>&lt;Title&gt; názov &lt;/Title&gt; - tag na vloženie názvu našej stránky - bude prehliadačom zobrazená na titulke okna
+	<li>&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250"&gt;	
+		<br>tento tag pomôže prehliadaču určiť kódovanie - nie vždy prehliadač uhádne ako je stránka zakódovaná, čo vedie k nesprávnemu zobrazovaniu slovenského textu na stránke.
+</ul> 
+ 
+<h3>tag BODY</h3>
+Najdôležitejší tag dokumentu. V ňom je popísaná celá stránka, ktorú chceme zobraziť. Ak tu nastavíme parametrom vlastnosť
+písma, podkladu, tak bude toto pravidlo platiť pre celú stránku (pokiaľ si to nejaký tag pre seba neprestaví).
+<ul><li>Možné parametre:
+		<ul><li><font color="Red">background=</font>url("obrázok") ... parameter umožní vložiť na pozadie
+				dokumentu obrázok, ak je obr. menší opakovaním sa zaplní celý dokument.
+			<li><font color="Red">bgproperties=</font>"Fixed" ... pri rolovaní dokumentu sa týmto zamkne
+				pohyb obrázku na pozadí. 	
+			<li><font color="Red">bgcolor=</font>"farba" ... farba pozadia celej stránky 	
+			<li><font color="Red">text=</font>"tarba" ... farba textu celej stránky
+		</ul>
+	<li>Pomocou <b>style</b>			
+		<ul><li><font color="Red">background-image : </font>url("obrázok") ... parameter umožní vložiť na pozadie
+				dokumentu obrázok, ak je obr. menší opakovaním sa zaplní celý dokument.
+			<li><font color="Red">background-repeat : </font>"Repeat|No-repeat|repeat-x|repeat-y" ... spôsob kladenia "kachličiek" do pozadia
+			<li><font color="Red">background-color : </font>"farba" ... farba pozadia celej stránky 	
+			<li><font color="Red">color : </font>"farba" ... farba textu celej stránky
+		</ul>
+</ul>
+
+
+<h3>Úprava textu</h3>
+Jazyk HTML umožňuje grafickú úpravu textu (farba písma, podkladu, veľkosť, typ písma rozvrhnutie textu). Podobne ako vo worde
+aj tu existujú nástroje na úpravu textu do často sa vyskytujúcich štruktúr (stĺpce, odsadzovanie textu, vkladanie grafických symbolov pred odseky).
+Navyše musí existovať tag na zlom riadku, lebo nami vložené Entre ho evidentne nezaujímajú.
+
+<h3>&nbsp;Vkladanie ukončenia riadku</h3>
+Pri pokusoch si ľahko všimneme, že nami vložený znak Enter síce v editore zalomí riadok, ale na prehliadač
+nemá ten Enter žiadny vplyv. Na zlomenie riadku teda použijeme tag:
+<br><font color="Green">&lt;BR></font> ... ukončí - zalomí riadok. Ak ho nedáme riadok bude zalamovaný podľa veľkosti okna.
+<h3 style="color:#0000cc; border-color:silver; border-width:3;  width:300; height:30; border-style:ridge">&nbsp;Vkladanie niektorých znakov</h3>
+Zobrazovač HTML dokumentu každý znak &lt; chápe ako začiatok tagu a preto ho textu nejde takto jednoducho vložiť. Na vkladanie takéhoto znaku 
+a niektorých ďalších slúžia "and sekvencie". (každá and_sekvencia končí bodkočiarkou)
+<br>&lt; .......&amp;lt;
+<br>&gt; .......&amp;gt;
+<br>pevná medzera .......&amp;nbsp;
+<br>&quot; .....&amp;quot;
+<br>Pevnú medzeru možno používať na vloženie viacerých medzier (viaceré bežné medzery za sebou sa vždy zobrazia ako jedna)  
+
+<h3>&nbsp;Tagy pre formátovanie textu</h3>
+<div style="margin-left:20">
+<dl>
+<dt>&nbsp;Centrovanie textu <font color="Green">&lt;center> &lt;/center></font>
+<dd>Na centrovanie ľubovoľnej časti text použijeme tento tag, ktorý každý riadok vycentruje vzhľadom na oblasť
+	v ktorej sa text nachádza. Centrovanie ostáva v platnosti i pri zmene veľkosti okna.
+<center><b>Tento text<br>je<br>centrovaný</b></center> 
+
+<dt>Nadpisy ... <font color="Green">H1, H2, H3, H4, H5, H6</font> 
+<dd>Text medzi &lt;Hi> a &lt;/Hi> je chápaný ako nadpis - je na samostatnom riadku (riaddkoch) 
+	a vertikálne odsadený od iného textu. Čísla udávajú veľkosť písma. Samotný text nadpisu možno samozrejme
+	formátovať ďalšími-vnorenými tagmi (napr. B, I, FONT, BR, ...)
+	<br>Parametre:
+		<ul><li><font color="Green">align</font>= LEFT | RIGHT | CENTER | JUSTIFY ... zarovnanie zľava, sprava, stred, blok 
+		</ul>
+		<h1 style="border-style:solid; border-width:0 3 3 0; border-color:#999999; width:200">Nadpis H1</h1>
+		<h2 style="border-style:solid; border-width:0 3 3 0; border-color:#999999; width:200; background:#cccccc">Nadpis H2</h2>
+		<h3 style="border-style:solid; border-width:0 3 3 0; border-color:#9999ff; width:200; background:#ccccff; padding:0 0 0 5">Nadpis H3</h3>
+				<h4  align="center" style="background:silver">Dvojriadkový centrovaný<br>nadpis H4</h4>
+				<h5>Nadpis H5</h5>
+				<h6>Nadpis H6</h6>
+				
+		<div style="background:#eeeeff; height:230; border:2; border-style:inset; padding:4; width:92%" >
+		<h4 style=";white-space:nowrap">Oblasť na testovanie parametrov príkazu Hi</h4>
+		Vypíš parametre a klikni na slovo Nadpis<br><br>
+		&lt;H3  
+	  	align= <input type="Text" size="7" id="hali" value="left">
+	  	<br>style= "color: <input type="Text" size="5" id="hcol" value="black"> 
+		    ;background: <input type="Text" size="5" id="hbg" value="white">
+	  	    ;border-width: <input type="Text" size="5" id="hbor" value="0">
+	  	    ;border-style: <input type="Text" size="5" id="hs"   value="solid">
+	  	    ;border-color:  <input type="Text" size="5" id="hbcol" value="silver">"&gt;
+      <h3 onclick="this.style.color=hcol.value; this.style.background=hbg.value; this.style.borderWidth=hbor.value; this.style.borderStyle=hs.value; this.align=hali.value; this.style.borderColor=hbcol.value;"
+		  style="color:'black';background='white';border-style:'solid';border-width:0">Nadpis</h3>
+	</div>
+<dt>Jednoduché formátovače textu
+<dd><ul><li>B ... <b>tučné písmo</b>
+		<li>I ... <i>šikmé písmo</i>
+		<li>BIG ... <font size="+1">o trošku väčšie písmo</font>
+		<li>SMALL ... <font size="-1">o trošku menšie písmo</font>
+		<li>SUP ... horný index - mocnina x<sup>2</sup>
+		<li>SUB ... dolný index - x<sub>i</sub>
+		<li>CODE ... <code>neproporcionálne písmo (Courier)</code>
+		<li>PRE ... zobraz text tak ako je naklepaný - naklepané medzery i entre platia
+	</ul>
+
+<dt>Určovanie fontu textu <font color="Green"> &lt;Font> &lt;/Font></font>
+<dd>Ľubovoľnému úseku textu možno nastaviť vlastný font. Parametre tagu sú:
+	<ul><li>color=farba ... farba textu
+		<li>style=" ..." ... typ, veľkosť písma, hrúbka
+			<ul><li>font-family: nazov1, nazov2,...  ... typ písma, prípadne aj alternatívne typy
+					<ul><li>'serif' (e.g. Times) 
+                         <li>'sans-serif' (e.g. Helvetica) 
+						<li>'cursive' (e.g. Zapf-Chancery) 
+						<li>'fantasy' (e.g. Western) 
+						<li>'monospace' (e.g. Courier) 
+					</ul>
+				<li>font-size: číslo% ... veľkosť písma v percentách
+					<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; xx-small, x-small, medium, large, x-large, xx-large ...preddefinované konštanty
+				<li>font-weight:číslo|nazov ... 100-900 s krokom 100 určuje hrúbku písma, 
+					<br> 400=normal, 700=bold
+				<li>font-style=normal|italic|oblique ... normálne alebo šikmé písmo	
+			</ul>		
+	</ul>	
+	<br><div style="background:#eeeeff; height:200; border:2; border-style:inset; padding:4; width:90%"  >
+		<h4 style=";white-space:nowrap">Oblasť na testovanie parametrov príkazu Font</h4>
+		Vypíš parametre a presuň kurzor do iného vstupného políčka<br><br>
+		&lt;Font color = <input type="Text" size="7" id="fc" value="black" onchange="fontu.style.color=this.value"> 
+				 Style=' font-family: <input type="Text" size="7" id="ff" value="serif" onchange="fontu.style.fontFamily=this.value"> 
+	             		 font-size: <input type="Text" size="7" id="fsi" value="x-small" onchange="fontu.style.fontSize=this.value">
+	             		 font-weight: <input type="Text" size="7" id="fw" value="400" onchange="fontu.style.fontWeight=this.value">
+	             		 font-style: <input type="Text" size="7" id="fst" value="normal" onchange="fontu.style.fontStyle=this.value">'&gt;
+		<br><br><center>
+		<div id="fontu" >Tento text bude formátovaný</div></center>
+		<br>&lt;/Font&gt;		 
+		</div>
+		
+<dt>Vkladanie grafických oddeľovačov do textu<font color="Green"> &lt;HR></font>
+<dd>Vloží do textu vodorovnú čiaru na samostatný riadok, ktorú možno parametrami formátovať
+	<br>Parametre
+	<ul><li>color=farba ... farba čiary
+		<li>width=číslo ... dĺžka čiary, môže byť zadaný aj v percentách
+		<li>size=číslo ... hrúbka čiary
+		<li>align= ... horizontálne zarovnanie 
+	</ul>
+	<br>
+	<hr size="3" noshade >
+	<br>		
+	<div style="background:#eeeeff; height:200; border:2; border-style:inset; padding:4; width:80%"  >
+	<h4 style=";white-space:nowrap">Oblasť na testovanie parametrov príkazu Hr</h4>
+		Vypíš parametre a presuň kurzor do iného vstupného políčka<br><br>
+		&lt;Hr color = <input type="Text" size="7" id="hc" value="black" onchange="hr1.color=this.value"> 
+			   align = <input type="Text" size="7" id="ha" value="center" onchange="hr1.align=this.value"> 
+			   width = <input type="Text" size="7" id="hw" value="100" onchange="hr1.width=this.value"> 
+	           size  = <input type="Text" size="7" id="hsi" value="2" onchange="hr1.size=this.value">&gt;
+		<br><br>
+		<hr id="hr1" align="center" width="100" size="2">
+		<br>
+		</div>
+</dl>
+</div>
+<h3 style="color:#0000cc; border-color:silver; border-width:3;  width:300; height:30; border-style:ridge">&nbsp;Úlohy</h3>
+<ol style="fontSize:120%"><li style="font-size:120%"><b>Napíš nadpisy uvedené v tejto kapitole</b><br>
+
+	<li style="font-size:120%"><b>Uprav text aby si vytvoril podobný vzhľad</b>
+		<table width="90%" border="1" style="margin:5 0 15 0">
+		<tr bgcolor="silver"><th width="50%">Požadovaný tvar<th width="50%">Tu bude výsledok</tr>
+		<tr><td height="100" valign="top" id="bb0">
+			<center>
+			<hr noshade width="60" size="1">
+			Milenci sa v žite hrajú,<br>
+			okolie si nevšímajú<br>
+			kombajnista netuší,<br>
+			že im tú hru preruší.
+			<hr noshade width="60" size="1">
+			<hr noshade width="10" size="1">
+			<p align="right">neznámy autor</p>
+			</center>	
+			<td id="b1" valign="top">&nbsp;</tr>
+		<tr bgcolor="silver"><th colspan="2">Uprav tento text</tr>
+		<tr><td bgcolor="silver" id="b0" height="100" colspan="2" ondblclick="t0.value=bb0.innerHTML">
+		    <div style="width:100%; height:80; background:'Aqua'">
+			<TextArea style="height:100%;width:100%" id="t0" rows="6" cols="1">
+			Milenci sa v žite hrajú,
+			okolie si nevšímajú
+			kombajnista netuší,
+			že im tú hru preruší.
+			neznámy autor
+			</textarea> 
+			</div></tr>
+		<tr bgcolor="silver"><td colspan="2">
+		<center><input type="Button" value="Stlač keď upravíš text" onclick="b1.innerHTML=t0.value";></center></tr>
+		</table>
+
+	<li style="font-size:120%"><b>Napíš príkazy aby si vytvoril podobný vzhľad</b>
+		<table width="90%" border="1" style="margin:5 0 15 0">
+		<tr bgcolor="silver"><th width="35%">Požadovaný tvar<th width="35%">Tu bude výsledok</tr>
+		<tr><td height="100" valign="top" id="bb1">
+			<div style="width:100%; height:100%; background:'Aqua'">
+			<h3  align="center" style="background:blue; color:#ffdddd">Nadpis H3</h3><font color="red">A tento text chcem červeno</font>
+			</div>
+			<td id="b3" valign="top">&nbsp;</tr>
+		<tr bgcolor="silver"><th colspan="2">Sem píš kód</tr>	
+		<tr><td bgcolor="silver" id="b2" height="100" colspan="2" ondblclick="t1.value=bb1.innerHTML">
+		<TextArea style="height:80;width:100%" id="t1"  rows="6" cols="1"> </textarea></tr>
+		<tr bgcolor="silver"><td colspan="2">
+		<center><input type="Button" value="Stlač keď napíšeš dokument" onclick="b3.innerHTML=t1.value"></center></tr>
+		</table>
+	
+	<li style="font-size:120%"><b>Napíš príkazy aby si vytvoril podobný vzhľad</b>
+		<table width="90%" border="1" style="margin:5 0 15 0">
+		<tr bgcolor="silver"><th width="50%">Požadovaný tvar<th width="50%">Tu bude výsledok</tr>
+		<tr><td height="100" valign="top" id="bb2">
+				<div style="width:100%; height:100%; background:'Aqua'">
+				2H<sub>2</sub> + O<sub>2</sub> --> 2H<sub>2</sub>O
+				<br>c<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup>
+				</div>
+			<td id="b5" valign="top">&nbsp;</tr>
+		<tr bgcolor="silver"><th colspan="2">Sem píš kód	</tr>
+		<tr><td bgcolor="silver" id="b4" height="100" colspan="2" ondblclick="t2.value=bb2.innerHTML">
+		    <div style="width:100%; height:80; background:'Aqua'">
+			<TextArea style="height:98%;width:100%" id="t2"  rows="6" cols="1"> </textarea> 
+			</div></tr>
+		<tr bgcolor="silver"><td colspan="2">
+		<center><input type="Button" value="Stlač keď napíšeš dokument" onclick="b5.innerHTML=t2.value"></center></tr>
+		</table>
+	
+	<li style="font-size:120%"><b>Napíš príkazy aby si vytvoril podobný vzhľad</b>
+		<table width="90%" border="1" style="margin:5 0 15 0">
+		<tr bgcolor="silver"><th width="50%">Požadovaný tvar<th width="50%">Tu bude výsledok</tr>
+		<tr><td height="100" valign="top" id="bb4">
+		    <div style="width:100%; height:100%; background:'Aqua'">
+		     <font style="font-size:48"><font color='#cc0000'>A </font>
+			 <font color=#ff6666>h </font><font color=#ffaaaa>o </font>
+			 <font color=#ffcccc>j </font><font color=#ffaaaa>t </font>
+			 <font color=#ff6666>e </font><font color=#cc0000>! </font>
+			 </font>
+			 <br>(veľkosť je 48)
+			</div>
+			<td id="b9" valign="top">&nbsp;</tr>
+		<tr bgcolor="silver"><th colspan="2">Sem píš kód	</tr>
+		<tr><td bgcolor="silver" id="b8" height="100" colspan="2" ondblclick="t4.value=bb4.innerHTML">
+		    <div style="width:100%; height:80; background:'Aqua'">
+			<TextArea style="height:98%;width:100%" id="t4" rows="6" cols="1"></textarea> 
+			</div></tr>
+		<tr bgcolor="silver"><td colspan="2">
+		<center><input type="Button" value="Stlač keď napíšeš dokument" onclick="b9.innerHTML=t4.value"></center></tr>
+		</table>
+
+	<li style="font-size:120%"><b>Vlož pascalský program z disku, aby si vytvoril podobný vzhľad</b>
+		<table width="90%" border="1" style="margin:5 0 15 0">
+		<tr bgcolor="silver"><th>Požadovaný tvar</tr>
+		<tr><td height="100" valign="top" id="pascal1">
+			<pre><code>
+uses grafika;
+var mx,my,x,y,kr: integer;
+begin
+  mysinic;
+    repeat
+    case citajmys of
+    0: if kr=0 then
+       begin
+       x:=mysx; mx:=x;
+       y:=mysy; my:=y;
+       kr:=1;
+       end;
+    -1: begin
+        setcolor(0);
+        rectangle(x,y,mx,y);
+        setcolor(1);
+        rectangle(x,y,mysx,mysy);
+        mx:=mysx;my:=mysy;
+        end;
+     -2:kr:=0;
+     end;
+    until keypressed;
+end.
+			</code></pre></tr>
+		<tr bgcolor="silver"><th>Tu bude výsledok</tr>
+		<tr style="height:100"><td id="pascal2" valign="top">&nbsp;</tr>
+		<tr bgcolor="silver"><th colspan="2">Vlož a uprav</tr>
+		<tr><td bgcolor="silver" id="pascal3" height="100" colspan="2" ondblclick="pascal4.value=pascal1.innerHTML">
+		    <div style="width:100%; height:80; background:'Aqua'">
+			<TextArea style="height:100%;width:100%" id="pascal4" rows="6" cols="1"> &nbsp; </textarea> 
+			</div></tr>
+		<tr bgcolor="silver"><td colspan="2">
+		<center><input type="Button" value="Stlač keď upravíš text" onclick="pascal2.innerHTML=pascal4.value"></center></tr>
+		</table>
+
+
+</ol>
+</body>
+</html>

@@ -1,0 +1,274 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Grafika_v_C++_=283.=29?=
+Date: Thu, 12 Jul 2007 09:50:53 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2467
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Grafika v C++ (3.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Grafika v C++ (3.)</H2>
+<H4>Pr=E1ce s obr=E1zky, jako je vyst=F8ihov=E1n=ED a lepen=ED na =
+r=F9zn=E1 m=EDsta, je velice=20
+d=F9le=9Eit=E1 pro programov=E1n=ED nap=F8. her. A proto se j=ED budeme =
+dnes zab=FDvat.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P><STRONG><FONT size=3D+1>Vyst=F8ihov=E1n=ED, lepen=ED obr=E1zk=F9 a =
+pr=E1ce s=20
+nimi</FONT></STRONG></P>
+<P>Toto je asi na nejlep=9A=ED =E8=E1st z knihovny graphics.h. Sice =
+m=F9=9Eeme h=FDbat pouze s=20
+t=EDm, co si sami namalujeme pomoc=ED funkc=ED, ale sta=E8=ED to. Nebo =
+si tak=E9 m=F9=9Eeme=20
+n=ECjak=FD ten obr=E1zek na=E8=EDst ze souboru a s n=EDm pak pracovat. =
+Vysv=ECtl=EDme si funkce=20
+getimage a putimage, kter=E9 se o v=9Aechno staraj=ED. Prvn=ED sejme kus =
+obr=E1zku z=20
+obrazovky a druh=E1 pro zm=ECnu zase pl=E1cne obr=E1zek z pam=ECti na =
+obrazovku. </P>
+<P><STRONG><FONT size=3D+1>P=F8=EDklad</FONT></STRONG> </P>
+<P>Nejlep=9A=ED bude si v=9Ae uk=E1zat na n=E1sleduj=EDc=EDm zdrojov=E9m =
+p=F8=EDklad=EC, proto=9Ee tak=20
+se to l=E9pe pochop=ED. Naprogramoval jsem =E8tvere=E8ek, kter=FD se =
+pomoc=ED funkc=ED=20
+getimage a putimage pohybuje po obrazovce a odr=E1=9E=ED se od st=ECn. =
+Nebudu d=E1le=20
+zdr=9Eovat a pod=EDvejte se na zdrojov=FD k=F3d, ka=9Edou funkci si =
+jednotliv=EC probereme,=20
+co d=ECl=E1 apod. Zdroj=E1k si m=F9=9Eete st=E1hnout <A=20
+href=3D"http://www.pcsvet.cz/art/climg/2467/grafika3.rar">zde</A>=20
+[climg/2467/grafika3.rar]. </P><PRE>#include &lt;graphics.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+#include &lt;dos.h&gt;
+
+int main(void)
+{
+   /* request autodetection */
+   int gdriver =3D DETECT, gmode, errorcode;
+   void *image;
+   int x, y, maxx, cx, cy;
+   unsigned int size;
+
+   /* initialize graphics and local variables */
+   initgraph(&amp;gdriver, &amp;gmode, "");
+
+   /* read result of initialization */
+   errorcode =3D graphresult();
+   if (errorcode !=3D grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n", grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1); /* terminate with an error code */
+   }
+
+   // nakreslime obrazek
+   setfillstyle(7, RED);
+   bar(0,0,32,32);
+
+   size=3Dimagesize(0,0,32,32);
+   image=3Dmalloc(size);
+
+   if (!image) {
+     closegraph();
+     printf("Malo pameti.");
+
+   }
+
+   getimage(0,0,32,32,image);
+   cleardevice();
+
+   x=3D100;cx=3D10;
+   y=3D100;cy=3D10;
+
+   while (1) { // nekonecna smycka
+
+     putimage(x,y,image,XOR_PUT);
+     delay(20);
+     putimage(x,y,image,XOR_PUT);
+
+     x+=3Dcx;
+     y+=3Dcy;
+
+     if (x&lt;0) {x=3D0;cx=3D-cx;}
+     if (y&lt;0) {y=3D0;cy=3D-cy;}
+     if (x&gt;639-32) {x=3D639-32;cx=3D-cx;}
+     if (y&gt;480-32) {y=3D480-32;cy=3D-cy;}
+
+     if (kbhit())
+       break;
+   }
+
+   free(image);
+   getch();
+   closegraph();
+   return 0;
+}
+</PRE>
+<P>Tak jako v=9Edy b=FDv=E1 zvykem, na za=E8=E1tku nahod=EDme grafick=FD =
+m=F3d 640x480x16 barev.=20
+Nen=ED to zrovna ten, kter=FD vym=E1=E8kne z grafick=E9 karty pomoc=ED =
+t=E9to knihovny=20
+maximum, ale pro na=9Ae z=E1klady po=E8=EDta=E8ov=E9 grafiky je =
+dosta=E8uj=EDc=ED. </P>
+<P>Hned pot=E9 samoz=F8ejm=EC zkontrolujeme, zda se spustil grafick=FD =
+m=F3d =E8i nikoliv.=20
+Pokud ne, ukon=E8=EDme program s chybov=FDm hl=E1=9Aen=EDm. </P>
+<P>A nyn=ED k samotn=E9mu j=E1dru v=ECci. Jako prvn=ED pomoc=ED =
+funkc=ED, kter=E9 jsme se=20
+nau=E8ili ji=9E d=F8=EDve, nakresl=EDme n=ECjak=FD obr=E1zek. Pro =
+jednoduchost jsem vybral pouze=20
+=E8tverec s kosti=E8kovou v=FDpln=ED. D=E1le u=9E n=E1sleduje nov=E1 =
+funkce, se kterou jsme se=20
+je=9At=EC nesetkali. </P>
+<P>A to je imagesize. Jako parametr bere =E8ty=F8i =E8=EDsla, stejn=EC =
+jako funkce bar, a=20
+vrac=ED velikost. Tu si ulo=9E=EDme do n=ECjak=E9 prom=ECnn=E9, v =
+na=9Aem p=F8=EDpad=EC size. Tu m=E1me=20
+typu unsigned int, proto=9Ee z=E1porn=E9 =E8=EDslo to vr=E1tit =
+nem=F9=9Ee a aby velikost byla a=9E=20
+65535 a ne jenom 32767. </P>
+<P>V dal=9A=EDm =F8=E1dku programu hned onu ulo=9Eenou hodnotu =
+pou=9Eijeme, a to na=20
+alokov=E1n=ED pam=ECti pro n=E1=9A obr=E1zek. Vysta=E8=EDme s =
+jednoduchou funkc=ED malloc, kter=E1=20
+n=E1m do na=9Aeho pointeru (chcete-li ukazatel) na void (jak jsme si to =
+deklarovali=20
+na za=E8=E1tku) vr=E1t=ED pointer na nov=EC alokovanou pam=EC=9D. V =
+dal=9A=ED =E8=E1sti programu=20
+zkontrolujeme, zda nebylo m=E1lo pam=ECti. Pokud ano, ukon=E8=ED se =
+op=ECt program s=20
+chybov=FDm hl=E1=9Aen=EDm, ale mysl=EDm si, =9Ee to by m=ECla b=FDt =
+v=FDjimka. </P>
+<P>A d=E1le se pou=9At=EDme do na=E8ten=ED a ulo=9Een=ED obr=E1zku do =
+pam=ECti. K tomu slou=9E=ED=20
+funkce getimage, jej=ED prvn=ED 4 parametry se shoduj=ED s funkc=ED =
+imagesize, kde si=20
+vlastn=EC or=E1mujeme oblast, o kterou m=E1me z=E1jem. A jako posledn=ED =
+parametr ji d=E1me=20
+n=E1=9A ukazatel, pro kter=FD jsme p=F8ed chv=EDl=ED alokovali =
+pam=EC=9D. Nyn=ED m=E1me obr=E1zek v=20
+pam=ECti pro na=9Ae =FA=E8ely. </P>
+<P>Posledn=ED p=F8=EDpravy. x a y jsou pozice lev=E9ho horn=EDho rohu =
+na=9Aeho obr=E1zku.=20
+P=F8ipom=EDn=E1m, =9Ee obr=E1zek je =9Airok=FD a vysok=FD 33 pixel=F9. =
+Na prvn=ED pohled se m=F9=9Ee=20
+zd=E1t, =9Ee jen 32, ale nesm=EDme zapomenout zapo=E8=EDtat i nulu. =
+Proto nejv=ECt=9A=ED =E8=EDslo=20
+pro =9A=ED=F8ku je 639 a nen=ED 640 a pro v=FD=9Aku 479 a nen=ED 480. Je =
+to prost=EC d=E1no t=EDm,=20
+=9Ee za=E8=EDn=E1me od nuly. To bych =F8ekl, =9Ee nebude takov=FD =
+probl=E9m. cx a cy jsou=20
+prom=ECnn=E9, kde m=E1me nastaveno, po kolika pixelech se budeme =
+posouvat horizont=E1ln=EC=20
+(cx) a vertik=E1ln=EC (cy). P=F8edpona c znamen=E1 count jako po=E8et. =
+</P>
+<P>Samotn=FD cyklus. Jako prvn=ED bych =F8ekl, =9Ee si vytvo=F8=EDme =
+nekone=E8nou smy=E8ku, do=20
+kter=E9 d=E1me podm=EDnku, =9Ee p=F9jde ukon=E8it p=F8i stisku =
+kl=E1vesy. Viz posledn=ED podm=EDnka=20
+ve smy=E8ce s kbhit(). P=F8ed t=EDm ne=9E si vysv=ECtl=EDme, pohyb =
+obr=E1zku po obrazovce si=20
+nejd=F8=EDve pov=EDme bl=ED=9Ee o pro n=E1s prozat=EDm nezn=E1m=E9 =
+funkci putimage. </P>
+<P>Funkce putimage d=ECl=E1 coby opak toho, co d=ECl=E1 funkce getimage. =
+Od toho=20
+p=F8edpony put a get. Polo=9Eit a dostat. Prvn=ED t=F8i parametry jsou =
+jasn=E9, x a y jsou=20
+sou=F8adnice lev=E9ho horn=EDho rohu, kam chceme obr=E1zek nalepit na =
+obrazovku. To=20
+znamen=E1, =9Ee obr=E1zky nelze zmen=9Aovat, zv=ECt=9Aovat, ot=E1=E8et =
+apod. T=F8et=ED parametr je=20
+na=9Ae prom=ECnn=E1 image, to je ta, ve kter=E9 m=E1me ulo=9Een=FD =
+n=E1=9A obr=E1zek. </P>
+<P><STRONG><FONT size=3D+1>Posledn=ED parametr m=F9=9Ee nab=FDvat =
+t=ECchto=20
+hodnot:</FONT></STRONG> </P>
+<P><STRONG>Vysv=ECtlivky: </STRONG></P>
+<P><STRONG>zdroj</STRONG> - n=E1=9A obr=E1zek<BR><STRONG>c=EDl</STRONG> =
+- to co u=9E je na=20
+obrazovce </P>
+<P><STRONG>0-COPY_PUT </STRONG>- zkop=EDruje obr=E1zek p=F8esn=EC tak =
+jak je na=20
+obrazovku<BR><STRONG>1-XOR_PUT </STRONG>- zkop=EDruje zdroj na c=EDl, =
+ale pomoc=ED=20
+funkce XOR mezi jednotliv=FDmi bity. Dvakr=E1t na sebe stejn=FD =
+obr=E1zek nebude vid=ECt,=20
+to pou=9E=EDv=E1me v na=9Aem =
+p=F8=EDklad=EC.<BR><STRONG>2-OR_PUT</STRONG>- zkop=EDruje zdroj na=20
+c=EDl, ale pomoc=ED funkce OR mezi jednotliv=FDmi =
+bity<BR><STRONG>3-AND_PUT</STRONG> -=20
+zkop=EDruje zdroj na c=EDl, ale pomoc=ED funkce AND mezi jednotliv=FDmi=20
+bity<BR><STRONG>4- NOT_PUT</STRONG> - zkop=EDruje zdroj na c=EDl, ale =
+invertuje=20
+v=9Aechny bity v datech. Nap=F8=EDklad m=EDsto =E8ern=FD bude b=EDl=E1 a =
+naopak. </P>
+<P>Jak to cel=E9 funguje? Zkop=EDrujeme obr=E1zek na obrazovku pomoc=ED =
+metody XOR.=20
+Jeliko=9E je obrazovka =E8ern=E1, je vid=ECt n=E1=9A obr=E1zek =
+p=F8esn=EC tak, jak ho m=E1me=20
+ulo=9Een=FD. Pomoc=ED funkce delay z knihovny dos.h vytvo=F8=EDme =
+zpomalen=ED 20 ms. Pot=E9=20
+hned obr=E1zek op=ECt nalep=EDme na stejn=E9 sou=F8adnice a op=ECt =
+pomoc=ED metody XOR. Tud=ED=9E=20
+se jakoby vyma=9Ee. M=EDsto toho by samoz=F8ejm=EC =9Alo smazat celou =
+obrazovku, ale=20
+takhle je to mnohem rychlej=9A=ED. D=F8=EDve se pou=9E=EDvalo jenom =
+toto, ale dneska kdy=9E=20
+existuj=ED knihovny jako DirectX a OpenGL a v=FDkonn=FD hardware, tak se =
+nevyplat=ED=20
+d=EClat nic jin=E9ho ne=9E smazat celou obrazovku a celou ji =
+p=F8ekreslit. </P>
+<P>D=E1le p=F8i=E8teme k sou=F8adnic=EDm x, y na=9Ae prom=ECnn=E9 cx a =
+cy, aby se obr=E1zek=20
+posunul. Pokud bychom nechali v=9Ae tak jak je, obr=E1zek by brzy zmizel =
+z=20
+obrazovky. A proto nyn=ED mus=EDme v=9Ae o=9Aet=F8it. K tomu n=E1m =
+poslou=9E=ED dal=9A=ED =E8ty=F8i=20
+podm=EDnky v programu ve smy=E8ce. U v=9Aech je princip takov=FD: pokud =
+nap=F8. x je men=9A=ED=20
+ne=9E nula, a tud=ED=9E by dal=9A=ED kus obr=E1zku m=ECl b=FDt mezi =
+okraj, nastav=ED se x na nulu=20
+a cx se stane -cx. Tedy m=EDsto 10 je -10, a tud=ED=9E se za=E8ne od =
+okraje op=ECt hezky=20
+vzdalovat. A takto to funguje u v=9Aech =E8ty=F8 podm=EDnek. </P>
+<P>T=EDm bych dne=9An=ED =E8l=E1nek ukon=E8il, doporu=E8uji si =
+jednotliv=E9 metody jako OR a AND=20
+vyzkou=9Aet. </P>
+<HR SIZE=3D1>
+Autor: <B>Pavel Matou=9Aek</B>, <A=20
+href=3D"mailto:pavelmmm@seznam.cz">pavelmmm@seznam.cz</A><BR>Rubrika: =
+<B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 9:50:40 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

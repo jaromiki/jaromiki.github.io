@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 46 - Fullscreenový antialiasing</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 3</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_46.jpg" class="nehe_maly" alt="Lekce 46" />
+
+<h1>Lekce 46 - Fullscreenový antialiasing</h1>
+
+<p class="nadpis_clanku">Chtěli byste, aby vaše aplikace vypadaly ještě lépe než doposud? Fullscreenové vyhlazování, nazývané též multisampling, by vám mohlo pomoci. S výhodou ho používají ne-realtimové renderovací programy, nicméně s dnešním hardwarem ho můžeme dosáhnout i v reálném čase. Bohužel je implementováno pouze jako rozšíření ARB_MULTISAMPLE, které nebude pracovat, pokud ho grafická karta nepodporuje.</p>
+
+<p>V tomto zajímavém tutoriálu zkusíme posunout grafický vzhled aplikací ještě dále. O antialiasingu jste už četli v minulých tutoriálech, multisampling, narozdíl od něj, neoperuje s jednotlivými objekty zvlášť, ale pracuje až s vykreslovanými pixely. Ve výsledném obrázku se pokouší najít a odstranit ostré hrany. Protože se musí vzít v úvahu každý zobrazovaný pixel, bez hardwarové akcelerace grafické karty by velice snížil výkon aplikace.</p>
+
+<p class="src0"><span class="kom">Vid_mem = sizeof(Front_buffer) + sizeof(Back_buffer) + num_samples * (sizeof(Front_buffer) + sizeof(ZS_buffer))</span></p>
+
+<p>Pro více informací prosím zkuste tyto odkazy:</p>
+
+<div><a href="http://developer.nvidia.com/attach/3464" target="_blank" title="http://developer.nvidia.com/attach/3464">GDC2002 - OpenGL Multisample</a></div>
+<div><a href="http://developer.nvidia.com/attach/2064" target="_blank" title="http://developer.nvidia.com/attach/2064">OpenGL Pixel Formats and Multisample Antialiasing</a></div>
+
+<p>Po tomto nutném úvodu se konečně můžeme pustit do práce. Narozdíl od jiných rozšíření, která OpenGL při renderingu využívá, musíme s ARB_MULTISAMPLE počítat už při vytváření okna. Postupujeme tedy následovně:</p>
+
+<ul>
+<li>Vytvoříme okno úplně stejně jako obyčejně</li>
+<li>Dotážeme se, jestli můžeme vyhlazovat pixely</li>
+<li>Pokud je multisampling dostupný, zrušíme okno a vytvoříme ho s novým pixel formátem</li>
+<li>Pro části, které chceme vyhlazovat, jednoduše zavoláme glEnable(GL_ARB_MULTISAMPLE)</li>
+</ul>
+
+<p>Začneme v souboru arb_multisample.cpp. Jako vždy inkludujeme hlavičkové soubory pro OpenGL a knihovnu GLU. O arb_multisample.h se budeme bavit později.</p>
+
+<p class="src0">#include &lt;windows.h&gt;</p>
+<p class="src0">#include &lt;gl/gl.h&gt;</p>
+<p class="src0">#include &lt;gl/glu.h&gt;</p>
+<p></p>
+<p class="src0">#include &quot;arb_multisample.h&quot;</p>
+
+<p>Symbolické konstanty použijeme při definování atributů pixel formátu. Podporuje-li grafická karta multisampling, bude logická proměnná arbMultisampleSupported obsahovat true.</p>
+
+<p class="src0">#define WGL_SAMPLE_BUFFERS_ARB 0x2041<span class="kom">// Symbolické konstanty pro multisampling</span></p>
+<p class="src0">#define WGL_SAMPLES_ARB 0x2042</p>
+<p></p>
+<p class="src0">bool arbMultisampleSupported = false;<span class="kom">// Je multisampling dostupný?</span></p>
+<p class="src0">int arbMultisampleFormat = 0;<span class="kom">// Formát multisamplingu</span></p>
+
+<p>Následující funkce testuje, zda je WGL OpenGL rozšíření na systému dostupné v daném formátu.</p>
+
+<p class="src0">bool WGLisExtensionSupported(const char *extension)<span class="kom">// Je rozšíření podporováno?</span></p>
+<p class="src0">{</p>
+<p class="src1">const size_t extlen = strlen(extension);</p>
+<p class="src1">const char *supported = NULL;</p>
+<p></p>
+<p class="src1"><span class="kom">// Pokud je to možné, pokusí se wglGetExtensionStringARB použít na aktuální DC</span></p>
+<p class="src1">PROC wglGetExtString = wglGetProcAddress(&quot;wglGetExtensionsStringARB&quot;);</p>
+<p></p>
+<p class="src1">if (wglGetExtString)<span class="kom">// WGL OpenGL rozšíření</span></p>
+<p class="src1">{</p>
+<p class="src2">supported = ((char*(__stdcall*)(HDC))wglGetExtString)(wglGetCurrentDC());</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (supported == NULL)<span class="kom">// Zkusí ještě standardní OpenGL řetězec s rozšířeními</span></p>
+<p class="src1">{</p>
+<p class="src2">supported = (char*)glGetString(GL_EXTENSIONS);</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (supported == NULL)<span class="kom">// Pokud selže i toto, není řetězec dostupný</span></p>
+<p class="src1">{</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">for (const char* p = supported; ; p++)<span class="kom">// Testování obsahu řetězce</span></p>
+<p class="src1">{</p>
+<p class="src2">p = strstr(p, extension);<span class="kom">// Hledá podřetězec</span></p>
+<p></p>
+<p class="src2">if (p == NULL)<span class="kom">// Podřetězec není v řetězci</span></p>
+<p class="src2">{</p>
+<p class="src3">return false;<span class="kom">// Rozšíření nebylo nalezeno</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Okolo podřetězce se musí vyskytovat oddělovač (mezera nebo NULL)</span></p>
+<p class="src2">if ((p == supported || p[-1] == ' ') &amp;&amp; (p[extlen] == '\0' || p[extlen] == ' '))</p>
+<p class="src2">{</p>
+<p class="src3">return true;<span class="kom">// Rozšíření bylo nalezeno</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Funkce InitMultisample() je svým způsobem jádrem programu. Dotážeme se na podporu potřebného rozšíření a pokud ji máme, získáme požadovaný pixel formát.</p>
+
+<p class="src0">bool InitMultisample(HINSTANCE hInstance, HWND hWnd, PIXELFORMATDESCRIPTOR pfd)<span class="kom">// Inicializace multisamplingu</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!WGLisExtensionSupported(&quot;WGL_ARB_multisample&quot;))<span class="kom">// Existuje řetězec ve WGL</span></p>
+<p class="src1">{</p>
+<p class="src2">arbMultisampleSupported = false;</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress(&quot;wglChoosePixelFormatARB&quot;);<span class="kom">// Získání pixel formátu</span></p>
+<p></p>
+<p class="src1">if (!wglChoosePixelFormatARB)<span class="kom">// Daný pixel formát není dostupný</span></p>
+<p class="src1">{</p>
+<p class="src2">arbMultisampleSupported = false;</p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">HDC hDC = GetDC(hWnd);<span class="kom">// Získání kontextu zařízení</span></p>
+<p></p>
+<p class="src1">int pixelFormat;</p>
+<p class="src1">int valid;</p>
+<p class="src1">UINT numFormats;</p>
+<p class="src1">float fAttributes[] = {0, 0};</p>
+
+<p>Následující pole atributů slouží pro definování vlastností pixel formátu. Všechny položky kromě WGL_SAMPLE_BUFFERS_ARB a WGL_SAMPLE_ARB jsou standardní, a proto by nám neměly činit potíže. Pokud uspěje hlavní test podpory multisamplingu, který reprezentuje wglChoosePixelFormatARB(), máme vyhráno.</p>
+
+<p class="src1">int iAttributes[] =<span class="kom">// Atributy</span></p>
+<p class="src1">{</p>
+<p class="src2">WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,</p>
+<p class="src2">WGL_SUPPORT_OPENGL_ARB, GL_TRUE,</p>
+<p class="src2">WGL_ACCELERATION_ARB, WGL_FULL_ACCELERATION_ARB,</p>
+<p class="src2">WGL_COLOR_BITS_ARB, 24,</p>
+<p class="src2">WGL_ALPHA_BITS_ARB, 8,</p>
+<p class="src2">WGL_DEPTH_BITS_ARB, 16,</p>
+<p class="src2">WGL_STENCIL_BITS_ARB, 0,</p>
+<p class="src2">WGL_DOUBLE_BUFFER_ARB, GL_TRUE,</p>
+<p class="src2">WGL_SAMPLE_BUFFERS_ARB, GL_TRUE,</p>
+<p class="src2">WGL_SAMPLES_ARB, 4,</p>
+<p class="src2">0, 0</p>
+<p class="src1">};</p>
+<p></p>
+<p class="src1">valid = wglChoosePixelFormatARB(hDC, iAttributes, fAttributes, 1, &amp;pixelFormat, &amp;numFormats);<span class="kom">// Pixel formát pro čtyři vzorkování</span></p>
+<p></p>
+<p class="src1">if (valid &amp;&amp; numFormats &gt;= 1)<span class="kom">// Vráceno true a počet formátů je větší než jedna</span></p>
+<p class="src1">{</p>
+<p class="src2">arbMultisampleSupported = true;</p>
+<p class="src2">arbMultisampleFormat = pixelFormat;</p>
+<p class="src2">return arbMultisampleSupported;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">iAttributes[19] = 2;<span class="kom">// Čtyři vzorkování nejsou dostupná, test dvou</span></p>
+<p></p>
+<p class="src1">valid = wglChoosePixelFormatARB(hDC, iAttributes, fAttributes, 1, &amp;pixelFormat, &amp;numFormats);</p>
+<p></p>
+<p class="src1">if (valid &amp;&amp; numFormats &gt;= 1)</p>
+<p class="src1">{</p>
+<p class="src2">arbMultisampleSupported = true;</p>
+<p class="src2">arbMultisampleFormat = pixelFormat; </p>
+<p class="src2">return arbMultisampleSupported;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return arbMultisampleSupported;<span class="kom">// Vrácení validního formátu</span></p>
+<p class="src0">}</p>
+
+<p>Kód pro detekci multisamplingu máme hotov, teď modifikujeme vytváření okna. Inkludujeme hlavičkový soubor arb_multisample.h a vytvoříme funkční prototypy.</p>
+
+<p class="src0">#include &quot;arb_multisample.h&quot;<span class="kom">// Hlavičkový soubor pro multisampling</span></p>
+<p></p>
+<p class="src0">BOOL DestroyWindowGL(GL_Window* window);<span class="kom">// Funkční prototypy</span></p>
+<p class="src0">BOOL CreateWindowGL(GL_Window* window);</p>
+
+<p>Následující výpis kódu patří do funkce CreateWindowGL(). Původní kód povětšinou zůstane, ale uděláme v něm několik změn. V základu potřebujeme vyřešit problém, který spočívá v tom, že nemůžeme položit dotaz na pixel formát (detekovat přítomnost multisamplingu), dokud není vytvořeno okno. Nicméně naproti tomu nemůžeme vytvořit okno s vyhlazováním, dokud nemáme pixel formát, který ho podporuje. Trochu se to podobá otázce, zda bylo první vejce nebo slepice. Implementujeme dvouprůchodový systém - nejprve vytvoříme obyčejné okno, dotážeme se na pixel formát a pokud je multisampling podporován, zrušíme okno a vytvoříme správné. Trochu těžkopádné, ale neznám jiný způsob.</p>
+
+<p class="src0"><span class="kom">// Funkce CreateWindowGL()</span></p>
+<p class="src1">window-&gt;hDC = GetDC(window-&gt;hWnd);<span class="kom">// Grabování kontextu zařízení</span></p>
+<p></p>
+<p class="src1">if (window-&gt;hDC == 0)<span class="kom">// Podařilo se ho získat?</span></p>
+<p class="src1">{</p>
+<p class="src2">DestroyWindow(window-&gt;hWnd);<span class="kom">// Zrušení okna</span></p>
+<p class="src2">window-&gt;hWnd = 0;<span class="kom">// Nulování handle</span></p>
+<p></p>
+<p class="src2">return FALSE;<span class="kom">// Neúspěch</span></p>
+<p class="src1">}</p>
+
+<p>Při prvním průchodu touto funkcí (další průchody např. při přepínání do/z fullscreenu) není možné multisampling natvrdo zapnout, takže jsme vytvořili pouze obyčejné okno. Pokud máme jistotu, že ho můžeme použít, nastavíme pixel formát na arbMultiSampleFormat.</p>
+
+<p class="src1">if(!arbMultisampleSupported)<span class="kom">// Multisampling není podporován</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Vytvoření normálního okna</span></p>
+<p class="src2">PixelFormat = ChoosePixelFormat(window-&gt;hDC, &amp;pfd);<span class="kom">// Získá kompatibilní pixel formát</span></p>
+<p></p>
+<p class="src2">if (PixelFormat == 0)<span class="kom">// Podařilo se ho získat?</span></p>
+<p class="src2">{</p>
+<p class="src3">ReleaseDC(window-&gt;hWnd, window-&gt;hDC);<span class="kom">// Uvolnění kontextu zařízení</span></p>
+<p class="src3">window-&gt;hDC = 0;<span class="kom">// Nulování proměnné</span></p>
+<p class="src3">DestroyWindow(window-&gt;hWnd);<span class="kom">// Zrušení okna</span></p>
+<p class="src3">window-&gt;hWnd = 0;<span class="kom">// Nulování handle</span></p>
+<p></p>
+<p class="src3">return FALSE;<span class="kom">// Neúspěch</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Multisampling je podporován</span></p>
+<p class="src1">{</p>
+<p class="src2">PixelFormat = arbMultisampleFormat;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (SetPixelFormat(window-&gt;hDC, PixelFormat, &amp;pfd) == FALSE)<span class="kom">// Zkusí nastavit pixel formát</span></p>
+<p class="src1">{</p>
+<p class="src2">ReleaseDC(window-&gt;hWnd, window-&gt;hDC);</p>
+<p class="src2">window-&gt;hDC = 0;</p>
+<p class="src2">DestroyWindow(window-&gt;hWnd);</p>
+<p class="src2">window-&gt;hWnd = 0;</p>
+<p></p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">window-&gt;hRC = wglCreateContext(window-&gt;hDC);<span class="kom">// Zkusí získat rendering kontext</span></p>
+<p></p>
+<p class="src1">if (window-&gt;hRC == 0)<span class="kom">// Podařilo se ho získat?</span></p>
+<p class="src1">{</p>
+<p class="src2">ReleaseDC(window-&gt;hWnd, window-&gt;hDC);</p>
+<p class="src2">window-&gt;hDC = 0;</p>
+<p class="src2">DestroyWindow(window-&gt;hWnd);</p>
+<p class="src2">window-&gt;hWnd = 0;</p>
+<p></p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (wglMakeCurrent(window-&gt;hDC, window-&gt;hRC) == FALSE)<span class="kom">// Aktivuje rendering kontext</span></p>
+<p class="src1">{</p>
+<p class="src2">wglDeleteContext(window-&gt;hRC);</p>
+<p class="src2">window-&gt;hRC = 0;</p>
+<p class="src2">ReleaseDC(window-&gt;hWnd, window-&gt;hDC);</p>
+<p class="src2">window-&gt;hDC = 0;</p>
+<p class="src2">DestroyWindow(window-&gt;hWnd);</p>
+<p class="src2">window-&gt;hWnd = 0;</p>
+<p></p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+
+<p>Okno bylo vytvořeno, takže máme k dispozici handle pro dotaz na multisampling. Pokud je podporován, zrušíme okno a vytvoříme ho s novým pixel formátem.</p>
+
+<p class="src1">if(!arbMultisampleSupported &amp;&amp; CHECK_FOR_MULTISAMPLE)<span class="kom">// Je multisampling dostupný?</span></p>
+<p class="src1">{</p>
+<p class="src2"></p>
+<p class="src2">if(InitMultisample(window-&gt;init.application-&gt;hInstance, window-&gt;hWnd, pfd))<span class="kom">// Inicializace multisamplingu</span></p>
+<p class="src2">{</p>
+<p class="src3">DestroyWindowGL(window);</p>
+<p class="src3">return CreateWindowGL(window);</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">ShowWindow(window-&gt;hWnd, SW_NORMAL);<span class="kom">// Zobrazí okno</span></p>
+<p class="src1">window-&gt;isVisible = TRUE;</p>
+<p></p>
+<p class="src1">ReshapeGL(window-&gt;init.width, window-&gt;init.height);<span class="kom">// Oznámí rozměry okna OpenGL</span></p>
+<p class="src1">ZeroMemory(window-&gt;keys, sizeof(Keys));<span class="kom">// Nulování pole indikující stisk kláves</span></p>
+<p class="src1">window-&gt;lastTickCount = GetTickCount();<span class="kom">// Inicializuje časovou proměnnou</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>OK, nastavování je kompletní, dostáváme se k zábavnější části, pro kterou jsme se tak snažili. Naštěstí se sdružení ARB rozhodlo učinit multisampling dynamickým, což nám ho umožňuje kdykoli zapnout nebo vypnout. Stačí jednoduché glEnable() a glDisable().</p>
+
+<p class="src0">glEnable(GL_MULTISAMPLE_ARB);</p>
+<p class="src1"><span class="kom">// Vykreslení vyhlazovaných objektů</span></p>
+<p class="src0">glDisable(GL_MULTISAMPLE_ARB);</p>
+
+<p>A to je vše. Až spustíte ukázkové demo, uvidíte, jak kvalitně vyhlazování zlepšuje celkový vzhled scény.</p>
+
+<p class="autor">napsal: Colt McAnlis - MainRoach <span class="transform_email">&lt;duhroach (zavináč) hotmail.com&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson46.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson46_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson46.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson46.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_46_big.jpg" class="nehe_velky" alt="Lekce 46" /></div>
+<p class="okolni_lekce"><a href="tut_45.php">&lt;&lt;&lt; Lekce 45</a> | <a href="tut_47.php">Lekce 47 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">technická</div>
+<div class="d_o_datumcas">10.04.2005 - 18:28:28</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_46.php&j=0">technická</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">08.01.2007 - 21:39:59</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_46.php&j=1">Co znamená...</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kasom</div>
+<div class="d_o_datumcas">13.05.2007 - 05:49:48</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_46.php&j=2">Re: Co znamená...</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kasom</div>
+<div class="d_o_datumcas">13.05.2007 - 05:57:51</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_46.php&j=3">Re: Co znamená...</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">16.07.2007 - 16:25:28</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_46.php&j=4">Re: Co znamená...</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_46.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='cs'>
+<head>
+<title>OpenGL (8.) - Slovníček pojmů v OpenGL</title>
+<meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="content-language" content="cs"/>
+<meta name="description" content="Dnes jsem si pro vás přichystal menší slovníček důležitých pojmů, se kterými se můžete setkat při programování v OpenGL. Je sice v only-english verzi, ale Vám jako programátorům by to nemělo zas tak moc vadit. Je potřeba si zvykat :-)."/>
+<meta name="Author" content="Roman Schulz, rschulz@centrum.cz"/>
+<meta name="robots" content="index,follow"/>
+<meta name="Copyright" content="(C) 2005 Roman Schulz, All rights reserved."/>
+<link href="index.php?zobraz=articles&amp;rss=10" rel="alternate" type="application/xml" title="rss články"/>
+<link href="index.php?zobraz=blog&amp;rss=10" rel="alternate" type="application/xml" title="rss blog"/>
+<link href="index.php?zobraz=discussion&amp;rss=30" rel="alternate" type="application/xml" title="rss komentáře"/>
+<link rel="stylesheet" href="/skin/new/styl.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="web">
+<div id="celek">
+  <div id="top">
+    <img src="/skin/new/img/top1.jpg" alt="" width="800" height="115" /> 
+		<div id="nadpis"><a href="http://www.pc-guru.cz">PC-guru.cz</a></div>
+  </div>
+  <div class="menuh">
+		<a class="buttonh" href="kontakni-informace">Kontaktní informace</a><a class="buttonh" href="inzerce">Výměna odkazů</a><a class="buttonh" href="historie-serveru">Historie</a>  </div>
+  
+  <div id="obal">
+    <div class="text">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2007-05-24: top
+google_ad_channel = "4038297255";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><a href="http://linkuj.cz/?id=linkuj&amp;url=http://www.pc-guru.cz/slovnik-pojmu-opengl&amp;title=OpenGL (8.) - Slovníček pojmů v OpenGL" rel="nofollow"><img style="float: right;" src="http://linkuj.cz/img/badge.png" alt="Dejte tomuto článku hlas!" title="Dejte tomuto článku hlas!"/></a><h1>OpenGL (8.) - Slovníček pojmů v OpenGL</h1><i>Dnes jsem si pro vás přichystal menší slovníček důležitých pojmů, se kterými se můžete setkat při programování v OpenGL. Je sice v only-english verzi, ale Vám jako programátorům by to nemělo zas tak moc vadit. Je potřeba si zvykat :-).</i><br/><hr/><br/><DL>	
+<DT><B>A</B>
+<DT>aliasing
+<DD>A rendering technique that assigns to pixels the color of the primitive being rendered, regardless of whether that primitive covers all of the pixel's area or only a portion of the pixel's area. This results in jagged edges, or jaggies 
+<DT>alpha
+<DD>A fourth color component typically used to control color blending. The alpha component is never displayed directly. By convention, OpenGL alpha corresponds to opacity rather than transparency, meaning an alpha value of 1.0 implies complete opacity, and an alpha value of 0.0 implies complete transparency.
+<DT>animation
+<DD>Generating repeated renderings of a scene, with smoothly changing viewpoint and/or object positions, quickly enough that the illusion of motion is achieved. OpenGL animation almost always is done using double-buffering.
+<DT>antialiasing
+<DD>A rendering technique that assigns pixel colors based on the fraction of the pixel's area that's covered by the primitive being rendered. Antialiased rendering reduces or eliminates the jaggies that result from aliased rendering.
+<DT>application-specific clipping
+<DD>Clipping of primitives against planes in eye coordinates. The planes are specified by the application using glClipPlane( ).
+
+<DT><BR><BR><B>B</B>
+<DT>back face
+<DD>See face 
+<DT>bit
+<DD>Binary digit. A state variable that has only two possible values: 0 or 1. Binary numbers are constructions of one or more bits.
+<DT>bitmap
+<DD>A rectangular array of bits. Also, the primitive rendered by the glBitmap( ) command, which uses its bitmap parameter as a mask.
+<DT>bitplane
+<DD>A rectangular array of bits mapped one-to-one with pixels. The frame buffer is a stack of bitplanes.
+<DT>blending
+<DD>Reduction of two color components to one component, usually as a linear interpolation between the two components.
+<DT>buffer
+<DD>A group of bitplanes that store a single component (such as depth or green) or a single index (such as the color index or the stencil index). Sometimes the red, green, blue, and alpha buffers together are referred to as the color buffer, rather than the color buffers.
+
+<DT><BR><BR><B>C</B>
+<DT>client
+<DD>The computer from which OpenGL commands are issued. The computer that issues OpenGL commands can be connected through a network to a different computer that executes the commands, or commands can be issued and executed on the same computer. See also server 
+<DT>client memory
+<DD>The main memory (where program variables are stored) of the client computer.
+<DT>clip coordinates
+<DD>The coordinate system that follows transformation by the projection matrix and that precedes perspective division. View-volume clipping is done in clip coordinates, but application-specific clipping is not.
+<DT>clipping
+<DD>Elimination of the portion of a geometric primitive that's outside the half-space defined by a clipping plane. Points are simply rejected if outside. The portion of a line or of a polygon that's outside the half-space is eliminated, and additional vertices are generated as necessary to complete the primitive within the clipping half-space. Geometric primitives and the current raster position (when specified) are always clipped against the six half-spaces defined by the left, right, bottom, top, near, and far planes of the view volume. Applications can specify optional application-specific clipping planes to be applied in eye coordinates.
+<DT>color index
+<DD>A single value that represents a color by name, rather than by value. OpenGL color indexes are treated as continuous values (for example, floating-point numbers) while operations such as interpolation and dithering are performed on them. Color indexes stored in the frame buffer are always integer values, however. Floating-point indexes are converted to integers by rounding to the nearest integer value.
+<DT>color-index mode
+<DD>An OpenGL context is in color index mode if its color buffers store color indexes, rather than red, green, blue, and alpha color components.
+<DT>color map
+<DD>A table of index-to-RGB mappings that's accessed by the display hardware. Each color index is read from the color buffer, converted to an RGB triple by lookup in the color map, and sent to the monitor.
+<DT>component
+<DD>A single, continuous (for example, floating-point) value that represents an intensity or quantity. Usually, a component value of zero represents the minimum value or intensity, and a component value of one represents the maximum value or intensity, though other normalizations are sometimes used. Because component values are interpreted in a normalized range, they are specified independent of actual resolution. For example, the RGB triple (1, 1, 1) is white, regardless of whether the color buffers store 4, 8, or 12 bits each.
+Out-of-range components are typically clamped to the normalized range, not truncated or otherwise interpreted. For example, the RGB triple (1.4, 1.5, 0.9) is clamped to (1.0, 1.0, 0.9) before it's used to update the color buffer. Red, green, blue, alpha, and depth are always treated as components, never as indexes.
+<DT>context
+<DD>A complete set of OpenGL state variables. Note that frame buffer contents are not part of the OpenGL state, but that the configuration of the frame buffer is.
+<DT>convex
+<DD>A polygon is convex if no straight line in the plane of the polygon intersects the polygon more than twice.
+<DT>convex hull
+<DD>The smallest convex region enclosing a specified group of points. In two dimensions, the convex hull is found conceptually by stretching a rubber band around the points so that all of the points lie within the band.
+<DT>coordinate system
+<DD>In n-dimensional space, a set of n linearly independent vectors anchored to a point (called the origin). A group of coordinates specifies a point in space (or a vector from the origin) by indicating how far to travel along each vector to reach the point (or tip of the vector).
+<DT>culling
+<DD>The process of eliminating a front face or back face of a polygon so that it isn't drawn.
+<DT>current matrix
+<DD>A matrix that transforms coordinates in one coordinate system to coordinates of another system. There are three current matrices in OpenGL: the modelview matrix transforms object coordinates (coordinates specified by the programmer) to eye coordinates; the perspective matrix transforms eye coordinates to clip coordinates; the texture matrix transforms specified or generated texture coordinates as described by the matrix. Each current matrix is the top element on a stack of matrices. Each of the three stacks can be manipulated with OpenGL matrix-manipulation commands.
+<DT>current raster position
+<DD>A window coordinate position that specifies the placement of an image primitive when it's rasterized. The current raster position, and other current raster parameters, are updated when glRasterpos( ) is called.
+
+<DT><BR><BR><B>D</B>
+<DT>depth
+<DD>Generally refers to the z window coordinate.
+<DT>depth-cueing
+<DD>A rendering technique that assigns color based on distance from the viewpoint.
+<DT>display list
+<DD>A named list of OpenGL commands. Display lists are always stored on the server, so display lists can be used to reduce the network traffic in client-server environments. The contents of a display list may be preprocessed, and might therefore execute more efficiently than the same set of OpenGL commands executed in immediate mode. Such preprocessing is especially important for computing intensive commands such as glTexImage( ).
+<DT>dithering
+<DD>A technique for increasing the perceived range of colors in an image at the cost of spatial resolution. Adjacent pixels are assigned differing color values. When viewed from a distance, these colors seem to blend into a single intermediate color. The technique is similar to the half-toning used in black-and-white publications to achieve shades of gray.
+<DT>double-buffering
+<DD>OpenGL contexts with both front and back color buffers are double-buffered. Smooth animation is accomplished by rendering into only the back buffer (which isn't displayed), then causing the front and back buffers to be swapped. 
+
+<DT><BR><BR><B>E</B>
+<DT>element
+<DD>A single component or index.
+<DT>evaluation
+<DD>The OpenGL process of generating object-coordinate vertices and parameters from previously specified Bé
+zier equations.
+<DT>execute
+<DD>An OpenGL command is executed when it's called in immediate mode or when the display list that it's a part of is called.
+<DT>eye coordinates
+<DD>The coordinate system that follows transformation by the modelview matrix and that precedes transformation by the projection matrix. Lighting and application-specific clipping are done in eye coordinates.
+
+<DT><BR><BR><B>F</B>
+<DT>face
+<DD>One side of a polygon. Each polygon has two faces: a front face and a back face. Only one face or the other is ever visible in the window. Whether the back or front face is visible is effectively determined after the polygon is projected onto the window. After this projection, if the polygon's edges are directed clockwise, one of the faces is visible; if directed counterclockwise, the other face is visible. Whether clockwise corresponds to front or back (and counterclockwise corresponds to back or front) is determined by the OpenGL programmer.
+<DT>flat shading
+<DD>Refers to coloring a primitive with a single, constant color across its extent, rather than smoothly interpolating colors across the primitive. See Gouraud shading 
+<DT>fog
+<DD>A rendering technique that can be used to simulate atmospheric effects such as haze, fog, and smog by fading object colors to a background color based on distance from the viewer. Fog also aids in the perception of distance from the viewer, giving a depth cue 
+<DT>font
+<DD>A group of graphical character representations usually used to display strings of text. The characters may be roman letters, mathematical symbols, Asian ideograms, Egyptian hieroglyphs, and so on.
+<DT>fragment
+<DD>Fragments are generated by the rasterization of primitives. Each fragment corresponds to a single pixel and includes color, depth, and sometimes texture-coordinate values.
+<DT>frame buffer
+<DD>All the buffers of a given window or context. Sometimes includes all the pixel memory of the graphics hardware accelerator.
+<DT>front face
+<DD>See face 
+<DT>frustum
+<DD>The view volume warped by perspective division.
+
+<DT><BR><BR><B>G</B>
+<DT>gamma correction
+<DD>A function applied to colors stored in the frame buffer to correct for the nonlinear response of the eye (and sometimes of the monitor) to linear changes in color-intensity values.
+<DT>geometric model
+<DD>The object-coordinate vertices and parameters that describe an object. Note that OpenGL doesn't define a syntax for geometric models, but rather a syntax and semantics for the rendering of geometric models.
+<DT>geometric object
+<DT>Geometric model.
+<DT>geometric primitive
+<DD>A point, a line, or a polygon.
+<DT>Gouraud shading
+<DD>Smooth interpolation of colors across a polygon or line segment. Colors are assigned at vertices and linearly interpolated across the primitive to produce a relatively smooth variation in color. Also called smooth shading.
+<DT>group
+<DD>Each pixel of an image in client memory is represented by a group of one, two, three, or four elements. Thus, in the context of a client memory image, a group and a pixel are the same thing.
+
+<DT><BR><BR><B>H</B>
+<DT>half-space
+<DD>A plane divides space into two half-spaces.
+<DT>homogenous coordinates
+<DD>A set of n+1 coordinates used to represent points in n-dimensional projective space. Points in projective space can be thought of as points in Euclidean space together with some points at infinity. The coordinates are homogenous because a scaling of each of the coordinates by the same non-zero constant doesn't alter the point to which the coordinates refer. Homogeneous coordinates are useful in the calculations of projective geometry, and thus in computer graphics, where scenes must be projected onto a window.
+
+<DT><BR><BR><B>I</B>
+<DT>image
+<DD>A rectangular array of pixels, either in client memory or in the frame buffer.
+<DT>image primitive
+<DD>A bitmap or an image.
+<DT>immediate mode
+<DD>Execution of OpenGL commands when they're called, rather than from a display list. No immediate-mode bit exists; the mode in immediate mode refers to usage of OpenGL, rather than to a specific bit of OpenGL state.
+<DT>index
+<DD>A single value that's interpreted as an absolute value, rather than as a normalized value in a specified range (as is a component). Color indexes are the names of colors, which are dereferenced by the display hardware using the color map. Indexes are typically masked, rather than clamped, when out of range. For example, the index 0xf7 is masked to 0x7 when written to a 4-bit buffer (color or stencil). Color indexes and stencil indexes are always treated as indexes, never as components.
+<DT>IRIS GL
+<DD>Silicon Graphics' proprietary graphics library, developed from 1982 through 1992. OpenGL was designed with IRIS GL as a starting point.
+
+<DT><BR><BR><B>J</B>
+<DT>jaggies
+<DD>Artifacts of aliased rendering. The edges of primitives that are rendered with aliasing are jagged rather than smooth. A near-horizontal aliased line, for example, is rendered as a set of horizontal lines on adjacent pixel rows, rather than as a smooth, continuous line.
+
+<DT><BR><BR><B>L</B>
+<DT>lighting
+<DD>The process of computing the color of a vertex based on current lights, material properties, and lighting-model modes.
+<DT>line
+<DD>A straight region of finite width between two vertices. (Unlike mathematical lines, OpenGL lines have finite width and length.) Each segment of a strip of lines is itself a line.
+<DT>luminance
+<DD>The perceived brightness of a surface. Often refers to a weighted average of red, green, and blue color values that gives the perceived brightness of the combination.
+
+<DT><BR><BR><B>M</B>
+<DT>matrices
+<DD>Plural of matrix.
+<DT>matrix
+<DD>A two-dimensional array of values. OpenGL matrices are all 4x4, though when they are stored in client memory they're treated as 1x16 single-dimension arrays.
+<DT>modelview matrix
+<DD>The 4x4 matrix that transforms points, lines, polygons, and raster positions from object coordinates to eye coordinates.
+<DT>monitor
+<DD>The device that displays the image in the frame buffer.
+<DT>motion blurring
+<DD>A technique that simulates what you get on a piece of film when you take a picture of a moving object, or when you move the camera when you take a picture of a stationary object. In animations without motion blur, moving objects can appear jerky.
+
+<DT><BR><BR><B>N</B>
+<DT>network
+<DD>A connection between two or more computers that allows each to transfer data to and from the others.
+<DT>nonconvex
+<DD>A polygon is nonconvex if there exists a line in the plane of the polygon that intersects the polygon more than twice.
+<DT>normal
+<DD>A three-component plane equation that defines the angular orientation, but not position, of a plane or surface.
+<DT>normalize
+<DD>Divide each of the components of a normal by the square root of the sum of their squares. Then, if the normal is thought of as a vector from the origin to the point (nx˘, ny˘, nx˘), this vector has unit length<BR>
+nx˘ = nx/factor<BR>
+ny˘ = ny/factor<BR>
+nz˘ = nz/factor
+<DT>normal vector
+<DD>Same as normal.
+<DT>NURBS
+<DD>Non-Uniform Rational B-Spline. A common way to specify parametric curves and surfaces.  
+
+<DT><BR><BR><B>O</B>
+<DT>object
+<DD>An object-coordinate model that's rendered as a collection of primitives.
+<DT>object coordinates
+<DD>Coordinate system prior to any OpenGL transformation.
+<DT>orthographic
+<DD>Nonperspective projection, as in some engineering drawings, with no foreshortening.
+
+<DT><BR><BR><B>P</B>
+<DT>parameter
+<DD>A value passed as an argument to an OpenGL command. Sometimes one of the values passed by reference to an OpenGL command.
+<DT>perspective division
+<DD>The division of x, y, and z by w, carried out in clip coordinates.
+<DT>pixel
+<DD>Picture element. The bits at location (x, y) of all the bitplanes in the frame buffer constitute the single pixel (x, y
+). In an image in client memory, a pixel is one group of elements. In OpenGL window coordinates, each pixel corresponds to a 1.0x1.0 screen area. The coordinates of the lower left corner of the pixel names x, y are (x, y
+), and the upper right corner are (x+1, y+1).
+<DT>point
+<DD>An exact location in space, which is rendered as a finite-diameter dot.
+<DT>polygon
+<DD>A near-planar surface bounded by edges specified by vertices. Each triangle of a triangle mesh is a polygon, as is each quadrilateral of a quadrilateral mesh. The rectangle specified by glRect*( ) is also a polygon.
+<DT>primitive
+<DD>A shape (such as a point, line, polygon, bitmap or image) that can be drawn, stored, and manipulated as a discrete entity; elements from which large graphic designs are created.
+<DT>projection matrix
+<DD>The 4x4 matrix that transforms points, lines, polygons, and raster positions from eye coordinates to clip coordinates.
+
+<DT><BR><BR><B>Q</B>
+<DT>quadrilateral
+<DD>A polygon with four edges.
+
+<DT><BR><BR><B>R</B>
+
+<DT>rasterize
+<DD>Convert a projected point, line, or polygon, or the pixels of a bitmap or image, to fragments, each corresponding to a pixel in the frame buffer. Note that all primitives are rasterized, not just points, lines, and polygons.
+
+<DT>rectangle
+<DD>A quadrilateral whose alternate edges are parallel to each other in object coordinates. Polygons specified with glRect*( ) are always rectangles; other quadrilaterals might be rectangles.
+
+<DT>rendering
+<DD>Conversion of primitives specified in object coordinates to an image in the frame buffer. Rendering is the primary operation of OpenGL.
+
+<DT>RGBA
+<DD>Red, Green, Blue, Alpha
+
+<DT>RGBA mode
+<DD>An OpenGL context is in RGBA mode if its color buffers store red, green, blue, and alpha color components, rather than color indexes.
+
+<DT><BR><BR><B>S</B>
+<DT>server
+<DD>The computer on which OpenGL commands are executed. This might differ from the computer from which commands are issued. See client 
+
+<DT>shading
+<DD>The process of interpolating color within the interior of a polygon, or between the vertices of a line, during rasterization.
+
+<DT>single-buffering
+<DD>OpenGL contexts that don't have back color buffers are single-buffered.
+
+<DT>stipple
+<DD>A one- or two-dimensional binary pattern that defeats the generation of fragments where its value is zero. Line stipples are one-dimensional and are applied relative to the start of a line. Polygon stipples are two-dimensional and are applied with a fixed orientation to the window.
+
+<DT><BR><BR><B>T</B>
+
+<DT>tessellation
+<DD>Reduction of a portion of an analytic surface to a mesh of polygons, or of a portion of an analytic curve to a sequence of lines.
+
+<DT>texel
+<DD>A texture element. A texel is obtained from texture memory and represents the color of the texture to be applied to a corresponding fragment.
+
+<DT>texture
+<DD>A one- or two-dimensional image used to modify the color of fragments produced by rasterization.
+
+<DT>texture mapping
+<DD>The process of applying an image (the texture) to a primitive. Texture mapping is often used to add realism to a scene. For example, you could apply a picture of a building facade to a polygon representing a wall.
+
+<DT>texture matrix
+<DD>The 4x4 matrix that transforms texture coordinates from the coordinates that they're specified in to the coordinates that are used for interpolation and texture lookup.
+
+<DT>transformation
+<DD>A warping of space. In OpenGL, transformations are limited to projective transformations that include anything that can be represented by a 4x4 matrix. Such transformations include rotations, translations, (nonuniform) scalings along the coordinate axes, perspective transformations, and combinations of these.
+
+<DT>triangle
+<DD>A polygon with three edges. Triangles are always convex.
+
+<DT><BR><BR><B>V</B>
+<DT>vertex
+
+<DD>A point in three-dimensional space.
+<DT>vertices
+<DD>Preferred plural of vertex.
+
+<DT>viewpoint
+<DD>The origin of either the eye- or the clip-coordinate system, depending on context. (For example, when discussing lighting, the viewpoint is the origin of the eye-coordinate system. When discussing projection, the viewpoint is the origin of the clip-coordinate system.) With a typical projection matrix, the eye-coordinate and clip-coordinate origins are at the same location.
+
+<DT>view volume
+<DD>The volume in clip coordinates whose coordinates satisfy the three conditions
+
+<DT><BR><BR><B>W</B>
+
+<DT>window
+<DD>A subregion of the frame buffer, usually rectangular, whose pixels all have the same buffer configuration. An OpenGL context renders to a single window at a time.
+
+<DT>window-aligned
+<DD>When referring to line segments or polygon edges, implies that these are parallel to the window boundaries. (In OpenGL, the window is rectangular, with horizontal and vertical edges). When referring to a polygon pattern, implies that the pattern is fixed relative to the window origin.
+
+<DT>window coordinates
+<DD>The coordinate system of a window. It's important to distinguish between the names of pixels, which are discrete, and the window-coordinate system, which is continuous. For example, the pixel at the lower-left corner of a window is a pixel (0, 0); the window coordinates of the center of this pixel are (0.5, 0.5, z). Note that window coordinates include a depth, or z, component, and that this component is continuous as well.
+
+<DT>wireframe
+<DD>A representation of an object that contains line segments only. Typically, the line segments indicate polygon edges.
+
+<DT><BR><BR><B>X</B>
+<DT>X Window System
+<DD>A window system used by many of the machines on which OpenGL is implemented.
+</DL><br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_alternate_color = "FFFFFF";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-07-08: bottom
+google_ad_channel = "1008048823";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><p>Děkuji, že jste se rozhodl(a) přečíst tento článek. Budu rád i za komentář. Pokud Vás tento článek
+zaujal a rádi byste jej doporučili ostatním, podpořte mně prosím tím, že věnujete minutku svého času a uděláte mi reklamu na linkuj.cz, vybrali.sme.sk či jagg.cz. Přeji příjemné čtení</p><h2>Poslední články</h2><ul style="margin-left: 20px"><li><a href="detekce-kolizi-v-opengl-nacteni-textury-jpg">OpenGL (7.) - Detekce kolizí, načtení mapy a textury v jpg souboru</a></li><li><a href="co-je-to-minigl">OpenGL (6.) - Co je to MiniGL</a></li><li><a href="opengl-vertex-array-gldrawelements">OpenGL (5.) - Urychlení pomocí glDrawElements</a></li><li><a href="system-speaker-a-destrukce-souboru">Delphi (7.) - Syst. repro a autodestrukce souboru</a></li><li><a href="opengl-fullscreen">OpenGL (4.) - FullScreen</a></li><li><a href="3d-studio-max-horici-zapalka-ohen">3D Studio MAX (8.) - Tvorba hořící zápalky</a></li><li><a href="techniky-zobrazeni-3d-doom">'DOOM' 3D Engine techniques</a></li><li><a href="pohyb-ve-3d-scene">OpenGL (3.) - Procházení scénou</a></li><li><a href="3d-studio-max-3d-text">3D Studio MAX (7.) - 3D text</a></li><li><a href="3d-studio-max-dym-smoke">3D Studio MAX (6.) - Vznášející se dým</a></li><li><a href="adobe-photoshop-textura-vodni-hladiny">Adobe Photoshop (3.) - Textura vodní hladiny</a></li><li><a href="grafika-a-zvuky-v-delphi">Delphi (6.) - Grafika a zvuky</a></li><li><a href="zajimave-zdrojaky-pro-delphi-2">Delphi (5.) - Zajímavé zdrojáky 2.</a></li><li><a href="3d-studio-max-mlha-fog">3D Studio MAX (5.) - Přízemní mlha ve 3D Studiu MAX</a></li><li><a href="adobe-photoshop-hvezdna-obloha-deep-stars">Photoshop tutoriály (2.) - Temná hvězdná obloha</a></li><li><a href="opengl-ctverec-s-texturou">OpenGL (2.) - Čtverec s texturou</a></li><li><a href="nastaveni-opengl-zobrazeni-barevneho-ctverce">OpenGL (1.) - Čtverec s interpolací barvy</a></li><li><a href="3d-studio-max-laser">3D Studio MAX (4.) - Jak vytvořit jednoduchý laser</a></li><li><a href="zajimave-zdrojaky-pro-delphi-1">Delphi (4.) - Zajímavé zdrojáky</a></li><li><a href="3d-studio-max-tvorba-krajiny-landscape">3D Studio MAX (3.) - Tvorba 3D krajiny</a></li><li><a href="detekce-typu-procesoru-jeho-frekvence-vytizeni">Delphi (3.) - Detekce typu procesoru, jeho frekvence a využití</a></li><li><a href="adobe-photoshop-ohniva-koule-fireball">Photoshop tutoriály (1.) - Ohnivé koule</a></li><li><a href="ini-soubory-a-registr-windows-v-delphi">Delphi (2.) - Práce se soubory, *.ini soubory a registry</a></li><li><a href="jak-zobrazit-startovaci-obrazek">Delphi (1.) - Jak zobrazit startovací obrázek</a></li><li><a href="3d-studio-max-ohniva-exploze-explosion">3D Studio MAX (2.) - Jak na ohnivé explose</a></li></ul><h2>Diskuse ke článku</h2><a id="disc"></a>Zatím nikdo nevložil komentář. Chcete být první?<br/><a href="index.php?zobraz=discussion&amp;add=1&amp;type=1&amp;subtype=11&amp;url=%2Fslovnik-pojmu-opengl" rel="nofollow">Přidání příspěvku </a>    </div>
+    <div class="menuv">
+		<span class="nadpisv">Hlavní menu</span>
+		<a href="/" class="buttonv">Blog</a>
+		<a href="index.php?zobraz=ankety" class="buttonv">Ankety</a>
+		<a href="index.php?zobraz=articles" class="buttonv">Články</a>
+
+		<span class="nadpisv">Články</span>
+		<a class="buttonv" href="programovani">Programování</a><a class="buttonv" href="grafika-2d-3d">Grafika</a>
+		<span class="nadpisv">Tip</span>
+		<a class="buttonv" href="index.php?zobraz=blog&amp;rss=10">RSS - Blog</a>
+		<a class="buttonv" href="index.php?zobraz=articles&amp;rss=10">RSS - Články</a>
+		<a class="buttonv" href="index.php?zobraz=discussion&amp;rss=30">RSS - Komentáře</a>
+		<a href="index.php?zobraz=search" class="buttonv">Hledej na pc-guru.cz</a>
+     
+		<div style="margin-left: 5px">   
+<br/><script type="text/javascript"><!--
+google_ad_client = "pub-8453529582371782";
+google_ad_width = 120;
+google_ad_height = 90;
+google_ad_format = "120x90_0ads_al_s";
+//2007-07-07: adsense left
+google_ad_channel = "1408597348";
+google_color_border = "9C9CE8";
+google_color_bg = "9C9CE8";
+google_color_link = "4F4F8B";
+google_color_text = "000000";
+google_color_url = "CCCCF4";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+		
+				<span class="nadpisv">Anketa: Jak trávíte léto?</span><a class="buttonv" href="jak-travite-leto?vote=1" rel="nofollow">Pracovně&nbsp;</a><div class="ank_box_count" style="width: 45.6532029843px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=2" rel="nofollow">Budu cestovat&nbsp;</a><div class="ank_box_count" style="width: 122px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=3" rel="nofollow">Budu grilovat&nbsp;</a><div class="ank_box_count" style="width: 45.7149472601px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=4" rel="nofollow">U piva&nbsp;</a><div class="ank_box_count" style="width: 62.0154360689px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=5" rel="nofollow">Spát s holkama/klukama&nbsp;</a><div class="ank_box_count" style="width: 47.1659377412px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=6" rel="nofollow">Festivaly&nbsp;</a><div class="ank_box_count" style="width: 35.3419089272px;">&nbsp;</div><a class="buttonv" href="jak-travite-leto?vote=7" rel="nofollow">Nic z uvedeného&nbsp;</a><div class="ank_box_count" style="width: 46.6719835349px;">&nbsp;</div>12651 hlasů, <a class="box_ank_prisp" href="jak-travite-leto#disc">10 příspěvků</a>
+<span class="nadpisv">Počítadlo</span><div style="text-align: center;"><script type="text/javascript"><!--
+document.write ('<img src="http://toplist.cz/count.asp?id=28945&amp;logo=mc&amp;http='+escape(document.referrer)+'&amp;wi='+escape(window.screen.width)+'&amp;he='+escape(window.screen.height)+'&amp;cd='+escape(window.screen.colorDepth)+'&amp;t='+escape(document.title)+'" width="88" height="60" alt="TOPlist" />');
+//--></script><noscript><div><img src="http://toplist.cz/count.asp?id=28945&amp;logo=bc" alt="TOPlist" width="88" height="60" /></div></noscript></div>    </div>
+  </div>
+  <!--<div class="novinky">
+ 	< ?ShowNewsBox($limit = 5);?>
+  </div>-->  
+</div>
+  <div class="paticka"> <strong>&copy;PC-guru.cz 2000-2007</strong> | Optimalizováno pro 1024*768 </div>
+</div>
+
+</body>
+</html>

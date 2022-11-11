@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<meta name="Content-language" content="sk">
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	<title>Databáza</title>
+</head>
+
+<body>
+PHP by určite nebolo tak rozšírené , keby nevedelo pracovať s databázami , najmä s MySQL . 
+Databázy sú téma veľmi rozsiahle a už to vydalo na veľa seriálov . My sa sústredíme na to , 
+čo nám pomôže vybudovať kvalitný PHP - databázový web . Pokiaľ s databázami aktívne pracujete , 
+budete pravdepodobne schopní tento článok vynechať , ak nie, čítajte pozorne ďalej.
+<br>
+<br>
+Aby sme mohli nejako účinne pracovať s databázami , predstavme si teraz , ako sú dáta v týchto databázach uložené . 
+<BR><br>
+<b>Relačné model </b>
+<br>Dáta sú v databázach uložené v celkoch , ktorým sa hovorí tabuľky . Majme napríklad tabuľku autorov , 
+ktorí prispievajú na portál Linuxsoftu . Táto tabuľka by mohla vyzerať nasledovne : 
+<table border="1" width="300">
+<tr ><th> Jmeno<th>Prijmeni<th>Email</tr> 
+<tr><td style="padding-left:5"> Petr <td>Zajac<td>petr@xzajic.cz </tr>
+<tr><td> Pavel<td>Adam<td>pa@pajus.com </tr>
+<tr><td> Niekto<td>Iný<td>kdosi@kdesi.cz </tr>
+ </table>
+
+Keď ste niekedy pracovali napríklad s OpenOffice , môžete si to predstaviť ako list aplikácie Calc. Naša tabuľka má tri stĺpce 
+a nejaký počet riadkov. Každý riadok v tabuľke obsahuje určitú skupinu dát , teda napríklad údaje o jednej osobe . 
+Keď budeme pridávať riadky , znamená to , že meníme dáta v tabuľke , ak budeme pridávať stĺpce , 
+znamená to, že meníme štruktúru tabuľky . 
+<br>Pozn : databázovému riadku sa tiež niekedy hovorí veta alebo záznam (record). 
+<br>
+<br>To bolo pomerne jednoduché .Teraz si predstavte , že budete chcieť mať inú tabuľku , ktorá bude obsahovať údaje o tom, 
+kto napísal na server školy aké články. To už je zaujímavejšie problém. Ide totiž o to (a väčšinou to tak býva), 
+že jeden autor napíše viac článkov .Ako by mohla takáto tabuľka vyzerať ? Mohla by vyzerať napríklad takto: 
+<table border="1">
+<tr><th>Jmeno <th> Prijmeni <th> Email <th> Nazov <th> URL</tr> 
+<tr><td>Petr<td> Zajac <td> petr@xzajic.cz <td> PHP ( 1 ) história a budúcnosť <th> http://www.linuxsoft.cz/article.php?id_article=171 </tr>
+<tr><td>Petr <td> Zajac <td> petr@xzajic.cz <td> PHP ( 2 ) ako to funguje <td> http://www.linuxsoft.cz/article.php?id_article=172 </tr>
+<tr><td>Pavel <td> Adam <td> pa@pajus.com <td> Úvod do C + + <td> http://www.linuxsoft.cz/article.php?id_article=196 </tr>
+<tr><td>Niekto <td> Iný <td> kdosi@kdesi.cz <td> Mám rád gympel <td> http://www.utopia.sk/nikdy/sa_to_nestane.php </tr>
+ </table>
+
+To nás privádza k zaujímavému problému - meno, priezvisko a e - mail autora tam máme zbytočne v oboch tabuľkách.
+Mať v tabuľke článkov kompletné informácie o autoroch nemusia byť z niekoľkých dôvodov výhodné. Tak napríklad : 
+<br>Tabuľka článkov bude zbytočne veľká a pomalá , pretože sa v nej údaje budú opakovať.
+<br>Keď budeme chcieť zmeniť, dajme tomu, e - mailovú adresu autora, budeme to musieť urobiť na viacerých miestach.
+<br>Keby sme chceli okrem mena, priezviska a e - mailu evidovať ešte niečo iné, budeme musieť meniť štruktúru niekoľkých 
+(časom skôr mnohých ) tabuliek. 
+Asi tušíte, že sa to tak v praxi naozaj nerobí - a máte pravdu. V praxi sa riadky v tabuľke autorov očíslujú a namiesto toho, 
+aby sa údaje opisovali do tabuľky článkov sa v tejto tabuľke uvedie len odkaz na súvisiace záznam. Asi bude najlepšie to ukázať : 
+<table border="1">
+<tr><th>ID<th>Jmeno<th>Prijmeni<th>Email</tr> 
+<tr><td>1<td>Petr<td>Zajac<td>petr@xzajic.cz </tr>
+<tr><td>2<td>Pavel<td>Adam<td>pa@pajus.com </tr>
+<tr>3<td>Niekto<td>Iný <td>kdosi@kdesi.cz </tr>
+</table>
+<br>
+<table border="1"> 
+<tr><th>Autor<th>Nazov <th>URL</tr> 
+<tr><td>1<td>PHP ( 1 ) história a budúcnosť <td> http://www.linuxsoft.cz/article.php?id_article=171  </tr>
+<tr><td>1<td>PHP ( 2 ) ako to funguje<td>http://www.linuxsoft.cz/article.php?id_article=172  </tr>
+<tr><td>2<td>Úvod do C + + <td>http://www.linuxsoft.cz/article.php?id_article=196  </tr>
+<tr><td>3<td> Mám rád gympel <td>http://www.utopie.cz/nikdy/se_to_nestane.php</tr>
+</table>
+Z toho môžeme vidieť, že sa nám tabuľka článkov smrskla z piatich polí na tri a že namiesto toho, aby sme uvádzali podrobnosti 
+o každom autorovi, uvádzame len číslo záznamu v súvisiacej tabuľke. Vzťahu medzi tabuľkou autorov a článkov sa hovorí odborne relácie 
+a práve preto, že možno dáta v tabuľkách takto organizovať, nazývajú sa tieto databázy relačné . 
+<br>
+<br><b>Stĺpce tabuľky </b>
+<br>Zhruba povedané sa do tabuľky dá ukladať to, čo sa v PHP dá ukladať do premenných. Takže reťazce ( jedno alebo vícepísmenné ), 
+logické hodnoty, dátumy a rôzne presné čísla. Každý stĺpec tabuľky má pri jej založení určený typ dát, ktoré sa do neho budú ukladať. 
+Keď sa pokúsite do stĺpca uložiť hodnotu iného dátového typu, môžu databázy reagovať rôzne - niekedy vykonajú čosi ako pretypovanie, 
+niekedy to skončí chybou. V MySQL sa najčastejšie používajú nasledujúce typy stĺpcov: 
+
+Typ stĺpca 
+ Čo do neho 
+ Rozsah 
+ 
+int 
+ Celé čísla 
+ -2147483648 až -2147483647  
+char ( n ) 
+ Reťazca 
+ Práve n znakov dlhé reťazce 
+ 
+varchar ( n ) 
+ Reťazca 
+ Maximálne n znakov dlhý reťazec 
+ 
+date 
+ Dátumy 
+ 1.1.1000 až 31.12.9999 
+ 
+
+Kde nič nie je ... 
+tam smrť síce neberie , ale databáza áno . Zvyknite si na to , že v tabuľkách nebývajú všetky polia povinné . Dajme tomu , že by sme v databáze autorov u niekoho nevyplnili e - mail , pretože ho nevieme . V tom prípade môžu nastať pri uložení riadku zhruba dve situácie : 
+
+Databáza má nariadené , že keď dané políčko nebude vyplnené , má tam dodať nejakú predvolené ( default ) hodnotu . Trebárs prázdny reťazec . 
+Databáza nemá nariadené nič , a preto si poznamená , že obsah tohto poľa je neznámy , čiže NULL . 
+NULL nie je rovné ničomu, čo sme až doteraz poznali . Nerovná sa nule , prázdnemu reťazcu ani logické hodnote false . S NULL sa dajú robiť databázové operácie , o ktorých si povieme niekedy nabudúce . Ale už teraz by ste mali mať na pamäti , že to je osobitná vec . 
+
+Nabudúce zanecháme suché teórie a ukážeme si, ako sa z PHP k databáze vôbec napojiť . 
+
+
+
+
+<br><br>
+Pakliže jste četli minulé díly našeho seriálu, víte, že MySQL je systémová databáze a že tudíž běží jako serverový proces. Proto musí každý, kdo se chce k MySQL připojit, znát tyto přihlašovací informace:
+
+
+Název hostitele
+MySQL pochopitelně běží na nějakém stroji. Název hostitele se může zadávat jménem (třeba mysql.nekde.cz) nebo IP adresou. Pokud budete provozovat MySQL server doma, můžete většinou použít localhost či 127.0.0.1. Pokud se budete připojovat k MySQL u providera, název hostitele Vám sdělí. 
+
+
+Pozn.: Server, na němž běží databáze nemusí být nutně týž, na němž běží webový (http) server.
+
+Port
+MySQL naslouchá standardně na portu 3306, pokud není při konfiguraci určeno jinak. Pravděpodobně můžete port vynechat, 3306 je doplněno automaticky.
+
+Název databáze 
+Zde by mohlo dojít k určitému matení pojmů: Na databázovém serveru MySQL existuje většinou několik vzájemně nesouvisejících databází. Každá databáze obsahuje žádnou nebo více tabulek a každá může mít vlastní nastavení práv. V praxi to většinou bývá tak, že součástí hostingových služeb je možnost používat jednu databázi. V ní můžete mít teoreticky nomezený počet tabulek a ostatní uživatelé serveru nemají k vaší databázi přístup. Vy zase nemáte přístup k jejich databázím.
+
+
+Uživatelské jméno 
+Znalci prominou, ale je potřeba zdůraznit, že uživatelské jméno k databázovému serveru nijak nesouvisí s přihlašovacím jménem k serveru. Ve skutečnosti většinou nebudete mít na serveru, na němž databáze poběží, zřízen systémový účet. Uživatelské jméno nejspíš dostanete od správce databáze.
+
+
+Heslo 
+Asi i heslo dostanete od správce databáze. Většinou bude splňovat základní bezpečnostní pravidla, tzn. bude dostatečně dlouhé a bude se skládat z písmen, číslic, případně dalších znaků. 
+
+
+V PHP se k MySQL databázi můžete připojit pomocí funkce myslq_connect. Jejími parametry jsou název hostitele, uživatelské jméno a heslo. Po připojení k MySQL si ještě musíte vybrat svoji databázi, což se děje příkazem mysql_select_db. Celé to může vypadat v nejjednodušším případě takto:
+
+<?
+mysql_connect("localhost", "uzivatel", "heslo");
+mysql_select_db("mojedb");
+?> 
+Aniž bychom zabíhali do podrobností dodejme, že pokud to dopadne úspěšně, budou se od tohoto místa ve skriptu všechny příkazy určené pro MySQL provádět na tomto spojení. Pokud v témže skriptu zavoláte mysql_connect znovu se stejnými parametry, pokusí se PHP použít první spojení nemísto vytvoření nového (vytvoření nového spojení jde ale vynutit pomocí nepovinného čtvrtého parametru funkce mysql_connect). Spojení vytvořené pomocí mysql_connect je otevřené až do doby, než je zavolána funkce mysql_close, nebo do ukončení běhu skriptu.
+
+
+Trvalá spojení
+K příkazu mysql_connect existuje alternativní příkaz mysql_pconnect. Jediný rozdíl mezi nimi je ten, že mysql_pconnect se neuzavírá po ukončení běhu skriptu, ale zůstává otevřené. Mysql_pconnect lze použít pouze tehdy, když běží PHP jako modul Apache a jeho výzam spočívá vlastně jen v tom, že šetří čas, který mysql_connect spotřebovává při každém otevření spojení.
+
+
+Pozn.: V typickém prostředí vícevláknových serverů je ale čas potřebný pro vykonání funkce mysql_connect zanedbatelný.
+
+
+Profi přístup
+Jelikož je připojení k databázi něco, co se bude v našich skriptech mnohokrát opakovat, měli bychom si ukázat nějaký pokročilejší příklad na připojování. Naše ukázka má totiž několik zásadních nevýhod:
+
+
+nikomu se asi nebude chtít psát do každého skriptu údaje pro spojení 
+neošetřujeme chyby 
+typicky budeme mít vývojové prostředí doma a reálnou aplikaci "venku", takže se údaje pro spojení budou lišit 
+Všechno lze poměrně jednoduše řešit. Jak říkal můj učitel programování: "Udělej to jednou, udělej to pořádně a zapomeň na to". Především si údaje do spojení uložíme do konstant (můžete rovněž použít například asociativního pole), abychom při změně konfigurace nemuseli údaje přepisovat na mnoha místech. Za druhé, konstanty uložíme do samostatného souboru, který pak vložíme do našich skriptů pomocí direktivy include. A za třetí - pomocí proměnné prostředí zjistíme, kde náš kód běží a nastavíme hodnoty podle toho. Celý includovaný soubor pak může vypadat asi následovně:
+
+<?
+if ($_SERVER["SERVER_ADDR"]=="localhost")
+{
+  define("SQL_HOST","localhost");
+  define("SQL_DBNAME","database");
+  define("SQL_USERNAME","user");
+  define("SQL_PASSWORD","password");
+}
+else
+{
+  define("SQL_HOST","mysql.nekde.cz");
+  define("SQL_DBNAME","databaze_u_providera");
+  define("SQL_USERNAME","user2");
+  define("SQL_PASSWORD","password2");
+}
+?>
+
+Pozn.: Je samozřejmě možné mít místo toho dva soubory začlenění, lokální a serverový. Většinou je ale dříve či později pomícháte nebo přepíšete, což se ve výše uvedeném případě nemůže stát.
+
+
+A je tu čas vypořádat se s chybami - jak mysql_connect, tak i mysql_select_db mohou skončit chybou. Testovat to je naštěstí poměrně jednoduché, protože v případě úspěchu vracejí obě procedury FALSE.  Takže můžeme použít něco ve smyslu:
+
+<?
+include ("config.php");
+mysql_connect(SQL_HOST, SQL_USERNAME, SQL_PASSWORD) or die("Nelze se připojit k MySQL: " . mysql_error());
+mysql_select_db(SQL_DBNAME) or die("Nelze vybrat databázi: ". mysql_error());    
+?> 
+kde config.php je soubor s definicí konstant (viz výše). Jak jste nejspíš pochopili, vrací mysql_error chybovou hlášku z MySQL. Co se týče použití die, můžete zavzpomínat na jeden z předchozích dílů našeho seriálu, který rozebírá jeho úskalí. Pokud by to, že se nemůžete připojit k databázi nebylo pro skript fatální, nejspíš použijete return.
+
+
+Příklady
+My budeme v seriálu používat přesně tuto metodu připojování. Pro demonstrativní účely máme na serveru Linuxsoftu k dispozici databázi; platné hodnoty připojovacích údajů však nezveřejním. Na začátku každého databázového skriptu budu vkládat soubor začlenění (něco jako výše include("config.php")), který bude tyto údaje obsahovat. Ve výpisu zdrojového kódu souboru bude tento řádek nahrazen komentářem; fungovat to bude normálně.
+<br><br>
+PHP (37) - Tvorba tabulek v MySQL
+Ako sme si už ukázali , skladajú sa databáza z tabuliek a tabuľky zo riadkov a stĺpcov . Predtým , než môžete nejakú tabuľku použiť , musíte ju definovať . K tomu slúži určitá podmnožina príkazov jazyka pre prácu s databázou .
+
+
+Veľmi ľahký úvod do SQL
+
+SQL , čiže štruktúrovaný dopytovací jazyk je jazyk , ktorému rozumie databábáze . Takže , typický skript PHP pracujúce s databázou má nasledujúcu štruktúru :
+
+Nejaký kód PHP , ktorý sa ( okrem iného ) postará o pripojenie k databáze 
+Kód SQL , ktorý " povie " databázu , čo od nej potrebujeme 
+Kód PHP , ktorý spracuje to , čo nám databáza odpovedala 
+Kód PHP , ktorý spojenie k databáze uzavrie . 
+Samotné príkazy jazyka SQL sa delia podľa účelu , na ktorý pri komunikácii s databázou slúži na :
+
+Oblasť
+ Popis
+ Príkaz ( y )
+ 
+Definičný
+ Umožňujú spravovať štruktúru databázy
+ CREATE TABLE , DROP TABLE
+ 
+Výberové
+ Umožňujú získať z databázy dáta
+ SELECT
+ 
+Pridávací
+ Umožňujú pridávať nové dáta do tabuľky alebo tabuliek
+ INSERT
+ 
+Aktualizačný
+ Umožňujú meniť existujúce dáta v tabuľkách
+ UPDATE , REPLACE
+ 
+Odstraňovacia
+ Umožňujú zmazať riadky z tabuľky alebo tabuliek
+ DELETE
+ 
+
+Pozn : Nie sú všetky , len tie hlavné .
+
+My sa dnes pozrieme na definície príkazy jazyka SQL a vytvoríme si v databáze tabuľku . K definovanie tabuľky slúži príkaz CREATE TABLE . Ako budete môcť definovať tabuľku , mali by ste presne vedieť koľko bude mať stĺpcov , čo bude v jednotlivých stĺpcoch uložené a ako sa majú menovať . Ak by ste napríklad chceli mať v tabuľke nejaký zoznam zamestnancov , mohol by definičný príkaz vyzerať takto :
+
+CREATE TABLE zamestnanci (
+jmeno varchar ( 10 ) ,
+prijmeni varchar ( 15 ) ,
+cislo int,
+datum_narozeni date
+) 
+Čo preložené do slovenčiny znamená : " Milá databáza , mala by si začať niečo robiť . Potrebujem vytvoriť novú tabuľku , bude sa menovať zamestnanci , a bude mať 4 stĺpce nasledujúcich typov a veľkostí : ... " . Dovolil by som si k tomu niekoľko poznámok :
+
+
+MySQL rozlišuje v názvoch tabuliek a názvoch stĺpcov veľkosť písmen . Takže , pozor na to . Niektorí sa rozhodli písať všetko malými písmenami , rozhodne treba mať v tom nejaký systém . 
+Názvy stĺpcov by mali byť dostatočne výstižné . 
+
+Názvy stĺpcov i tabuliek by mali byť dostatočne krátke , inak sa upíše a budete robiť viac chýb . 
+Uvádzať všetky podrobnosti syntaxe príkazu CREATE TABLE nebudeme , na to slúži oficiálnej dokumentácie. Z dôvodov , ktoré budeme vysvetľovať neskôr však môže byť výhodné mať v tabuľke pole , ktoré sa bude postupne pri vložení záznamu číslovať . To by sme urobili nasledovne :
+
+CREATE TABLE zamestnanci (
+id INT NOT NULL AUTO_INCREMENT ,
+prijmeni VARCHAR ( 20 ) NOT NULL ,
+jmeno VARCHAR ( 10 ) NOT NULL ,
+PRIMARY KEY ( id ) 
+) 
+ako vidíte , väčšinou sa jednoduchým pohľadom na príkaz SQL dá odvodiť , čo asi robí .
+
+
+Opakom príkazu CREATE TABLE je potom príkaz DROP TABLE . Ten celú tabuľku odstráni . Takže by ste mohli napísať :
+
+DROP TABLE zamestnanci 
+Ale pozor ! Tento príkaz bez milosti odstráni tabuľku iv prípade , že už v nej sú nejaké dáta . Mal by sa preto používať s rozvahou . Príkaz DROP TABLE už pochopiteľne nepotrebuje poznať štruktúru tabuľky , pretože ju rovnako bude mazať .
+
+
+Pozn : Väčšinou môže byť výhodnejšie použiť na definovanie tabuliek nejaký hotový program . V praxi to býva často tak , že sa štruktúra tabuliek sa navrhuje mimo PHP a skripty neobsahujú veľa definičných príkazov .
+
+
+Ako na to v PHP
+V PHP slúži všeobecne k zasielanie príkazov jazyka SQL databáz príkaz mysql_query . Mysql_query vyžaduje , aby už existovalo prepojenie na databázu vytvorené pomocou mysql_connect alebo mysql_pconnect . Ak spojenie existovať nebude, pokúsia sa ho PHP vytvoriť s predvolenými hodnotami (čo pravdepodobne zlyhá ) . Takže by sme mohli napísať niečo ako : 
+
+< ?
+/ / tu je include súboru s konštantami
+mysql_connect(SQL_HOST, SQL_USERNAME, SQL_PASSWORD) ;
+mysql_select_db(SQL_DBNAME) ;
+mysql_query(" CREATE TABLE zamestnanci ( jmeno varchar ( 10 ) , prijmeni varchar ( 15 ) , cislo int, datum_narozeni date ) ")
+or die (" Nemožno vykonať definície dotaz : " . mysql_error( ) ) ;
+? > 
+Všimnite si , že reťazec pre mysql_query môžeme napísať na jeden riadok , nemusí byť nevyhnutne členená tak , som to ukazoval prve . Aj funkcie mysql_query má samozrejme právo skončiť chybou . O vychytávania chýb z tejto funkcie platí to, čo bolo povedané v minulom diele . Len dodajme , že príčin zlyhania mysql_query môže byť celá rada . Medzi najznámejšie patria :
+
+Ako argument je odovzdaný niečo , čo databázy nepochopí ako platný kód jazyka SQL 
+Príkaz SQL je síce syntakticky správny, ale nemožno ho vykonať ( potrebné vytvorenie tabuľky , ktorá už existuje ) . 
+Pre vykonanie príkazu nemáte potrebné práva . 
+Neexistuje spojenie, ktoré by mysql_query obslúžili .
+
+Použitie funkcie mysql_error môžem v tomto prípade len odporučiť . MySQL sa totiž pokúsi vysvetliť Vám , čo jej nevoňajú .
+
+
+V ďalšom diele nášho seriálu sa stretneme s hotovou aplikáciou na vyhľadávanie PSČ a názvov obcí . Na nej Vám ukážem , ako fungujú výberové dotazy .
+
+<br><br>
+
+
+
+
+</body>
+</html>

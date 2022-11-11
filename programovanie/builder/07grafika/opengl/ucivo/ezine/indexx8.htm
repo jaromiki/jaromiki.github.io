@@ -1,0 +1,607 @@
+<html>
+<head>
+<script>
+<!--
+function cha()
+{
+}
+
+function li(name,nw,nh)
+{
+ if (nw==0) nw=600;
+ if (nh==0) nh=440;
+// nw=640;
+// nh=440;
+ if (nh>window.screen.availHeight) nh=window.screen.availHeight;
+ if (nw>window.screen.availWidth) nw=window.screen.availWidth;
+ msgWindow=window.open(name,"","toolbar=no,scrollbars=yes,resizable=yes,width="+nw+",height="+nh+";");
+}
+
+function checkv()
+{
+// document.all.mojatab.style.height=document.all.stredna.scrollHeight;
+}
+
+function checkv2()
+{
+// document.all.mojatab.style.height="399000";
+// checkv();
+}
+-->
+</script>
+<meta http-equiv="Content-Language" content="sk">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+<META HTTP-EQUIV="Expires" CONTENT="Fri, Jun 12 1981 08:20:00 GMT">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache,must revalidate">
+<META http-equiv=copyright content="AMMO, The Ezine engine (c)2000-2001 Anton Krug fredy@ammo.sk" name=copyright>
+<META http-equiv=description NAME="description" CONTENT="! Ammo, The Ezine">
+<META http-equiv=keywords NAME="keywords" CONTENT="games,music,mp3,sound,hry,hudba,manual,patche,navod,kultura,filmy,film,obrazky,discman,News,news,New,New,Technology,technology,Headlines,headlines,Geek,geek,Geeks,geeks,Hacker,hacker,Hackers,hackers,Windows,windows,Software,software,Download,download,Downloads,downloads,Free,FREE,free,Community,community,MP3,mp3,Forum,forum,Forums,forums,Bulletin,bulletin,Board,board,Boards,boards,PHP,php,Survey,survey,Kernel,kernel,Comment,comment,Comments,comments,Portal,portal,Open,open,Open Source,OpenSource,Opensource,opensource,open source,Free Software,FreeSoftware,Freesoftware,free software,MySQL,mysql,SQL,sql,Database,DataBase,database,Programming,programming,Extreme,extreme,Game,game,Games,games,Web Site,web site,Guru,GURU,guru">
+<META http-equiv=author NAME="Author" CONTENT="NUKYsoft">
+<meta http-equiv=generator name="GENERATOR" content="NUKYsoft WEBmaker 1.0 Beta">
+
+<title>! AMMO, The Ezine - Článok: OpenGL, časť 8</title>
+<STYLE>
+<!--
+a:hover { text-decoration: underline; color: #0D6AE8 }
+A { TEXT-DECORATION: none }
+a.m { color:#ffffff; font-size:10pt }
+
+BODY { scrollbar-3d-light-color:"#aaaaaa"; scrollbar-arrow-color:"#1F83FF"; scrollbar-base-color:"#1F83FF"; scrollbar-dark-shadow-color:"#1F83FF"; scrollbar-face-color:"#ffffff"; scrollbar-highlight-color:"#999999"; scrollbar-shadow-color:"#1F83FF" }
+table.male { font-family:Arial; font-size:8pt; color:#bbbbbb }
+a.male { font-family:Arial; font-size:8pt; color:#ffffff }
+font.male { font-family:Arial; font-size:8pt; color:#bbbbbb }
+font.nadhlad { color:#000000; font-family:Times New; font-size:13pt; }
+font.text { font-family:Arial; font-size:13pt }
+font.norm { font-family:Arial; font-size:10pt }
+font.odkaz { font-size:14pt }
+font.nasiel { font-size:22pt }
+font.znamky { font-size:13pt }
+font.diskusia { font-family:Verdana, Arial, Helvetica; font-size:9pt}
+img.ram { border: 2 solid white; cursor: hand }
+img.hand { cursor: hand }
+font.vyhladaj { FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif }
+.menusmall { FONT-SIZE: 9pt; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif }
+.menusmallblack { FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif }
+.menusmall:hover { COLOR: #ffffff }
+.menusmall2 { FONT-SIZE: 9pt; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif }
+.biele { COLOR: #ffffff }
+.biele:hover { COLOR: #ffffff }:.naenter { FONT-SIZE: 2pt; }
+h1 { font-family:Arial; font-size:19pt }
+-->
+</STYLE>
+</head>
+<body leftmargin=2 topmargin=2 bgcolor="#ffffff" text="#000000" link="#000000" vlink="#000000" alink="#0D6AE8"  onResize="checkv2();" >
+<layer top=2 left=2><DIV id=overDiv style="Z-INDEX: 3; POSITION: absolute"></DIV>
+<script>if (typeof backcolor == 'undefined') { var backcolor = "#0D6AE8";}</script><SCRIPT language=JavaScript src="allover.js"></SCRIPT>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><td aling=left width=165 >
+<a href=indexx.htm><img src="global/u5.gif" width=165 height=75 border=0 alt="Hlavné menu"></a></td><td width=3></td><td align=left valign=top>
+<table border=0 cellpadding=0 cellspacing=0>
+<form action=addp.htm method=get target=_pool name=fpo>
+<tr><td align=left>
+<font size=1 face=Arial>
+<a href="javascript:li('poll.htm');" class=menusmallblack><b>Anketa: Kto je lepšie pohlavie?</b></a></td></tr>
+<tr><td>
+<font size=1 face=Arial>
+
+<input type=radio name=odpoved CHECKED value=151>Som&nbsp;muž&nbsp;a&nbsp;myslím&nbsp;si&nbsp;že&nbsp;muži.&nbsp;(3182&nbsp;hlasov)
+<input type=radio name=odpoved  value=152>Som&nbsp;muž&nbsp;a&nbsp;myslím&nbsp;si&nbsp;že&nbsp;ženy.&nbsp;(799&nbsp;hlasov)
+<input type=radio name=odpoved  value=153>Som&nbsp;žena&nbsp;a&nbsp;myslím&nbsp;si&nbsp;že&nbsp;muži.&nbsp;(152&nbsp;hlasov)
+<input type=radio name=odpoved  value=154>Som&nbsp;žena&nbsp;a&nbsp;myslím&nbsp;si&nbsp;že&nbsp;ženy.&nbsp;(1391&nbsp;hlasov)<input type=hidden name=ota value=36>
+<img class=hand alt="Odošli výsledok" src=ok.gif width=19 height=15 onclick="javascript: document.fpo.submit();"></td></tr>
+</table>
+</td>
+</form>
+<td>
+<a href=lakadla.htm>&nbsp;</a><script src="http://p1.naj.sk/code?site=8222;t=lb14"
+type="text/javascript"></script><noscript><div><a
+href="http://naj.sk/"><img
+src="http://p1.naj.sk/hit?site=8222;t=lb14;ref=;jss=0"
+width="14" height="14" alt="NAJ.sk"
+style="border:none" /></a></div></noscript>
+
+<IMG width=1 height=1 SRC="http://www.toplist.cz/count.asp?ID=27695" ></td>
+</tr>
+</table>
+<hr><div style="width:160px;float:left" id=mojatab>
+
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=sr/vr1.gif><b class=menusmall>Známkovanie článku</b></td></tr><tr><td background=sr/st.gif><table cellpadding=0 cellspacing=8 class=male><form action=hlas.htm target=_hlas>
+<tr><td align=center><input type=hidden name=co value=312>
+<select name=znamka><option value=0></option><option value=1>1-výborný</option><option value=2>2-chválitebný</option><option value=3>3-dobrý</option><option value=4>4-dostatočný</option><option value=5>5-nedostatočný</option></select> <input type=submit value="Oznámkuj">
+</td></tr></form></table></td></tr><tr><td width=160 height=5 align=center background=sr/sp.gif></td></tr></table>
+<table cellpadding=0 cellspacing=0 width=160>
+<tr>
+<td width=160 height=33 align=center background=s/vr1.gif>
+<b><a href=indexx.htm?mod=cat&m=1&co=12 class=menusmall>TOP Výuka</a></b></td></tr>
+<tr><td align=center background=s/st.gif width=160>
+
+<table cellpadding=0 cellspacing=0><tr><td width=8></td><td>
+<table cellpadding=0 cellspacing=0 class=male>
+<tr><td valign="top"> <b>01</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=393 onmouseover="prr('393/mk005m.gif',96,128);" onmouseout="nd(); return true;">Maľované krížovky</a> <img src=jedna.gif width=6 height=8> 34 bodov </td></tr>
+<tr><td valign="top"> <b>02</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=276 onmouseover="prr('276/a.gif',128,87);" onmouseout="nd(); return true;">OpenGL, lákadlo</a> <img src=jedna.gif width=6 height=8> 9 bodov </td></tr>
+<tr><td valign="top"> <b>03</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=339 onmouseover="prr('339/mysql2.gif',128,67);" onmouseout="nd(); return true;">MySQL (+ použitie Visual C++ a PHP)</a> <img src=jedna.gif width=6 height=8> 9 bodov </td></tr>
+<tr><td valign="top"> <b>04</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=261>Základy HTML časť 2</a> <img src=jedna.gif width=6 height=8> 9 bodov </td></tr>
+<tr><td valign="top"> <b>05</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=441 onmouseover="prr('441/hptlac.gif',128,128);" onmouseout="nd(); return true;">Ako tlačiť s HP</a> <img src=jedna.gif width=6 height=8> 7 bodov </td></tr>
+<tr><td valign="top"> <b>06</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=200>Pascal, časť 1</a> <img src=jedna.gif width=6 height=8> 6 bodov </td></tr>
+<tr><td valign="top"> <b>07</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=262>Základy HTML časť 3</a> <img src=jedna.gif width=6 height=8> 6 bodov </td></tr>
+<tr><td valign="top"> <b>08</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=313>Huffmanove kódovanie</a> <img src=jedna.gif width=6 height=8> 3 body </td></tr>
+<tr><td valign="top"> <b>09</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=324 onmouseover="prr('324/skladnik.gif',128,80);" onmouseout="nd(); return true;">Hry pre nenáročných + zdrojáky</a> <img src=jedna.gif width=6 height=8> 3 body </td></tr>
+<tr><td valign="top"> <b>10</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=278>OpenGL, časť 1</a> <img src=jedna.gif width=6 height=8> 3 body </td></tr>
+<tr><td valign="top"> <b>11</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=416 onmouseover="prr('416/hlsaverm.jpg',128,128);" onmouseout="nd(); return true;">HLSaver</a> <img src=jedna.gif width=6 height=8> 3 body </td></tr>
+<tr><td valign="top"> <b>12</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=260>Základy HTML časť 1</a> <img src=jedna.gif width=6 height=8> 3 body </td></tr>
+<tr><td valign="top"> <b>13</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=326>OpenGL, časť 14</a> <img src=jedna.gif width=6 height=8> 2 body </td></tr>
+<tr><td valign="top"> <b>14</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=347>Fake2</a> <img src=jedna.gif width=6 height=8> 2 body </td></tr>
+<tr><td valign="top"> <b>15</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=289>OpenGL, časť 5</a> <img src=jedna.gif width=6 height=8> 2 body </td></tr>
+</td></tr></table></td><td width=9></td></tr></table></td></tr><tr><td width=160 height=5 align=center background=s/sp.gif></td></tr>
+</table>
+
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=s/vr1.gif>
+<b><a href=indexx.htm class=menusmall>Najnovšie články</a></b></td></tr><tr><td  background=s/st.gif><table cellpadding=0 cellspacing=0><tr><td width=8></td><td><table cellpadding=0 cellspacing=0 class=male>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=469>Kvalitné služby podľa skúseností iných - TopSlužby.sk</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=468>LOTR - Dve veže - Parodia - Scénka 2. časť</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=467>Neverwinter nights</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=466>Children Of Bodom-Hatebreeder</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=465>Kult Duny - 6. časť (Bonus)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=464 onmouseover="prr('464/dune-figures.jpg',92,128);" onmouseout="nd(); return true;">Kult Duny - 5. časť (Filmy, Hry)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=463>Dobré ráno. (morc certa, hora incerta...)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=462 onmouseover="prr('462/dune00231.gif',128,48);" onmouseout="nd(); return true;">Kult Duny - 4. časť (Knihy 2/2)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=461>Stretnutie Spoločenstva Tolkiena</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=460 onmouseover="prr('460/pc-kotc-02m.jpg',127,128);" onmouseout="nd(); return true;">GRAVE DIGGER – Knights Of The Cross</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=459 onmouseover="prr('459/pdvd_009m.jpg',128,72);" onmouseout="nd(); return true;">Kult Duny - 3. časť (Knihy 1/2)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=458 onmouseover="prr('458/pdvd_001m.jpg',128,72);" onmouseout="nd(); return true;">Kult Duny - 2. časť (Pojmy)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=457 onmouseover="prr('457/dunes.jpg',128,34);" onmouseout="nd(); return true;">Kult Duny - 1. časť (Úvod)</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=456 onmouseover="prr('456/uvod.jpg',128,74);" onmouseout="nd(); return true;">LOTR - Dve veže - Parodia - Scénka</a></td></tr>
+<tr><td valign=top><img src=je.gif width=6 height=11></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=455 onmouseover="prr('455/jackass.gif',128,128);" onmouseout="nd(); return true;">Jackass</a></td></tr>
+</table></td><td width=9></td></tr></table></td></tr><tr>
+<td width=160 height=5 align=center background=s/sp.gif></td></tr></table>
+
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=s/vr1.gif>
+<font class=menusmall>
+<b>Vyhľadávanie v článkoch</b><br>
+</td></tr>
+<tr><td align=center background=s/st.gif width=160>
+<table cellpadding=0 cellspacing=8><tr><td><table cellpadding=0 cellspacing=0 class=male>
+<form action=indexx.htm name=ff id=ff><input type=hidden name=search value=1>
+<input type=text name=co value="Vyhľadaj text" size=14>
+<img class=hand alt="Klikni a budem vyhľadávať medzi článkami zadaný text" src=find.gif width=16 height=16 onclick="javascript: document.ff.submit();">
+</td>
+</tr>
+</td></tr></table></td></tr></table></td></tr><tr>
+<td width=160 height=5 align=center background=s/sp.gif></td></tr>
+</form>
+</table>
+
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-5518641232134842";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text_image";
+//2007-01-21: ezine bok
+google_ad_channel = "7244863516";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=s/vr1.gif>
+<b><a href=all.htm class=menusmall>Všetky články</a></b></td>
+</tr><tr><td align=center background=s/st.gif width=160>
+<table cellpadding=0 cellspacing=0><tr><td width=8></td><td><table cellpadding=0 cellspacing=0 align=left class=male >
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=23 class=m><b>Airsoft - Specnaz</b></a>  [4&nbsp;články]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=3 class=m><b>Básne</b></a>  [6&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=20 class=m><b>Douglas Adams</b></a>  [27&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=14 class=m><b>Fantázia</b></a>  [4&nbsp;články]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=2 class=m><b>Filmy a DVD</b></a>  [51&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=7 class=m><b>Hardware</b></a>  [10&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=5 class=m><b>Hry</b></a>  [171&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=6 class=m><b>Hry, návody</b></a>  [6&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=11 class=m><b>Hudba</b></a>  [8&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=17 class=m><b>Internet</b></a>  [7&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=10 class=m><b>Knihy</b></a>  [6&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=19 class=m><b>O AMME</b></a>  [4&nbsp;články]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=24 class=m><b>Pandemonium</b></a>  [10&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=8 class=m><b>Poviedky</b></a>  [14&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=1 class=m><b>Programy</b></a>  [18&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=15 class=m><b>Rôzne</b></a>  [8&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=16 class=m><b>Technické</b></a>  [3&nbsp;články]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=4 class=m><b>Úvahy</b></a>  [8&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=12 class=m><b>Výuka</b></a>  [50&nbsp;článkov]</td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=441 onmouseover="prr('441/hptlac.gif',128,128);" onmouseout="nd(); return true;">Ako tlačiť s HP</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=314>Algoritmy v grafoch</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=347>Fake2</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=329 onmouseover="prr('329/fakturka.gif',128,66);" onmouseout="nd(); return true;">Faktúrka</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=332 onmouseover="prr('332/fakt_v4_1.gif',126,128);" onmouseout="nd(); return true;">Faktúrka v4.0 + zdrojáky v MS Visual C++ 6.0</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=378 onmouseover="prr('378/fract009.gif',128,128);" onmouseout="nd(); return true;">Fract</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=416 onmouseover="prr('416/hlsaverm.jpg',128,128);" onmouseout="nd(); return true;">HLSaver</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=324 onmouseover="prr('324/muzzle.gif',128,80);" onmouseout="nd(); return true;">Hry pre nenáročných + zdrojáky</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=313>Huffmanove kódovanie</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=387 onmouseover="prr('387/ipicture2_2.jpg',128,60);" onmouseout="nd(); return true;">IPicture2 & aggresiveoptimize.h</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=393 onmouseover="prr('393/mk005m.gif',96,128);" onmouseout="nd(); return true;">Maľované krížovky</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=339 onmouseover="prr('339/mysql2.gif',128,67);" onmouseout="nd(); return true;">MySQL (+ použitie Visual C++ a PHP)</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=380>OpenGL - GLWnd</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=360 onmouseover="prr('360/a_saver.gif',128,96);" onmouseout="nd(); return true;">OpenGL AMMO Saver</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=311>OpenGL povinná literatúra</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=356 onmouseover="prr('356/opengl.gif',126,128);" onmouseout="nd(); return true;">OpenGL – Intermezzo 1</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=316 onmouseover="prr('316/10screenshot.gif',128,96);" onmouseout="nd(); return true;">OpenGL, časť 10</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=317>OpenGL, časť 11</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=320>OpenGL, časť 12</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=323>OpenGL, časť 13</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=326>OpenGL, časť 14</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=334>OpenGL, časť 15</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=346>OpenGL, časť 16</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=359>OpenGL, časť 17</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=368 onmouseover="prr('368/h1.gif',128,81);" onmouseout="nd(); return true;">OpenGL, časť 18</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=306>OpenGL, časť 7</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=315>OpenGL, časť 9</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=392 onmouseover="prr('392/cloth7.gif',128,96);" onmouseout="nd(); return true;">Opengl – Cloth Simulation</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=388 onmouseover="prr('388/renamer.gif',128,91);" onmouseout="nd(); return true;">RenameR</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=382 onmouseover="prr('382/sm01male.gif',128,87);" onmouseout="nd(); return true;">SkinMagic</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=344 onmouseover="prr('344/obr.gif',89,128);" onmouseout="nd(); return true;">WinSocket Communication via VC++</a></td></tr>
+<tr><td width=6></td><td><a class=menusmall2 href=indexx.htm?rub=1&co=415 onmouseover="prr('415/us2.jpg',128,96);" onmouseout="nd(); return true;">Údajové štruktúry</a></td></tr>
+<tr></tr><tr><td width=6></td><td><a href=all.htm class=male>viac...</a></td></tr><tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=13 class=m><b>Zábava</b></a>  [5&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2><a href=indexx.htm?mod=cat&co=21 class=m><b>Zdravie</b></a>  [15&nbsp;článkov]</td></tr>
+<tr><td colspan=2 height=5></td></tr>
+<tr><td colspan=2 align=center><font face="Arial" size=1>Celkový počet článkov: 435 </td></tr> 
+
+</table></td><td width=9></td></tr></table></td></tr>
+<tr><td width=160 height=5 align=center background=s/sp.gif></td></tr></table>
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=s/vr1.gif>
+<b><a href=indexx.htm?top=1 class=menusmall>20 najlepších článkov</a></b></td></tr>
+<tr><td align=center background=s/st.gif width=160>
+<table cellpadding=0 cellspacing=0><tr><td width=8></td><td><table cellpadding=0 cellspacing=0 class=male>
+<tr><td valign=top> <b>01</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=456 onmouseover="prr('456/uvod.jpg',128,74);" onmouseout="nd(); return true;">LOTR - Dve veže - Parodia - Scénka</a>  <img src=jedna.gif width=6 height=8> 102 bodov  </td></tr>
+<tr><td valign=top> <b>02</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=336>Pán Prsteňov - Paródia</a>  <img src=jedna.gif width=6 height=8> 91 bodov  </td></tr>
+<tr><td valign=top> <b>03</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=423 onmouseover="prr('423/_14.jpg',115,128);" onmouseout="nd(); return true;">Warcraft III:Frozen Throne</a>  <img src=jedna.gif width=6 height=8> 83 bodov  </td></tr>
+<tr><td valign=top> <b>04</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=135 onmouseover="prr('135/maly.gif',128,57);" onmouseout="nd(); return true;">Dyna Blaster<img src=fdd.gif border=0 width=14 height=10></a>  <img src=jedna.gif width=6 height=8> 79 bodov  </td></tr>
+<tr><td valign=top> <b>05</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=374 onmouseover="prr('374/sshot166.gif',128,96);" onmouseout="nd(); return true;">Command and Conquer: Generals</a>  <img src=jedna.gif width=6 height=8> 75 bodov  </td></tr>
+<tr><td valign=top> <b>06</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=350 onmouseover="prr('350/snap0005.gif',128,96);" onmouseout="nd(); return true;">Mafia</a>  <img src=jedna.gif width=6 height=8> 65 bodov  </td></tr>
+<tr><td valign=top> <b>07</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=468>LOTR - Dve veže - Parodia - Scénka 2. časť</a>  <img src=jedna.gif width=6 height=8> 64 bodov  </td></tr>
+<tr><td valign=top> <b>08</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=421 onmouseover="prr('421/_cz_recoil0016.jpg',108,128);" onmouseout="nd(); return true;">Counter Strike: Condition Zero</a>  <img src=jedna.gif width=6 height=8> 60 bodov  </td></tr>
+<tr><td valign=top> <b>09</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=455 onmouseover="prr('455/jackass.gif',128,128);" onmouseout="nd(); return true;">Jackass</a>  <img src=jedna.gif width=6 height=8> 59 bodov  </td></tr>
+<tr><td valign=top> <b>10</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=437 onmouseover="prr('437/nfh1m.jpg',128,128);" onmouseout="nd(); return true;">Neighbours from Hell 2</a>  <img src=jedna.gif width=6 height=8> 47 bodov  </td></tr>
+<tr><td valign=top> <b>11</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=361 onmouseover="prr('361/bul001.gif',128,97);" onmouseout="nd(); return true;">Bulanci</a>  <img src=jedna.gif width=6 height=8> 47 bodov  </td></tr>
+<tr><td valign=top> <b>12</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=321 onmouseover="prr('321/gta3_008.gif',128,96);" onmouseout="nd(); return true;">GTA III</a>  <img src=jedna.gif width=6 height=8> 46 bodov  </td></tr>
+<tr><td valign=top> <b>13</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=84 onmouseover="prr('84/man.gif',91,128);" onmouseout="nd(); return true;">Runy</a>  <img src=jedna.gif width=6 height=8> 45 bodov  </td></tr>
+<tr><td valign=top> <b>14</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=30 onmouseover="prr('30/snap265.jpg',128,78);" onmouseout="nd(); return true;">Rammstein - Live Aus Berlin</a>  <img src=jedna.gif width=6 height=8> 45 bodov  </td></tr>
+<tr><td valign=top> <b>15</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=242>Recenzia na Maturitu</a>  <img src=jedna.gif width=6 height=8> 43 bodov  </td></tr>
+<tr><td valign=top> <b>16</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=426 onmouseover="prr('426/img4m.jpg',128,96);" onmouseout="nd(); return true;">Ghotic 2</a>  <img src=jedna.gif width=6 height=8> 40 bodov  </td></tr>
+<tr><td valign=top> <b>17</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=466>Children Of Bodom-Hatebreeder</a>  <img src=jedna.gif width=6 height=8> 40 bodov  </td></tr>
+<tr><td valign=top> <b>18</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=420 onmouseover="prr('420/chucklittlehand_male.jpg',128,78);" onmouseout="nd(); return true;">DEATH – Symbolic</a>  <img src=jedna.gif width=6 height=8> 38 bodov  </td></tr>
+<tr><td valign=top> <b>19</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=447 onmouseover="prr('447/small0.jpg',128,108);" onmouseout="nd(); return true;">Call of Duty: United Offensive</a>  <img src=jedna.gif width=6 height=8> 36 bodov  </td></tr>
+<tr><td valign=top> <b>20</b>.&nbsp; </td><td> <a class=menusmall2 href=indexx.htm?rub=1&co=319 onmouseover="prr('319/pontifex0061.gif',128,96);" onmouseout="nd(); return true;">Elasto Mania</a>  <img src=jedna.gif width=6 height=8> 35 bodov  </td></tr>
+
+</td></tr></table></td><td width=9></td></tr></table></td></tr><tr>
+<td width=160 height=5 align=center background=s/sp.gif></td></tr></table>
+
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=s/vr1.gif>
+<b class=menusmall>Spriatelené stránky</b></td>
+</tr><tr><td align=center background=s/st.gif width=160>
+<table cellpadding=0 cellspacing=0><tr><td width=8></td><td><table cellpadding=0 cellspacing=0 align=left class=male ><tr><td align=center>
+<a target=_blank href=link.htm?url=http://www.dvdspace.sk><img src=ikonky/dvdonline.gif border=0 width=88 height=31 alt="Všetko o DVD - HARDWARE, SOFTWARE, SÚTAŽE, PORADNA"></a>
+<a target=_blank href=link.htm?url=http://www.bestweb.sk/?from=ammo><img src=ikonky/bw.gif border=0 width=88 height=31 ></a>
+<a target=_blank href=link.htm?url=http://www.tolkien.sk/><img src=ikonky/tolkien.gif border=0 width=88 height=31 ></a>
+
+
+<br>
+<a target="_blank" href="http://www.abc-online-casino.biz/"><b><font color=#ffffff>online casino</b></a><br>
+<a target="_blank" href="http://www.casinopages.biz/"><b><font color=#ffffff>online casino</b></a><br>
+<a target="_blank" href="http://www.pokerlady.org"><b><font color=#ffffff>online poker</b></a><br>
+<a target="_blank" href="http://www.pokerpage.org/"><b><font color=#ffffff>online poker</b></a><br>
+
+
+<a target="_blank" class=menu1 href="http://www.ammo.sk">Ammo</a><br>
+<a target="_blank" class=menu1 href="http://www.ammo.cz">Ammo</a><br>
+<a target="_blank" class=menu1 href="http://www.ezine.ammo.sk">Ammo</a><br>
+<a target="_blank" class=menu1 href="http://www.ezine.ammo.cz">Ammo</a><br>
+<a target="_blank" class=menu1 href="http://www.buducnost.sk">Buducnost</a><br>
+</td></tr></table></td><td width=9></td></tr></table></td></tr>
+<tr><td width=160 height=5 align=center background=s/sp.gif></td></tr></table>
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=s/vr1.gif>
+<b class=menusmall>Internetové vyhľadávanie</b></td>
+</tr><tr><td align=center background=s/st.gif width=160>
+<table cellpadding=0 cellspacing=8>
+<form  name=f3 id=f3 action=http://search.mamma.com/10499 method=GET target=_vyhlad>
+<tr><td align=center>
+
+<b class=menusmall>Hľadaj</b>
+<select name=qtype>
+<option VALUE=51>MP3</option>
+<option value=0>Stránku</option>
+<option VALUE=12>Zvuk</option>
+<option value=50>Video</option>
+<option value=11>Obrázok</option>
+<option value=4>Správy</option>
+</select>
+<input type=hidden name=timeout value=4>
+<input type=hidden name=lang value=10499>
+<input type=text size=14 name=query>
+<img class=hand alt="Klikni a budem vyhľadáva# na celom internete" src=search.gif width=17 height=14 onclick="javascript: document.f3.submit();">
+
+
+</td></tr></table></td></tr>
+</form>
+<tr><td width=160 height=5 align=center background=s/sp.gif></td></tr></table>
+<table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=12 align=center background=sd/vr.gif></td></tr><tr><td align=center background=sd/st.gif width=160>
+<table cellpadding=0 cellspacing=0><tr><td align=center>
+<FONT SIZE=2 color=#ffffff>
+Created by:<br>
+<FONT SIZE=2>
+<a class=male href="mailto:%63%65%6e%73%6f%72%65%64%40%61%6d%6d%6f%2e%73%6b">Ján Dacho</a> &
+<a class=male href="mailto:%77%65%62%6d%61%73%74%65%72%40%61%6d%6d%6f%2e%73%6b">Anton Krug</a><br>
+<FONT SIZE=1>© 2000 - 2002</a><br>
+</td></tr></table></td></tr><tr><td width=160 height=12 align=center background=sd/sp.gif></td></tr></table>
+
+</div><div id=stredna style="float: left">
+<center>
+<table><tr><td align=center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-5518641232134842";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_type = "text_image";
+//2007-01-21: ezine vrch
+google_ad_channel = "6750928431";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+<center>
+<!-- ************ BANNER ************* -->
+<NOSCRIPT>
+ <A HREF="http://www.bestweb.sk/?from=ammo0"><IMG SRC="http://www.bestweb.sk/banners/banner1.gif" ALT="Doména .sk .com .net .org .net .biz teraz zadarmo ..."></a>
+</NOSCRIPT>
+<SCRIPT language="javascript">
+<!--
+  var appName
+  var appVer
+  appName = navigator.appName
+  appVer = parseFloat(navigator.appVersion.substring(0,4))
+  if ((((appName.indexOf("Microsoft")>-1)&&(appVer<4))||((appName.indexOf("Netscape")>-1)&&(appVer<4)))||((appName.indexOf("Netscape")==-1)&&(appName.indexOf("Microsoft")==-1)))
+  {
+   document.write("<a href=\"http://www.bestweb.sk/?from=ammo0\" target=\"_top\">")
+   document.write("<img src=\"http://http://www.bestweb.sk/banners/banner1.gif\" width=\"468\" height=\"60\" border=\"1\"></a>")
+  }
+//-->
+</SCRIPT>
+<CENTER>
+<SCRIPT SRC="http://www.bestweb.sk/banners/sem.phtml"></SCRIPT>
+</CENTER>
+<!-- ************ BANNER END ************* -->
+<center>
+<table align=center><tr><td></td><td align=center><font face="Arial" size=4><b>OpenGL, časť 8</b></font>&nbsp;<a href=indexx.htm?rub=1&won=1&co=312&max=1><img src=max.gif width=16 height=14 border=0 alt="Maximalizuj"></a><a href=indexx.htm?rub=1&print=1&co=312 ><img src=print.gif wifth=20 height=18 border=0 alt="Verzia pre tlač"></a></td><td></td></tr></table><font size=2><b><a href=indexx.htm?mod=cat&co=12>Výuka</a> | Dňa 19.5.2002 | <a href="mailto:%6a%6f%68%6e%79%40%61%6d%6d%6f%2e%73%6b" target=_www>Johny</a> |  5 známok, priemer 2.80 | 5516 videní | 569 WAP videní</b></font><br>
+</td></tr></table>
+ <font class=text>
+<P class=pismeno align=left>Jednoduchá priesvitnosť<br>
+<br>
+	Väčšina špeciálnych efektov v OpenGL zavisí na nejakom type priesvitnosti (Blendovania). Používa sa na kombináciu farieb, aby pixel, ktorý ideme kresliť nejakým spôsobom využil už to, čo je na obrazovke nakreslené. To, akým spôsobom sa to celé bude diať závisí od Alphy, ktorá určuje priesvitnosť. Keď si predstavíte klasické RGB BMP-čko, tak je hneď jasné aké zložky má. Sú to zložky RGB. A niekedy býva aj v samostatnom súbore uložená Alpha, teda, ktorá časť obrázku ma byť priesvitná viac, ktorá menej. A pri vytváraní textúry je možné to hneď použiť. Namiesto GL_RGB sa napíše GL_RGBA a tým povieme OpenGL, že naša textúra ma 4 zložky. A takisto môžeme použiť glColor4f() namiesto glColor3f().<br>
+<br>
+	Ak je Alpha 0.0 znamená to, že je kompletne priesvitný, ak je 1.0 tak je kompletne nepriesvitný. <br>
+<br>
+Trochu matematiky<br>
+<br>
+(Rs Sr + Rd Dr, Gs Sg + Gd Dg, Bs Sb + Bd Db, As Sa + Ad Da) <br>
+<br>
+OpenGL vypočíta výsledok 2 pixelov podľa toho vzorca, čo je kúsok vyššie. Písmenká s a r znamenajú source a destination. S a D sú faktory priesvitnosti. Tieto hondoty ukazujú jako chceme spriesvitňovať pixely. Najčastejšie hodnoty sú  (As, As, As, As) (AKA source alpha) pre S a (1, 1, 1, 1) - (As, As, As, As) (AKA one minus src alpha) pre D. <br>
+<br>
+(Rs As + Rd (1 - As), Gs As + Gd (1 - As), Bs As + Bs (1 - As), As As + Ad (1 - As)) <br>
+<br>
+<br>
+Blending v OpenGL <br>
+<br>
+	Tiež třeba dbať na poradí v akom vykresľujeme, lebo ak zmeníme poradie môžeme dostať rôzne výsledky. Ale Blendovanie v OpenGL je veľmi jednoduché, pretože OpenGL robí prakticky všetko za nás.<br>
+		<br>
+<br>
+Použijeme zdroják z minulej časti.<br>
+Trošku sme pozmenili zdroják, v prvom rade nahráme inú textúru.<br>
+A v InitGL sa nastaví Blendovacia funckia, chceme polovičnú priesvitnosť.   <br>
+   <br>
+<br>
+	if (TextureImage[0]=LoadBMP("Data/glass.bmp")) <br>
+   <br>
+	glColor4f(1.0f,1.0f,1.0f,0.5f);			// Full Brightness, 50% Alpha <br>
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE);	// najlepšie nastavenia<br>
+<br>
+   	if (keys['B'] && !bp)					<br>
+{<br>
+		bp=TRUE;						<br>
+blend = !blend;				<br>
+		if(blend)						<br>
+{<br>
+			glEnable(GL_BLEND);									glDisable(GL_DEPTH_TEST);	<br>
+		}<br>
+		else					<br>
+		{<br>
+			glDisable(GL_BLEND);		<br>
+			glEnable(GL_DEPTH_TEST);	<br>
+		}<br>
+	}<br>
+	if (!keys['B'])					<br>
+	{<br>
+		bp=FALSE;				<br>
+	}<br>
+<br>
+<br>
+	A zmeníme vypnutie a zapnutie Blendovania na kláves B.<br>
+Na záver ešte prikladám možné parametre a popis funkcie z jedného anglického helpu.<br>
+<br>
+// ----------- začiatok -----------//<br>
+glBlendFunc<br>
+The glBlendFunc function specifies pixel arithmetic.<br>
+<br>
+void glBlendFunc(<br>
+  GLenum sfactor,  <br>
+  GLenum dfactor   <br>
+);<br>
+ <br>
+Parameters<br>
+sfactor <br>
+Specifies how the red, green, blue, and alpha source-blending factors are computed. Nine symbolic constants are accepted: GL_ZERO, GL_ONE, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, and GL_SRC_ALPHA_SATURATE. <br>
+dfactor <br>
+Specifies how the red, green, blue, and alpha destination-blending factors are computed. Eight symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, and GL_ONE_MINUS_DST_ALPHA. <br>
+Remarks<br>
+In RGB mode, pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). By default, blending is disabled. Use glEnable and glDisable with the GL_BLEND argument to enable and disable blending.<br>
+<br>
+When enabled, glBlendFunc defines the operation of blending. The sfactor parameter specifies which of nine methods is used to scale the source color components. The dfactor parameter specifies which of eight methods is used to scale the destination color components. The eleven possible methods are described in the following table. Each method defines four scale factors, one each for red, green, blue, and alpha.<br>
+<br>
+In the table and in subsequent equations, source and destination color components are referred to as (R (s) ,G (s) ,B (s) ,A (s) ) and (R (d) ,G (d) ,B (d) ,A (d) ). They are understood to have integer values between zero and (k (R) ,k (G) ,k (B) ,k (A) ), where<br>
+<br>
+k (c) = 2^m (c) – 1<br>
+<br>
+and (m (R) ,m (G) ,m (B) ,m (A) ) is the number of red, green, blue, and alpha bitplanes.<br>
+<br>
+Source and destination scale factors are referred to as (s (R) ,s (G) ,s (B) ,s (A) ) and (d (R) ,d (G) ,d (B) ,d (A) ). The scale factors described in the table, denoted (f (R) ,f (G) ,f (B) ,f (A) ), represent either source or destination factors. All scale factors have range [0,1].<br>
+<br>
+Parameter (f (R) ,f (G) ,f (B) ,f (A) ) <br>
+GL_ZERO (0,0,0,0) <br>
+GL_ONE (1,1,1,1) <br>
+GL_SRC_COLOR (R (s) /k (R) ,G (s) /k (G) ,B (s) /k (B) ,A (s) /k (A) ) <br>
+GL_ONE_MINUS_SRC_COLOR (1,1,1,1).<br>
+(R (s) /k (R) ,G (s) /k (G) ,B (s) /k (B) ,A (s) /k (A) ) <br>
+GL_DST_COLOR (R (d) /k (R) ,G (d) /k (G) ,B (d) /k (B) ,A (d) /k (A) ) <br>
+GL_ONE_MINUS_DST_COLOR (1,1,1,1) <br>
+GL_SRC_ALPHA (R (d) /k (R) ,G (d) /k (G) ,B (d) /k (B) ,A (d) /k (A) )<br>
+(A (s) /k (A) ,A (s) /k (A) ,A (s) /k (A) ,A (s) /k (A) ) <br>
+GL_ONE_MINUS_SRC_ALPHA (1,1,1,1)<br>
+(A (s) /k (A) ,A (s) /k (A) ,A (s) /k (A) ,A (s) /k (A) ) <br>
+GL_DST_ALPHA (A (d) /k (A) ,A (d) /k (A) ,A (d) /k (A) ,A (d) /k (A) ) <br>
+GL_ONE_MINUS_DST_ALPHA (1,1,1,1)<br>
+(A (d) /k (A) ,A (d) /k (A) ,A (d) /k (A) ,A (d) /k (A) ) <br>
+GL_SRC_ALPHA_SATURATE (i,i,i,1) <br>
+<br>
+<br>
+In the table,<br>
+<br>
+i = min (A (s) ,k (A) – A (d) ) / kA<br>
+<br>
+To determine the blended RGBA values of a pixel when drawing in RGB mode, the system uses the following equations:<br>
+<br>
+R (d) = min(kR,RssR+RddR)<br>
+<br>
+G (d) = min(kG,GssG+GddG)<br>
+<br>
+B (d) = min(kB,BssB+BddB)<br>
+<br>
+A (d) = min(kA,AssA+AddA)<br>
+<br>
+Despite the apparent precision of the above equations, blending arithmetic is not exactly specified, because blending operates with imprecise integer color values. However, a blend factor that should be equal to one is guaranteed not to modify its multiplicand, and a blend factor equal to zero reduces its multiplicand to zero. Thus, for example, when sfactor is GL_SRC_ALPHA, dfactor is GL_ONE_MINUS_SRC_ALPHA, and A (s) is equal to k (A) , the equations reduce to simple replacement:<br>
+<br>
+R (d) = R (s) <br>
+<br>
+G (d) = G (s) <br>
+<br>
+B (d) = B (s) <br>
+<br>
+A (d) = A (s<br>
+<br>
+) <br>
+<br>
+Examples<br>
+Transparency is best implemented using glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA) with primitives sorted from farthest to nearest. Note that this transparency calculation does not require the presence of alpha bitplanes in the frame buffer.<br>
+<br>
+You can also use glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA) for rendering antialiased points and lines in arbitrary order.<br>
+<br>
+To optimize polygon antialiasing, use glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE) with polygons sorted from nearest to farthest. (See the GL_POLYGON_SMOOTH argument in glEnable for information on polygon antialiasing.) Destination alpha bitplanes, which must be present for this blend function to operate correctly, store the accumulated coverage.<br>
+<br>
+Incoming (source) alpha is a material opacity, ranging from 1.0 (K (A) ), representing complete opacity, to 0.0 (0), representing complete transparency.<br>
+<br>
+When you enable more than one color buffer for drawing, each enabled buffer is blended separately, and the contents of the buffer is used for destination color. (See glDrawBuffer.)<br>
+<br>
+Blending affects only RGB rendering. It is ignored by color-index renderers.<br>
+<br>
+The following functions retrieve information related to glBlendFunc:<br>
+<br>
+glGet with argument GL_BLEND_SRC<br>
+<br>
+glGet with argument GL_BLEND_DST<br>
+<br>
+glIsEnabled with argument GL_BLEND<br>
+<br>
+Error Codes<br>
+The following are the error codes generated and their conditions.<br>
+<br>
+Error Code Condition <br>
+GL_INVALID_ENUM  Either sfactor or dfactor was not an accepted value. <br>
+GL_INVALID_OPERATION  glBlendFunc was called between a call to glBegin and the corresponding call to glEnd. <br>
+// ----------- koniec -----------//<br>
+<br>
+<br>
+Ako tradične zdroják si môžete stiahnuť tu:<br>
+<font class=odkaz><a target=_newtexthttp://www.softsklad.host.sk/opengl/lesson08.zip href=link.htm?uvod=312&url=http%3A%2F%2Fwww.softsklad.host.sk%2Fopengl%2Flesson08.zip%0D><b><u>http://www.softsklad.host.sk/opengl/lesson08.zip</b></u></a></font>
+<br>
+</b></i></u></p></a><font face=Arial color=#ffffff><br></u></b></font><p><table cellpadding=0 cellspacing=0 width=160><tr><td width=160 height=33 align=center background=sr/vr1.gif><b class=menusmall>Známkovanie článku</b></td></tr><tr><td background=sr/st.gif><table cellpadding=0 cellspacing=8 class=male><form action=hlas.htm target=_hlas>
+<tr><td align=center><input type=hidden name=co value=312>
+<select name=znamka><option value=0></option><option value=1>1-výborný</option><option value=2>2-chválitebný</option><option value=3>3-dobrý</option><option value=4>4-dostatočný</option><option value=5>5-nedostatočný</option></select> <input type=submit value="Oznámkuj">
+</td></tr></form></table></td></tr><tr><td width=160 height=5 align=center background=sr/sp.gif></td></tr></table>
+</p><font size=3><table border=0><tr><td width=50% align=center valign=top><table cellpadding=0 cellspacing=0 ><tr><td width=6><img width=5 src=irm2/7.gif height=24></td><td width=100% background=irm2/8.gif align=center><b class=menusmall>Najnovšie články od tohto redaktora</b></td><td><img src=irm2/9.gif border=0 height=24 width=5></td></tr><tr><td width=5 background=irm2/4.gif></td><td bgcolor=#000000>
+
+<a class=menusmall2 href=indexx.htm?rub=1&co=441 onmouseover="prr('441/hptlac.gif',128,128);" onmouseout="nd(); return true;">Ako tlačiť s HP</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=439 onmouseover="prr('439/pkiller01m.gif',128,128);" onmouseout="nd(); return true;">Painkiller</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=437 onmouseover="prr('437/nfh1m.jpg',128,128);" onmouseout="nd(); return true;">Neighbours from Hell 2</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=430 onmouseover="prr('430/jpog1m.jpg',128,96);" onmouseout="nd(); return true;">Jurassic Park: Operation Genesis</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=429 onmouseover="prr('429/formyk01m.jpg',128,96);" onmouseout="nd(); return true;">formYk</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=425 onmouseover="prr('425/aargonm.jpg',128,96);" onmouseout="nd(); return true;">AArgon</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=417 onmouseover="prr('417/popsotm2.jpg',128,96);" onmouseout="nd(); return true;">Prince of Persia – Sands of Time</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=416 onmouseover="prr('416/hlsaverm.jpg',128,128);" onmouseout="nd(); return true;">HLSaver</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=415 onmouseover="prr('415/us2.jpg',128,96);" onmouseout="nd(); return true;">Údajové štruktúry</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=414 onmouseover="prr('414/w3dm2.jpg',128,128);" onmouseout="nd(); return true;">Worms 3D</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=412 onmouseover="prr('412/matrix02m.jpg',128,96);" onmouseout="nd(); return true;">Matrix ANTIRevolutions</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=411 onmouseover="prr('411/codm1.jpg',128,128);" onmouseout="nd(); return true;">Call of Duty</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=398 onmouseover="prr('398/lh06.gif',128,69);" onmouseout="nd(); return true;">Lionheart – Legacy of Crusader</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=397 onmouseover="prr('397/ricochet13.gif',128,115);" onmouseout="nd(); return true;">Ricochet Xtreme</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=395 onmouseover="prr('395/sysinternals.jpg',128,128);" onmouseout="nd(); return true;">Sysinternals</a><br></td><td width=5 background=irm2/6.gif></td></tr><tr><td><img width=5 src=irm2/1.gif height=5></td><td background=irm2/2.gif></td><td><img width=5 src=irm2/3.gif height=5></td></tr></table></td><td width=50% align=center valign=top><table cellpadding=0 cellspacing=0 ><tr><td width=6><img width=5 src=irm2/7.gif height=24></td><td width=100% background=irm2/8.gif align=center><b class=menusmall>Podobné články</b></td><td><img src=irm2/9.gif border=0 height=24 width=5></td></tr><tr><td width=5 background=irm2/4.gif></td><td bgcolor=#000000>
+
+<a class=menusmall2 href=indexx.htm?rub=1&co=392 onmouseover="prr('392/cloth7.gif',128,96);" onmouseout="nd(); return true;">Opengl – Cloth Simulation</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=380>OpenGL - GLWnd</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=368 onmouseover="prr('368/h1.gif',128,81);" onmouseout="nd(); return true;">OpenGL, časť 18</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=359>OpenGL, časť 17</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=346>OpenGL, časť 16</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=334>OpenGL, časť 15</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=326>OpenGL, časť 14</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=323>OpenGL, časť 13</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=320>OpenGL, časť 12</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=317>OpenGL, časť 11</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=316 onmouseover="prr('316/10screenshot.gif',128,96);" onmouseout="nd(); return true;">OpenGL, časť 10</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=315>OpenGL, časť 9</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=311>OpenGL povinná literatúra</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=306>OpenGL, časť 7</a><br><a class=menusmall2 href=indexx.htm?rub=1&co=304>OpenGL, časť 6</a><br></td><td width=5 background=irm2/6.gif></td></tr><tr><td><img width=5 src=irm2/1.gif height=5></td><td background=irm2/2.gif></td><td><img width=5 src=irm2/3.gif height=5></td></tr></table></td></tr></table>
+<TABLE align=center border=0 cellPadding=0 cellSpacing=0>
+<TR>
+<TD vAlign=top width=100% align=center><br><br>
+<TABLE align=center bgColor=#000000 border=0 cellPadding=0 cellSpacing=1 width=399>
+<TR>
+<TD bgColor=#127E32 vAlign=bottom>
+<P align=center><font size=2><A href=indexx.htm?dis=1&co=312><font color=#ffffff><B>Diskusia</B></A></b></font>
+</P>
+</TD>
+</TR>
+</TABLE>
+<DIV align=center>
+<TABLE border=0 cellPadding=0 cellSpacing=0>
+<TR>
+<form action=indexx.htm method=post >
+<INPUT type=hidden name=dis value=1>
+<INPUT type=hidden name=co value=312>
+<INPUT type=hidden name=send value=1>
+<TD><font size=2>Meno:&nbsp;</TD>
+<TD ><INPUT maxLength=30 name=meno size=9 value=""></TD>
+<td><font size=2>&nbsp;E-mail:&nbsp;</TD>
+<TD><INPUT maxLength=50 name=email size=9 value=""></TD>
+<TD><font size=2>&nbsp;Www:&nbsp;</TD>
+<TD><INPUT maxLength=150 name=www value="" size=9></TD>
+</TR>
+</TABLE>
+</DIV>
+
+<DIV align=center>
+<TEXTAREA cols=47 name=text rows=6 wrap=physical></TEXTAREA>
+</DIV>
+<DIV align=left>
+<INPUT name=sendemail type=checkbox value=1  ><font size=2>Posielaj mi nové príspevky z tejto diskusie na môj email</div>
+<DIV align=center><INPUT name=action type=submit value="Pridaj príspevok"></DIV>
+</form>
+</TD>
+</TR>
+</TABLE><center><br>
+</div><script> checkv2();</script></layer></body></html>

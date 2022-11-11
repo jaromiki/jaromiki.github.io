@@ -1,0 +1,630 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Riadice struktury</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+
+<h1>5 Riadiace štruktúry</h1>
+
+<ul>
+<li><a href="#vyraz">Výrazový príkaz</a></li>
+
+<li><a href="#blok">Blok</a></li>
+
+<li><a href="#podmieneny">Podmienený príkaz</a></li>
+
+<li><a href="#prepinac">Prepínač</a></li>
+
+<li><a href="#cykly">Príkazy cyklu</a></li>
+
+<li><a href="#skok">Príkazy skoku</a></li>
+
+<li><a href="#funkcie">Funkcie</a></li>
+
+<li><a href="#priklady">Príklady</a></li>
+</ul>
+
+
+
+<p align="justify">Základnou jednotkou riadiacej štruktúry je príkaz. Riadiace štruktúry predpisujú poradie vykonávania dielčich výpočtov. Príkazy možno rozdeliť na</p>
+
+<ul>
+<li>výrazový príkaz</li>
+
+<li>blok</li>
+
+<li>podmienený príkaz</li>
+
+<li>prepínač</li>
+
+<li>príkaz cyklu</li>
+
+<li>príkaz skoku</li>
+</ul>
+
+<h2><a id="vyraz" name="vyraz">5.1 Výrazový príkaz</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Výrazový príkaz vzniká pridaním znaku ";" za výraz (viď kap. 4.5). Pretože výrazom je aj volanie funkcie (napr. štandardnej), v&nbsp;nasledujúcom <a href="Zdrojaky/Pr5_1.c.html">programe</a> sú tri výrazové príkazy:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_1.c  v&#253;razov&#233; prkazy */</i></font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> a<font color="#800000">,</font>b<font color="#800000">;</font>
+
+  a <font color="#800000">=</font> <font color="#ff0080">1</font><font color="#800000">;</font>    <font color="#0000a0"><i>/* prvy vyrazovy prikaz */</i></font>
+  b <font color="#800000">+=</font> <font color="#ff0080">1</font><font color="#800000">+</font><font color="#ff0080">3</font><font color="#800000">*</font>a<font color="#800000">;</font>  <font color="#0000a0"><i>/* druhy vyrazovy prikaz */</i></font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;a=%d b=%d\n&quot;</font><font color="#800000">,</font>a<font color="#800000">,</font>b<font color="#800000">);</font> <font color="#0000a0"><i>/* treti vyrazovy prikaz */</i></font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<h2><a id="blok" name="blok">5.2 Blok</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Blok je tvorený postupnosťou príkazov jazyka C, uzavrenou v&nbsp;dvojici zložených zátvoriek {,}. V&nbsp;bloku je taktiež možné deklarovať lokálne premenné, ktoré majú platnosť iba v&nbsp;rámci daného bloku. Z&nbsp; iných častí programu, resp. blokov nie sú takéto premenné viditeľné. Vnorený blok môže, ale nemusí byť ukončený znakom bodkočiarka. Blok, ktorý obsahuje iba príkazy bez deklarácií premenných, označujeme ako zložený príkaz.</p>
+
+<h2><a id="podmieneny" name="podmieneny">5.3 Podmienený príkaz</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Podmienený príkaz umožňuje vykonávať vetvenie priebehu programu. Má dva tvary - skrátený a&nbsp;úplný :</p>
+
+<pre>
+  if (výraz) príkaz;  /* skrátený */
+
+  if (výraz) príkaz1;
+  else príkaz2;      /* úplný */
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Vetvenie sa vykoná na základe vyhodnotenia podmienky, ktorou je výraz v&nbsp;zátvorkách. Ak je hodnota výrazu nenulová (odpovedá pascalovskému true), vykoná sa príkaz, resp. v&nbsp;prípade úplného tvaru príkaz1. Ak je hodnota výrazu nulová (odpovedá false), vykoná sa iba v&nbsp;druhom prípade príkaz2. Výber minima dvoch čísel môžeme preto zapísať v&nbsp;tvare :</p>
+
+<pre>
+  int min(int a, int b)
+  {
+    if (a &lt; b) return(a);
+    else return(b);
+  }
+
+  alebo
+
+  int min(int a, int b)
+  {
+    if(a &lt; b) return(a);
+    return(b);
+  }
+
+  alebo pomocou podmieneného výrazu
+
+  int min(int a, int b)
+  {
+    return((a &lt; b)? a : b);
+  }
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Pri vnáraní podmienených príkazov sa vzťahuje else vždy k&nbsp;najbližšiemu predchádzajúcemu if, preto musíme správne použiť vnorený blok. Príklad :</p>
+
+<br />
+<pre>
+  {
+    if(y != 0)
+      if (x &lt; 0) x = -x;
+      else printf("Delenie nulou\n")
+    z = x/y;
+  }
+</pre>
+
+<p align="justify">nie je správne zapísaný. Musíme použiť vnorený blok alebo zmeniť podmienku prvého príkazu if :</p>
+
+<pre>
+  {
+    if(y != 0)
+    {
+      if (x &lt; 0) x = -x;
+      z = x/y;
+    }
+    else printf("Delenie nulou\n")
+  }
+  resp.
+  {
+    if (y == 0) printf("Delenie nulou\n");
+    else
+    {
+      x = -x;
+      z = x/y;
+    }
+  }
+</pre>
+
+<h2><a id="prepinac" name="prepinac">5.4 Prepínač</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Prepínač umožňuje vykonávať vetvenie programu na viac ako dve vetvy. Vetvenie sa rovnako ako v&nbsp;predchádzajúcom príkaze if vykonáva na základe vyhodnotenia výrazu, ktorý je celočíselného typu. Ak sa nájde zhoda medzi hodnotou výrazu a&nbsp;cestou case, pokračuje výpočet touto vetvou (až po príkaz break), inak je skok na default vetvu. Tvar príkazu je :</p>
+
+<pre>
+  switch (výraz)
+  {
+  case hodn1 : prikaz1;
+    ...
+  case hodnn : prikazn;
+  default : prikaz;
+  }
+
+  resp.
+
+  switch (výraz)
+  {
+  case hodn1 : prikaz1;break
+    ...
+  case hodnn : prikazn;break;
+  default : prikaz;break;
+  }
+</pre>
+
+<p align="justify">V prvom prípade sa vykonajú všetky príkazy od zvolenej vetvy až po default, v&nbsp;druhom prípade je výpočet každej vetvy ukončený príkazom break, to znamená že výpočet sa príkazom switch (v Pascale ekvivalent CASE) rozvetví a&nbsp;po jeho ukončení opäť spojí. Spôsob ošetrenia vetvy default záleží na programátorovi.<br />
+V uvedenom príklade vytlačí funkcia slovne hodnotu známky, zadanej číslom:</p>
+
+<pre>
+  void znslovo(int zn)
+  {
+    switch(zn)
+    {
+    case 1 : printf("vyborne");break;
+    case 2 : printf("velmi dobre");break;
+    case 3 : printf("dobre");break;
+    case 4 : printf("nevyhovel");break;
+    default : printf("nepripustna znamka %d\n",zn);break;
+    }
+  }
+</pre>
+
+
+<h2><a id="cykly" name="cykly">5.5 Príkazy cyklu</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Príkaz cyklu sa používa pre riadenie opakovania nejakého výpočtu. Určuje spôsob a&nbsp;podmienku ukončenia opakovania. Jazyk C pozná tri varianty príkazu cyklu:</p>
+
+<ul>
+<li>cyklus while</li>
+
+<li>cyklus do while</li>
+
+<li>cyklus for</li>
+</ul>
+
+<p>Cyklus <em>while</em> má tvar :</p>
+
+<pre>
+   while (výraz) príkaz;
+</pre>
+
+<p align="justify">Výraz tvorí podmienku ukončenia cyklu. Cyklus sa vykonáva, kým je výraz nenulový (true). Telo cyklu sa teda nemusí vykonať ani raz. Príkaz ilustrujeme funkciou na výpočet celočíselnej mocniny celého čísla.<br />
+</p>
+
+<p><a href="Zdrojaky/Pr5_2.c.html">Príklad pr5_2.c :</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_2.c   celociselna mocnina pomocou while */</i></font>
+
+<font color="#800000"><b>int</b></font> imoc<font color="#800000">(<b>int</b></font> x<font color="#800000">, <b>int</b></font> n<font color="#800000">);</font>
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Mocnina (%d)%d = %d\n&quot;</font><font color="#800000">,</font><font color="#ff0080">3</font><font color="#800000">,</font><font color="#ff0080">4</font><font color="#800000">,</font>imoc<font color="#800000">(</font><font color="#ff0080">3</font><font color="#800000">,</font><font color="#ff0080">4</font><font color="#800000">));</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> imoc<font color="#800000">(<b>int</b></font> x<font color="#800000">, <b>int</b></font> n<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> y<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font>
+  <font color="#800000"><b>while</b> (</font>n<font color="#800000">--)</font> y <font color="#800000">*=</font>x<font color="#800000">;</font>
+  <font color="#800000"><b>return</b> (</font>y<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Cyklus <em>do while</em> má tvar :</p>
+
+<pre>
+  do
+    príkaz
+  while (výraz);
+</pre>
+
+<p align="justify">Výraz tvorí podmienku ukončenia cyklu. Cyklus sa vykonáva, kým je výraz nenulový (true), najmenej však jedenkrát. Použitie príkazu do while je pomerne zriedkavé v&nbsp;porovnaní s&nbsp;ostanými dvoma príkazmi cyklu. Príkaz ilustrujeme rovnakým <a href="Zdrojaky/Pr5_1.c.html">príkladom</a> funkcie na výpočet celočíselnej mocniny celého čísla :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_3.c   celociselna mocnina pomocou do while */</i></font>
+
+<font color="#800000"><b>int</b></font> imoc<font color="#800000">(<b>int</b></font> x<font color="#800000">, <b>int</b></font> n<font color="#800000">);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Mocnina (%d)%d = %d\n&quot;</font><font color="#800000">,</font><font color="#ff0080">3</font><font color="#800000">,</font><font color="#ff0080">4</font><font color="#800000">,</font>imoc<font color="#800000">(</font><font color="#ff0080">3</font><font color="#800000">,</font><font color="#ff0080">4</font><font color="#800000">));</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> imoc<font color="#800000">(<b>int</b></font> x<font color="#800000">, <b>int</b></font> n<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> y<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>do</b></font>
+    y <font color="#800000">*=</font> x<font color="#800000">;</font>
+  <font color="#800000"><b>while</b> (</font>n<font color="#800000">--) ;</font>
+  <font color="#800000"><b>return</b> (</font>y<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Cyklus <em>for</em> má tvar :</p>
+
+<pre>
+   for (init ; koniec ; zmena) prikaz;
+</pre>
+
+<p align="justify">kde <i>init</i> je výraz, ktorý sa vyhodnotí raz na začiatku cyklu, obvykle sa tu nastavujú počiatočné hodnoty cyklu.<br />
+<i>Koniec</i> je podmienka ukončenia cyklu (kým je pravdivá - nenulová).<br />
+<i>Zmena</i> sa vyčísli po každom vykonaní cyklu, slúži pre zmenu riadiacej premennej cyklu. Táto zmena riadiacej premennej sa nemá uskutočňovať v&nbsp;tele cyklu, ale iba v&nbsp;hlavičke cyklu.</p>
+
+<p align="justify">Príkaz ilustrujeme rovnakým <a href="Zdrojaky/Pr5_1.c.html">príkladom</a> funkcie na výpočet celočíselnej mocniny celého čísla :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_4.c   celociselna mocnina pomocou for */</i></font>
+
+<font color="#800000"><b>int</b></font> imoc<font color="#800000">(<b>int</b></font> x<font color="#800000">, <b>int</b></font> n<font color="#800000">);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Mocnina (%d)%d = %d\n&quot;</font><font color="#800000">,</font><font color="#ff0080">3</font><font color="#800000">,</font><font color="#ff0080">4</font><font color="#800000">,</font>imoc<font color="#800000">(</font><font color="#ff0080">3</font><font color="#800000">,</font><font color="#ff0080">4</font><font color="#800000">));</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> imoc<font color="#800000">(<b>int</b></font> x<font color="#800000">, <b>int</b></font> n<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> y<font color="#800000">;</font>
+
+  <font color="#800000"><b>for</b>(</font>y<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font> n<font color="#800000">--;</font> y <font color="#800000">*=</font> x<font color="#800000">);</font>
+  <font color="#800000"><b>return</b> (</font>y<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Často sa používa príkaz for s&nbsp;prázdnym telom, ktorý predstavuje nekonečný cyklus :</p>
+
+<pre>
+   for ( ; ; );
+</pre>
+
+<p align="justify">Taktiež je možné vynechať v&nbsp;hlavičke cyklu hociktorý (jeden alebo dva) z&nbsp;výrazov init, koniec a&nbsp;zmena. Vynechanie je označené bodkočiarkou, ktorá musí byť prítomná vždy. Vyššie uvedený príklad nekonečného cyklu vlastne predstavuje vynechanie všetkých troch parametrov cyklu. Ukončenie takého cyklu (vyskočenie z&nbsp;tela cyklu) potom musí byť zabezpečené iným spôsobom (viď napr. príkazy skoku).</p>
+
+<h2><a id="skok" name="skok">5.6 Príkazy skoku</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Príkazy skoku sa používajú pre ošetrenie, resp. riešenie zvláštnych či výninočných situácií v&nbsp;programe. Ide o&nbsp;situácie, ktoré je spravidla potrebné ošetriť jednorázovo. Medzi príkazy skoku možno zaradiť príkazy :</p>
+
+<ul>
+<li>break</li>
+
+<li>continue</li>
+
+<li>return</li>
+
+<li>goto</li>
+</ul>
+
+<p align="justify">Príkazy <em>break</em> a&nbsp;<em>continue</em> sa používajú predovšetkým v&nbsp;spojení s&nbsp;príkazmi cyklu.<br />
+Príkaz <em>break</em> ukončuje najvnútornejšiu neukončenú slučku cyklu a&nbsp;opúšťa okamžite telo cyklu, to znamená, že spôsobuje skok z&nbsp;príkazu cyklu na ďalší príkaz. Ďalšie použitie príkazu break je v&nbsp;príkaze switch (viď kap. 5.4).<br />
+Príkaz <em>continue</em> preruší vykonávanie najbližšej nadradenej štruktúrovanej konštrukcie cyklu (najvnútornejšiu neukončenú slučku cyklu) a&nbsp;spôsobí prechod na ďalší krok cyklu bez toho, aby sa predchádzajúci krok cyklu ukončil. Dôležité je, že nespôsobuje skok z&nbsp;tela cyklu von. Použitie príkazov break a&nbsp;continue ilustrujú nasledovné príklady pre čítanie a&nbsp;tlač znaku:</p>
+
+<p><a href="Zdrojaky/Pr5_5.c.html">Príklad pr5_5.c:</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_5.c   tanie a tla znakov pomocou while */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> c<font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>((</font>c <font color="#800000">=</font> getchar<font color="#800000">()) &lt;</font> <font color="#ff8080">'z'</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b> (</font>c <font color="#800000">&gt;=</font> <font color="#ff8080">' '</font><font color="#800000">)</font> putchar<font color="#800000">(</font>c<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Koniec citania\n&quot;</font><font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr5_6.c.html">Príklad pr5_6.c:</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad p5_6.c tanie a tla znakov pomocou while, break, continue */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> c<font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b> (</font><font color="#ff0080">1</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b> ((</font>c <font color="#800000">=</font> getchar<font color="#800000">()) &lt;</font> <font color="#ff8080">' '</font><font color="#800000">) <b>continue</b>;</font>  <font color="#0000a0"><i>/* zahodit neviditelny znak  */</i></font>
+    <font color="#800000"><b>if</b> (</font>c <font color="#800000">==</font> <font color="#ff8080">'z'</font><font color="#800000">) <b>break</b>;</font>                  <font color="#0000a0"><i>/* koniec po znaku z  */</i></font>
+    putchar<font color="#800000">(</font>c<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Koniec citania\n&quot;</font><font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Príkaz <em>return</em> spôsobí ukončenie vykonávania nejakej funkcie a&nbsp;súčasne môže exportovať hodnotu výrazu do nadradenej úrovne ako deklarovaný typ hodnoty funkcie. Môže sa vyskytovať v&nbsp;jednom z&nbsp;tvarov</p>
+
+<pre>
+   return výraz;
+   return (výraz);
+   return;
+</pre>
+
+<p align="justify">Hodnota výrazu sa stáva hodnotou funkcie (prvé dva tvary príkazu return sú ekvivalentné). Tretí tvar príkazu return sa používa v&nbsp;prípade, keď funkcia je typu void, to znamená, že nevracia žiadnu hodnotu.</p>
+
+<p align="justify">Príkaz <em>goto</em> umožňuje vykonať skok tak v&nbsp;rámci jednej funkcie, ako aj medzi jednotlivými funkciami. Je však otázka, aký veľký zmysel takého skoky majú. Obecne je možné vykonať skok z&nbsp;bloku aj do bloku, a&nbsp; samozrejme von z&nbsp;cyklu. Všeobecne sa doporučuje používať príkaz goto čo najmenej a&nbsp;skutočne len vo výnimočných prípadoch. Príkaz, na ktorý sa má uskutočniť skok, musí byť označený návestím, za ktorým nasleduje dvojbodka. Pri skoku do bloku je hodnota všetkých lokálnych premenných daného bloku nedefinovaná. Skok do bloku ilustruje <a href="Zdrojaky/Pr5_7.c.html">príklad :</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad p5_7.c skok do bloku goto */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> c<font color="#800000">=</font><font color="#ff0080">5</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>goto</b></font> nav1<font color="#800000">;</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>int</b></font> c <font color="#800000">=</font> <font color="#ff0080">2</font><font color="#800000">;</font>
+
+nav1<font color="#800000">:</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;c=%d\n&quot;</font><font color="#800000">,</font> c<font color="#800000">);</font>
+    <font color="#800000"><b>goto</b></font> nav2<font color="#800000">;</font>
+  <font color="#800000">}</font>
+nav2<font color="#800000">:</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;c=%d\n&quot;</font><font color="#800000">,</font> c<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">Program vytlačí najprv c=2, potom c=5.</p>
+
+<h2><a id="funkcie" name="funkcie">5.7 Funkcie</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Funkcia predstavuje základnú stavebnú jednotku C jazyka. Obecný tvar funkcie je</p>
+
+<pre>
+  Typ výsledku identifikátor(deklarácia argumentov)
+  blok
+</pre>
+
+<p align="justify"><i>Typ výsledku</i> aj <i>deklarácia argumentov</i> môžu byť aj prázdne, t.j. typu void. Ak neuvedieme typ funkcie, implicitná hodnota je priradená prekladačom(všeobecne by mala byť int, no nemusí). Typ a&nbsp;počet formálnych a&nbsp;skutočných argumetov funkcie musí byť samozrejme rovnaký (pri volaní). Pretože každá funkcia vracia aspoň jednu hodnotu (okrem void), mal by sa v&nbsp;tele funkcie vyskytovať aspoň jeden príkaz return.</p>
+
+<h2><a id="priklady" name="priklady">5.8 Príklady</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Príkazy cyklov sa využívajú v&nbsp;nasledovných programoch pre prácu so znakmi (čítanie, výpis, počítanie znakov, riadkov, slov, číslic atď).</p>
+
+<p><a href="Zdrojaky/Pr5_8.c.html">Príklad pr5_8.c :</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_8.c pocet znakov zadanych z terminalu*/</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> nc<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>(</font>getchar<font color="#800000">()!=</font><font color="#ff8080">'\n'</font><font color="#800000">)</font> nc<font color="#800000">++;</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet zadanych znakov = %d\n&quot;</font><font color="#800000">,</font>nc<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr5_9.c.html">Príklad pr5_9.c :</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_9.c pocet cislic, bielych a ostatnych znakov */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> c<font color="#800000">,</font>i<font color="#800000">,</font>nwhite<font color="#800000">,</font>nother<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> ndigit<font color="#800000">[</font><font color="#ff0080">10</font><font color="#800000">];</font>
+
+  nwhite<font color="#800000">=</font>nother<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+  <font color="#800000"><b>for</b>(</font>i<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>i<font color="#800000">&lt;</font><font color="#ff0080">10li</font><font color="#800000">++)</font> ndigit<font color="#800000">[</font>i<font color="#800000">]=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+  <font color="#800000"><b>while</b>((</font>c<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">'\n'</font><font color="#800000">(</font><font color="#ff8080">'k'</font><font color="#800000">))</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b>(</font>c<font color="#800000">&gt;=</font><font color="#ff8080">'0'</font> <font color="#800000">&amp;&amp;</font> c<font color="#800000">&lt;=</font><font color="#ff8080">'9'</font><font color="#800000">) ++</font>ndigit<font color="#800000">[</font>c<font color="#800000">-</font><font color="#ff8080">'0'</font><font color="#800000">];</font>
+    <font color="#800000"><b>else if</b>(</font>c<font color="#800000">==</font><font color="#ff8080">' '</font><font color="#800000">||</font>c<font color="#800000">==</font><font color="#ff8080">'\n'</font><font color="#800000">||</font>c<font color="#800000">==</font><font color="#ff8080">'\t'</font><font color="#800000">) ++</font>nwhite<font color="#800000">;</font>
+    <font color="#800000"><b>else</b> ++</font>nother<font color="#800000">;</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocty zadanych cislic = \n&quot;</font><font color="#800000">);</font>
+    <font color="#800000"><b>for</b>(</font>i<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>i<font color="#800000">&lt;</font><font color="#ff0080">10</font><font color="#800000">;</font>i<font color="#800000">++)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;%d&quot;</font><font color="#800000">,</font>ndigit<font color="#800000">[</font>i<font color="#800000">]);</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet bielych znakov = %d\n&quot;</font><font color="#800000">,</font>nwhite<font color="#800000">);</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet ostatnych znakov = %d\n&quot;</font><font color="#800000">,</font>nother<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr5_10.c.html">Príklad pr5_10.c :</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_10.c pocet znakov, slov a riadkov */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#008000">#define  YES  1</font>
+<font color="#008000">#define  NO   0</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> c<font color="#800000">,</font>nl<font color="#800000">,</font>nw<font color="#800000">,</font>nc<font color="#800000">,</font>inword<font color="#800000">;</font>
+
+  nw<font color="#800000">=</font>nc<font color="#800000">=</font>nl<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+  inword<font color="#800000">=</font>NO<font color="#800000">;</font>
+  <font color="#800000"><b>while</b>((</font>c<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">'k'</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    nc<font color="#800000">++;</font>
+    <font color="#800000"><b>if</b>(</font>c<font color="#800000">&gt;==</font><font color="#ff8080">'\n'</font><font color="#800000">)</font> nl<font color="#800000">++;</font>
+    <font color="#800000"><b>if</b>(</font>c<font color="#800000">==</font><font color="#ff8080">' '</font><font color="#800000">||</font>c<font color="#800000">==</font><font color="#ff8080">'\n'</font><font color="#800000">||</font>c<font color="#800000">==</font><font color="#ff8080">'\t'</font><font color="#800000">)</font> inword<font color="#800000">=</font>NO<font color="#800000">;</font>
+    <font color="#800000"><b>else if</b> (</font>inword<font color="#800000">==</font>NO<font color="#800000">)</font>
+    <font color="#800000">{</font>
+      inword<font color="#800000">=</font>YES<font color="#800000">;</font>
+      nw<font color="#800000">++;</font>
+    <font color="#800000">}</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet riadkov = %d\n&quot;</font><font color="#800000">,</font>nl<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet slov  = %d\n&quot;</font><font color="#800000">,</font>nw<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet znakov = %d\n&quot;</font><font color="#800000">,</font>nc<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr5_11.c.html">Príklad pr5_11.c:</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_11.c vstup riadkov, tlac najdlhsieho */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#008000">#define  MAXLINE  100 </font><font color="#0000a0"><i>/* max. dlzka vstupn. riadku */</i></font>
+
+<font color="#800000"><b>int</b></font> getline<font color="#800000">(<b>char</b></font> s<font color="#800000">[],<b>int</b></font> lim<font color="#800000">);</font>
+<font color="#800000"><b>void</b></font> copy<font color="#800000">(<b>char</b></font> s1<font color="#800000">[],</font> s2<font color="#800000">[]);</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> len<font color="#800000">,</font>max<font color="#800000">;</font>   <font color="#0000a0"><i>/* dlzka bezneho a max. riadku */</i></font>
+  <font color="#800000"><b>char</b></font> line<font color="#800000">[</font>MAXLINE<font color="#800000">],</font> save<font color="#800000">[</font>MAXLINE<font color="#800000">];</font>
+
+  max<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+  <font color="#800000"><b>while</b>((</font>len<font color="#800000">=</font>getline<font color="#800000">(</font>line<font color="#800000">,</font>MAXLINE<font color="#800000">))&gt;=</font><font color="#ff0080">0</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b> (</font>len <font color="#800000">&gt;</font> max<font color="#800000">)</font>
+    <font color="#800000">{</font>
+      max<font color="#800000">=</font>len<font color="#800000">;</font>
+      copy<font color="#800000">(</font>line<font color="#800000">,</font>save<font color="#800000">);</font>
+    <font color="#800000">}</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>if</b>(</font>max <font color="#800000">&gt;</font> <font color="#ff0080">0</font><font color="#800000">)</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Najdlhsi riadok : %s\n&quot;</font><font color="#800000">,</font>save<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Jeho dlzka   : %d\n&quot;</font><font color="#800000">,</font>max<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> getline<font color="#800000">(<b>char</b></font> s<font color="#800000">[],<b>int</b></font> lim<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> c<font color="#800000">,</font>i<font color="#800000">;</font>
+
+  <font color="#800000"><b>for</b>(</font>i<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>i<font color="#800000">&lt;</font>lim<font color="#800000">-</font><font color="#ff0080">1</font><font color="#800000">&amp;&amp;(</font>c<font color="#800000">=</font>getchar<font color="#800000">())!=</font><font color="#ff8080">'k'</font><font color="#800000">&amp;&amp;</font>c<font color="#800000">!=</font><font color="#ff8080">'\n'</font><font color="#800000">;</font>i<font color="#800000">++)</font> s<font color="#800000">[</font>i<font color="#800000">]=</font>c<font color="#800000">;</font>
+  <font color="#800000"><b>if</b>(</font>c<font color="#800000">==</font><font color="#ff8080">'\n'</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    s<font color="#800000">[</font>i<font color="#800000">]=</font>c<font color="#800000">;</font>
+    i<font color="#800000">++;</font>
+  <font color="#800000">}</font>
+  s<font color="#800000">[</font>i<font color="#800000">]=</font><font color="#ff8080">'\0'</font><font color="#800000">;</font>
+  <font color="#800000"><b>return</b>(</font>i<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>void</b></font> copy<font color="#800000">(<b>char</b></font> s1<font color="#800000">[],</font> s2<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> i<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>while</b>((</font>s2<font color="#800000">[</font>i<font color="#800000">]=</font>s1<font color="#800000">[</font>i<font color="#800000">])!=</font><font color="#ff8080">'\0'</font><font color="#800000">)</font> i<font color="#800000">++;</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr5_12.c.html">Príklad pr5_12.c:</a></p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr5_12.c jednoduche umocnenie */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> i<font color="#800000">;</font>
+
+  <font color="#800000"><b>for</b>(</font>i<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>i<font color="#800000">&lt;</font><font color="#ff0080">10</font><font color="#800000">;</font>i<font color="#800000">++)</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot; %d (%d)%d = %d (%d)%d = %d\n&quot;</font><font color="#800000">,</font>i<font color="#800000">,</font><font color="#ff0080">2</font><font color="#800000">,</font>i<font color="#800000">,</font>power<font color="#800000">(</font><font color="#ff0080">2</font><font color="#800000">,</font>i<font color="#800000">),</font><font color="#ff0080">3</font><font color="#800000">,</font>i<font color="#800000">,</font>power<font color="#800000">(</font><font color="#ff0080">3</font><font color="#800000">,</font>i<font color="#800000">));</font>
+<font color="#800000">}</font>
+
+<font color="#800000"><b>int</b></font> power<font color="#800000">(<b>int</b></font> x<font color="#800000">,<b>int</b></font> n<font color="#800000">)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> i<font color="#800000">,</font>p<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font>
+
+  <font color="#800000"><b>for</b>(</font>i<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font>i<font color="#800000">&lt;=</font>n<font color="#800000">;</font>i<font color="#800000">++)</font> p<font color="#800000">=</font>p<font color="#800000">*</font>x<font color="#800000">;</font>
+  <font color="#800000"><b>return</b>(</font>p<font color="#800000">);</font>
+<font color="#800000">}</font>
+<font color="#0000a0"><i>/*</i></font>
+<font color="#0000a0"><i>In&#225; verzia funkcie power:</i></font>
+
+<font color="#0000a0"><i>int power(int x,int n)</i></font>
+<font color="#0000a0"><i>{</i></font>
+<font color="#0000a0"><i>  int p;</i></font>
+<font color="#0000a0"><i>  for(p=1;n&gt;0;n--) p=p*x;</i></font>
+<font color="#0000a0"><i>  return(p);</i></font>
+<font color="#0000a0"><i>}</i></font>
+<font color="#0000a0"><i>*/</i></font>
+
+</font>
+</code></pre>
+
+
+</div>
+
+
+</body>
+
+</html>
+

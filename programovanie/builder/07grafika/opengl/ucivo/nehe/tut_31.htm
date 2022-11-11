@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 31 - Nahrávání a renderování modelů</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_31.jpg" class="nehe_maly" alt="Lekce 31" />
+
+<h1>Lekce 31 - Nahrávání a renderování modelů</h1>
+
+<p class="nadpis_clanku">Další skvělý tutoriál! Naučíte se, jak nahrát a zobrazit otexturovaný Milkshape3D model. Nezdá se to, ale asi nejvíce se budou hodit znalosti o práci s dynamickou pamětí a jejím kopírování z jednoho místa na druhé.</p>
+
+<p>Zdrojový kód tohoto projektu byl vyjmut z PortaLib3D, knihovny, kterou jsem napsal, abych lidem umožnil zobrazovat modely za použití velmi malého množství dalšího kódu. Abyste se na ni mohli opravdu spolehnout musíte nejdříve vědět, co dělá a jak pracuje.</p>
+
+<p>Část PortaLib3D, uvedená zde, si stále zachovává můj copyright. To neznamená, že ji nesmíte používat, ale že při vložení kódu do svého projektu musíte uvést náležitý credit. To je vše - žádné velké nároky. Pokud byste chtěli číst, pochopit a re-implementovat celý kód (žádné kopírovat vložit!), budete uvolněni ze své povinnosti. Pak je to váš výtvor. Pojďme se ale podívat na něco zajímavějšího.</p>
+
+<p>Model, který používáme v tomto projektu, pochází z Milkshape3D. Je to opravdu kvalitní balík pro modelování, který zahrnuje vlastní file-formát. Mým dalším plánem je implementovat Anim8or (<a href="http://www.anim8or.com/" target="_blank">http://www.anim8or.com/</a>), souborový reader. Je free a umí číst samozřejmě i 3DS. Nicméně formát souboru není tím hlavním pro loading modelů. Nejdříve se musí vytvořit vlastní struktury, které jsou schopny pojmout data.</p>
+
+<p>První ze všeho deklarujeme obecnou třídu Model, která je kontejnerem pro všechna data.</p>
+
+<p class="src0">class Model<span class="kom">// Obecné úložiště dat (abstraktní třída)</span></p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+
+<p>Ze všeho nejdůležitější jsou samozřejmě vertexy. Pole tří desetinných hodnot m_location reprezentuje jednotlivé x, y, z souřadnice. Proměnnou m_boneID budeme v tomto tutoriálu ignorovat. Její čas přijde až v dalším při kosterní animaci.</p>
+
+<p class="src1">struct Vertex<span class="kom">// Struktura vertexu</span></p>
+<p class="src1">{</p>
+<p class="src2">float m_location[3];<span class="kom">// X, y, z souřadnice</span></p>
+<p class="src2">char m_boneID;<span class="kom">// Pro skeletální animaci</span></p>
+<p class="src1">};</p>
+
+<p>Všechny vertexy potřebujeme seskupit do trojúhelníků. Pole m_vertexIndices obsahuje tři indexy do pole vertexů. Touto cestou bude každý vertex uložen v paměti pouze jednou. V polích m_s a m_t jsou texturové koordináty každého vrcholu. Poslední atribut definuje tři normálové vektory pro světlo.</p>
+
+<p class="src1">struct Triangle<span class="kom">// Struktura trojúhelníku</span></p>
+<p class="src1">{</p>
+<p class="src2">int m_vertexIndices[3];<span class="kom">// Tři indexy do pole vertexů</span></p>
+<p class="src2">float m_s[3], m_t[3];<span class="kom">// Texturové koordináty</span></p>
+<p class="src2">float m_vertexNormals[3][3];<span class="kom">// Tři normálové vektory</span></p>
+<p class="src1">};</p>
+
+<p>Další struktura popisuje mesh modelu. Mesh je skupina trojúhelníků, na které je aplikován stejný materiál a textura. Skupiny meshů dohromady tvoří celý model. Stejně jako trojúhelníky obsahovaly pouze indexy na vertexy, budou i meshe obsahovat pouze indexy na trojúhelníky. Protože neznáme jejich přesný počet, musí být pole dynamické. Třetí proměnná je opět indexem, tentokrát do materiálů (textura, osvětlení).</p>
+
+<p class="src1">struct Mesh<span class="kom">//Mesh modelu</span></p>
+<p class="src1">{</p>
+<p class="src2">int *m_pTriangleIndices;<span class="kom">// Indexy do trojúhelníků</span></p>
+<p class="src2">int m_numTriangles;<span class="kom">// Počet trojúhelníků</span></p>
+<p class="src2">int m_materialIndex;<span class="kom">// Index do materiálů</span></p>
+<p class="src1">};</p>
+
+<p>Ve struktuře Material jsou uložené standardní koeficienty světla, ve stejném formátu jako používá OpenGL: okolní (ambient), rozptýlené (diffuse), odražené (specular), vyzařující (emissive) a lesklost (shininess). dále obsahuje objekt textury a souborovou cestu k textuře, aby mohla být znovu nahrána, když je ukončen kontext OpenGL.</p>
+
+<p class="src1">struct Material<span class="kom">// Vlastnosti materiálů</span></p>
+<p class="src1">{</p>
+<p class="src2">float m_ambient[4], m_diffuse[4], m_specular[4], m_emissive[4];<span class="kom">// Reakce materiálu na světlo</span></p>
+<p class="src2">float m_shininess;<span class="kom">// Lesk materiálu</span></p>
+<p class="src2">GLuint m_texture;<span class="kom">// Textura</span></p>
+<p class="src2">char *m_pTextureFilename;<span class="kom">// Souborová cesta k textuře</span></p>
+<p class="src1">};</p>
+
+<p>Vytvoříme proměnné právě napsaných struktur ve formě ukazatelů na dynamická pole, jejichž paměť alokuje funkce pro loading objektů. Musíme samozřejmě ukládat i velikost polí.</p>
+
+<p class="src0">protected:</p>
+<p class="src1">int m_numVertices;<span class="kom">// Počet vertexů</span></p>
+<p class="src1">Vertex *m_pVertices;<span class="kom">// Dynamické pole vertexů</span></p>
+<p></p>
+<p class="src1">int m_numTriangles;<span class="kom">// Počet trojúhelníků</span></p>
+<p class="src1">Triangle *m_pTriangles;<span class="kom">// Dynamické pole trojúhelníků</span></p>
+<p></p>
+<p class="src1">int m_numMeshes;<span class="kom">// Počet meshů</span></p>
+<p class="src1">Mesh *m_pMeshes;<span class="kom">// Dynamické pole meshů</span></p>
+<p></p>
+<p class="src1">int m_numMaterials;<span class="kom">// Počet materiálů</span></p>
+<p class="src1">Material *m_pMaterials;<span class="kom">// Dynamické pole materiálů</span></p>
+
+<p>A konečně metody třídy. Virtuální členská funkce loadModelData() má za úkol nahrát data ze souboru. Přiřadíme jí nulu, aby nemohl být vytvořen objekt třídy (abstraktní třída). Tato třída je zamýšlena pouze jako úložiště dat. Všechny operace pro nahrávání mají na starosti odvozené třídy, kdy každá z nich umí svůj vlastní formát souboru. Celá hierarchie je více obecná.</p>
+
+<p class="src0">public:</p>
+<p class="src1">Model();<span class="kom">// Konstruktor</span></p>
+<p class="src1">virtual ~Model();<span class="kom">// Destruktor</span></p>
+<p></p>
+<p class="src1">virtual bool loadModelData(const char *filename) = 0;<span class="kom">// Loading objektu ze souboru</span></p>
+
+<p>Metoda reloadTextures() slouží pro loading textur a jejich znovunahrávání, když se ztratí kontext OpenGL (např. při přepnutí z/do fullscreenu). Draw() vykresluje objekt. Tato funkce nemusí být virtuální, protože defakto známe všechny potřebné informace o struktuře objektu (vertexy, trojúhelníky...).</p>
+
+<p class="src1">void reloadTextures();<span class="kom">// Znovunahrání textur</span></p>
+<p class="src1">void draw();<span class="kom">// Vykreslení objektu</span></p>
+<p class="src0">};</p>
+
+<p>Od třídy Model podědíme třídu MilkshapeModel. Přepíšeme v ní metodu loadModelData().</p>
+
+<p class="src0">class MilkshapeModel : public Model</p>
+<p class="src0">{</p>
+<p class="src0">public:</p>
+<p class="src1">MilkshapeModel();<span class="kom">// Konstruktor</span></p>
+<p class="src1">virtual ~MilkshapeModel();<span class="kom">// Destruktor</span></p>
+<p></p>
+<p class="src1">virtual bool loadModelData(const char *filename);<span class="kom">// Loading objektu ze souboru</span></p>
+<p class="src0">};</p>
+
+<p>Nyní nahrávání objektů. Přepíšeme virtuální funkci loadModelData() abstraktní třídy Model tak, aby ve třídě MilkShapeModel nahrávala data ze souboru ve formátu Milkshape3D. Předáváme jí řetězec se jménem souboru. Pokud vše proběhne v pořádku, funkce nastaví datové struktury a vrátí true.</p>
+
+<p class="src0">bool MilkshapeModel::loadModelData(const char *filename)</p>
+<p class="src0">{</p>
+
+<p>Soubor otevřeme jako vstupní (ios::in), binární (ios::binary) a nebudeme ho vytvářet (ios::nocreate). Pokud nebyl nalezen vrátí funkce false, aby indikovala error.</p>
+
+<p class="src1">ifstream inputFile(filename, ios::in | ios::binary | ios::nocreate);<span class="kom">// Otevření souboru</span></p>
+<p></p>
+<p class="src1">if (inputFile.fail())<span class="kom">// Podařilo se ho otevřít?</span></p>
+<p class="src2">return false;</p>
+
+<p>Zjistíme velikost souboru v bytech a potom ho celý načteme do pomocného bufferu pBuffer.</p>
+
+<p class="src1"><span class="kom">// Velikost souboru</span></p>
+<p class="src1">inputFile.seekg(0, ios::end);</p>
+<p class="src1">long fileSize = inputFile.tellg();</p>
+<p class="src1">inputFile.seekg(0, ios::beg);</p>
+<p></p>
+<p class="src1">byte *pBuffer = new byte[fileSize];<span class="kom">// Alokace paměti pro kopii souboru</span></p>
+<p class="src1">inputFile.read(pBuffer, fileSize);<span class="kom">// Vytvoření paměťové kopie souboru</span></p>
+<p class="src1">inputFile.close();<span class="kom">// Zavření souboru</span></p>
+
+<p>Deklarujeme pomocný ukazatel pPtr, který ihned inicializujeme tak, aby ukazoval na stejné místo jako pBuffer, tedy na začátek paměti. Do hlavičky souboru pHeader uložíme adresu hlavičky a zvětšíme adresu v pPtr o velikost hlavičky.</p>
+
+<p>Pozn.: Strukturu hlavičky a jí podobné jsem na začátku tutoriálu neuváděl, protože je budeme používat jenom zde, v této funkci. Pokud vás přeci zajímají, stáhněte si zdrojový kód. Jsou deklarované nahoře v souboru MilkshapeModel.cpp.</p>
+
+<p class="src1">const byte *pPtr = pBuffer;<span class="kom">// Pomocný ukazatel na kopii souboru</span></p>
+<p></p>
+<p class="src1">MS3DHeader *pHeader = (MS3DHeader*)pPtr;<span class="kom">// Ukazatel na hlavičku</span></p>
+<p class="src1">pPtr += sizeof(MS3DHeader);<span class="kom">// Posun za hlavičku</span></p>
+
+<p>Hlavička přímo specifikuje formát souboru. Ujistíme se, že se jedná o platný formát, který umíme nahrát.</p>
+
+<p class="src1"><span class="kom">// Není Milkshape3D souborem</span></p>
+<p class="src1">if (strncmp(pHeader-&gt;m_ID, &quot;MS3D000000&quot;, 10) != 0)</p>
+<p class="src1">{</p>
+<p class="src2">delete [] pBuffer;<span class="kom">// Překl.: Smaže kopii souboru !!!!!</span></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1"><span class="kom">// Špatná verze souboru, třída podporuje pouze verze 1.3 a 1.4</span></p>
+<p class="src1">if (pHeader-&gt;m_version &lt; 3 || pHeader-&gt;m_version &gt; 4)</p>
+<p class="src1">{</p>
+<p class="src2">delete [] pBuffer;<span class="kom">// Překl.: Smaže kopii souboru !!!!!</span></p>
+<p class="src2">return false;</p>
+<p class="src1">}</p>
+
+<p>Načteme všechny vertexy. Nejdříve zjistíme jejich počet, alokujeme potřebnou paměť a přesuneme pPtr na další pozici. V cyklu procházíme jednotlivé vertexy. Nastavíme ukazatel pVertex na přetypovaný pPtr a definujeme m_boneID. Nakonec zavoláme memcpy() pro zkopírování hodnot a zvětšíme pPtr.</p>
+
+<p class="src1">int nVertices = *(word*)pPtr;<span class="kom">// Počet vertexů</span></p>
+<p></p>
+<p class="src1">m_numVertices = nVertices;<span class="kom">// Nastaví atribut třídy</span></p>
+<p class="src1">m_pVertices = new Vertex[nVertices];<span class="kom">// Alokace paměti pro vertexy</span></p>
+<p></p>
+<p class="src1">pPtr += sizeof(word);<span class="kom">// Posun za počet vertexů</span></p>
+<p></p>
+<p class="src1">int i;<span class="kom">//Pomocná proměnná</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; nVertices; i++)<span class="kom">// Nahrává vertexy</span></p>
+<p class="src1">{</p>
+<p class="src2">MS3DVertex *pVertex = (MS3DVertex*)pPtr;<span class="kom">// Ukazatel na vertex</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Načtení vertexu</span></p>
+<p class="src2">m_pVertices[i].m_boneID = pVertex-&gt;m_boneID;</p>
+<p class="src2">memcpy(m_pVertices[i].m_location, pVertex-&gt;m_vertex, sizeof(float) * 3);</p>
+<p></p>
+<p class="src2">pPtr += sizeof(MS3DVertex);<span class="kom">// Posun za tento vertex</span></p>
+<p class="src1">}</p>
+
+<p>Stejně jako u vertexů, tak i trojúhelníků nejdříve provedeme potřebné operace pro alokaci paměti. V cyklu procházíme jednotlivé trojúhelníky a inicializujeme je. Všimněte si, že v souboru jsou indexy vertexů uloženy v poli word hodnot, ale v modelu kvůli konzistentnosti a jednoduchosti používáme datový typ int. Číslo se implicitně přetypuje.</p>
+
+<p class="src1">int nTriangles = *(word*)pPtr;<span class="kom">// Počet trojúhelníků</span></p>
+<p class="src1">m_numTriangles = nTriangles;<span class="kom">// Nastaví atribut třídy</span></p>
+<p class="src1">m_pTriangles = new Triangle[nTriangles];<span class="kom">// Alokace paměti pro trojúhelníky</span></p>
+<p></p>
+<p class="src1">pPtr += sizeof(word);<span class="kom">// Posun za počet trojúhelníků</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; nTriangles; i++)<span class="kom">// Načítá trojúhelníky</span></p>
+<p class="src1">{</p>
+<p class="src2">MS3DTriangle *pTriangle = (MS3DTriangle*)pPtr;<span class="kom">// Ukazatel na trojúhelník</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Načtení trojúhelníku</span></p>
+<p class="src2">int vertexIndices[3] = { pTriangle-&gt;m_vertexIndices[0], pTriangle-&gt;m_vertexIndices[1], pTriangle-&gt;m_vertexIndices[2] };</p>
+
+<p>Všechna čísla v poli t jsou nastavena na 1.0 mínus originál. To proto, že OpenGL používá počátek texturovacího souřadnicového systému vlevo dole, narozdíl od Milkshape, které ho má vlevo nahoře. Odečtením od jedničky, y souřadnici invertujeme. Vše ostatní by mělo být bez problémů.</p>
+
+<p class="src2">float t[3] = { 1.0f-pTriangle-&gt;m_t[0], 1.0f-pTriangle-&gt;m_t[1], 1.0f-pTriangle-&gt;m_t[2] };</p>
+<p></p>
+<p class="src2">memcpy(m_pTriangles[i].m_vertexNormals, pTriangle-&gt;m_vertexNormals, sizeof(float)*3*3);</p>
+<p class="src2">memcpy(m_pTriangles[i].m_s, pTriangle-&gt;m_s, sizeof(float)*3);</p>
+<p class="src2">memcpy(m_pTriangles[i].m_t, t, sizeof(float)*3);</p>
+<p class="src2">memcpy(m_pTriangles[i].m_vertexIndices, vertexIndices, sizeof(int)*3);</p>
+<p></p>
+<p class="src2">pPtr += sizeof(MS3DTriangle);<span class="kom">// Posun za tento trojúhelník</span></p>
+<p class="src1">}</p>
+
+<p>Nahrajeme struktury mesh. V Milkshape3D jsou také nazývány groups - skupiny. V každé se liší počet trojúhelníků, takže nemůžeme načíst žádnou standardní strukturu. Namísto toho budeme dynamicky alokovat paměť pro indexy trojúhelníků a v každém průchodu je načítat.</p>
+
+<p class="src1">int nGroups = *(word*)pPtr;<span class="kom">// Počet meshů</span></p>
+<p class="src1">m_numMeshes = nGroups;<span class="kom">// Nastaví atribut třídy</span></p>
+<p class="src1">m_pMeshes = new Mesh[nGroups];<span class="kom">// Alokace paměti pro meshe</span></p>
+<p></p>
+<p class="src1">pPtr += sizeof(word);<span class="kom">// Posun za počet meshů</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; nGroups; i++)<span class="kom">// Načítá meshe</span></p>
+<p class="src1">{</p>
+<p class="src2">pPtr += sizeof(byte);<span class="kom">// Posun za flagy</span></p>
+<p class="src2">pPtr += 32;<span class="kom">// Posun za jméno</span></p>
+<p></p>
+<p class="src2">word nTriangles = *(word*)pPtr;<span class="kom">// Počet trojúhelníků v meshi</span></p>
+<p class="src2">pPtr += sizeof(word);<span class="kom">// Posun za počet trojúhelníků</span></p>
+<p></p>
+<p class="src2">int *pTriangleIndices = new int[nTriangles];<span class="kom">// Alokace paměti pro indexy trojúhelníků</span></p>
+<p></p>
+<p class="src2">for (int j = 0; j &lt; nTriangles; j++)<span class="kom">// Načítá indexy trojúhelníků</span></p>
+<p class="src2">{</p>
+<p class="src3">pTriangleIndices[j] = *(word*)pPtr;<span class="kom">// Přiřadí index trojúhelníku</span></p>
+<p class="src3">pPtr += sizeof(word);<span class="kom">// Posun za index trojúhelníku</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">char materialIndex = *(char*)pPtr;<span class="kom">// Načte index materiálu</span></p>
+<p></p>
+<p class="src2">pPtr += sizeof(char);<span class="kom">// Posun za index materiálu</span></p>
+<p></p>
+<p class="src2">m_pMeshes[i].m_materialIndex = materialIndex;<span class="kom">// Index materiálu</span></p>
+<p class="src2">m_pMeshes[i].m_numTriangles = nTriangles;<span class="kom">// Počet trojúhelníků</span></p>
+<p class="src2">m_pMeshes[i].m_pTriangleIndices = pTriangleIndices;<span class="kom">// Indexy trojúhelníků</span></p>
+<p class="src1">}</p>
+
+<p>Poslední, co načítáme jsou informace o materiálech.</p>
+
+<p class="src1">int nMaterials = *(word*)pPtr;<span class="kom">// Počet materiálů</span></p>
+<p class="src1">m_numMaterials = nMaterials;<span class="kom">// Nastaví atribut třídy</span></p>
+<p class="src1">m_pMaterials = new Material[nMaterials];<span class="kom">// Alokace paměti pro materiály</span></p>
+<p></p>
+<p class="src1">pPtr += sizeof(word);<span class="kom">// Posun za počet materiálů</span></p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; nMaterials; i++)<span class="kom">// Prochází materiály</span></p>
+<p class="src1">{</p>
+<p class="src2">MS3DMaterial *pMaterial = (MS3DMaterial*)pPtr;<span class="kom">// Ukazatel na materiál</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Načte materiál</span></p>
+<p class="src2">memcpy(m_pMaterials[i].m_ambient, pMaterial-&gt;m_ambient, sizeof(float)*4);</p>
+<p class="src2">memcpy(m_pMaterials[i].m_diffuse, pMaterial-&gt;m_diffuse, sizeof(float)*4);</p>
+<p class="src2">memcpy(m_pMaterials[i].m_specular, pMaterial-&gt;m_specular, sizeof(float)*4);</p>
+<p class="src2">memcpy(m_pMaterials[i].m_emissive, pMaterial-&gt;m_emissive, sizeof(float)*4);</p>
+<p class="src2">m_pMaterials[i].m_shininess = pMaterial-&gt;m_shininess;</p>
+
+<p>Alokujeme paměť pro řetězec jména souboru textury a zkopírujeme ho.</p>
+
+<p class="src2"><span class="kom">// Alokace pro jméno souboru textury</span></p>
+<p class="src2">m_pMaterials[i].m_pTextureFilename = new char[strlen(pMaterial-&gt;m_texture)+1];</p>
+<p></p>
+<p class="src2"><span class="kom">// Zkopírování jména souboru</span></p>
+<p class="src2">strcpy(m_pMaterials[i].m_pTextureFilename, pMaterial-&gt;m_texture);</p>
+<p></p>
+<p class="src2"><span class="kom">// Posun za materiál</span></p>
+<p class="src2">pPtr += sizeof(MS3DMaterial);</p>
+<p class="src1">}</p>
+
+<p>Nakonec loadujeme textury objektu, uvolníme paměť kopie souboru a vrátíme true, abychom oznámili úspěch celé akce.</p>
+
+<p class="src1">reloadTextures();<span class="kom">// Nahraje textury</span></p>
+<p></p>
+<p class="src1">delete [] pBuffer;<span class="kom">// Smaže kopii souboru</span></p>
+<p></p>
+<p class="src1">return true;<span class="kom">// Model byl nahrán</span></p>
+<p class="src0">}</p>
+
+<p>Nyní jsou členské proměnné třídy Model vyplněné. Zbývá ještě nahrát textury. V cyklu procházíme všechny materiály a testujeme, jestli je řetězec se jménem textury delší než nula. Pokud ano nahrajeme texturu pomocí standardní NeHe funkce. Pokud ne přiřadíme textuře nulu jako indikaci, že neexistuje.</p>
+
+<p class="src0">void Model::reloadTextures()<span class="kom">// Nahrání textur</span></p>
+<p class="src0">{</p>
+<p class="src1">for (int i = 0; i &lt; m_numMaterials; i++)<span class="kom">// Jednotlivé materiály</span></p>
+<p class="src1">{</p>
+<p class="src2">if (strlen(m_pMaterials[i].m_pTextureFilename) &gt; 0)<span class="kom">// Existuje řetězec s cestou</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Nahraje texturu</span></p>
+<p class="src3">m_pMaterials[i].m_texture = LoadGLTexture(m_pMaterials[i].m_pTextureFilename);</p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Nulou indikuje, že materiál nemá texturu</span></p>
+<p class="src3">m_pMaterials[i].m_texture = 0;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Můžeme začít vykreslovat model. Díky uspořádání do struktur to není nic složitého. Ze všeho nejdříve uložíme atribut, jestli je zapnuté nebo vypnuté texturování. Na konci funkce ho budeme moci obnovit.</p>
+
+<p class="src0">void Model::draw()</p>
+<p class="src0">{</p>
+<p class="src1">GLboolean texEnabled = glIsEnabled(GL_TEXTURE_2D);<span class="kom">// Uloží atribut</span></p>
+
+<p>Každý mesh renderujeme samostatně, protože mesh seskupuje všechny trojúhelníky se stejnými vlastnostmi. Stačí jedno hromadné nastavení OpenGL pro velkou skupinu polygonů, namísto mnohem méně efektivnímu: nastavit vlastnosti pro trojúhelník - vykreslit trojúhelník. S meshi postupujeme takto: nastavit vlastnosti - vykreslit všechny trojúhelníky s těmito vlastnostmi.</p>
+
+<p class="src1">for (int i = 0; i &lt; m_numMeshes; i++)<span class="kom">// Meshe</span></p>
+<p class="src1">{</p>
+
+<p>M_pMeshes[i] použijeme jako referenci na aktuální mesh. Každý z nich má vlastní materiálové vlastnosti, podle kterých nastavíme OpenGL. Pokud se materialIndex rovná -1, znamená to, že mesh není definován. V takovém případě zůstaneme u implicitních nastavení OpenGL. Texturu zvolíme a zapneme pouze tehdy, pokud je větší než nula. Při jejím loadingu jsme nadefinovali, že pokud neexistuje nastavíme ji na nulu. Vypnutí texturingu je tedy logickým krokem. Pokud materiál meshe neexistuje, texturování také vypneme, protože nemáme kde vzít texturu.</p>
+
+<p class="src2">int materialIndex = m_pMeshes[i].m_materialIndex;<span class="kom">// Index</span></p>
+<p></p>
+<p class="src2">if (materialIndex &gt;= 0)<span class="kom">// Obsahuje mesh index materiálu?</span></p>
+<p class="src2">{</p>
+<p class="src3"><span class="kom">// Nastaví OpenGL</span></p>
+<p class="src3">glMaterialfv(GL_FRONT, GL_AMBIENT, m_pMaterials[materialIndex].m_ambient);</p>
+<p class="src3">glMaterialfv(GL_FRONT, GL_DIFFUSE, m_pMaterials[materialIndex].m_diffuse);</p>
+<p class="src3">glMaterialfv(GL_FRONT, GL_SPECULAR, m_pMaterials[materialIndex].m_specular);</p>
+<p class="src3">glMaterialfv(GL_FRONT, GL_EMISSION, m_pMaterials[materialIndex].m_emissive);</p>
+<p class="src3">glMaterialf(GL_FRONT, GL_SHININESS, m_pMaterials[materialIndex].m_shininess);</p>
+<p></p>
+<p class="src3">if (m_pMaterials[materialIndex].m_texture &gt; 0)<span class="kom">// Obsahuje materiál texturu?</span></p>
+<p class="src3">{</p>
+<p class="src4">glBindTexture(GL_TEXTURE_2D, m_pMaterials[materialIndex].m_texture);</p>
+<p class="src4">glEnable(GL_TEXTURE_2D);</p>
+<p class="src3">}</p>
+<p class="src3">else<span class="kom">// Bez textury</span></p>
+<p class="src3">{</p>
+<p class="src4">glDisable(GL_TEXTURE_2D);</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src2">else<span class="kom">// Bez materiálu nemůže být ani textura</span></p>
+<p class="src2">{</p>
+<p class="src3">glDisable(GL_TEXTURE_2D);</p>
+<p class="src2">}</p>
+
+<p>Při vykreslování procházíme nejdříve všechny trojúhelníky meshe a potom každý z jeho vrcholů. Specifikujeme normálový vektor a texturové koordináty.</p>
+
+<p class="src2">glBegin(GL_TRIANGLES);<span class="kom">// Začátek trojúhelníků</span></p>
+<p class="src2">{</p>
+<p class="src3">for (int j = 0; j &lt; m_pMeshes[i].m_numTriangles; j++)<span class="kom">// Trojúhelníky v meshi</span></p>
+<p class="src3">{</p>
+<p class="src4">int triangleIndex = m_pMeshes[i].m_pTriangleIndices[j];<span class="kom">// Index</span></p>
+<p></p>
+<p class="src4">const Triangle* pTri = &amp;m_pTriangles[triangleIndex];<span class="kom">// Trojúhelník</span></p>
+<p></p>
+<p class="src4">for (int k = 0; k &lt; 3; k++)<span class="kom">// Vertexy v trojúhelníku</span></p>
+<p class="src4">{</p>
+<p class="src5">int index = pTri-&gt;m_vertexIndices[k];<span class="kom">// Index vertexu</span></p>
+<p></p>
+<p class="src5">glNormal3fv(pTri-&gt;m_vertexNormals[k]);<span class="kom">// Normála</span></p>
+<p class="src5">glTexCoord2f(pTri-&gt;m_s[k], pTri-&gt;m_t[k]);<span class="kom">// Texturovací souřadnice</span></p>
+<p class="src5">glVertex3fv(m_pVertices[index].m_location);<span class="kom">// Souřadnice vertexu</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src1">}</p>
+
+<p>Obnovíme atribut OpenGL.</p>
+
+<p class="src1"><span class="kom">// Obnovení nastavení OpenGL</span></p>
+<p class="src1">if (texEnabled)</p>
+<p class="src1">{</p>
+<p class="src2">glEnable(GL_TEXTURE_2D);</p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src1">{</p>
+<p class="src2">glDisable(GL_TEXTURE_2D);</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Jediným dalším kódem ve třídě Model, který stojí za pozornost je konstruktor a destruktor. Konstruktor inicializuje všechny členské proměnné na nulu nebo v případě ukazatelů na NULL. Mějte na paměti, že pokud zavoláte funkci loadModelData() dvakrát pro jeden objekt, nastanou úniky paměti! Paměť se totiž uvolňuje až v destruktoru.</p>
+
+<p class="src0">Model::Model()<span class="kom">// Konstruktor</span></p>
+<p class="src0">{</p>
+<p class="src1">m_numMeshes = 0;</p>
+<p class="src1">m_pMeshes = NULL;</p>
+<p></p>
+<p class="src1">m_numMaterials = 0;</p>
+<p class="src1">m_pMaterials = NULL;</p>
+<p></p>
+<p class="src1">m_numTriangles = 0;</p>
+<p class="src1">m_pTriangles = NULL;</p>
+<p></p>
+<p class="src1">m_numVertices = 0;</p>
+<p class="src1">m_pVertices = NULL;</p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">Model::~Model()<span class="kom">// Destruktor</span></p>
+<p class="src0">{</p>
+<p class="src1">int i;</p>
+<p></p>
+<p class="src1">for (i = 0; i &lt; m_numMeshes; i++)</p>
+<p class="src1">{</p>
+<p class="src2">delete[] m_pMeshes[i].m_pTriangleIndices;</p>
+<p class="src1">}</p>
+<p class="src1">for (i = 0; i &lt; m_numMaterials; i++)</p>
+<p class="src1">{</p>
+<p class="src2">delete[] m_pMaterials[i].m_pTextureFilename;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">m_numMeshes = 0;</p>
+<p></p>
+<p class="src1">if (m_pMeshes != NULL)</p>
+<p class="src1">{</p>
+<p class="src2">delete[] m_pMeshes;</p>
+<p class="src2">m_pMeshes = NULL;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">m_numMaterials = 0;</p>
+<p></p>
+<p class="src1">if (m_pMaterials != NULL)</p>
+<p class="src1">{</p>
+<p class="src2">delete[] m_pMaterials;</p>
+<p class="src2">m_pMaterials = NULL;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">m_numTriangles = 0;</p>
+<p></p>
+<p class="src1">if (m_pTriangles != NULL)</p>
+<p class="src1">{</p>
+<p class="src2">delete[] m_pTriangles;</p>
+<p class="src2">m_pTriangles = NULL;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">m_numVertices = 0;</p>
+<p></p>
+<p class="src1">if (m_pVertices != NULL)</p>
+<p class="src1">{</p>
+<p class="src2">delete[] m_pVertices;</p>
+<p class="src2">m_pVertices = NULL;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Vysvětlili jsme si třídu Model, zbytek už bude velice jednoduchý. Nahoře v souboru Lesson32.cpp deklarujeme ukazatel na model a inicializujeme ho na NULL.</p>
+
+<p class="src0">Model *pModel = NULL;<span class="kom">// Ukazatel na model</span></p>
+
+<p>Jeho data nahrajeme až ve funkci WinMain(). Loading NIKDY nevkládejte do InitGL(), protože se volá vždycky, když uživatel změní mód fullscreen/okno. Při této akci se ztrácí a znovu vytváří OpenGL kontext, ale data modelu se nemusí (a kvůli únikům paměti dokonce nesmí) reloadovat. Zůstávají nedotčená. Stačí znovu nahrát textury, které jsou na OpenGL závislé. Je-li ve scéně více modelů, musí se reloadTextures() volat zvlášť pro každý objekt třídy. Pokud se stane, že budou modely najednou bílé, znamená to, že se textury nenahrály správně.</p>
+
+<p class="src0"><span class="kom">// Začátek funkce WinMain()</span></p>
+<p class="src1">pModel = new MilkshapeModel();<span class="kom">// Alokace paměti pro model</span></p>
+<p></p>
+<p class="src1">if (pModel->loadModelData("data/model.ms3d") == false)<span class="kom">// Pokusí se nahrát model</span></p>
+<p class="src1">{</p>
+<p class="src2">MessageBox(NULL, "Couldn't load the model data\\model.ms3d", "Error", MB_OK | MB_ICONERROR);</p>
+<p class="src2">return 0;<span class="kom">// Model se nepodařilo nahrát - program se ukončí</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src0"><span class="kom">// Začátek funkce InitGL()</span></p>
+<p class="src1">pModel->reloadTextures();<span class="kom">// Nahrání textur modelu</span></p>
+
+<p>Poslední, co popíšeme je DrawGLScene(). Namísto klasických glTranslatef() a glRotatef() použijeme funkci gluLookAt(). Prvními třemi parametry umísťuje kameru na pozici, prostřední tři souřadnice určují střed scény a poslední tři definují vektor směřující vzhůru. V našem případě se díváme z bodu (75, 75, 75) na bod (0, 0, 0). Model tedy bude vykreslen kolem souřadnic (0, 0, 0), pokud před kreslením neprovedeme translaci. Osa y směřuje vzhůru. Aby se gluLookAt() chovala tímto způsobem, musí být volána jako první po glLoadIdentity().</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Rendering scény</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže buffery</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">gluLookAt(75,75,75, 0,0,0, 0,1,0);<span class="kom">// Přesun kamery</span></p>
+
+<p>Aby byl výsledek trochu zajímavější rotujeme modelem kolem osy y.</p>
+
+<p class="src1">glRotatef(yrot, 0.0f, 1.0f, 0.0f);<span class="kom">// Rotace na ose y</span></p>
+
+<p>Pro rendering modelu použijeme jeho vlastní funkce. Vykreslí se vycentrovaný okolo středu, ale pouze tehdy, že i v Milkshape 3D byl modelován okolo středu. Pokus s ním budete chtít rotovat, posunovat nebo měnit velikost, zavolejte odpovídající OpenGL funkce. Pro otestování si zkuste vytvořit vlastní model a nahrajte ho do programu. Funguje?</p>
+
+<p class="src1">pModel->draw();<span class="kom">// Rendering modelu</span></p>
+<p></p>
+<p class="src1">yrot += 1.0f;<span class="kom">// Otáčení scény</span></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>A co dál? Plánuji další tutoriál pro NeHe, ve kterém rozšíříme třídu tak, aby umožňovala animaci objektu pomocí jeho kostry (skeletal animation). Možná také naprogramuji další třídy loaderů - program bude schopen nahrát více různých formátů. Krok ke skeletální animaci není až zase tak velký, jak se může zdát, ačkoli matematika bude o stupeň složitější. Pokud ještě nerozumíte maticím a vektorům, je čas se na ně trochu podívat.</p>
+
+<p class="autor">napsal: <a href="http://rsn.gamedev.net/" target="_blank" title="http://rsn.gamedev.net/">Brett Porter</a><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3>Informace o autorovi</h3>
+
+<p>Brett Porter se narodil v Austrálii, studoval na Wollogongské Univerzitě. Nedávno absolvoval na BCompSc A BMath (BSc - bakalář přírodních věd). Programovat začal před dvanácti lety v Basicu na &quot;klonu&quot; Commodore 64 zvaném VZ300, ale brzy přešel na Pascal, Intel Assembler, C++ a Javu. Před několika lety začal používat OpenGL.</p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson31.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson31_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson31.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson31.zip">Dev C++</a> kód této lekce. ( <a href="mailto:zealouselixir@mchsi.com">Warren Moore</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/glut/lesson31.zip">GLut</a> kód této lekce. ( <a href="mailto:rb@roccobalsamo.com">Rocco Balsamo</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson31.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:rodolphe.suescun@wanadoo.fr">Rodolphe Suescun</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson31.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson31.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_31_big.jpg" class="nehe_velky" alt="Lekce 31" /></div>
+<p class="okolni_lekce"><a href="tut_30.php">&lt;&lt;&lt; Lekce 30</a> | <a href="tut_32.php">Lekce 32 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jozo</div>
+<div class="d_o_datumcas">20.11.2003 - 08:10:11</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=0">Nesuhlasi to s Milkshape 3D SDK</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">25.11.2003 - 20:56:18</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_31.php&j=2">Re: Nesuhlasi to s Milkshape 3D SDK</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tomáš</div>
+<div class="d_o_datumcas">04.01.2004 - 19:01:45</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_31.php&j=4">Re: Nesuhlasi to s Milkshape 3D SDK</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jiří Linhart</div>
+<div class="d_o_datumcas">20.11.2003 - 10:21:04</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=1">ZMRDI!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">24.04.2006 - 20:43:02</div>
+<div>
+<input type="checkbox" name="id_16" id="id_16" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_31.php&j=16">Re: ZMRDI!!!!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tomáš</div>
+<div class="d_o_datumcas">04.01.2004 - 18:57:02</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=3">TomSoft</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Steve</div>
+<div class="d_o_datumcas">21.05.2004 - 20:14:12</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=5">Zobrazovani</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.05.2004 - 19:59:39</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_31.php&j=6">Re: Zobrazovani</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Petr</div>
+<div class="d_o_datumcas">17.07.2004 - 13:27:37</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=7">Milkshape 1,4</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Dark KNight</div>
+<div class="d_o_datumcas">05.10.2004 - 20:31:47</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=8">Linker error</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">lama</div>
+<div class="d_o_datumcas">15.11.2004 - 14:52:00</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=9">vlozenie do projektu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">lama</div>
+<div class="d_o_datumcas">15.11.2004 - 14:52:35</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=10">vlozenie do projektu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">15.11.2004 - 19:39:53</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_31.php&j=11">Re: vlozenie do projektu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">09.07.2005 - 10:05:07</div>
+<div>
+<input type="checkbox" name="id_12" id="id_12" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=12">Depth testing off?!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">24.04.2006 - 16:02:04</div>
+<div>
+<input type="checkbox" name="id_15" id="id_15" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_31.php&j=15">Re: Depth testing off?!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">24.04.2006 - 20:43:59</div>
+<div>
+<input type="checkbox" name="id_17" id="id_17" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_31.php&j=17">Re: Depth testing off?!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">DaemonX</div>
+<div class="d_o_datumcas">09.08.2006 - 19:27:51</div>
+<div>
+<input type="checkbox" name="id_18" id="id_18" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_31.php&j=18">Re: Depth testing off?!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">10.08.2006 - 17:07:05</div>
+<div>
+<input type="checkbox" name="id_19" id="id_19" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_31.php&j=19">Re: Depth testing off?!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Jan16</div>
+<div class="d_o_datumcas">27.07.2007 - 14:48:38</div>
+<div>
+<input type="checkbox" name="id_37" id="id_37" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_31.php&j=37">Re: Depth testing off?!</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">09.07.2005 - 10:13:19</div>
+<div>
+<input type="checkbox" name="id_13" id="id_13" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=13">Depth testing off?! P.S.</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Wassik</div>
+<div class="d_o_datumcas">28.03.2006 - 14:56:45</div>
+<div>
+<input type="checkbox" name="id_14" id="id_14" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=14">Poloha jointu?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mudy</div>
+<div class="d_o_datumcas">19.12.2006 - 22:51:37</div>
+<div>
+<input type="checkbox" name="id_36" id="id_36" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_31.php&j=36">Textury :(</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_31.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

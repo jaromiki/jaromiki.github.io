@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	 <meta name="keywords" content="programovanie,algoritmy,konvexný obal">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+	  		<script>
+        var canvas; var context; var canvas2;
+		var x; var y; var i; var j;
+		var uh=0; var ud=0;
+		var u = new Array (50);
+		var xx; var yy;
+		var h=new Array (100);
+		var d=new Array (100);
+		var pu=0;
+function init()
+{ uh=ud=pu=0;
+ for (i=1;i<50;i++) u[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+ for (i=0;i<100;i++) { h[i]=[0,0]; d[i]=[0,0];}		
+   canvas2 = document.getElementById("platno2");
+   if (canvas2.getContext) 
+   { context2 = canvas2.getContext("2d");
+     context2.fillStyle = "#a8c101";
+     context2.fillRect(0, 0, 800, 600); 
+     context2.fillStyle = "#ffffcc";
+	 for (i=10; i<450; i+=10)
+	   for (j=10; j<670; j+=10)
+	     context2.fillRect(j,i,1,1);
+   }
+}	
+function zmaz()
+{    context2.fillStyle = "#a8c101";
+     context2.fillRect(0, 0, 800, 600); 
+     context2.fillStyle = "#ffffcc";
+	 for (i=1; i<45; i++)
+	   for (j=1; j<67; j++)
+	     if (u[i][j]) context2.fillRect(10*j-3,10*i-3,6,6);
+	     else context2.fillRect(10*j,10*i,1,1);
+}
+function mdole(xx,yy )
+{  xx= Math.round(xx/10); yy=Math.round(yy/10);
+   if (u[yy][xx])
+   { context2.fillStyle = "#a8c101";context2.fillRect(10*xx-3,10*yy-3,6,6);
+	 context2.fillStyle = "#ffffcc";context2.fillRect(10*xx,10*yy,1,1);
+     pu--; u[yy][xx]=0;
+   }
+   else
+   { context2.fillRect(10*xx-3,10*yy-3,6,6); 
+     pu++; u[yy][xx]=1;
+	} 
+}	
+function obal()
+{  if (pu<3) {alert ('malý počet zadaných uzlov'); return 0;}
+   uh=ud=0;
+   for (i=1,j=1;u[i][j]==0;) if(i<45) i++; else {i=1;j++;}
+   h[uh][0]=i;h[uh][1]=j; uh++; 
+   j++;i=1;
+   while (!u[i][j]) if(i<45) i++; else {i=1;j++;}
+   h[uh][0]=i;h[uh][1]=j; uh++; 
+   j++;i=1; 
+   while (j<66)
+   {  
+      while (!u[i][j] && j<66) if(i<45) i++; else {i=1;j++;}
+      if (j<66) { h[uh][0]=i;h[uh][1]=j;// uh++; 
+                  while (uh>1 &&(h[uh-1][0]-h[uh-2][0])/(h[uh-1][1]-h[uh-2][1])*(h[uh-0][1]-h[uh-2][1])>(h[uh-0][0]-h[uh-2][0]))
+                  { h[uh-1][0]= h[uh-0][0];h[uh-1][1]= h[uh-0][1]; uh--;}
+                  j++;i=1;uh++;
+				}
+   }
+
+   for (i=44,j=1;u[i][j]==0;) if(i>1) i--; else {i=44;j++;}
+   d[ud][0]=i;d[ud][1]=j; ud++; 
+   j++;i=44; 
+   while (!u[i][j]) if(i>1) i--; else {i=44;j++;}
+   d[ud][0]=i;d[ud][1]=j; ud++; 
+   j++;i=44; 
+   while (j<66)
+   {  while (!u[i][j] && j<66) if(i>1) i--; else {i=44;j++;}
+      if (j<66) { d[ud][0]=i;d[ud][1]=j; //ud++; 
+                  while (ud>1 &&(d[ud-1][0]-d[ud-2][0])/(d[ud-1][1]-d[ud-2][1])*(d[ud-0][1]-d[ud-2][1])<(d[ud-0][0]-d[ud-2][0]))
+                  { d[ud-1][0]= d[ud-0][0];d[ud-1][1]= d[ud-0][1]; ud--;}
+                  j++;i=44;ud++; 
+				}
+   }
+ //  alert ('uh='+uh);
+
+   context2.beginPath();
+   context2.moveTo(10*h[0][1],10*h[0][0]);
+   for (i=1;i<uh;i++) context2.lineTo(10*h[i][1],10*h[i][0]);
+  for (i=ud-1;i>=0;i--) context2.lineTo(10*d[i][1],10*d[i][0]);
+  context2.lineTo(10*h[0][1],10*h[0][0]);
+   context2.strokeStyle = 'blue';
+   context2.stroke();
+}
+			</script>
+</head>
+
+<body onload="init();">
+<h3>Konvexný obal bodov v rovine</h3>
+V rovine sú dané body (počet väčší ako 3 a môžme predpokladať, že neležia na jednej priamke). Zostrojte najmenší konvexný útvar, ktorý 
+pojme všetky zadané body v rovine.
+<br>V nasledovnej ukážke môžete body zadávať/rušiť klikaním na zelenú plochu. 
+<br>Po stlačení tlačídka <b>Obal</b> sa konvexný obal v rovine vykreslí.
+<br>Tlačídkom <b>clear-all</b> možno vymazať všetky zadané body prípadne aj vykreslený obal
+<br>Tlačídkom <b>clear-obal</b> možno vymazať vykreslený obal, zadané body ostávajú v platnosti.
+
+<div style="border-width:3;border-style:outset;width:700px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:700px; padding:0;border-width:0;">
+	   <img src="obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+  	<div style="background-color:silver; width:700px;" onclick="mdole(event.pageX-this.offsetLeft-5,event.pageY-this.offsetTop-5 );">
+<canvas width="670" height="450" id="platno2" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<input type="Button" value="Clear-all" onclick="init();" style="margin:5">
+<input type="Button" value="Clear-obal" onclick="zmaz();" style="margin:5">
+<input type="Button" value="Obal;" onclick="obal();" style="margin:5">
+</div>
+<br>
+
+
+
+</body>
+</html>

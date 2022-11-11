@@ -1,0 +1,903 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (11): vykreslovací řetězec - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="V dnešním dílu si popíšeme vykreslovací řetězec OpenGL, tj. cestu dat od prvotního zadání 2D obrazce či 3D scény v aplikaci až po vykreslení na obrazovku. Pochopení činnosti jednotlivých bloků vykreslovacího řetězce je důležité zejména při programování pokročilých grafických efektů." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-11-vykreslovaci-retezec%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-11-vykreslovaci-retezec%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-11-vykreslovaci-retezec%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (11): vykreslovací řetězec</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 10. 9. 2003 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (11): vykreslovací řetězec</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+V dnešním dílu si popíšeme vykreslovací řetězec OpenGL, tj. cestu dat od prvotního zadání 2D obrazce či 3D scény v aplikaci až po vykreslení na obrazovku. Pochopení činnosti jednotlivých bloků vykreslovacího řetězce je důležité zejména při programování pokročilých grafických efektů.
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h2>Vykreslovací řetězec OpenGL</h2>
+
+<p>Knihovna OpenGL se v dnešní době používá především jako programové rozhraní
+ke grafickým akcelerátorům. Ty jsou na počítačích typu PC (které v jednodušších
+i složitějších grafických aplikacích postupně nahrazují výkonné grafické
+stanice) většinou umístěny na port AGP (<i>Advanced Graphics Port</i>, jedná se
+skutečně o port, který sice ideově vychází z PCI sběrnice, ale nemá arbitráž
+pro ovládání více zařízení - na AGP tedy lze připojit pouze jednu grafickou
+kartu). Pokud má počítač pouze jeden procesor, je grafický akcelerátor
+připojený přes chipset na základní desce přímo k procesoru. Pokud je však v
+počítači více procesorů, je zapotřebí použít rozhraní (tzv. most - bridge) mezi
+multiprocesorovou sběrnicí a AGP portem. Schéma připojení grafického
+akcelerátoru v uniprocesorovém a multiprocesorovém systému je zobrazeno na
+následujících obrázcích:</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_11_1.gif" width="450" height="354" alt="Připojení grafického akcelerátoru v uniprocesorovém systému" /></p>
+
+<br />
+<p>Připojení grafického akcelerátoru v uniprocesorovém systému.</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_11_2.gif" width="450" height="344" alt="Připojení grafického akcelerátoru v multiprocesorovém systému" /></p>
+
+<br />
+<p>Připojení grafického akcelerátoru v multiprocesorovém systému.</p>
+
+<p>Při vykreslování 2D obrazců či celých 3D scén se do vykreslovacího řetězce
+(<i>rendering pipeline</i>) OpenGL nahrávají dva odlišné typy dat: údaje o
+vrcholech a rastrová data. Tato data jsou průběžně vykreslovacím řetězcem
+zpracovávána, přičemž se na výstupu (ve framebufferu) vytváří rastrová podoba
+zadané scény. Jednotlivé moduly vykreslovacího řetězce jsou zobrazeny na
+následujícím obrázku:</p>
+
+<p class="urs-p-center">
+<img src="http://i.iinfo.cz/r/photos/opengl/opengl_11_3.gif" width="450" height="275" alt="Vykreslovací řetězec OpenGL" /></p>
+
+<br />
+<p>V dalších podkapitolách budou tyto moduly podrobněji popsány. Všimněme si
+však nejprve celkové koncepce systému. Vykreslovaná data jsou logicky
+rozdělena na geometrickou část (vertexy grafických primitiv) a rastrovou část
+(bitmapy, pixmapy, textury). Tato data jsou ze začátku zpracovávána odděleně a
+teprve při rasterizaci v modulu označeném <i>Rasterization</i> dojde k jejich
+vzájemnému spojení. Po vykreslení dat do framebufferu je možné některé údaje z
+framebufferu přečíst zpátky do hlavní paměti procesoru nebo již vykreslený
+snímek zkombinovat se snímkem, který právě vzniká. Tato technika se používá
+například při <i>blendingu</i> nebo vykreslení scén se zrcadlícími povrchy.</p>
+
+<p>Důležité je, že jednotlivé moduly pracují relativně nezávisle na ostatních
+modulech a mezi moduly se nepředávají žádné řídící informace. Vše je řízeno
+pouze daty (jedná se tedy o architekturu <i>data-flow</i>), která do
+vykreslovacího řetězce postupně vstupují, což je významný rozdíl například vůči
+klasickému procesoru, který je řízen programem. Z tohoto faktu také vyplývá
+velká rychlost vykreslování pomocí grafických akcelerátorů, která je umožněna
+čtyřmi faktory:</p>
+
+<ol class="urs-decimal"><li>Geometrická a rastrová data jsou zpracovávána odděleně odlišnými
+jednotkami, které tak mohou pracovat paralelně. Při zpracování rastrových dat
+jsou výpočetní jednotky celkem jednoduché, a proto jich může být implementováno
+více.</li>
+
+<li>Moduly zobrazené na předchozím obrázku mohou pracovat nezávisle na sobě a
+jsou řízeny pouze daty. Proto lze vytvořit zřetězené zpracování dat
+(<i>pipeline</i>) na vysoké úrovni, kde jednotlivé moduly představují řezy
+pipeline.</li>
+
+<li>Uvnitř modulů se provádějí operace, které lze rozložit na velké množství
+jednodušších operací, a ty lze opět vykonávat zřetězeně. Například násobení
+matice vektorem lze rozložit na jednotlivá násobení a sčítání prvků matice a
+vektoru, která se provádějí za sebou. V jednom modulu může tato pipeline
+obsahovat i stovky řezů.</li>
+
+<li>Tok většiny dat (zejména geometrických) je jednosměrný, takže se používá
+technika streamingu a zmenší se tok dat přenesených mezi grafickým čipem a
+pamětí na grafickém akcelerátoru.</li>
+
+</ol>
+
+<p>Z těchto faktorů vyplývá, proč jsme v posledním desetiletí svědky tak
+velkého nárustu rychlosti grafických akcelerátorů na personálních počítačích.
+Není toho dosaženo nijak závratnou technologií při výrobě grafických čipů ani
+grafických pamětí (jedná se většinou o obyčejné dynamické paměti), ale
+důsledným využitím zřetězeného zpracování. Z toho také vyplývá, že se při
+vykreslování malého množství trojúhelníků ve scéně nedosáhne maximálního výkonu
+grafické karty, ale pokud počet trojúhelníků stoupá do tisíců, začíná se výhoda
+zřetězeného zpracování dat výrazně projevovat. V dalších odstavcích budou
+podrobněji popsány jednotlivé moduly zobrazené na předchozím obrázku:</p>
+
+<h4>Vertex data</h4>
+
+<p>Jedním ze dvou typů dat, které vstupují do vykreslovacího řetězce OpenGL,
+jsou údaje o vrcholech grafických primitiv (vertexech). Pro každý vertex musíme
+zadat minimálně jeho souřadnice příkazem glVertex*()(souřadnice jsou
+zadány ve dvojici [x, y], trojici [x, y, z] nebo čtveřici [x, y, z, w]). Dále
+je možné u každého vertexu specifikovat následující parametry:</p>
+
+<ol class="urs-decimal"><li>True-color barvu vertexu příkazem glColor*(), kde barva je zadána
+buď třemi složkami RGB (Red, Green, Blue), nebo čtyřmi složkami RGBA (Red,
+Green, Blue, Alpha). Pro každý vertex grafické primitivy lze zadat jinou barvu,
+barvy mezilehlých fragmentů se dopočítají lineární interpolací.</li>
+
+<li>Barvu z předdefinované palety (pokud OpenGL pracuje v <i>index-color</i>
+režimu). Tato barva se zadává příkazem glIndex*() s jedním parametrem
+představujícím index do předem vytvořené palety. Index-color režim se v dnešní
+době již příliš nepoužívá, protože mnoho vlastností OpenGL v tomto režimu nelze
+aplikovat. Jedinou podstatnou výhodou index-color režimů je menší spotřeba
+paměti na <i>color buffer</i>.</li>
+
+<li>Normálu vertexu pomocí příkazu glNormal*(). Normála se využije při
+výpočtu osvětlení a při odstraňování odvrácených plošek tělesa. Vzhledem k
+tomu, že normálu lze pro každý vertex zadat libovolně, je možné aplikovat různé
+grafické efekty, například <i>bump mapping</i>. Normály lze nechat vypočítat i
+automaticky, ale při opakovaném vykreslování rozsáhlých scén může opakovaný
+výpočet normál znamenat značné zatížení systému, proto je většinou výhodnější
+provést výpočet normál pouze jedenkrát v inicializační části programu.</li>
+
+<li>Texturovací souřadnice pomocí příkazu glTexCoord*(). OpenGL
+podporuje rastrové textury ve třech formátech: jednorozměrné, dvourozměrné a
+třírozměrné. Při texturování je pro každý vertex zapotřebí zadat souřadnice do
+právě aktivní (vybrané) textury. Souřadnice v textuře se při vykreslování
+lineární, bilineární nebo trilineární interpolací automaticky dopočítávají (je
+možné provádět i perspektivní korekci). Texturováním se budeme podrobněji
+zabývat v dalších dílech tohoto seriálu.</li>
+
+<li>Parametry pro vyhodnocení mapovací funkce pomocí příkazu
+glEvalCoord*(). Pomocí mapovací funkce lze vypočítat například
+souřadnice vertexu nebo jeho normálu. Pokud se pomocí mapovací funkce
+vyhodnocuje souřadnice vertexu, lze zapnutím automatického generování normál
+povolit výpočet normál přímo z mapovací funkce.</li>
+
+<li>Bod v předem zadané mřížce pomocí příkazu glEvalPoint*(). Tento
+příkaz se používá při vyhodnocení hodnot zadaných do mřížky. Parametrem (resp.
+parametry) tohoto příkazu jsou indexy do této mřížky.</li>
+
+<li>Parametry materiálu vertexu pomocí příkazu glMaterial*(). Tímto
+příkazem lze pro každý vertex zadat jiné optické vlastnosti materiálu, ze
+kterého se skládá výsledné těleso. Tyto vlastnosti (podobně jako například
+barva) jsou potom pro každý fragment automaticky dopočítány pomocí lineární
+interpolace.</li>
+
+<li>Vlastnosti hrany, která začíná právě zadávaným vertexem pomocí příkazu
+glEdgeFlag*(). Pro každou hranu lze určit, zda je hraniční, či nikoliv.
+Tento příznak se potom použije například při vykreslování drátového modelu, kdy
+hrany, které nejsou hraniční, nemusí být vykresleny.</li>
+
+</ol>
+
+<h4>Pixel data</h4>
+
+<p>Druhým typem dat, která vstupují do vykreslovacího řetězce, jsou rastrová
+data. Ta se používají ve třech případech:</p>
+
+<ol class="urs-decimal"><li>Vykreslování <i>bitmap</i> (jednobarevných rastrových obrázků). Bitmapy se
+používají zejména pro výpis řetězců. Vzhledem k tomu, že u bitmap je pro každý
+pixel rezervovaný pouze jeden bit, je nutné před vlastním vykreslováním
+příkazem glColor*() zadat barvu bitmapy.</li>
+
+<li>Vykreslování rastrových obrázků s vyšší barevnou hloubkou. V terminologii
+OpenGL se tyto obrázky nazývají <i>pixmapy</i>. Pixmapy mohou být zadány v
+několika barevných modelech a jsou podporovány různé barevné hloubky, aby bylo
+možné použít různé typy rastrových obrázků bez nutnosti programové
+konverze.</li>
+
+<li>Pokrytí povrchu těles <i>texturou</i>. Textury se obecně po jejich zadání
+nikam přímo nevykreslují, ale zůstávají v <i>texturovací paměti</i>. Odtud je
+lze použít při nanášení na povrch těles. V ideálním případě je texturovací
+paměť umístěna přímo na grafickém akcelerátoru, ale je možné, že při větším
+množství velkých textur se tyto umístí do hlavní paměti počítače.</li>
+
+</ol>
+
+<h4>Display list</h4>
+
+<p>Jak vertexy těles, tak rastrová data lze uložit do takzvaných <i>display
+listů</i>. Display listy si lze zjednodušeně představit jako část paměti na
+grafickém akcelerátoru nebo v hlavní paměti počítače, do níž se ukládá
+posloupnost příkazů OpenGL, kterou lze následně jedním příkazem vyvolat.
+Podrobněji se budeme display listy zabývat v dalších dílech.</p>
+
+<h4>Evaluators</h4>
+
+<p><i>Evaluátory</i> jsou použity zejména při vykreslování parametrických ploch
+nebo kvadrik. Pokud jsou evaluátory použity, jsou údaje na jejich vstupu brány
+jako vlastnosti řídících bodů parametrických ploch. Tyto plochy jsou následně
+vyhodnoceny a na výstupu tohoto bloku se objeví údaje o jednotlivých vrcholech
+(vertexech).</p>
+
+<h4>Per-vertex operation and primitive assembly</h4>
+
+<p>Na každý vertex (specifikovaný buď příkazem glVertex*(), uložený v
+<i>display listu</i>, nebo vyhodnocený pomocí <i>evaluátorů</i>) jsou aplikovány
+<i>per-vertex operace</i>. Jedná se zejména o transformaci souřadnic vertexu s
+použitím matice <i>ModelView</i>. Pokud jsou specifikovány i texturovací
+souřadnice, jsou transformovány s použitím <i>Texture</i> matice. Dále může být
+na základě údajů o materiálu vertexu a jeho normály vypočteno osvětlení.</p>
+
+<p>Jednotlivé vertexy mohou být dále ořezány některou předem zadanou ořezávací
+rovinou. Pokud je vertex umístěn za ořezávací rovinou, je odstraněn z dalšího
+zpracování. V případě úseček nebo polygonů mohou být po ořezání další vertexy
+přidány, aby se vykreslil zbytek viditelné části primitiva.</p>
+
+<p>Po ořezání jsou souřadnice vertexů transformovány pomocí transformační
+matice <i>Projection</i>, kde je u 3D scén většinou provedena perspektivní
+projekce. Po této transformaci je provedeno další ořezání, teď už však pro šest
+základních ořezávacích rovin (jsou paralelní s osami souřadného systému).</p>
+
+<h4>Pixel operations</h4>
+
+<p>Operace nad pixely spočívají v dekódování barev jednotlivých pixelů z
+formátu zadaného aplikací do interního formátu, který je na grafické kartě
+používán. Po tomto dekódování (které spočívá v rozložení -<i>unpack</i>- tří
+nebo čtyř barevných složek, jejich případném prohození -<i>swap</i>-, posunutí
+-<i>bias</i>-, změně kontrastu -<i>scale</i>- a přemapování -<i>map</i>-) se
+pixely buď uloží do texturovací paměti jako rastr textury, nebo jsou přímo
+poslány dále do rasterizační jednotky.</p>
+
+<h4>Rasterization</h4>
+
+<p>Grafická primitiva specifikovaná svými vrcholy jsou vykreslena tak, že se
+vygenerují ty fragmenty, které dané primitivum pokrývá. Toto vygenerování se
+nazývá <i>rasterizace</i>. Při rasterizaci je zapotřebí brát v úvahu jak
+transformované souřadnice jednotlivých vertexů, tak i případná rastrová data
+(textury nebo pixely bitmap a pixmap).</p>
+
+<h4>Texture assembly</h4>
+
+<p>V tomto bloku se provádí různé algoritmy nad daty uloženými v texturovací
+paměti a rastrovými daty, která posílá aplikace. Jedná se většinou o jednoduché
+(a tím i rychlé) algoritmy pro kombinování více textur, mipmaping apod. Textury
+jsou v ideálním případě uloženy přímo v paměti grafického akcelerátoru. V
+horším případě jsou uloženy v hlavní paměti počítače a v době, kdy jsou
+zapotřebí pro vykreslování, jsou postupně nahrávány do grafického akcelerátoru,
+což může znamenat značné zatížení sběrnice procesoru a portu AGP.</p>
+
+<h4>Per-fragment operations</h4>
+
+<p>Pokud je povoleno texturování, je pro každý <i>fragment</i> vygenerován
+jeden pixel z texturovací paměti nazývaný <i>texel</i>. Tento texel je potom na
+fragment aplikován. V nejjednodušším případě je barva fragmentu změněna přímo
+na barvu texelu, ve složitějších případech se mohou provést další operace nad
+daty fragmentu a texelu, například <i>blending</i>.</p>
+
+<p>Dále je pro každý fragment proveden výpočet mlhy (<i>fog</i>) a antialias.
+Poté se provedou operace s jednotlivými buffery (pokud jsou povoleny), tedy
+test na hodnotu alfa složky fragmentu (<i>alpha test</i>), test s hodnotou ve
+stencil bufferu (<i>stencil test</i>) a test s hloubkou uloženou v Z-bufferu
+(<i>depth test</i>). Následně může být proveden <i>dithering</i> a v true-color
+režimu se může provést <i>blending</i> (smíchání barev více fragmentů, které
+obsazují stejné místo na obrazovce).</p>
+
+<p>Všechny tyto operace se samozřejmě mohou buď povolit, nebo zakázat. Pokud
+všechny operace nad fragmenty zakážeme, vykreslí se grafická primitiva postupně
+tak, jak jsou posílána do vykreslovacího řetězce (mohou se tedy postupně
+překreslovat) a není nijak změněna jejich barva. Zapnutím texturování, mlhy,
+antialiasingu, ditheringu nebo operací s buffery lze zásadně ovlivnit výsledný
+vzhled jednotlivých fragmentů a tím i vzhled celé scény.</p>
+
+<h4>Framebuffer</h4>
+
+<p>Výstup je uložen do takzvaného <i>framebufferu</i>, který se skládá z
+několika samostatných bufferů. Mezi nejdůležitější buffery patří barvový buffer
+(<i>color buffer</i>), paměť hloubky (<i>Z-buffer</i>), paměť šablony
+(<i>stencil buffer</i>) a akumulační buffer (<i>accumulation buffer</i>).
+Podobně, jako jsou v bitmapách uloženy jednotlivé pixely, jsou ve framebufferu
+uloženy takzvané <i>fragmenty</i>, které představují průřez všemi buffery. Pro
+uživatele je jistě nejdůležitější <i>color buffer</i>, neboť v něm jsou uloženy
+barvy všech fragmentů. Tento buffer je většinou přímo zobrazen na obrazovce, i
+když jsou možné i další (netypické) režimy zobrazení.</p>
+
+<p>Významem jednotlivých bufferů, ze kterých se framebuffer skládá, se budeme
+podrobněji zabývat v dalším díle tohoto seriálu.</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-9-pixmapy/">Grafická knihovna OpenGL (9): pixmapy</a></li>
+			<li><a href="/clanky/opengl-10-operace-s-bitmapami-a-pixmapami/">Grafická knihovna OpenGL (10): operace s bitmapami a pixmapami</a></li>
+			<li class="actual">Grafická knihovna OpenGL (11): vykreslovací řetězec</li>
+			<li><a href="/clanky/opengl-12-vlastnosti-framebufferu/">Grafická knihovna OpenGL (12): vlastnosti framebufferu</a></li>
+			<li><a href="/clanky/opengl-13-double-buffering/">Grafická knihovna OpenGL (13): double-buffering</a></li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-11-vykreslovaci-retezec%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-11-vykreslovaci-retezec%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/">Vlastní</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q2/">2</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q3/">3</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q4/">4</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q5/">5</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q6/">6</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q7/">7</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q8/">8</a>
+<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-11-vykreslovaci-retezec/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[24205]" /></td>
+	<th><a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/24205/">Neco jineho, ale zkusim se zeptat....</a></th>
+	<td class="op-au">TC</td>
+	<td class="op-dt">11. 9. 2003 18:16	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[24213]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/t.gif" align="left" width="9" height="21" alt="&#9500;" />&nbsp;<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/24213/">Re: Neco jineho, ale zkusim se zeptat....</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">12. 9. 2003 07:33	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[24259]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/i.gif" align="left" width="9" height="21" alt="&#9474;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/24259/">Re: Neco jineho, ale zkusim se zeptat....</a></th>
+	<td class="op-au">TC</td>
+	<td class="op-dt">15. 9. 2003 13:47	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[24875]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/24875/">Re: Neco jineho, ale zkusim se zeptat....</a></th>
+	<td class="op-au">ApoC</td>
+	<td class="op-dt">28. 9. 2003 14:56	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[24227]" /></td>
+	<th><a href="/clanky/opengl-11-vykreslovaci-retezec/nazory/24227/">verze pro tisk</a></th>
+	<td class="op-au">Jiri Hnidek</td>
+	<td class="op-dt">12. 9. 2003 13:21	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-11-vykreslovaci-retezec/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-11-vykreslovaci-retezec/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-11-vykreslovaci-retezec/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D532">TEAM LEADER C++/UNIX (i6349)</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D293">VÝVOJÁŘ J2EE (i6290)</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3790">JAVA, XML DEVELOPER (i3284) / INTERNATIONAL COMPANY / PRAGUE</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D110">TEAM LEADER J2EE (i6273)</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3639">DEVELOPER / KONZULTANT - JAVA, J2EE (i4660) / ZAHRANIČNÍ PROJEKTY / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3283">PROGRAMÁTOR C++ (i6750) / ZAJÍMAVÁ NABÍDKA / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3121">JUNIOR / SENIOR SYSTEM ENGINEER (i6865) / 25-60.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3371">SENIOR TEST ENGINEER (i5158) / LÁKAVÁ NABÍDKA / PRAHA</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

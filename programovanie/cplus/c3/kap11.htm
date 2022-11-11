@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Triedenie</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+<h1>11 Triedenie</h1>
+
+<p align="justify">Triedenie (usporiadanie) množiny prvkov je proces preusporiadania danej množiny v&nbsp;špecifickom poradí (podľa určitej relácie). Je to jedna z&nbsp;najčastejšie sa vyskytujúcich operácií pri spracovaní údajov, resp. dátových štruktúr. Usporiadanie množiny prvkov výrazne zvyšuje efektívnosť vyhľadávania prvkov. Typickými príkladmi triedenia je spracovanie rôznych zoznamov, registrov, skladov, slovníkov a&nbsp;pod.</p>
+
+<p align="justify">Problematika triedenia je veľmi prepracovaná. Venovalo sa jej množstvo autorov, za základnú publikáciu je považovaný [Knuth78]. Existuje celý rad metód, ktoré sa líšia rýchlosťou, pamäťovou a&nbsp;operačnou zložitosťou algoritmu, princípom triedenia, prípustným typom triedených prvkov a&nbsp;spôsobom prístupu k&nbsp;triedeným prvkom. Pre ilustráciu uvedieme najznámejšie metódy triedenia na príklade usporiadania množiny celých čísel od najmenšieho po najväčšie (relácia &lt;=). Cieľom ilustrácie je uviesť algoritmy jednotlivých metód v&nbsp;jazyku C vo forme funkcií. Ich podrobnejší popis, zdôvodnenie aj vzájomné porovnanie môže čitateľ nájsť v&nbsp;literatúre [1], [2], [3] i&nbsp;[4]. Vstupným parametrom všetkých funkcií je pole celých čísel a&nbsp;ich počet, výstupom je zotriedené pole. V&nbsp;dvoch prípadoch <b>(heapsort a&nbsp;mergesort)</b> je vo funkciách vstupné pole transformované do pomocného poľa od indexu 1, pretože daný algoritmus s&nbsp;počiatočným indexom 0 nepracuje. V&nbsp;prípade funkcie <b>mergesort</b> má okrem toho pomocné pole dvojnásobnú dĺžku (vyplýva z&nbsp;metódy). Niektoré z&nbsp;uvádzaných algoritmov sú implementované priamo v&nbsp;prekladačoch jazyka C (napr. <b>quicksort</b> pod názvom <b>qsort, binsearch</b> pod názvom <b>bsearch</b>), pričom spôsob porovnávania prvkov je daný užívateľom definovanou funkciou (v závislosti na type prvkov množiny). Parametre týchto funkcií sú uvedené pri ich popise.<br />
+</p>
+
+<p align="justify">Všetky uvedené funkcie sú ilustrovanné v&nbsp;príklade p11_1.C Hlavný program obsahuje výpis celočíselného poľa pred triedením a&nbsp;po ňom a&nbsp;samozrejme volanie príslušnej funkcie. V&nbsp;uvedenom príklade je volaná funkcia <b>insert</b>, ktorá zabezpečí potrebné usporiadanie poľa a&nbsp;a následne funkcia <b>binsearch</b>, ktorá vráti index prvku (12) v&nbsp;usporiadanom (zotriedenom) poli. O&nbsp;jednotlivých funkciách sa stručne zmienime v&nbsp;poradí, v&nbsp;akom sú uvedené v&nbsp;príklade.<br />
+</p>
+
+<p align="justify"><b>Bubblesort</b> realizuje priamu výmenu dvoch prvkov množiny v&nbsp;zmysle zadanej relácie, pričom jeden cyklus porovnávania ide od začiatku, druhý od konca triedeného poľa. Názov metódy pochádza z&nbsp;analógie medzi pohybom triedených prvkov a&nbsp;pohybom bublín vo vode (ak uvažujeme triedené pole vo zvislej polohe).<br />
+</p>
+
+<p align="justify">Uvedený algoritmus je možné vylepšiť sledovaním, či pri jednotlivých prechodoch nastávajú výmeny prvkov pomocou indexov L a&nbsp;R vo funkcii <b>shakersort</b>, ktorá zabezpečuje triedenie pretriasaním. Triedenie je ukončené, keď sa indexy L a&nbsp;R stretnú. Ich počiatočné hodnoty sú začiatok a&nbsp; koniec triedeného poľa. Triedi sa pritom vždy len tá časť poľa, ktorá sa ešte môže meniť (v rozsahu L - R).<br />
+</p>
+
+<p align="justify">Funkcia <b>insert</b> realizuje triedenie priamym vkladaním, ktoré je založené na schopnosti vložiť daný prvok tak, že výsledná postupnosť je znovu zotriedená. Postup má tieto kroky: najprv sa nájde miesto, kde treba prvok vložiť, potom sa ostatné prvky o&nbsp;jedno miesto posunú a&nbsp;na takto získané miesto sa uloží daný prvok (analógia - usporiadanie hracích kariet).<br />
+</p>
+
+<p align="justify">Zlepšenie (pokiaľ ide o&nbsp;zrýchlenie metódy určenia miesta vkladania prvku) realizuje funkcia <b>bininsert</b>, ktorá používa na tento cieľ metódu binárneho hľadania (viď funkciu <b>binsearch</b>). Vychádzame pritom z&nbsp;predpokladu, že cieľová postupnosť je zotriedená.<br />
+</p>
+
+<p align="justify">Funkcia <b>select</b> realizuje triedenie priamym výberom, ktoré vychádza z&nbsp;predpokladu, že najmenší prvok prvok môžeme zaradiť priamo na začiatok triedeného poľa, najmenší prvok zo zvyšku poľa zase na jeho začiatok atď.<br />
+</p>
+
+<p align="justify">Zlepšenie triedenia priamym vkladaním navrhol v&nbsp;r. 1959 D.I. Shell - funkcia <b>Shellsort</b>. Toto pozostáva v&nbsp;triedení prvkov po skupinách so zmenšovaním kroku, pričom sa začína s&nbsp;najväčším krokom a&nbsp;končí krokom 1. Obvykle sa postupnosť krokov uvažuje ako rad mocnín 2, napr.: 4,2,1, ale nie je to podmienkou. Voľba postupnosti krokov však môže podstatne ovplyvniť efektívnosť triedenia.<br />
+</p>
+
+<p align="justify">Funkcia <b>heapsort</b> realizuje stromové triedenie (pomocou binárneho stromu), založené na opakujúcom sa výbere najmenšieho prvku zo všetkých n prvkov potom n-1 prvkov atď. Nevýhodou tohoto spôsobu sú zvýšené nároky na pamäť (minimálne dvojnásobok rozsahu triedeného poľa, ktoré sa zvyčajne realizujú tzv. haldou - anglicky heap, odtiaľ názov metódy).<br />
+</p>
+
+<p align="justify">Ďalšie zlepšenie triedenia výmenou, ktoré predstavuje najlepšiu metódu triedenia v&nbsp;poli, navrhol C.A.Hoare a&nbsp;nazval ju pre jej rýchlosť <b>quicksort</b>. Pod týmto názvom je metóda všeobecne známa (viď funkcia qsort v&nbsp;jazyku C). Vychádza zo skutočnosti, že najefektívnejšie sú výmeny prvkov na čo najväčšie vzdialenosti. Triedenie preto (podobne ako <b>shakersort</b>) začína z&nbsp;oboch koncov poľa a&nbsp;končí, keď sa indexy stretnú. Funkcia <b>quicksort</b> využíva rekuzrívnu triediacu funkciu qs, ktorá zotrieďuje jednotlivé časti triedeného poľa. Použitie rekurzie je veľmi účinná programovacia technika [4], ktorá je v&nbsp;tomto prípade úplne namieste (niekedy však môže zapríčiniť aj nepríjemné situácie - doporučujeme zvýšenú obozretnosť !).<br />
+</p>
+
+<p align="justify">Triedenie metódou priameho zlučovania - funkcia <b>mergesort</b> sa používa predovšetkým v&nbsp;prípadoch triedenia takých veľkých rozsahov údajov (ide o&nbsp;diskové, resp. iné periférne súbory), ktoré sa nezmestia do operačnej pamäte počítača. Triedenie pracuje takto: 1. postupnosť sa rozdelí na dve polovice, 2. ich prvky sa spájajú do usporiadaných dvojíc. 3. na takto vzniknutú postupnosť sa aplikujú kroky 1. a&nbsp;2., čím dostaneme usporiadané štvorice. 4. opakovaním krokov 1. až 3. dostaneme osmice atď. Algoritmus končí usporiadaním celej postupnosti. Triedenie si vyžaduje pamäť rovnú dvojnásobku veľkosti poľa. V&nbsp; jednej polovici je zdrojová postupnosť, v&nbsp;druhej sa ukladá cieľová.</p>
+
+<pre>
+/*        K13_1.c                triedenie
+        metody        
+                bubblesort        priama vymena
+                shakersort        pretriasanim
+                insert                 priamym vkladanim
+                bininsert              binarnym vkladanim
+                select                priamym vyberom
+                Shellsort            vkladanim so
+                                zmensovanim kroku
+                heapsort              stromove - haldou
+                quicksort              rozdelovanim
+                mergesort              priamym zlucovanim
+        vyhladavanie
+                binsearch        binarne hladanie
+*/
+#include &lt;stdio.h&gt;
+#include &lt;alloc.h&gt;
+void bubblesort(int pole[], int pocet);
+void shakersort(int pole[], int pocet);
+void insert(int pole[], int pocet);
+void insert1(int pole[], int pocet);
+void bininsert(int pole[], int pocet);
+void select(int pole[], int pocet);
+void Shellsort(int pole[], int pocet);
+void heapsort(int pole[], int pocet);
+void quicksort(int pole[], int pocet);
+void mergesort(int pole[], int pocet);
+int binsearch(int pole[], int pocet, int cislo);
+main()
+{
+  int a[32]={44,55,12,42,94,18,06,67,1,3,3,13,48,56,59,33},i;
+printf("\nBegin\n");
+for(i=0;i&lt;16;i++)printf("%3d ",a[i]);
+        insert(a,16);
+        i=binsearch(a,16,12);
+printf("\nResult 12 je a[%d]\n",i);
+for(i=0;i&lt;16;i++)printf("%3d ",a[i]);
+     return 0;
+}
+void bubblesort(int pole[], int pocet)
+/* bublinove triedenie - priamou vymenou        */
+{
+    int a,b,pom;
+    for(a=1; a&lt;pocet; ++a)
+        for(b=pocet-1; b&gt;=a; --b)
+            if(pole[b-1] &gt; pole[b]){   /* vymena   */
+                pom = pole[b-1];
+                pole[b-1] = pole[b];
+                pole[b] = pom;
+                }
+}
+void shakersort(int pole[], int pocet)
+/*  triedenie pretriasanim - priamou vymenou        */
+{
+    int a,b,L,R,pom;
+    L=1; R=b=pocet-1;
+    do{
+        for(a=R; a&gt;=L; a--)
+          if(pole[a-1] &gt; pole[a]){
+            pom = pole[a-1];
+            pole[a-1] = pole[a];
+            pole[a] = pom;
+            b=a;                /* index vymeny lavy */
+            }
+        L = b+1;
+        for(a=L; a&lt;R+1; a++)
+          if(pole[a-1] &gt; pole[a]){
+            pom = pole[a-1];
+            pole[a-1] = pole[a];
+            pole[a] = pom;
+            b=a;                 /* index vymeny pravy */
+            }
+        R = b-1;
+        } while(L&lt;=R);        /* kym sa nestretnu   */
+}
+void insert1(int pole[], int pocet)
+/*  triedenie priamym vkladanim - verzia s kopiou */
+{
+    int a,b,pom,*ppole;
+    ppole=malloc(pocet+1);         /* pom. pole     */
+    for(a=0;a&lt;pocet;a++)
+        ppole[a+1]=pole[a];        /* od 1 po pocet */
+    for(a=1; a&lt;=pocet; a++){
+        pom = ppole[a];
+        ppole[0] = pom;            /* na 0 minimum  */
+        b = a;
+        while(pom &lt; ppole[b-1]){
+                ppole[b] = ppole[b-1];
+                b--;
+                }
+        ppole[b] = pom;             /* vymena        */
+        };
+    for(a=0;a&lt;pocet;a++)
+        pole[a]=ppole[a+1];
+    free(ppole);
+}
+void insert(int pole[], int pocet)
+/*  triedenie priamym vkladanim                */
+{
+    int a,b,pom,*ppole;
+    for(a=1; a&lt;pocet; a++){
+        pom = pole[a];
+        b = a;
+        while(b&gt;0 &amp;&amp; pom &lt; pole[b-1]){
+                pole[b] = pole[b-1];
+                b--;
+                }
+        pole[b] = pom;              /* vymena */
+        };
+}
+void bininsert(int pole[], int pocet)
+/*  triedenie binarnym vkladanim   */
+{
+    int a,b,pom,m,L,R;
+    for(a=1; a&lt;pocet; a++){
+        pom = pole[a];
+        L = 0; R = a;
+        while(L &lt; R){       /* najst miesto pre prvok */
+                m = (L+R)/2;
+                if(pole[m] &lt;= pom)
+                        L = m+1;
+                else
+                        R = m;
+                }
+        for(b=a;b&gt;=R+1;b--)  /* uvolnit miesto pre prvok */
+            pole[b]=pole[b-1];
+        pole[R]=pom;
+        }
+}
+void select(int pole[], int pocet)
+/*  triedenie priamym vyberom                */
+{
+    int a,b,m,pom;
+    for(a=0; a&lt;pocet-1; a++){
+        pom = pole[a];
+        m = a;
+        for(b=a+1;b&lt;pocet; b++)
+            if(pole[b] &lt; pom){
+                m = b;                /* min. prvok a index */
+                pom = pole[m];
+                };
+        pole[m] = pole[a];
+        pole[a] = pom;                 /* vymena */
+        };
+}
+void Shellsort(int pole[], int pocet)
+/*  triedenie vkladanim so zmensovanim kroku - Shell  */
+{
+    int a,b,m,k,presun,pom,t=4,h[]={1,2,4,8};
+    for(m=t-1; m&gt;=0; m--){           /* kroky spracovania */
+       k = h[m];
+       do{        
+         presun = 0;                    /* indikacia presunu */
+         for(a=k; a&lt;pocet; a++){
+            pom = pole[a];
+            b = a-k;
+            if(pom&lt;pole[b]){         /* porovnanie v kroku */
+               pole[a]=pole[b];         /* usporiad. v kroku  */
+               pole[b]=pom;
+               presun = 1;
+               };
+            }
+         }while(presun&gt;0);
+       }
+}
+void heapsort(int pole[], int pocet)
+/*  stromove triedenie  - haldou         */
+{
+    int L,R,pom,*ppole;
+    void sift(int L, int R, int pole[]);
+     ppole=malloc(pocet+1);         /* pom. pole       */
+     for(L=0;L&lt;pocet;L++)
+        ppole[L+1]=pole[L];         /* od 1 po pocet   */
+     L=pocet/2+1; R=pocet;
+     while(L&gt;1){                 /* previerka prvkov */
+        L--;
+        sift(L,R,ppole);
+        };
+     while(R&gt;1){
+        pom = ppole[1];
+        ppole[1]=ppole[R];
+        ppole[R]=pom;
+        R--;
+        sift(L,R,ppole);
+        };
+     for(L=0;L&lt;pocet;L++)            /* pole spat  */
+        pole[L]=ppole[L+1];
+     free(ppole);
+}
+    void sift(int L, int R, int pole[])
+    /*        zaradenie prvku L do haldy        */        
+    {
+        int a,b,pom;
+        a=L; b=2*L;
+        pom = pole[L];
+        while(b&lt;=R){
+           if(b&lt;R)
+                if(pole[b]&lt;pole[b+1]) b++;
+           if(pom &gt;= pole[b])break;
+           pole[a]=pole[b];
+           a=b;
+           b=2*a;
+           }
+        pole[a]=pom;
+/*        getchar();
+        printf("\nS L %d R %d\n",L,R);
+        for(a=1;a&lt;=16;a++)printf("%3d ",pole[a]);
+*/
+     }
+void quicksort(int pole[], int pocet)
+/*  triedenie rozdelovanim  - rekurzivne         */
+{
+    void qs(int L, int R, int pole[]);
+    qs(0,pocet-1,pole);
+}
+void qs(int L, int R, int pole[])
+/*        vlastna funkcia triedenia v poli - Hoare */
+{
+    int a,b,pom,pom1;
+    a=L; b=R; pom=pole[(L+R)/2]; /* vyber prvku  */
+    do{
+        while((pole[a]&lt;pom)&amp;&amp;(a&lt;R)) a++;
+        while((pom&lt;pole[b])&amp;&amp;(b&gt;L)) b--;
+        if(a&lt;=b){
+            pom1=pole[a];
+            pole[a]=pole[b];
+            pole[b]=pom1;
+            a++; b--;
+            }
+        }while(a&lt;=b);
+    if(L&lt;b)qs(L,b,pole);
+    if(a&lt;R)qs(a,R,pole);
+}
+void mergesort(int pole[], int pocet)
+/*        triedenie metodou priameho zlucovania        */
+{
+  int i,j,k,L,t,h,m,p,q,r,up,*ppole;
+  ppole=malloc(2*pocet+1);       /* pom. pole           */
+  for(i=0;i&lt;pocet;i++)        /* indexy 1 az 2*pocet */          
+   ppole[i+1]=pole[i];           /* od 1 po pocet       */
+  up = p = 1;
+  do {
+     h = 1;
+     m = pocet;
+     if(up&gt;0) {                /* zdroj 1. cast      */
+        i=1; j=pocet;
+        k=pocet+1; L=2*pocet;
+        }
+     else{                        /* zdroj 2. cast      */
+        k=1; L=pocet;
+        i=pocet+1; j=2*pocet;
+        };
+     /* zlucit postupnosti, urcene indexami i,j
+        do postupnosti urcenej indexom k;
+        q je dlzka i-postupnosti, r j-postupnosti */
+     do {
+        if(m&gt;=p) q=p;
+        else q=m;
+        m=m-q;
+        if(m&gt;=p) r=p;
+        else r=m;
+        m=m-r;
+        while((q!=0)&amp;&amp;(r!=0)){        /* zlucovanie     */          
+           if(ppole[i]&lt;ppole[j]){
+                ppole[k]=ppole[i]; k=k+h;
+                i++; q--;
+                }
+           else{
+                ppole[k]=ppole[j]; k=k+h;
+                j--; r--;
+                };
+           }
+        while(r&gt;0){     /* kopia zvysku j postupnosti */
+                ppole[k]=ppole[j]; k=k+h;
+                j--; r--;
+                };
+        while(q&gt;0){     /* kopia zvysku i postupnosti */
+                ppole[k]=ppole[i]; k=k+h;
+                i++; q--;
+                };
+        h=-h; t=k;
+        k=L; L=t;
+        } while(m!=0);
+     up=-up; p=2*p;
+     } while(p&lt;pocet);
+     if(up&lt;0)
+        for(i=0;i&lt;pocet;i++)
+           ppole[i]=ppole[i+pocet];
+     for(L=0;L&lt;pocet;L++)         /* pole spat       */
+        pole[L]=ppole[L+1];
+     free(ppole);
+}
+        
+int binsearch(int pole[], int pocet, int cislo)
+/*         binarne hladanie prvku cislo delenim intervalu
+        pole musi byt usporiadane - zotriedene !!!      */
+{
+    int a,b,pom;
+                
+    a=0; b=pocet-1;
+    while(a&lt;=b){
+        pom=(a+b)/2;
+        if(cislo&lt;pole[pom])
+                b=pom-1;
+        else if(cislo&gt;pole[pom])
+                a=pom+1;
+        else                         /* index prvku  */
+                return pom;
+        }
+    return(-1);                      /* nenaslo sa   */
+}
+</pre>
+</div>
+
+
+</body>
+
+</html>
+

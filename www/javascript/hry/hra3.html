@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+	<script>
+	var k=0, l=7, z=0, dx=2;
+    function spusti()
+	{ for(var i=48;i>-1;i--) {document.images[i+1].width=document.images[i].width; }
+	  	document.images[0].style.top=10;
+ 		k=parseInt(document.images[1].width)+parseInt(10*Math.random())-l;
+		document.images[0].width=k;
+		
+		if (parseInt(10*Math.random())==5 && l==4) l=1;  
+		if (k<40) l=4;
+		if (k>160) l=7; 
+      for(var i=0;i<50;i++) 
+	   {
+	    document.images[i+50].style.left=document.images[i].width+100;
+	    document.images[i+50].width=200-document.images[i].width; 
+	   }
+//    if (window.event.button==2) {gul.style.left+=2;}
+	}	
+
+    function pis()
+	{ alert(event.keyCode); }
+
+    function pohyb()
+	{
+	 z=window.event.keyCode;
+	 T1.innerText=z;
+	  var xx=parseInt(gu.style.left);
+	   if (z==48) xx-=dx; else xx+=dx; 
+	   gu.style.left = xx;
+	   window.event.keyCode=0;}
+	</script>
+</head>
+
+<body>
+<script>
+  for(var i=0;i<50;i++) {document.writeln('<img src="xx.bmp" border="0" style="position:absolute; background:#0000ff;" width="100" height="7">');  }
+  var k=150;
+  for(var i=0;i<50;i++) {var j=10+7*i; document.images[i].style.left=50; document.images[i].style.top=j; k+=parseInt(10*Math.random())-5; 
+                         document.images[i].width=k; }
+  for(var i=0;i<50;i++) {document.writeln('<img src="xx.bmp" border="0" style="position:absolute; background:#0000ff;" width="100" height="7">');  }
+//  var k=150;
+  for(var i=0;i<50;i++) {var j=10+7*i; k=document.images[i].width+100; document.images[50+i].style.left=k; document.images[i+50].style.top=j; 
+                         document.images[i+50].width=300-k; }
+  </script>
+<br>
+<input type="Button" value='Start' onclick="window.tr=setInterval('spusti()',60)" style="position:absolute" id="tlac1">
+<script>
+  tlac1.style.top=370;
+</script>
+<textarea cols="" rows="" id='vstup' onkeypress="pohyb()"> 1</textarea>
+<img src="../JS-prednaska/gulicka.gif" width="15" height="15" border="0" alt="" style="position:absolute" id="gu">
+<script>
+  gu.style.left=document.images[48].width+65;
+  gu.style.top=340;
+  vstup.focus();
+</script>
+<input type="text" value" " id="T1">
+</body>
+</html>

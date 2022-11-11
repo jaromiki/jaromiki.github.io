@@ -1,0 +1,25 @@
+	var MinX=0, 
+    MaxX=700,
+    X=0,
+    Y=40,
+    Step=10,
+    iid;
+    
+function move()
+{
+    // Pøesun zdroje svìtla
+    document.all.napis.filters.Light.moveLight(0, X, Y, 0, true);
+    // Aktualizace 
+    X += Step;      
+    if (X >= MaxX) { Step = -Step; };
+    if (X <= MinX) { Step = -Step; };
+}
+
+function init()
+{	document.all.napis.filters.Light.addCone((MinX+MaxX)/2, Y, 200, X, Y,
+        255, 180, 180, 100, 20);    // Kuželový zdroj svìtla
+    document.all.napis.filters.Light.addAmbient(0, 0, 127, 100);
+                                    // Rovnomìrný zdroj svìtla
+	napis.filters.Light.addPoint(100, 50, 50, 255, 0, 0, 100);
+    iid = setInterval("move()", 100);    // Aktivace pohybu
+}

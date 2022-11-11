@@ -1,0 +1,146 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C++_?=
+	=?windows-1250?Q?=2811.=29?=
+Date: Thu, 12 Jul 2007 10:07:07 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1129
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (11.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (11.)</H2>
+<H4>Kreslen=ED textu do okna, nastaven=ED fontu a vlastnost=ED =
+textu</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>V minul=E9m d=EDle jsem v=E1m p=F8edvedl, jak jednodu=9Ae kreslit do =
+okna =E8=E1ry a body.=20
+K tomuto bych je=9At=EC mohl uv=E9st, =9Ee standardn=ED barvy syst=E9mu, =
+kter=E9 si m=F9=9Eete=20
+nastavit v ovl=E1dac=EDch panelech (panel obrazovka), lze z=EDskat =
+funkc=ED GetSysColor.=20
+V=FD=E8et parametr=F9 (prefix COLOR_) pak naleznete v souboru WINUSER.H =
+nebo v=20
+referenci Win32.=20
+<P>Za=E8n=ECme s t=EDm, jak do okna nakreslit text. Op=ECt bychom m=ECli =
+odpov=EDdat na=20
+zpr=E1vu WM_PAINT. Funkce BeginPaint a EndPaint ji=9E nebudu uv=E1d=ECt, =
+viz minul=FD d=EDl.=20
+
+<P>Chceme-li nakreslit text, mus=EDme si nejprve vytvo=F8it font. K =
+tomuto =FA=E8elu si=20
+vytvo=F8=EDme prom=ECnnou typu HFONT, t=F8eba hf, kter=E1 bude obsahovat =
+handle na n=E1mi=20
+vytvo=F8en=FD font, kter=FD budeme pou=9E=EDvat ke kreslen=ED textu. =
+Font si tedy vytvo=F8=EDme=20
+funkc=ED CreateFont. <FONT face=3D"Courier New" color=3D#000044>
+<P><FONT size=3D2>HFONT hf; <BR>hf =3D CreateFont( =
+<BR>&nbsp;&nbsp;&nbsp;=20
+16,&nbsp;&nbsp; // V=FD=9Aka p=EDsma. Je-li zad=E1no 0 pak je pou=9Eita =
+implicitn=ED=20
+hodnota, <BR>&nbsp;&nbsp; // je-li men=9A=ED ne=9E 0, pak je pou=9Eita =
+hodnota v=20
+pixelech. <BR>&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp; // Logick=E1 =
+pr=F9m=ECrn=E1 =9A=ED=F8ka znaku=20
+( 0 - implicitn=ED ) <BR>&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp; // =DAhel =
+sklonu p=EDsma=20
+<BR>&nbsp;&nbsp;&nbsp; 0,&nbsp;&nbsp; // =DAhel orientace vzhledem k =
+=F8=E1dku=20
+<BR>&nbsp;&nbsp;&nbsp; FW_BOLD,&nbsp; // =D8ez p=EDsma =
+<BR>&nbsp;&nbsp;&nbsp;=20
+0,&nbsp;&nbsp; // Ur=E8uje, zda je p=EDsmo kurz=EDva =
+<BR>&nbsp;&nbsp;&nbsp;=20
+0,&nbsp;&nbsp; // Ur=E8uje, zda je p=EDsmo podtr=9Een=E9 =
+<BR>&nbsp;&nbsp;&nbsp;=20
+0,&nbsp;&nbsp; // Ur=E8uje, zda je p=EDsmo p=F8e=9Akrtnut=E9 =
+<BR>&nbsp;&nbsp;&nbsp;=20
+DEFAULT_CHARSET, // Ur=E8uje typ znakov=E9 sady <BR>&nbsp;&nbsp;&nbsp;=20
+OUT_DEFAULT_PRECIS, // Ur=E8uje preciznost v=FDpo=E8tu stylu p=EDsma=20
+<BR>&nbsp;&nbsp;&nbsp; CLIP_DEFAULT_PRECIS,// P=F8esnost um=EDst=ECn=ED=20
+<BR>&nbsp;&nbsp;&nbsp; DEFAULT_QUALITY, // Kvalita vykreslov=E1n=ED =
+p=EDsma=20
+<BR>&nbsp;&nbsp;&nbsp; FF_ROMAN,&nbsp; // Typ p=EDsma, kter=FD se =
+zvol=ED nen=ED-li v=20
+syst=E9mu vypran=FD font <BR>&nbsp;&nbsp;&nbsp; "Arial CE"&nbsp;&nbsp; =
+// Font,=20
+kter=FDm se bude text kreslit <BR>); </FONT></FONT>
+<P>D=E1le tento font vybereme funkc=ED SelectObject. <FONT =
+face=3D"Courier New"=20
+color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>SelectObject( hDC, (HGDIOBJ) hf=20
+);</FONT></FONT></P></BLOCKQUOTE>
+<P>P=F8ed za=E8=E1tkem kreslen=ED si je=9At=EC mus=EDme vytvo=F8it =
+strukturu RECT, kterou=20
+n=E1sledn=EC p=F8ed=E1me Windows. N=E1=9A text bude kreslen do takto =
+vymezen=E9 oblasti. <FONT=20
+face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>RECT rect =3D { 0,0,200,50 =
+};</FONT></FONT></P></BLOCKQUOTE>
+<P>Nyn=ED u=9E Windows v=ED, =9Ee p=F8i dal=9A=EDm kreslen=ED textu =
+budeme pou=9E=EDvat n=E1=9A font a=20
+kam chceme kreslit, tak=9Ee n=E1m nic nebr=E1n=ED nakreslit do na=9Aeho =
+okna libovoln=FD=20
+text. K tomuto m=F9=9Eeme pou=9E=EDt n=ECkolik funkc=ED. Prvn=ED z nich =
+je DrawText, d=E1le jej=ED=20
+roz=9A=ED=F8en=E1 verze DrawTextEx, TextOut a nebo jej=ED =
+roz=9A=ED=F8en=E1 verze ExtTextOut.=20
+P=F8=EDklady jsou zde. <FONT face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>DrawText( hDC, "PC Sv=ECt", -1, &amp;rect, DT_LEFT=20
+  =
+|<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+  DT_NOPREFIX | DT_SINGLELINE ); </FONT></P></BLOCKQUOTE>
+<P><FONT size=3D2>TextOut( hDC, 0, 0, "PC Sv=ECt", 7); </FONT></FONT>
+<P>A=9D u=9E jste pou=9Eili jakoukoli funkci, m=ECl by b=FDt text =
+nakreslen v okn=EC. Vzhled=20
+textu m=F9=9Ee b=FDt d=E1le upraven API funkcemi jako SetTextColor, =
+SetBkColor a=20
+SetBkMode t=F8eba takto: <FONT face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>SetTextColor( hDC, 0x0000FF00 );</FONT>
+  <P><FONT size=3D2>SetBkColor( hDC, 0x000000FF );</FONT>
+  <P><FONT size=3D2>SetBkMode( hDC, TRANSPARENT /*nebo OPAQUE*/=20
+  );</FONT></FONT></P></BLOCKQUOTE>
+<P>T=EDmto zp=F9sobem m=F9=9Eete vytvo=F8it velmi zaj=EDmav=E9 nadpisy a =
+popisky, av=9Aak z=20
+u=9Eivatelova pohledu by mohla b=FDt spousta barevn=FDch text=F9 =
+sp=ED=9A ru=9Aiv=E1 a m=F9=9Ee=20
+znep=F8=EDjem=F2ovat pr=E1ci s programem. Jako v=9Edy plat=ED: v=9Aeho s =
+m=EDrou. <BR>&nbsp;=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:06:50 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 48 - ArcBall rotace</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 3</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_48.jpg" class="nehe_maly" alt="Lekce 48" />
+
+<h1>Lekce 48 - ArcBall rotace</h1>
+
+<p class="nadpis_clanku">Nebylo by skvělé otáčet modelem pomocí myši jednoduchým drag &amp; drop? S ArcBall rotacemi je to možné. Moje implementace je založená na myšlenkách Brettona Wadea a Kena Shoemakea. Kód také obsahuje funkci pro rendering toroidu - kompletně i s normálami.</p>
+
+<p class="netisk"><a href="tut_48_sk.php">Verze ve slovenštině...</a></p>
+
+<p>ArcBall funguje tak, že mapuje okenní souřadnice kliknutí přímo do souřadnic ArcBallu. Zmenší poměr souřadnic myši z rozsahu [0..šířka, 0..výška] na rozsah [-1..1, 1..-1]. Pamatujte si, že aby v OpenGL dosáhl korektního výsledku, musí převrátit znamínko y souřadnice. Vzorec vypadá takto:</p>
+
+<p class="src0"><span class="kom">MousePt.X  =  ((MousePt.X / ((Width  - 1) / 2)) - 1);</span></p>
+<p class="src0"><span class="kom">MousePt.Y  = -((MousePt.Y / ((Height - 1) / 2)) - 1);</span></p>
+
+<p>Jediný důvod, proč jsme měnili měřítko souřadnic je, abychom zjednodušili matematiku, nicméně šťastnou shodou okolností to dovoluje kompilátoru kód trochu optimalizovat. Dále vypočítáme délku vektoru a určíme, jestli se nachází nebo nenachází uvnitř koule. Pokud ano, vrátíme vektor z jejího vnitřku, jinak normalizujeme bod a vrátíme nejbližší pozici k vnějšku koule. Poté, co máme oba vektory, získáme vektor současně kolmý na počáteční i koncový vektor, čímž dostaneme quaternion. S tímto v rukách máme dost informací na vygenerování rotační matice.</p>
+
+<p>Konstruktoru třídy ArcBall budeme předávat rozměry okna.</p>
+
+<p class="src0">ArcBall_t::ArcBall_t(GLfloat NewWidth, GLfloat NewHeight)</p>
+
+<p>Když uživatel klikne myší, vypočítáme počáteční vektor podle toho, kam kliknul.</p>
+
+<p class="src0">void ArcBall_t::click(const Point2fT* NewPt)</p>
+
+<p>Když táhne myší (drag), aktualizujeme koncový vektor pomocí metody drag() a pokud je poskytnut i výstupní quaternion, aktualizujeme ho pomocí výsledné rotace.</p>
+
+<p class="src0">void ArcBall_t::drag(const Point2fT* NewPt, Quat4fT* NewRot)</p>
+
+<p>Při změně velikosti okna jednoduše aktualizujeme i rozměry ArcBallu.</p>
+
+<p class="src0">void ArcBall_t::setBounds(GLfloat NewWidth, GLfloat NewHeight)</p>
+
+<p>V projektu budeme potřebovat i několik dalších proměnných. Transformation je finální transformace, která určuje rotaci, ale také posunutí. LastRot představuje poslední zaznamenanou rotaci od konce dragu a ThisRot určuje rotaci v době táhnutí myší. Všechny tři na začátku inicializujeme na matici identity.</p>
+
+<p>Při kliknutí se začíná z identického stavu rotace a když následně táhneme, rotace se počítá od pozice kliknutí až po bod táhnutí. I když na otáčení objektů ve scéně používáme tuto implementaci, je důležité poznamenat, že nerotujeme samotný ArcBall. S rostoucími (přírůstkovými) rotacemi se musíme vypořádat sami. To je úkol LastRot a ThisRot. LastRot si můžeme představit jako všechny rotace až do teď a ThisRot jako aktuální rotace. Vždy, když začne rotace, ThisRot se modifikuje pomocí originální rotace a potom se aktualizuje jako výsledek součinu s LastRot (a také se upraví konečná transformace). Po skončení dragu přiřadíme do LastRot hodnoty z ThisRot. Kdybychom neakumulovali rotace samotné, model by vypadal, jako by se při každém kliknutí přilepil na začátek souřadnic. Například při rotaci okolo osy x o 90 stupňů a potom o 45 stupňů, chceme získat 135 namísto posledních 45.</p>
+
+<p class="src0">Matrix4fT Transform =<span class="kom">// Finální transformace</span></p>
+<p class="src0">{</p>
+<p class="src1">1.0f, 0.0f, 0.0f, 0.0f,</p>
+<p class="src1">0.0f, 1.0f, 0.0f, 0.0f,</p>
+<p class="src1">0.0f, 0.0f, 1.0f, 0.0f,</p>
+<p class="src1">0.0f, 0.0f, 0.0f, 1.0f</p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0">Matrix3fT LastRot =<span class="kom">// Minulá rotace</span></p>
+<p class="src0">{</p>
+<p class="src1">1.0f, 0.0f, 0.0f,</p>
+<p class="src1">0.0f, 1.0f, 0.0f,</p>
+<p class="src1">0.0f, 0.0f, 1.0f</p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0">Matrix3fT ThisRot =<span class="kom">// Současná rotace</span></p>
+<p class="src0">{</p>
+<p class="src1">1.0f, 0.0f, 0.0f,</p>
+<p class="src1">0.0f, 1.0f, 0.0f,</p>
+<p class="src1">0.0f, 0.0f, 1.0f</p>
+<p class="src0">};</p>
+
+<p>Co se týče zbytku proměnných (kromě isDragged), všechno, co s nimi musíme udělat, je vždy je ve správný čas aktualizovat. ArcBall potřebuje, aby se jeho hranice při každé změně velikosti okna resetovaly. MousePt se aktualizuje při pohybu myší nebo stisknutí tlačítka a isClicked/isRClicked při stlačení levého/pravého tlačítka myši. Levé tlačítko slouží pro dragging a pravé pro resetování všech rotací do výchozího identity stavu.</p>
+
+<p class="src0">ArcBallT ArcBall(640.0f, 480.0f);<span class="kom">// Instance ArcBallu</span></p>
+<p class="src0">Point2fT MousePt;<span class="kom">// Pozice myši</span></p>
+<p></p>
+<p class="src0">bool isClicked  = false;<span class="kom">// Kliknuto myší?</span></p>
+<p class="src0">bool isRClicked = false;<span class="kom">// Kliknuto pravým tlačítkem myši?</span></p>
+<p class="src0">bool isDragging = false;<span class="kom">// Táhnuto myší?</span></p>
+
+<p>Aktualizace proměnných vypadají takto:</p>
+
+<p class="src0"><span class="kom">// Konec ReshapeGL()</span></p>
+<p class="src1">ArcBall.setBounds((GLfloat)width, (GLfloat)height);<span class="kom">// Nastaví hranice pro ArcBall</span></p>
+<p></p>
+<p class="src0"><span class="kom">// Funkce WindowProc() - ošetření zpráv myši</span></p>
+<p class="src1">case WM_MOUSEMOVE:<span class="kom">// Pohyb</span></p>
+<p class="src2">MousePt.s.X = (GLfloat)LOWORD(lParam);</p>
+<p class="src2">MousePt.s.Y = (GLfloat)HIWORD(lParam);</p>
+<p class="src2">isClicked = (LOWORD(wParam) & MK_LBUTTON) ? true : false;</p>
+<p class="src2">isRClicked = (LOWORD(wParam) & MK_RBUTTON) ? true : false;</p>
+<p class="src2">break;</p>
+<p></p>
+<p class="src1">case WM_LBUTTONUP:<span class="kom">// Uvolnění levého tlačítka</span></p>
+<p class="src2">isClicked = false;</p>
+<p class="src2">break;</p>
+<p></p>
+<p class="src1">case WM_RBUTTONUP:<span class="kom">// Uvolnění pravého tlačítka</span></p>
+<p class="src2">isRClicked  = false;</p>
+<p class="src2">break;</p>
+<p></p>
+<p class="src1">case WM_LBUTTONDOWN:<span class="kom">// Kliknutí levým tlačítkem</span></p>
+<p class="src2">isClicked = true;</p>
+<p class="src2">break;</p>
+<p></p>
+<p class="src1">case WM_RBUTTONDOWN:<span class="kom">// Kliknutí pravým tlačítkem</span></p>
+<p class="src2">isRClicked = true;</p>
+<p class="src2">break;</p>
+
+<p>Máme-li toto všechno, je na čase vypořádat se s klikací logikou.</p>
+
+<p class="src0">void Update(DWORD milliseconds)<span class="kom">// Aktualizace scény</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_ESCAPE] == TRUE)<span class="kom">// Stisk ESC</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication(g_window);<span class="kom">// Ukončení programu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (g_keys-&gt;keyDown [VK_F1] == TRUE)<span class="kom">// Stisk F1</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen(g_window);<span class="kom">// Přepnutí do fullscreenu</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (isRClicked)<span class="kom">// Kliknutí pravým tlačítkem - reset všech rotací</span></p>
+<p class="src1">{</p>
+<p class="src2">Matrix3fSetIdentity(&amp;LastRot);</p>
+<p class="src2">Matrix3fSetIdentity(&amp;ThisRot);</p>
+<p class="src2">Matrix4fSetRotationFromMatrix3f(&amp;Transform, &amp;ThisRot);</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">if (!isDragging)<span class="kom">// Netáhne se myší?</span></p>
+<p class="src1">{</p>
+<p class="src2">if (isClicked)<span class="kom">// Kliknutí?</span></p>
+<p class="src2">{</p>
+<p class="src3">isDragging = true;<span class="kom">// Příprava na dragging</span></p>
+<p class="src3">LastRot = ThisRot;<span class="kom">// Nastavení minulé statické rotace na tuto</span></p>
+<p class="src3">ArcBall.click(&amp;MousePt);<span class="kom">// Aktualizace startovního vektoru a příprava na dragging</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Už se táhne</span></p>
+<p class="src1">{</p>
+<p class="src2">if (isClicked)<span class="kom">// Je ještě stisknuto tlačítko?</span></p>
+<p class="src2">{</p>
+<p class="src3">Quat4fT ThisQuat;</p>
+<p></p>
+<p class="src3">ArcBall.drag(&amp;MousePt, &amp;ThisQuat);<span class="kom">// Aktualizace koncového vektoru a získání rotace jako quaternionu</span></p>
+<p class="src3">Matrix3fSetRotationFromQuat4f(&amp;ThisRot, &amp;ThisQuat);<span class="kom">// Konvertování quaternionu na Matrix3fT</span></p>
+<p class="src3">Matrix3fMulMatrix3f(&amp;ThisRot, &amp;LastRot);<span class="kom">// Akumulace minulé rotace do této</span></p>
+<p class="src3">Matrix4fSetRotationFromMatrix3f(&amp;Transform, &amp;ThisRot);<span class="kom">// Nastavení koncové transformační rotace na tuto</span></p>
+<p class="src2">}</p>
+<p class="src2">else<span class="kom">// Už není stisknuto</span></p>
+<p class="src2">{</p>
+<p class="src3">isDragging = false;<span class="kom">// Konec draggingu</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Teď už jenom potřebujeme aplikovat transformaci na naše modely a jsme hotovi.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smazání bufferů</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(-1.5f, 0.0f, -6.0f);<span class="kom">// Translace doleva a do hloubky</span></p>
+<p></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uložení matice</span></p>
+<p class="src2">glMultMatrixf(Transform.M);<span class="kom">// Aplikování transformace</span></p>
+<p class="src2">glColor3f(0.75f, 0.75f, 1.0f);<span class="kom">// Barva</span></p>
+<p class="src2">Torus(0.30f, 1.00f);<span class="kom">// Vykreslení toroidu (speciální funkce)</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení původní matice</span></p>
+<p></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(1.5f, 0.0f, -6.0f);<span class="kom">// Translace doprava a do hloubky</span></p>
+<p></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uložení matice</span></p>
+<p class="src2">glMultMatrixf(Transform.M);<span class="kom">// Aplikování transformace</span></p>
+<p class="src2">glColor3f(1.0f, 0.75f, 0.75f);<span class="kom">// Barva</span></p>
+<p class="src2">gluSphere(quadratic,1.3f,20,20);<span class="kom">// Vykreslení koule</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení matice</span></p>
+<p></p>
+<p class="src1">glFlush();<span class="kom">// Flushnutí renderovací pipeline</span></p>
+<p class="src0">}</p>
+
+<p>Přidal jsem i ukázku kompletního kódu, který toto všechno demonstruje. Nemusíte používat moji matematiku a funkce stojící na pozadí, naopak, pokud si věříte, doporučuji vytvořit si vlastní. Nicméně i s mými vzorci a výpočty by všechno mělo bez problémů fungovat.</p>
+
+<p class="autor">napsal: Terence J. Grant <span class="transform_email">&lt;tjgrant (zavináč) tatewake.com&gt;</span><br />
+do slovenštiny přeložil: Pavel Hradský - PcMaster <span class="transform_email">&lt;pcmaster (zavináč) stonline.sk&gt;</span><br />
+do češtiny přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson48.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson48_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:conglth@hotmail.com">Le Thanh Cong</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson48.zip">Dev C++</a> kód této lekce. ( <a href="mailto:robohog_64@hotmail.com">Victor Andr?e</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson48.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:werkt@csh.rit.edu">George Gensure</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson48.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_48_big.jpg" class="nehe_velky" alt="Lekce 48" /></div>
+<p class="okolni_lekce"><a href="tut_47.php">&lt;&lt;&lt; Lekce 47</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">VDO</div>
+<div class="d_o_datumcas">23.04.2004 - 10:29:37</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_48.php&j=0">citajte</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_48.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

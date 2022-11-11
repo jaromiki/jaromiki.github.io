@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Ukladaná</title>
+    <script>
+	var pr=24;
+	function miesaj()
+	{  
+    for(i=9;i<24;i++) 
+	{ j=9+Math.floor(15*Math.random()); 
+	  vymen(i,j);
+    }	
+	}
+	function vymen(i,j)
+	{var k=0; 
+//		alert(""+i+","+document.all[i].innerText);
+	 k=document.all[i].innerText;
+	 document.all[i].innerText=document.all[j].innerText;
+	 document.all[j].innerText=k;
+	} 
+	function tahaj(i)
+	{
+	 if (i+1==pr && (i%4)) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+	   document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i-1==pr && (i-1)%4) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+	   document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i+4==pr) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+	   document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	 if (i-4==pr) 
+	 { document.all[pr].innerText=document.all[i].innerText;
+	   document.all[pr].style.visibility='visible';
+	   document.all[i].style.visibility='hidden';
+	   pr=i;
+	}
+	}
+	</script>
+</head>
+
+<body>
+<code><b>
+<div style="height:500; width:500; background:#dddddd; border:2; border-style:solid; border-color:#999999; padding:5" id="M1">
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(9)">1 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(10)">2 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(11)">3 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(12)">4 </span>
+
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(13)">5 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(14)">6 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(15)">7 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(16)">8 </span>
+
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(17)">9 </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(18)">A </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(19)">B </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:08; font-size:52; padding:15 1 18 20;" onclick="tahaj(20)">C </span>
+
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:8; font-size:54; padding:20 15 20 20;" onclick="tahaj(21)">D </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:8; font-size:54; padding:20 15 20 20;" onclick="tahaj(22)">E </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:8; font-size:54; padding:20 15 20 20;" onclick="tahaj(23)">F </span>
+<span style="height:100; width:100;background:#eeeeee;border:2; border-style:solid; border-color:#999999; margin:8; font-size:54; padding:20 15 20 20; visibility=hidden"onclick="tahaj(24)" >F </span>
+</div>
+<span style="height:100; width:100; margin:8; font-size:54; padding:20 15 20 20;" id="c"> </span>
+<input type="Button" value="Zamiešaj" onclick="miesaj()" style="margin:20">
+<script>
+   miesaj();
+</script>
+</body>
+</html>

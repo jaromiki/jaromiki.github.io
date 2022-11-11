@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Lexikalne prvky jazyka</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+<h1>4 Lexikálne prvky jazyka</h1>
+
+<ul>
+<li><a href="#priorita">Priorita operátorov</a></li>
+
+<li><a href="#unarne">Unárne operátory</a></li>
+
+<li><a href="#binarne">Binárne operátory</a></li>
+
+<li><a href="#ternarne">Ternárne operátory</a></li>
+
+<li><a href="#vyrazy">Výrazy</a></li>
+</ul>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Program v&nbsp;jazyku C pozostáva z&nbsp;postupnosti lexikálnych prvkov, ktoré môžu na seba nadväzovať alebo byť oddelené oddeľovačmi. Ak je možné tieto prvky rozlíšiť, oddeľovač sa môže (ale nemusí) použiť, v&nbsp;ostatných prípadoch je samozrejme jeho použitie potrebné. Za oddeľovač je v&nbsp;jazyku C považovaná neprázdna postupnosť:</p>
+
+<ul>
+<li>medzier</li>
+
+<li>tabelátorov</li>
+
+<li>znakov prechodu na nový riadok</li>
+
+<li>znakov prechodu na novú stránku</li>
+
+<li>komentárov</li>
+</ul>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Prvé štyri kategórie oddeľovačov sa nazývajú tzv. biele znaky (v angličtine white spaces). Komentár v&nbsp;jazyku C je postupnosť, ktorá sa začína dvojicou znakov /* a&nbsp;končí tou istou dvojicou v&nbsp;opačnom poradí */ (v tom istom alebo v&nbsp;hociktorom ďalšom riadku programu. Komentáre nie je možné do seba vnárať.</p>
+
+<p>Lexikálne prvky jazyka C tvoria</p>
+
+<ul>
+<li>identifikátory</li>
+
+<li>kľúčové slová</li>
+
+<li>konštanty</li>
+
+<li>interpunkčné znaky</li>
+
+<li>reťazce</li>
+
+<li>operátory</li>
+</ul>
+
+<p align="justify"><b>Identifikátory</b> i&nbsp;<b>kľúčové slová</b> boli popísané v&nbsp;predchádzajúcej kapitole v&nbsp;odstavci 3.1.</p>
+
+<p align="justify"><b>Konštanty</b> sa používajú pre označenie konkrétnej hodnoty jedného dátového objektu daného typu. Preto sa u konštanty vždy rozlišuje jej typ, ktorý je daný typom jej konkrétnej hodnoty. Konštanty sa podľa typu delia na konštanty:</p>
+
+<ul>
+<li>celočíselné</li>
+
+<li>znakové</li>
+
+<li>v pohyblivej rádovej čiarke</li>
+
+<li>vymenovaného typu</li>
+
+<li>typu reťazec</li>
+</ul>
+
+<p>-<em>Celočíselné konštanty</em> môžu byť dekadické, oktálové (začína '0') a&nbsp;hexadecimálne (začína '0x'). Ak presiahne hodnota konštanty rozsah typu int, považuje sa za konštantu typu long (explicitná prípona pre typ long je 'l', resp. 'L', napr. 010L, 0X1EL).<br />
+-<em>Znakové konštanty</em> môžu byť vyjadrené ako znak medzi apostrofmi ('z') alebo svojou oktálovou hodnotou za obráteným lomítkom ( napr. '\65' a&nbsp;'a' sú ekvivalentné, podobne '\12' a&nbsp;'\n' atď.).<br />
+-<em>Konštanty v&nbsp;pohyblivej rádovej čiarke</em> môžu byť zapísané v&nbsp;bežnom tvare (celá a&nbsp;desatinná časť, oddelená desatinnou bodkou) alebo v&nbsp;semilogaritmickom tvare (mantisa a&nbsp; exponent).<br />
+-<em>Konštanta vymenovaného typu</em> môže nadobúdať jednu z&nbsp;hodnôt tohoto typu.<br />
+-<em>Konštanta typu reťazec</em> je postupnosť znakov medzi dvojicou znakov "", napr. "Typ retazec". Každá konštanta tohoto typu je uložená v&nbsp;statickom poli typu char s&nbsp;dĺžkou o&nbsp;jedna väčšou ako dĺžka konštanty, pretože ukončovacím znakom reťazca je vždy znak '\0' (binárna nula). Súčasťou reťazca môžu byť aj znaky zmenových postupností (začínajú znakom '\'). Reťazec musí byť napísaný v&nbsp;jednom riadku. V&nbsp;prípade dlhého reťazca sa tento na prechode riadkov musí ukončiť a&nbsp;na ďalšom riadku opäť začať znakom apostrof ("). V&nbsp;takom prípade sa dvojica apostrofov a&nbsp;znak prechodu na nový riadok vypúšťa z&nbsp;obsahu reťazca.<br />
+<br />
+</p>
+
+<p align="justify"><b>Interpunkčné znaky</b> (symboly) jazyka C sú [ ] ( ) { } * , : = ; ... #</p>
+
+<p align="justify">Pre <b>reťazce</b> platí všetko, čo bolo uvedené v&nbsp;odstavci <em>Konštanta typu reťazec</em>.</p>
+
+<h2><a id="priorita" name="priorita">4.1 Priorita operátorov</a></h2>
+
+<p align="justify">Operátory sú vyhodnocované podľa ich priority a&nbsp;asociativity. Vyššia priorita znamená skoršie vyhodnotenie operátora. Pri rovnakej priorite sa operátory vyhodnocujú podľa ich asociativity (-&gt; znamená zľava doprava, &lt;- naopak).</p>
+
+<pre>
+priorita        symbol          typ operácie              asociativita
+12       () [] . -&gt;             výraz                     -&gt;
+        - ~ ! * &amp;               unárne operátory          &lt;-
+        ++ --                   inkrement, dekrement      &lt;-
+        (cast)                  pretypovanie              &lt;-
+        (typ)
+        (roly)
+        sizeof                  operátor dĺžky            &lt;-
+        * / %                   multiplikatívne operátory -&gt;
+11      + -                     aditívne operátory        -&gt;
+10      &lt;&lt; &gt;&gt;                   operátory posuvu          -&gt;
+ 9      &lt; &gt; &lt;= &gt;=               operátory relačné         -&gt;
+ 8      == !=                   rovnosť, nerovnosť        -&gt;
+ 7      &amp;                       bitový súčin AND          -&gt;
+ 6      ^                       bitový exkl. súčet XOR    -&gt;
+ 5      |                       bitový súčet OR           -&gt;
+ 4      &amp;&amp;                      logický súčin AND         -&gt;
+ 3      ||                      logický súčet OR          -&gt;
+ 2      ? :                     podmienený operátor       &lt;-
+ 1      = *= /= %=              priradenie                &lt;-
+        += -= &lt;&lt;=
+        &gt;&gt;= &amp;= |= ^=
+        ,                       čiarka                    -&gt;
+</pre>
+
+<p align="justify"><b>Operátory</b> slúžia na vytváranie výrazov z&nbsp;konštánt a&nbsp; premenných. Podľa počtu argumentov sa delia na operátory :</p>
+
+<ul>
+<li><u><i>unárne</i></u></li>
+
+<li><u><i>binárne</i></u></li>
+
+<li><u><i>ternárne</i></u></li>
+</ul>
+
+<h2><a id="unarne" name="unarne">4.2 Unárne operátory</a></h2>
+
+<p align="justify">Unárny operátor má jeden argument, pred ktorý sa zapisuje. V&nbsp; prípade viacerých operátorov sa tieto vyhodnocujú sprava doľava. Operátory ++ a&nbsp; -- je možné písať i&nbsp;za argument.</p>
+
+<table cellspacing="10" summary="Unarne operatory">
+<tbody>
+<tr>
+<td colspan="4">Unárne operátory sú:</td>
+</tr>
+
+<tr>
+<td></td>
+<td>*</td>
+<td>-&gt;</td>
+<td>dereferencia (získanie objektu podľa adresy)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>&amp;</td>
+<td>-&gt;</td>
+<td>referencia (získanie adresy objektu)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>-</td>
+<td>-&gt;</td>
+<td>aritmetické mínus</td>
+</tr>
+
+<tr>
+<td></td>
+<td>!</td>
+<td>-&gt;</td>
+<td>logická negácia (0 -&gt; 1, nenulové -&gt; 0)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>~</td>
+<td>-&gt;</td>
+<td>bitový doplnok (v bitovej reprezentácii zmení 0 na 1 a&nbsp;naopak)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>++</td>
+<td>-&gt;</td>
+<td>inkrementácia hodnoty pred vyhodnotením nasledujúceho, resp. po vyhodnotení predchádzajúceho operandu</td>
+</tr>
+
+<tr>
+<td></td>
+<td>--</td>
+<td>-&gt;</td>
+<td>dekrementácia hodnoty pred vyhodnotením následujúceho, resp. po vyhodnotení predchádzajúceho operandu</td>
+</tr>
+
+<tr>
+<td></td>
+<td>([typ])</td>
+<td>-&gt;</td>
+<td>explicitný prevod na typ v&nbsp;zátvorke(pretypovanie)</td>
+</tr>
+
+<tr>
+<td></td>
+<td>sizeof</td>
+<td>-&gt;</td>
+<td>získane dĺžky objektu alebo typu(v byte-och)</td>
+</tr>
+</tbody>
+</table>
+
+<p align="justify"><em>Operátor *</em> predpokladá ako argument smerník na objekt a&nbsp;vracia ako hodnotu tento objekt (ak s&nbsp;je smerník na typ int, *s je tiež typu int). <em>Operátor &amp;</em> vracia adresu premennej, ktorá sa môže priradiť smerníku. Teda platí že v&nbsp;= *&amp;v (hodnota premennej v&nbsp;sa rovná obsahu adresy premennej v), ale neplatí v&nbsp;= &amp;*v, pretože v&nbsp;nie je smerník. <em>Operátor logickej negácie !</em> je možné aplikovať i&nbsp;na aritmetické typy a&nbsp;smerníky. Výsledok negácie je typu int. <em>Aj bitový doplnok ~</em> sa používa iba na typ int. <em>Operátor ++, resp. --</em> znamená zvýšenie, resp. zníženie hodnoty objektu o&nbsp;1 v&nbsp;závislosti na type objektu. Pre typ int platí ++i = i&nbsp;+ 1, pre typ smerník na pole znamená presun smerníka na následujúci prvok poľa podľa jeho typu. Funkcia strlen vracia dĺžku reťazca:</p>
+
+<pre>
+  int strlen(char *s)  /* *s - smerník na reťazec  */
+  {
+    int i=0;
+
+    while(*s++) i++;
+    return(i);
+  }
+</pre>
+
+<p align="justify">Pre pretypovanie objektu sa používa <em>operátor ([typ])</em> (podľa K&amp;R operátor (roly)), ktorý vykoná konverziu z&nbsp;jedného dátového typu na druhý (ktorý je uvedený v&nbsp;zátvorkách). Určité rozumné konverzie vykonáva kompilátor automaticky, napr. typ int na typ float. <em>Operátor sizeof</em> vracia dĺžku objektu alebo typu v&nbsp;bytoch. Argumentom sizeof môže byť aj pole, štruktúra alebo zjednotenie.</p>
+
+<h2><a id="binarne" name="binarne">4.3 Binárne operátory</a></h2>
+
+<p align="justify">Binárny operátor sa zapisuje medzi dva argumenty. Binárne operátory sa členia na operátory:</p>
+
+<pre>
+aritmetické     sčítanie                        +
+                odčítanie                       -
+                násobenie                       *
+                delenie                         /
+                modulo                          %    (zvyšok po celočíselnom delení)
+relačné         menší ako                       &lt;
+                väčší ako                       &gt;
+                menší alebo rovný               &lt;=
+                väčší alebo rovný               &gt;=
+                rovný                           ==
+                nerovný                         &lt;&gt;
+logické         logický súčin (AND)             &amp;&amp;    +---+---+-----+-----+-----+
+                logický súčet (OR)              ||    | x | y | x&amp;x | x^y | x|y |
+bitové          bitový súčin (AND)              &amp;     +---+---+-----+-----+-----+
+                bit. exkluzívny súčet (XOR)     ^     | 0 | 0 |  0  |  0  |  0  |
+                bitový súčet (OR)               |     | 0 | 1 |  0  |  1  |  1  |
+priradenia      priradenie                      =     | 1 | 0 |  0  |  1  |  1  |
+posuvu          posuv vľavo                     &lt;&lt;    | 1 | 1 |  1  |  0  |  1  |
+                posuv pravo                     &gt;&gt;    +---+---+-----+-----+-----+
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; <b>Aritmetické</b> operátory sa vyhodnocujú sprava doľava. Operátor + a&nbsp;- je možné aplikovať aj na smerníky (smerníková aritmetika: ak s&nbsp;je smerník na nejaký objekt, potom s+1 ukazuje na nasledujúci objekt, s-1 na predchádzajúci objekt danej dĺžky; je to ekvivalentné s++, resp. s--). Odčítaním dvoch smerníkov dostaneme vzdialenosť dvoch objektov v&nbsp;jednotkách ich dĺžky.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <b>Relačné</b> operátory sa používajú pre porovnávanie objektov. Výsledkom porovnania je splnenie relácie (hodnota 1) alebo jej nesplnenie (hodnota 0). Uvedené hodnoty sú typu int. Na rovnosť, resp. nerovnosť je možné porovnávať aj smerníky.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <b>Logické</b>operátory sa vyhodnocujú vždy zľava doprava. Pre hodnotu a&nbsp;typ výsledku platí predchádzajúci odstavec. Pozor na rozdiel medzi logickými a&nbsp;bitovými operátormi.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <b>Bitové</b> operátory slúžia na vykonávanie základných operácií (logického súčinu, súčtu či nonekvivalencie) po bitoch. Sledujme hodnoty logického i&nbsp; bitového súčtu i&nbsp;súčinu v&nbsp;nasledujúcom príklade. Vidíme, že bitové operácie dávajú v&nbsp;konečnom dôsledku číselný výsledok, zatiaľ čo logické operácie poskytujú "logický" výsledok, teda hodnoty 0 (false) a&nbsp;1 (true).<br />
+<a href="Zdrojaky/Pr4_1.c.html">Príklad</a>:</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr4_1.c logicke a bitov&#233; oper&#225;tory */</i></font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> x<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">,</font>y<font color="#800000">=</font><font color="#ff0080">2</font><font color="#800000">;</font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">&quot; x = %d  y = %d  x&amp;y = %d\n&quot;</font><font color="#800000">,</font>x<font color="#800000">,</font>y<font color="#800000">,</font>x<font color="#800000">&amp;</font>y<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot; x = %d  y = %d  x&amp;&amp;y = %d\n&quot;</font><font color="#800000">,</font>x<font color="#800000">,</font>y<font color="#800000">,</font>x<font color="#800000">&amp;&amp;</font>y<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot; x = %d  y = %d  x|y = %d\n&quot;</font><font color="#800000">,</font>x<font color="#800000">,</font>y<font color="#800000">,</font>x<font color="#800000">|</font>y<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot; x = %d  y = %d  x||y = %d\n&quot;</font><font color="#800000">,</font>x<font color="#800000">,</font>y<font color="#800000">,</font>x<font color="#800000">||</font>y<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Operátor <b>priradenia</b> sa môže vyskytovať okrem základného tvaru = aj v&nbsp;jednom z&nbsp;tvarov +=, -=, /=, *=, %=, &gt;&gt;=, &lt;&lt;=, &amp;=, ^=, |=. Sú to tzv. kombinované tvary, ktoré skracujú zápis, napr.</p>
+
+<pre>
+   a = a+2   je ekvivalentné     a += 2
+</pre>
+
+<p align="justify">Operátor priradenia možno použiť viacnásobne, napr.</p>
+
+<pre>
+   a=b=c=0   je ekvivalentné     a=(b=(c=0))
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Operátory <b>posuvu</b> umožnujú vykonávať posuv po bitoch doprava alebo doľava o&nbsp;počet bitov, ktorý je typu int. Pri posuve doľava sú bity sprava nulované pre objekty typu unsigned, resp. sa kopíruje znamienkový bit.</p>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Operátor <b>čiarka</b> (operátor zabudnutia) oddeľuje dva výrazy a&nbsp;vyhodnocuje sa zľava doprava. Používa sa predovšetkým ako oddeľovač v&nbsp;príkaze cyklu typu for, napr.</p>
+
+<pre>
+   for(i=0,j=100;i&lt;25;i++,j--)
+</pre>
+
+<h2><a id="ternarne" name="ternarne">4.4 Ternárne operátory</a></h2>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Operátor <b>?</b> je jediným operátorom jazyka, spájajúcim tri argumenty. Jeho význam ilustruje nájdenie menšej z&nbsp;dvoch hodnôt x,y zápisom :</p>
+
+<pre>
+   min = x &lt; y ? x : y;
+</pre>
+
+<p align="justify">ktorý interpretujeme takto:<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Do premennej min ulož hodnotu x, ak je splnená podmienka x &lt; y, inak tam ulož hodnotu premennej y.</p>
+
+<h2><a id="vyrazy" name="vyrazy">4.5 Výrazy</a></h2>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Výraz v&nbsp;jazyku C je tvorený postupnosťou operátorov a&nbsp;operandov. Ich vyhodnotenie vedie na výpočet adresy alebo hodnoty. Preto sa v&nbsp;jazyku C rozlišuje tzv. adresový výraz - lvalue, ktorý sa používa na ľavej strane priradzovacieho príkazu (odtiaľ left value) a&nbsp; hodnotový výraz - rvalue, ktorý sa používa (vyskytuje, vyhodnocuje) na pravej strane príkazu.<br />
+Vyhodnotenie výrazu v&nbsp;C môže mať vedľajší efekt, ktorému sa snažíme zabrániť, napr. používaním výrazov, ktoré behom výpočtu nespôsobia viacnásobnú zmenu obsahu toho istého pamäťového miesta.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Výrazy sa vytvárajú z&nbsp;operandov pomocou operátorov, pričom operandom môže byť konštanta, premenná alebo opäť výraz. Základom výrazov sú tzv. primárne výrazy, kam patrí:</p>
+
+<ul>
+<li>identifikátor</li>
+
+<li>konštanta</li>
+
+<li>reťazec</li>
+
+<li>výraz v&nbsp;okrúhlych zátvorkách</li>
+
+<li>indexový výraz, t.j. primárny výraz nasledovaný výrazom v&nbsp;hranatých zátvorkách</li>
+
+<li>volanie funkcie, t.j. primárny výraz nasledovaný výrazom v&nbsp;okrúhlych zátvorkách s&nbsp;prípadným zoznamom argumentov</li>
+
+<li>výraz selekcie položiek (príkazy výberu) v&nbsp;tvare:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [primárny_výraz].[identifikátor_položky]<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Je možný aj iný spôsob selekcie položky s&nbsp;využitím smerníka na položku v&nbsp;tvare:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [smerník na štruktúrovaný objekt]-&gt;[identifikátor_položky]<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Ak s&nbsp;je smerník na nejakú štruktúru, prístup na jej zložku x zapíšeme s-&gt;x, čo je to isté ako (*s).x</li>
+</ul>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Konštantné výrazy spravidla využívajú pamäťovú triedu static. Vyhodnotenie takého výrazu sa vykoná už počas kompilácie programu. Pri volaní funkcie musí byť dodržaný typ a&nbsp;počet argumentov funkcie a&nbsp;taktiež typ návratovej hodnoty funkcie. V&nbsp;prípade, že funkcia nie je v&nbsp;programe deklarovaná, kompilátor ju automaticky označí za externú funkciu s&nbsp;návratovým parametrom typu int, t.j</p>
+
+<pre>
+   extern int f();
+</pre>
+
+<p align="justify">čo môže spôsobiť nedefinované chovanie programu. Podľa normy ANSI musí byť každá použitá funkcia deklarovaná.</p>
+</div>
+
+
+</body>
+
+</html>
+

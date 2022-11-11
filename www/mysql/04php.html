@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+     <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Mysql-php</title>
+</head>
+
+<body>
+<h2>Príkazy PHP pre MySQL</h2>
+Webové databázové aplikácie sú štandartne postavené na trojvrstvovej architektúre. 
+<dl><dt>Databázová vrstva, 
+	<dd>najnižšia-základná vrstva, ktorá je tvorená <br><b>DBMS</b> - Database management system - databázový systém, zajisťuje správu databázy 
+	(vytváranie dát, zmena, odstraňovanie, vyhľadávanie). Priame nástroje pre prácu v tejto vrstve som popísal v predošlých kapitolách.
+	<br>Oproti databáze Access, Dbase asi užívateľovi chýba vytváranie výstupných zostáv. To je tu prenechané na vyššie vrstvy.
+	<dt>Prostredná vrstva, 
+	<dd>obsahuje scripty (programy), ktoré predávajú databázovej vrstve príkazy podľa voľby užívateľa, prípadne iných udalostí
+		a odovzdáva ich najvyššej vrstvy na zobrazenie. My budeme používať PHP.
+	<dt>Najvyššia vrstva, 
+	<dd>ktorá zobrazuje zasielané výsledky. My budeme používať webový prehliadač, ktorému budeme zasielať html tagy. 	 
+</dl>
+<h2>Základné príkazy</h2>
+<h3>Pripojenie k databáze</h3>
+<p>
+  resource mysql_connect ( [string server [, string používateľské_meno [, string heslo [, bool nové_pripojenie [, int príznaky_klienta] ] ] ] ] )
+</p>
+<div>
+  Vráti identifikátor pripojenia k MySQL alebo <code>FALSE</code> v prípade chyby.<br />
+  <code>mysql_connect()</code> vytvorí pripojenie k serveru MySQL. 
+  Implicitné hodnoty pre neuvedené parametre bývajú nasledovné: server = 'localhost:3306', 
+  <br>(nastavené systémovou premennou  mysql.default_user)
+  <br> používateľské_meno = meno používateľa, 
+  ktorý vlastní proces servera a heslo = prázdne heslo.<br />
+  Parameter server môže tiež obsahovať číslo portu napr. "hostiteľ:port" alebo cestu k socketu ":/cesta/k/socketu" 
+  v prípade miestneho servera localhost (alebo IP 127.0.0.1).
+  <br>Návratovú adresu tvorí 
+</div>
+<p>
+  bool mysql_select_db ( string $database_name [, resource $link_identifier] )
+</p>
+<div>
+  <code>mysql_select_db()</code> nastaví aktuálnu databázu na serveri a asociuje ju s uvedeným identifikátorom spojenia.
+</div>
+<p>
+  &lt;?php<br />
+  $db = mysql_connect("server", "meno", "heslo" ) or die("Nie je možné pripojiť sa k DB");<br />
+  mysql_select_db("meno_databázy", $db);<br />
+  ?&gt;<br /><br />
+ 
+</p>
+<h3>mysql_query</h3>
+<p>
+  resource mysql_query ( string query [, resource spojenie] )
+</p>
+<p>
+  <code>mysql_query()</code> vykoná požiadavku na aktuálnom spojení v aktívnej databáze na serveri a vráti identifikátor výsledku. Ak nie je parameter spojenia uvedený, použije posledne otvorené spojenie. Pokiaľ nie je žiadne otvorené spojenie nájdené, funkcia sa ho pokúsi vytvoriť použitím východzích hodnôt funkcie <code>mysql_connect</code>.
+</p>
+<h3>mysql_fetch_array</h3>
+<p>
+  array mysql_fetch_array ( resource $result [, int $result_type] )
+</p>
+<div>
+  Funkcia vracia pole hodnôt načítaného záznamu alebo <code>FALSE</code>, ak nie je žiaden ďalší riadok.<br />
+  <code>mysql_fetch_array()</code> je rozšířenou verziou <code>mysql_fetch_row</code>. Naviac sú tu dáta uložené v poli nielen pod číselnými kľúčmi, ale aj pod asociatívnymi textovými kľúčmi pomenovanými podľa názvu stĺpca sql tabuľky.
+</div>
+<h3>mysql_fetch_array s MYSQL_NUM</h3>
+<p>
+  &lt;?php<br />
+  $result = mysql_query("SELECT meno, priezvisko FROM pouzivatelia");<br />
+  while ($row = mysql_fetch_array($result, MYSQL_NUM))<br />
+  {<br />
+  &nbsp;&nbsp;echo "Meno a priezvisko: " . $row[0] . " " . $row[1];<br />
+  }<br />
+  mysql_free_result($result);<br />
+  ?&gt;<br /><br />
+  <a href="http://lamp.fornax.sk/jazyky/mysql/select/" title="MySQL SELECT">MySQL SELECT</a>
+</p>
+<h3>mysql_fetch_array s MYSQL_ASSOC</h3>
+<p>
+  &lt;?php<br />
+  $result = mysql_query("SELECT meno, priezvisko FROM pouzivatelia");<br />
+  while ($row = mysql_fetch_array($result, MYSQL_ASSOC))<br />
+  {<br />
+  &nbsp;&nbsp;echo "Meno a priezvisko: " . $row["meno"] . " " . $row["priezvisko"];<br />
+  }<br />
+  mysql_free_result($result);<br />
+  ?&gt;<br /><br />
+</p>
+<h3>mysql_fetch_array s MYSQL_BOTH</h3>
+<p>
+  &lt;?php<br />
+  $result = mysql_query("SELECT meno, priezvisko FROM pouzivatelia");<br />
+  while ($row = mysql_fetch_array($result, MYSQL_BOTH))<br />
+  {<br />
+  &nbsp;&nbsp;echo "Meno a priezvisko: " . $row[0] . " " . $row["priezvisko"];<br />
+  }<br />
+  mysql_free_result($result);<br />
+  ?&gt;
+</p>
+<h3>mysql_num_rows</h3>
+<p>
+  int mysql_num_rows ( resource $result )
+</p>
+<div>
+  <code>mysql_num_rows()</code> vracia počet záznamov vo výsledku požiadavky. Tento príkaz je použiteľný len pre <code>SELECT</code>. Ak potrebujeme získať počet záznamov ovplyvnených príkazmi <code>INSERT</code>, <code>UPDATE</code> alebo <code>DELETE</code>, použijeme <code>mysql_affected_rows</code>.
+</div>
+<p>
+  &lt;?php<br />
+  $result = mysql_query("SELECT * FROM pouzivatelia");<br />
+  $num_rows = mysql_num_rows($result);<br />
+  echo "Riadkov: $num_rows\n";<br />
+  ?&gt;<br /><br />
+</p>
+<!-- =========================================================================== -->
+<h3>mysql_close</h3>
+<p>
+  bool mysql_close ( [resource $link_identifier] )
+</p>
+<div>
+  Funkcia <code>mysql_close()</code> uzavrie spojenie s MySQL serverom, ktoré je asociované s určitým identikátorom spojenia. Pokiaľ spojenie nie je zadané, uzavrie posledné otvorené spojenie.
+</div>
+</body>
+</html>

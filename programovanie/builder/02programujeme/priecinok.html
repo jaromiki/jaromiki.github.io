@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Práca s adresármi a súbormi</title>	
+<LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<H3 class=nadpis>Adresáre a súbory</H3>
+
+Pre prácu s adresármi a súbormi máme k dispozícii viac rovnocenných nástrojov vo viacerých knižniciach, tiež možno používať
+príkazy z API. Ja budem popisovať príkazy z knižnice <font color="Green">SysUtils</font>.
+<dl>
+	<dt class=main>Zistenie aktuálneho adresára
+	<dd><b>string <font color="Green">GetCurrentDir()</font></b>
+		<br> vráti string v ktorom je celá cesta ku aktuálnemu adresáru.
+	    S každým procesom je spojený jeden adresár - tkz. aktuálny adresár. Všetky súborové operácie prebiehajú
+		v ňom, pokiaľ nie je celou cestou (resp. relatívnou) určené inak.
+	<dt  class=main>Zmena aktuálneho adresára	
+	<dd><b>bool <font color="Green">SetCurrentDir</font>(string cesta)</b> <br>ak sa podarí zmeniť vráti True inak vráti False.
+
+	<dt  class=main>Zrušenie prázdneho adresára
+	<dd><b>bool <font color="Green">RemoveDir</font>(string Dir)</b>	
+		<br>Zruší adresár uvedený ako parameter. Ak sa podarí vráti True inak False;
+	<dt  class=main>Vytvorenie prázdneho adresára
+	<dd><b>bool <font color="Green">CreateDir</font>(string Dir)</b>
+		<br>v aktuálnom adresári vytvorí adresár so zvoleným menom. Ak sa podarí vráti True, inak False.
+	<dt  class=main>Vytvorenie adresára aj s cestou
+	<dd><b>bool ForceDirectories(string s)</b>
+<hr>
+	<dt  class=main>Zistenie, či súbor existuje
+	<dd><b>bool FileExists(string FileName)</b>
+		<br>ak súbor existuje vráti True
+	<dt  class=main>Premenovanie súboru
+	<dd><b>bool RenameFile(string OldName, string NewName)</b>
+		<br>zmení názov, ak sa nepodarí vráti False.
+	<dt  class=main>Zrušenie súboru
+	<dd><b>bool DeleteFile(string FileName)</b>
+		<br>zruší súbor s daným menom.
+	<dt  class=main>Kopírovanie súboru
+	<dd><b>bool CopyFile(string subor_zdroj, string subor_ciel, bool log_par)</b>
+		<br>funkcia API (v unite system)
+		<br>log-par ... ak je pravda a subor-ciel existuje hlasi chybu a nekopíruje
+		<br>log-par ... ak je nepravda a subor-ciel existuje  prepíše tento súbor
+		<br>ak sa nepodarí vráti 0
+</dl>
+
+
+</body>
+</html>

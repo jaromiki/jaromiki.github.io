@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Dialógové okná - Load</h3>
+Vo Win máme štandartné prostriedky na voľbu niektorých prostriedkov - volajú sa dialógové okná.				 
+		<br>Dialógové okná sú prostriedky Windows na prácu s 
+		<br><font color="Blue">tlačiarňou</font> - chceme aby užívateľ zvolil tlačiareň, alebo ju nastavil
+		<br><font color="Blue">súbormi</font> - chceme aby užívateľ zvolil súbor na načítanie alebo zápis
+		<br><font color="Blue">adresármi</font> - chceme aby užívateľ zvolil aktívny disk, adresár
+		<br><font color="Blue">farbami</font> - chceme aby užívateľ vyberal aktívnu farbu
+		<br><br>
+<dl>
+	<dt class=main>OpenDialog
+	<dd>Toto dialógové okno použijeme, ak chceme aby užívateľ načítal nejaký súbor z disku a chceme mu umožniť
+		zvoliť si disk, priečinok a tiež meno súboru. Tento dialóg ale súbor nečíta, len umožní užívateľovi postupom
+		bežným vo Win zvoliť si priečinok a meno súboru. Dialógové okno <b>OpenDialog</b> nájdeme na karte <b>Dialogs</b>,
+		vložíme ho do nášho formulára. Ide o nevizuálny objekt a tak umiestnenie v okne nemá vplyv na použitie.
+		Po vložení do formulára získame funkciu <b>OpenDialog1.execute</b>, ktorá vytvorí dialógové okno na zvolenie súboru,
+		ktoré nám umožní súhrnne zadať 
+		<ul><li>cestu, kde chceme súbor hľadať
+			<li>meno súboru - FileName
+		</ul>
+		<br>a v object inspector alebo príkazmi možno pred zavolaním okna nastaviť nejaké vlastnosti
+		<ul><li>filter - jeden alebo viacero filtrov, ktoré vyfiltrujú zobrazované súbory v prechádzaných priečinkov
+			<li>FilterIndex 
+			<li>InitialDir
+			<li>DefaultExt
+		</ul>	
+	<dt>Execute
+	<dd>- základná funkcia objektu, ktorá vytvorí na obrazovke okno cez ktoré bude
+		komunikovať s užívateľom. V tomto okne je vstupný riadok kam zapisujeme názov 
+		súboru a dve tlačítka OK a Storno. Okno nám ponúkne <b>Inicializačný adresár</b>, ak chceme začať v nejakom konkrétnom
+		priečinku zadáme ho do vlastnosti InitialDir. Pokiaľ chceme začať v domovskom adresári nášho programu možno hocikedy
+		(najlepšie vo FormCreate) zadať: <b>OpenDialog1.InitialDir := ExtractFilePath(Application.ExeName);</b>  
+		<br>Súbor možno nájsť kliknutím naň alebo zapísaním jeho mena.	
+		Funkcia nadobúda logickú hodnotu TRUE - ak užívateľ stlačí OK a FALSE ak stlačí
+		Storno alebo okno len zavrie. Ak stlačíme OK meno zvoleného súboru (celé meno aj 
+		s cestou) sa zapíše do vlastnosti <b>FileName</b>. Čo je nepríjemné zmení nám to aj 
+		aktívny adresár, napr. ak otvárame súbory z adresára v ktorom máme program,
+		po OpenDialogu sa presunieme inam a súbory načítavané bez dialógu už nemusíme nájsť.
+		Ak vo vlastnosti Options nastavíme vlastnosť <font color="Green">ofNoChangeDir</font> na True 
+		tak po stlačení Enter sa aktuálny adresár vráti na hodnotu pred volaním okna.	
+		(sú príkazy na zisťovanie akt. adresár i jeho menenie - pozri kapitolu "adresár".)
+	<dt><font color="Green">FileName</font> 
+	<dd>- je typu TfileName, čo je vlastne string, ktorý obsahuje celú cestu a meno súboru.
+	<dt><font color="Green">Filter</font>
+	<dd>- je možné predvoliť niekoľko filtrov, ktoré si užívateľ môže aktivovať tým, že 
+		ich navolí. Ak chceme popísať filtre nájdeme vlastnosť Filter klikneme na ... a 
+		do riadkov zadávame filtre.
+		<br>Vľavo popis (napr. Textové subory) a vpravo zadáme filter (napr. *.txt;*.dat;*.in) 
+	<dt><font color="Green">FilterIndex</font>
+	<dd>- ak máme naklepaných viacero filtrov vo vlastnosti "Filter" je tu možné zadať
+		číslo filtra, ktorý bude implicitne aktívny (užívateľ si to môže prepnúť)
+	<dt><font color="Green">InitialDir</font>
+	<dd>Už názov všetko povedal
+				 
+	<dt><font color="Green">DefaultExt</font>
+	<dd>- štandartná koncovka súboru pre zápis sôboru. Ak užívateľ zadá názov s inou príponou 
+		ako je tu uvedená alebo nedá žiadnu je ku menu pripojená (s bodkou) táto štandartná prípona.
+	<dt>Použitie
+	<dd>Tu je ukázané ako použiť OpenDialog napr. pri načítaní obsahu Mema zo súboru na disku
+		<br>Vytvoríme nasledovný formulár.
+	<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:#dddddd;">
+   <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1</div>
+   <div style="background-color:#dddddd; width:450px;">
+ 	 <table><tr><td><textarea rows="5" >Memo1</textarea>
+	 			<td><img src="open.jpg" width="30" height="31" border="0" alt=""><br><br>
+					<input type="Button" value=" Load "><br>
+	</table>
+	</div></div>				
+	<br>Program na obsluhu tlačídka by mohol byť nasledovný:
+	<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+   		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+   		</div>
+   		<div style="background-color:#dddddd; width:690px;" >
+   		<div style="margin:10px">
+<pre>
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+  if (OpenDialog1.Execute) Memo1-> Lines->LoadFromFile(SaveDialog1.FileName);
+  else ShowMessage("Načítanie súboru bolo zrušené užívateľom");
+end;
+</pre>	
+	</div></div></div>	
+		<dt class=second><font size="+1" color="red">Príklady na precvičenie:</font>
+			<dd><table cellspacing="20"><tr><td>
+				<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
+   				<td>1. Vytvor nasledovný program
+				<br><a href="dialog1.exe">stiahnuť</a>		
+   				<td>2. Vytvor nasledovný program
+				<br><a href="dialog2.exe">stiahnuť</a>		
+				
+				</table>		
+	</dl>
+</dl>
+
+</body>
+</html>

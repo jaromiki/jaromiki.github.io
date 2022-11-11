@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Untitled</title>
+<script>
+    var cesta= new Array();
+	var blud= new Array();
+	var hx,hy,i=0,j=0,hxx,hyy,n;
+  
+function chod(x,y,hxx,hyy)
+{alert(x);
+	if (blud[y][x-1]==0 ||blud[y][x-1]==2)  {rek(x-1,y,hxx-50,0);}
+	if (blud[y-1][x]==0 ||blud[y][x-1]==2)  {rek(x,y-1,0,hyy-50);}
+    if (blud[y][x+1]==0 ||blud[y][x-1]==2)  {rek(x+1,y,hxx+50,0);}
+	if (blud[y+1][x]==0 ||blud[y][x-1]==2)  {rek(x,y+1,0,hyy+50);}
+	harry.style.left=hxx;harry.style.top=hyy;
+
+}  
+  
+function rek(x,y)
+{ 	
+    n=cesta.push(x,y);
+	if (blud[y][x]=='2') {alert(cesta.join());}
+	blud[y][x]='4'; pom.innerText+=x+', '+y+' | ';
+	if (blud[y][x-1]==0)  {rek(x-1,y);}
+	if (blud[y-1][x]==0)  {rek(x,y-1);}
+    if (blud[y][x+1]==0)  {rek(x+1,y);}
+	if (blud[y+1][x]==0)  {rek(x,y+1);}
+	cesta.pop();cesta.pop();
+}
+function start()
+{ //harry.style.top=hyy;
+  //harry.style.left=hxx;
+  rek(hx,hy);
+} 
+</script>
+</head>
+
+<body>
+<textarea cols="" rows="14" id="t" >
+111111111111111111
+130000110000110001
+101010000010000101
+100111110110111111
+101000000110111021
+111000111110101001
+100111000000101011
+100100011101101011
+101101101100001011
+101101101111111001
+100000000000111101
+110011101110000001
+111111111111111111
+123456789012345678
+</textarea>
+<br>
+<button type="button">init</button>
+<button type="button" onclick="start()">start</button>
+<div>
+<script>
+	blud.length=14;
+	for (var i=0; i<14; i++) 
+	{  blud[i]=new Array();
+		blud[i].length=18;
+	}
+	document.writeln('<table cellpadding="0" cellspacing="0" id="obr" style="background:#666633">');
+	for (var i=0;i<13;i++) 
+	{ 	document.writeln('<tr>'); 
+		for (j=0; j<18; j++) 
+		{  blud[i][j]=t.value.charAt(i*20+j); 
+		   switch (blud[i][j]) 
+		   { case '1': document.write('<td><img  src="stena.bmp" height="50" width="50">'); break;
+		     case '0': document.write('<td height="50" width="50">'); break;
+			 case '2': document.write('<td><img  src="slimak.bmp" height="50" width="50"  style="filter:Chroma(Color=#0000ff);>'); break;
+			 case '3': hyy=i*50-650;hxx=i*50;hx=j; hy=i;document.write('<td height="50" width="50">'); break;		   
+		   } 
+		}   
+	}
+	document.writeln('</table>');
+//lert(blud[0]);
+</script>
+
+<img  src="harry.bmp" height="50" width="50"  style="filter:Chroma(Color=#ff00ff); position:relative; " id=harry>
+</div>
+<div id=pom>
+</div>
+</body>
+</html>

@@ -1,0 +1,3858 @@
+<html lang="sk"><head>
+<title>Allegro Vivace (siedma verzia)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+</head><body>
+<h1><a name="Top">Allegro Vivace</a></h1>
+
+<p>Copyright &copy; 1997-1999 George Foot
+<p>Preklad (Translation) &copy; 2002 Anino Belan
+
+<p> Táto dokumentácia sa môže šíriť bezo zmeny v ľubovoľnej podobe bez
+obmedzenia. V prípade šírenia zmenených kópií je nutné uviesť, že došlo ku
+zmene.
+
+<p> Toto je siedma verzia, posledná zmena v origináli bola urobená 26 Augusta
+1999
+
+<ul>
+<li><a href="#Legal%20issues">Právne ustanovenia</a>
+
+<li><a href="#Introduction">Úvod</a>
+
+<li><a href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+
+<li><a href="#A%20basic%20game%20structure">Základná štruktúra hry</a>
+
+<li><a href="#Introducing%20graphics">Úvod do grafiky</a>
+
+<li><a href="#Making%20several%20things%20happen%20at%20once">Ako zariadiť, aby
+sa niekoľko vecí dialo súčasne</a>
+
+<li><a href="#User%20input">Uživateľský vstup</a>
+
+<li><a href="#More%202D%20graphics">Niečo viac z 2D grafiky</a>
+
+<li><a href="#Sound">Zvuk</a>
+
+<li><a href="#Timers">Časovače</a>
+
+<li><a href="#Datafiles">Datasúbory</a>
+
+<p>
+</p>
+<li><a href="#Index">Index</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Introduction">Úvod</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Legal%20issues">Právne ustanovenia</a></h1>
+
+<h2>Šírenie</h2>
+
+<p> Tento dokument môžete bezo zmien voľne šíriť v akejkoľvek forme. Nechcem za
+to nič, ale e-mail poteší.
+
+<p> Môžete tiež šíriť zmenené kópie v akejkoľvek forme, ak sa postaráte o to,
+aby bolo zrejmé, že tieto kópie sú zmenené.
+
+<h2>Vyhlásenie</h2>
+
+<p> Neprijímam žiadnu zodpovednosť za akúkoľvek škodu, ktorú použitie alebo
+zneužitie tohto tutoriálu môže komukoľvek spôsobiť. Nie je zaručené, že príklady,
+ktoré sú súčasťou tohto balíka budú fungovať ani nie je zaručené, že sú
+bezpečné. Vo všeobecnosti by ste v žiadnom prípade nemali kompilovať programy,
+ktorým nerozumiete.
+
+
+<p><hr>[ Ďalší:<a rel=next
+href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ | Predošlý:<a rel=previous href="#Legal%20issues">Právne ustanovenia</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Introduction"><a name="TOC_0">1. Úvod</a></a></h1>
+
+<ul>
+<li><a href="#About%20the%20tutorial">O tutoriáli</a>
+
+<li><a href="#Aim">Zámer</a>
+
+<li><a href="#Target%20audience">Cieľová skupina</a>
+
+<li><a href="#Requirements">Požiadavky</a>
+
+<li><a href="#Before%20we%20start">Predtým, než začneme</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Aim">Zámer</a>
+ | Hore:<a rel=up href="#Introduction">Úvod</a>
+ ]<p>
+
+<h2><a name="About%20the%20tutorial"><a name="TOC_1">1.1 O tutoriáli</a></a></h2>
+
+<p>Tento tutoriál je dostupný v niekoľkých verziach - textový súbor, Info formát
+(ktorý funguje aj s RHIDE) a v zdrojovom tvare ako Texinfo. Zdrojová distribúcia
+obsahuje nástroje na vytvorenie iných formátov včítane DVI a Postscript-u, ktoré
+môžu byť vytlačené. Podpora pre HTML sa plánuje. (pozn. prekl. V slovenčine 
+existuje len HTML verzia, ak z toho spravite aj nejaké iné, nech sa páči.)
+
+<p>K tutoriálu patrí aj súbor ukážkových programov, väčšinou napísaných
+Grzegorzom Adamom Hanciewiczom. Demonštrujú funkcie a techniky o ktorých sa
+hovorí v texte tutoriálu a sú hodnotným zdrojom informácií, ak sa vám nedarí
+niečo pochopiť.
+
+<p>Všetky časti Allegro Vivace - tutoriál v hlavných formátoch, zdrojová
+distribúcia tutoriálu a ukážkové programy - môžu byť stiahnuté jednotlivo alebo
+po skupinách z webovej stránky:
+
+<pre>http://www.canvaslink.com/gfoot/vivace/
+</pre>
+
+<p>Ak ma chcete kontaktovať, moja e-mailová adresa je:
+
+<pre>gfoot@users.sourceforge.net
+</pre>
+
+<p>Komentáre, návrhy a sťažnosti sú, ako vždy, veľmi cenené.
+
+<p><hr>[ Ďalší:<a rel=next href="#Target%20audience">Cieľová skupina</a>
+ | Predošlý:<a rel=previous href="#About%20the%20tutorial">O tutoriáli</a>
+ | Hore:<a rel=up href="#Introduction">Úvod</a>
+ ]<p>
+
+<h2><a name="Aim"><a name="TOC_2">1.2 Zámer</a></a></h2>
+
+<p>Zámerom tohto tutoriálu je viesť nováčikov k programovaniu hier a Allegru s
+pomocou procesu vytvárania jednoduchej hry.
+
+<p><hr>[ Ďalší:<a rel=next href="#Requirements">Požiadavky</a>
+ | Predošlý:<a rel=previous href="#Aim">Zámer</a>
+ | Hore:<a rel=up href="#Introduction">Úvod</a>
+ ]<p>
+
+<h2><a name="Target%20audience"><a name="TOC_3">1.3 Cieľová skupina</a></a></h2>
+
+<p> Ako bolo povedané vyššie, tento tutoriál je určený pre nováčikov v
+programovaní hier a Allegre. Nie je určený pre úplných začiatočníkov v jazyku C.
+Tým myslím, že sa predpokladá istá znalosť a skúsenosti s používaním jazyka C a
+očakávam, že už máte funkčný kompilátor, ktorý podporuje Allegro.
+
+
+<p><hr>[ Ďalší:<a rel=next href="#Before%20we%20start">Pred tým, než začneme</a>
+ | Predošlý:<a rel=previous href="#Target%20audience">Cieľová skupina</a>
+ | Hore:<a rel=up href="#Introduction">Úvod</a>
+ ]<p>
+
+<h2><a name="Requirements"><a name="TOC_4">1.4 Požiadavky</a></a></h2>
+
+<ul>
+<li>Funkčný kompilátor (odporúča sa: gcc v2.7.2.1 alebo novší; použite
+djgpp v2.01 alebo novší pre DOS)
+
+<li>Allegro verzia 4.0 alebo kompatibilná (pozrite nižšie komentár k iným
+verziam)
+
+<li>GNU Make utilita (na kompiláciu Allegra, a pretože je aj inak užitočná)
+</ul>
+
+<p>Pod <dfn>funkčným kompilátorom</dfn> myslím taký, ktorý vie kompilovať
+programy v jazyku C a urobiť z nich programy spustiteľné na vašej platforme.
+Tiež samozrejme musí byť schopný pracovať s knižnicou Allegro, ale tomu sa
+budeme venovať nižšie.
+
+<p>Ak váš kompilátor nefunguje správne, potrebujete problém odstrániť a toto nie
+je miesto, kde by som túto problematiku mal rozoberať do detailov. Ak používate
+djgpp, prečítajte si <code>readme.1st</code> a djgpp FAQ; ak to nepomôže,
+konajte podľa inštrukcií, ktoré sú vo FAQ ohľadom poslielania otázok na mailing
+list a usenetovú skupinu venovanú djgpp. Ak používate verziu djgpp v2.00, vrelo
+odporúčam upgrade.
+
+<p>Tento tutoriál bol poslednýkrát zmenený, keď bola na svete verzia Allegro
+4.0, ale nepokrýva ešte úplne všetky nové vlastnosti. Napriek tomu je Allegro
+4.0 hlavnou verziou, pre ktorú je tento tutoriál písaný a čoskoro ho budem
+aktualizovať.
+
+<p>Väčšina vecí bude fungovať aj pre staršie verzie, ale niektoré nemusia --
+taký je život. Urobím, čo budem môcť, aby som opísal zmeny potrebné pre Allegro
+3.x. Aby mohli byť skompilované verzie Allegra staršie než 3.0, potrebujú C++.
+Nemusíte v C++ programovať, ale váš počítač ho musí podporovať. Ak nepodporuje,
+buď nainštalujte najnovšiu verziu Allegra (odporúča sa, sú samozrejme veľmi
+stabilné) alebo nainštalovať podporu C++ (pre djgpp pozrite <code>readme.1st</code>)
+Ak nenainštalujete novú verziu allegra, <em>budete musieť</em> zmeniť časti kódu
+ukážok z tohto tutoriálu.
+
+<p>Dúfame, že novšie verzie zmienených balíkov sú spätne kompatibilné so 
+staršími; ak nie, je opäť na vás, aké zmeny urobíte.
+
+<p><em>Budete</em> potrebovať program GNU make, napriek faktu, že je v súbore
+<code>readme.1st</code> z djgpp označený ako nepovinný. Je to náramne užitočný
+balík a aj Allegro aj príklady sprevádzajúce tento tutoriál sú navrhnuté tak,
+aby sa dali (bezbolestne) skompilovať s jeho pomocou. Najnovšia verzia pre djgpp
+(počas písania) je <code>mak3761b.zip</code>, ktorá patrí k verzii djgpp 2.01 a
+<em>nefunguje</em> správne s verziou 2.00.
+
+<p>Väčšina ľudí pri programovaní používa jeden z troch spôsobov: niekto používa
+IDE ako napríklad RHIDE, niekto má radšej Emacs a iní používajú jednoduché textové editory
+a utilitu Make. Tento tutoriál sa nesnaží vnútiť vám niektorý z týchto systémov;
+programujte v tom prostredí, ktoré máte najradšej. Príklady môžu byť
+skompilované utilitou Make, ale jednoducho pre ne môžete vytvoriť RHIDE
+projekty.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Requirements">Požiadavky</a>
+ | Hore:<a rel=up href="#Introduction">Úvod</a>
+ ]<p>
+
+<h2><a name="Before%20we%20start"><a name="TOC_5">1.5 Predtým, než začneme <small>...</small></a></a></h2>
+
+<p>Tento tutoriál je určený ľuďom s rôznymi programátorskými schopnosťami,
+od tých, ktorí sa ešte len učia až po tých, ktorí už majú množstvo skúseností.
+Ak máte pocit, že niektorá časť zachádza priveľmi do podrobností, tak to všetko
+nečítajte -- táto časť je najskôr určená ľuďom s nižším štandardom, než máte vy
+a stačí, keď ju preletíte, aby ste sa zoznámili s príkazmi, ktoré sú v nej
+uvedené. 
+
+<p>Nadpisy niektorých sekcií som uzavrel medzi [ a ]. Znamená to, že kapitoly
+obsahujú témy pre pokročilých, komplikované, ktoré je namáhavé programovať alebo
+sú len okrajové. Ak nechcete, nečítajte to.
+
+<p>Veľkým problémom pri písaní hier je inšpirácia -- ak nemáte v hlave nič, čo
+by ste chceli napísať, tak to ani nenapíšete. V prvom momente vás pravdepodobne
+buď nenapadne nič, alebo dostanete spústu nápadov, ktoré ale budú vyzerať príliš
+zložito na to, aby sa dali naprogramovať.
+
+<p>Ak vás nenapadne nič, relaxujte a čítajte tento tutoriál. Použite ukážkové
+príklady ako základ, pridajte k nim nové veci a prispôsobte si ich podľa svojej
+potreby. Počas čítania získate lepší prehľad o tom, čo sa dá urobiť a čo nie.
+Mrknite sa aj na komerčné hry -- skúste, či viete na prvý pohľad povedať, ako
+robia to, čo robia a potom to skúste vylepšiť. Nehovorte si, že je to niečo, čo
+nikdy nezvládnete -- ako budete získavať skúsenosti, budete prichádzať na rôzne
+spôsoby, ako veci spraviť. Pamätajte si, že ak to autori nejako napísali,
+musí sa to dať urobiť.
+
+<p>Ak sú vaše nápady príliš zložité, to čo bolo napísané vyššie platí tiež --
+čím viac hier napíšete, tým lepší v tom budete a tým viac hier budete schopní
+napísať. V takmer každom prípade je pre začiatočníkov najlepšie, keď začnú s
+jednoduchými vecami a urobia rýchle fungujúcu hru a potom na tom základe 
+stavajú. Táto technika má svoje nevýhody, ale nateraz bude celkom dobrá.
+
+<p>A nakoniec -- hry musia prinášať zábavu; je to ich cieľom. Nemôžete napísať
+peknú hru, ak sa netešíte z toho, že ju píšete. Ak sa vám bude tento tutoriál
+zdať nudný, tak som ho napísal zle a treba ho zmeniť, dajte mi, prosím,
+vedieť. Tento tutoriál je pre vás a vám podobných; užite si ho!
+
+<p><hr>[ Ďalší:<a rel=next href="#A%20basic%20game%20structure">Základná
+štruktúra hry</a>
+ | Predošlý:<a rel=previous href="#Introduction">Úvod</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Getting%20installing%20and%20using%20Allegro"><a name="TOC_6">2. Ako získať,
+nainštalovať a používať Allegro</a></a></h1>
+
+<ul>
+<li><a href="#What%20is%20Allegro">Čo je to Allegro</a>
+
+<li><a href="#Where%20to%20find%20Allegro">Kde získať Allegro</a>
+
+<li><a href="#How%20to%20install%20Allegro">Ako nainštalovať Allegro</a>
+
+<li><a href="#Testing%20the%20installation">Testovanie inštalácie</a>
+
+<li><a href="#Using%20Allegro">Použitie Allegra</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Where%20to%20find%20Allegro">Kde získať Allegro</a>
+ | Hore:<a rel=up href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ ]<p>
+
+<h2><a name="What%20is%20Allegro"><a name="TOC_7">2.1 Čo je to Allegro?</a></a></h2>
+
+<p>Allegro je knižnica určená na programovanie hier, ktorej hlavným autorom a
+koordinátorom je Shawn Hargreaves. Je to veľmi dobrá knižnica; je rýchla, má
+množstvo vlastností a od verzie 4 predstavuje skvelú multiplatformnú vrstvu,
+ktorá vám umožňuje písať kód, ktorý bude fungovať aj na systémoch, ktoré ste v
+živote nevideli. Ak chcete podrobnejšie informácie, pozrite si domovskú stránku
+projektu:
+
+<pre>http://www.talula.demon.co.uk/allegro/
+</pre>
+
+<p><hr>[ Ďalší:<a rel=next href="#How%20to%20install%20Allegro">Ako nainštalovať Allegro</a>
+ | Predošlý:<a rel=previous href="#What%20is%20Allegro">Čo je to Allegro?</a>
+ | Hore:<a rel=up href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ ]<p>
+
+<h2><a name="Where%20to%20find%20Allegro"><a name="TOC_8">2.2 Kde získať Allegro</a></a></h2>
+
+<p>Allegro je dostupné v prvom rade na linkách uvedených na jeho domovskej
+stránke (pozri <a href="#What%20is%20Allegro">Čo je to Allegro?</a>) a tiež ako
+súčasť distribúcie djgpp na <code>ftp.simtel.net</code>. Verzie, ktoré sú
+pribalené k
+djgpp sú zvyčajne posledné stabilné verzie. Ak chcete najnovšiu vývojovú verziu,
+musíte ísť na stránku allegra.
+
+<p>Odporúčam vám stiahnuť si vývojovú verziu, pretože tento tutoriál bol písaný
+s prihliadnutím na ňu. Je celkom stabilná. Počas písania tohto
+tutoriálu bola vonku už niekoľko týždňov verzia 3.9.25 a musím povedať, že som s
+ňou nemal žiadne väčšie problémy. (pozn.prekl. Už pomerne dlho sú na svete aj
+stabilné verzie radu 4. Ja osobne som mal lepšie skúsenosti so stabilnými, než s
+vývojovými verziami.)
+
+
+<p><hr>[ Ďalší:<a rel=next href="#Testing%20the%20installation">Testovanie
+inštalácie</a>
+ | Predošlý:<a rel=previous href="#Where%20to%20find%20Allegro">Kde získať Allegro</a>
+ | Hore:<a rel=up href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ ]<p>
+
+<h2><a name="How%20to%20install%20Allegro"><a name="TOC_9">2.3 Ako nainštalovať Allegro</a></a></h2>
+
+<p>Tieto inštrukcie majú slúžiť len ako stručný návod - postup sa líši od
+platformy k platforme a je vysvetlený oveľa podrobnejšie v zodpovedajúcich
+readme súboroch, ktoré sú vo verzii, ktorú ste si stiahli.
+
+<p>Vytvorte pre Allegro adresár kdekoľvek chcete a rozbaľte do neho Allegro tak,
+aby ste zachovali jeho adresárovú štruktúru (parameter <code>-d</code> pre
+<code>pkunzip</code> pod DOSom; Unixové rozpakovávače to spravia automaticky a
+žiadne prepínače nie sú nutné). Uistite sa, že bol vytvorený napríklad adresár s
+názvom <code>docs</code>.
+
+<p>Keď to bude hotové, choďte do adresára kde Allegro máte. Ak používate
+vývojovú verziu, treba spustiť fix, ktorý distribúciu upraví pre vašu platformu.
+Pre DOS a djgpp napíšte:
+
+<pre>fixdjgpp
+</pre>
+
+<p>Pre Unixové systémy napíšte:
+
+<pre>chmod 700 fixunix.sh
+./fixunix.sh
+</pre>
+
+<p> Potom bude treba skonfigurovať kompiláciu. Pozrite si readme súbor pre vašu
+verziu a platformu, aby ste sa dozvedeli detaily. 
+
+<p>Aby ste skompilovali knižnicu a nástroje, zadajte 'make':
+
+<pre>make
+</pre>
+
+<p>To by potom malo bežať samo a skončiť krátkou správou, ktorá vám povie, že to
+funguje. Ak sa tak nestane, prečítajte si dokumentáciu k Allegru ak ste tak ešte
+nespravili (v adresári v ktorom máte Allegro súbory <code>allegro.txt</code>,
+<code>faq.txt</code> a čiastočne aj <code>readme.txt</code>).
+
+<p>Nakoniec potrebujete nainštalovať knižnicu a hlavičkové súbory, aby ich vaše
+programy mohli jednoducho používať:
+
+<pre>make install
+</pre>
+
+<p>Pod Unixom budete pravdepodobne potrebovať práva roota, aby ste to mohli
+urobiť.
+
+<p>Ak ste niekde zamrzli, skúste sa popýtať na Allegrovskej konferencii --
+<code>allegro@canvaslink.com</code>. Ak potrebujete informáciu o tom, ako sa do
+konferencie prihlásiť, pozrite si časť <cite>Contact Info</cite> na
+konci Allegrovského súboru <code>readme.txt</code>. Väčšina ľudí píše odpovede
+iba do konferencie, takže ak nie ste prihlásení, v maili to uveďte a poproste
+ľudí, aby poslali Cc: aj vám.
+
+<p><hr>[ Ďalší:<a rel=next href="#Using%20Allegro">Použitie Allegra</a>
+ | Predošlý:<a rel=previous href="#How%20to%20install%20Allegro">Ako nainštalovať Allegro</a>
+ | Hore:<a rel=up href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ ]<p>
+
+<h2><a name="Testing%20the%20installation"><a name="TOC_10">2.4 Testovanie
+inštalácie a kompilácia ukážkových programov</a></a></h2>
+
+<p>Inštalácia je v podstate samotestujúca, pretože sa pri nej kompilujú všetky
+Allegrovské vzorové príklady a nástroje. Napriek tomu som pre úplnosť zaradil
+krátky program na kontrolu toho, či nie sú problémy s nájdením hlavičkového
+súboru a knižnice. Ak chcete test spustiť, vojdite do adresára
+<code>examples</code> a napíšte:
+
+<pre>make test
+</pre>
+
+<p>Ak tam nie sú žiadne chyby, skvelé - môžete skompilovať ostatné vzorové
+programy z Vivace znovuspustením <code>make</code> bez argumentu
+<code>test</code>.
+
+<p>Ak ale kompilátor nemôže nájsť <code>allegro.h</code>,
+<code>liballeg.a</code> alebo <code>-lalleg</code>, inštalácia neprebehla
+správne a vy budete musieť znovu podrobnejšie prečítať dokumentáciu.
+
+
+<p><hr>[ Predošlý:<a rel=previous href="#Testing%20the%20installation">Testovanie
+inštalácie</a>
+ | Hore:<a rel=up href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ ]<p>
+
+<h2><a name="Using%20Allegro"><a name="TOC_11">2.5 Použitie Allegra</a></a></h2>
+
+<p>Táto časť stručne opakuje veci, ktoré sú v dokumentácii Allegra
+
+<p>Za prvé, každý zdrojový kód, ktorý používa funkcie alebo procedúry z Allegra,
+musí obsahovať <code>#include &lt;allegro.h&gt;</code>. Dajte to až <em>za</em>
+všetky štandardné hlavičkové súbory -- konkrétne musí ísť až za <code>#include
+&lt;stdio.h&gt;</code> -- aby sa predišlo kolíziam medzi hlavičkovými súbormi.
+
+<p>Za druhé treba zavolať <code>allegro_init()</code> krátko po štarte vášho
+programu. Inicializuje to niektoré dôležité všeobecné veci, ktoré sú pre
+knižnicu podstatné. Tiež budete potrebovať inicializovať jednotlivé subsystémy,
+ktoré budete používať, ale k tomu sa vrátime neskôr. Odporýčam, aby bola
+<code>allegro_init()</code> prvá vec, ktorú spustíte vo vašej funkcii
+<code>main</code>.
+
+<p>Za tretie, musíte [V Allegro 4 a vývojových verziach] napísať
+<code>END_OF_MAIN()</code> za uzatváraciu zátvorku vašej funkcie main. Ak to
+nespravíte, váš program sa nebude správne linkovať s knižnicou Allegro.
+
+<p>A nakoniec, pri linkovaní musíte prilinkovať knižnicu Allegro. Spraví sa to
+tak, že na <em>koniec</em> vášho linkovacieho príkazu pridáte
+<code>-lalleg</code>. (pozn. prekl. V Linuxe treba pridať aj
+<code>-lalleg_unsharable</code>) Linkovací príkaz je ten, ktorý vám vyrobí
+spustiteľný súbor; môže to byť jediný príkaz, ktorý používate. Ale počas tohto
+tutoriálu vás budem povzbudzovať, aby ste vaše projekty rozdelili na viacero
+súborov.
+
+<p>Ako príklad tohto všetkého si pozrite súbor <code>test.c</code> v podadresári
+<code>examples/test/ex_1</code> hlavného adresára tutoriálu.
+
+<p>V každom prípade dosť už o tom -- poďme sa mrknúť na zaujímavejšie veci.
+
+<p><hr>[ Ďalší:<a rel=next href="#Introducing%20graphics">Úvod do grafiky</a>
+ | Predošlý:<a rel=previous href="#Getting%20installing%20and%20using%20Allegro">Ako získať,
+nainštalovať a používať Allegro</a>
+ | Hore:<a rel=up href="#Top">Úvod</a>
+ ]<p>
+
+<h1><a name="A%20basic%20game%20structure"><a name="TOC_12">3. Základná štruktúra hry</a></a></h1>
+
+<ul>
+<li><a href="#What%20does%20a%20game%20need%20to%20do">Čo všetko musí hra robiť?</a>
+
+<li><a href="#Proposed%20structure">Návrh štruktúry</a>
+
+<li><a href="#Multi-file%20projects">Projekt rozdelený do súborov</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Proposed%20structure">Návrh štruktúry</a>
+ | Hore:<a rel=up href="#A%20basic%20game%20structure">Základná štruktúra hry</a>
+ ]<p>
+
+<h2><a name="What%20does%20a%20game%20need%20to%20do"><a name="TOC_13">3.1 Čo všetko musí hra robiť?</a></a></h2>
+
+<p>Väčšina hier je postavená na rovnakom základnom princípe. Sú samozrejme
+výnimky a ja nie som profesionály programátor hier, ale podľa mojich skúseností
+nasledovný systém funguje veľmi dobre.
+
+
+<ol type=1 start=1>
+</p><li>Inicializácia
+
+<p>Na začiatku potrebujeme dostať hru do nejakého známeho stavu a zakaždým sa to
+deje tým istým spôsobom. Napríklad môžete chcieť, aby hráč začínal vždy v strede
+obrazovky, vytvoriť bludisko alebo vygenerovať náhodnú mapu. Všetko toto sa 
+udeje tu.
+
+</p><li>Hlavný cyklus hry
+
+<p>Hra potrebuje zabezpečiť, aby sa veci diali znova a znova kým hráč neumrie,
+nevyhrá, nevzdá sa alebo niečo také. To sa nám deje v hlavnom cykle hry. Ten má
+tri hlavné zložky:
+
+<ol type=A start=1>
+</p><li>Vstup -- získanie vstupu od hráča
+
+<li>Spracovanie -- zmena stavu vecí, odozva na vstup
+
+<li>Výstup -- odoslanie informácií späť hráčovi, zvyčajne vykreslením na
+obrazovku, ale niekedy aj inými spôsobmi, napríklad prehratím zvukov
+</ol>
+
+<li>Záver hry
+
+<p>Keď hra skončí, môžme potrebovať urobiť ešte nejaké ďalšie veci ako napríklad
+povedať hráčovi, prečo hra skončila, zmeniť tabuľku najlepších výsledkov alebo
+niečo na ten spôsob.
+
+</ol>
+
+<p>V skutočnosti je zvyčajne vyššie uvedená postupnosť súčasťou väčšieho cyklu,
+takže hra sa môže hrať znova a znova bez toho, aby ste sa medzitým vždy museli 
+vracať do OS a pred vonkajším cyklom je tiež nejaká inicializácia a po ňom
+nejaký upratovací kód, napr. nahrávanie tabuľky najlepších výsledkov z disku na
+začiatku a jej znovuuloženie na konci. Pre začiatok ale budeme robiť len jeden
+beh hry za spustenie.
+
+<p><hr>[ Ďalší:<a rel=next href="#Multi-file%20projects">Projekt rozdelený do súborov</a>
+ | Predošlý:<a rel=previous href="#What%20does%20a%20game%20need%20to%20do">Čo všetko musí hra robiť?</a>
+ | Hore:<a rel=up href="#A%20basic%20game%20structure">Základná štruktúra hry</a>
+ ]<p>
+
+<h2><a name="Proposed%20structure"><a name="TOC_14">3.2 Návrh štruktúry</a></a></h2>
+
+<p>Takto vyzerá vyššie opísaná štruktúra v jazyku C:
+
+<pre>#include &lt;allegro.h&gt;
+#include "game.h"
+
+int end_game;                   /* príznak, ktorý nastavíme, ak chceme skončiť */
+
+int main (void)
+{
+    allegro_init();             /* inicializuje knižnicu Allegro */
+    init();                     /* inicializuje hru */
+
+    end_game = 0;               /* príznak, že končíme */
+    do {                        /* cyklus */
+        input();                /* vezmi vstup */
+        process();              /* spracuj ho */
+        output();               /* vyrob výstup */
+    } while (end_game == 0);    /* kým je príznak v poriadku */
+
+    shutdown();                 /* zhoď veci, ktoré potrebuješ */
+    allegro_exit();             /* pre istotu */
+    return 0;                   /* povedz operačnému systému, že je všetko O.K. */
+}
+END_OF_MAIN()
+</pre>
+
+<p>V uvedenom príklade je <code>game.h</code> hlavičkový súbor, v ktorom sú
+deklarácie funkcií <code>init</code>, <code>input</code>, <code>process</code>,
+<code>output</code> a <code>shutdown</code>, ktoré musia byť definované niekde
+inde v projekte.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Proposed%20structure">Návrh štruktúry</a>
+ | Hore:<a rel=up href="#A%20basic%20game%20structure">Základná štruktúra hry</a>
+ ]<p>
+
+<h2><a name="Multi-file%20projects"><a name="TOC_15">3.3 Projekt rozdelený do súborov</a></a></h2>
+
+<p>Už som spomínal, že vás budem povzbudzovať k tomu, aby ste svoj zdrojový kód
+rozdelili na viacero súborov. Mnohým ľuďom sa to zo začiatku zdá ťažké a nevedia
+pochopiť, na čo je to dobré. V tejto sekcii tutoriálu mám v úmysle vyjasniť to a
+ukázať, ako má podľa mňa vyzerať dobrý sytém organizácie projektu.
+
+<h3>Objasnenie</h3>
+
+<p>Takže najprv, prečo je projekt rozdelený do viacerých súborov dobrá vec? Veď
+to vyzerá, že len pribúdajú problémy -- vyžaduje to vytvárať hlavičkové súbory,
+robiť externé deklarácie a máte pocit, že musíte prehľadať viacero súborov, kým
+nájdete funkciu, ktorú hľadáte.
+
+<p>V skutočnosti má ale tento prístup mnohé pozitíva. Keď vo svojom kóde zmeníte
+jeden riadok, gcc, aby vytvorilo nový spustiteľný súbor, prekompiluje všetko.
+Ale ak je váš projekt rozdelený do viacerých súborov a vy zmeníte jeden z nich,
+gcc už má k dispozícii objektové súbory, ktoré vygenerovalo z vašich zdrojových
+súborov, keď ste ich kompilovali posledne a teraz potrebuje prekompilovať iba
+súbor, ktorý ste zmenili. Pri väčších projektoch to môže znamenať rozdiel v
+dĺžke (5 minút alebo viac, v závislosti na rýchlosti počítača) rekompilácie a
+dvadsaťsekundovou úpravou.
+
+<p>Pri troche organizáce môže rozdelenie projektu do súborov značne uľahčiť
+hľadanie kusu kôdu, ktorý práve zháňate. Je to jednoduché -- rozdeľte kód medzi
+súbory podľa toho, čo robí. Ak potom hľadáte funkciu, ktorá kreslí hráča, viete,
+že bude v zdrojovom súbore s grafikou.
+
+<p>Okrem toho, ak je váš program dostatočne modulárny a zdieľánie medzi súbormi
+je obmedzené na minimum, ľahšie sa hľádajú chyby. Ak majú k danej premennej
+prístup iba niektoré programy, vadná hodnota musí byť spôsobená chybou v jednom
+z týchto súborov.
+
+<h3>Navrhovaný systém</h3>
+
+<p>To, čo bude nasledovať je len môj skromný názor; rôzni ľudia si môžu chcieť
+zariadiť veci rôzne. Ale keďže som zistil, že nasledujúce pravidlá sú užitočné,
+odporúčam vám dodržiavať ich.
+
+<ul>
+<li>Nerobte hlavičkové súbory, ktoré obsahujú deklarácie z viacerých zdrojových
+súborov (výnimka: hlavičkové súbory pre knižnice). Je oveľa jednoduchšie na
+sledovanie a zvyčajne aj oveľa efektívnejšie, ak každý hlavičkový súbor
+deklaruje symboly z jediného zdrojového súboru.
+
+<li>Tam, kde je to vhodné, použite pre jeden zdrojový súbor viacero
+hlavičkových.
+
+<li>Neopakujte informáciu vo viacerých hlavičkových súboroch. Ak to potrebujete,
+<code>#include</code>-nite jeden do druhého, ale nepíšte tú istú informáciu do
+hlavičkových súborov dvakrát. Ak budete totiž informáciu chcieť zmeniť, stačí
+vám ju zmeniť raz a vyhnete sa zdĺhavému hľadaniu duplicít, ktoré majú byť
+zmenené tiež.
+
+<li>Dbajte na to, aby každý zdrojový súbor načítal všetky hlavičkové súbory,
+ktoré obsahujú deklarácie jeho symbolov. Ak to spravíte, kompilátor vám vychytá
+chyby spôsobené tým, že deklarácia v hlavičkovom súbore nesedí s definíciou v
+zdrojovom súbore.
+</ul>
+
+<p>Dúfam, že ste pochopili výhody rozdelenia vášho projektu, ale ak nechcete,
+rozhodne ho nechajte v jednom súbore. Príklady, ktoré budem používať neskôr,
+budú štandardne mnohosúborové, založené na odporúčaniach podaných vyššie a na
+skôr diskutovanej štruktúre hry (pozri <a href="#Proposed%20structure">Návrh
+štruktúry</a>), takže budete mať veľá možností oceniť výhody tohto prístupu.
+
+<p>Ak ste z toho stále zmätení, pozrite sa, prosím, na článok, ktorý som napísal
+pre elektronický magazín C-Scene:
+
+<pre>http://www.cscene.org/
+</pre>
+
+<p>Článok je v časti 2 a volá sa <cite>Multi-file
+projects and the GNU Make utility</cite>. Opakuje informácie spomenuté tu, lenže
+podrobnejšie a vysvetľuje začiatočníkom v tejto technike niektoré bežné problémy. 
+
+<p><hr>[ Ďalší:<a rel=next href="#Making%20several%20things%20happen%20at%20once">Ako zariadiť, aby
+sa niekoľko vecí dialo súčasne</a>
+ | Predošlý:<a rel=previous href="#A%20basic%20game%20structure">Základná štruktúra hry</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Introducing%20graphics"><a name="TOC_16">4. Úvod do grafiky</a></a></h1>
+
+<h2>Poznámka</h2>
+
+<p>Táto časť predpokladá, že ste oboznámení s pojmami programovania v grafike
+ako napríklad súradnicový systém, rozlíšenie atď. Ak nie ste, aj tak si ju
+skúste prečítať; ak nebudete rozumieť, mali by ste si pozrieť nejakú knižku o
+počítačovej grafike.
+
+<ul>
+<li><a href="#Selecting%20a%20graphics%20mode">Nastavenie grafického režimu</a>
+
+<li><a href="#Drawing%20things">Kreslenie objektov</a>
+
+<li><a href="#Palette%20manipulation">Práca s paletou</a>
+
+<li><a href="#Simple%20animation">Jednoduchá animácia</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Drawing%20things">Kreslenie objektov</a>
+ | Hore:<a rel=up href="#Introducing%20graphics">Úvod do grafiky</a>
+ ]<p>
+
+<h2><a name="Selecting%20a%20graphics%20mode"><a name="TOC_17">4.1 Nastavenie grafického režimu</a></a></h2>
+
+
+<p>Aby ste dostali počítač do grafického režimu, použite túto funkciu:
+
+<pre>int set_gfx_mode (int <var>card</var>, int <var>w</var>, int <var>h</var>, int <var>v_w</var>, int <var>v_h</var>);
+</pre>
+
+<p>Miesto <var>card</var> dajte jednu z <code>GFX_*</code> konštánt, bežne
+<code>GFX_AUTODETECT</code>. <var>w</var> a <var>h</var> je minimálna šírka a
+výška obrazovkového priestoru, ktorú požadujete; v závislosti na režime, ktorý
+zvolíte, môžete dostať kúsok väčšiu plochu. Ako <var>v_w</var> a <var>v_h</var>
+dajte zatiaľ 0.
+
+
+<p><hr>[ Ďalší:<a rel=next href="#Palette%20manipulation">Práca s paletou</a>
+ | Predošlý:<a rel=previous href="#Selecting%20a%20graphics%20mode">Nastavenie grafického režimu</a>
+ | Hore:<a rel=up href="#Introducing%20graphics">Úvod do grafiky</a>
+ ]<p>
+
+<h2><a name="Drawing%20things"><a name="TOC_18">4.2 Kreslenie objektov</a></a></h2>
+
+<ul>
+<li><a href="#The%20BITMAP%20struct">Štruktúra BITMAP</a>
+
+<li><a href="#Plotting%20pixels">Kreslenie pixelov</a>
+
+<li><a href="#Some%20other%20primitives">Nejaké ďalšie primitívy</a>
+
+<li><a href="#Writing%20text">Písanie textu</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Plotting%20pixels">Kreslenie pixelov</a>
+ | Hore:<a rel=up href="#Drawing%20things">Kreslenie objektov</a>
+ ]<p>
+
+<h3><a name="The%20BITMAP%20struct"><a name="TOC_19">4.2.1 Štruktúra BITMAP</a></a></h3>
+
+<p>Grafické funkcie Allegra nie sú obmedzené na zápis na obrazovku; zapisujú do
+<dfn>bitmáp</dfn>. Bitmapa môže byť obrazovka, môže to byť blok pamäte alebo to
+môže byť <dfn>podbitmapa</dfn> (časť inej bitmapy). Keď voláte grafické funkcie
+Allegra, dáte im ako parameter smerník na štruktúru <code>BITMAP</code>, ktorý
+obsahuje informácie o bitmape, do ktorej chcete zapisovať.
+
+<p>Najlepšie bude, keď si zvyknete na váš smerník pozerať jednoducho ako na
+<dfn>odkaz</dfn> na bitmapu -- je to niečo ako identifikačne číslo. Allegro na
+začiatku určí jeho hodnotu a vy ho potom uvádzate grafickým procedúram, aby ste
+im dali vedieť, kde majú kresliť.
+
+<p>Jediné zaujímavé časti štruktúry <code>BITMAP</code> aspoň pokiaľ sme sa
+zaujímali sú polia <code>w</code> a <code>h</code> fields; je v nich uložená
+šírka a výška bitmapy v pixeloch.
+
+<p>Allegro definuje premennú <code>screen</code> ako smerník na štruktúru
+<code>BITMAP</code> reprezentujúcu obrazovku, takže napríklad:
+
+<pre>clear_to_color (screen, 5);
+</pre>
+
+<p>vyplní obrazovku farbou 5 (často fialová).
+
+<p><hr>[ Ďalší:<a rel=next href="#Some%20other%20primitives">Nejaké ďalšie primitívy</a>
+ | Predošlý:<a rel=previous href="#The%20BITMAP%20struct">Štruktúra BITMAP</a>
+ | Hore:<a rel=up href="#Drawing%20things">Kreslenie objektov</a>
+ ]<p>
+
+<h3><a name="Plotting%20pixels"><a name="TOC_20">4.2.2 Kreslenie pixelov</a></a></h3>
+
+<p> Na nakreslenie pixelu použite funkciu Allegra:
+
+<pre>void putpixel (BITMAP *<var>bmp</var>, int <var>x</var>, int <var>y</var>, int <var>color</var>);
+</pre>
+
+<p>Toto nastaví pixel bitmapy <var>bmp</var>, ktorý sa nachádza na súradniciach
+<var>x</var>,<var>y</var> na farbu <var>color</var>. Jednoduché.
+
+<p> Ako príklad použitia <code>set_gfx_mode</code>, <code>clear_to_color</code>
+a <code>putpixel</code> si pozrite ukážkový program
+<code>examples/chap_04/ex_2_2</code>.
+
+<p><hr>[ Ďalší:<a rel=next href="#Writing%20text">Písanie textu</a>
+ | Predošlý:<a rel=previous href="#Plotting%20pixels">Kreslenie pixelov</a>
+ | Hore:<a rel=up href="#Drawing%20things">Kreslenie objektov</a>
+ ]<p>
+
+<h3><a name="Some%20other%20primitives"><a name="TOC_21">4.2.3 Nejaké ďalšie primitívy</a></a></h3>
+
+Funkcie ako putpixel sa volajú grafické <dfn>primitívy</dfn>, pretože sú to
+základné grafické výstupné funkcie.
+
+<p>Niektoré ďalšie jednoduché grafické funkcie sú:
+
+<pre>void vline(BITMAP *bmp, int x, int y1, int y2, int color);
+void hline(BITMAP *bmp, int x1, int y, int x2, int color);
+void line(BITMAP *bmp, int x1, int y1, int x2, int y2, int color);
+void triangle(BITMAP *bmp, int x1, y1, x2, y2, x3, y3, int color);
+void rect(BITMAP *bmp, int x1, int y1, int x2, int y2, int color);
+void rectfill(BITMAP *bmp, int x1, int y1, int x2, int y2, int color);
+void circle(BITMAP *bmp, int x, int y, int radius, int color);
+void circlefill(BITMAP *bmp, int x, int y, int radius, int color);
+</pre>
+
+<p>Skúste pozmeniť ukážkový program z predošlej sekcie
+(<code>examples/chap_04/ex_2_2</code>) tak, aby ste niektoré z nich
+použili. Informácie o nich nájdete v súbore <code>allegro.txt</code> v
+podadresári <code>docs</code> vášho adresára obsahujúceho Allegro.
+
+<p>Ak by ste s tým mali problémy, pozrite sa na príklad
+<code>examples/chap_04/ex_2_3</code>.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Some%20other%20primitives">Nejaké ďalšie primitívy</a>
+ | Hore:<a rel=up href="#Drawing%20things">Kreslenie objektov</a>
+ ]<p>
+
+<h3><a name="Writing%20text"><a name="TOC_22">4.2.4 Písanie textu</a></a></h3>
+
+<p>Na písanie textu na obrazovku použite nasledovné funkcie:
+
+<pre>void textout(BITMAP *bmp, FONT *f, unsigned char *s, int x, y, int c);
+void textout_center(BITMAP *bmp, FONT *f, unsigned char *s, int x, y, int c);
+void textprintf(BITMAP *bmp, const FONT *f, int x, y, int c, const char *fmt, ...);
+</pre>
+
+<p><code>bmp</code> je samozreme bitmapa, na ktorú chcete písať.
+
+<p>Štruktúra <code>FONT</code> je definovaná v <code>allegro.h</code> a používa
+sa na odkazovanie na rôzne fonty načítané v pamäti. Väčšinou ju budete používať
+rovnako, ako používate štruktúru <code>BITMAP</code> -- poväčšine len budete
+smerníky na ne dávať rôznym funkciam ako parametre  a nebudete potrebovať vedieť
+nič o tom, čo sa vo vnútri štruktúry nachádza.
+
+<p>Môžete si vytvoriť vlastné fonty, použiť fonty z distribúcie GRX (iná
+grafická knižnica), ktoré pôvodne pochádzajú z XFree86 (okienkoidný systém pre
+Unix), alebo skonvertovať fonty z Windowsovského TTF formátu. V každom z týchto
+prípadov musíte vedieť používať allegrovský Grabber a datasúbory. Ak chcete viac
+informácií môžete si pozrieť súbor <code>grabber.txt</code>, ale o práci s
+datasúbormi budeme hovoriť v tomto tutoriáli až oveľa neskôr. Zatiaľ môžete do
+fukcií písať <code>font</code>; je to <code>FONT *</code> deklarovaný v
+<code>allegro.h</code> a odkazuje na 8x8 BIOS font.
+
+<p><code>s</code> je reťazec, ktorý chcete vypísať, <code>x</code> a
+<code>y</code> sú súradnice a <code>c</code> je farba. Ak <code>c</code> je -1 a
+font je proporcionálny, Allegro použije informáciu o farbe obsiahnutú vo fonte,
+takto sa dajú použiť viacfarebné fonty.
+
+<p>Funkcia <code>textout_center</code> je takmer rovnaká; jediný rozdiel je, že
+text bude vycentrovaný na súradnicu <code>x</code>.
+
+<p>Funkcia <code>textprintf</code> je vhodne obalený <code>textout</code>, ktorý
+prijíma formátovací reťazec tým istým spôsobom ako <code>printf</code>.
+<code>textout</code> je rýchlejší, ale <code>textprintf</code> univerzálnejší.
+
+<p>Farba pozadia textového výstupu sa dá nastaviť funkciou
+
+<pre>void text_mode(int mode);
+</pre>
+
+<p>kde <code>mode</code> je nová farba pozadia. Ak je <code>mode</code> záporný,
+pozadie sa nekreslí a bude viditeľný podklad, ktorý tam bol predtým.
+
+<p>Pohrajte sa s tým sami, alebo sa pozrite na
+<code>examples/chap_04/ex_2_4</code>, kde nájdete ukážku toho, ako sa to
+používa.
+
+<p><hr>[ Ďalší:<a rel=next href="#Simple%20animation">Jednoduchá animácia</a>
+ | Predošlý:<a rel=previous href="#Drawing%20things">Kreslenie objektov</a>
+ | Hore:<a rel=up href="#Introducing%20graphics">Úvod do grafiky</a>
+ ]<p>
+
+<h2><a name="Palette%20manipulation"><a name="TOC_23">4.3 Práca s paletou</a></a></h2>
+
+<h3>Poznámka</h3>
+
+<p>V prvom rade treba podotknúť, že palety majú význam iba v 8-bitových (256
+farieb) režimoch. Môžete nastaviť režimy aj s vyššími farebnými hĺbkami; ak to
+urobíte, obsah tejto časti pre vás nebude mať význam. Ak chcete informáciu o
+vyšších farebných hĺbkach, pozrite si dokument Pot of Gold od Shawna
+Hargreavesa na ktorý je linka z allegrovských webových stránok odkazujúcich 
+na dokumentáciu.
+
+<ul>
+<li><a href="#Palette%20explanation">Čo je to paleta</a>
+
+<li><a href="#Changing%20a%20palette%20entry">Zmena položky palety</a>
+
+<li><a href="#Changing%20the%20entire%20palette">Zmena palety</a>
+
+<li><a href="#Fading%20in%20and%20out">Stmievanie a rozsvecovanie</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Changing%20a%20palette%20entry">Zmena položky palety</a>
+ | Hore:<a rel=up href="#Palette%20manipulation">Práca s paletou</a>
+ ]<p>
+
+<h3><a name="Palette%20explanation"><a name="TOC_24">4.3.1 Čo je to paleta</a></a></h3>
+
+<p>Keď chcete kresliť na obrazovku v 8-bitovom režime, musíte určiť číslo farby
+od 0 do 255. Zvyčajne prvých šestnásť farieb býva: čierna, modrá, zelená,
+tyrkysová, červená, fialová, hnedá, svetlošedá, tmavošedá, ..., svetlofialová,
+žltá, biela (ale nemusí to tak byť vždy).
+
+<p>Zvyšných 240 farieb nemusí myť vždy rovnakých. Pred tým, než ich použijete,
+môžete počítaču povedať, aká farba sa má objaviť na obrazovke, keď nastavíte
+pixelom určité číslo farby. Najbezpečnejšie je nastaviť všetky farby, ktoré
+budete používať, včetne prvých šestnástich; tak si budete istí, že skutočne budú
+vyzerať tak, ako chcete, aby vyzerali.
+
+<p>Čísla farieb, ktoré budete uvádzať grafickým funkciam budem nazývať
+<dfn>logické</dfn> farby a farby k ním priradené, ktoré sa objavia na obrazovke
+<dfn>fyzické</dfn> farby. A teda potrebujeme funkcie, ktoré priradia logickým
+farbám fyzické.
+
+<p>Logické farby sú vyjadrené číslami od 0 do 255. Každá možná fyzická farba je
+vyjadrená tromi číslami, každé z nich z intervalu od 0 do 63. Tieto čísla
+reprezentujú veľkosť červenej, zelenej a modrej zložky vo farbe. 63 je
+samozrejme maximálna veľkosť. Na reprezentáciu fyzických farieb sa používa
+štruktúra RGB definovaná v <code>allegro.h</code>:
+
+<pre>typedef struct RGB
+{
+    unsigned char r, g, b;
+} RGB;
+</pre>
+
+<p>Netreba hovoriť, že <code>r</code>, <code>g</code> and <code>b</code> sú
+intenzity červenej, zelenej a modrej vo farbe, ako je to popísané vyššie.
+
+<p><hr>[ Ďalší:<a rel=next href="#Changing%20the%20entire%20palette">Zmena celej
+palety</a>
+ | Predošlý:<a rel=previous href="#Palette%20explanation">Čo je to paleta</a>
+ | Hore:<a rel=up href="#Palette%20manipulation">Práca s paletou</a>
+ ]<p>
+
+<h3><a name="Changing%20a%20palette%20entry"><a name="TOC_25">4.3.2 Zmena
+fyzického významu jednej logickej farby</a></a></h3>
+
+<p>Ak chcete zmeniť fyzický význam logickej farby, použite funkciu
+
+<pre>void set_color (int index, RGB *p);
+</pre>
+
+<p><code>index</code> je číslo logickej farby a <code>p</code> je smerník na RGB
+záznam, ako je popísané vyššie.
+
+<p>Ukážkový program <code>examples/chap_04/ex_3_2</code> ukazuje použitie tejto
+funkcie - ako stláčate klávesy, farba 0 (farba pozadia) nadobúda rôzne hodnoty.
+Ak chcete  skončiť, stlačte &lt;ESC&gt;.
+
+<p>Pripomeňme, že je tu jedna drobná komplikácia -- ak sa pokúšate meniť farby
+rýchle za sebou, mali by ste medzi zmenami volať funkciu Allegra
+<code>vsync</code> (ktorá tiež pridá isté zdržanie). Hlavný dôvod je ten, že
+niektoré grafické karty nemajú radi, ak im brnkáte po palete, keď sa snažia
+kresliť po obrazovke, niekedy potom zobrazia nesprávne farby a vyzerá to ako
+zasnežené. <code>vsync</code> počká, kým monitor dokreslí obrazovku, čo problém
+odstráni. O <code>vsync</code> si neskôr ešte niečo povieme.
+
+<p><hr>[ Ďalší:<a rel=next href="#Fading%20in%20and%20out">Stmievanie a rozsvecovanie</a>
+ | Predošlý:<a rel=previous href="#Changing%20a%20palette%20entry">Zmena položky palety</a>
+ | Hore:<a rel=up href="#Palette%20manipulation">Práca s paletou</a>
+ ]<p>
+
+<h3><a name="Changing%20the%20entire%20palette"><a name="TOC_26">4.3.3 Zmena celej
+palety</a></a></h3>
+
+<p>Ak chceme zmeniť celú paletu naraz, mohli by sme opakovane volať
+<code>set_color</code>, ale bolo by to pomalé a nešikovné. Miesto toho
+<code>allegro.h</code> definuje typ <code>PALETTE</code> ako pole 256 RGB
+záznamov, jeden pre každú logickú farbu. V tomto poli môžete vytvoriť celú
+vlastnú paletu a potom ju nastaviť jedným volaním funkcie
+
+<pre>void set_palette (PALETTE p);
+</pre>
+
+<p> Príklad <code>examples/chap_04/ex_3_3</code> demonštruje túto funkciu tak,
+že nakreslí dúhu farieb a potom prepne paletu na čiernobielu.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Changing%20the%20entire%20palette">Zmena celej
+palety</a>
+ | Hore:<a rel=up href="#Palette%20manipulation">Práca s paletou</a>
+ ]<p>
+
+<h3><a name="Fading%20in%20and%20out"><a name="TOC_27">4.3.4 Stmievanie a rozsvecovanie</a></a></h3>
+
+<p>V málofarebných režimoch (napr. 256 farieb) je to jednoduché: ak chcete
+spraviť stmievanie, spravte paletu tmavšiu a tmavšiu až bude všetko čierne, pri
+rozsvecovaní to urobte naopak.
+
+<p>Allegro má niekoľko funkcií, ktoré to robia; najzákladnejšie sú:
+
+<pre>void fade_in (PALETTE p, int speed);
+void fade_out (int speed);
+</pre>
+
+<p>Poznamenajme, že <code>fade_in</code> chce, aby ste jej povedali, do akej
+palety treba rozsvietiť; <code>fade_out</code> to nepotrebuje, pretože
+predpokladá, že sa bude stmievať z aktuálnej palety.
+
+<p><code>speed</code> je rýchlosť stmievania v intervale od 1 do 64, kde 64
+znamená okamžitú zmenu.
+
+<p><code>examples/chap_04/ex_3_4</code> ukazuje použitie týchto funkcií.
+
+
+<p><hr>[ Predošlý:<a rel=previous href="#Palette%20manipulation">Práca s paletou</a>
+ | Hore:<a rel=up href="#Introducing%20graphics">Úvod do grafiky</a>
+ ]<p>
+
+<h2><a name="Simple%20animation"><a name="TOC_28">4.4 Jednoduchá animácia</a></a></h2>
+
+<ul>
+<li><a href="#What%20is%20animation">Čo je to animácia</a>
+
+<li><a href="#Making%20things%20appear%20to%20move">Ako urobiť, aby veci
+vyzerali, že sa hýbu</a>
+
+<li><a href="#Reducing%20flicker">Zníženie blikania</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Making%20things%20appear%20to%20move">Ako urobiť, aby veci
+vyzerali, že sa hýbu</a>
+ | Hore:<a rel=up href="#Simple%20animation">Jednoduchá animácia</a>
+ ]<p>
+
+<h3><a name="What%20is%20animation"><a name="TOC_29">4.4.1 Čo je to animácia?</a></a></h3>
+
+<p>Animácia je, keď spôsobíte, že to vyzerá, že sa veci hýbu. Môže to 
+znamenať, že vám po obrazovke pobehuje pixel, ale zvyčajne sa tým myslí, že
+dookola meníte výzor niečoho tak, že vyzerá, že sa to hýbe.
+
+<p>Teraz sa pozrieme iba na to, ako pohybovať po obrazovke s jednoduchými 
+vecami; druhá interpretácia bude rozobratá neskôr, keď sa pozrieme na sprity.
+
+<p><hr>[ Ďalší:<a rel=next href="#Reducing%20flicker">Zníženie blikania</a>
+ | Predošlý:<a rel=previous href="#What%20is%20animation">Čo je to animácia</a>
+ | Hore:<a rel=up href="#Simple%20animation">Jednoduchá animácia</a>
+ ]<p>
+
+<h3><a name="Making%20things%20appear%20to%20move"><a name="TOC_30">4.4.2 Ako urobiť, aby veci
+vyzerali, že sa hýbu</a></a></h3>
+
+<p>Najjednoduchší spôsob, ako vytvoriť zdanie, že sa niečo hýbe, je zmazať to na
+tom mieste, kde to je a znovu to vykresliť na obrazovku niekde inde. Je otázkou
+pre filozofov, či to je skutočne pohyb; ale keďže to aj tak neexistuje, nie je
+veľmi dôvod trápiť sa tým. A tak budeme hovoriť, že sa to pohlo.
+
+<p>Na to, aby vyplnený kruh prešiel cez obrazovku, môžete urobiť niečo takéto:
+
+<pre>int x;
+install_timer();                           /* potrebuje to `rest' */
+circlefill (screen, 0, 100, 5, 15);        /* nakreslí prvýkrát */
+for (x = 1; x &lt; 320; x++) {               /* cyklus cez obrazovku */
+    rest (10);                             /* spomaľ */
+    circlefill (screen, x - 1, 100, 5, 0); /* vymaž tam, kde to bolo */
+    circlefill (screen, x, 100, 5, 15);    /* nakresli na novom mieste */
+}
+</pre>
+
+<p>Vyskúžajte, či to funguje. Teraz to skúste s väčším polomerom (povedzme 50) a
+pozrite sa, čo sa stane.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Making%20things%20appear%20to%20move">Ako urobiť, aby veci
+vyzerali, že sa hýbu</a>
+ | Hore:<a rel=up href="#Simple%20animation">Jednoduchá animácia</a>
+ ]<p>
+
+<h3><a name="Reducing%20flicker"><a name="TOC_31">4.4.3 Zníženie blikania</a></a></h3>
+
+<p>No áno - začalo to trochu blikať. Ak nezačalo, skúste to s väčším kruhom. Ak
+stále nezačalo, hmm, začne ak použijete režim obrazovky s vyšším rozlíšením
+(vyskúšajte si to). Ak to ani tak nezačalo blikať, potom gratulujem, máte
+superpočítač.
+
+<p>My, obyčajní smrteľníci, ale s tým blikaním niečo budeme musieť urobiť. Je
+viacero možných prístupov; niektoré sú komplikovanejšie než iné, niektoré
+efektívnejšie a niektoré sú jednoducho dobré, pretože nežerú toľko procesorového
+času (a teda hry môžu bežať s vyššou obnovovacou frekvenciou).
+
+
+<ul>
+<li><a href="#Synchronising%20to%20the%20vertical%20retrace">Synchronizácia na
+zatemnenie</a>
+
+<li><a href="#Maximising%20drawn%20time">Maximalizácia času vykreslenia</a>
+
+<li><a href="#Optimising%20drawing%20order">Optimalizácia poradia vykreslenia</a>
+
+<li><a href="#Double%20buffering">Dvojitý buffering</a>
+
+<li><a href="#Dirty%20rectangles">Špinavé obdĺžniky</a>
+
+<li><a href="#Alternate%20line%20blitting">Striedavé vykreslovanie riadkov</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Maximising%20drawn%20time">Maximalizácia času vykreslenia</a>
+ | Hore:<a rel=up href="#Reducing%20flicker">Zníženie blikania</a>
+ ]<p>
+
+<h4><a name="Synchronising%20to%20the%20vertical%20retrace"><a name="TOC_32">4.4.3.1 Synchronizácia na
+zatemnenie</a></a></h4>
+
+<p>Toto je najdôležitejšia vec, ktorú treba urobiť. Zatemnenie je časový úsek,
+počas ktorého sa váš monitor pripravuje na vykreslenie nového rámca. Počas tohto
+času sa nič na obrazovke nedeje, takže ak stihneme vymazať objekt a znovu ho
+nakresliť, kým monitor  začne s novým rámom, je po probléme.
+
+<p>Funkcia <code>vsync</code> čaká, kým sa nezačne ďalšie zatemnenie. Keď to
+nastane, treba prekresliť obrazovku tak rýchlo, ako je to možné. Takže nahraďte
+<code>rest(10)</code> funkciou <code>vsync()</code> a skúste to znovu. Oveľa
+lepšie.
+
+<p>Pripomeňme, že zatemnenie je svojim spôsobom niečo ako časovač. Objavuje sa v
+pravidelných intervaloch (pre daný grafický režim; medzi jednotlivými režimami
+sa to líši). Z toho vyplýva, že (okrem toho, že ho aj tak používame na
+synchronizáciu) to môže byť užitočný spôsob, ako regulovať
+rýchlosť hry. V kapitole 9 sa ale dajú nájsť aj lepšie spôsoby, ako sa to dá
+urobiť - budeme tam hovoriť o systéme časovačov, ktorý Allegro obsahuje.
+
+<p><hr>[ Ďalší:<a rel=next href="#Optimising%20drawing%20order">Optimalizácia poradia vykreslenia</a>
+ | Predošlý:<a rel=previous href="#Synchronising%20to%20the%20vertical%20retrace">Synchronizácia na
+zatemnenie</a>
+ | Hore:<a rel=up href="#Reducing%20flicker">Zníženie blikania</a>
+ ]<p>
+
+<h4><a name="Maximising%20drawn%20time"><a name="TOC_33">4.4.3.2 Maximalizácia času vykreslenia</a></a></h4>
+
+<p>Ak toho máme na kreslenie príliš veľa, tak to všetko nezvládneme počas
+jedného zatemnenia. Potrebujeme teda blikanie znížiť nejakým iným spôsobom.
+Predstavte si situáciu, že máme množstvo kruhov, a predtým, než ich prekreslíme,
+ich všetky vymažeme. Budú vymazané pomerne dlhý čas; je preto veľká
+ôravdepodobnosť, že sa monitor bude snažiť zobraziť časť obrazovky vtedy, keď
+ešte nebudú vykreslené.
+
+<p>Tento problém môžeme vyriešiť tak, že ich budeme prekreslovať jeden po
+druhom. Môže to pomôcť znížiť blikanie, ale môže to viesť k iným problémom. To,
+čo je podstatné ale je, že je rozumné snažiť sa o to, aby boli veci vykreslené
+čo najdlhšie.
+
+<p>Ak napríklad zmažete všetky vaše objekty a až potom zisťujete, kde budú
+vykreslené, nie sú na obrazovke po celý čas výpočtu. Ak spravíte výpočty pred
+tým, než ich zmažete, budú na obrazovke dlhšie a čas, keď sú preč, sa skráti.
+
+<p><hr>[ Ďalší:<a rel=next href="#Double%20buffering">Dvojitý buffering</a>
+ | Predošlý:<a rel=previous href="#Maximising%20drawn%20time">Maximalizácia času vykreslenia</a>
+ | Hore:<a rel=up href="#Reducing%20flicker">Zníženie blikania</a>
+ ]<p>
+
+<h4><a name="Optimising%20drawing%20order"><a name="TOC_34">4.4.3.3 Optimalizácia poradia vykreslenia</a></a></h4>
+
+<p>Ako sme poznamenali vyššie, niekedy nestihneme celé vykreslenie počas jedného
+zatemnenia. Čo sa stane potom? Monitor začne prekreslovať obrazovku z hora dole.
+Takže ak máme nakreslenú iba časť, je lepšie, ak je horná časť obrazovky v
+poriadku, keď ju monitor začne prekreslovať.
+
+<p>V podstate ide o to, aby práve nebolo vymazané niečo, čo sa monitor pokúša
+zobraziť. Žiaľ, ak nemáme k dispozícii časovač s veľmi vysokým rozlíšením,
+nevieme povedať, ktorá časť obrazovhy sa práve prekresľuje. A ak taký časovač
+máme, má to zas iné tienisté stránky.
+
+<p>Rozumné môžu byť rôzne poradia vykresľovania. Môžete vykresľovať veci od hora
+nadol. Toto okrem iného urýchli prekresľovanie rámcov v režimoch s vyšším
+rozlíšením/farebnou hĺbkou zredukovaním prepínaní rozsahu videa. (??? This also
+improves the frame redraw speed in higher resolution/colour depth modes by
+reducing video bank switches.) Tiež môžete zvážiť, aké zložité sú jednotlivé
+objekty a začať prekresľovanie od jednoduchších.
+
+<p>Iná technika je vykreslovanie <em>zdola nahor</em>. Môže to znieť zvláštne,
+ale ak to tak spravíte, zatemnenie stihnete len raz a to na kratučký moment. Ak
+budete používať tento systém, dôjde asi k nejakému blikaniu, ale pravdepodobne
+to nebude až také tragické.
+
+<p>Môžete si to predstaviť ako rýchlu jazdu autom na diaľnici, počas ktorej sa
+pozeráte bočným oknom. (Uistite sa, že šoféruje niekto iný.) Snažíte sa mať
+dobrý výhľad na živý plot. Autá, ktoré idú tým istým smerom ako vy, majú nízku
+relatívnu rýchlosť a teda stoja v ceste vášmu výhľadu na živý plot dlhšiu dobu.
+Zato autá ktoré idú v protismere blokujú váš výhľad len veľmi krátko.
+
+<p><hr>[ Ďalší:<a rel=next href="#Dirty%20rectangles">Špinavé obdĺžniky</a>
+ | Predošlý:<a rel=previous href="#Optimising%20drawing%20order">Optimalizácia poradia vykreslenia</a>
+ | Hore:<a rel=up href="#Reducing%20flicker">Zníženie blikania</a>
+ ]<p>
+
+<h4><a name="Double%20buffering"><a name="TOC_35">4.4.3.4 Dvojitý buffering</a></a></h4>
+
+<p>Toto je veľmi populárny a jednoduchý systém, ktorý funguje dobre v rýchlych
+grafických režimoch (teda tých s nízkym rozlíšením). Novšie grafické karty (AGP
+a v menšej miere PCI) ho môžu použiť aj pri vyšších rozlíšeniach.
+
+<p>Technika dvojitého bufferingu znamená, že celý grafický výstup sa zapisuje do
+dočasnej bitmapy, kým nie je prekreslený celý rámec a výsledný obraz sa potom
+skopíruje do reálnej videopamäte ako jeden veľký kus.
+
+<p>Toto môže byť efektívne z viacerých dôvodov. Po prvé, znamená to, že z
+obrazovky nemusíme nič mazať -- iba nahradíme jeden obraz (na ktorom je všetko
+vykreslené) iným (na ktorom je tiež všetko vykreslené).
+
+<p>Po druhé, videopamäť je o dosť pomalšia. Ak mienime počas vykresľovania rámca
+častokrát prepisovať jednotlivé oblasti, bude rýchlejšie, ak to všetko zapíšeme
+do (rýchlej) systémovej pamäte a potom to skopírujeme do (pomalej) videopamäte,
+než keby sme zapisovali priamo na obrazovku. Navyše čítanie z videopamäte je
+dokonca ešte pomalšie; a teda ak budeme chcieť čítať z obrázka, je oveľa lepšie
+čítať z kópie v systémovej pamäti. Je to niečo podobné ako vyrovnávacia pamäť
+disku, kde sa časti disku uchovávajú v systémovej pamäti aby sa vyhlo priamemu
+prístupu na disk.
+
+<p>Tak teda namiesto kreslenia na obrazovku, kreslíme do inej bitmapy v pamäti.
+Potom, keď sme hotoví, zavoláme <code>vsync()</code> a potom celý zásobník
+(buffer) skopírujeme na obrazovku. V režime 320x200x256 sa to s rezervou vojde
+do prekreslovacieho intervalu, takže k žiadnemu blikaniu nedôjde. Pri vyšších
+rozlíšeniach alebo farebných hĺbkach je treba samozrejme skopírovať viac
+obrazových dát a teda to trvá dlhšie. Dôsledky môžu byť rôzne, počnúc rozdelením
+(kde je na hornej časti obrazovky vykreslený jeden rámec a na dolnej druhý) a
+končiac znížením frekvencie vykresľovania (pretože vykresľovanie trvá pridlho,
+takže zmeškáme ďalšiu prekresľovaciu periódu, takže <code>vsync</code> bude
+čakať až na tú, ktorá nasleduje po nej).
+
+<p>Pozrite si ukážkový prgram <code>examples/chap_04/ex_4</code>. Nechceme
+zatiaľ rozoberať príliš podrobne pamäťové bitmapy a funkciu blit; vrátime sa k
+tomu podrobnejšie v kapitole 7.
+
+<p><hr>[ Ďalší:<a rel=next href="#Alternate%20line%20blitting">Striedavé vykreslovanie riadkov</a>
+ | Predošlý:<a rel=previous href="#Double%20buffering">Dvojitý buffering</a>
+ | Hore:<a rel=up href="#Reducing%20flicker">Zníženie blikania</a>
+ ]<p>
+
+<h4><a name="Dirty%20rectangles"><a name="TOC_36">4.4.3.5 Špinavé obdĺžniky</a></a></h4>
+
+<p>Toto je varianta dvojitého bufferingu, ktorá nevyžaduje taký rýchly grafický
+režim, ale je ťažšia na programovanie. Teoreticky to vyzerá tak, že spravíte
+presne to isté, ako pri dvojitom bufferingu, teda všetko vykreslíte do pamäťovej
+bitmapy, ale potom na obrazovku skopírujete iba tie oblasti, ktoré sa zmenili.
+
+<p>To ale znamená, že treba sledovať, ktoré oblasti sa zmenili; Najjednoduchší
+spôsob je označiť obdĺžniky ako <dfn>špinavé</dfn> keď do nich píšete. Potom
+môžete ľahko tieto obdĺžniky skopírovať na obrazovku.
+
+<p>Tento prístup je lepší než dvojitý buffering, ak sa toho veľa nezmenilo. Ak
+bolo zmien veľa, môže sa ukázať ako horší, čiastočne preto, lebo jednorázové
+prekreslenie veľkej plochy je efektívnejšie, než mnoho prekreslení menších
+oblastí a čiastočne preto, že sa jednotlivé špinavé obdĺžniky môžu prekrývať;
+pokiaľ sa nepostaráte o to, aby sa tak nestalo, budú sa niektoré časti obrazu
+prekresľovať dvakrát. Avšak ak situácie v ktorých bude jednoduchšie použiť
+dvojitý buffering viete rozpoznať, môžete jednoducho skopírovať celý obraz
+naraz, ako pri dvojitom bufferingu. Tieto dve techniky majú mnoho spoločné.
+
+<p>Špinavé obdĺžniky sú náročnejšie na realizáciu a ak spravíte malú chybičku,
+môžete sa dočkať podivných výsledkov. V kapitole 7 sa vrátime aj k tejto téme.
+
+<p><hr>[  Predošlý:<a rel=previous href="#Dirty%20rectangles">Špinavé obdĺžniky</a>
+ | Hore:<a rel=up href="#Reducing%20flicker">Zníženie blikania</a>
+ ]<p>
+
+<h4><a name="Alternate%20line%20blitting"><a name="TOC_37">4.4.3.6 Striedavé vykreslovanie riadkov</a></a></h4>
+
+<p>Toto je ďalšia varianta dvojitého bufferingu. Hlavná myšlienka je kopírovať
+na obrazovku iba každý druhý riadok. Môžete kopírovať iba párne riadky a nepárne
+nechať čierne. Dostanete tak trochu tmavší obraz s efektívne zníženým zvislým
+rozlíšením. Tiež môžete skopírovať párne riadky v jednom rámci a nepárne v
+ďalšom. Takto nestratíte jas obrazu, ale niektoré riadky budú "staršie", než
+iné, čo spôsobí malé rozmazanie obrazu. Tieto techniky sa uplatňujú najlepšie vo
+veciach ako video.
+
+<p><hr>[ Ďalší:<a rel=next href="#User%20input">Uživateľský vstup</a>
+| Predošlý:<a rel=previous href="#Introducing%20graphics">Úvod do grafiky</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Making%20several%20things%20happen%20at%20once"><a name="TOC_38">5.Ako zariadiť, aby sa niekoľko vecí dialo súčasne </a></a></h1>
+
+<ul>
+<li><a href="#More%20circles">Ďalšie kruhy</a>
+	
+<li><a href="#Squares%20too">Aj štvorce</a>
+
+<li><a href="#Keeping%20track%20of%20things">Uchovávanie viacerých vecí</a>
+
+<li><a href="#Object%20Oriented%20Programming">Objektovo orientované
+programovanie</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Squares%20too">Aj štvorce</a>
+ | Hore:<a rel=up href="#Making%20several%20things%20happen%20at%20once"Ako zariadiť, aby sa niekoľko vecí dialo súčasne></a>
+ ]<p>
+
+<h2><a name="More%20circles"><a name="TOC_39">5.1 Pohyb viacerých kruhov</a></a></h2>
+
+<p>Znie to celkom jednoducho a aj môže byť, ale znova ukážeme viacero spôsobov, ako sa to dá urobiť. Našim cieľom bude, aby sa to hodilo do štruktúry hry, ktorá bola prezentovaná skôr.
+
+<p>Na to, aby sme mali pohromade všetky údaje, ktoré popisujú každý kruh -- jeho
+umiestnenie, farbu, polomer, rýchlosť, ktorou sa pohybuje v každom smere, budeme
+používať štruktúru. Tiež bude výhodné zapamätať si, kde bol kruh nakreslený, aby
+sme si zjednodušili mazanie. Takže začnime definíciou štruktúry:
+
+<pre>struct circle_t {
+    int x,y,r;         /* x, y, polomer */
+    int col;           /* farba */
+    int xs,ys;         /* x rýchlosť, y rýchlosť */
+    int dx,dy;         /* nakreslene x, nakreslene y */
+};
+</pre>
+
+<p>Ďalej, dobrý spôsob, ako písať modulárny kód ako tento je najprv popremýšľať
+trochu o rozhraní; rozhodnite sa, čo má vrstva, ktorá bude modul používať,
+vidieť. Potom môžete napísať funkcie, zatiaľ stačí len zhruba určiť, čo budú
+robiť -- alebo môžete napísať programy, ktoré ich volajú, dokonca bez toho, že
+by ste urobili volané funkcie. Výhoda tohto prístupu je, že ak máte viac než
+jedného človeka, ktorý na hre pracuje, jeden z vás môže písať obslužné programy
+objektu a druhý program, ktorý ich volá.
+
+<p>Ďalšou výhodou, ktorú uvidíme neskôr je, že do tohoto typu systému je
+jednoduché pridať nové objekty -- všetky objekty budú používať tie isté funkcie
+rozhrania. A tak človek, ktorý píše program, ktorý volá všetky obslužné
+programy objektu môže začať s použitím fiktívnych objektov, ktoré toho veľa
+nerobia, aby skontroloval, či obsluha vlasne funguje; reálne objekty môžu byť
+pridané neskôr.
+
+<p>Poďme rozhodnúť, aké funkcie by každý objekt mohol mať. V ideálnom prípade
+chceme mať pre kruh k dispozícii nasledovné funkcie: funkciu, ktorá ho nakreslí,
+funkciu, ktorá ho zmaže a funkciu, ktorá upraví vnútorné premenné. Tieto funkcie
+budú často volané z vnútorného cyklu hry. Okrem toho potrebujeme funkciu, ktorá
+ho vytvorí a inicializuje jeho vnútorné premenné, spolu s funkciou, ktorá ho
+zlikviduje. Táto funkcia v tomto konkrétnom prípade nebude robiť veľa, ale mohla
+by, ak by napríklad bolo nutné uvoľniť dynamicky alokovanú pamäť potrebnú pre
+kruh.
+
+<p>Prototypy našich funkcií môžu vyzerať nasledovne:
+
+<pre>void circle_draw (struct circle_t *circle, BITMAP *bmp);
+void circle_erase (struct circle_t *circle, BITMAP *bmp);
+void circle_update (struct circle_t *circle);
+struct circle_t *circle_init (int new_x, int new_y, int new_radius, int new_col, int new_xs, int new_ys);
+void circle_destroy (struct circle_t *circle);
+</pre>
+
+<p>Všimnite si, že som mená funkcií zvolil tak, aby začínali na
+<code>circle_</code>. Je užitočné urobiť to, pretože tieto funkcie budú globálne
+a nechceme, aby dochádzalo ku kolíziam s funkciami, ktoré obsluhujú iné typy
+objektov. Začiatok názvu nás tiež upozorní, že patria do modulu "kruh". Keby sme
+si tým neboli istí, mohli by sme sa samozrejme pozrieť do hlavičkového súboru,
+aby sme zistili, do ktorého modulu vlastne patria, ale je rýchlejšie, keď to
+viete zistiť iba pohľadom na meno funkcie.
+
+<p>Budeme mať pole smerníkov na štruktúry <code>circle_t</code> a naša hlavná
+funkcia <code>init</code> ich všetky inicializuje s pomocou volania
+<code>circle_init</code> s rôznymi parametrami.
+
+<p>Keď už sú inicializované, tak ich ešte predtým, než odídeme z funkcie
+<code>init</code> vykreslíme.
+
+<p>Funkcia <code>input</code> zatiaľ nebude robiť nič okrem toho, že nastaví
+príznak "koniec hry" (premenná <code>end_game</code>), ak bolo stlačené
+&lt;ESC&gt;. Použitie klávesnice bude vysvetlené v ďalšej časti. 
+
+<p>Vo funkcii <code>process</code> vypočítame novú polohu všetkých kruhov.
+Použijeme na to for cyklus, ktorý prejde pole kruhov a zavolá
+<code>circle_update</code> pre každý z nich.
+
+<p>Vo funkcii <code>output</code> budeme potrebovať podobný cyklus, ktorý pre
+každý kruh zavolá <code>circle_draw</code>. Vo väčšine prípadov (záleží od toho,
+ktorú animačnú techniku použijeme) budeme najprv musieť zavolať funkciu
+<code>circle_erase</code>.
+
+<p>Na záver, keď skončíme, je slušné uvoľniť z pamäte kruhy vytvorené s pomocou
+<code>circle_init</code> funkciou <code>circle_destroy</code>.
+
+<p>Teraz by som vám navrhol, aby ste sa pokúsili naprogramovať to sami pre
+jeden kruh a potom program rozšíriť tak, aby sa ich hýbalo viacero. Ukážkové
+programy <code>examples/chap_05/1_a</code> a <code>examples/chap_05/1_b</code>
+demonštrujú, ako sa to robí. Ak by ste mali problémy s vytvorením programu,
+ktorý hýbe len jedným kruhom, navrhujem vám pozrieť si prvý príklad a pokúsiť sa
+ho upraviť tak, aby hýbal s viacerými kruhmi.
+
+<p>Všimnite si, že v prípade, že hýbete viacerými kruhmi, ak ich mažete a
+vykreslujete jeden po druhom, mazanie ďalších môže vygumovať kúsok z už
+vykreslených. Rieši sa to tak, že vymažete všetky kruhy naraz a potom ich všetky
+nakreslíte. Toto ale môže zväčšiť blikanie obrazovky (pamätáte sa na
+maximalizáciu času vykreslenia?), ak nepoužívate dvojitý buffering.
+
+<p><hr>[ Ďalší:<a rel=next href="#Keeping%20track%20of%20things">Uchovávanie viacerých vecí</a>
+ | Predošlý:<a rel=previous href="#More%20circles">Ďalšie kruhy</a>
+ | Hore:<a rel=up href="#Making%20several%20things%20happen%20at%20once">Ako zariadiť, aby sa niekoľko vecí dialo súčasne</a>
+ ]<p>
+
+<h2><a name="Squares%20too"><a name="TOC_40">5.2 Ako pridať pohyb štvorcov</a></a></h2>
+
+<p>Vyššie opísaná technika je vhodná, ak máme mnoho podobných objektov. Ale v
+reálnej hre je zvyčajne mnoho rôznych typov objektov. Tak sa teda pozrime na
+nejaké spôsoby, ako narábať napríklad so štvorcami súčasne s kruhmi.
+
+<p>Jedno riešenie je pridať do štruktúry informácie, ktoré jej umožnia popísať,
+či sa jedná o kruh alebo o štvorec tak, že pridáme premennú, ktorá to rozlíši.
+Potom môžeme modifikovať funkcie tak, aby rozlišovali oba prípady a kreslili ich
+róznym spôsobom. Niektoré funkcie dokonca nebude treba meniť.
+
+<p>Iné riešenie je vytvoriť novú štruktúru pre štvorce a nový súbor funkcií,
+ktoré s nimi budú narábať.
+
+<p>Obe tieto techniky majú svoje výhody. Prvá je vhodná vtedy, keď sú dva typy
+objektov veľmi podobné; v takýchto prípadoch nebude nutné mnoho funkcií meniť.
+Všetky objekty môžu byť uložené v jednom poli a bude stačiť jeden cyklus na to,
+aby boli vykreslené, aby sa pohli atď. Navyše podobnosť môže byť využitá tak, že
+môžeme vytvoriť spoločné procedúry pre veci ako zisťovanie kolízie.
+
+<p>Druhá technika je vhodná, ak sú objekty úplne rôzne. V takom prípade je
+nešikovné robiť štruktúru, ktorá bude udržiavať dáta pre všetky z niekoľkých
+objektov a funkcie nebudú mať príliš veľa kódu spoločného. Pri použití tejto
+techniky potrebujete zvláštne pole pre každý typ objektu a ak chcete
+vykresľovať/mazať/meniť objekty, musíte prezerať polia jedno po druhom.
+
+<p>V praxi sada viacerých rôznych typov objektov môže byť rozdelená do tried
+typov objektov. Kritériom napríklad môže byť správanie, výzor alebo to, ktorému
+hráčovi objekt patrí. S každou triedou sa potom môže zaobchádzať prvým zo
+zmienených systémov a bude mať spoločnú štruktúru, ktorá bude schopná popísať
+každý objekt v tejto triede. Rozdielne triedy sú potom spravované ako rôzne
+objekty druhým systémom.
+
+<p>Ak ste tomu porozumeli, pokúste sa vyššie uvedený program na pohyb viacerých
+kruhov upraviť tak, aby sa tam hýbali aj štvorce s použitím každej z uvedených
+dvoch metód. V prípade, že zatuhnete, sú tu ukážky, na ktoré sa môžete pozrieť:
+<code>examples/chap_05/ex_2_a</code> a <code>examples/chap_05/ex_2_b</code>. Ak
+sa vám nepodarí urobiť to vlastným spôsobom, pozrite si ich a pokúste sa do
+každej pridať ďalší typ objektov.
+
+<p>Ako cvičenie založené na zmiešanej technike sa pokúste urobiť program, kde sa
+budú hýbať štvorce, obdĺžniky a<small>...</small> hmmm<small>...</small>
+trojuholníky (ktoré budú prechádzať hranicu!), pričom štvorce a obdĺžniky sa
+budú hýbať tak, ako predtým, ale trojuholníky sa nebudú odrážať; spravte to tak,
+že sa vrátia na plochu z opačnej strany, než je tá, kadiaľ odišli. Príklad
+tohoto programu je <code>examples/chap_05/ex_2_c</code>; môžete ho spustiť, aby
+ste videli, čo to robí a potom sa pokúste napodobniť jeho správanie vašim
+vlastným programom.
+
+<p><hr>[ Ďalší:<a rel=next href="#Object%20Oriented%20Programming">Objektovo orientované
+programovanie</a>
+ | Predošlý:<a rel=previous href="#Squares%20too">Aj štvorce</a>
+ | Hore:<a rel=up href="#Making%20several%20things%20happen%20at%20once">Ako zariadiť, aby sa niekoľko vecí dialo súčasne</a>
+ ]<p>
+
+<h2><a name="Keeping%20track%20of%20things"><a name="TOC_41">5.3 Uchovávanie viacerých vecí</a></a></h2>
+
+<p>Predpokladajme, že chceme počas behu programu meniť počet útvarov. Vo
+všetkých predošlých príkladoch bol počet útvarov jednotlivých tvarov dopredu
+daný. Môžeme počet útvarov znížiť tak, že skrátime cyklus, ale takto vždy
+odstránime posledný útvar v zozname a okrem toho nemáme možnosť útvary pridať
+(pokiaľ predtým nejaké nezničíme). Skrátka to, čo hra môže robiť, je limitované v
+čase kompilácie veľkosťou polí.
+
+<p>Sú dve techniky, ktoré by som tu chcel predstaviť: dynamická alokácia a
+zreťazené zoznamy. Zreťazené zoznamy závisia od dynamickej alokácie, takže túto
+sekciu budete pravdepodobne čítať ako prvú.
+
+<ul>
+<li><a href="#Dynamic%20allocation">Dynamická alokácia</a>
+
+<li><a href="#Linked%20lists">Zreťazené zoznamy</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Linked%20lists">Zreťazené zoznamy</a>
+ | Hore:<a rel=up href="#Keeping%20track%20of%20things">Uchovávanie viacerých vecí</a>
+ ]<p>
+
+<h3><a name="Dynamic%20allocation"><a name="TOC_42">5.3.1 Dynamická alokácia</a></a></h3>
+
+<p>V tejto sekcii uvidíme, čo to dynamická alokácia je a pozrieme sa, ako ju
+môžeme použiť na rozšírenie systému lineárnych polí, ktorý sme používali
+doteraz.
+
+<p>Dynamická alokácia nám dovoľuje vyžiadať si pamäť počas behu programu (teda
+keď už program beží, ako protiklad k času kompilácie). To napríklad znamená, že
+sa na začiatku behu programu môžeme spýtať užívateľa, koľko kusov z každého
+útvaru budeme animovať a potom si vytvoríme polia také dlhé, ako potrebujeme. A
+ešte lepšie je, že môžeme meniť veľkosť polí počas behu hry, takže ak by sme
+mali mať málo miesta, tak ich len trochu zväčšíme.
+
+<p>Na to, aby sme to urobili, použijeme funkciu <code>malloc</code>. Táto
+štandardná funkcia jazyka C dostane parameter typu <code>size_t</code> (v
+podstate číslo) a alokuje daný počet bytov pamäte. Návratová hodnota je
+<code>void *</code>, ktorá ukazuje na blok alokovanej pamäte.
+
+Takže chceme vytvoriť pole kruhov dĺžky <code>num_circles</code>.  Každý kruh
+bude reprezentovaný <code>struct circle_t</code>. Môžeme použiť kľúčové slovo
+<code>sizeof</code>, s pomocou ktorého zistíme, koľko bytov potrebujeme pre
+každú štruktúru a alokovať pamäť takto:
+
+<pre>struct circle_t *circles;
+...
+circles = (struct circle_t *) malloc (num_circles * sizeof (struct circle_t));
+</pre>
+
+<p>Pretypovanie na <code>struct circle_t *</code> v jazyku C nie je nutné;
+kompilátor C++ si ale bude sťážovať, ak ho nepoužijete. Jeho použitie je
+väčšinou vecou vkusu.
+
+<p>Ak alokácia zlyhá (napr. pre nedostatok pamäte), <code>malloc</code> vráti
+<code>NULL</code>. Za určitých okolností to môžete chcieť zistiť a informovať
+užívateľa. Je dobrý zvyk robiť to, ale ľudia sa o to často nestarajú, pretože
+nemusí existovať zmysluplný spôsob, ako z toho von. Ak používate djgpp s nejakým
+robustným DPMI klientom (napr. CWSDPMI), tento ukončí váš program, kedykoľvek sa
+pokúsite použiť smerník NULL. Niektorí iní DPMI klienti nechajú program bežať,
+čo pred vami problém skryje; najlepšie je tomu vyhnúť sa počas vývoja, alebo
+aspoň občas použiť CWSDPMI (teda z čistého DOSu, nie z Windows), aby ste
+skontrolovali, či veci vyzerajú byť v poriadku.
+
+<p>Po alokácii sa môžeme na kruhy odvolávať spôsobom circles[0], circles[1],
+atď., ako keby sme mali skutočné pole. To, čo máme, nie je celkom presne pole v
+jazyku C; je to len smerník na blok pamäte. Predsa sa to ale v mnohých ohľadoch
+správa ako pole.
+
+<p>Na záver, ak sme s používaním pamäte skončili, mali by sme ju uvoľniť, aby ju
+malloc mohol ak to bude potrebné znovu použiť:
+
+<pre>free (circles);
+</pre>
+
+<p>Teraz sa pokúste zmeniť váš program z časti 5.1 (iba kruhy, štvorce a
+trojuholníky netreba) tak, aby si užívateľ mohol na začiatku programu zvoliť
+počet kruhov. Ak zatuhnete, pozrite sa na <code>examples/chap_05/ex_3_1</code>.
+
+<p>Zmeniť príklad <code>examples/chap_05/ex_2_a</code> tým istým spôsobom bude
+celkom jednoduché. Zmena <code>examples/chap_05/ex_2_b</code> bude vyžadovať
+viac mallocov.
+
+<p>A čo takto dovoliť hre zväčšovať pole počas behu? To pri skutočných poliach
+nie je možné, ale ako sme spomenuli predtým, naše "pole" nie je skutočné pole.
+Bolo alokované dynamicky, takže môžeme použiť funkciu realloc(), aby sme ho
+realokovali s inou veľkosťou. Údaje, ktoré v ňom boli predtým, tam budú stále aj
+potom, keď alokáciu rozšírime. Ak ho skracujeme, údaje, ktoré sú aj v novom
+bloku budú samozrejme zachované, ale dáta, ktoré sú na konci odrezané sa
+stratia. Dokonca ak blok pamäte znovu zväčšíte, nedá sa spoliehať na to, že
+dáta znovu získate.
+
+<p>Problém so znovualokovaním takýchto blokov je, že ak je oblasť pamäti, ktorá
+sa nachádza za našim blokom už obsadená, realloc potrebuje skopírovať celý blok
+niekde inde. Toto nie je zvlášť pomalé (operácie kopírovania pamäte sú skutočne
+celkom rýchle) ale nie je to vec, ktorú by ste chceli, aby sa vám diala príliš
+často.
+
+<p>Väčšina implementácií <code>malloc</code> nechávajú nejaké voľné miesto na
+konci každého bloku, ale nemôžeme sa na to príliš spoliehať. Je lepšie znížiť
+počet realokácií nejakým iným spôsobom. Najjednoduchší spôsob, ako to spraviť je
+vždy si zapýtať veľa miesta navyše --- potom nemusíme volať <code>realloc</code>
+veľmi často.
+
+<p>Takže potrebujeme sledovať niekoľko vecí:
+
+<pre>int num_objs;      /* koľko je ich aktívnych */
+int alloced_objs;  /* koľko je ich alokovaných */
+int block_size;    /* koľko ich budeme na jeden krát alokovať */
+</pre>
+
+<p>Keď potom chceme pridať nový objekt, najprv skontrolujeme, či máme dosť
+miesta (je <code>alloced_objs &gt; num_objs</code>?). Ak áno, zväčšíme iba
+<code>num_objs</code> a použijeme ten priestor. Inak musíme zväčšiť
+<code>alloced_objs</code> o <code>block_size</code> a znovualokovať blok
+napríklad takto:
+
+<pre>objects = (struct obj_t *) realloc (objects, alloced_objs * sizeof (stuct obj_t));
+</pre>
+
+<p>Všimnite si, že syntax realloc je podobná ako malloc až na to, že musíte
+zadať starú hodnotu smerníka. Po zavolaní realloc už nemôžete používať jeho
+starú hodnotu -- funkcia realloc blok presunula, stará hodnota je teraz
+neplatná. Ak ste nastavili iný smerník na hodnotu <code>objects</code> a realloc
+posunula blok niekde inde, druhý smerník bude ukazovať na nesprávny blok.
+
+<p>Po znovualokovaní novej veľkosti bloku môžeme samozrejme zväčšiť
+<code>num_objs</code> a použiť novoalokované objekty.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Dynamic%20allocation">Dynamická alokácia</a>
+ | Hore:<a rel=up href="#Keeping%20track%20of%20things">Uchovávanie viacerých vecí</a>
+ ]<p>
+
+<h3><a name="Linked%20lists"><a name="TOC_43">5.3.2 Zreťazené zoznamy</a></a></h3>
+
+<p>Zreťazené zoznamy sú extrémne užitočnou dátovou štruktúrou. Nanešťastie sú z
+istých dôvodov pre mnohých ľudí ťažko pochopiteľné. Ak si však o nich vytvoríte
+správnu predstavu, sú skutočne veľmi jednoduché a keď ich niekoľkokrát
+použijete, získate intuitívny vhľad do toho, ako ich používať.
+
+<p>V tejo časti sa pozrieme na tri typy zreťazených zoznamov a vyskúšame použiť
+ich v krúžkovo/štvorčekovo/trojuholníkových programoch vytvorených predtým.
+
+<ul>
+<li><a href="#Singly%20linked%20lists">Jednoducho zreťazené zoznamy</a>
+	
+<li><a href="#Doubly%20linked%20lists">Dvojmo zreťazené zoznamy</a>
+
+<li><a href="#Circularly%20linked%20lists">Kruhovo zreťazené zoznamy</a>
+
+<li><a href="#Using%20linked%20lists">Použitie zreťazených zoznamov</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Doubly%20linked%20lists">Dvojmo zreťazené zoznamy</a>
+| Hore:<a rel=up href="#Linked%20lists">Zreťazené zoznamy</a>
+ ]<p>
+
+<h4><a name="Singly%20linked%20lists"><a name="TOC_44">5.3.2.1 Jednoducho zreťazené zoznamy</a></a></h4>
+
+<p>V prvom rade potrebujete byť dôverne oboznámení so smerníkmi. Smrníky sú
+jednoducho objekty, ktoré môžu ukazovať na iné objekty. Snažte sa nemyslieť na
+ne presne ako na adresy v pamäti; je to bežná analógia, ale nemusí byť nutne
+správna a ak o nich budete uvažovať takto, smerníková aritmetika sa bude zdať
+mätúcou.
+
+<p>Takže smerníky môžu ukazovať na iné dátové objekty. Väčšinou sú smerníky
+navrhnuté tak, aby ukazovali na istý konkrétny typ dát. Konkrétne môžu ukazovať
+na užívateľom definované štruktúry:
+
+<pre>struct little_struct {
+    int number;
+} *ptr;
+</pre>
+
+<p>Smerník <code>ptr</code> môže ukazovať na ľubovoľný objekt typu <code>struct
+little_struct</code>. Ak chceme pristupovať k poľu <code>number</code> objektu,
+na ktorý <code>ptr</code> ukazuje, môžeme písať <code>(*ptr).number</code> alebo
+použiť skrátený zápis <code>ptr-&gt;number</code>, ktorý znamená to isté.
+Všimnite si, že definícia uvedená vyššie nevytvára hneď objekt, na ktorý by
+<code>ptr</code> ukazoval; vytvorí len objekt <code>ptr</code>, ktorý má možnosť
+ukazovať na objekty typu <code>struct little_struct</code> ale na začiatku
+neukazuje nikam (smozrejme niekam ukazuje, ale kam presne záleží na iných
+okolnostiach; a teda sa nemôžete spoliehať, že je to platný smerník). Teraz sa
+pozrite na toto:
+
+<pre>struct linked_list_node {
+    int number;
+    struct linked_list_node *next;
+} *ptr;
+</pre>
+
+<p>Tu štruktúra <code>linked_list_node</code> neobsahuje len celé číslo
+<code>number</code>, ale aj smerník <code>next</code>, ktorý môže ukazovať na
+objekt typu <code>struct linked_list_node</code>. Takže ak vytvoríme objekt
+tohto typu a nasmerujeme na neho <code>ptr</code>, smerník
+<code>ptr-&gt;next</code> môže ukazovať na iný objekt tohto typu. A
+<code>ptr-&gt;next-&gt;next</code> môže ukazovať na ďalší<small>...</small> ako
+vidíte, môžeme mať celý zoznam takýchto štruktúr, pričom alokujeme každú zvlášť
+(radšej ako v jednom veľkom bloku) a môžeme k nemu pristupovať s použitím
+jediného smerníka na začiatok zoznamu. Aby sme označili koniec zoznamu, môžeme
+nastaviť smerník <code>next</code> posledného uzla na NULL.
+
+<pre>
+ptr --&gt; +------------+    +------------+    +---------------+
+        | number : 7 |    | number : 3 |    | number : 285  |
+        | next   :  ----&gt; | next   :  ----&gt; | next   : NULL |
+        +------------+    +------------+    +---------------+
+</pre>
+
+<p>Na diagrame vyššie vidíte <code>ptr</code>, ktorý ukazuje na prvú zo zoznamu
+troch položiek. Prvá položka s hodnotou <code>number</code> 7 má svoj smerník
+<code>next</code> nastavený na druhú s hodnotou <code>number</code> 3. Smerník
+<code>next</code> tejto položky ukazuje na tretiu položku, ktorá má hodnotu
+<code>number</code> 285, a smerník <code>next</code> tretej položky je NULL,
+pretože je to posledný prvok v zozname. Celý zoznam obsahuje čísla 7, 3 a 285 v
+uvedenom poradí.
+
+<p>Pravdepodobne sa čudujete, prečo sme sa trápili s takýmto systémom. Ak ho
+porovnáme s lineárnym dynamickým blokovým zásobníkom zmieneným vyššie, má
+niekoľko výhod a niekoľko nevýhod.
+
+<p>V prvom rade narábať s vecami v zreťazenom zozname je veľmi jednoduché. Nové
+položky môžu byť pridané kdekoľvek do zoznamu, staré položky vymazané,
+existujúce pložky môžu byť preusporiadané alebo presúvane zo zoznamu do zoznamu
+a zoznamy sa môžu deliť alebo spájať s minimálnou námahou. Stačí zmeniť hodnoty
+niektorých smerníkov <code>next</code>. Každá z týchto operácií by bola
+nepríjemná a zdĺhavá, keby mala byť vykonaná v lineárnom bloku -- museli by sme
+presúvať veľké množstvo dát.
+
+<p>Predstavte si napríklad vymazanie druhej dátovej položky v dlhom sekvenčnom
+zozname -- museli by sme posunúť celý zvyšok zoznamu o jedno miesto. V
+zreťazených zoznamoch stačí len nastaviť smerník <code>next</code> prvej položky
+na to, na čo ukazuje smerník <code>next</code> druhej položky (teda buď na
+tretiu položku, alebo na NULL, ak žiadna tretia položka neexistuje) a potom
+môžeme druhú položku funkciou <code>free</code> uvoľniť.
+
+<p>Podobne je jednoduché pridať novú položku. Predpokladajme, že máme smerník na
+položku v zozname pred miestom, kde chceme našu novú položku pridať. Stačí
+nastaviť smerník <code>next</code> našej položky na rovnakú hodnotu ako má
+smerník <code>next</code> položky zo zoznamu a potom nastaviť smerník
+<code>next</code> položky zo zoznamu na našu novú položku.
+
+<p>Nevýhodami zreťazených zoznamov je využitie pamäte a neefektívnosť
+vyhľadávania
+položiek podľa čísla. Použitá pamäť je väčšia kvôli všetkým smerníkom v zozname
+a pretože je väčšinou alokované veľké množstvo malých kúskov (konkrétne v čase
+písania tohto textu bola minimálna veľkosť bloku alokovaného funkciou
+<code>malloc</code> v kompilátore djgpp 4096 bajtov). Vyhľadávanie podľa čísla
+je neefektívne, pretože musíme prejsť celý zoznam od začiatku, aby sme danú
+položku našli, zatiaľ čo v sekvenčnom zozname môžeme skoči priamo na ňu
+jednoduchým pripočítaním.
+
+<p>Ako vždy, ktorý spôsob použijete, záleží na tom, na čo ho chcete použiť.
+
+<p>Často kód zjednoduší, ak prvá položka v zreťazenom zozname je
+<dfn>atrapa</dfn> (niekedy sa nazýva aj <dfn>hlavička zoznamu</dfn>), ktorej
+dáta nemajú žiadny význam. Robí sa to preto, aby manipulácia s prázdnymi
+zoznamami bola jednoduchšia -- stanú sa zoznamami s jedinou položkou, s atrapou.
+
+<p>Teraz by som vám navrhol, aby ste sa pozreli do
+<code>examples/chap_05/ex_3_2a</code> na nejaké príklady vkladania, mazania a
+vyhľadávania položiek v zreťazených zoznamoch.
+
+<p>Myslím, že teraz pravdepodobne rozumiete, prečo zreťazené zoznamy môžu byť
+veľmi užitočné -- môžeme vytvoriť toľko útvarov koľko chceme, kedy chceme a
+pridávať ich do zoznamu veľmi efektívnym spôsobom. V skutočnosti sa nestaráme o
+to, koľko ich je v zozname; ak sa potrebujeme z nejakých dôvodov odkazovať na
+istú konkrétnu položku, použijeme miesto jeho poradového čísla smerník.
+
+<p><hr>[ Ďalší:<a rel=next href="#Circularly%20linked%20lists">Kruhovo zreťazené zoznamy</a>
+ | Predošlý:<a rel=previous href="#Singly%20linked%20lists">Jednoducho zreťazené zoznamy</a>
+ | Hore:<a rel=up href="#Linked%20lists">Zreťazené zoznamy</a>
+ ]<p>
+
+ <h4><a name="Doubly%20linked%20lists"><a name="TOC_45">5.3.2.2 Dvojmo zreťazené zoznamy</a></a></h4>
+
+<p>Ak predpokladáme, že ste pochopili predošlú lekciu, toto bude zvládnuteľné
+jednoducho. V jednoducho zreťazených zoznamoch vyššie má každá položka jeden
+smerník na ďalšiu položku v zozname. V dvojmo zreťazených zoznamoch má každá
+položka dva smerníky -- jeden na ďalšiu položku v zozname a jeden na
+<em>predošlú</em> položku v zozname.
+
+<pre>struct dllnode {
+    struct dllnode *next;
+    struct dllnode *prev;
+    int number;
+} *ptr;
+</pre>
+
+<pre>
+ptr --&gt; +--------+     +--------+     +--------+
+        |  next -----&gt; |  next -----&gt; |  next ---&gt; NULL
+ NULL &lt;--- prev  | &lt;----- prev  | &lt;----- prev  |
+        | number |     | number |     | number |
+        +--------+     +--------+     +--------+
+</pre>
+
+<p>Teraz stačí mať smerník na ľubovoľný prvok zoznamu a je možné pristupovať ku
+každému prvku. Stále je často užitočné mať ako prvý prvok v zozname (ten, ktorý
+má <code>prev == NULL</code>) atrapu, ktorej dáta sa nepoužívajú. Dôvody sú
+rovnaké ako predtým. Môže slúžiť ako <dfn>rukoväť</dfn> k zoznamu -- niečo, čoho
+sa dá zachytiť, čo bude stále súčasťou zoznamu. Pamätajte, že ostatné prvky sa
+budú priebežne pridávať a mazať; hlavička je jediný prvok o ktorom bude
+zaručené, že je tam celý čas.
+
+<p>Jednou z výhod dvojmo zreťazeného zoznamu je to, že môžete zmazať prvok
+zoznamu bez toho, že by ste potrebovali vedieť, v ktorom zozname sa vlastne
+nachádza. Dalšou výhodou je, že ak nejaký prvok zoznamu potrebuje prejsť celý
+zoznam, môže to urobiť bez toho, že by poznal smerník na hlavičku zoznamu. Okrem
+toho ak máte daný ľubovoľný prvok zoznamu, môžete pridať prvok na obe jeho
+strany bez toho, aby ste museli celý zoznam prejsť. Dvojité zoznamy sa vo
+všeobecnosti jednoduchšie (a efektívnejšie) spravujú, ale samozrejme za cenu
+trocha vyšších režijných nákladov.
+
+<p><code>examples/chap_05/ex_3_2b</code> je príklad dvojmo zreťazeného zoznamu a
+funkcií, ktoré s ním narábajú.
+
+<p><hr>[ Ďalší:<a rel=next href="#Using%20linked%20lists">Použitie zreťazených zoznamov</a>
+| Preošlý:<a rel=previous href="#Doubly%20linked%20lists">Dvojmo zreťazené zoznamy</a>
+ | Hore:<a rel=up href="#Linked%20lists">Zreťazené zoznamy</a>
+ ]<p>
+
+<h4><a name="Circularly%20linked%20lists"><a name="TOC_46">5.3.2.3 Kruhovo zreťazené zoznamy</a></a></h4>
+
+<p>Znovu, ak ste porozumeli zreťazeným zoznamom až potiaľto, toto nebude príliš
+náročné. V našom jednoducho zreťazenom zozname sme mali smerník
+<code>next</code> posledného prvku nastavený na NULL, aby sme tak označili
+koniec zoznamu. V kruhovo zreťazenom zozname smerník <code>next</code>
+posledného prvku ukazuje späť na začiatok zoznamu -- teda to nie je v
+skutočnosti posledný prvok. Predstavte si to ako kruh prvkov, kde každý ukazuje
+na nasledujúci.
+
+<p>Ak je kruhový zoznam dvojmo zreťazený, smerník <code>prev</code> prvého prvku
+ukazuje na posledný prvok.
+
+<p>Prázdne kruhové zoznamy sú tiež problematické; použitie atrapového prvku je
+užitočné aj tu, ale musíte pamätať na to, že ho treba preskočiť, keď budete
+prechádzať okolo kruhu. Môžete to spraviť aj tak, že ak je zoznam úplne prázdny,
+váš smerník na neho bude NULL (ako to môžete spraviť aj s ostatnými zreťazenými
+zoznamami), ale stále budete musieť ošetrovať nejaké špeciálne prípady.
+
+<p>Kruhové zoznamy sú užitočné na iné veci, než lineárne zreťazené zoznamy; ak
+programujete hru, vo všeobecnosti chcete počas herného cyklu spravit niečo s
+každým prvkom zoznamu a na tieto účely sa často viac hodia lineárne zoznamy.
+Kruhové zoznamy som tu spomenul pre úplnosť a pretože sa od lineárnych príliš
+nelíšia. Ako príklad si pozrite <code>examples/chap_05/ex_3_2c</code>.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Circularly%20linked%20lists">Kruhovo zreťazené zoznamy</a>
+ | Hore:<a rel=up href="#Linked%20lists">Zreťazené zoznamy</a>
+ ]<p>
+
+<h4><a name="Using%20linked%20lists"><a name="TOC_47">5.3.2.4 Použitie zreťazených zoznamov</a></a></h4>
+
+<p>Pokúste sa prerobiť váš program na pohyb útvarov tak, že útvary uložíte do
+zreťazeného zoznamu a animujete ich odtiaľ. Tiež môžete každých 100 herných
+cyklov pridať nový útvar, alebo niektorý zmazať. Pozrite si
+<code>examples/chap_05/ex_3_2d</code> ako ukážku toho všetkého.
+ 
+<p>Táto metóda, keď všetky objekty hry vložíte do zreťazeného zoznamu, je veľmi
+užitočná. Môžete tam tiež vložiť hráčovu raketu/postavu/potvoru; ak hráčova
+postava vykonáva podobné akcie ako nepriatelia, môže to fungovať celkom dobre.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Keeping%20track%20of%20things">Uchovávanie viacerých vecí</a>
+ | Hore:<a rel=up href="#Making%20several%20things%20happen%20at%20once">Ako zariadiť, aby sa niekoľko vecí dialo súčasne</a>
+ ]<p>
+
+<h2><a name="Object%20Oriented%20Programming"><a name="TOC_48">5.4 Objektovo orientované programovanie</a></a></h2>
+
+<p>Táto časť zatiaľ nebola napísaná, sorry.
+
+<p><hr>[ Ďalší:<a rel=next href="#More%202D%20graphics">Niečo viac z 2D grafiky</a>
+ | Predošlý:<a rel=previous href="#Making%20several%20things%20happen%20at%20once">Ako zariadiť, aby sa niekoľko vecí dialo súčasne</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="User%20input"><a name="TOC_49">6. Uživateľský vstup</a></a></h1>
+
+<p>Vstupné zariadenie je čokoľvek, čo použijete, aby ste dali počítaču
+informácie. U štandardných PC je to najmä klávesnica, aj keď väčšina má myš a
+mnohé joystick. Podľa uvedenej definície disketová jednotka je tiež istým druhom
+vstupného zariadenia rovnako ako mikrofóny, skenery a modemy, ale to väčšinou
+nie sú tie najlepšie veci na ovládanie hry.
+
+<p>Pozrieme sa na každé z hlavných troch zariadení podrobnejšie, potom
+premyslíme abstrakciu nášho vstupného systému. Nakoniec sa pozrieme na rôzne
+spôsoby použitia vstupnej informácie.
+
+<ul>
+<li><a href="#Keyboard%20input">Vstup z klávesnice</a>
+
+<li><a href="#Joystick%20input">Vstup z joysticku</a>
+
+<li><a href="#Mouse%20input">Vstup z myši</a>
+
+<li><a href="#Generic%20input">Vstup všeobecne</a>
+
+<li><a href="#Ways%20to%20interpret%20input%20data">Spôsoby interpretácie vstupných dát</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Joystick%20input">Vstup z joysticku</a>
+ | Hore:<a rel=up href="#User%20input">Uživateľský vstup</a>
+ ]<p>
+
+<h2><a name="Keyboard%20input"><a name="TOC_50">6.1 Vstup z klávesnice</a></a></h2>
+
+<ul>
+<li><a href="#Why%20the%20standard%20keyboard%20routines%20are%20useless">Prečo
+sú štandardné klávesnicové funkcie nepoužiteľné</a>
+
+<li><a href="#Allegro%20keyboard%20routines">Klávesnicové funkcie allegra</a>
+
+<li><a href="#Moving%20something%20using%20the%20keyboard">Ako niečím pohnúť s pomocou klávesnice</a>
+
+<li><a href="#Letting%20the%20user%20choose%20which%20keys%20to%20use">Ako nechať užívateľa vybrať si klávesy</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Allegro%20keyboard%20routines">Klávesnicové funkcie allegra</a>
+ | Hore:<a rel=up href="#Keyboard%20input">Vstup z klávesnice</a>
+ ]<p>
+
+<h3><a name="Why%20the%20standard%20keyboard%20routines%20are%20useless"><a name="TOC_51">6.1.1 Prečo sú štandardné klávesnicové funkcie nepoužiteľné</a></a></h3>
+
+<p>Štandardné rozhranie PC klávesnice je takmer, aj keď nie celkom, úplne
+nepoužiteľné ako zariadenie na ovládanie hry. Je na to niekoľko dôvodov; v prvom
+rade kedykoľvek stlačíte klávesu alebo len na ňu klepnete, hra určitý čas
+(zvyčajne štvrtinu sekundy) bude vidieť len jednu stlačenú klávesu. Potom, ak
+držíte klávesu stlačenú, naplníte zásobník mnohými stlačeniami, čo znamená, že
+hra ich stále bude čítať aj potom, čo klávesu pustíte. Navyše ak stlačíte jednu
+klávesu a klepnete na inú, bude to vyzerať, ako by ste prvú pustili.
+
+<p>Toto všetko dohromady robí štandardné PC klávesnicové funkcie nepoužiteľné
+pre riadenie akčných hier. Našťastie Allegro poskytuje sadu oveľa lepších
+funkcií.
+
+<p><hr>[ Ďalší:<a rel=next href="#Moving%20something%20using%20the%20keyboard">Ako niečím pohnúť s pomocou klávesnice</a>
+ | Predošlý:<a rel=previous href="#Why%20the%20standard%20keyboard%20routines%20are%20useless">Prečo sú štandardné klávesnicové funkcie nepoužiteľné</a>
+ | Hore:<a rel=up href="#Keyboard%20input">Vstup z klávesnic</a>
+ ]<p>
+
+<h3><a name="Allegro%20keyboard%20routines"><a name="TOC_52">6.1.2 Klávesnicové funkcie allegra</a></a></h3>
+
+<p>Vo vašich allegrovských programoch treba počas inicializácie zavolať
+<code>install_keyboard()</code>. Potom môžete používať klávesnicové funkcie
+Allegra.
+
+<p>Predovšetkým je tam pole charov nazvané <code>key</code> ktoré obsahuje jeden
+prvok pre každú klávesu na klávesnici. Je indexované podľa scankódov (nie ASCII
+kódov). Jednotlivé scankódy môžete získať s použitím <code>KEY_*</code> konštánt
+definovaných v <code>allegro.h</code>.  Napríklad, ak chcete zistiť, či je práve
+stlačený medzerník, zistite, či je <code>key[KEY_SPACE]</code> nenulové.
+Pravdepodobne si pamätáte, že ste vstupnú funkciu už videli, keď bolo potrebné
+skontrolovať, či bola alebo nebola stlačená klávesa &lt;ESC&gt;.
+
+<p>Potom, čo inštalujete klávesnicový ovládač Allegra, funkcie BIOSu prestanú
+fungovať. To sa týka <code>getch</code> z conio, <code>getchar</code>,
+<code>gets</code>, <code>scanf</code> z stdio a všetko ďalšie, čo používa stdin.
+Allegro poskytuje náhradu za <code>getch</code> nazvanú <code>readkey</code>,
+ktorá čaká, kým bude stlačená klávesa a vráti celé číslo zložené zo scankódu
+klávesy a ASCII hodnoty. Aby ste ich rozdelili, musíte urobiť niečo takéto:
+
+<pre>int value, scancode, ascii;
+value = readkey();
+scancode = value &gt;&gt; 8;
+ascii = value &amp; 0xff;
+</pre>
+
+<p>Podobne <code>keypressed</code> je náhrada coniovskej funkcie
+<code>kbhit</code>, ktorá vracia nenulovú hodnotu, ak je vo vstupnom zásobníku
+stlačená klávesa.
+
+<p>Ďalšie informácie nájdete v dokumentácii k Allegru.
+
+<p><hr>[ Ďalší:<a rel=next href="#Letting%20the%20user%20choose%20which%20keys%20to%20use">Ako nechať užívateľa vybrať si klávesy</a>
+ | Predošlý:<a rel=previous href="#Allegro%20keyboard%20routines">Klávesnicové funkcie allegra</a>
+ | Hore:<a rel=up href="#Keyboard%20input">Vstup z klávesnice</a>
+ ]<p>
+
+<h3><a name="Moving%20something%20using%20the%20keyboard"><a name="TOC_53">6.1.3 Ako niečím pohnúť s pomocou klávesnice</a></a></h3>
+
+<p>Je niekoľko spôsobov, ktorými môžu objekty v hre reagovať na vstup. Nateraz
+budeme objektami hýbať konštantnou rýchlosťou v smere, ktorý užívateľ určí. Iné
+modely spomenieme neskôr.
+
+<p>Takže čo chceme je niečo takéto: 
+<pre>if (key[KEY_LEFT]) x--;  /* ak užívateľ stlačí ľavú šipku, ideme vľavo */
+if (key[KEY_RIGHT]) x++; /* to isté vpravo */
+if (key[KEY_UP]) y--;    /* to isté hore; pozn. aby sa išlo hore, y sa zmenšuje */
+if (key[KEY_DOWN]) y++;  /* to isté dole (y sa zväčšuje) */
+</pre>
+
+<p>kde <code>x</code> a <code>y</code> sú súradnice objektu.
+
+<p>Pokúste sa pozmeniť (jednoduchý) kolieskový program, aby užívateľ mohol
+kolieskom hýbať. Pokúste sa urobiť program tak, aby vyhovoval navrhnutej
+štruktúre. Ukážkový program <code>examples/chap_06/ex_1_3</code> demonštruje,
+ako sa to má spraviť.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Moving%20something%20using%20the%20keyboard">Ako niečím pohnúť s pomocou klávesnice</a>
+ | Hore:<a rel=up href="#Keyboard%20input">Vstup z klávesnice</a>
+ ]<p>
+
+<h3><a name="Letting%20the%20user%20choose%20which%20keys%20to%20use"><a name="TOC_54">6.1.4 Ako nechať užívateľa vybrať si klávesy</a></a></h3>
+
+<p>S použitím explicitných <code>KEY_*</code> konštánt vo vašej hre je niekoľko
+problémov. Vo všeobecnosti je najlepšie použiť pole <code>key</code> vtedy, keď
+sa nestaráte, čo klávesa normálne značí. Ak od niekoho chcete, aby zadal
+&lt;Q&gt; potom na testovanie toho, či to spravil nemôžete použiť pole
+<code>key</code>, pretože mapovanie konštánt <code>KEY_*</code> na fyzickú
+klávesnicu je nezávislé od softwarového mapovania klávesnice. <code>KEY_Q</code>
+odkazuje na klávesu vedľa &lt;TAB&gt;, ale inojazyčné a alternatívne mapovania
+klávesnice tam nemusia mať &lt;Q&gt;. To znamená, že môžete <code>KEY_*</code>
+konštanty použiť na výber pohodlnej rozlohy ovládacích kláves, ale nemôžete ich
+použiť, ak je symbol na klávese dóležitý (napr. Q ako Quit)
+
+<p>Keďže klávesnica na PC nebola v skutočnosti navrhnutá ako zariadenie na
+ovládanie hier, nemôže sledovať každú klávesu nezávisle. Dokonca sa k tomu ani
+nepribližuje. Existujú isté kombinácie kláves, ktorých stlačenie spôsobí, že iné
+klávesy už nebudú snímané -- dokonca aj keď máte dobré klávesnicové funkcie ako
+v Allegre. Je to hardwarové obmedzenie. Príklad
+<code>examples/chap_06/ex_1_4</code> je jednoduchý program, ktorý opakovane
+vypisuje zoznam všetkých kláves, ktoré Allegro registruje ako stlačené; spustite
+ho a vyskúšajte stláčať klávesy, kým nezistíte, že ďalšie stlačenie nie je
+detekované. Na mojej klávesnici spôsobí súčasné stlačenie kláves  &lt;Z&gt;,
+&lt;X&gt; a &lt;C&gt; to, že ak sa s nimi stlačí &lt;F&gt;, zostane
+nepovšimnuté.
+
+<p>Čo je ešte väčšia smola, nie všetky klávesnice majú takéto
+<dfn>prekrytia</dfn> na tých
+istých miestach. Ako potom chcete vybrať klávesy, ktorými budete ovládať hru, ak
+nie je isté, že budú fungovať na všetkých systémoch?
+
+<p>Odpoveďou je samozrejme nechať na užívateľoch, nech si definujú svoje vlastné
+klávesy. Ak dôjde ku klávesovému prekrytiu, môžu si zvoliť iné klávesy.
+
+<p>Ak to budete chcieť spraviť, bude treba konštanty <code>KEY_*</code> vo
+vašich vstupných procedúrach nahradiť premennými, ktoré inicializujete na nejaké
+vstupné hodnoty a potom užívateľom dovoliť meniť ich ak to budú chcieť.
+Prirodzene nemôžete očakávať, že užívatelia budú vedieť, čo sú to scankódy;
+mali by ste napísať procedúru, ktorá to pre nich zistí.
+
+<p>Použitie poľa <code>key</code> je celkom jednoduché; jednoducho necháte bežať
+cyklus od 1 do <code>KEY_MAX</code>, najvyššieho scankódu a zistíte si, ktorá
+klávesa je stlačená. Vložíte ju do vašej premennej <code>klavesa_vlavo</code>,
+počkáte, kým užívateľ pôjde ďalej, spýtate sa na klávesu "vpravo" atď. Môžete
+predpokladať, že prvá stlačená klávesa, ktorú nájdete, je jediná; ktorý praštený
+idiot by stláčal dve klávesy naraz, keď je požiadaný o to, aby stlačil jednu? :)
+
+<p>Ukážkový program, ktorý užívateľovi dovolí predefinovať ovládacie klávesy
+uvidíme neskôr.
+
+<p><hr>[ Ďalší:<a rel=next href="#Mouse%20input">Vstup z myši</a>
+| Predošlý:<a rel=previous href="#Keyboard%20input">Vstup z klávesnice</a>
+| Hore:<a rel=up href="#User%20input">Uživateľský vstup</a>
+ ]<p>
+
+<h2><a name="Joystick%20input"><a name="TOC_55">6.2 Vstup z joysticku</a></a></h2>
+
+<ul>
+<li><a href="#Digital%20readings">Digitálne snímanie</a>
+	
+<li><a href="#The%20fire%20buttons">Tlačítka na streľbu</a>
+
+<li><a href="#Analogue%20readings%20and%20calibration">Analógové snímanie a kalibrácia</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#The%20fire%20buttons">Tlačítka na streľbu</a>
+ | Hore:<a rel=up href="#Joystick%20input">Vstup z joysticku</a>
+ ]<p>
+
+<h3><a name="Digital%20readings"><a name="TOC_56">6.2.1 Digitálne snímanie</a></a></h3>
+
+<p>Digitálne snímanie joysticku je jednoduché. Uistite sa, či je joystick
+centrovaný (t.j. povedzte im, aby dali joystick do stredu a počkajte, kým vám
+dajú vedieť, že to spravili) a potom zavolajte
+<code>initialise_joystick()</code>. Teraz kedykoľvek chcete snímať stav
+joysticku, zavolajte <code>poll_joystick()</code>. Táto funkcia zistí stav
+joysticku a popri iných veciach obnoví stav globálnych premenných <code>joy_left</code>, <code>joy_right</code>,
+<code>joy_up</code> a <code>joy_down</code>, z ktorých každá ukazuje, či je
+alebo nie je joystick tlačený v danom smere.
+
+<p>Príklad vstupného kódu uvedený v klávesnicovej sekcii vyššie bude teraz
+vyzerať:
+
+<pre>poll_joystick();
+if (joy_left) x--;  /* if the joystick is pushed to the left, go left */
+if (joy_right) x++; /* same for right */
+if (joy_up) y--;    /* same for up; note that y _decreases_ to go up */
+if (joy_down) y++;  /* and for down y _increases_ */
+</pre>
+
+<p>Predsa len sa uistite, že joystick je centrovaný, keď ho inicializujete.
+Funkcia <code>initialise_joystick</code> vráti nulu iba vtedy, keď je joystick
+pripojený, takže to môžete skontrolovať, potom požiadať užívateľa, aby joystick
+vycentroval a nakoniec znovu zavolať funkciu <code>initialise_joystick</code>,
+aby sa správne nastavila stredová pozícia.
+
+<p>Pokúste sa zmeniť predošlý príklad tak, aby čítal vstup z joysticku miesto z
+klávesnice. Ak zatuhnete, pozrite sa na ukážkový program <code>examples/chap_06/ex_2_1</code>.
+
+<p><hr>[ Ďalší:<a rel=next href="#Analogue%20readings%20and%20calibration">Analógové snímanie a kalibrácia</a>
+ | Predošlý:<a rel=previous href="#Digital%20readings">Digitálne snímanie</a>
+ | Hore:<a rel=up href="#Joystick%20input">Vstup z joysticku</a>
+ ]<p>
+
+<h3><a name="The%20fire%20buttons"><a name="TOC_57">6.2.2 Tlačítka na streľbu</a></a></h3>
+
+<p>Je jednoduché čítať ich; priemerný joystick ich má dve a ich stav je uložený
+v premenných <code>joy_b1</code> a <code>joy_b2</code> ako TRUE (nenulová
+hodnota), kéď sú tlačidlá stlačené. Ako pri všetkých premenných typu
+<code>joy_*</code>, ich hodnota sa obnovuje iba vtedy, keď zavoláte funkciu
+<code>poll_joystick</code>. Ak ju nikdy nezavoláte, ich hodnota bude stále
+rovnaká; nemusíte ju ale volať príliš často. Raz za herný cyklus úple stačí, ak
+náhodou nekontrolujete nasledujúci prípad<small>...</small>
+
+<p>Podľa všetkého väčšina joystickov má palebné tlačidlá s odskokom, takže by
+ste mali vedieť, že stlačenie palebného tlačidla vyvolá niekoľko zmien z
+"vypnyté" na "zapnuté" a späť; mne to nikdy nespôsobilo žiadne problémy, ale
+možno sa môj joystick skrátka o to nestará. Vo väčšine hier, ktorých sa to týka,
+je problém v nastavení maximálnej palebnej rýchlosti (t.j. užívateľ nemôže
+streliť druhýkrát, kým povedzme neprejde 20 herných cyklov.) Jediná vec, v
+ktorej odskakovanie spôsobí skutočne veľký chaos sú dvojkiky na tlačítku
+joysticku; jedno stlačenie môže vyzerať ako dve (prípadne viac) stlačení.
+Poznamenajme, že to je problém iba vtedy, ak čas medzi odozvami z joysticku je
+veľmi krátky.
+
+<p>Pokúste sa zmeniť príklad z digitálneho snímania tak, aby ktuh smenil farbu,
+keď stlačíte palebné tlačidlo. Pokúste sa to urobiť tak, aby pri každom stlačení
+zmenil farbu len raz (tak, že budete zakaždým čakať až dovtedy, kým sa joystick
+neuvoľní -- nezabudnite načítať stav joysticku v každom cykle, inak v prenemmých
+ostanú staré hodnoty). Ak sa farby nemenia správnym spôsobom, tlačidlo môže mať
+odskakovanie, pokúste sa to zrušiť. Teraz (ťažšie) urobte, aby sa mohol kruh
+pohybovať, aj keď je ltačidlo stlačené.
+
+<p>Príklady na všetko uvedené vyššie sú v <code>examples/chap_06/ex_2_2</code>;
+pozrite sa špeciálne na techniku použitú v poslednom prípade.
+
+<p><hr>[ Predošlý:<a rel=previous href="#The%20fire%20buttons">Tlačítka na streľbu</a>
+ | Hore:<a rel=up href="#Joystick%20input">Vstup z joysticku</a>
+ ]<p>
+
+<h3><a name="Analogue%20readings%20and%20calibration"><a name="TOC_58">6.2.3 Analógové snímanie a kalibrácia</a></a></h3>
+
+<p>[Poznámka: táto informácia je zastaralá. Stále to bude fungovať ale pre
+Allegro 4 to chce zmenu.]
+
+<p>Predpokladá sa, že PC joystick je analógové zariadenie; inými slovami, môžete
+zistiť nielen ktorým smerom páka ukazuje, ale aj ako ďaleko tým smerom je
+naklonená. Ale ako zdôrazňuje Shawn v <code>allegro.txt</code>:
+
+<blockquote>
+<small>...</small>presné pravidlá sa môžu líšiť v závislosti na type joysticku,
+rýchlosti vášho počítača, teplote v miestnosti a fáze mesiaca. Ak chcete získať
+zmysluplný vstup, musíte joystick pred použitím kalibrovať, čo je trest za
+programátorove hriechy.
+</blockquote>
+
+<p>Kalibrácia nie je v skutočnosti taká ťažká, len trocha irituje užívateľov. Aj
+keď väčšina PC hráčov je na klaibráciu joysticku zvyknutá.
+
+<p>V kalibrácii ide o to, že joystickovské procedúry potrebujú vedieť, aký
+rozsah hodnôt v smere X aj Y joystick vracia. Allegro to robí s použitím troch
+funkcií: <code>initialise_joystick</code>, ako sme povedali vyššie, zaznačí
+hodnoty v strede; <code>calibrate_joystick_tl</code> zaznačí hodnoty, keď je
+páka čo najďalej vľavo hore a <code>calibrate_joystick_br</code> robí to isté,
+keď je páka vpravo dole.
+
+<p>Znova, obyčajne budete volať <code>initialise_joystick</code> raz na
+začiatku, aby ste zistili, či je alebo nie je joystick pripojený. Ak je a vy ho
+chcete neskôr kalibrovať, postupujte takto:
+
+<ol type=1 start=1>
+</p><li>Požiadajte užívateľa, nech vycentruje joystick a počkajte, kým vám
+oznámi, že to urobil (napríklad stlačením klávesy)
+<li>Zavolajte funkciu <code>initialise_joystick</code>, aby si poznačila
+stredovú pozíciu.
+<li>Požiadajte užívateľa, aby dal joystick do ľavého horného rohu a oznámil vám
+to
+<li>Zavolajte funkciu <code>calibrate_joystick_tl</code>
+<li>Požiadajte užívateľa, aby dal joystick vpravo dole a oznámil to
+<li>Zavolajte funkciu <code>calibrate_joystick_br</code>
+</ol>
+
+<p>Teraz má Allegro všetko, čo potrebuje vedieť, aby vám bolo schopné dať
+analógovú pozíciu. Z estetických dôvovdov je vhodné teraz joystick vrátiť do
+stredovej pozície; inak môžete spustiť niečo dôležité s joystickom, ktorý je
+stále nastavený vpravo dole. Buď užívateľa požiadajte aby joystick vycentroval a
+potvrdil to ešte raz, alebo sledujte stav joysticku, kým to neurobí (pozrite
+nižšie).
+
+<p>Ako ukážku takéhoto kódu si pozrite <code>examples/chap_06/ex_2_3a</code>.
+
+<p>Keď máme joystick zkalibrovaný, môžeme konečne jeho pozíciu čítať
+detailnejšie. Premenné <code>joy_x</code> a <code>joy_y</code> vrátia jeho X a Y
+súradnice od -128 do 128, kde (-128,-128) je ľavý horný roh, (0,0) je stred a
+(128,128) je pravý dolný roh.
+
+<p>Teraz zmeňte program na pohyb kruhom tak, aby sa kruh hýbal tak rýchlo, ako
+ďaleko potiahnete páku. <code>examples/chap_06/ex_2_3b</code> ukazuje ako na to
+v prípade, že to nezvládnete. Všimnite si <code>#define</code> neďaleko
+začiatku; ovláda maximálnu rýchlosť kruhu, ktorá zodpovedá úplnému nakloneniu
+páky. Použitie <code>#define</code> alebo premennej typu <code>constant</code>
+namiesto čísla zjednoduší zmenu rýchlosti v budúcnosti.
+
+<p><hr>[ Ďalší:<a rel=next href="#Generic%20input">Vstup všeobecne</a>
+ | Predošlý:<a rel=previous href="#Joystick%20input">Vstup z joysticku</a>
+ | Hore:<a rel=up href="#User%20input">Uživateľský vstup</a>
+ ]<p>
+
+<h2><a name="Mouse%20input"><a name="TOC_59">6.3 Vstup z myši</a></a></h2>
+
+<p>Na myš môžete pozerať jedným z dvoch spôsobov -- buď je to "ukáž a klikni"
+zariadenie, alebo čosi ako analógový joystick, ktorý poskytuje priamu kontrolu
+nad postavou.
+
+<ul>
+<li><a href="#Point%20and%20click">Ukáž a klikni</a>
+
+<li><a href="#Direct%20mouse%20control">Priama kontrola myšou</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Direct%20mouse%20control">Priama kontrola myšou</a>
+ | Hore:<a rel=up href="#Mouse%20input">Vstup z myši</a>
+ ]<p>
+
+<h3><a name="Point%20and%20click"><a name="TOC_60">6.3.1 Ukáž a klikni</a></a></h3>
+
+<p>Prístup "ukáž a klikni" znamená, že na obrazovke je nejaký druh ukazovátka a
+s pomocou myši sa ním pohybuje. Keď sa stlačí tlačítko, spravíte niečo, čo
+záleží od toho, kam ukazovátko ukazovalo. Príkladom takého niečoho sú WIMP
+GUIčka (ako Windows), Dune 1 a 2, Warcraft 1 a 2, spústa rozhraní (rôzne menu)
+atď. Je to veľmi populárna technika.
+
+<ul>
+<li><a href="#Initialising%20the%20mouse">Inicializácia myši</a>
+
+<li><a href="#Reading%20the%20mouse">Čítanie myši</a>
+
+<li><a href="#Displaying%20the%20mouse%20pointer">Zobrazenie ukazovateľa myši</a>
+
+<li><a href="#Controlling%20the%20mouse%20pointer">Ovládanie ukazovateľa myši</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Reading%20the%20mouse">Čítanie myši</a>
+ | Hore:<a rel=up href="#Point%20and%20click">Ukáž a klikni</a>
+ ]<p>
+
+<h4><a name="Initialising%20the%20mouse"><a name="TOC_61">6.3.1.1 Inicializácia myši</a></a></h4>
+
+<p>Na inicializáciu myši zavolajte <code>install_mouse()</code>. Ako sa píše v
+allegro.txt, funkcia vráti -1, ak inicializácia zlyhá alebo vráti počet
+tlačidiel na myši, ak uspeje.
+
+<p><hr>[ Ďalší:<a rel=next href="#Displaying%20the%20mouse%20pointer">Zobrazenie ukazovateľa myši</a>
+ | Predošlý:<a rel=previous href="#Initialising%20the%20mouse">Inicializácia myši</a>
+ | Hore:<a rel=up href="#Point%20and%20click">Ukáž a klikni</a>
+ ]<p>
+
+<h4><a name="Reading%20the%20mouse"><a name="TOC_62">6.3.1.2 Čítanie myši</a></a></h4>
+
+<p>Teraz môžete získať X-ovú a Y-ovú súradnicu ukazovateľa myši v premenných
+<code>mouse_x</code> a <code>mouse_y</code> (kde sú uložené súradnice na 
+obrazovke) a stav tlačidiel myši uložený v premennej <code>mouse_b</code>,
+ktorá je bitovým poľom s týmto významom:
+
+
+<pre>Bity:  2 1 0
+       . . X = príznak ľavého tlačidla
+       . X . = príznak pravého tlačidla
+       X . . = príznak stredného tlačidla
+</pre>
+
+<p>Ostatné bity sú v súčasnosti nepoužité. Príznakové bity troch tlačidiel
+sú nastavené, ak je zodpovedajúce tlačidlo stlačené, nulové, ak stlačené 
+nie je. Ak myš nemá stredné tlačidlo, patričný príznak je stále nulový.
+
+<p>Takže na zistenie stavu jednotlivých tlačidiel použijete na premennú 
+<code>mouse_b</code> binárne AND (&amp;) s číslami 1, 2 alebo 4 nasledujúcim
+spôsobom:
+
+<pre>if (mouse_b &amp; 1) printf ("Ľavé ");
+if (mouse_b &amp; 2) printf ("Pravé ");
+if (mouse_b &amp; 4) printf ("Stredné ");
+printf ("\n");
+</pre>
+
+<p>Poznamenajme, že hodnota premennej <code>mouse_b</code> sa môže meniť
+(a aj sa mení) "vám za chrbtom"; nasledujúci spôsob testovania môže vrátiť
+pochybné výsledky:
+
+<pre>if (mouse_b) {
+    printf ("Stlačené tlačidlá: ");
+    if (mouse_b &amp; 1) printf ("Ľavé ");
+    if (mouse_b &amp; 2) printf ("Pravé ");
+    if (mouse_b &amp; 4) printf ("Stredné ");
+    printf ("\n");
+}
+</pre>
+
+<p>Predstavte si, čo sa stane, ak je na začiatku stlačené jedno tlačidlo,
+takže prvá podmienka <code>if</code> sa vyhodnotí, ale potom sa tlačidlo 
+uvoľní; reťazec "Stlačené tlačidlá: " sa vypíše, ale pretože už žiadne 
+tlačidlo stlačené nie je, žiadna z možností "Ľavé ", "Pravé ", "Stredné "
+sa nevypíše.
+
+<p>Ak by podobná nekalosť mala robiť problémy, môžete si vytvoriť kópiu
+premennej <code>mouse_b</code> a pracovať potom s ňou; mimochodom je to 
+niečo podobné, ako čítanie z joysticku.
+
+<pre>my_mouse_b = mouse_b;
+if (my_mouse_b) {
+    printf ("Stlačené tlačidlá: ");
+    if (my_mouse_b &amp; 1) printf ("Ľavé ");
+    /* atď */
+}
+</pre>
+
+
+<p><hr>[ Ďalší:<a rel=next href="#Controlling%20the%20mouse%20pointer">Ovládanie ukazovateľa myši</a>
+ | Predošlý:<a rel=previous href="#Reading%20the%20mouse">Čítanie myši</a>
+ | Hore:<a rel=up href="#Point%20and%20click">Ukáž a klikni</a>
+ ]<p>
+
+<h4><a name="Displaying%20the%20mouse%20pointer"><a name="TOC_63">6.3.1.3 Zobrazenie ukazovateľa myši</a></a></h4>
+
+<p>Ak chcete zobraziť ukazovateľ na obrazovke, jednoducho zavolajte funkciu
+<code>show_mouse</code> ktorej poviete, na ktorú bitmapu ho chcete ktesliť,
+napríklad:
+
+<pre>show_mouse (screen);
+</pre>
+
+<p>Kedykoľvek sa myš pohne, Allegro obnoví ukazovateľ myši (ledaže by ste 
+mu povedali, aby to nerobilo -- pozrite si dokumentáciu k Allegru). Preto
+predtým, než do bitmapy čokoľvek zapíšete, treba myš skryť, inak sa na
+monitore budú diať zlé veci. Spraví sa to tak, že zavoláte
+<code>show_mouse(NULL)</code>.
+
+<p>Poznamenajme, že funkcie, ktoré priamo vykresľujú ukazovateľ myši 
+(podobne ako niektoré iné časti Allegra) vyžadujú, aby boli nainštalované 
+procedúry časovača -- je to čiastočne vecou toho, ako veci fungujú na 
+pozadí. Kvôli ďalším informáciam si pozrite <a href="#Timers">časovače</a> 
+a čiastočne aj 
+<a href="#Initialising%20the%20timer%20system">Inicializácia systému časovačov</a>. 
+
+<p><hr>[ Predošlý:<a rel=previous href="#Displaying%20the%20mouse%20pointer">Zobrazenie ukazovateľa myši</a>
+ | Hore:<a rel=up href="#Point%20and%20click">Ukáž a klikni</a>
+ ]<p>
+
+<h4><a name="Controlling%20the%20mouse%20pointer"><a name="TOC_64">6.3.1.4 Ovládanie ukazovateľa myši</a></a></h4>
+
+<p>Ak potrebujete upraviť oblasť myši, môžete zavolať:
+
+<pre>set_mouse_range (min_x, min_y, max_x, max_y);
+</pre>
+
+<p>kde <code>min_x</code> a <code>min_y</code> je minimálna hodnota X a Y
+a <code>max_x</code> a <code>max_y</code> sú maximálne hodnoty.
+
+<p>Ak z nejakého dôvodu chcete posunúť ukazovateľ myši na určité miesto 
+na obrazovke, zavolajte funkciu <code>position_mouse</code>, ktorej 
+odovzdáte ako parametre novú X-ovú a Y-ovú súradnicu.
+
+<p>Ukážkový program <code>examples/chap_06/ex_3_1</code> demonštruje
+prístup "ukáž a klikni".
+
+<p><hr>[ Predošlý:<a rel=previous href="#Point%20and%20click">Ukáž a klikni</a>
+ | Hore:<a rel=up href="#Mouse%20input">Vstup z myši</a>
+ ]<p>
+
+<h3><a name="Direct%20mouse%20control"><a name="TOC_65">6.3.2 Priama kontrola myšou</a></a></h3>
+
+<p>Táto technika znamená, že zistíme, ako ďaleko sa v každom hernom cykle
+v jednotlivých smeroch pohla myš a potom s údajmi zaobchádzame ako 
+s analógovými dátami z joysticku. Príklady takýchto hier sú:
+
+<ul>
+<li>Všetky súčasné hry od id Software == teda Wolfenstein 3D a všetky
+hry ako Doom, Heretic a Quake.
+
+<li>Ďalšie strieľačky v prvej osobe. Áno, id Software si zaslúži samostatnú
+kategóriu, pretože (aspoň zatiaľ) vždy vynikali, čo sa týka hrateľnosti
+a atmosféry. Napríklad: séria Descent, Duke Nukem 3D, Dark Forces.
+
+<li>Letové simulátory -- napr. Jetfighter II, hry Wing Commander, X-Wing, 
+Tie Fighter, atď. 
+</ul>
+
+<p>Nemyslím si, že je zákonitosť v tom, že v tomto zozname sú iba hry
+v prvej osobe (teda hry, kde je zobrazená situácia z pohľadu hráča).
+Nehovorím, že je táto metóda nepoužiteľná v iných hrách; myslím si, že
+je bežnejšie, že sa v tomto type hier daný prístup využíva.
+
+<p>Keď používate tento systém, myš inicializujete rovnako ako v systéme
+"ukáž a klikni" (pozrite <a href="#Initialising%20the%20mouse">Inicializácia myši</a>).
+
+<p>Pri použití tohto spôsobu ovládania žiadate ovládač myši o obnovu 
+hodnoty mickey. <dfn>Mickey</dfn> je veľmi jemná miera pohybu myši a je
+určovaná relatívne k momentu, kedy ste ju poslednýkrát zisťovali. Allegro
+má na to funkciu <code>get_mouse_mickeys</code>:
+
+<pre>void get_mouse_mickeys (int *mickeyx, int *mickeyy);
+</pre>
+
+<p>Dajte funkcii dva smerníky na premenné typu <code>int</code> a ona
+naplní premenné, na ktoré ukazujú hodnotami, o ktoré sa zmenila X-ová a 
+Y-ová súradnica myši odvtedy čo sme naposledy volali túto funkciu. 
+Napríklad, ak <code>dx</code> a <code>dy</code> sú premenné typu 
+<code>int</code>, tak volanie funkcie
+
+<pre>get_mouse_mickeys (&amp;dx, &amp;dy);
+</pre>
+
+<p>vloží mickey rozdiely do <code>dx</code> a <code>dy</code>. 
+Poznamenajme, že jednotky nie sú rovnaké, ako jednotky 
+v <code>mouse_x</code> and <code>mouse_y</code> --
+mickey má oveľa jemnejšie jednotky.
+
+<p>Ukážka k tejto časti, <code>examples/chap_06/ex_3_2</code>, používa 
+túto techniku na pohyb nášho skvelého kruhu, pričom pohyb myši spôsobuje
+zrýchľovanie. Ako je [ed: bude] zmienené neskôr, toto je všeobecný model
+aj pre realistickejšie hry -- pohyb myši je zviazaný so silou, ktorá 
+pôsobí na objekt. Pozrite sa na ukážku, aspoň aby ste vedeli, ako to 
+funguje.
+
+<p><hr>[ Ďalší:<a rel=next href="#Ways%20to%20interpret%20input%20data">Spôsoby interpretácie vstupných dát</a>
+ | Predošlý:<a rel=previous href="#Mouse%20input">Vstup z myši</a>
+ | Hore:<a rel=up href="#User%20input">Uživateľský vstup</a>
+ ]<p>
+
+<h2><a name="Generic%20input"><a name="TOC_66">6.4 Vstup všeobecne</a></a></h2>
+
+<p>Keď máme k dispozícii uvedené typy vstupov, môžeme písať programy, 
+v ktorých môžeme ovládať veci ktorýmkoľvek z nich. Ako ale napísať hru,
+ktorá dovoľuje užívateľovi použiť zariadenie, ktoré si vyberie?
+
+<p>Môžeme napísať verzie reagujúceho kódu, ktoré budú interpretovať každý
+typ informácie a potom použijeme ten, ktorý korešponduje so zariadením, 
+ktoré vybral užívateľ, ale bolo by lepšie minimalizovať počet styčných
+bodov medzi vstupným kódom a reagujúcim kódom. Príklad 
+<code>examples/chap_06/ex_4</code> ukazuje spôsob, ako sa to dá spraviť;
+odporúčam vám pozerať sa do neho, kým budete čítať túto časť. Pozrite sa
+hlavne na <code>input.c</code> a <code>input.h</code>.
+
+<p>Potrebujeme všeobecný formát, ktorý budeme posielať reagujúcemu kódu.
+Potrebujeme informáciu o tom, ako ďaleko je vstupné zariadenie v každom
+smere, a aký je stav palebných tlačidiel. Na uschovanie týchto informácií 
+som vytvoril nasedovnú štruktúru:
+
+<pre>struct input_t {
+    int dx, dy;
+    int fire1, fire2;
+};
+</pre>
+
+<p>Nech sú <code>dx</code> a <code>dy</code> čísla z rozsahu od -128 do 128
+(ako pri joystickových procedúrach), ktoré ukazujú, ktorým smerom zariadenie
+ukazuje a ako ďaleko. <code>fire1</code> a <code>fire2</code> budú nenulové,
+ak je stlačené zodpovedajúce palebné tlačidlo. Ich počet sme obmedzili na
+dve, pretože väčšina joystickov má iba dve palebné tlačidlá; ak píšete kód,
+ktorý má fungovať pod viacerými systémami, často je rozumné obmedziť sa na 
+to, čo je spločné.
+
+<p>Vstupná procedúra bude musieť získať informáciu zakaždým, keď ju 
+zavolajú. Pre vstup z joysticku je to jednoduché; stačí skopírovať patričné
+hodnoty, keďže rozsah je rovnaký. Ak je joystick digitálny, budeme ale 
+musieť skontrolovať <code>joy_left</code>, <code>joy_right</code>, atď.
+pričom použijeme rovnaký systém, aký opíšeme o chvíľu pre klávesnicu.
+
+<p>Pre klávesnicu musíme nejakým spôsobom určiť, kde vlastne <dfn>ukazuje</dfn>.
+Ak máme určené klávesy <code>left_key</code> a <code>right_key</code>,
+môžeme určiť vychýlenie vpravo (<dfn>rightness</dfn>) nasledovne:
+
+<pre>rightness = (key[left_key] ? -1 : 0) + (key[right_key] ? 1 : 0);
+</pre>
+
+<p>Pozrite sa, čo to spraví v jednotlivých situáciach: Ak žiadna z kláves
+nie je stlačená, hodnota oboch zátvoriek je nulová a výsledok je 0. Ak sú
+stlačené obe, prvá zátvorka vráti -1 a druhá 1; takže výsledok je znovu 0.
+Ak je stlačená iba ľavá klávesa, prvá zátvorka bude -1 a druhá 0, akže 
+dokopy -1 a ak je stlačená iba pravá klávesa, výsledok bude 0+1, čo je 1.
+Teraz to môžeme prispôsobiť našej štruktúre napríklad takto:
+
+<pre>dx = (key[left_key] ? -128 : 0) + (key[right_key] ? 128 : 0);
+dy = (key[up_key]   ? -128 : 0) + (key[down_key]  ? 128 : 0);
+fire1 = key[fire1_key];
+fire2 = key[fire2_key];
+</pre>
+
+<p>Každý vstup z klávesnice tu má rovnaký účinok ako úplné vychýlenie 
+joysticku.
+
+<p>Čo sa týka myši, použijeme priame ovládanie; ak by sme chceli použiť
+rozhranie "ukáž a klikni", boli by sme príliš závislí na užívateľovi,
+ktorý myš používa. Tento systém môžete simulovať s pomocou vstupných 
+procedúr na ľubovoľnom vstupnom zariadení, ale na tomto 
+mieste to nechceme rozoberať.
+
+<p>Aby sme mohli zobraziť premenné <code>dx</code> a <code>dy</code>
+z myšieho kódu do rozsahu [-128,128] ktorý tu používame, potrebujeme ich
+vydeliť <code>max_mousespeed</code> a vynásobiť 128, pričom
+<code>max_mousespeed</code> je premenná ovládajúca citlivosť myši. Spravíme
+to ale v opačnom poradí, lebo potom to môže zostať ako výpočet v celočíselnej
+aritmetike. Pretypovaniu medzi celočíselnými a desatinnými typmi by sme
+sa mali vyhnúť všade, kde je to možné -- je pomalé.
+
+<p>Celý kód obsahujúci to, o čom sme sa až doteraz bavili je vo funkcii
+<code>input_getinput</code>.
+
+<p>Predtým, než to začneme používať, je ale potrebné vstupnému modulu 
+povedať, aký druh vstupu očakávame. To môžete spraviť zavolaním funkcie
+<code>input_create_*</code>, ktorá môže mať nejaké parametre (v závislosti 
+na tom, čo <code>*</code> v skutočnosti je). Táto funkcia musí byť urobená
+tak, aby vytvorila vstupnú štruktúru a vrátila smerník na ňu. Vstupná 
+funkcia joysticku žiadnu informáciu naviac nepotrebuje, ale vstupná funkcia
+myši potrebuje vedieť, akú hodnotu použiť pre <code>max_mousespeed</code>, 
+a vstupná funkcia klávesnice potrebuje vedieť, ktoré klávesy použiť. Mohli
+by sme použiť jedinú funkciu s premenlivým počtom parametrov, ale to je pre
+potreby tohto tutoriálu trocha komplikované.
+
+<p>Takže definujme funkcie"
+
+<pre>input_t *input_create_joystick ();
+input_t *input_create_mouse (int max_mousespeed);
+input_t *input_create_keybd (int left_key, int right_key,
+                             int up_key, int down_key,
+                             int fire1_key, int fire2_key);
+</pre>
+
+<p>Tiež budeme potrebovať funkcie pre inicializáciu vstupného modulu,
+funkciu, ktorá ho zruší a funkciu, ktorá zruší už zaregistrované
+vstupné zariadenie (napr. ak zmeníte klávesy); ich deklarácia môže
+vyzerať takto:
+
+<pre>void input_init ();
+void input_shutdown ();
+void input_destroy (input_t *what);
+</pre>
+
+<p>Takže ak to zhrnieme, programy na začiatku zavolajú <code>input_init</code> 
+aby nastavili modul. Potom zavolajú niektoré z <code>input_create_*</code> 
+funkcií, aby zaregistrovali vstupné zariadenia hráčov; <code>input_create_keybd</code> 
+sa môže volať viac než raz s rôznymi klávesami, aby mohol hrať na klávesnici 
+viac než jeden hráč. Funkcie <code>input_create_*</code> vrátia smerníky na
+štruktúry <code>input_t</code>, ktorých členské premenné budú obnovené 
+pri každom zavolaní <code>input_getinput</code>. Zaregistrované zariadenia
+sa môžu odregistrovať zavolaním funkcie <code>input_destroy</code>, ktorá
+ako parameter dostane smerník na <code>struct input_t</code>; táto funkcia
+súčasne dealokuje štruktúru, na ktorú smerník ukazuje. Funkcia
+<code>input_shutdown</code> odregistruje všetky zariadenia a uvoľní všetku
+pamäť, ktorá je ešte alokovaná.
+
+<p>Štruktúra <code>input_t</code> obsahuje polia <code>dx</code>, <code>dy</code>,
+<code>fire1</code> a <code>fire2</code>. <code>dx</code> and <code>dy</code>
+nadobúdajú hodnoty od -128 do 128, ktoré ukazujú množstvo pohybu v jednotlivých 
+smeroch a <code>fire1</code> a <code>fire2</code> sú nenulové, ak je stlačené
+zodpovedajúce palebné tlačidlo.
+
+<p>Ešte raz, pozrite si program <code>examples/chap_06/ex_4</code>, aby ste 
+videli, ako tento systém používať.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Generic%20input">Vstup všeobecne</a>
+ | Hore:<a rel=up href="#User%20input">Uživateľský vstup</a>
+ ]<p>
+
+<h2><a name="Ways%20to%20interpret%20input%20data"><a name="TOC_67">6.5 Spôsoby interpretácie vstupných dát</a></a></h2>
+
+<p>Táto časť zatiaľ nie je napísaná. Keď bude, bude obsahovať informácie
+o fyzikálnych modeloch (nie, nie je to taká nuda, ako to znie!) a ako
+môžete vstupné dáta použiť.
+
+<p><hr>[ Ďalší:<a rel=next href="#Sound">Zvuk</a>
+ | Predošlý:<a rel=previous href="#User%20input">Uživateľský vstup</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="More%202D%20graphics"><a name="TOC_68">7. Niečo viac z 2D grafiky</a></a></h1>
+
+<p>Táto časť zatiaľ nie je napísaná. Keď bude, bude hovoriť o:
+
+<ul>
+<li>pamäťových bitmapách
+
+<li>spritoch
+
+<li>pohybe vecí bez narušenia pozadia
+
+<li>znova o dvojitom bufferingu a špinavých obdĺžnikoch a úvod do prepínania
+stránok
+
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Timers">Časovače</a>
+ | Predošlý:<a rel=previous href="#More%202D%20graphics">Niečo viac z 2D grafiky</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Sound"><a name="TOC_69">8. Zvuk</a></a></h1>
+
+<ul>
+<li><a href="#Sound%20configuration">Konfigurácia zvuku</a>
+
+<li><a href="#Digital%20sound">Digitálny zvuk</a>
+
+<li><a href="#MIDI%20music">MIDI súbory</a>
+</ul>
+
+<p><hr>[ Next:<a rel=next href="#Digital%20sound">Digitálny zvuk</a>
+ | Up:<a rel=up href="#Sound">Zvuk</a>
+ ]<p>
+
+<h2><a name="Sound%20configuration"><a name="TOC_70">8.1 Konfigurácia zvuku</a></a></h2>
+
+<ul>
+<li><a href="#Initialising%20sound%20drivers">Inicializácia ovládačov zvuku</a>
+
+<li><a href="#Config%20file%20for%20sound">Konfiguračný súbor pre zvuk</a>
+</ul>
+
+<p><hr>[ Next:<a rel=next href="#Config%20file%20for%20sound">Konfiguračný súbor pre zvuk</a>
+ | Up:<a rel=up href="#Sound%20configuration">Konfigurácia zvuku</a>
+ ]<p>
+
+<h3><a name="Initialising%20sound%20drivers"><a name="TOC_71">8.1.1 Inicializácia ovládačov zvuku</a></a></h3>
+
+<p>Aby ste nainštalovali ovládače zvuku, treba zavolať funkciu:
+
+<pre>install_sound (digi_driver, midi_driver, NULL);
+</pre>
+
+<p>kde na miesto parametra <code>digi_driver</code> vložíte konštantu
+<code>DIGI_*</code> a na miesto parametra <code>midi_driver</code> 
+konštantu <code>MIDI_*</code>. Tretí parameter je zastaralý, dajte
+tam skrátka NULL.
+
+<p>Ak je funkcia úspešná, vráti nulu. Nenulová návratová hodnota
+pravdepodobne znamená, že ovládač, ktorý požadujete, nie je prístupný.
+Ak pre niektorý ovládač používate <code>*_AUTODETECT</code>, môže
+to znamenať, že konfiguračný súbor špecifikuje, ktorý ovládač presne
+treba použiť a tento ovládač je nepoužiteľný.
+
+<p>Myslím si, že sa málokedy vyskytne rozumný dôvod nepoužiť 
+<code>DIGI_AUTODETECT</code> a <code>MIDI_AUTODETECT</code>. Moje dôvody
+sú také, že ak určíte zariadenie explicitne, hra nebude fungovať, ak toto
+zariadenie nie je dostupné a nebude schopná použiť lepšie zariadenie,
+ak toto dostupné bude. Dokonca ak máte v počítači nejaký hardwarový 
+konflikt, ktorý spôsobuje, že táto voľba normálne zlyháva, nie je to dôvod
+na to, aby ste zrušili funkčnosť vašej hry na počítačoch iných ľudí -- 
+môžete si vytvoriť konfiguračný súbor (pozrite nižšie). Konfiguračné súbory
+majú vždy prednosť pred autodetekciou, takže konflikt zmizne -- môžete sa 
+spoľahnúť na to, že rovnako to bude fungovať aj u koncových užívateľov; 
+ak sa vyskytnú problémy, môžu ich odstrániť. Ak parametre zadáte napevno,
+ľudia nebudú môcť nastavenia zmeniť, kým si to neprekompilujú -- čo je 
+zlá novinka!
+
+<p>Takže ak nemáte veľmi dobrý dôvod (žiaden ma nenapadá), používajte 
+konštanty <code>*_AUTODETECT</code>. Dokonca ukážkový program 
+<code>play.exe</code> v adresári <code>tests</code> Allegra je pre mňa
+hraničným prípadom -- používa pevne určenú tabuľku čísel a mien ovládačov.
+To je dosť zlé; výhoda tohto prístupu (aspoň myslím) spočíva v tom, 
+že sa ovládače otestujú rýchlo. Nie ktovieaká výhoda<small>...</small>
+
+<p>Treba poznamenať ešte jednu vec -- MIDI prehrávač Allegra poučíva 
+pre svoju činnosť procedúry časovača, takže predtým, ako budete prehrávať
+MIDI súbory ho musíte inštalovať. Viac podrobností nájdete v kapitole
+<a href="#Initialising%20the%20timer%20system">Inicializácia systému časovača</a>.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Initialising%20sound%20drivers">Inicializácia ovládačov zvuku</a>
+ | Hore:<a rel=up href="#Sound%20configuration">Konfigurácia zvuku</a>
+ ]<p>
+
+<h3><a name="Config%20file%20for%20sound"><a name="TOC_72">8.1.2 Konfiguračný súbor pre zvuk</a></a></h3>
+
+<p>Allegro v konfiguračných súboroch podporuje široký okruh oblastí; 
+konfigurácia zvuku je len časťou štandardných dát a vy môžete pridávať
+pre vnútornú potrebu vašej hry dáta podľa vlastného výberu. Čo sa všetkých
+detailov použitia konfiguračných súborov týka, pozrite si dokumentáciu
+k Allegru (ak používate info, napíšte v príkazovom riadku 
+<code>info allegro config</code>). Tu bude zmienka iba o tom, čo sa týka
+ovládačov zvuku.
+
+<p>Ak nepoviete inak, program skontroluje vo svojom domovskom adresári
+súbory <code>allegro.cfg</code> a <code>sound.cfg</code>. Ak chcete použiť
+iné meno súboru, dajte ho ako parameter funkcii <code>set_config_file</code>.
+
+<p>Informácia o konfigurácii zvuku je v časti <code>[sound]</code>
+súboru a obsahuje okrem iného informácie o tom, ktoré ovládače 
+s akými nastaveniami sa majú použiť, ak zažiadate o autodetekciu.
+Allegro potom autodetekciu spracuje tak, že ak je ovládač explicitne určený
+v konfiguračnom súbore, tak sa ten ovládač použije. Ak žiaden ovládač
+neurčíte, Allegro sa vám začne hrabať v mašine, aby zistilo, čo tam 
+vlastne je; toto <em>môže</em> mať vedľajšie efekty a navyše z technických 
+dôvodov niektoré veci (ako napr. externé MIDI zariadenie) nikdy nebudú 
+zistené
+
+<p>Najbezpečnejšia a najjednoduchšia cesta, ako vytvoriť konfiguračné 
+súbory je program <code>setup</code>. Je navrhnutý tak, aby sa dal pribaliť
+k vašim hrám a aby si s jeho pomocou mohol užívateľ vybrať (alebo 
+si nechať zistiť) a vyskúšať nastavenia. Setup potom uloží nastavenia do 
+konfiguračného súboru, ktorý môže váš program čítať.
+
+<p>Teda najjednoduchší spôsob ako to distribuovať, je pribaliť súbor 
+<code>setup.exe</code> do toho istého adresára, ako spustiteľný súbor
+vášho programu, takže výstup z programu setup bude presne tam, kde ho
+váš program bude očakávať. Je veľa vecí, ktoré s pomocou programu 
+setup môžete nastaviť (alebo nechať tak). Úplnú informáciu nájdete 
+v súbore <code>setup.txt</code> (je v tom istom adresári ako zvyšok 
+programu setup).
+
+<p><hr>[ Ďalší:<a rel=next href="#MIDI%20music">MIDI súbory</a>
+ | Predošlý:<a rel=previous href="#Sound%20configuration">Konfigurácia zvuku</a>
+ | Hore:<a rel=up href="#Sound">Zvuk</a>
+ ]<p>
+
+<h2><a name="Digital%20sound"><a name="TOC_73">8.2 Digitálny zvuk</a></a></h2>
+
+<ul>
+<li><a href="#Loading%20sound%20files">Načítanie zvukových súborov</a>
+
+<li><a href="#Playing%20samples">Prehrávanie zvukov</a>
+
+<li><a href="#Adjusting%20sample%20parameters">Úprava parametrov zvuku</a>
+
+<li><a href="#Unloading%20samples">Uvoľnenie zvukov z pamäti</a>
+
+<li><a href="#Voice%20functions">Hlasové funkcie</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Playing%20samples">Prehrávanie zvukov</a>
+ | Hore:<a rel=up href="#Digital%20sound">Digitálny zvuk</a>
+ ]<p>
+
+<h3><a name="Loading%20sound%20files"><a name="TOC_74">8.2.1 Načítanie zvukových súborov</a></a></h3>
+
+<p>Allegro vie čítať digitálny zvuk z WAV a VOC súborov. Oba typy súborov 
+musia byť mono. WAV súbory môžu byť 8 alebo 16 bitové; VOC súbory musia byť
+8 bitové.
+
+<p>Načítanie súboru nemôže byť jednoduchšie -- meno WAV alebo VOC súboru
+(musí mať správnu koncovku) dáte ako parameter funkcii <code>load_sample</code> 
+a ona vráti <code>SAMPLE *</code> ktorý ukazuje na zvuk alebo NULL, ak sa zvuk
+nepodarilo nahrať (teda nebola rozlíšená koncovka, nebol nájdený súbor alebo
+formát súboru je nesprávny alebo nepodporovaný).
+
+<p>Môžete tiež rovnakým spôsobom priamo zavolať <code>load_voc</code> alebo
+<code>load_wav</code>. Výhodou tohto prístupu môže byť, že sa spracuje aj 
+súbor, ktorý nemá koncovku .WAV alebo .VOC.
+
+<p><hr>[ Next:<a rel=next href="#Adjusting%20sample%20parameters">Úprava parametrov zvuku</a>
+ | Previous:<a rel=previous href="#Loading%20sound%20files">Načítanie zvukových súborov</a>
+ | Up:<a rel=up href="#Digital%20sound">Digitálny zvuk</a>
+ ]<p>
+
+<h3><a name="Playing%20samples"><a name="TOC_75">8.2.2 Prehrávanie zvukov</a></a></h3>
+
+<p>Allegrovský prehrávč zvukov môže počas prehrávania narábať so zvukmi 
+rôznymi spôsobmi. Parametre, ktoré na základnej úrovni môžete nastaviť
+sú hlasitosť, balanc a frekvencia. Zvukovému prehrávaču tiež môžete povedať,
+či chcete alebo nechcete vždy spustiť zvuk od začiatku, keď sa dohrá do konca.
+
+<p>Keď chcete prehrať zvuk, treba zavolať funkciu <code>play_sample</code>.
+Má nasledujúce parametre:
+
+<ul>
+<li>zvuk, ktorý chcete prehrať (<code>SAMPLE *</code>)
+
+<li>hlasitosť zvuku od 0 (min) do 255 (max)
+
+<li>balanc -- smer odkiaľ zvuk vychádza od 0 (vľavo) do 255 (vpravo)
+
+<li>frekvencia zvuku vzhľadom k originálnej frekvencii -- pri hodnote 1000
+bude prehratý s pôvodnou frekvenciou, pri hodnote 2000 s dvojnásobnou
+(hudobník by povedal "o oktávu vyššie") a pri hodnote 500 s polovičnou
+(o oktávu nižšie).
+
+<li>príznak cyklenia; 1 = cykliť, 0 = necykliť
+</ul>
+
+<p>Poznamenajme, že zmena frekvencie môže viesť k nesprávnemu prehraniu
+-- Allegro je knižnica na programovanie hier, nie súbor rafinovaných 
+programov na úpravu zvukov. Tiež prehrávanie zvukov na nižšej hlasitosti,
+ale s ovládačom hlasitosti na vašej stereosúprave vytočeným nadoraz doprava
+bude viesť k skresleniu, nehovoriac o šume ;). Snažte sa, pokiaľ je to možné, 
+využívať celý rozsah hodnôt a používať zvuky, ktoré tiež vnútorne používajú
+celý prípustný rozsah.
+
+<p>Typické volanie funkcie play_sample potom bude vyzerať takto:
+
+<pre>play_sample (gun_sound, 255, 128, 1000, 0);
+</pre>
+
+<p>čo prehrá <code>gun_sound</code> (ktorý ste predtým načítali) na 
+maximálnej hlasitosti, zo stredu, s jeho pôvodnou frekvenciou a bez
+cyklenia.
+
+<pre>play_sample (some_sound, 192, 96, 1200, 1);
+</pre>
+
+<p>bude hrať <code>some_sound</code> na 3/4 hlasitosti, posunutý jemne vľavo,
+trochu vyššie ako obyčajne a vždy, keď príde na koniec, začne sa hrať od 
+začiatku.
+
+<p>Na zastavenie prehrávania zvuku slúži funkcia <code>stop_sample</code>:
+
+<pre>stop_sample (some_sound);
+</pre>
+
+<p>To je zvlášť užitočné pri zacyklených zvukoch.
+
+<p><hr>[ Ďalší:<a rel=next href="#Unloading%20samples">Uvoľnenie zvukov z pamäti</a>
+ | Predošlý:<a rel=previous href="#Playing%20samples">Prehrávanie zvukov</a>
+ | Hore:<a rel=up href="#Digital%20sound">Digitálny zvuk</a>
+ ]<p>
+
+<h3><a name="Adjusting%20sample%20parameters"><a name="TOC_76">8.2.3 Úprava parametrov prehrávaného zvuku</a></a></h3>
+
+<p>Tieto parametre môžete upraviť aj počas prehrávania súboru. Používa
+sa na to funkcia <code>adjust_sample</code>. Má rovnaké parametre ako
+<code>play_sample</code> a v zozname prehrávaných zvukov hľadá ten, 
+ktorý ste zadali. Takže ak už spomínaný zvuk <code>some_sound</code> stále
+hrá, môžete zrušiť cyklenie takto:
+
+<pre>adjust_sample (some_sound, 192, 96, 1200, 0);
+</pre>
+
+<p>Samozrejme môžeme zmeniť aj iné parametre. Ak chcete upravovať zvuky,
+kým sú prehrávané, dbajte na to, aby súčasne nebolo prehrávaných viacero
+kópií daného zvuku -- <code>adjust_sample</code> zmení iba prvú kópiu,
+ktorú nájde a ostatné sa nezmenia.
+
+<p>Rafinovanejší spôsob, ako prehrávať a ovládať zvuky, ktorý nemá 
+spomínané problémy nájdete v kapitole 
+<a href="#Voice%20functions">Hlasové funkcie</a>.
+
+<p><hr>[ Ďalší:<a rel=next href="#Voice%20functions">Hlasové funkcie</a>
+ | Predošlý:<a rel=previous href="#Adjusting%20sample%20parameters">Úprava parametrov zvuku</a>
+ | Hore:<a rel=up href="#Digital%20sound">Digitálny zvuk</a>
+ ]<p>
+
+<h3><a name="Unloading%20samples"><a name="TOC_77">8.2.4 Uvoľnenie zvukov z pamäti</a></a></h3>
+
+<p>Keď už zvuk nepotrebujete, môžete ho odstrániť z pamäti funkciou 
+<code>destroy_sample</code> nasledujúcim spôsobom:
+
+<pre>destroy_sample (some_sound);
+</pre>
+
+<p>Ak zvuk ešte stále hrá, bude automaticky zastavený.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Unloading%20samples">Uvoľnenie zvukov z pamäti</a>
+ | Hore:<a rel=up href="#Digital%20sound">Digitálny zvuk</a>
+ ]<p>
+
+<h3><a name="Voice%20functions"><a name="TOC_78">8.2.5 Hlasové funkcie</a></a></h3>
+
+<p>Táto časť ešte nebola napísaná. Bude obsahovať informácie o tom, ako
+používať hlasové funkcie priamo, aby ste získali nad zvukmi väčšiu kontrolu.
+
+<p>Je tu ale ukážkový program: <code>examples/chap_08/ex_2_5</code>
+
+<p><hr>[ Predošlý:<a rel=previous href="#Digital%20sound">Digitálny zvuk</a>
+ | Hore:<a rel=up href="#Sound">Zvuk</a>
+ ]<p>
+
+<h2><a name="MIDI%20music"><a name="TOC_79">8.3 MIDI súbory</a></a></h2>
+
+<ul>
+<li><a href="#Loading%20MIDI%20music">Načítanie MIDI súborov</a>
+
+<li><a href="#Playing%20MIDI%20music">Prehrávanie MIDI súborov</a>
+
+<li><a href="#Controlling%20MIDI%20music">Ovládanie MIDI súborov</a>
+
+<li><a href="#Unloading%20MIDI%20music">Uvoľnenie MIDI súborov z pamäti</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Playing%20MIDI%20music">Prehrávanie MIDI súborov</a>
+ | Hore:<a rel=up href="#MIDI%20music">MIDI súbory</a>
+ ]<p>
+
+<h3><a name="Loading%20MIDI%20music"><a name="TOC_80">8.3.1 Načítanie MIDI súborov</a></a></h3>
+
+<p>V súčasnosti podporuje Allegro iba MIDI súbory, z ktorých môže nahrať
+buď typ 0 alebo 1 (teda väčšinu).
+
+<p>Na načítanie MIDI súboru do pamäti zavolajte funkciu <code>load_midi</code>,
+ktorá ako parameter dostane meno súboru a vráti <code>MIDI *</code> alebo
+NULL, ak sa načítanie nepodarí. 
+
+<p><hr>[ Ďalší:<a rel=next href="#Controlling%20MIDI%20music">Ovládanie MIDI súborov</a>
+ | Predošlý:<a rel=previous href="#Loading%20MIDI%20music">Načítanie MIDI súborov</a>
+ | Hore:<a rel=up href="#MIDI%20music">MIDI súbory</a>
+ ]<p>
+
+<h3><a name="Playing%20MIDI%20music"><a name="TOC_81">8.3.2 Prehrávanie MIDI súborov</a></a></h3>
+
+<p>Ak chcete začať s prehrávaním MIDI objektu, jednoducho zavolajte
+<code>play_midi</code>:
+
+<pre>play_midi (title_theme, 0);
+</pre>
+
+<p>Druhý parameter je príznak cyklenia; 0 znamená necykliť, čokoľvek iné
+spôsobí, že keď sa súbor dohrá, spustí sa od začiatku. Ak chcete, aby sa
+váš súbor opakoval od iného miesta (napríklad ak má úvod, ktorý chcete pri
+opakovaní preskočiť), môžete zavolať:
+
+<pre>play_looped_midi (background_music, loop_start, loop_end);
+</pre>
+
+<p>Keď je dosiahnutá pozícia <code>loop_end</code>, prehrávač skočí späť
+na <code>loop_start</code>. Ak je <code>loop_end</code> -1, návratový bod
+bude až na konci skladby. Jednotky pre <code>loop_start</code> a 
+<code>loop_end</code> sú takty, tak ako sú odmeriavané premennou
+<code>midi_pos</code> zmienenou nižšie.
+
+<p>Inak môžete hudbu zastaviť volaním <code>stop_midi</code>:
+
+<pre>stop_midi();
+</pre>
+
+<p>Keďže Allegro môže naraz prehrávať iba jednu hudbu, táto funkcia 
+nepotrebuje parametre. Začiatok prehrávania hudby zatiaľ, čo hrá nejaká 
+iná, spôsobí zastavenie prehrávania predošlej. Volanie funkcie 
+<code>stop_midi</code> má rovnaký efekt ako volanie <code>play_midi</code> 
+s prvým parametrom NULL.
+
+<p><hr>[ Next:<a rel=next href="#Unloading%20MIDI%20music">Uvoľnenie MIDI súborov z pamäti</a>
+ | Previous:<a rel=previous href="#Playing%20MIDI%20music">Prehrávanie MIDI súborov</a>
+ | Up:<a rel=up href="#MIDI%20music">MIDI súbory</a>
+ ]<p>
+
+<h3><a name="Controlling%20MIDI%20music"><a name="TOC_82">8.3.3 Ovládanie MIDI súborov</a></a></h3>
+
+<p>Počas prehrávania MIDI súboru Allegro zväčšuje raz za takt globálnu 
+premennú <code>midi_pos</code>. Ak sa žiaden MIDI súbor neprehráva
+(alebo necyklický súbor už skončil), je nastavená na -1.
+
+<p>Poznamenajme, že zväčšenie nemusí nutne nastať v každom takte -- ak 
+sa v nejakom takte nič nehrá, premenná sa zmení až pri hraní najbližšej 
+noty. Ak chcete s premennou synchronizovať udalosti, uistite sa, či je 
+v každom takte nejaká nota; môžete napríklad vložiť notu s nulovou 
+hlasitosťou, ktorá bude slúžiť len na spustenie udalosti.
+
+<p>Prehrávanie môžete zastaviť a znovu spustiť s pomocou funkcii
+<code>midi_pause</code> a <code>midi_resume</code>. Môžete skočiť na určitú
+pozíciu v súbore ak cieľovú <code>midi_pos</code> hodnotu odovzdáte
+ako parameter funkcii <code>midi_seek</code>. Pamätajte na to, že 
+vyhľadávanie dozadu  spôsobí previnutie súboru na začiatok a potom 
+hľadanie dopredu; teda nebude dobrý nápad robiť za sebou niekoľko malých
+vyhľadávaní dozadu.
+
+<p>Nakoniec, ak sa súbor prehráva cyklicky, môžete za jazdy zmeniť miesta
+cyklenia. Dve premenné, ktoré ich určujú, sú <code>midi_loop_start</code>
+a <code>midi_loop_end</code> a sú merané v <code>midi_pos</code> jednotkách.
+Hodnota -1 pre <code>midi_loop_start</code> alebo <code>midi_loop_end</code>
+znamená začiatok resp. koniec súboru.
+
+<p>Spomenul som už predtým, že časť MIDI súboru môže tvoriť predohru
+ktorú v cykle nechcete hrať zakaždým a funkcia <code>play_looped_midi</code> 
+tento problém rieši; nastavenie bodov cyklenia vám dovoľuje spraviť
+podobnú vec, ak MIDI súbor obsahuje záver, ktorý nechcete hrať počas
+opakovania -- teda chcete raz zahrať úvod, potom nekoľkokrát cykliť hlavnú 
+časť a nakoniec zahrať záver.
+
+<p>Aby ste to dosiahli, začnete prehrávať hudbu s použitím funkcie
+<code>play_looped_midi</code> kde ako parameter začiatku cyklu uvediete 
+začiatok hlavnej časti a ako koniec cyklu koniec hlavnej časti. Potom
+necháte hudbu hrať; zakaždým, keď hlavná časť skončí, spustí sa znovu 
+od začiatku. Neskôr môžete parameter konca cyklu nastaviť na koniec skladby.
+
+<p>Sú tam ale niektoré zádrhele:
+
+<ul>
+<li><code>midi_loop_start</code> musí byť vždy skôr, než 
+<code>midi_loop_end</code>; ak je vaša nová štartovacia hodnota väčšia, než
+stará koncová, musíte najprv zmeniť koncovú hodnotu a ak je vaša nová
+koncová hodnota menšia než stará štartovacia, treba najprv zmeniť
+štartovaciu.
+
+<li>Okrem prípadov uvedených vyššie je vo všeobecnosti lepšie meniť najprv
+<code>midi_loop_end</code> a až potom <code>midi_loop_start</code> ak sa 
+koncový bod posúva dozadu a v opačnom poradí, ak sa koncový bod posúva
+dopredu. To zmenšuje pravdepodobnosť skokov počas zmeny.
+</ul>
+
+<p>Pravdepodobnosť, že niektorá z uvedených vecí  bude robiť vážne problémy 
+je pomerne malá, ale je lepšie to zabezpečiť, než ľutovať. (Týka sa to najmä
+prvej.)
+
+<p><hr>[ Predošlý:<a rel=previous href="#Controlling%20MIDI%20music">Ovládanie MIDI súborov</a>
+ | Hore:<a rel=up href="#MIDI%20music">MIDI súbory</a>
+ ]<p>
+
+<h3><a name="Unloading%20MIDI%20music"><a name="TOC_83">8.3.4 Uvoľnenie MIDI súborov z pamäti</a></a></h3>
+
+<p>Na uvoľnenie MIDI súboru z pamäti použite funkciu <code>destroy_midi</code>:
+
+<pre>destroy_midi (background_music);
+</pre>
+
+<p>Ak je súbor práve prehrávaný, hudba sa najprv zastaví.
+
+<p><hr>[ Ďalší:<a rel=next href="#Datafiles">Datasúbory</a>
+ | Predošlý:<a rel=previous href="#Sound">Zvuk</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Timers"><a name="TOC_84">9. Časovače</a></a></h1>
+
+<ul>
+<li><a href="#Uses%20of%20timers">Použitie časovačov</a>
+
+<li><a href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+
+<li><a href="#Limitations%20of%20timers">Obmedzenia časovačov</a>
+
+<li><a href="#Examples%20of%20timers">Príklady časovačov</a>
+</ul>
+
+<p><hr>[ Next:<a rel=next href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+ | Up:<a rel=up href="#Timers">Časovače</a>
+ ]<p>
+
+<h2><a name="Uses%20of%20timers"><a name="TOC_85">9.1 Použitie časovačov</a></a></h2>
+
+<p>V tomto zozname nájdete rôzne použitie časovačov. Samozrejme nie je úplný
+-- jeho cieľom je poskytnúť vám predstavu, na čo sa väčšinou časovače 
+používajú. Niektoré, prípadne všetky z nich sa neskôr objavia v príkladoch.
+
+<ul>
+<li>Časomiera hry
+
+<p>Toto je pravdepodobne najbežnejšie použitie. Časovač môžete použiť na to,
+aby ste zistili, ako dlho hráč zotrváva v jednej úrovni aby ste mu pridali
+body, ak to zvládne rýchlo, alebo ho zamordovali, ak je tam pridlho.
+
+</p><li>Zisťovanie obnovovacej frekvencie hry
+
+<p>Ak zväčšíte globálnu premennú zakaždým, keď prekreslíte obrazovku, môžete
+nastaviť časovač tak, aby túto hodnotu niekam raz za sekundu skopíroval. 
+Miesto, kde to skopírujete, bude potom ukazovať počet prekreslení za poslednú
+sekundu -- je to skrátka číslo FPS (frames per second, rámcov za sekundu)
+alebo obnovovacia frekvencia hry. Toto je veľmi užitočné, keď zisťujete,
+ako dobre hra funguje na počítačoch iných ľudí; ak je číslo vysoké, majú 
+peknú hladkú grafiku; ak nie, grafika je trhaná.
+
+</p><li>Ovládanie rýchlosti hry
+
+<p>Možno sa pamätáte, že keď sme sa kedysi skôr pokúšali získať
+konštantné zdržanie pri pohybe kruhom krížom cez obrazovku, tak sme na
+ovládanie rýchlosti použili <code>vsync</code>.
+
+<p>Predošlý systém mal zásadný nedostatok v tom, že rýchlosť cyklu stále závisí
+od rýchlosti počítača -- ak čakáme 10 ms medzi vykresleniami a vykreslenie 
+trvá 5 ms, budeme vykresľovať raz za 15 ms; ale ak vykreslenie trvá 10 ms,
+budeme vykresľovať raz za 20 ms. Na reguláciu rýchlosti priveľký rozdiel.
+
+<p>Použitie <code>vsync</code> je lepšie; vertikálne zatemnenie prichádza 
+v pravidelných intervaloch, takže ak zariadime, že naše prekreslovane a
+pohyb zaberie menej času, než jeden zatemňovací cyklus (alebo presnejšie,
+vždy zaberie rovnaký počet zatemňovacích cyklov), dosiahneme konštantnú 
+rýchlosť. Ak ale ostaneme na niektorom rámci trocha dlhšie, hra bude
+vyzerať, akoby na zlomok sekundy zastala, pretože <code>vsync</code> 
+zmešká jeden VBI (interval vertikálneho zatemnenia) a musí čakať na ďalší.
+To sa deje pomerne často pod určitými polo-viacúlohovými operačnými 
+systémami, kde systém prevezme kontrolu nad počítačom tesne pred VBI
+-- <code>vsync</code> potom ten VBI zmešká a musí čakať na ďalší.
+Výsledný efekt je pekne drsný (hra je strašne trhaná a podľa mňa najhoršie
+je omeškávanie sa v čase).
+
+<p>Lepší spôsob na udržanie konštantnej rýchlosti hry sú časovače. Aby sa 
+znížilo blikanie, prekreslovanie musí byť stále ovládané s pomocou 
+<code>vsync</code>, ale náš časovač vie efektívne zistiť, ako dlho musel
+<code>vsync</code> čakať a zdržanie môžeme neskôr vyrovnať tak, že 
+patričný počet krát prejdeme cez logiku hry.
+
+<p>Ako presne sa to spraví, uvidíme potom, ako sa pozrieme, ako časovače
+fungujú. Alebo môžete rovno skočiť na danú časť teraz -- to je na vás.
+Pozrite sa na <a href="#Regulating%20game%20speed">Ovládanie rýchlosti hry</a>.
+
+</p><li>Získavanie vstupu v pravidelných intervaloch
+
+<p>Ak nastavíme časovač tak, aby behal dosť často, môžeme získať vstup 
+v pravidelných intervaloch. Načo je to dobré? Nuž, niektoré herné
+systémy (ako napríklad ten  opísaný vyššie) majú sklon prebehnúť 
+niekoľkokrát za sebou cez herný cyklus a potom zbehnúť dlhú funkciu na
+obnovovanie grafiky. Strávia veľkú časť svojho času kreslením a keď
+s tým skončia, znova sa rýchlo niekoľkokrát preženú herným cyklom.
+Ak by sme čítali vstup vždy počas herného cyklu, tak by sme prečítali
+zakaždým ten istý stav.
+
+<p>Ako extrémny príklad si skúste predstaviť, že vykonanie vykresľovacej
+funkcie zaberie celú sekundu a funkcia herného cyklu sa za ten čas má
+vykonať desaťkrát. Ak užívateľ stlačí tlačidlo počas behu grafickej funkcie,
+alebo ho dokonca väčšinu času drží stlačené, funkcia herného cyklu si to
+nevšimne, pretože vstup kontroluje, pretože vstup sa kontroluje až po
+skončení grafickej funkcie. Ale ak užívateľ stlačí klávesu po skončení
+grafickej funkcie, všetkých 10 obnovovaní pozície bude vidieť tlačidlo 
+stlačené, čo je tiež zle. To, čo potrebujeme je, aby každé obnovenie stavu
+hry videlo iný stav vstupu, získaný v pravidelných intervaloch.
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Limitations%20of%20timers">Obmedzenia časovačov</a>
+ | Predošlý:<a rel=previous href="#Uses%20of%20timers">Použitie časovačov</a>
+ | Hore:<a rel=up href="#Timers">Časovače</a>
+ ]<p>
+
+<h2><a name="Setting%20up%20timer%20callbacks"><a name="TOC_86">9.2 Nastavenie obslužných funkcií časovača</a></a></h2>
+
+<ul>
+<li><a href="#Initialising%20the%20timer%20system">Inicializácia systému časovačov</a>
+
+<li><a href="#Locking%20and%20volatility">Zamykanie a volatilita</a>
+
+<li><a href="#Installing%20timer%20callbacks">Inštalovanie obslužných funkcií</a>
+
+<li><a href="#Removing%20timer%20callbacks">Odinštalovanie obslužných funkcií</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Locking%20and%20volatility">Zamykanie a volatilita</a>
+ | Hore:<a rel=up href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+ ]<p>
+
+<h3><a name="Initialising%20the%20timer%20system"><a name="TOC_87">9.2.1 Inicializácia systému časovačov</a></a></h3>
+
+<p>Pred tým, než môžete použiť niektorú z funkcií časovača, musíte 
+inicializovať systém časovačov Allegra. Ako už bolo povedané, potrebujú
+to aj mnohé iné časti Allegra (ako napríklad kód na vykreslovanie
+ukazovateľa myši alebo prehrávač MIDI súborov), takže ho už pravdepodobne 
+budete mať nainštalovaný.
+
+<p>Na inicializáciu systému časovačov zavolajte:
+
+<pre>install_timer();
+</pre>
+
+<p>Po tomto volaní vám prestane fungovať funkcia <code>delay</code> 
+z knižnice libc; môžete použiť funkciu <code>rest</code> z Allegra,
+ktorá robí takmer to isté.
+
+<p><hr>[ Ďalší:<a rel=next href="#Installing%20timer%20callbacks">Inštalovanie obslužných funkcií</a>
+ | Predošlý:<a rel=previous href="#Initialising%20the%20timer%20system">Inicializácia systému časovačov</a>
+ | Hore:<a rel=up href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+ ]<p>
+
+<h3><a name="Locking%20and%20volatility"><a name="TOC_88">9.2.2 Zamykanie a volatilita</a></a></h3>
+
+<p>Allegrovské funkcie časovača sú ovládané cez prerušenia. Prerušenia sú
+vyvolávané istými udalosťami a <dfn>prerušia</dfn> vykonávanie vášho 
+programu. V tomto momente procesor začne vykonávať kód ISR (interrupt service 
+routine - funkcia obsluhy prerušenia). Allegro má rôzne mechanizmy, s pomocou
+ktorých sa dozvie o tom, že sa určité prerušenie vyskytlo -- v tomto prípade
+prerušenie od časovača.
+
+<p>Allegrovský ovládač prerušenia volá rôzne funkcie, ktoré určíte, 
+nazývané <dfn>obslužné funkcie</dfn> (anglicky <dfn>callbacks</dfn>), 
+v intervaloch, ktoré tiež môžete určiť. Dôležité je, že tieto funkcie
+sa volajú <dfn>vo vnútri</dfn> prerušenia.
+
+<p>Z rôznych technických dôvodov je veľmi nešťastný nápad pokúšať sa
+počas prerušenia presúvať veci na disk a z disku. To znamená, že sa
+musíte uistiť, že vaše obslužné funkcie nesmú byť počas behu programu 
+dočasne odložené z pamäte na disk -- ak by boli, museli by sa počas 
+prerušenia načítavať späť do pamäte. Tiež sa musíte uistiť, že všetky dáta,
+ktoré menia -- globálne premenné atď. -- sa nikdy neocitnú v swapovacom
+priestore na disku. Toto urobíte <dfn>zamknutím</dfn> pamäte, kde sú
+uložené. Djgpp má funkcie, ktoré to vedia urobiť a Allegro ich má pekne
+zabalené vo forme nasledovných makier:
+
+<pre>END_OF_FUNCTION (function_name);
+LOCK_FUNCTION (function_name);
+LOCK_VARIABLE (variable_name);
+</pre>
+
+<p><code>LOCK_VARIABLE</code> zamyká statickú alebo globálnu premennú
+a <code>LOCK_FUNCTION</code> zamyká funkciu. <code>LOCK_VARIABLE</code> 
+funguje aj sama o sebe, ale <code>LOCK_FUNCTION</code> potrebuje,
+aby ste koniec zamykanej funkcie označili s pomocou 
+<code>END_OF_FUNCTION</code>. Ak <code>END_OF_FUNCTION</code> uviesť
+zabudnete, dostanete spústu nebezpečne vyzerajúcich (ale celkom slušne
+vysvetľujúcich) varovaní kompilátora a chýb linkera. 
+
+<p>Ďalšia vec, s ktorou sa stretneme, keď je reč o prerušeniach, je
+volatilita (premenlivosť). Každý slušný kompilátor sa snaží optimalizovať
+kód, ktorý generuje. Obyčajne pri tom predpokladá, že premenná, do ktorej 
+nezapisujete, sa nemení. To je väčšinou pravda, ale ak niektorá funkcia
+volaná cez prerušenie túto premennú zmení, o tejto zmene nemusí 
+kompilátor nič vedieť. Aby ste tento problém vyriešili, musíte všetky
+premenné, ktorých sa to týka deklarovať ako <dfn>volatile</dfn>.
+<code>volatile</code> je kľúčové slovo jazyka C, ktoré povie kompilátoru,
+aby nerobil žiadne predpoklady ohľadom obsahu premennej -- a navyše
+nebude dočasne uchovávať obsah premennej v registri.
+
+<p>Samozrejme nedeklarujte všetky vaše premenné ako volatile. Keby ste
+to spravili, značne by ste tým obmedzili schopnosť kompilátora optimalizovať
+váš kód a výsledný program by pravdepodobne bežal pomalšie. Ako volatile
+označte len tie premenné, do ktorých zapisujete alebo z ktorých čítate
+v súvislosti s prerušením (teda vo vnútri obslužnej funkcie časovača alebo
+iného prerušenia).
+
+
+<p><hr>[ Ďalší:<a rel=next href="#Removing%20timer%20callbacks">Odinštalovanie obslužných funkcií</a>
+ | Predošlý:<a rel=previous href="#Locking%20and%20volatility">Zamykanie a volatilita</a>
+ | Hore:<a rel=up href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+ ]<p>
+
+<h3><a name="Installing%20timer%20callbacks"><a name="TOC_89">9.2.3 Inštalovanie obslužných funkcií</a></a></h3>
+
+<p>Keď ste nainštalovali systém časovačov, zamkli obslužné funkcie a
+všetky dáta s ktorými narábajú a označili všetky takéto dáta ako
+<code>volatile</code>, môžete konečne povedať Allegru aby obslužné
+funkcie začalo volať.
+
+<pre>install_int (callback, msecs);
+</pre>
+
+<p>Nahraďte <code>callback</code> menom funkcie, ktorá vracia void a nemá
+parametre (v jazyku C) alebo neurčený počet parametrov (v jazyku C++).
+<code>msecs</code> je interval, v akom sa bude funkcia volať.
+
+<p>Tu je príklad funkcie pre C:
+
+<pre>volatile int counter = 0;      /* Budeme to v obslužnej funkcii meniť,
+                                  takže to musí byť volatile. */
+void my_callback_func()
+{
+    counter++;                 /* Pekné a jednoduché */
+}
+END_OF_FUNCTION (my_callback_func);   /* Všimnite si syntax */
+</pre>
+
+<p>Poznamenajme, že obslužná funkcia musí byť veľmi jednoduchá. Nesmie trvať
+príliš dlho, nesmie volať žiadne knižničné funkcie jazyka C, nesmie si
+dovoliť žiadny prepych ako napr. volanie funkcií DOSu. Ak volá procedúry
+Allegra, musia spĺňať rovnaké pravidlá.
+
+<p>Ak použivame C++, musíme zmeniť definíciu funkcie na:
+
+<pre>void my_callback_func(...)
+</pre>
+
+<p>inak dostaneme chybu.
+
+<p>Ďalej je tu kód, ktorý použijeme na zamknutie vecí zmienených vyššie:
+
+<pre>LOCK_FUNCTION (my_callback_func);    /* Zamkneme funkciu */
+LOCK_VARIABLE (counter);             /* Mení sa v obslužnej funkcii,
+                                        takže ju zamkneme tiež. */
+</pre>
+
+<p>Nakoniec nasledujúci riadok povie Allegru, aby našu funkciu volalo 
+desaťkrát za sekundu (raz za sto milisekúnd):
+
+<pre>install_int(my_callback_func, 100);
+</pre>
+
+<p>Všimnite si, že aj keď <code>my_callback_func</code> je funkcia, za jej
+menom nepíšeme zátvorky (<code>(</code> a <code>)</code>) -- keby sme to 
+spravili, funkcia by sa zavolala a jej (neexistujúca) návratová hodnota
+by sa zadala <code>install_int</code>. My ale potrebujeme zadať miesto, kde
+v pamäti začína kód funkcie, takže zátvorky nepíšeme.
+
+<p>Mimochodom, ak chcete zmeniť interval volania funkcie, môžete zavolať
+<code>install_int</code> neskôr znova.
+
+<p>Ak chcete mať lepšiu kontrolu nad obslužnými funkciami, môžete použiť
+funkciu <code>install_int_ex</code>. Parameter tejto funkcie sa zadáva
+v tikoch hardwarových hodín, ale môžete použiť makrá, ktoré na tento formát
+vedia skonvertovať bežnejšie jednotky -- sekundy alebo milisekundy na jedno
+volanie, alebo počet volaní za sekundu alebo minútu. Čo sa týka detailov
+k tejto funkcii a ďalších informácií o tom, čo obslužné funkcie môžu alebo 
+nemôžu urobiť, pozrite si Allegrovkú dokumentáciu.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Installing%20timer%20callbacks">Inštalovanie obslužných funkcií</a>
+ | Hore:<a rel=up href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+ ]<p>
+
+<h3><a name="Removing%20timer%20callbacks"><a name="TOC_90">9.2.4 Odinštalovanie obslužných funkcií</a></a></h3>
+
+<p>Odinštalovanie obslužnej funkcie je jednoduché -- stačí zavolať funkciu:
+
+<pre>remove_int(my_callback_proc);
+</pre>
+
+<p>Teoreticky by ste teraz mohli odomknúť pamäť, ktorú funkcia zaberá,
+ale prakticky to nehrá žiadnu rolu.
+
+<p><hr>[ Ďalší:<a rel=next href="#Examples%20of%20timers">Príklady časovačov</a>
+ | Predošlý:<a rel=previous href="#Setting%20up%20timer%20callbacks">Nastavenie obslužných funkcií časovača</a>
+ | Hore:<a rel=up href="#Timers">Časovače</a>
+ ]<p>
+
+<h2><a name="Limitations%20of%20timers"><a name="TOC_91">9.3 Obmedzenia časovačov</a></a></h2>
+
+<p>Tu je zoznam niektorých vecí, ktoré musíte a ktoré nesmiete, keď 
+píšete a používate obslužné funkcie časovačov (a vo všeobecnosti aj 
+iných prerušení).
+
+<p>Musíte:
+
+<ul>
+<li>Musíte zamknúť všetku pamäť, ktorej sa obslužné funkcie dotýkajú --
+zamknúť samotné obslužné funkcie a aj premenné, ktoré používajú. Ak
+volajú iné funkcie, musíte zamknúť aj tie ako aj všetko, čoho sa dotýkajú; 
+ak tie volajú ďalšie funkcie, musíte zamknúť aj tie, atď.
+
+<li>Musíte použiť volatile premenné. Ak to nespravíte, budú sa diať
+divné veci. Počas kompilácie nedostanete varovanie ani chybovú správu
+a nič špecifické sa neudeje ani pri spustení programu, ale zistíte,
+že program nerobí, čo má. Typickým príznakom je, že cyklus, ktorý čaká
+na to, že časovač zmení premennú, nikdy neskončí.
+</ul>
+
+<p>Nesmiete:
+
+<ul>
+<li>Z vašich obslužných funkcií nevolajte funkcie DOSu. DOS vo všeobecnosti
+nie je reentrantný a môže to vo väčšine prípadov spôsobiť vážne problémy.
+
+<li>Nevolajte knižničné funkcie jazyka C -- pokiaľ naozaj neviete, čo robíte.
+Knižničné funkcie Cčka môžu volať DOS a ako už bolo povedané vyššie, 
+v súvislosti s prerušeniami je to veľmi nešťastný nápad.
+
+<li>Nerobte nič príliš prepychové. Vaše obslužné funkcie by sa mali
+vykonať veľmi rýchlo. To, že sú vykonávané mimo hlavného toku programu
+neznamená, že nezaťažujú procesor. Čím dlhšie budú trvať vaše obslužné
+funkcie, tým menej času bude na vykonanie vášho hlavného programu. Nie je
+náhoda, že všetky ukážky len zmenia niekoľko premenných a skončia
+-- to je zhruba úroveň, na akej by ste mali uvažovať. Nastaviť pár 
+premenných a potom nechať váš hlavný kód, aby spravil ťažkú robotu.
+
+<li>Nechcite, aby sa vaše obslužné funkcie volali častejšie, než 
+potrebujete. Poznamenajme, že pod Windowsami musí byť čas medzi
+jednotlivými volaniami násobkom 5 milisekúnd; takže ak chcete, aby
+vaša hra fungovala správne pod rôznymi operačnými problémami, mali
+by byť vami použité časy násobkami 5 milisekúnd.
+
+<li>Neinštalujte priveľa obslužných funkcií. Maximálny počet je 16
+a majte na pamäti, že Allegro nejaké potrebuje pre seba.
+</ul>
+
+<p><hr>[ Predošlý:<a rel=previous href="#Limitations%20of%20timers">Obmedzenia časovačov</a>
+ | Hore:<a rel=up href="#Timers">Časovače</a>
+ ]<p>
+
+<h2><a name="Examples%20of%20timers"><a name="TOC_92">9.4 Príklady časovačov</a></a></h2>
+
+<ul>
+<li><a href="#Timing%20a%20game">Časomiera hry</a>
+
+<li><a href="#Measuring%20the%20frame%20rate">Zisťovanie obnovovacej frekvencie hry</a>
+
+<li><a href="#Regulating%20game%20speed">Ovládanie rýchlosti hry</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Measuring%20the%20frame%20rate">Zisťovanie obnovovacej frekvencie hry</a>
+ | Hore:<a rel=up href="#Examples%20of%20timers">Príklady časovačov</a>
+ ]<p>
+
+<h3><a name="Timing%20a%20game"><a name="TOC_93">9.4.1 Časomiera hry</a></a></h3>
+
+<p>Tento príklad je celkom jednoduchý. Nastavíme globálnu premennú tak, aby 
+obsahovala uplynulý počet sekúnd. Naša obslužná funkcia bude toto číslo
+zväčšovať. Zamkneme počítadlo aj obslužnú funkciu. Potom, keď chceme spustiť
+hodiny, nechháme obslužnú funkciu volať raz za sekundu. Potom môžeme 
+z (volatile!) premennej zistiť, koľko času uplunulo.
+
+<p>Keď čas, ktorý stopujeme uplynie, môžeme si počítadlo skopírovať, alebo 
+len odinštalovať obslužnú funkciu. Ak ju odinštalujeme, počítadlo sa už meniť 
+nebude.
+
+<p>Ako variáciu môžeme naprogramovať časový limit. V tomto prípade
+nastavíme počítadlo na počet sekúnd, ktoré sú k dispozícií (napríklad
+na uhratie levelu). Obslužná funkcia bude túto hodnotu zmenšovať.
+V hlavnom cykle hry budeme kontrolovať, či je v počítadle kladná hodnota.
+Ak nie je, hráčovi vypršal čas. V tomto momente môžete obslužnú funkciu 
+odinštalovať, aby ste zastavili ďalšie zmenšovanie počítadla.
+
+<p>Pozrite si <code>examples/chap_09/ex_4_1</code>.
+
+<p><hr>[ Ďalší:<a rel=next href="#Regulating%20game%20speed">Ovládanie rýchlosti hry</a>
+ | Predošlý:<a rel=previous href="#Timing%20a%20game">Časomiera hry</a>
+ | Hore:<a rel=up href="#Examples%20of%20timers">Príklady časovačov</a>
+ ]<p>
+
+<h3><a name="Measuring%20the%20frame%20rate"><a name="TOC_94">9.4.2 Zisťovanie obnovovacej frekvencie hry</a></a></h3>
+
+<p>Toto je tiež celkom jednoduché
+
+<p>Najprv si urobíme dve volatile globálne premenné -- jednu nazvanú 
+<code>last_fps</code> a druhú <code>frame_counter</code>. Potom spravíme
+obslužnú funkciu časovača, ktorá jednoducho skopíruje <code>frame_counter</code>
+do <code>last_fps</code> a potom nastavíte <code>frame_counter</code>
+na nulu. Zamkneme obe premenné a obslužnú funkciu a potom obslužnú funkciu
+necháme vyvolať raz za sekundu. 
+
+<p>Teraz môžeme premennú <code>last_fps</code> zobraziť na monitore
+alebo zapísať do logu alebo čokoľvek. Na chvíľu to bude nula. Všetko, čo
+musíme urobiť, aby sme získali počet vykreslených rámcov za sekundu je,
+aby vykresľovacia funkcia po každom vykreslení rámca premennú 
+<code>frame_counter</code> zväčšila o 1.
+
+<p>Funguje to preto, lebo obslužná funkcia sa volá každú sekundu a kopíruje
+hodnotu do <code>last_fps</code>, pričom vynuluje <code>frame_counter</code>.
+Potom vykreslíme nejaké rámce a kým to robíme, zväčšuje sa premenná
+<code>frame_counter</code>. Sekundu po predošlom volaní sa obslužná funkcia
+zavolá znovu a skopíruje počet vykreslených rámcov z <code>frame_counter</code>
+do <code>last_fps</code>.
+
+<p>Pozrite si <code>examples/chap_09/ex_4_2</code>.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Measuring%20the%20frame%20rate">Zisťovanie obnovovacej frekvencie hry</a>
+ | Hore:<a rel=up href="#Examples%20of%20timers">Príklady časovačov</a>
+ ]<p>
+
+<h3><a name="Regulating%20game%20speed"><a name="TOC_95">9.4.3 Ovládanie rýchlosti hry</a></a></h3>
+
+<p>Táto téma je mojou nomináciou na "často pýtanú otázku" roka 
+v mailingliste Allegra. Je veľmi dôležitá.  Hry, ktoré nebežia rovnako 
+rýchlo na rôznych počítačoch alebo za rôznych podmienok ma štvú.
+Nemyslím tým, že obnovovacia frekvencia musí byť na všetkých počítačoch 
+rovnaká -- to samozrejme nie je možné. Hovorím o rýchlosti hry --
+napríklad o rýchlosti pohybu postáv.
+
+<p>Aby ste to dosiahli, mohli by ste v ideálnom prípade chcieť hýbať
+postavami v pravidelných intervaloch. Žeby vo vnútri obslužnej funkcie
+časovača? V žiadnom prípade. Je to príliš komplikované; pamätajte, že
+obslužné funkcie musia byť jednoduché. Mimochodom, predstavte si, koľko
+problémov by narobilo snažiť sa zamknúť všetko, čoho sa takáto obslužná
+funkcia dotkne!
+
+<p>Najlepšia vec, ktorú môžeme reálne urobiť je časovač zväčšujúci premennú,
+ktorá obsahuje počet herných cyklov, ktoré <em>by mali</em> doteraz uplynúť.
+Potom môžeme upraviť herný cyklus tak, aby túto premennú porovnával s počtom
+herných cyklov, ktoré skutočne uplynuli. Ak sa omeškávame, musíme zavolať
+funkciu obsluhujúcu logiku hry ešte raz (prípadne niekoľkokrát), kým to 
+nezrovnáme. Inak herným cyklom momentálne prejsť netreba.
+
+<p>Ak sme patričný počet cyklov prešli, môžeme si dať pohov a robiť iné
+veci, ako zobraziť jeden rámec grafiky. Zobrazovanie grafiky je často 
+pomalá vec, čiastočne preto, lebo vykreslenie nejaký čas trvá a čiastočne 
+preto, lebo sa s použitím <code>vsync</code> čaká na VBI. Pokiaľ kreslíme 
+grafiku a čakáme na VBI, naša obslužná funkcia časovača je stále 
+v pravidelných intervaloch volaná. Samozrejme s tým momentálne nerobíme nič;
+ono to počká, kým s grafikou skončíme. Ale keď sme s grafikou hotoví, vieme 
+presne, koľko herných cyklov musíme prebehnúť, aby sme sa opäť dostali tam,
+kde chceme byť.
+
+<p>Takže ak to zhrnieme -- treba si spraviť dve počítadlá. Jedno sa bude
+zväčšovať v pravidelných intervaloch (cieľový interval cyklu hry) s pomocou
+obslužnej funkcie časovača a druhé bude zväčšovať raz za aktuálny herný
+cyklus funkcia, ktorá ho vykonáva. Na začiatku tieto počítadlá nastavíme na 
+nulu. Pri každom prechode cez hlavný herný cyklus najprv nakreslíme jeden
+rámec grafiky. To vo väčšine hier zaberie relatívne dlhý čas. Potom zistíme,
+či je cieľový počet herných cyklov väčší, než aktuálny (to pravdepodobne 
+bude) a robíme herné cykly, kým to nedoženieme. Potom začneme od začiatku.
+
+<p>Pozrite si <code>examples/chap_09/ex_4_3</code>.
+
+<p><hr>[ Predošlý:<a rel=previous href="#Timers">Časovače</a>
+ | Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1><a name="Datafiles"><a name="TOC_96">10. Datasúbory</a></a></h1>
+
+<p>Súbor <code>grabber.txt</code> v podadresári <code>tools</code> Allegra
+obsahuje dobrý popis takmer všetkých aspektov datasúborov. Ak je niektorý
+tu zmienený bod nejasný, ak chcete viac informácií alebo ak tu nie je niečo
+popísané do podrobností, je to miesto, kde by ste mali hľadať ďalšie 
+informácie.
+
+<ul>
+<li><a href="#Concept">Koncept</a>
+
+<li><a href="#Creating%20a%20datafile">Vytvorenie datasúboru</a>
+
+<li><a href="#Using%20a%20datafile">Použitie datasúboru</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Creating%20a%20datafile">Vytvorenie datasúboru</a>
+ | Hore:<a rel=up href="#Datafiles">Datasúbory</a>
+ ]<p>
+
+<h2><a name="Concept"><a name="TOC_97">10.1 Koncept</a></a></h2>
+
+<p>Doteraz ste mohli vidieť, že hra vyžaduje mnoho rôznych súborov; je
+tam spustiteľný súbor, ktorý spúšťajú používatelia, potom grafika buď 
+v niekoľkých veľkých súboroch z ktorých každý jej obsahuje spústu, alebo
+každý obrázok vo svojom vlastnom súbore (ja radšej používam prvý prístup).
+Tiež máme zvukové efekty (jeden súbor pre každý) a hudbu (jeden súbor pre
+každú časť).
+
+<p>To sú len štandardné súbory, ktoré potrebujú takmer všetky hry. Okrem 
+toho môže každá hra obsahovať súbory s popisom levelov, umelej inteligencie
+protivníkov a iné potrebné dáta. Dohromady to môže byť značný počet súborov.
+
+<p>Vďaka spôsobu clusteringu pod DOSom musí byť každý súbor uchovávaný
+v blokoch určitej dĺžky. Na partíciach menších, než 1Gb majú tieto
+<dfn>clustre</dfn> (čítať "klastre") veľkosť 16K. Väčšina súborov nezaplní 
+úplne posledný cluster a zostávajúci priestor je premrhaný -- v priemernom
+prípade je strata 8K na súbor, ale v praxi to pravdepodobne býva viac.
+Takto premrhaný priestor môže narastať, zvlášť ak používate veľa súborov,
+z ktorých každý je oveľa menší než veľkosť jedného clustra. Ak máte 
+Windows 95, skúste napísať vo vašom adresári <code>djgpp\zoneinfo</code> 
+príkaz <code>dir /s/v</code> a porovnajte "bytes" a "bytes allocated".
+Keď to spravíte, možno sa rozhodnete adresár vymazať, alebo aspoň zozipovať
+-- pravdepodobne ho nebudete potrebovať.
+
+<p>Množstvo súborov s koncovkami <code>.PCX</code>, <code>.WAV</code> 
+alebo <code>.MID</code> tiež ľudí zvádza k tomu, aby si ich "požičali"
+pre svoje vlastné účely, alebo ich modifikovali a tak zmenili hru.
+Ak im to nechcete dovoliť, je rozumné nenechať tam tie súbory ležať len tak.
+
+<p>Odhliadnuc od predošlých dvoch dôvodov, je celkom chaos, ak máte všetky 
+súbory uložené jednotlivo a vaša hra ich má na začiatku všetky nahrať. 
+Datasúbory poskytujú spôsob, ako zabaliť všetky alebo niektoré vaše súbory do
+jedného veľkého datasúboru, ktorý môže byť načítaný naraz, prípadne 
+môže byť skomprimovaný a dáta v ňom zašifrované. 
+
+<p><hr>[ Ďalší:<a rel=next href="#Using%20a%20datafile">Použitie datasúboru</a>
+ | Predošlý:<a rel=previous href="#Concept">Koncept</a>
+ | Hore:<a rel=up href="#Datafiles">Datasúbory</a>
+ ]<p>
+
+<h2><a name="Creating%20a%20datafile"><a name="TOC_98">10.2 Vytvorenie datasúboru</a></a></h2>
+
+<p>Datasúbory sa vytvárajú zo súborov na disku. Allegro na narábanie s nimi 
+poskytuje dva hlavné prostriedky: Grabber a nástroj DAT. Oba sú dobre 
+zdokumentované v súbore <code>grabber.txt</code>, v adresári <code>tools</code>
+Allegra, ale spravím tu aspoň stručný popis.
+
+<ul>
+<li><a href="#The%20grabber">Grabber</a>
+
+<li><a href="#The%20DAT%20utility">Nástroj DAT</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#The%20DAT%20utility">Nástroj DAT</a>
+ | Hore:<a rel=up href="#Creating%20a%20datafile">Vytvorenie datasúboru</a>
+ ]<p>
+
+<h3><a name="The%20grabber"><a name="TOC_99">10.2.1 Grabber</a></a></h3>
+
+<p>(nebolo zatiaľ napísané)
+
+<p><hr>[ Predošlý:<a rel=previous href="#The%20grabber">Grabber</a>
+ | Hore:<a rel=up href="#Creating%20a%20datafile">Vytvorenie datasúboru</a>
+ ]<p>
+
+<h3><a name="The%20DAT%20utility"><a name="TOC_100">10.2.2 Nástroj DAT</a></a></h3>
+
+<p>(nebolo zatiaľ napísané)
+
+<p><hr>[ Predošlý:<a rel=previous href="#Creating%20a%20datafile">Vytvorenie datasúboru</a>
+ | Hore:<a rel=up href="#Datafiles">Datasúbory</a>
+ ]<p>
+
+<h2><a name="Using%20a%20datafile"><a name="TOC_101">10.3 Použitie datasúboru vo vašom programe</a></a></h2>
+
+<p>Je viacero spôsobov, ako môžete prečítať dáta z datasúboru. V prvom rade
+môžete prečítať celý datasúbor, všetko naraz. Za druhé môžete prečítať jednu
+zložku datasúbosu zvlášť. A nakoniec môžete otvoriť zložku datasúboru, ako 
+keby to bol normálny súbor.
+
+<ul>
+<li><a href="#Loading%20an%20entire%20datafile">Načítanie celého datasúboru</a>
+
+<li><a href="#Individually%20loading%20datafile%20components">Jednotlivé načítanie zložky datasúboru</a>
+
+<li><a href="#Reading%20a%20datafile%20component%20as%20a%20normal%20packfile">Čítanie zložky datasúboru ako normálneho súboru</a>
+</ul>
+
+<p><hr>[ Ďalší:<a rel=next href="#Individually%20loading%20datafile%20components">Jednotlivé načítanie zložky datasúboru</a>
+ | Hore:<a rel=up href="#Using%20a%20datafile">Použitie datasúboru</a>
+ ]<p>
+
+<h3><a name="Loading%20an%20entire%20datafile"><a name="TOC_102">10.3.1 Načítanie celého datasúboru</a></a></h3>
+
+<p>Toto je zvyčajný spôsob, akým sa veci robia. Pri tomto prístupe stačí
+zavolať jednu funkciu a Allegro načíta všetky objekty, ktoré ste uložili
+v datasúbore. Funkcia, ktorú treba zavolať je <code>load_datafile</code>:
+
+<pre>DATAFILE *load_datafile(char *filename);
+</pre>
+
+<p>Dáte jej meno vášho datasúboru a vráti smerník na pole štruktúr DATAFILE,
+pre každý objekt je tam jedna. Takže ak <code>data</code> je 
+<code>DATAFILE *</code> a vy napíšete:
+
+<pre>data = load_datafile("datafile.dat");
+</pre>
+
+<p>potom <code>data[0]</code> bude prvý objekt datasúboru, <code>data[1]</code> 
+druhý, atď.
+
+<p>Najdôležitejšia položka v štruktúre DATAFILE je položka <code>dat</code>.
+Je to smerník, ktorý ukazuje na aktuálne dáta objektu. Ak je objekt bitmapa,
+potom toto pole ukazuje na štruktúru BITMAP -- takže môžete písať:
+
+<pre>blit(data[0].dat, screen, <small>...</small>);
+</pre>
+
+<p>Ak je objekt zvuk, tak je to štruktúra SAMPLE:
+
+<pre>play_sample(data[1].dat, 255, 128, 1000, 0);
+</pre>
+
+<p>Rovnako to funguje pre MIDI súbory, palety, animácie a niektoré 
+ďalšie veci. V grabberi alebo nástroji DAT môžete vidieť, akého typu
+dát sú jednotlivé objekty, je to uvedené v zozname vľavo od mena objektu
+(napíšte <code>dat -l &lt;filename&gt;</code>, alebo sa pozrite na ľavú 
+stranu obrazovky grabbera).
+
+<p>Tiež sa dá povedať, aký typ dát sa v objekte nachádza podľa položky
+<code>type</code>. Táto je nastavená na konštantu ako 
+<code>DAT_BITMAP</code>, <code>DAT_SAMPLE</code> or <code>DAT_MIDI</code>.  
+Ak dáta nie sú v zvláštnom formáte, je to <code>DAT_DATA</code> --
+znamená to, že <code>dat</code> iba ukazuje na blok dát. Veľkosť tohto
+bloku môžete zistiť z položky <code>size</code> štrultúry DATAFILE:
+
+<pre>load_map_data(data[2].dat, data[2].size);
+</pre>
+
+<p>odovzdá smerník na binárny blok a jeho veľkosť funkcii
+<code>load_map_data</code> (ktorú si sami napíšete).
+
+<p>Ďalej, ako zistiť, aké číslo objektu v datasúbore korešponduje 
+s jednotlivými objektami, ktoré ste vložili do datasúboru? Sú tri spôsoby,
+ako to zistiť a ako vždy, je na vás, ktorý z nich zvolíte. Podľa okolností
+môžete zmixovať všetky tri dohromady.
+
+<p>Prvý spôsob je použiť hlavičkový súbor, ktorý vám môže vytvoriť grabber
+alebo nástroj DAT. Tento súbor bude obsahovať jedno makro pre každý súbor,
+ktoré #definuje meno objektu ako jeho index v datasúbore. Takže miesto 
+použitia toho, čo som písal vyššie, môžete povedať:
+
+<pre>blit(data[MY_BITMAP].dat, screen, <small>...</small>);
+play_sample(data[MY_SAMPLE].dat, 255, 128, 1000, 0);
+load_map_data(data[MY_MAP].dat, data[MY_MAP].size);
+</pre>
+
+<p>Ak pri tomto prístupe pridáte do datasúboru nové objekty a uložíte 
+ich pred staré, nemusíte v celom programe meniť všetky indexy.
+
+<p>Text každého #define je presne to, čo zadáte grabberu ako meno objektu. Ak na
+vytváranie objektu použijete nástroj DAT, jeho meno bude pravdepodobne pôvodné
+meno súboru napísané veľkými písmenami s tým, že znak <code>.</code> bude
+nahradený znakom <code>_</code>. Táto náhrada sa robí preto, aby výsledné meno
+objektu mohlo byť použiteľné v #define v Cčku -- bodky povolené nie sú.
+
+<p>V tejto súvislosti majte na pamäti, že keď vyberiete svojim objektom mená,
+tak budú použité vo vašom programe ako makrá v #define -- nevyberajte teda mená,
+ktoré môžu byť použité na ňiečo iné (napr.<code>main</code>,
+<code>BITMAP</code>, atď. ) V grabberi alebo nástroji dat môžete použiť
+nastavenie <code>Prefix</code>, čo spôsobí, že sa pred každé meno v hlavičkovom
+súbore niečo vloží. Ak ho napr. nastavíte na <code>DATAFILE</code>, dostanete:
+
+<pre>blit(data[DATAFILE_BITMAP].dat, screen, <small>...</small>);
+</pre>
+
+<p>ak bolo meno objektu <code>BITMAP</code>.
+
+<p>Ďalší spôsob, ako sa dá zistiť, kde sa objekt v datasúbore nachádza je
+založený na fakte, že sú uložené v abecednom poradí.  Podľa autora je to pravda
+teraz a vždy aj bude. Neodporúčam používať túto vlastnosť pričasto, ale môže byť
+užitočná, ak napríklad máte viacero bitmáp (napríklad rámce jedného spritu),
+ktoré sú nazvané <code>ENEMY_000</code>, <code>ENEMY_001</code>,
+<code>ENEMY_002</code>, atď. Aby ste sa na ne odvolali, môžete samozrejme
+používať mená z #define, ale je výhodnejšie môcť vybrať niektorú z týchto
+premenných s pomocou čísla uloženého v premennej.
+
+<p>Kvôli spôsobu, akým preprocesing funguje (<code>pre</code> = pred, t.j. pred
+kompiláciou) nie je možné zmeniť počas behu programu <code>ENEMY_000</code> na
+<code>ENEMY_xxx</code>. Ale keďže sú objekty uložené v abecednom poradí, viete,
+že <code>ENEMY_000</code> bude uložená v súbore ako prvá a
+<code>ENEMY_001</code> bude tesne za ňou -- teda n-tá bitmapa s nepriateľom bude
+objekt číslo <code>ENEMY_000 + n</code> (ak ako každý normálny programátor
+začínate číslovať od nily, teda <code>ENEMY_000</code> je nultý objekt.) Potom
+nasledujúca vec bude fungovať:
+
+<pre>void draw_nth_enemy (int n, BITMAP *where, int x, int y)
+{
+    draw_sprite(where, data[ENEMY_000 + n], x, y);
+}
+</pre>
+
+<p>Tretí spôsob nájdenia objektu v datasúbore znamená prehľádávanie datasúboru,
+kým nenájdete objekt so správnym menom. Mená objektov sú uložené ako
+<dfn>properties</dfn> (vlastnosti) objektov. Všetky detaily nájdete v súbore
+<code>grabber.txt</code>. Stručne ale, ak chcete získať meno objektu, napíšte:
+
+<pre>name = get_datafile_property(&amp;dat[obj_number],
+                              DAT_ID ('N','A','M','E'));
+</pre>
+
+<p>Všimnite si toho <code>&amp;</code> -- odovzdávate smerník na prvok poľa. Ak
+je reťazec, ktorý sa vráti, prázdny (teda name[0] == '\0', <em>nie</em> name ==
+NULL), potom objekt nemá vlastnosť <code>NAME</code>. To pravdepodobne znamená,
+že ste z datasúboru vysekali vlastnosti; v tom prípade musíte na vyhľadanie
+objektu použiť niektorú z predošlých dvoch metód.
+
+<p>Je spústa ďalších vecí, o ktorých by bolo dobré sa tu zmieniť. V prvom rade,
+ak používate C++, potom sa kompilátoru nebude páčiť, že dávate pole
+<code>dat</code> (smerník na void) ako parameter funkciam, ktoré očakávajú iný
+typ smerníka, takže ho musíte explicitne pretypovať na to, čo funkcia očakáva:
+
+<pre>play_midi( (MIDI *) data[MUSIC].dat, 0);
+</pre>
+
+<p>Po druhé (a so vzťahom k predošlému) je často výhodné zriadiť si aliasy k
+objektom v datasúbore tak, že vytvoríte globálne premenné alebo polia, niečo
+ako:
+
+<pre>BITMAP *enemy_bitmap;
+MIDI *background_music;
+SAMPLE *crash_sound;
+</pre>
+
+<p>potom ich nastavíte, aby ukazovali na určité miesta v datasúbore:
+
+<pre>data = load_datafile("DATAFILE.DAT");
+if (!data) barf();  /* loading failed */
+
+enemy_bitmap = (BITMAP *) data[ENEMY_BITMAP];
+background_music = (MIDI *) data[MUSIC];
+crash_sound = (SAMPLE *) data[CRASH_SOUND];
+</pre>
+
+<p>a konečne ich použijete v hre:
+
+<pre>draw_sprite(screen, enemy_bitmap, x, y);
+play_midi(background_music, 1);
+play_sample(crash_sound, 255, 128, 1000, 0);
+</pre>
+
+<p>Výhody tohto prístupu sú, že sa zbavíte obtiažneho pretypovávania potrebného
+v C++, výsledný kód bude krajší a trochu rýchlejší a tiež to zjednoduší prechod
+z kódu založeného na datasúboroch na kód založený na jednotlivých súboroch alebo
+naopak.
+
+<p>Po tretie, pole datasúboru je zakončené objektom typu <code>DAT_END</code>.
+Môžete a nemusíte to pokladať za veľmi užitočné; je to temer zbytočná
+informácia, čosi ako že <code>argv[argc]</code> je NULL. Ak chcete celý
+datasúbor z nejakého dôvodu prehľádať (napríklad, aby ste našli objekt s určitou
+vlastnosťou), môžete tento fakt použiť, aby ste vedeli, kde máte prestať.
+
+<p>Nakoniec, keď prácu s datasúborom skončíte, môžete ho odstrániť z pamäte
+použitím funkcie <code>unload_datafile</code>:
+
+<pre>unload_datafile(data);
+</pre>
+
+<p>Je zbytočné hovoriť, že keď to spravíte, nemôžete viac pole <code>data</code>
+používať a ak máte nejaké aliasy  pre objekty v poli (ako vyššie), nemôžete
+používať ani tie.
+
+<p>Pozrite si príklad: <code>examples/chap_10/ex_3_1</code>
+
+<p><hr>[ Ďalší:<a rel=next href="#Reading%20a%20datafile%20component%20as%20a%20normal%20packfile">Čítanie zložky datasúboru ako normálneho súboru</a>
+ | Predošlý:<a rel=previous href="#Loading%20an%20entire%20datafile">Načítanie celého datasúboru</a>
+ | Hore:<a rel=up href="#Using%20a%20datafile">Použitie datasúboru</a>
+ ]<p>
+
+<h3><a name="Individually%20loading%20datafile%20components"><a name="TOC_103">10.3.2 Jednotlivé načítanie zložky datasúboru</a></a></h3>
+
+<p>Je možné z datasúboru načítať aj jednotlivé objekty, za predpokladu, že v
+datasúbore sú informácie o menách (teda, že ste v grabberi nevysekali všetky
+vlastnosti, alebo ste nepoužili <code>-s2</code> v nástroji dat). Funkcia, ktorá
+to spraví, je <code>load_datafile_object</code> a používa sa spôsobom:
+
+<pre>data_object = load_datafile_object ("datafile.dat", "object_name");
+</pre>
+
+<p><code>data_object</code> bude <code>DATAFILE *</code>, rovnako ako keby ste
+načítali celý datasúbor. Na prístup k objektu len dereferencujete smerník:
+
+<pre>music_object = load_datafile_object("datafile.dat", "MUSIC");
+play_midi(music_object-&gt;dat);      /* alebo music_object[0].dat */
+</pre>
+
+<p>Keďže je načítaný len jeden objekt, funkcia vráti smerník na jedinú štruktúru
+DATAFILE, nie na celé pole. Takže nemôžete použiť index objektu z hlavičkového
+súboru a za vráteným objektom nenasleduje žiaden <code>DAT_END</code> objekt.
+
+<p>Na odstránenie objektu načítaného týmto spôsobom z pamäti použijete funkciu
+<code>unload_datafile_object</code>:
+ 
+<pre>unload_datafile_object(data_object);
+</pre>
+
+<p>Pozrite príklad: <code>examples/chap_10/ex_3_2</code>
+
+<p><hr>[ Predošlý:<a rel=previous href="#Individually%20loading%20datafile%20components">Jednotlivé načítanie zložky datasúboru</a>
+ | Hore:<a rel=up href="#Using%20a%20datafile">Použitie datasúboru</a>
+ ]<p>
+
+<h3><a name="Reading%20a%20datafile%20component%20as%20a%20normal%20packfile"><a name="TOC_104">10.3.3 Čítanie zložky datasúboru ako normálneho súboru</a></a></h3>
+
+<p>Príjemná vlastnosť Allegrovských funkcií na prácu s pakovanými súbormi je
+schopnosť čítať objekt dátového súboru, ako by to bol súbor na disku. Stačí na
+to použiť kódovaný formát mena súboru <code>meno_datasúboru#meno_objektu</code>,napríklad:
+
+<pre>fp = pack_fopen("datafile.dat#MUSIC", F_READ);
+</pre>
+
+<p>Ak potom <code>fp</code> nie je NULL, môžete z neho čítať ako z normálneho
+pakovaného súboru. Nemôžete do neho zapisovať. Keď ich chcete zatvoriť,
+použijete <code>pack_fclose</code> ako zvyčajne.
+
+<p>Pozrite si príklad: <code>examples/chap_10/ex_3_3</code>
+
+<p><hr>[ Hore:<a rel=up href="#Top">Začiatok</a>
+ ]<p>
+
+<h1>Obsah</h1>
+<ul>
+<li><a href="#TOC_0">1. Úvod</a>
+<ul>
+<li><a href="#TOC_1">1.1 O tutoriáli</a>
+<li><a href="#TOC_2">1.2 Zámer</a>
+<li><a href="#TOC_3">1.3 Cieľová skupina</a>
+<li><a href="#TOC_4">1.4 Požiadavky</a>
+<li><a href="#TOC_5">1.5 Predtým, než začneme <small>...</small></a>
+</ul>
+<li><a href="#TOC_6">2. Ako získať, nainštalovať a používať Allegro</a>
+<ul>
+<li><a href="#TOC_7">2.1 Čo je to Allegro</a>
+<li><a href="#TOC_8">2.2 Kde získať Allegro</a>
+<li><a href="#TOC_9">2.3 Ako nainštalovať Allegro</a>
+<li><a href="#TOC_10">2.4 Testovanie inštalácie</a>
+<li><a href="#TOC_11">2.5 Použitie Allegra</a>
+</ul>
+<li><a href="#TOC_12">3. Základná štruktúra hry</a>
+<ul>
+<li><a href="#TOC_13">3.1 Čo všetko musí hra robiť?</a>
+<li><a href="#TOC_14">3.2 Návrh štruktúry</a>
+<li><a href="#TOC_15">3.3 Projekt rozdelený do súborov</a>
+</ul>
+<li><a href="#TOC_16">4. Úvod do grafiky</a>
+<ul>
+<li><a href="#TOC_17">4.1 Nastavenie grafického režimu</a>
+<li><a href="#TOC_18">4.2 Kreslenie objektov</a>
+<ul>
+<li><a href="#TOC_19">4.2.1 Štruktúra BITMAP</a>
+<li><a href="#TOC_20">4.2.2 Kreslenie pixelov</a>
+<li><a href="#TOC_21">4.2.3 Nejaké ďalšie primitívy</a>
+<li><a href="#TOC_22">4.2.4 Písanie textu</a>
+</ul>
+<li><a href="#TOC_23">4.3 Práca s paletou</a>
+<ul>
+<li><a href="#TOC_24">4.3.1 Čo je to paleta</a>
+<li><a href="#TOC_25">4.3.2 Zmena položky palety</a>
+<li><a href="#TOC_26">4.3.3 Zmena palety</a>
+<li><a href="#TOC_27">4.3.4 Stmievanie a rozsvecovanie</a>
+</ul>
+<li><a href="#TOC_28">4.4 Jednoduchá animácia</a>
+<ul>
+<li><a href="#TOC_29">4.4.1 Čo je to animácia</a>
+<li><a href="#TOC_30">4.4.2 Ako urobiť, aby veci vyzerali, že sa hýbu</a>
+<li><a href="#TOC_31">4.4.3 Zníženie blikania</a>
+<ul>
+<li><a href="#TOC_32">4.4.3.1 Synchronizácia na zatemnenie</a>
+<li><a href="#TOC_33">4.4.3.2 Maximalizácia času vykreslenia</a>
+<li><a href="#TOC_34">4.4.3.3 Optimalizácia poradia vykreslenia</a>
+<li><a href="#TOC_35">4.4.3.4 Dvojitý buffering</a>
+<li><a href="#TOC_36">4.4.3.5 Špinavé obdĺžniky</a>
+<li><a href="#TOC_37">4.4.3.6 Striedavé vykreslovanie riadkov</a>
+</ul>
+</ul>
+</ul>
+<li><a href="#TOC_38">5. Ako zariadiť, aby sa niekoľko vecí dialo súčasne</a>
+<ul>
+<li><a href="#TOC_39">5.1 Ďalšie kruhy</a>
+<li><a href="#TOC_40">5.2 Aj štvorce</a>
+<li><a href="#TOC_41">5.3 Uchovávanie viacerých vecí</a>
+<ul>
+<li><a href="#TOC_42">5.3.1 Dynamická alokácia</a>
+<li><a href="#TOC_43">5.3.2 Zreťazené zoznamy</a>
+<ul>
+<li><a href="#TOC_44">5.3.2.1 Jednoducho zreťazené zoznamy</a>
+<li><a href="#TOC_45">5.3.2.2 Dvojmo zreťazené zoznamy</a>
+<li><a href="#TOC_46">5.3.2.3 Kruhovo zreťazené zoznamy</a>
+<li><a href="#TOC_47">5.3.2.4 Použitie zreťazených zoznamov</a>
+</ul>
+</ul>
+<li><a href="#TOC_48">5.4 Objektovo orientované programovanie</a>
+</ul>
+<li><a href="#TOC_49">6. Uživateľský vstup</a>
+<ul>
+<li><a href="#TOC_50">6.1 Vstup z klávesnice</a>
+<ul>
+<li><a href="#TOC_51">6.1.1 Prečo sú štandardné klávesnicové funkcie nepoužiteľné</a>
+<li><a href="#TOC_52">6.1.2 Klávesnicové funkcie allegra</a>
+<li><a href="#TOC_53">6.1.3 Ako niečím pohnúť s pomocou klávesnice</a>
+<li><a href="#TOC_54">6.1.4 Ako nechať užívateľa vybrať si klávesy</a>
+</ul>
+<li><a href="#TOC_55">6.2 Vstup z joysticku</a>
+<ul>
+<li><a href="#TOC_56">6.2.1 Digitálne snímanie</a>
+<li><a href="#TOC_57">6.2.2 Tlačítka na streľbu</a>
+<li><a href="#TOC_58">6.2.3 Analógové snímanie a kalibrácia</a>
+</ul>
+<li><a href="#TOC_59">6.3 Vstup z myši</a>
+<ul>
+<li><a href="#TOC_60">6.3.1 Ukáž a klikni</a>
+<ul>
+<li><a href="#TOC_61">6.3.1.1 Inicializácia myši</a>
+<li><a href="#TOC_62">6.3.1.2 Čítanie myši</a>
+<li><a href="#TOC_63">6.3.1.3 Zobrazenie ukazovateľa myši</a>
+<li><a href="#TOC_64">6.3.1.4 Ovládanie ukazovateľa myši</a>
+</ul>
+<li><a href="#TOC_65">6.3.2 Priama kontrola myšou</a>
+</ul>
+<li><a href="#TOC_66">6.4 Vstup všeobecne</a>
+<li><a href="#TOC_67">6.5 Spôsoby interpretácie vstupných dát</a>
+</ul>
+<li><a href="#TOC_68">7. Niečo viac z 2D grafiky</a>
+<li><a href="#TOC_69">8. Zvuk</a>
+<ul>
+<li><a href="#TOC_70">8.1 Konfigurácia zvuku</a>
+<ul>
+<li><a href="#TOC_71">8.1.1 Inicializácia ovládačov zvuku</a>
+<li><a href="#TOC_72">8.1.2 Konfiguračný súbor pre zvuk</a>
+</ul>
+<li><a href="#TOC_73">8.2 Digitálny zvuk</a>
+<ul>
+<li><a href="#TOC_74">8.2.1 Načítanie zvukových súborov</a>
+<li><a href="#TOC_75">8.2.2 Prehrávanie zvukov</a>
+<li><a href="#TOC_76">8.2.3 Úprava parametrov zvuku</a>
+<li><a href="#TOC_77">8.2.4 Uvoľnenie zvukov z pamäti</a>
+<li><a href="#TOC_78">8.2.5 Hlasové funkcie</a>
+</ul>
+<li><a href="#TOC_79">8.3 MIDI súbory</a>
+<ul>
+<li><a href="#TOC_80">8.3.1 Načítanie MIDI súborov</a>
+<li><a href="#TOC_81">8.3.2 Prehrávanie MIDI súborov</a>
+<li><a href="#TOC_82">8.3.3 Ovládanie MIDI súborov</a>
+<li><a href="#TOC_83">8.3.4 Uvoľnenie MIDI súborov z pamäti</a>
+</ul>
+</ul>
+<li><a href="#TOC_84">9. Časovače</a>
+<ul>
+<li><a href="#TOC_85">9.1 Použitie časovačov</a>
+<li><a href="#TOC_86">9.2 Nastavenie obslužných funkcií časovača</a>
+<ul>
+<li><a href="#TOC_87">9.2.1 Inicializácia systému časovačov</a>
+<li><a href="#TOC_88">9.2.2 Zamykanie a volatilita</a>
+<li><a href="#TOC_89">9.2.3 Inštalovanie obslužných funkcií</a>
+<li><a href="#TOC_90">9.2.4 Odinštalovanie obslužných funkcií</a>
+</ul>
+<li><a href="#TOC_91">9.3 Obmedzenia časovačov</a>
+<li><a href="#TOC_92">9.4 Príklady časovačov</a>
+<ul>
+<li><a href="#TOC_93">9.4.1 Časomiera hry</a>
+<li><a href="#TOC_94">9.4.2 Zisťovanie obnovovacej frekvencie hry</a>
+<li><a href="#TOC_95">9.4.3 Ovládanie rýchlosti hry</a>
+</ul>
+</ul>
+<li><a href="#TOC_96">10. Datasúbory</a>
+<ul>
+<li><a href="#TOC_97">10.1 Koncept</a>
+<li><a href="#TOC_98">10.2 Vytvorenie datasúboru</a>
+<ul>
+<li><a href="#TOC_99">10.2.1 Grabber</a>
+<li><a href="#TOC_100">10.2.2 Nástroj DAT</a>
+</ul>
+<li><a href="#TOC_101">10.3 Použitie datasúboru</a>
+<ul>
+<li><a href="#TOC_102">10.3.1 Načítanie celého datasúboru</a>
+<li><a href="#TOC_103">10.3.2 Jednotlivé načítanie zložky datasúboru</a>
+<li><a href="#TOC_104">10.3.3 Čítanie zložky datasúboru ako normálneho súboru</a>
+</ul>
+</body></html>
+

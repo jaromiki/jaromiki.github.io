@@ -1,0 +1,1214 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_21.jpg" class="nehe_maly" alt="Lekce 21" />
+
+<h1>Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika</h1>
+
+<p class="nadpis_clanku">První opravdu rozsáhlý tutoriál - jak už plyne z gigantického názvu. Doufejme, že taková spousta informací a technik dokáže udělat šťastným opravdu každého. Strávil jsem dva dny kódováním a kolem dvou týdnů psaním tohoto HTML souboru. Pokud jste někdy hráli hru Admiar, lekce vás vrátí do vzpomínek. Úkol hry sestává z vyplnění jednotlivých políček mřížky. Samozřejmě se musíte vyhýbat všem nepřátelům.</p>
+
+<p>Námět této lekce je vcelku složitý. Vím, že spousta z vás je unavena studiem základů. Každý by zemřel pro zvláštnosti 3D objektů, multitexturingu a podobně. Těmto lidem se omlouvám, protože chci zachovat postupné nabalování znalostí. Po velkém skoku vpřed není u krůčku zpět snadné udržet zájem čtenářů. Já osobně preferuji konstantní tempo. Možná jsem ztratil několik z vás, ale doufám, že ne příliš mnoho. Do dneška se ve všech mých tutoriálech objevovaly polygony, obdélníky a trojúhelníky. Pravděpodobně jste si všimli neúmyslné diskriminace :-) čar, přímek, linek a podobných jednorozměrných útvarů. O několik hodin později začal vznikat Line Tutoriál. Vypadal v klidu, ale totálně nudný! Linky jsou skvělé, ale v porovnání s některými efekty nic moc. Shrnuto: rozhodl jsem se napsat multi-tutoriál. Na konci lekce bychom měli mít vytvořenu jednoduchou hru typu 'Admiar'. Misí bude vyplnit políčka mřížky. Hráče nesmí chytit nepřátelé - jak jinak. Implementujeme levely, etapy, životy, zvuky a kódy - k průchodu skrz levely, když se věci stanou příliš obtížnými. Ačkoli hru spustíte i na Pentiu 166 s Voodoo 2, rychlejší procesor nebude na škodu.</p>
+
+<p>Rozšíříme standardní kód z lekce jedna. Přidáme potřebné hlavičkové soubory - stdio.h pro souborové operace a stdarg.h kvůli výstupu proměnných (level, obtížnost ap.).</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;stdarg.h&gt;<span class="kom">// Hlavičkový soubor pro funkce s proměnným počtem parametrů</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+
+<p>Deklarujeme proměnné. Pole vline ukládá záznamy o 121 vertikálních linkách, které tvoří mřížku. 11 přímek zleva doprava a 11 čas ze shora dolů. Hline ukládá 121 horizontálních přímek. Ap používáme ke zjištění stisku klávesy A. Filled je nastaveno na FALSE, jestliže mřížka není kompletně vyplnění a TRUE pokud je. Gameover ukončuje hru. Pokud se anti rovná TRUE je zapnut antialiasing objektů.</p>
+
+<p class="src0">bool vline[11][10];<span class="kom">// Ukládá záznamy o vertikálních linkách</span></p>
+<p class="src0">bool hline[10][11];<span class="kom">// Ukládá záznamy o horizontálních linkách</span></p>
+<p class="src0">bool ap;<span class="kom">// Stisknuto 'A'?</span></p>
+<p class="src0">bool filled;<span class="kom">// Bylo ukončeno vyplňování mřížky?</span></p>
+<p class="src0">bool gameover;<span class="kom">// Konec hry?</span></p>
+<p class="src0">bool anti = TRUE;<span class="kom">// Antialiasing?</span></p>
+
+<p>Přicházejí na řadu celočíselné proměnné. Loop1 a loop2 užíváme k označení bodů v herní mřížce, zjištění zda do nás nepřítel nevrazil  a k vygenerování randomové pozice. Zastavení pohybu nepřátel je implementováno čítačem delay. Po dosažení určité hodnoty se začnou znovu hýbat a delay se zpátky vynuluje.</p>
+
+<p>Proměnná adjust je speciální. I když program obsahuje timer, tento timer pouze zjišťuje, zda je počítač (průběh programu) příliš rychlý a v takovém případě ho zpomalíme. Na grafické kartě GeForce hra běží hodně rychle. Po testu s PIII/450 s Voodoo 3500 TV si nelze nevšimnout extrémní lenosti. Problém spočívá v kódu pro časování, který hru pouze zpomaluje. Zrychlení jím nelze provést. Vytvořil jsem proměnnou adjust, která může nabývat nuly až pěti. Čím vyšší hodnota, tím rychleji se objekty pohybují - podpora starších systémů. Nicméně nezáleží, jak rychlá je hra, absolutní rychlost provádění programu se nikdy nezvýší. Nastavením adjust na trojku vytvoříme kompromis pro pomalé i rychlé systémy. Více o časování dále.</p>
+
+<p>Lives ukládá počet životů, level užíváme k zaznamenávání obtížnosti. Není to level, který se zobrazuje na monitoru. Level2 začíná se stejnou hodnotou, ale může být inkrementován donekonečna - záleží na obratnosti hráče. Pokud dokáže dosáhnout třetího levelu, proměnná level se přestane zvyšovat. určuje pouze vnitřní obtížnost hry. Stage definuje konkrétní etapu hry.</p>
+
+<p class="src0">int loop1;<span class="kom">// Řídící proměnná cyklů</span></p>
+<p class="src0">int loop2;<span class="kom">// Řídící proměnná cyklů</span></p>
+<p class="src0">int delay;<span class="kom">// Doba zastavení nepřátel</span></p>
+<p class="src0">int adjust = 3;<span class="kom">// Rychlostní kompenzace pro pomalé systémy</span></p>
+<p class="src0">int lives = 5;<span class="kom">// Počet životů hráče</span></p>
+<p class="src0">int level = 1;<span class="kom">// Vnitřní obtížnost hry</span></p>
+<p class="src0">int level2 = level;<span class="kom">// Zobrazovaný level</span></p>
+<p class="src0">int stage = 1;<span class="kom">// Etapa/fáze hry</span></p>
+
+<p>Definujeme strukturu objektu - hráč, nepřítel ap. Vnitřní proměnné fx a fy ukládají pomocnou polohu pro plynulý pohyb (fx = fine x). X a y definují pozici na mřížce. Mohou nabývat hodnot od nuly do deseti. Kdybychom se s hráčem po scéně pohybovali pomocí těchto dvou proměnných měli bychom jedenáct pozic vodorovně a jedenáct svisle. Hráč by přeskakoval z jednoho místa na druhé. Proto při pohybu používáme upřesňující fx a fy. Poslední proměnnou spin používáme pro otáčení objektů okolo osy z.</p>
+
+<p class="src0">struct object<span class="kom">// Struktura objektu ve hře</span></p>
+<p class="src0">{</p>
+<p class="src1">int fx, fy;<span class="kom">// Pohybová pozice</span></p>
+<p class="src1">int x, y;<span class="kom">// Absolutní pozice</span></p>
+<p class="src1">float spin;<span class="kom">// Otáčení objektu dokola</span></p>
+<p class="src0">};</p>
+
+<p>Na základě struktury vytvoříme hráče, devět nepřátel a jeden speciální objekt - skleněné přesýpací hodiny, které se sem tam objeví. Pokud je stihnete sebrat, nepřítel se na chvíli zastaví.</p>
+
+<p class="src0">struct object player;<span class="kom">// Hráč</span></p>
+<p class="src0">struct object enemy[9];<span class="kom">// Nepřátelé</span></p>
+<p class="src0">struct object hourglass;<span class="kom">// Skleněné hodiny</span></p>
+
+<p>Abychom proměnné pro časovač měli pohromadě, sloučíme je do struktury. Frekvenci časovače deklarujeme jako 64-bitové celé číslo. Resolution je perioda (obrácená hodnota frekvence). Mm_timer_start a mm_timer_elapsed udržují počáteční a uplynulý čas. Používáme je pouze tehdy, pokud počítač nemá performance counter (v překladu: čítač provedení nebo výkonu, zůstanu u anglického termínu). Logická proměnná performance_timer bude nastavena na TRUE pokud program detekuje, že počítač má performance counter. Pokud ho nenajde budeme pro časování používat méně přesný, ale celkově dostačující multimediální timer. Poslední dvě proměnné jsou opět 64-bitové integery, které ukládají čas spuštění a uplynulý čas performance counteru. Proměnnou na bázi této struktury pojmenujeme timer.</p>
+
+<p class="src0">struct <span class="kom">// Informace pro časovač</span></p>
+<p class="src0">{</p>
+<p class="src1">__int64 frequency;<span class="kom">// Frekvence</span></p>
+<p class="src1">float resolution;<span class="kom">// Perioda</span></p>
+<p class="src1">unsigned long mm_timer_start;<span class="kom">// Startovní čas multimediálního timeru</span></p>
+<p class="src1">unsigned long mm_timer_elapsed;<span class="kom">// Uplynulý čas multimediální timeru</span></p>
+<p class="src1">bool performance_timer;<span class="kom">// Užíváme Performance Timer?</span></p>
+<p class="src1">__int64 performance_timer_start;<span class="kom">// Startovní čas Performance Timeru</span></p>
+<p class="src1">__int64 performance_timer_elapsed;<span class="kom">// Uplynulý čas Performance Timeru</span></p>
+<p class="src0">} timer;<span class="kom">// Struktura se jmenuje timer</span></p>
+
+<p>Následující pole si můžeme představit jako tabulku rychlostí. objekt ve hře se může pohybovat rozdílnými rychlostmi. Vše závisí na proměnné adjust (výše). Pokud se její hodnota rovná nule pohybující se o pixel za určitý čas, pokud pěti, rychlost činí dvacet pixelů. Inkrementováním adjust se na pomalých počítačích zvýší rychlost (ale i &quot;trhanost&quot;) hry. Počet pixelů kroku je v tabulce. Adjust používáme jako index do tohoto pole.</p>
+
+<p class="src0">int steps[6]={ 1, 2, 4, 5, 10, 20 };<span class="kom">// Krokovací hodnota pro přizpůsobení pomalého videa</span></p>
+
+<p>Deklarujeme pole dvou textur - pozadí a bitmapový font. Base ukazuje na první display list fontu (viz. minulé tutoriály). Funkce pro nahrávání a vytváření textur nebudu opisovat, byly tu už tolikrát, že je musíte znát na zpaměť (překladatel).</p>
+
+<p class="src0">GLuint texture[2];<span class="kom">// Dvě textury</span></p>
+<p class="src0">GLuint base;<span class="kom">// Základní display list pro font</span></p>
+
+<p>Inicializujeme časovač. Začneme vynulováním všech proměnných. Potom zjistíme, zda budeme moci používat performance counter. Pokud ano,uložíme frekvenci do timer.frequency, pokud ne budeme používat multimediální timer - nastavíme timer.performance_timer na FALSE a načteme do počáteční hodnoty aktuální čas. Timer.resolution definujeme na 0.001 (Překladatel: dělení je celkem zbytečné) a timer.frequency na 1000. Protože ještě neuplynul žádný čas, přiřadíme uplynulému času startovní čas.</p>
+
+<p class="src0">void TimerInit(void)<span class="kom">// Inicializace timeru</span></p>
+<p class="src0">{</p>
+<p class="src1">memset(&amp;timer, 0, sizeof(timer));<span class="kom">// Vynuluje proměnné struktury</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Zjistí jestli je Performance Counter dostupný a pokud ano, bude načtena jeho frekvence</span></p>
+<p class="src1">if (!QueryPerformanceFrequency((LARGE_INTEGER *) &amp;timer.frequency))</p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Performance Counter není dostupný</span></p>
+<p class="src2">timer.performance_timer = FALSE;<span class="kom">// Nastaví Performance Timer na FALSE</span></p>
+<p class="src2">timer.mm_timer_start = timeGetTime();<span class="kom">// Získání aktuálního času</span></p>
+<p class="src2">timer.resolution = 1.0f/1000.0f;<span class="kom">// Nastavení periody</span></p>
+<p class="src2">timer.frequency = 1000;<span class="kom">// Nastavení frekvence</span></p>
+<p class="src2">timer.mm_timer_elapsed = timer.mm_timer_start;<span class="kom">// Uplynulý čas = počáteční</span></p>
+<p class="src1">}</p>
+
+<p>Má-li počítač performance counter projdeme touto větví. Nastavíme počáteční hodnotu a oznámíme, že můžeme používat performance counter. Poté spočítáme periodu pomocí frekvence získané v if() výše. Perioda je převrácená hodnota frekvence. Nakonec nastavíme uplynulý čas na startovní. Všimněte si, že místo sdílení proměnných obou timerů, jsem se rozhodl použít různé. Obě cesty by pracovaly, ale tato je přehlednější.</p>
+
+<p class="src1">else</p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Performance Counter je možné používat</span></p>
+<p class="src2">QueryPerformanceCounter((LARGE_INTEGER *) &amp;timer.performance_timer_start);<span class="kom">// Počáteční čas</span></p>
+<p class="src2">timer.performance_timer = TRUE;<span class="kom">// Nastavení Performance Timer na TRUE</span></p>
+<p class="src2">timer.resolution = (float) (((double)1.0f)/((double)timer.frequency));<span class="kom">// Spočítání periody</span></p>
+<p class="src2">timer.performance_timer_elapsed = timer.performance_timer_start;<span class="kom">//Nastaví uplynulý čas na počáteční</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>V následující funkci načteme timer a vrátíme uplynulý čas v milisekundách. Deklarujeme 64-bitové celé číslo, do kterého načteme současnou hodnotu čítače. Opět větvíme program podle přítomnosti performance timeru. První řádkou v if() načteme obsah čítače. Dále od něj odečteme počáteční čas, který jsme získali při inicializaci časovače. Získaný rozdíl násobíme periodou čítače. Abychom výsledek v sekundách převedli na milisekundy násobíme ho tisícem. Tuto hodnotu vrátíme. Nepoužíváme-li performance counter, provede se větev else, která dělá analogicky to samé. Načteme současný čas, odečteme od něj počáteční, násobíme periodou a poté tisícem. Opět získáme uplynulý čas v milisekundách a vrátíme ho.</p>
+
+<p class="src0">float TimerGetTime()<span class="kom">// Získá čas v milisekundách</span></p>
+<p class="src0">{</p>
+<p class="src1">__int64 time;<span class="kom">// Čas se ukládá do 64-bitového integeru</span></p>
+<p></p>
+<p class="src1">if (timer.performance_timer)<span class="kom">// Performance Timer</span></p>
+<p class="src1">{</p>
+<p class="src2">QueryPerformanceCounter((LARGE_INTEGER *) &amp;time);<span class="kom">// Načte aktuální čas</span></p>
+<p class="src2"><span class="kom">// Vrátí uplynulý čas v milisekundách</span></p>
+<p class="src2">return ((float)(time - timer.performance_timer_start) * timer.resolution)*1000.0f;</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Multimediální timer</span></p>
+<p class="src1">{</p>
+<p class="src2"><span class="kom">// Vrátí uplynulý čas v milisekundách</span></p>
+<p class="src2">return ((float)(timeGetTime() - timer.mm_timer_start) * timer.resolution)*1000.0f;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>V další funkci se resetuje pozice hráče na levý horní roh a poloha nepřátel na randomové body. Levý horní roh scény má souřadnice [0;0]. Přiřadíme je hráčově x a y. Protože je na začátku linek, nepohybuje se, takže i upřesňující pohybové pozice nastavíme na nulu.</p>
+
+<p class="src0">void ResetObjects(void)<span class="kom">// Reset hráče a nepřátel</span></p>
+<p class="src0">{</p>
+<p class="src1">player.x = 0;<span class="kom">// Hráč bude vlevo nahoře</span></p>
+<p class="src1">player.y = 0;<span class="kom">// Hráč bude vlevo nahoře</span></p>
+<p class="src1">player.fx = 0;<span class="kom">// Pohybová pozice</span></p>
+<p class="src1">player.fy = 0;<span class="kom">// Pohybová pozice</span></p>
+
+<p>Přejdeme k inicializaci polohy nepřátel. Jejich aktuální počet (zobrazených) je roven vnitřnímu levelu násobenému jeho současnou obtížností/etapou. Zapamatujte si, že maximální počet levelů je tři a maximální počet etap v levelu je také tři. Z toho plyne, že můžeme mít nejvíce devět nepřátel. V cyklu nastavíme x pozici každého nepřítele na pět až deset a y pozici na nula až deset. Nechceme, aby se pohybovali ze staré pozice na novou, takže se ujistíme, že se fx a fy budou rovnat x krát délka linky (60) a y krát výška linky (40).</p>
+
+<p class="src1"></p>
+<p class="src1">for (loop1=0; loop1&lt;(stage*level); loop1++)<span class="kom">// Prochází nepřátele</span></p>
+<p class="src1">{</p>
+<p class="src2">enemy[loop1].x = 5 + rand() % 6;<span class="kom">// Nastaví randomovou x pozici</span></p>
+<p class="src2">enemy[loop1].y = rand() % 11;<span class="kom">// Nastaví randomovou y pozici</span></p>
+<p class="src2">enemy[loop1].fx = enemy[loop1].x * 60;<span class="kom">// Pohybová pozice</span></p>
+<p class="src2">enemy[loop1].fy = enemy[loop1].y * 40;<span class="kom">// Pohybová pozice</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Funkce glPrint() se moc nezměnila. Narozdíl od minulých tutoriálů jsem přidal možnost výpisu hodnot proměnných. Zapneme mapování textur, resetujeme matici a přesuneme se na určenou pozici. Pokud je zvolena první (nultá) znaková sada, změníme měřítko tak, aby byl font dvakrát vyšší a jeden a půl krát širší. Pomocí této finty budeme moci vypsat titul hry většími písmeny. Na konci vypneme mapování textur.</p>
+
+<p class="src0">GLvoid glPrint(GLint x, GLint y, int set, const char *fmt, ...)<span class="kom">// Výpis textů</span></p>
+<p class="src0">{</p>
+<p class="src1">char text[256];<span class="kom">// Bude ukládat výsledný řetězec</span></p>
+<p class="src1">va_list ap;<span class="kom">// Ukazatel do argumentů funkce</span></p>
+<p></p>
+<p class="src1">if (fmt == NULL)<span class="kom">// Nebyl předán řetězec</span></p>
+<p class="src2">return;<span class="kom">// Konec</span></p>
+<p></p>
+<p class="src1">va_start(ap, fmt);<span class="kom">// Rozdělí řetězec pro proměnné</span></p>
+<p class="src1">vsprintf(text, fmt, ap);<span class="kom">// Konvertuje symboly na čísla</span></p>
+<p class="src1">va_end(ap);<span class="kom">// Výsledek je uložen v text</span></p>
+<p></p>
+<p class="src1">if (set&gt;1)<span class="kom">// Byla předána špatná znaková sada?</span></p>
+<p class="src1">{</p>
+<p class="src2">set=1;<span class="kom">// Pokud ano, zvolí se kurzíva</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturové mapování</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslated(x,y,0);<span class="kom">// Přesun na požadovanou pozici</span></p>
+<p class="src1">glListBase(base-32+(128*set));<span class="kom">// Zvolí znakovou sadu</span></p>
+<p></p>
+<p class="src1">if (set==0)<span class="kom">// Pokud je určena první znaková sada font bude větší</span></p>
+<p class="src1">{</p>
+<p class="src2">glScalef(1.5f,2.0f,1.0f);<span class="kom">// Změna měřítka</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glCallLists(strlen(text),GL_UNSIGNED_BYTE, text);<span class="kom">// Výpis textu na monitor</span></p>
+<p class="src1">glDisable(GL_TEXTURE_2D);<span class="kom">// Vypne texturové mapování</span></p>
+<p class="src0">}</p>
+
+<p>Implementace změny velikosti okna je nová. Namísto perspektivní scény použijeme pravoúhlou projekci (ortho view). Její hlavní charakteristikou je, že se při změně vzdálenosti pozorovatele (translace do hloubky) objekty nezmenšují - vypnutá perspektiva. Osa z je méně užitečná, někdy dokonce ztrácí význam. V tomto tutoriálu s ní nebudeme pracovat vůbec.</p>
+
+<p>Začneme nastavením viewportu, úplně stejně, jako při perspektivní scéně. Poté zvolíme projekční matici (analogie filmovému projektoru; obsahuje informace, jak se zobrazí obrázek) a resetujeme ji.</p>
+
+<p>Inicializujeme pravoúhlou projekci. První parametr 0.0f určuje pozici levé hrany scény. Druhá předávaná hodnota označuje polohu pravé hrany. Pokud by mělo okno velikost 640 x 480, tak ve width bude uložena hodnota 640. Scéna by začínala na ose x nulou a končila 640 - přesně jako okno. Třetím parametrem označujeme spodní okraj scény. Bývá záporný, ale protože chceme pracovat s pixely určíme spodek okna rovnu jeho výšce. Nula, čtvrtý parametr, definuje horní okraj. Poslední dvě hodnoty náleží k ose z. V této lekci se o ni nestaráme, takže nastavíme rozmezí od -1.0f do 1.0f. Všechno budeme vykreslovat v hloubce nula, takže uvidíme vše.</p>
+
+<p>Po nastavení pravoúhlé scény, zvolíme matici modelview (informace o objektech, lokacích, atd.) a resetujeme ji.</p>
+
+<p class="src0">GLvoid ReSizeGLScene(GLsizei width, GLsizei height)<span class="kom">// Inicializace a změna velikosti okna</span></p>
+<p class="src0">{</p>
+<p class="src1">if (height==0)<span class="kom">// Proti dělení nulou</span></p>
+<p class="src1">{</p>
+<p class="src2">height=1;<span class="kom">// Výška se rovná jedné</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glViewport(0,0,width,height);<span class="kom">// Reset Viewportu</span></p>
+<p></p>
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Zvolí projekční matici</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset projekční matice</span></p>
+<p></p>
+<p class="src1">glOrtho(0.0f,width,height,0.0f,-1.0f,1.0f);<span class="kom">// Vytvoří pravoúhlou scénu</span></p>
+<p></p>
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Zvolí matici modelview</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice modelview</span></p>
+<p class="src0">}</p>
+
+<p>Při inicializaci se vyskytne několik nových příkazů. Začneme klasicky loadingem textur a kontrolou úspěšnosti této akce, poté vygenerujeme znakovou sadu fontu. Zapneme jemné stínování, nastavíme černé pozadí a vyčistíme hloubku jedničkou.</p>
+
+<p>glHint() oznamuje OpenGL, jak má vykreslovat. V tomto případě požadujeme, aby všechny linky byly nejhezčí, jaké OpenGL dokáže vytvořit. Tímto příkazem zapínáme antialiasing. Také zapneme blending a zvolíme jeho mód tak, abychom umožnili, již zmíněný, antialiasing linek. Blending je potřeba, pokud chceme pěkně skombinovat (smíchat, zprůhlednit - blend with) s obrázkem na pozadí. Pokud chcete vidět, jak špatně budou linky vypadat, vypněte blending. Je důležité poukázat na fakt, že antialiasing se nemusí zobrazovat správně(? překl.). Objekty ve hře jsou docela malé, takže si nemusíte všimnout, že něco není v pořádku. Podívejte se pořádně. Všimněte si, jak se linky na nepřátelích zjemní pokud je antialiasing zapnutý. Hráč a hodiny by měli vypadat mnohem lépe.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Loading textur</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">BuildFont();<span class="kom">// Vytvoření fontu</span></p>
+<p></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Zapne jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);<span class="kom">// Nastavení antialiasingu linek</span></p>
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapne blending</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);<span class="kom">// Typ blendingu</span></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Na řadu přichází vykreslování. Smažeme obrazovku a hloubkový buffer a zvolíme texturu fontu - texture[0]. Abychom slova "GRID CRAZY" vypsali purpurovou barvou nastavíme R a G naplno, G s poloviční intenzitou. Nápis vypíšeme na souřadnice [207;24]. Použijeme první (nultou) znakovou sadu, takže bude text velkými písmeny. Poté zaměníme purpurovou barvu za žlutou a vypíšeme "Level" s obsahem proměnné level2. Dvojka v %2i určuje maximální počet číslic. Pomocí i oznamujeme, že se jedná o celočíselnou proměnnou (integer). O trochu níže, tou samou barvou, zobrazíme "Stage" s konkrétní etapou hry.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Všechno kreslení</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Zvolí texturu fontu</span></p>
+<p></p>
+<p class="src1">glColor3f(1.0f,0.5f,1.0f);<span class="kom">// Purpurová barva</span></p>
+<p class="src1">glPrint(207,24,0,&quot;GRID CRAZY&quot;);<span class="kom">// Vypíše logo hry</span></p>
+<p></p>
+<p class="src1">glColor3f(1.0f,1.0f,0.0f);<span class="kom">// Žlutá barva</span></p>
+<p class="src1">glPrint(20,20,1,&quot;Level:%2i&quot;,level2);<span class="kom">// Vypíše level</span></p>
+<p class="src1">glPrint(20,40,1,&quot;Stage:%2i&quot;,stage);<span class="kom">// Vypíše etapu</span></p>
+
+<p>Zkontrolujeme konec hry. Pokud je gameover rovno TRUE zvolíme náhodnou barvu. Používáme glcolor3ub(), protože je mnohem jednodušší vygenerovat číslo od 0 do 255 než od 0.0f do 1.0f. Doprava od titulku hry vypíšeme "GAME OVER" a o řádek níže "PRESS SPACE". Upozorňujeme hráče, že zemřel a že pomocí mezerníku může hru resetovat.</p>
+
+<p class="src1">if (gameover)<span class="kom">// Konec hry?</span></p>
+<p class="src1">{</p>
+<p class="src2">glColor3ub(rand()%255,rand()%255,rand()%255);<span class="kom">// Náhodná barva</span></p>
+<p class="src2">glPrint(472,20,1,&quot;GAME OVER&quot;);<span class="kom">// Vypíše GAME OVER</span></p>
+<p class="src2">glPrint(456,40,1,&quot;PRESS SPACE&quot;);<span class="kom">// Vypíše PRESS SPACE</span></p>
+<p class="src1">}</p>
+
+<p>Pokud mu však nějaké životy zbyly, zobrazíme doprava od titulku hry animované obrázky hráče. Vytvoříme cyklus, který jde od nuly do aktuálního počtu životů mínus jedna. Jedničku odečítáme, protože jeden obrázek se zobrazuje do hracího pole.</p>
+
+<p class="src1">for (loop1=0; loop1&lt;lives-1; loop1++)<span class="kom">// Cyklus vykreslující životy</span></p>
+<p class="src1">{</p>
+
+<p>Uvnitř cyklu resetujeme matici a provedeme translaci doprava na pozici, kterou získáme výpočtem: 490 plus řídící proměnná krát 40. Tímto způsobem budeme moci vykreslit každý animovaný život hráče o 40 pixelů doprava od minulého. Poté orotujeme pohled proti směru hodinových ručiček v závislosti na hodnotě uložené v player.spin. Záporným znaménkem způsobíme, že se budou životy otáčet opačným směrem než hráč.</p>
+
+<p class="src2">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src2">glTranslatef(490+(loop1*40.0f),40.0f,0.0f);<span class="kom">// Přesun doprava od titulku</span></p>
+<p class="src2">glRotatef(-player.spin,0.0f,0.0f,1.0f);<span class="kom">// Rotace proti směru hodinových ručiček</span></p>
+
+<p>Zvolíme zelenou barvu a začneme zobrazovat. Kreslení linek je úplně stejné, jako kreslení polygonů. Začneme s glBegin(GL_LINES). Tím oznámíme OpenGL, že chceme kreslit přímky. Pro jednu stačí pouze dva body. My zadáváme body pomocí glVertex2d(), protože nepotřebujeme hloubku, ale samozřejmě lze použít i glVertex3f() pro plnohodnotný bod ve 3D prostoru.</p>
+
+<p class="src2">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Zelená barva</span></p>
+<p></p>
+<p class="src2">glBegin(GL_LINES);<span class="kom">// Začátek kreslení životů</span></p>
+<p></p>
+<p class="src3">glVertex2d(-5,-5);<span class="kom">// Levý horní bod</span></p>
+<p class="src3">glVertex2d( 5, 5);<span class="kom">// Pravý dolní bod</span></p>
+<p class="src3">glVertex2d( 5,-5);<span class="kom">// Pravý horní bod</span></p>
+<p class="src3">glVertex2d(-5, 5);<span class="kom">// Levý dolní bod</span></p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Po vykreslení X (X - tvar hráče), znovu natočíme scénu, ale tentokrát pouze o polovinu úhlu. Zadáme tmavší zelenou barvu a vykreslíme +, ale trochu větší než X. Protože je + pomalejší a tmavší, X vypadá, jako by se otáčelo na jeho vrcholu.</p>
+
+<p class="src2">glRotatef(-player.spin*0.5f,0.0f,0.0f,1.0f);<span class="kom">// Rotace proti směru hodinových ručiček</span></p>
+<p class="src2">glColor3f(0.0f,0.75f,0.0f);<span class="kom">// Tmavší zelená barva</span></p>
+<p></p>
+<p class="src2">glBegin(GL_LINES);<span class="kom">// Pokračování kreslení životů</span></p>
+<p></p>
+<p class="src3">glVertex2d(-7, 0);<span class="kom">// Levý středový bod</span></p>
+<p class="src3">glVertex2d( 7, 0);<span class="kom">// Pravý středový bod</span></p>
+<p class="src3">glVertex2d( 0,-7);<span class="kom">// Horní středový bod</span></p>
+<p class="src3">glVertex2d( 0, 7);<span class="kom">// Dolní středový bod</span></p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src1">}</p>
+
+<p>Nakreslíme herní mřížku. Nastavením proměnné filled na TRUE oznámíme programu, že už byla mřížka kompletně vyplněná (více dále). Určíme šířku čáry na 2.0f - linky ztloustnou a mřížka bude opticky více definovaná. Přestože se zhorší kvalita grafického výstupu, vypneme antialiasing. Velmi zatěžuje procesor a pokud nemáte hodně dobrou grafickou kartu, zaznamenáte obrovské zpomalení. Vyzkoušejte si a konejte, jak uznáte za vhodné.</p>
+
+<p class="src1">filled=TRUE;<span class="kom">// Před testem je všechno vyplněné</span></p>
+<p class="src1">glLineWidth(2.0f);<span class="kom">// Širší čáry</span></p>
+<p class="src1">glDisable(GL_LINE_SMOOTH);<span class="kom">// Vypne antialiasing</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>Po resetu matice deklarujeme dva vnořené cykly. Prvním procházíme mřížku zleva doprava a druhým ze shora dolů. Nastavíme barvu na modrou a pokud je právě kreslená linka již přejetá hráčem, přebijeme modrou barvu bílou. Dále zkontrolujeme, zda se nechystáme kreslit příliš vpravo. Pokud ano přeskočíme kreslení.</p>
+
+<p class="src1">for (loop1=0; loop1&lt;11; loop1++)<span class="kom">// Cyklus zleva doprava</span></p>
+<p class="src1">{</p>
+<p class="src2">for (loop2=0; loop2&lt;11; loop2++)<span class="kom">// Cyklus ze shora dolů</span></p>
+<p class="src2">{</p>
+<p class="src3">glColor3f(0.0f,0.5f,1.0f);<span class="kom">// Modrá barva</span></p>
+<p></p>
+<p class="src3">if (hline[loop1][loop2])<span class="kom">// Byla už linka přejetá?</span></p>
+<p class="src3">{</p>
+<p class="src4">glColor3f(1.0f,1.0f,1.0f);<span class="kom">// Bílá barva</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (loop1&lt;10)<span class="kom">// Nekreslit úplně vpravo</span></p>
+<p class="src3">{</p>
+
+<p>Otestujeme, jestli už byla horizontální linka přejetá. Pokud ne, přiřadíme do filled FALSE a tím oznámíme, že ještě nejméně jedna linka nebyla vyplněná, a tudíž ještě nemůžeme tento level opustit.</p>
+
+<p class="src4">if (!hline[loop1][loop2])<span class="kom">// Nebyla linka ještě přejetá?</span></p>
+<p class="src4">{</p>
+<p class="src5">filled=FALSE;<span class="kom">// Všechno ještě není vyplněno</span></p>
+<p class="src4">}</p>
+
+<p>Poté konečně vykreslíme horizontální linku. Protože je vodorovná, přiřadíme y-ové hodnotě obou bodů stejnou velikost. Přičítáme sedmdesátku, aby nad hracím polem zůstalo volné místo pro informace o počtu životů, levelu ap. Hodnoty na ose x se liší tím, že druhý bod je posunut o šedesát pixelů doprava (80-20=60). Opět přičítáme konstantu, v tomto případě dvacítku, aby hrací pole nebylo namačkáno na levý okraj a vpravo nebyla zbytečná mezera. Všimněte si, že linky jsou kresleny zleva doprava. Toto je důvod, proč nechceme kreslit jedenáctou - nevešla by se na obrazovku.</p>
+
+<p class="src4">glBegin(GL_LINES);<span class="kom">// Začátek kreslení horizontálních linek</span></p>
+<p class="src5">glVertex2d(20+(loop1*60),70+(loop2*40));<span class="kom">// Levý bod</span></p>
+<p class="src5">glVertex2d(80+(loop1*60),70+(loop2*40));<span class="kom">// Pravý bod</span></p>
+<p class="src4">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src3">}</p>
+
+<p>Na řadu přicházejí vertikální linky. Kód je téměř stejný, takže text popisu nebudu zbytečně opisovat. Linky se kreslí ze shora dolů namísto zleva doprava - jediná odlišnost.</p>
+
+<p class="src3">glColor3f(0.0f,0.5f,1.0f);<span class="kom">// Modrá barva</span></p>
+<p></p>
+<p class="src3">if (vline[loop1][loop2])<span class="kom">// Byla už linka přejetá?</span></p>
+<p class="src3">{</p>
+<p class="src4">glColor3f(1.0f,1.0f,1.0f);<span class="kom">// Bílá barva</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (loop2&lt;10)<span class="kom">// Nekreslit úplně dolů</span></p>
+<p class="src3">{</p>
+<p class="src4">if (!vline[loop1][loop2])<span class="kom">// Nebyla linka ještě přejetá?</span></p>
+<p class="src4">{</p>
+<p class="src5">filled=FALSE;<span class="kom">// Všechno ještě nebylo vyplněno</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">glBegin(GL_LINES);<span class="kom">// Začátek kreslení vertikálních linek</span></p>
+<p class="src5">glVertex2d(20+(loop1*60),70 +(loop2*40));<span class="kom">// Horní bod</span></p>
+<p class="src5">glVertex2d(20+(loop1*60),110+(loop2*40));<span class="kom">// Dolní bod</span></p>
+<p class="src4">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src3">}</p>
+
+<p>Scéna je dohromady seskládaná z obdélníků o velikosti jedné desetiny obrázku scény. Na každý z nich je namapovaná určitá část velké textury, proto musíme zapnout mapování textur. Protože nechceme, aby měl kreslený obdélník barevný nádech, nastavíme barvu na bílou. Také nesmíme zapomenout zvolit texturu.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_21_image.jpg" width="128" height="128" alt="Textura hrací plochy" /></div>
+
+<p class="src3">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+<p class="src3">glColor3f(1.0f,1.0f,1.0f);<span class="kom">// Bílá barva</span></p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, texture[1]);<span class="kom">// Zvolí texturu</span></p>
+
+<p>Dále prověříme, jestli aktuální obdélník ve scéně ještě existuje (není za hranou hrací plochy). Nacházíme se v cyklech, které postupně vykreslují 11 linek vodorovně a 11 svisle. Nicméně nevykreslujeme 11 obdélníků, ale pouze 10! Ověříme, jestli se nechystáme kreslit na jedenáctou pozici - loop1 i loop2 musí být menší než deset (0-9).</p>
+
+<p class="src3">if ((loop1&lt;10) &amp;&amp; (loop2&lt;10))<span class="kom">// Pouze pokud je obdélník v hrací ploše</span></p>
+<p class="src3">{</p>
+
+<p>Zjistíme přejetí všech okolních linek obdélníku. Kraje testujeme v pořadí: horní, dolní, levý a pravý. Po každém průchodu vnitřním cyklem se inkrementuje loop1 a tím se z pravého okraje stává levý okraj následujícího obdélníku. V případě průchodu vnější smyčkou se ze spodních hran obdélníků v řádku stávají horní okraje nových obdélníků v řádku o jedno níže. Vše by mělo být zřejmé z diagramu.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_21_diagram.jpg" width="256" height="128" alt="Diagram" /></div>
+
+<p>Pokud jsou všechny okraje projeté (rovnají se TRUE), můžeme namapovat texturu a vykreslit obdélník. Děláme to stejným stylem, jako jsme rozřezávali texturu znakové sady na jednotlivá písmena. Ani teď se neobejdeme bez matematiky. Dělíme loop1 i loop2 deseti, protože chceme rozdělit texturu mezi sto obdélníků (10x10). Koordináty jsou v rozmezí od nuly do jedné s krokem jedné desetiny (1/10=0,1).</p>
+
+<p>Takže abychom dostali pravý horní roh, vydělíme hodnotu proměnných loop deseti a přičteme 0,1 k x-ovému koordinátu. Levý horní roh získáme dělením bez žádných dalších komplikací. Levý dolní bod spočívá opět v dělení deseti a přičtení 0,1 k ypsilonové složce. Dostáváme se k pravému dolnímu rohu, u kterého se po vydělení přičítá 0,1 k oběma souřadnicovým složkám. Doufám, že to dává smysl (Já taky - překl.).</p>
+
+<p>Pokud budou oba loopy rovny devíti, ve výsledku dostaneme kombinaci 0,9 a 1,0, které dosadíme do parametrů funkce glTexCoord2f(x,y). souřadnice vrcholů obdélníků pro glVertex2d(x,y) získáme analogicky jako okraje linek mřížky. Přičítáme k nim, ale ještě konstanty (1, 59, 1, 39), které zajišťují zmenšení obdélníků - aby se vešly do políček mřížky a přitom nic nepřekryly.</p>
+
+<p class="src4"><span class="kom">// Jsou přejety všechny čtyři okraje obdélníku?</span></p>
+<p class="src4">if (hline[loop1][loop2] &amp;&amp; hline[loop1][loop2+1] &amp;&amp; vline[loop1]loop2] &amp;&amp; vline[loop1+1][loop2])</p>
+<p class="src4">{</p>
+<p class="src5">glBegin(GL_QUADS);<span class="kom">// Vykreslí otexturovaný obdélník</span></p>
+<p></p>
+<p class="src6">glTexCoord2f(float(loop1/10.0f)+0.1f,1.0f-(float(loop2/10.0f)));</p>
+<p class="src6">glVertex2d(20+(loop1*60)+59,(70+loop2*40+1));<span class="kom">// Pravý horní</span></p>
+<p></p>
+<p class="src6">glTexCoord2f(float(loop1/10.0f),1.0f-(float(loop2/10.0f)));</p>
+<p class="src6">glVertex2d(20+(loop1*60)+1,(70+loop2*40+1));<span class="kom">// Levý horní</span></p>
+<p></p>
+<p class="src6">glTexCoord2f(float(loop1/10.0f),1.0f-(float(loop2/10.0f)+0.1f));</p>
+<p class="src6">glVertex2d(20+(loop1*60)+1,(70+loop2*40)+39);<span class="kom">// Levý dolní</span></p>
+<p></p>
+<p class="src6">glTexCoord2f(float(loop1/10.0f)+0.1f,1.0f-(float(loop2/10.0f)+0.1f));</p>
+<p class="src6">glVertex2d(20+(loop1*60)+59,(70+loop2*40)+39);<span class="kom">// Pravý dolní</span></p>
+<p></p>
+<p class="src5">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+
+<p>V závěru vypneme mapování textur a po opuštění obou cyklů vrátíme šířku čáry na původní hodnotu.</p>
+
+<p class="src3">glDisable(GL_TEXTURE_2D);<span class="kom">// Vypne mapování textur</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glLineWidth(1.0f);<span class="kom">// Šířka čáry 1.0f</span></p>
+
+<p>V případě, že je anti rovno TRUE, zapneme zjemňování linek (antialiasing).</p>
+
+<p class="src1">if (anti)<span class="kom">// Má být zapnutý antialiasing?</span></p>
+<p class="src1">{</p>
+<p class="src2">glEnable(GL_LINE_SMOOTH);<span class="kom">// Zapne antialiasing</span></p>
+<p class="src1">}</p>
+
+<p>Abychom usnadnili hru, přidáme speciální objekt - přesýpací hodiny, jejichž sebráním se nepřátelé na chvíli zastaví. Pro jejich umístění v hracím poli používáme proměnné x a y, nicméně protože se nebudou pohybovat, můžeme využít nepotřebné fx jako přepínač (0 jsou viditelné, 1 nejsou, 2 hráč je sebral). Fy implementujeme pro čítač, jak dlouho by měly být viditelné.</p>
+
+<p>Začneme testem viditelnosti. Pokud se nemají zobrazit, přeskočíme vykreslení. Pokud ano, resetujeme matici a translací je umístíme. Protože mřížka začíná na dvacítce, přičteme tuto hodnotu k x*60. Ze stejného důvodu na ose y přičítáme 70. Dále orotujeme matici okolo osy z o úhel uložený v hourglass.spin. Před vykreslením ještě zvolíme náhodnou barvu.</p>
+
+<p class="src1">if (hourglass.fx==1)<span class="kom">// Hodiny se mají vykreslit</span></p>
+<p class="src1">{</p>
+<p class="src2">glLoadIdentity();<span class="kom">// Reset Matice</span></p>
+<p></p>
+<p class="src2">glTranslatef(20.0f+(hourglass.x*60),70.0f+(hourglass.y*40),0.0f);<span class="kom">// Umístění</span></p>
+<p class="src2">glRotatef(hourglass.spin,0.0f,0.0f,1.0f);<span class="kom">// Rotace ve směru hodinových ručiček</span></p>
+<p></p>
+<p class="src2">glColor3ub(rand()%255,rand()%255,rand()%255);<span class="kom">// Náhodná barva</span></p>
+
+<p>Pomocí GL_LINES oznámíme kreslení linek. Horní levý bod získáme odečtením pěti pixelů v obou směrech. Konec přímky leží pět pixelů směrem vpravo dolů od aktuální pozice. Druhou linku začneme vpravo nahoře a skončíme vlevo dole. Tvar písmene X doplníme o horní a dolní uzavírací linku.</p>
+
+<p class="src2">glBegin(GL_LINES);<span class="kom">// Vykreslení přesýpacích hodin</span></p>
+<p></p>
+<p class="src3">glVertex2d(-5,-5);<span class="kom">// Levý horní bod</span></p>
+<p class="src3">glVertex2d( 5, 5);<span class="kom">// Pravý dolní bod</span></p>
+<p class="src3">glVertex2d( 5,-5);<span class="kom">// Pravý horní bod</span></p>
+<p class="src3">glVertex2d(-5, 5);<span class="kom">// Levý dolní bod</span></p>
+<p></p>
+<p class="src3">glVertex2d(-5, 5);<span class="kom">// Levý dolní bod</span></p>
+<p class="src3">glVertex2d( 5, 5);<span class="kom">// Pravý dolní bod</span></p>
+<p class="src3">glVertex2d(-5,-5);<span class="kom">// Levý horní bod</span></p>
+<p class="src3">glVertex2d( 5,-5);<span class="kom">// Pravý horní bod</span></p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src1">}</p>
+
+<p>Dále vykreslíme hráče. Opět resetujeme matici a určíme pozici ve scéně. Všimněte si, že pro jemný neskokový pohyb používáme fx a fy. Natočíme matici o uložený úhel, zvolíme světle zelenou barvu a pomocí linek vykreslíme tvar písmene X.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset Matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(player.fx+20.0f,player.fy+70.0f,0.0f);<span class="kom">// Přesun na pozici</span></p>
+<p class="src1">glRotatef(player.spin,0.0f,0.0f,1.0f);<span class="kom">// Rotace po směru hodinových ručiček</span></p>
+<p></p>
+<p class="src1">glColor3f(0.0f,1.0f,0.0f);<span class="kom">// Zelená barva</span></p>
+<p></p>
+<p class="src1">glBegin(GL_LINES);<span class="kom">// Vykreslení hráče</span></p>
+<p></p>
+<p class="src2">glVertex2d(-5,-5);<span class="kom">// Levý horní bod</span></p>
+<p class="src2">glVertex2d( 5, 5);<span class="kom">// Pravý dolní bod</span></p>
+<p class="src2">glVertex2d( 5,-5);<span class="kom">// Pravý horní bod</span></p>
+<p class="src2">glVertex2d(-5, 5);<span class="kom">// Levý dolní bod</span></p>
+<p></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Aby nevypadal až tak nudně, přidáme ještě tvar znamínka +, které se otáčí trochu rychleji, má tmavší barvu a je o dva pixely větší.</p>
+
+<p class="src1">glRotatef(player.spin*0.5f,0.0f,0.0f,1.0f);<span class="kom">// Rotace po směru hodinových ručiček</span></p>
+<p></p>
+<p class="src1">glColor3f(0.0f,0.75f,0.0f);<span class="kom">// Tmavší zelená barva</span></p>
+<p></p>
+<p class="src1">glBegin(GL_LINES);<span class="kom">// Pokračování kreslení hráče</span></p>
+<p></p>
+<p class="src2">glVertex2d(-7, 0);<span class="kom">// Levý středový bod</span></p>
+<p class="src2">glVertex2d( 7, 0);<span class="kom">// Pravý středový bod</span></p>
+<p class="src2">glVertex2d( 0,-7);<span class="kom">// Horní středový bod</span></p>
+<p class="src2">glVertex2d( 0, 7);<span class="kom">// Dolní středový bod</span></p>
+<p></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Ještě zbývá vykreslit nepřátele, takže se do nich pustíme. Deklarujeme cyklus procházející všechny nepřátele, kteří jsou viditelní v konkrétním levelu. Tento počet získáme vynásobením levelu s obtížností. Jejich maximální počet je devět. Uvnitř smyčky resetujeme matici a umístíme právě vykreslovaného nepřítele pomocí fx a fy (může se pohybovat). Zvolíme růžovou barvu a pomocí linek vykreslíme čtverec postavený na špičku, který nerotuje.</p>
+
+<p class="src1">for (loop1=0; loop1&lt;(stage*level); loop1++)<span class="kom">// Vykreslí nepřátele</span></p>
+<p class="src1">{</p>
+<p class="src2">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src2">glTranslatef(enemy[loop1].fx+20.0f,enemy[loop1].fy+70.0f,0.0f);<span class="kom">// Přesun na pozici</span></p>
+<p class="src2">glColor3f(1.0f,0.5f,0.5f);<span class="kom">// Růžová barva</span></p>
+<p></p>
+<p class="src2">glBegin(GL_LINES);<span class="kom">// Vykreslení nepřátel</span></p>
+<p></p>
+<p class="src3">glVertex2d( 0,-7);<span class="kom">// Horní bod</span></p>
+<p class="src3">glVertex2d(-7, 0);<span class="kom">// Levý bod</span></p>
+<p class="src3">glVertex2d(-7, 0);<span class="kom">// Levý bod</span></p>
+<p class="src3">glVertex2d( 0, 7);<span class="kom">// Dolní bod</span></p>
+<p class="src3">glVertex2d( 0, 7);<span class="kom">// Dolní bod</span></p>
+<p class="src3">glVertex2d( 7, 0);<span class="kom">// Pravý bod</span></p>
+<p class="src3">glVertex2d( 7, 0);<span class="kom">// Pravý bod</span></p>
+<p class="src3">glVertex2d( 0,-7);<span class="kom">// Horní bod</span></p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Přidáme krvavě červené X, které se otáčí okolo osy z a poté ukončíme obrovskou vykreslovací funkci.</p>
+
+<p class="src2">glRotatef(enemy[loop1].spin,0.0f,0.0f,1.0f);<span class="kom">// Rotace vnitřku nepřítele</span></p>
+<p></p>
+<p class="src2">glColor3f(1.0f,0.0f,0.0f);<span class="kom">// Krvavá barva</span></p>
+<p></p>
+<p class="src2">glBegin(GL_LINES);<span class="kom">// Pokračování kreslení nepřátel</span></p>
+<p></p>
+<p class="src3">glVertex2d(-7,-7);<span class="kom">// Levý horní bod</span></p>
+<p class="src3">glVertex2d( 7, 7);<span class="kom">// Pravý dolní bod</span></p>
+<p class="src3">glVertex2d(-7, 7);<span class="kom">// Levý dolní bod</span></p>
+<p class="src3">glVertex2d( 7,-7);<span class="kom">// Pravý horní bod</span></p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Konec funkce</span></p>
+<p class="src0">}</p>
+
+<p>Změn ve funkci WinMain() bude také trochu víc. Protože se jedná o hru, musíme ošetřit ovládání klávesnicí, časování a vše ostatní, co jsme dosud neudělali.</p>
+
+<p class="src0">int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)</p>
+<p class="src0">{</p>
+<p class="src1">MSG msg;</p>
+<p class="src1">BOOL done=FALSE;</p>
+<p></p>
+<p class="src1">if (MessageBox(NULL,&quot;Would You Like To Run In Fullscreen Mode?&quot;, &quot;Start FullScreen?&quot;, MB_YESNO|MB_ICONQUESTION) == IDNO)</p>
+<p class="src1">{</p>
+<p class="src2">fullscreen=FALSE;</p>
+<p class="src1">}</p>
+
+<p>Změníme titulek okna na "NeHe's Line Tutorial" a přidáme volání funkce ResetObjects(), která inicializuje pozici hráče na levý horní roh a nepřátelům předělí náhodné umístění, nejméně však pět políček od hráče. Poté zavoláme funkci pro inicializaci timeru.</p>
+
+<p class="src1">if (!CreateGLWindow(&quot;NeHe's Particle Tutorial&quot;,640,480,16,fullscreen))</p>
+<p class="src1">{</p>
+<p class="src2">return 0;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">ResetObjects();<span class="kom">// Inicializuje pozici hráče a nepřátel</span></p>
+<p class="src1">TimerInit();<span class="kom">// Zprovoznění timeru</span></p>
+<p></p>
+<p class="src1">while(!done)</p>
+<p class="src1">{</p>
+<p class="src2">if (PeekMessage(&amp;msg,NULL,0,0,PM_REMOVE))</p>
+<p class="src2">{</p>
+<p class="src3">if (msg.message==WM_QUIT)</p>
+<p class="src3">{</p>
+<p class="src4">done=TRUE;</p>
+<p class="src3">}</p>
+<p class="src3">else</p>
+<p class="src3">{</p>
+<p class="src4">TranslateMessage(&amp;msg);</p>
+<p class="src4">DispatchMessage(&amp;msg);</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+
+<p>Teď zajistíme, aby pracoval kód pro časování. Předtím než vykreslíme scénu, nagrabujeme aktuální čas a uložíme jej do desetinné proměnné nazvané start. Potom vykreslíme scénu a prohodíme buffery.</p>
+
+<p class="src3">float start=TimerGetTime();<span class="kom">// Nagrabujeme aktuální čas</span></p>
+<p></p>
+<p class="src3">if ((active &amp;&amp; !DrawGLScene()) || keys[VK_ESCAPE])</p>
+<p class="src3">{</p>
+<p class="src4">done=TRUE;</p>
+<p class="src3">}</p>
+<p class="src3">else</p>
+<p class="src3">{</p>
+<p class="src4">SwapBuffers(hDC);</p>
+<p class="src3">}</p>
+
+<p>Vytvoříme časové zpoždění a to tak, že vkládáme prázdné příkazy tak dlouho, dokud je aktuální hodnota časovače (TimerGetTime()) menší než počáteční hodnota sečtená s rychlostí kroky hry krát dva. tímto velmi jednoduše zpomalíme OPRAVDU rychlé systémy.</p>
+
+<p>Protože používáme krokování rychlosti (určené proměnnou adjust) program vždy poběží stejnou rychlostí. Například, pokud je hodnota kroku rovna jedné, měli bychom čekat dokud timer nebude větší nebo roven dvěma (2*1). Ale pokud zvětšíme rychlost kroku na dva (způsobí, že se hráč bude pohybovat o dvakrát tolik pixelů najednou), zpoždění se zvětší na čtyři (2*2). Ačkoli se pohybujeme dvakrát tak rychle, zpoždění trvá dvakrát déle a tudíž hra běží stejně rychle (ale více trhaně).</p>
+
+<p>Spousta lidí jde ale jinou cestou než my. Je třeba brát v úvahu čas který uběhl mezi jednotlivými cykly ve kterých se renderuje. Na začátku každého cyklu se uloží aktuální čas, od kterého se odečte čas v minulém cyklu a tímto rozdílem se vydělí rychlost, kterou se má objekt pohybovat. Například: máme auto, které má jet rychlostí 10 jednotek za sekundu. Víme, že mezi tímto a předchozím cyklem uběhlo 20 ms. Objekt musíme tedy posunout o 10/(20*1000) = 0,0005 jednotek. Bohužel v tomto programu to takto provést nemůžeme, protože používáme mřížku a ne např. otevřenou krajinu. Hodnoty fx a fy musí být přesně určené. Pokud hráčova fx bude řekněme 59 a počítač rozhodne posunout hráče o dva pixely doprava, tak po stisku šipky nahoru hráč nepůjde po &quot;šedesátých pixelech&quot;, ale o kousek vedle.</p>
+
+<p>Překl.: Nicméně i naše metoda má jeden velký error - okno nemůže v čekacích cyklech zpracovávat žádné zprávy. Řekněme, že bude (poněkud přeženu) časové zpoždění 5 sekund. Okno není aktivní a uživateli připadá, že v programu nastala fatální chyba. Pokusí se ho ukončit, ale i to se mu podaří až za těchto pět sekund. A pokud se bude zpomalovací kód volat častěji (např. po každém překreslení)... chápete? I u nás je tento problém trochu znatelný. Pokud se pokoušíte zatočit do určité linky, někdy se strefíte až na několikátý pokus - program nezareaguje včas. Proč vlastně vzniklo vícevláknové programování? Aby odstranilo zdánlivě &quot;spadnuté programy&quot; při náročných a dlouho trvajících výpočtech. Já osobně, bych se takovémuto časování za každou cenu vyhnul.</p>
+
+<p class="src3"><span class="kom">// Plýtvá cykly procesoru na rychlých systémech</span></p>
+<p class="src3">while(TimerGetTime() &lt; start + float(steps[adjust] * 2.0f))</p>
+<p class="src3">{</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (keys[VK_F1])</p>
+<p class="src3">{</p>
+<p class="src4">keys[VK_F1]=FALSE;</p>
+<p class="src4">KillGLWindow();</p>
+<p class="src4">fullscreen =! fullscreen;</p>
+<p></p>
+<p class="src4">if (!CreateGLWindow(&quot;NeHe's Line Tutorial&quot;,640,480,16,fullscreen))</p>
+<p class="src4">{</p>
+<p class="src5">return 0;</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+
+<p>Přejdeme k ovládání klávesnicí. Po stisku 'A' znegujeme proměnnou anti a tím oznámíme kódu pro kreslení, že má nebo nemá používat antialiasing.</p>
+
+<p class="src3">if (keys['A'] &amp;&amp; !ap)<span class="kom">// Stisk A</span></p>
+<p class="src3">{</p>
+<p class="src4">ap = TRUE;<span class="kom">// Nastaví příznak</span></p>
+<p class="src4">anti=!anti;<span class="kom">// Zapne/vypne antialiasing</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (!keys['A'])<span class="kom">// Uvolnění A</span></p>
+<p class="src3">{</p>
+<p class="src4">ap=FALSE;<span class="kom">// Vypne příznak</span></p>
+<p class="src3">}</p>
+
+<p>Teď pohyb a logika nepřátel. Chtěl jsem udržet kód opravdu jednoduchý, takže nečekejte žádné zázraky. Pracuje tak, že nepřátelé zjistí, kde je hráč a poté se vydají jeho směrem (na pozici x, y). Mohou například vidět, že je v hracím poli nahoře, ale v čase, kdy testovali pozici x, hráč už může být díky fx úplně někde jinde. Častokrát se dostanou tam, kde byl o krok předtím. Někdy vypadají opravdu zmateně.</p>
+
+<p>Začneme ujištěním se, jestli už není konec hry a jestli je okno aktivní. Pokud se například minimalizovalo, nepřátelé se nebudou na pozadí pohybovat.</p>
+
+<p>Vytvoříme cyklus, který i tentokrát prochází všechny nepřátele.</p>
+
+<p class="src3">if (!gameover &amp;&amp; active)<span class="kom">// Není-li konec hry a okno je aktivní</span></p>
+<p class="src3">{</p>
+<p class="src4">for (loop1=0; loop1&lt;(stage*level); loop1++)<span class="kom">// Prochází všechny nepřátele</span></p>
+<p class="src4">{</p>
+
+<p>V případě, že bude x pozice nepřítele menší než x pozice hráče a zároveň se také musí rovnat y*40 pozici y (jsme v průsečíku vertikální a horizontální linky) posuneme nepřítele doprava. Analogickým způsobem implementujeme i pohyb doleva, nahoru a dolů.</p>
+
+<p>Poznámka: po změně pozic x a y nelze vidět žádný pohyb, protože při vykreslování objekty umísťujeme pomocí proměnných fx a fy. Změnou x a y jenom určujeme požadovaný směr pohybu.</p>
+
+<p class="src5">if ((enemy[loop1].x &lt; player.x) &amp;&amp; (enemy[loop1].fy==enemy[loop1].y*40))</p>
+<p class="src5">{</p>
+<p class="src6">enemy[loop1].x++;<span class="kom">// Přesun o políčko doprava</span></p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if ((enemy[loop1].x &gt; player.x) &amp;&amp; (enemy[loop1].fy==enemy[loop1].y*40))</p>
+<p class="src5">{</p>
+<p class="src6">enemy[loop1].x--;<span class="kom">// Přesun o políčko doleva</span></p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if ((enemy[loop1].y &lt; player.y) &amp;&amp; (enemy[loop1].fx==enemy[loop1].x*60))</p>
+<p class="src5">{</p>
+<p class="src6">enemy[loop1].y++;<span class="kom">// Přesun o políčko dolů</span></p>
+<p class="src5">}</p>
+<p></p>
+<p class="src5">if ((enemy[loop1].y &gt; player.y) &amp;&amp; (enemy[loop1].fx==enemy[loop1].x*60))</p>
+<p class="src5">{</p>
+<p class="src6">enemy[loop1].y--;<span class="kom">// Přesun o políčko nahoru</span></p>
+<p class="src5">}</p>
+
+<p>Následující kód provádí opravdový pohyb. Zjistíme, zda je proměnná delay větší než tři mínus level. Pokud jsme v levelu jedna, program pojde cyklem dvakrát (3-1=2), předtím než se nepřítel opravdu pohne. V levelu tři (nejvyšší možný) se nepřátelé budou pohybovat stejnou rychlostí jako hráč - tedy bez zpoždění. Také ověřujeme, jestli se hourglas.fx nerovná dvěma. Tato proměnná označuje hráčovo sebrání přesýpacích hodin. V takém případě nepřítelem nepohybujeme.</p>
+
+<p>Pokud je zpoždění vyšší než tři mínus level a hráč nesebral hodiny, pohneme nepřítelem úpravou proměnných fx a fy. Nejprve vynulujeme zpoždění, takže ho budeme moci znovu počítat a potom opět deklarujeme cyklus, který prochází všechy viditelné nepřátele.</p>
+
+<p class="src5">if (delay &gt; (3-level) &amp;&amp; (hourglass.fx!=2))<span class="kom">// Hráč nesebral přesýpací hodiny</span></p>
+<p class="src5">{</p>
+<p class="src6">delay=0;<span class="kom">// Reset delay na nulu</span></p>
+<p></p>
+<p class="src6">for (loop2=0; loop2&lt;(stage*level); loop2++)<span class="kom">// Prochází všechny nepřátele</span></p>
+<p class="src6">{</p>
+
+<p>Nepřítel se vždy pohybuje pomocí fx/fy směrem k x/y. V prvním if zjistíme jestli je fx menší než x*60. V takovém případě ho posuneme doprava o vzdálenost steps[adjust]. Také změníme jeho úhel natočení, aby vznikl dojem rolování doprava.</p>
+
+<p>Úplně stejně provedeme pohyby doleva, dolů a nahoru.</p>
+
+<p class="src7">if (enemy[loop2].fx &lt; enemy[loop2].x*60)<span class="kom">// Fx je menší než x</span></p>
+<p class="src7">{</p>
+<p class="src8">enemy[loop2].fx+=steps[adjust];<span class="kom">// Zvýšit fx</span></p>
+<p class="src8">enemy[loop2].spin+=steps[adjust];<span class="kom">// Rotace ve směru hodinových ručiček</span></p>
+<p class="src7">}</p>
+<p></p>
+<p class="src7">if (enemy[loop2].fx &gt; enemy[loop2].x*60)<span class="kom">// Fx je větší než x</span></p>
+<p class="src7">{</p>
+<p class="src8">enemy[loop2].fx-=steps[adjust];<span class="kom">// Snížit fx</span></p>
+<p class="src8">enemy[loop2].spin-=steps[adjust];<span class="kom">// Rotace proti směru hodinových ručiček</span></p>
+<p class="src7">}</p>
+<p></p>
+<p class="src7">if (enemy[loop2].fy &lt; enemy[loop2].y*40)<span class="kom">// Fy je menší než y</span></p>
+<p class="src7">{</p>
+<p class="src8">enemy[loop2].fy+=steps[adjust];<span class="kom">// Zvýšit fy</span></p>
+<p class="src8">enemy[loop2].spin+=steps[adjust];<span class="kom">// Rotace ve směru hodinových ručiček</span></p>
+<p class="src7">}</p>
+<p></p>
+<p class="src7">if (enemy[loop2].fy &gt; enemy[loop2].y*40)<span class="kom">// Fy je větší než y</span></p>
+<p class="src7">{</p>
+<p class="src8">enemy[loop2].fy-=steps[adjust];<span class="kom">// Snížit fy</span></p>
+<p class="src8">enemy[loop2].spin-=steps[adjust];<span class="kom">// Rotace proti směru hodinových ručiček</span></p>
+<p class="src7">}</p>
+<p class="src6">}</p>
+<p class="src5">}</p>
+
+<p>Pohyb tedy máme. nyní potřebujeme vyřešit náraz nepřátel do hráče. V případě, že se obě fx i obě fy rovnají... hráč zemře. Dekrementujeme životy a v případě jejich nulové hodnoty prohlásíme hru za skončenou. Resetujeme všechny objekty a necháme zahrát úmrtní skladbu.</p>
+
+<p>Zvuky jsou v našich tutoriálech novinkou. rozhodl jsem se použít tu nejzákladnější dostupnou rutinu... PlaySound(). Předáváme jí tři parametry. První určuje cestu k souboru se zvukem. Druhý parametr pomocí nulového ukazatele ignorujeme. Třetí parametr je flag stylu. Dva nejčastěji používané jsou: SND_SYNC, který zastaví provádění programu, dokud přehrávání zvuku neskončí. Druhá možnost, SND_ASYNC, přehrává zvuk nezávisle na běhu programu. Dáme přednost maličkému zpoždění, takže funkci předáme SND_SYNC.</p>
+
+<p>Na začátku tutoriálu jsem zapomněl na jednu věc: Abychom mohli používat funkci PlaySound(), potřebujeme inkludovat knihovnu WINMM.LIB (Windows Multimedia Library). Ve Visual C++ to lze provést v nabídce Project/Setting/Link.</p>
+
+<p class="src5"><span class="kom">// Setkání nepřítele s hráčem</span></p>
+<p class="src5">if ((enemy[loop1].fx==player.fx) &amp;&amp; (enemy[loop1].fy==player.fy))</p>
+<p class="src5">{</p>
+<p class="src6">lives--;<span class="kom">// Hráč ztrácí život</span></p>
+<p></p>
+<p class="src6">if (lives==0)<span class="kom">// Nulový počet životů</span></p>
+<p class="src6">{</p>
+<p class="src7">gameover=TRUE;<span class="kom">// Konec hry</span></p>
+<p class="src6">}</p>
+<p></p>
+<p class="src6">ResetObjects();<span class="kom">// Reset pozice hráče a nepřátel</span></p>
+<p></p>
+<p class="src6">PlaySound(&quot;Data/Die.wav&quot;, NULL, SND_SYNC);<span class="kom">// Zahraje umíráček</span></p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+
+<p>Ošetříme stisk kurzorových kláves. Vyřešíme šipku doprava, ostatní směry jsou zcela analogické. Abychom nevypadli pryč z hracího pole musí být player.x menší než deset (šířka mřížky). Nechceme, aby mohl změnit směr uprostřed přesunu a tak kontrolujeme, zda se fx==player.x*60 a fy==player.y*40. Nastanou-li obě rovnosti, můžeme s určitostí říci, že se nachází v průsečíku rovnoběžné se svislou linkou a tedy dokončil svůj pohyb. Platí-li všechny podmínky, označíme linku pod hráčem jako přejetou a posuneme jej na následující pozici.</p>
+
+<p class="src4">if (keys[VK_RIGHT] &amp;&amp; (player.x&lt;10) &amp;&amp; (player.fx==player.x*60) &amp;&amp; (player.fy==player.y*40))</p>
+<p class="src4">{</p>
+<p class="src5">hline[player.x][player.y]=TRUE;<span class="kom">// Označení linky</span></p>
+<p class="src5">player.x++;<span class="kom">// Doprava</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_LEFT] &amp;&amp; (player.x&gt;0) &amp;&amp; (player.fx==player.x*60) &amp;&amp; (player.fy==player.y*40))</p>
+<p class="src4">{</p>
+<p class="src5">hline[player.x][player.y]=TRUE;<span class="kom">// Označení linky</span></p>
+<p class="src5">player.x--;<span class="kom">// Doleva</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_DOWN] &amp;&amp; (player.y&lt;10) &amp;&amp; (player.fx==player.x*60) &amp;&amp; (player.fy==player.y*40))</p>
+<p class="src4">{</p>
+<p class="src5">vline[player.x][player.y]=TRUE;<span class="kom">// Označení linky</span></p>
+<p class="src5">player.y++;<span class="kom">// Dolů</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_UP] &amp;&amp; (player.y&gt;0) &amp;&amp; (player.fx==player.x*60) &amp;&amp; (player.fy==player.y*40))</p>
+<p class="src4">{</p>
+<p class="src5">vline[player.x][player.y]=TRUE;<span class="kom">// Označení linky</span></p>
+<p class="src5">player.y--;<span class="kom">// Nahoru</span></p>
+<p class="src4">}</p>
+
+<p>Hráče máme, dá se říci, přesunutého - ale pouze v programu! Je viditelný stále na stejném místě, protože ho vykreslujeme pomocí fx a fy. Provnáme, polohu fx vzhledem k x a pokud se nerovnají, snížíme vzdálenost mezinimi o přesně daný úsek. Po několika překresleních se začnou obě hodnoty rovnat, což značí, že dokončil pohyb a nyní se nachází v průsečíku linek. Při následném stisku klávesy můžeme začít hráče znovu posunovat (viz. kód výše).</p>
+
+<p class="src4">if (player.fx&lt;player.x*60)<span class="kom">// Fx je menší než x</span></p>
+<p class="src4">{</p>
+<p class="src5">player.fx+=steps[adjust];<span class="kom">// Zvětší fx</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (player.fx&gt;player.x*60)<span class="kom">// Fx je větší než x</span></p>
+<p class="src4">{</p>
+<p class="src5">player.fx-=steps[adjust];<span class="kom">// Zmenší fx</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (player.fy&lt;player.y*40)<span class="kom">// Fy je menší než y</span></p>
+<p class="src4">{</p>
+<p class="src5">player.fy+=steps[adjust];<span class="kom">// Zvětší fy</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (player.fy&gt;player.y*40)<span class="kom">// Fy je větší než y</span></p>
+<p class="src4">{</p>
+<p class="src5">player.fy-=steps[adjust];<span class="kom">// Zmenší fy</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+
+<p>Nastane-li konec hry, projde program větví else. V ní je pouze test stisku mezerníku, který znovu spustí hru. Nastavíme filled na TRUE a díky tomu si program bude myslet, že je mřížka kompletně vyplněná - resetuje se pozice hráče i nepřátel. Abychom byli přesní, program si vlastně myslí, že jsme dokončili level, a proto inkrementuje do stage přiřazenou nulu na jedna. Přesně tohle chceme. Život vrátíme na počáteční hodnotu.</p>
+
+<p class="src3">else<span class="kom">// Jinak (if (!gameover && active))</span></p>
+<p class="src3">{</p>
+<p class="src4">if (keys[' '])<span class="kom">// Stisknutý mezerník</span></p>
+<p class="src4">{</p>
+<p class="src5">gameover = FALSE;<span class="kom">// Konec hry</span></p>
+<p class="src5">filled = TRUE;<span class="kom">// Mřížka vyplněná</span></p>
+<p></p>
+<p class="src5">level = 1;<span class="kom">// Level</span></p>
+<p class="src5">level2 = 1;<span class="kom">// Zobrazovaný level</span></p>
+<p class="src5">stage = 0;<span class="kom">// Obtížnost hry</span></p>
+<p></p>
+<p class="src5">lives = 5;<span class="kom">// Počet životů</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+
+<p>Následující část testuje, zda je mřížka kompletně vyplněná. Filled může být nastaveno na TRUE celkem dvěma způsoby. Buď je mřížka úplně vyplněná, nebo skončila hra (zabitím hráče; nula životů) a uživatel stiksl mezerník, aby ji restartoval.</p>
+
+<p class="src3">if (filled)<span class="kom">// Vyplněná mřížka?</span></p>
+<p class="src3">{</p>
+
+<p>Ať už to způsobil kterýkoli případ je nám to celkem jedno. Vždy zahrajeme zvuk značící ukončení levelu. Už jsme jednou vysvětloval, jak PlaySound() pracuje. Předáním SND_SYNC vytvoříme časové zpoždění, kdy program čeká až zvuk dohraje.</p>
+
+<p class="src4">PlaySound(&quot;Data/Complete.wav&quot;, NULL, SND_SYNC);<span class="kom">// Zvuk ukončení levelu</span></p>
+
+<p>Potom inkrementujeme stage a zjistíme, jestli není větší než tři. Pokud ano, vrátíme ho na jedno, zvětšíme vnitřní i zobrazovaný level o jedničku.</p>
+
+<p class="src4">stage++;<span class="kom">// Inkrementace obtížnosti</span></p>
+<p></p>
+<p class="src4">if (stage &gt; 3)<span class="kom">// Je větší než tři?</span></p>
+<p class="src4">{</p>
+<p class="src5">stage=1;<span class="kom">// Reset na jedničku</span></p>
+<p class="src5">level++;<span class="kom">// Zvětší level</span></p>
+<p class="src5">level2++;<span class="kom">// Zvětší zobrazovaný level</span></p>
+
+<p>Pokud bude vnitřní level větší než tři, vrátíme ho zpět na trojku a přidáme hráči jeden život, ale pouze do maximálních pěti. Více živý nikdy nebude.</p>
+
+<p class="src5">if (level&gt;3)<span class="kom">// Je level větší než tři?</span></p>
+<p class="src5">{</p>
+<p class="src6">level=3;<span class="kom">// Vrátí ho zpátky na tři</span></p>
+<p class="src6">lives++;<span class="kom">// Život navíc</span></p>
+<p></p>
+<p class="src6">if (lives &gt; 5)<span class="kom">// Má víc životů než pět?</span></p>
+<p class="src6">{</p>
+<p class="src7">lives = 5;<span class="kom">// Maximální počet životů pět</span></p>
+<p class="src6">}</p>
+<p class="src5">} </p>
+<p class="src4">}</p>
+
+<p>Resetujeme všechny objekty ve hře (hřáč, nepřátelé) a vynulujeme flag projetí všech linek na FALSE. Pokud bychom to neudělali, další level by byl předčasně ukončen - program by opět skočil do tohoto kódu. Mimochodem, je úplně stejný jako kód pro vykrelsování mřížky.</p>
+
+<p class="src4">ResetObjects();<span class="kom">// Reset pozice hráče a nepřátel</span></p>
+<p></p>
+<p class="src4">for (loop1=0; loop1&lt;11; loop1++)<span class="kom">// Cyklus skrz x koordináty mřížky</span></p>
+<p class="src4">{</p>
+<p class="src5">for (loop2=0; loop2&lt;11; loop2++)<span class="kom">// Cyklus skrz y koordináty mřížky</span></p>
+<p class="src5">{</p>
+<p class="src6">if (loop1 &lt; 10)<span class="kom">// X musí být menší než deset</span></p>
+<p class="src6">{</p>
+<p class="src7">hline[loop1][loop2] = FALSE;<span class="kom">// Nulování</span></p>
+<p class="src6">}</p>
+<p></p>
+<p class="src6">if (loop2 &lt; 10)<span class="kom">// Y musí být menší než deset</span></p>
+<p class="src6">{</p>
+<p class="src7">vline[loop1][loop2] = FALSE;<span class="kom">// Nulování</span></p>
+<p class="src6">}</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+
+<p>Pokusíme se umplementovat hráčovo sebrání přesýpacích hodin. Že si musí polohy odpovídat je, myslím si, jasné. Nicméně přidáváme ještě podmínku hourgalss.fx==1. Nejedná se o žádnou polohu. Fx používáme jako indikátor toh, že jsou zobrazené na monitoru.</p>
+
+<p class="src3"><span class="kom">// Hráč sebral přesýpací hodiny</span></p>
+<p class="src3">if ((player.fx==hourglass.x*60) &amp;&amp; (player.fy==hourglass.y*40) &amp;&amp; (hourglass.fx==1))</p>
+<p class="src3">{</p>
+
+<p>Necháme zahrát zvuk zmrazení. Aby zvuk zněl na pozadí, používáme SND_ASYNC. Díky OR-ování se symbolickou konstantou SND_LOOP docílíme toho, že se po dokončení přehrávání zvuku sám znovu spustí. Zastavit ho můžeme buď požadavkem na zastvení, nebo přehráním jiného zvuku.</p>
+
+<p>Aby hodiny nebyly dále zobrazené nastavíme fx na dva. Také přiřadíme do fy nulu. Fy je něco jako čítač, který inkrementujeme do určité hodnoty, po jejímž přetečení změníme hodnotu fx.</p>
+
+<p class="src4">PlaySound(&quot;Data/freeze.wav&quot;, NULL, SND_ASYNC | SND_LOOP);<span class="kom">// Zvuk zmrazení</span></p>
+<p></p>
+<p class="src4">hourglass.fx=2;<span class="kom">// Skryje hodiny</span></p>
+<p class="src4">hourglass.fy=0;<span class="kom">// Nuluje čítač</span></p>
+<p class="src3">}</p>
+
+<p>Následující kód zajišťuje narůstání rotace hráče o polovinu nižší rychlostí než má hra. V případě, že bude hodnota vyšší než 360° odečteme 360. Tím zajistíme, aby nebyla moc vysoká.</p>
+
+<p class="src3">player.spin += 0.5f * steps[adjust];<span class="kom">// Rotace hráče</span></p>
+<p></p>
+<p class="src3">if (player.spin&gt;360.0f)<span class="kom">// Úhel je větší než 360°</span></p>
+<p class="src3">{</p>
+<p class="src4">player.spin -= 360;<span class="kom">// Odečte 360</span></p>
+<p class="src3">}</p>
+
+<p>Aby se hodiny točily opačným směrem než hráč, namísto zvyšování, úhel snižujeme. Rychlost je čtvrtinová oproti rychlosti hry. Opět ošetříme podtečení proměnné.</p>
+
+<p class="src3">hourglass.spin-=0.25f*steps[adjust];<span class="kom">// Rotace přesýpacích hodin</span></p>
+<p></p>
+<p class="src3">if (hourglass.spin &lt; 0.0f)<span class="kom">// Úhel je menší než 0°</span></p>
+<p class="src3">{</p>
+<p class="src4">hourglass.spin += 360.0f;<span class="kom">// Přičte 360</span></p>
+<p class="src3">}</p>
+
+<p>Zvětšíme hodnotu čítače přesýpacích hodin, o které jsme mluvili před chvílí. Opět podle rychlosti hry. Dále zjistíme, jestli se hourglass.fx rovná nule (nejsou zobrazené) a zároveň jelsti je čítač větší než 6000 děleno level. V takovém případě přehrajeme zvuk zobrazení, vygenerujeme novou pozici a přes fx=1 hodiny zobrazíme. Vynulujeme čítač, aby mohl počítat znovu.</p>
+
+<p class="src3">hourglass.fy+=steps[adjust];<span class="kom">// Zvětšení hodnoty čítače přesýpacích hodin</span></p>
+<p></p>
+<p class="src3">if ((hourglass.fx==0) &amp;&amp; (hourglass.fy &gt; 6000/level))<span class="kom">// Hodiny jsou skryté a přetekl čítač</span></p>
+<p class="src3">{</p>
+<p class="src4">PlaySound(&quot;Data/hourglass.wav&quot;, NULL, SND_ASYNC);<span class="kom">// Zvuk zobrazení hodin</span></p>
+<p></p>
+<p class="src4">hourglass.x = rand()%10+1;<span class="kom">// Náhodná pozice</span></p>
+<p class="src4">hourglass.y = rand()%11;<span class="kom">// Náhodná pozice</span></p>
+<p></p>
+<p class="src4">hourglass.fx = 1;<span class="kom">// Zobrazení hodin</span></p>
+<p class="src4">hourglass.fy = 0;<span class="kom">// Nulování čítače</span></p>
+<p class="src3">}</p>
+
+<p>Překl-li čítač v době, kdy jsou hodiny viditelné (fx==1), schováme je a opět vynulujeme čítač.</p>
+
+<p class="src3">if ((hourglass.fx==1) &amp;&amp; (hourglass.fy&gt;6000/level))<span class="kom">// Hodiny jsou zobrazené a přetekl čítač</span></p>
+<p class="src3">{</p>
+<p class="src4">hourglass.fx = 0;<span class="kom">// Skrýt hodiny</span></p>
+<p class="src4">hourglass.fy = 0;<span class="kom">// Nulování čítače</span></p>
+<p class="src3">}</p>
+
+<p>Při hráčově sebrání hodin jsme zmrazili všechny nepřátele. Nyní je rozmrazíme. Fx==2 indikuje, že byly hodiny sebrány. Fy porovnáváme s vypočtenou hodnotou. Jsou-li obě podmínyk pravdivé, vypneme zvuk, který zní ve smyčce na pozadí a to tak, že přehrajeme nulový zvuk. Zneviditelníme hodiny a vynulujeme jejich čítač.</p>
+
+<p class="src3">if ((hourglass.fx==2) &amp;&amp; (hourglass.fy&gt;500+(500*level)))<span class="kom">// Nepřátelé zmrazení a přetekl čítač</span></p>
+<p class="src3">{</p>
+<p class="src4">PlaySound(NULL, NULL, 0);<span class="kom">// Vypne zvuk zmrazení</span></p>
+<p></p>
+<p class="src4">hourglass.fx = 0;<span class="kom">// Skrýt hodiny</span></p>
+<p class="src4">hourglass.fy = 0;<span class="kom">// Nulování čítače</span></p>
+<p class="src3">}</p>
+
+<p>Na samém konci hlavní smyčky programu inkrementujeme proměnnou delay. To je, myslím si, vše.</p>
+
+<p class="src3">delay++;<span class="kom">// Inkrementuje čítač zpoždění nepřátel</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">KillGLWindow();<span class="kom">// Zruší okno</span></p>
+<p class="src1">return (msg.wParam);<span class="kom">// Ukončí program</span></p>
+<p class="src0">}</p>
+
+<p>Psaním tohoto tutoriálu jsem strávil spoustu času. Začínal jako zcela jednoduchý tutoriál o linkách, který se úplně nečekaně rozvinul v menší hru. Doufejme, že budete moci ve svých programech využít vše, co jste se zde naučili. Vím, že se spousta z vás ptala po hře s kostičkami a políčky. Nemohli jste dostat více kostičkovatější a více políčkovatější hru než je tato. Ačkoli lekce nevysvětluje mnoho nových věcí o OpenGL, myslím si, že časování a zvuky jsou také důležité - zvlášť ve hrách. Co ještě napsat? Asi nic...</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson21.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson21_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson21.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson21.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson21.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson21.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson21.zip">Irix</a> kód této lekce. ( <a href="mailto:christop@fhw.gr">Dimi</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson21.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson21.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson21.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:marius@hot.ee">Marius Andra</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson21.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:miqster@gmx.net">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson21.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson21.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson21.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson21.zip">MASM</a> kód této lekce. ( <a href="mailto:chris.j84@free.fr">Christophe</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson21.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson21.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_21_big.jpg" class="nehe_velky" alt="Lekce 21" /></div>
+<p class="okolni_lekce"><a href="tut_20.php">&lt;&lt;&lt; Lekce 20</a> | <a href="tut_22.php">Lekce 22 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">myn</div>
+<div class="d_o_datumcas">05.12.2004 - 10:31:18</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_21.php&j=0">chybí knihovny?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">08.12.2004 - 14:55:35</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_21.php&j=1">Re: chybí knihovny?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">myn</div>
+<div class="d_o_datumcas">09.12.2004 - 08:45:47</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_21.php&j=2">Re: chybí knihovny?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Speedy</div>
+<div class="d_o_datumcas">23.12.2004 - 15:37:54</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_21.php&j=3">Re: chybí knihovny?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">10.08.2005 - 20:12:03</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_21.php&j=4">Chyba při kompilaci</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">11.08.2005 - 19:16:09</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_21.php&j=5">Re: Chyba při kompilaci</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">F</div>
+<div class="d_o_datumcas">17.11.2006 - 21:19:33</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_21.php&j=6">Hudba</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eraser17</div>
+<div class="d_o_datumcas">26.02.2007 - 21:18:23</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_21.php&j=7">Re: Hudba</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Michal Turek</div>
+<div class="d_o_datumcas">26.02.2007 - 22:13:35</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_21.php&j=8">Re: Hudba</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eraser17</div>
+<div class="d_o_datumcas">27.02.2007 - 20:58:00</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_21.php&j=9">Re: Hudba</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_21.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Edit</title>
+	 <script>
+	 var i=0;
+	 </script>
+</head>
+
+<body>
+<h3 class=nadpis>Vstup 1. časť</h3>
+<dl>
+	<dt class=main>	Opakovanie
+	<dd style="background-color:#ddffdd">- Aké sú základné vlastnosti objektov
+	<br>- Ako zadám farbu ktorej neviem meno
+	<br>- Aké objekty sme spomínali na výstup dát
+	<br>- Ako vypíšem číselnú hodnotu
+	<br>- Ako zabezpečím formátovanie číselných údajov
+	<br>- Ktorý objekt slúži na viacriadkový výstup
+	<br>- Je možné v memo určiť 1 riadku formát zobrazenia
+	<br>- Ako urobiť výpis do stavového riadku
+	<br>- Aké modálne okná sme spomínali a na čo slúžia
+
+	<dt class=main>	Vstup dát z klávesnice, myši
+	<dd>Podobne ako výstup i vstup je oproti DOS pascalu riešený úplne odlišne a sú naň určené
+		nasledovné objekty:
+		<ul>
+		<li>textové dáta - Edit, InputBox
+		<li>logické dáta - CheckBox, RadioButton, Radiogroup
+		<li>textové dáta výberom - ListBox, ComboBox
+		</ul>
+<br>
+	<dt class=main>Edit
+	<dd>Tu sa budeme venovať načítavaniu textu a čísel pomocou objektu Edit.
+		Nakoľko nie je možné načítať číselné hodnoty musíme používať prevody textových hodnôt na číselné (pozri časť: <a href="../01zaciname/prevod.html" target="obsah">Prevody</a>).
+	<b>Edit</b> je jednoduchý vstupný riadok s možnosťou zadania textu aj dlhšieho ako je zobrazený. 
+	Ak potrebujeme formátovaný vstupný riadok použijeme objekt <b>MaskEdit</b>.
+	<br>Obyčajne pred vstupné políčko <b>Edit</b> vkladáme <b>Label</b> na stručný popis žiadaných dát.
+	<br>Pri zadávaní čísel je možné <b>Edit</b> kombinovať s objektom <font color="Blue">UpDown</font> (karta Win32), 
+	ktorý umožní incrementovať a decrementovať hodnoty pomocou šipiek. Ak pole Edit navyše dáme 
+	ReadOnly nedovolíme užívateľovi zadávať "somariny". Objekt UpDown musíme prepojiť s objektom 
+	Edit - pomocou udalosti Associate.
+	<BR>V príklade je pre objekt UpDown zvolené min na 1 a max na hodnotu 5 (nastavené cez Object Inspector)
+	<br>a pre obe čísla (Edity) ošetrená udalosť OnChange. 
+	<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   	<div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+   		<img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   	</div>
+   	<div style="background-color:silver; width:500px;" id="back2">
+	<div style="margin:10">
+     <h4>Priemer dvoch známok<br>čísla zadávané pomocou UpDown</h4>
+	 <table cellpadding="0" cellspacing="0">
+	 <tr valign="bottom">
+	<td style="padding:0">číslo1: <input type="Text" id="cis1" value="1" READONLY>
+	<td style="padding:0">
+	<img src="obr/up.png" width="19" height="13" onclick="if ((i=parseInt(cis1.value)+1)!=6) {cis1.value=i; vyslx.value=(i+parseInt(cis2.value))/2;}" border="0"><br>
+	<img src="obr/down.png" width="19" height="13" border="0" onclick="if ((i=parseInt(cis1.value)-1)>0) {cis1.value=i; vyslx.value=(i+parseInt(cis2.value))/2;}"></tr>
+	<tr><td colspan="2">&nbsp;</tr>
+	<tr>
+	<td style="padding:0">číslo2: <input type="Text" id="cis2" value="1" READONLY>
+	<td style="padding:0">
+	<img src="obr/up.png" width="19" height="13" onclick="if ((i=parseInt(cis2.value)+1)!=6) {cis2.value=i; vyslx.value=(i+parseInt(cis1.value))/2;}" border="0" o><br>
+	<img src="obr/down.png" width="19" height="13" onclick="if ((i=parseInt(cis2.value)-1)>0) {cis2.value=i; vyslx.value=(i+parseInt(cis1.value))/2;}" border="0">
+	</tr></table>
+	Priemer: <input type="Text" value="?" id="vyslx" READONLY>
+	</div></div></div>
+	Pri ošetrovaní rizík zadania nesprávnej hodnoty môžme:
+	<ul><li>Nedovoliť zadať iné znaky ako +,-,0..9 (pomocou udalosti OnChange)
+		<li>Nedovoliť zadať nepovolené znaky pred ich zápisom do editu. Po stlačení klávesy sa vyvolá
+		udalosť OnKeypress (este pred pridaním znaku do editu), a ak je znak nepovolený môžeme ho ľubovoľne zmeniť
+		priradením hodnoty do parametra Key.
+		<li>Nedovoliť odísť z Editu ak nám zadaná hodnota nevyhovuje (pomocou funkcie Edit.SetFocus) 
+		napr. kontrolou cez funkciou val (osetrime udalost onExit, kde zavoláme proceduru Edit1.SetFokus 
+		<li>Prevod stringu získaného z Editu robíme cez val, predídeme padaniu programu.
+	</ul>
+<br>	
+	<dl>
+	<dt class=second>Príklady na precvičenie:
+	<dd><table cellspacing="20">
+		<tr><td><img src="../obr/ktstrofa.png" border="0" alt="" height="50">		
+		<td>
+		<ol>
+		<li>Vytvor formulár s jedným editom a jedným memo. Do editu zadaj číslo N 
+			a po stlačeni enter	(alebo tlačítka start) do mema natabeluje hodnoty
+			<br>Číslo bude kontrolované na správnosť.
+			<br><a href="kontr-vstup.exe">stiahni</a>
+			<br>i......i*i............i! pre i od 1 po N
+
+		<li>Vytvor formulár, ktorý má jeden Edit a jeden Button - Exit. V edite budeme zadávať x-sur. tlačítka.
+			<br>Úlohu riešte pomocou samotného Editu - Button sa presunie po zadaní Enter
+			<br>Editu v spojení s UpDown - Button sa presunie po každej zmene
+			<br><a href="pohyb.exe">stiahni</a>
+		<li>Vytvor formulár so štyrmi Editmi - Cislo1,Oper,Cislo2,Výsl
+			<br> Užívateľ zadá číslo1, číslo2 a operáciu +-*/ a do výsledku sa zapíše výsledok
+
+		</ol></tr>
+		</table>
+	</dl>	
+<dt class="main">InputBox
+<dd>Funkcia InputBox je dialógové okno so vstupným riadkom, kam možno zadať požadovaný text a stlačením OK sa vráti
+naklepaný text.
+<br>Syntax:
+<br><b>AnsiString InputBox(AnsiString hlavička, AnsiString výzva, AnsiString def)</b>
+<br><b>hlavička</b> - text zobrazený v hlavičke okna
+<br><b>výzva</b> - text zobrazený v okne pred vstupným polom
+<br><b>def</b> - počiatočný text vo vstupnom riadku
+<br><br>Použitie:
+<code>
+<br>{
+<br> &nbsp;AnsiString InputString = InputBox("Input Box", "Prompt", "Default string")
+<br>}
+</code>
+<br>Samozrejme možno načítať aj čísla ale musíme ich z textu "vytiahnuť" pomocou prevodu text-&gt;číslo
+	</table>	
+</dl>
+<h3>Úloha</h3>
+<br>
+<div style="border-width:3;border-style:outset;width:500px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:500px; padding:0;border-width:0;">
+   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
+   </div>
+   <div style="background-color:silver; width:500px;" id="back2">
+  <div style="margin:10">
+<table  width="100%" rules="cols"><tr><td width="250">
+A <input type="Text" value="125" id="texta">
+<br>B <input type="Text" value="55" id="textb">
+<hr>
+výsledok: <input type="Text" value="" id="textc">
+<td align="center"><input type="Button" onclick="textc.value= eval(texta.value) + eval(textb.value);" value="súčet" style="width:115;margin:3">
+<br><input type="Button" onclick="textc.value= eval(texta.value) - eval(textb.value);" value="rozdiel" style="width:115;margin:3">
+<br><input type="Button" onclick="textc.value= eval(texta.value) * eval(textb.value);" value="súčin" style="width:115;margin:3">
+<br><input type="Button" onclick="textc.value= eval(texta.value) / eval(textb.value);" value="podiel" style="width:115;margin:3">
+</tr></table>
+</div></div></div>
+</body>
+</html>

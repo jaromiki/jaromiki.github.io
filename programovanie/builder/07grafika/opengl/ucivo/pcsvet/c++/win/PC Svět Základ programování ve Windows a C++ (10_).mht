@@ -1,0 +1,157 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C++_?=
+	=?windows-1250?Q?=2810.=29?=
+Date: Thu, 12 Jul 2007 10:06:38 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1128
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (10.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (10.)</H2>
+<H4>Z=E1klady kreslen=ED ve Windows, trocha teorie a jednoduch=FD =
+p=F8=EDklad</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Kdy=9E jsem se u=E8il programovat pro Windows, p=F8i=9Alo mi =
+neskute=E8n=EC slo=9Eit=E9=20
+kreslen=ED na obrazovku. Vzhledem k jednoduchosti pou=9Eit=ED BGI =
+knihoven pod BC, TC=20
+nebo TP je to opravdu pro za=E8=EDnaj=EDc=EDho program=E1tor trochu =
+obt=ED=9En=E9 k pochopen=ED.=20
+Nejprve si mus=EDme uv=ECdomit, =9Ee obrazovka u=9E nen=ED jenom na=9Ae. =
+Je zde spousta=20
+jin=FDch oken, plocha a tak=E9 hlavn=ED panel s tla=E8=EDtkem Start.
+<P>Nejprve si vysv=ECtl=EDme, jak jsou pod Windows API okna kreslen=E1. =
+Standardn=EC=20
+m=E1me pro kreslen=ED k dispozici okno a k tomuto oknu n=E1le=9E=ED =
+procedura, kter=E1=20
+reaguje na zpr=E1vy od syst=E9mu nebo jin=FDch oken a proces=F9. Kdy=9E =
+p=ED=9Aeme vlastn=ED=20
+proceduru okna, vol=E1me p=F8i obdr=9Een=ED zpr=E1v, kter=E9 =
+nezpracov=E1v=E1me, funkci=20
+<B>DefWndProc</B> (pop=F8. <B>DefDlgProc</B> nebo u dialog=F9 vrac=EDme =
+0) a takto=20
+zajist=EDme, =9Ee Windows za n=E1s ud=EClaj=ED zbytek pr=E1ce, tj. i =
+kreslen=ED.
+<P>Pro kreslen=ED oken Windows pos=EDlaj=ED dv=EC zpr=E1vy, a to =
+<B>WM_PAINT</B> a=20
+<B>WM_NCPAINT</B>. WM_PAINT je zpr=E1va, kterou Windows oznamuj=ED =
+procedu=F8e okna,=20
+=9Ee vy=9Eaduj=ED znovu vykreslit obsah klientsk=E9 =E8=E1sti okna. =
+Standardn=EC v t=E9to =E8=E1sti=20
+okna nic k p=F8ekreslen=ED nen=ED, a tak DefWindProc neprov=E1d=ED nic. =
+WM_NCPAINT obdr=9E=ED=20
+okno v p=F8=EDpad=EC, =9Ee je t=F8eba p=F8ekreslit neklientskou =E8=E1st =
+okna. Do t=E9to =E8=E1sti=20
+spad=E1 r=E1me=E8ek, titulkov=FD pruh a jeho obsah, pop=F8. menu. =
+Obvykle nen=ED t=F8eba tuto=20
+zpr=E1vu zpracov=E1vat. My budeme odpov=EDdat na zpr=E1vu WM_PAINT.=20
+<P><FONT color=3D#0033cc><B>Za=E8=EDn=E1me jednodu=9A=9A=EDm =
+p=F8=EDkladem</B></FONT>
+<P>Chceme-li kreslit do okna, budeme v programu pot=F8ebovat n=ECkolik =
+dal=9A=EDch=20
+prom=ECnn=FDch. Nejprve je to <B>hDC</B> typu HDC, tedy handle na =
+kontext za=F8=EDzen=ED,=20
+podle n=ECho=9E Windows poznaj=ED, do kter=E9ho okna kreslit, a d=E1le =
+struktura typu=20
+PAINTSTRUCT, ve kter=E9 si na=9Ae aplikace uchov=E1 informace o =
+kreslen=ED. <FONT=20
+face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>HDC hDC; <BR>PAINTSTRUCT ps; =
+</FONT></FONT></P></BLOCKQUOTE>
+<P>P=F8edt=EDm ne=9E za=E8neme vlastn=ED kreslen=ED, pou=9Eijeme funkci =
+<B>BeginPaint</B>,=20
+kterou zinicializujeme kresl=EDc=ED mechanizmy Windows vzhledem k =
+na=9Aemu oknu. Za=20
+parametry uvedeme handle na na=9Ae okno a referenci na strukturu =
+PAINTSTRUCT.=20
+<FONT face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>hDC =3D BeginPaint( hwnd , &amp;ps );=20
+</FONT></FONT></P></BLOCKQUOTE>
+<P>Pro kreslen=ED si Windows uchov=E1vaj=ED sadu objekt=F9 (nepl=E9st s =
+objekty v C++),=20
+kter=FDmi se kresl=ED. Jsou to Bitmapa, =8At=ECtec (brush), Font, Pero =
+(pen) a Oblast=20
+(region). Pero je pou=9E=EDv=E1no ke kreslen=ED p=F8edev=9A=EDm =E8ar. =
+=8At=ECtci kresl=EDme v=FDpln=EC=20
+definovan=FDch oblast=ED. Font u=9E=EDv=E1me k definici stylu p=EDsma. =
+Ke kreslen=ED m=F9=9Eeme=20
+vytvo=F8it vlastn=ED objekty nebo pou=9E=EDt p=F8eddefinovan=E9. Aby =
+Windows pou=9Eily n=E1=9A=20
+objekt, mus=EDme jej vybrat funkc=ED SelectObject.=20
+<P>V n=E1sleduj=EDc=EDm =F8=E1dku nahrad=EDme aktu=E1ln=ED pero nov=FDm =
+vlastn=EDm. Toto pero bude=20
+pln=E1 =E8=E1ra o tlou=9A=9Dce 1 pixel a modr=E9 barv=EC. <FONT =
+face=3D"Courier New"=20
+color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>SelectObject(hDC, CreatePen( PS_SOLID, 1, 0x00FF0000 =
+) );=20
+  </FONT></FONT></P></BLOCKQUOTE>
+<P>A nyn=ED ji=9E m=F9=9Eeme kreslit. Jako v BGI p=F8esuneme =
+aktu=E1ln=ED pozici kurzoru na=20
+sou=F8adnice [0,0], tj. do lev=E9ho horn=EDho rohu na=9Aeho okna. <FONT=20
+face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>MoveToEx( hDC, 0, 0, NULL ); =
+</FONT></FONT></P></BLOCKQUOTE>
+<P>A z tohoto bodu nakresl=EDme =E8=E1ru do bodu [100,100]. <FONT =
+face=3D"Courier New"=20
+color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>LineTo( hDC, 100, 100 ); =
+</FONT></FONT></P></BLOCKQUOTE>
+<P>Nyn=ED na pozici [30,10] nakresl=EDme =E8erven=FD bod. <FONT =
+face=3D"Courier New"=20
+color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>SetPixel( hDC, 30, 10, 0x000000FF );=20
+</FONT></FONT></P></BLOCKQUOTE>
+<P>A po dokon=E8en=ED kreslen=ED zavol=E1me funkci EndPaint, kter=E1 =
+dokon=E8=ED na=9Ae kresl=EDc=ED=20
+operace a zjednodu=9Aen=EC =F8e=E8eno zp=F9sob=ED, =9Ee se to, co jsme =
+kreslili, objev=ED v=20
+okn=EC. <FONT face=3D"Courier New" color=3D#000044>
+<BLOCKQUOTE>
+  <P><FONT size=3D2>EndPaint( hwnd, &amp;ps ); =
+</FONT></FONT></P></BLOCKQUOTE>
+<P>Jak jednoduch=E9.&nbsp; V p=F8=ED=9At=EDm d=EDle si pov=EDme n=ECco o =
+tom, jak do okna=20
+um=EDstit jak=FDkoliv text.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:06:22 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

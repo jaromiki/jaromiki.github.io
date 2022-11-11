@@ -1,0 +1,255 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	 <title>JavaScript - výrazy, vstup</title>
+</head>
+
+<body>
+<dl><dt>Zahniezdenie príkazov JavaScriptu
+	<dd><dl><dt>Časť head - hlavička
+			<dd>V časti hlavička je zvykom deklarovať funkcie, ktoré sú potom v časti Body k dispozícii. 
+				Ak by sme definovali funkcie v časti body neboli by načítané dopredu a až pri volaní by sa 
+				načítavali, čo by mohlo reakciu neúmerne predĺžiť.
+			<dt>Časť body - telo
+			<dd>Samotné príkazy (program) sú potom v časti body.
+				<br>Je zvykom funkcie i program písať do komentárov, aby sme predišli problémom pri prezeračoch
+				nepodporujúcimi JS.
+		</dl><br>
+		<table bgcolor="White" border="3">
+		<tr><th>Ukážka stránky s príkazmi javascriptu
+		<tr><td><code>
+				&lt;html&gt;
+				<br>&lt;head&gt;
+				<br>&lt;title&gt;Moj prvy JavaScript&lt;/title&gt;
+				<br>&lt;script language="JavaScript">
+				<br>&lt;!--
+				<br>function pushbutton()
+				<br>{
+				<br>alert("Ahoj!");
+				<br>}
+				<br>// --&gt;
+				<br>}&lt;/script&gt;
+				<br>&lt;/head&gt;
+				<br>&lt;body&gt;Toto je napisane normalne.&lt;br&gt;
+				<br>&lt;script language=&quot;JavaScript&quot;&gt;
+				<br>&lt;!--
+				<br>document.write(&quot;A toto napisal JavaScript!&quot;)
+				<br>// --&gt;
+				<br>&lt;/script&gt;
+        		<br>&lt;br&gt;A toto je opat napisane normalne.
+				<br>&lt;input type="button" name="Button1" value="Stlac ma" onclick="pushbutton()">
+        		<br>&lt;/body&gt;
+				<br>&lt;/html&gt;
+				<br><br>
+				</code>
+		</table>	
+	<dl><dt>Poznámky ku prvému programu
+		<dd><dl>
+			<dt>Komentár v html dokumente
+			<dd>Komentárom je všetko medzi riadkami
+			<br>&lt;!--
+			<br>--&gt;
+			<dt>write
+			<dd>je štandartná metóda objektu document (naša stránka), používa sa na výpis textu 
+			(obyčajne premenného napr. aktuálny čas, dátum,...)
+	<br>
+	</dl>
+</dl>		
+</dl>
+<h2><font color="Blue">Program</h2>
+<dl><dt>Podprogram
+	<dd>JavaScript umožnuje tvorbu funkcií (ako C++) a deklaruje ich pomocou kľúčového slova function (ako pascal)
+		<dl><dt>deklarácia - syntax:
+			<dd>function nazov ( parametre)
+				<br>{ príkazy }
+				<br>nazov - identifikátor funkcie
+				<br>() - zátvorky za názvom funkcie sú povinné (aj keď nie sú parametre)
+				<br> - premenné deklarované v podprograme (aj parametre) sú lokálne - platné len v podprograme
+				<br> - príkazy podprogramu sa vykonávajú pokiaľ sa nenarazí na príkaz <font color="Green">return</font> alebo na na ukončujúcu zátvorku
+				<br> - návrat z podprogramu do miesta od kade bol volaný:
+				<br> - &nbsp; 1. narazením  - návratová hodnota je <font color="Green">undefined</font>
+				<br> - &nbsp; 2. narazením na <font color="Green">return;</font> - návratová hodnota je <font color="Green">undefined</font>
+				<br> - &nbsp; 3. narazením na <font color="Green">return hodnota;</font> - návratová hodnota je <font color="Green">hodnota</font>
+		    <dt>volanie - syntax:
+			<dd>nazov( hodnoty_parametrov )
+				<br>hodnoty oddeľujeme čiarkami
+				<br>ak funkcia nemá parametre zátvorky musia byť
+				<br>ak funkcia nemá návratovú hodnotu voláme ju ako samostatný príkaz
+				<br>ak funkcia má návratovú hodnotu môžme ju volať vo výraze i ako samostatný príkaz
+		</dl>	
+</dl>
+
+<h2Základné stavebné prvky</h2>
+<dl>
+<dt>Konštanty
+<dd>JavaScript rozoznáva nasledovné typy hodnôt: 
+	<ul>
+	<li>cisla, ako 42 nebo 3.14159 
+		<br>42, -15 ... desiatkové celé rozsah &lt;-2<sup>53</sup>;+2<sup>53</sup>&gt;
+		<br>042 ... osmičkové celé
+		<br>0xa1 ... hexa celé
+		<br>1.5, -20.2, 1., .15, 1.01e2, 20e-2 ... reálne rozsah &lt;10<sup>-308</sup>;10<sup>+308</sup>&gt;
+	<li>logické (Boolean) hodnoty; true nebo false 
+	<li>reťazce, jako "Ahoj!" 
+	<li>null, špeciálna hodnota označujúca prázdnu hodnotu 
+	<li>NaN, špeciálna konštanta na označenie neúspešnosti niektorých funkcií
+	<li>undefined, špeciálna konštanta na označenie neexistencie vlastnosti objektu
+	</ul>
+<dt>Deklarovanie premenných
+<dd>Syntax: var &nbsp;  zoznam ;
+	<br>Typ premennej je určený priradením - jednoduché premenné nie je nutné deklarovať, 
+	JS ich zadeklaruje pri prvom výskyte ako globálnu neinicializovanú premennú (aj keď to bolo v podprograme) 
+	Kontrola typovej zhody nie je, ak do premennej zapíšeme hodnotu iného typu, premenná sa pretypuje.
+	<br>a=5; &nbsp; &nbsp; //premenná a je číselného typu s inicializačnou hodnotou 5
+	<br>a="Ahoj"+a; &nbsp; //premenná a zmení typ na reťazec s hodnotou Ahoj5
+	<br>
+	<br>Premenná môže byť pri deklarácii inicializovaná.
+	<br>Stringové (a vlastne všetky) premenné sú vlastne objektami, ale nemusíme ich ako iné objekty vytvárať pomocou <font color="Green">new</font> 
+<dt>Výrazy
+<dd><ol>
+	<li>číselné operátory - +,-,*,/, %-zvyšok po delení, ++,--
+		<ul  type="square">
+		<li>Ak sú oba operandy celočíselné je výsledok celočíselný (okrem /, ktoré dáva reálnu hodnotu)
+		<li>Ak je jeden operand text je aj druhý operand zmenený na text
+		<li>Ak je jeden operand číselný a druhý logický je true je nahradené 1 false je nahradené 0
+		<li>Ak je jeden operand textový a druhý logický je true resp. false prevedené na text
+		</ul>
+		<table bgcolor="White">
+		<tr><th>Príklad
+		<tr><td><code>
+					var a=3, b='12', c=-5.45, d=-5;
+					<br>document.write(a++ +d); &nbsp; &nbsp;//vypise -2 a zväčší a o 1
+					<br>document.write(a+b); &nbsp; &nbsp; &nbsp; //vypise 412
+					<br>document.write(a/d); &nbsp; &nbsp; &nbsp; //vypise -0.8
+				</code>
+		</table> 
+		<dl>
+		<dt>Úlohy:
+		<dd>... Načítajte počet chlapcov a dievčat v triede a vypíšte počty v percentách 
+		<br>... Napíš stránku na výpočet mesačných splátok pôžičky
+		<br>&nbsp; &nbsp; &nbsp; &nbsp; Vstup: 1. Požičaná suma, 2. Úrok v percentách, 3. Doba splácania v rokoch 
+		<br>&nbsp; &nbsp; &nbsp; &nbsp; Výstup: 1. Mesačná splátka, 2. Celková zaplatená suma, 3. Splatené úroky 
+		</dl>
+	<li>bitové operácie 
+		<ul type="disc">
+		<li>& - bitové AND
+		<li>| - bitové OR 
+		<li>^ - bitové XOR
+		</ul>
+		<dl>
+		<dt>Príklad:
+		<dd>var maska=2,b=1000;
+			<br> &nbsp; &nbsp;b=b|maska; &nbsp; &nbsp; //nastavi 2. bit na 1
+			<br> &nbsp; &nbsp;b=b^maska; &nbsp; &nbsp; //zakóduje hodnotu xorom
+		</dl>
+	<li>logické operátory 
+		<ul type="disc">
+		<li>&& - logické AND
+		<li>|| - logické OR 
+		<li>! - logická negácia
+		</ul>
+	<li>relačné operátory
+		<ul type="disc">
+		<li>== - rovnosť
+		<li>!= - nerovnosť 
+		<li>< - menšie
+		<li><= - menšie alebo rovné
+		<li>> - väčšie
+		<li>>= - väčšie alebo rovné
+		</ul>
+	<li>stringové operátory	
+		<ul type="disc">
+		<li>+ &nbsp; zreťazenie textov
+		</ul>
+	<li>operátory priradenia
+		<ul type="disc">
+		<li>= &nbsp; sémantika ... prem = výraz  
+		<li>+= &nbsp;sémantika ... prem = prem+výraz 
+		<li>-= &nbsp;sémantika ... prem = prem-výraz 
+		<li>*= &nbsp;sémantika ... prem = prem*výraz 
+		<li>/= &nbsp;sémantika ... prem = prem/výraz 
+		</ul>
+		Priradenie možno reťaziť a=b=c=d++ +c;
+	<li>operátor podmienka
+		<ul type="disc">
+		<li>?: &nbsp; syntax: logicky_vyraz ? vyraz1 : vyraz2
+			 &nbsp; &nbsp;sémantika: vyhodnotí sa log. výraz, ak true vyhodnotí sa výraz1 inak výraz2
+			 &nbsp; &nbsp;príklad: a=b&gt;0 ? 1:-1;  //zapise do A znamienko z B  
+	<li>operátor čiarka
+		<ul type="disc">
+		<li>?: &nbsp; syntax: vyraz1 , vyraz2
+			 &nbsp; &nbsp;sémantika: vyhodnotí sa výraz1, vyhodnotí sa výraz2 a ten je výsledkom
+	</ol>
+	<dl>
+		<dt>Úlohy:
+		<dd>... Načítajte počet chlapcov a dievčat v triede a vypíšte koho je viac 
+	</dl>
+
+<dt>Vstup - výstup dát
+<dd>Ak chceme písať program (napr. hru), často potrebujeme načítať nejaké dáta - texty, čísla 
+	a výsledok práce zas v dokumente zobraziť.
+	<dl><dt>Výstup do dokumentu
+		<dd>Na výstup textu do dokumentu budeme používať metódu objektu <font color="Green">document</font> - write
+			alebo metódu writeln - vloží nakoniec CRLF - ale odriadkuje len ak sme v tagu &lt;PRE>
+			<br>syntax: document.write(zoznam výrazov)
+			<br>sémantika: pri načítavaní write dopisuje do dokumentu, ak zavoláme write ako 
+				obsluhu udalosti prepíše celý dokument - preto ho volíme na výstup do nového prázdneho okna.
+			<br><br>Výstup do objektu TextArea -  pomocou vlastnosti value.
+				<BR>Výstup do objektu div, span a pod - pomocou innerText, innerHtml
+			<br>Úloha:
+			<br>Vytvor nové okno s obdĺžnikom axb hviezdičiek
+			<br>	
+			<br>Pri výstupe budeme často využívať nasledovné funkcie:
+			<ul type="disc">
+			<li>funkcie objektu Window eval(text), parseInt(text), parseInt(text,sústava), parseFloat(text)
+			<li>funkcie objektu Math - round(cislo), int(cislo) 
+			<li>funkcie objektu String - substring(c1,c2), slice(od, po), toUpperCase(), toLowerCase(),fixed(), fontcolor(), fontsize()
+				<br> &nbsp; velkosť 3 je štandartná, možnosti sú od 1 po 7
+				<br> &nbsp; relatívne veľkosti možno zadávať pomocou reťazcov ("+2", "-1")
+			</ul>
+			Ak chceme textu nastaviť viac vlastností, musíme to spraviť pomocou premennej, ktorej potom
+			nastavíme všetky požadované vlastnosti a potom cez write zobrazíme.
+			<dl><dt>Úlohy:
+				<dd><ul type="disc">
+					<li>Načítaj číslo v sústave1 a vypíš v sústave2
+					<li>Z formulára načítaj počet požadovaných desatinných čísel a vypíš číslo math.PI
+					</ul>
+			</dl>
+		<dt>Výstup do pomocného preddefinovaného okna
+		<dd>Už sme používali okno alert(lub_textovy_vyraz), zobrazený text nie možné formátovať. 	
+		<dt>Výstup do nami vytvoreného okna - dokumentu
+		<dd>Okno najprv vytvoríme, určíme mu vlastnosti a nakoniec mu zaplníme telo.
+			<br>Pozri objekt Document a Window
+		<br>	
+	    <dt>Vstup z formulára 
+		<dd>vstup je súčasťou dokumentu - &lt;input type=text&gt;   
+		<dt>z preddefinovaných pomocných vstupných okien - prompt, confirm
+		<dd><dl><dt>prompt
+				<dd>na nové okno zobrazí vstupný riadok a zadaný text je "prenesený" 
+					do nášho programu.
+					<dl><dt>syntax: prem=prompt(textovy_vyraz1, textovy_vyraz1)
+						<dd>textovy_vyraz1 - text nad vstupným riadkom
+						<br>textovy_vyraz2 - imlicitný text vo vstupnom riadku - nepovinné
+					</dl>	
+					<br>ukážka: <font color="Green">prompt("Sem zadaj vstup:", "text");</font>
+					<br><img src="prompt.jpg" width="488" height="125" border="0" alt="">
+					<br>sémantika: ak stlačíme OK vráti nám naklepaný text, inak vráti null
+			    <dt>confirm
+				<dd>Slúži na zadanie logickej hodnoty. V okienku sú dve tlačítka OK a Storno
+					<br>syntax: confirm(textovy_vyraz)
+					<br> &nbsp; &nbsp;textovy_vyraz - zobrazená výzva
+					<br><img src="confirm.JPG" width="193" height="118" border="0" alt="">
+					<br>sémantika: ak stlačíme OK vráti TRUE, inak vráti FALSE
+			</dl>	
+		<dt>z nami vytvorených sekundárnych okien
+		<dd>Pozri objekt window
+</dl>
+<dl><dt>Úlohy:
+	<dd><ul type="disc">
+		<li>načítaj priezvisko a vypíš ho cez write - prvé písmeno modrým a o 1 väčším
+		<li>načítaj počet požadovaných desatinných čísel a vypíš číslo math.PI
+		</ul>
+</dl>
+</body>
+</html>

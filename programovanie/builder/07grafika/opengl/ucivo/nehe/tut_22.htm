@@ -1,0 +1,1836 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 22 - Bump Mapping &amp; Multi Texturing</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_22.jpg" class="nehe_maly" alt="Lekce 22" />
+
+<h1>Lekce 22 - Bump Mapping &amp; Multi Texturing</h1>
+
+<p class="nadpis_clanku">Pravý čas vrátit se zpátky na začátek a začít si opakovat. Nováčkům v OpenGL se absolutně nedoporučuje! Pokud, ale máte odvahu, můžete zkusit dobrodružství s nadupanou grafikou. V této lekci modifikujeme kód z šesté lekce, aby podporoval hardwarový multi texturing přes opravdu skvělý vizuální efekt nazvaný bump mapping.</p>
+
+<p>Při překladu této lekce jsem zvažoval zda mám některé termíny překládat do češtiny. Ale vzhledem k tomu, že jsou to většinou názvy, které se běžně v oboru počítačové grafiky objevují, rozhodl jsem se nechat je v původním znění. Aby však i ti, kteří se s nimi setkávají poprvé, věděli o čem je řeč, tak je zde v rychlosti vysvětlím:</p>
+
+<p><b>OpenGL extension</b> je funkce, která není v běžné specifikaci OpenGL dostupná, ale kvůli novým možnostem grafických akcelerátorů a novým postupům při programování byla do OpenGL dodatečně přidána. Tyto funkce ve svém názvu obsahují EXT nebo ARB. Firmy se samozřejmě snaží, aby jejich akcelerátor podporoval těchto rozšíření co nejvíce, protože mnohé z nich zrychlují práci, přidávají nové možnosti nebo zvyšují výkon.</p>
+
+<p><b>Bumpmapa</b> je textura, která obsahuje informace o reliéfu. Většinou bývá ve stupních šedi, kde tmavá místa udávají vyvýšeniny a světlá rýhy, nebo naopak - to záleží na programátorovi.</p>
+
+<p><b>Emboss bumpmapping</b> je postup vytváření reliéfovaných textur, u kterých se zdá, že jsou tvarované i do hloubky - hlavní téma této lekce.</p>
+
+<p><b>Alpha kanál</b> je poslední složka RGBA barvy, která obsahuje informace o průhlednosti. Pokud je alpha maximální (255 nebo 1.0f), tak není objekt vůbec průhledný. Pokud je alpha nulová je objekt neviditelný.</p>
+
+<p><b>Blending</b> je míchání alpha kanálu s barevnou texturou. Dociluje se jím průhlednosti.</p>
+
+<p><b>Artefakt</b> je nějaký vizuální prvek, který by se v renderované scéně neměl objevovat. Nicméně vzhledem k tomu, že postupy, které by je nezanechávaly jsou většinou velmi pomalé, musí se používat jiné, které na úkor kvality zvýší rychlost renderování.</p>
+
+<p>Další názvy typu <b>vertex</b>, <b>pipeline</b>, ... by měly být dobře známé z předchozích tutoriálů.</p>
+
+<p>Doufám, že Vám překlad i téma budou srozumitelné a že Vám pomohou vytvářet kvalitní OpenGL aplikace. Pokud byste narazili na nějaký problém, není nic jednoduššího než poslat emailem dotaz. Rád Vám na všechny otázky odpovím, případně opravím nedostatky v textu.</p>
+
+<p>Tato lekce byla napsána Jensem Schneiderem. Volně vychází z 6. lekce, i když vzniklo mnoho změn. Naučíte se zde:</p>
+<ul>
+<li>Jak ovládat multitexturovací možnosti grafického akcelerátoru.</li>
+<li>Jak vytvořit zdání emdoss bumpmappingu (reliéf na texturách).</li>
+<li>Jak udělat pomocí blendingu profesionálně vypadající loga, která &quot;plují&quot; nad renderovanou scénou.</li>
+<li>Základy multi-pass (několika fázových) renderovacích technik.</li>
+<li>Jak využívat efektivně transformace matice.</li>
+</ul>
+
+<p>Nejméně tři z výše uvedených bodů mohou být považovány za &quot;pokročilé renderovací techniky&quot;. Měli byste mít již základní představu o tom, jak funguje renderovací pipeline OpenGL. Měli byste znát většinu příkazů užitých v tutoriálu a měli byste být obeznámeni s vektorovou matematikou. Sekce, které začínají slovy "začátek teorie(...)" a končí slovy "konec teorie(...)", se snaží vysvětlit problematiku uvedenou v závorkách. Tohle je zde jen pro jistotu. Pokud danou problematiku znáte, můžete tyto části jednoduše přeskočit. Pokud budete mít problémy s porozuměním kódu, zvažte návrat zpět k teoretickým částem textu. Poslední, ale neméně důležité: Tato lekce obsahuje více než 1 200 řádek kódu a velká část z nich je nejen nudná, ale i dobře známá těm, kteří četli předchozí tutoriály. Proto nebudu komentovat každý řádek, ale jen podstatu této lekce. Pokud narazíte na něco jako <b>&gt;-&lt;</b>, znamená to, že zde byly vynechány nějaké nepodstatné řádky kódu.</p>
+
+<p>Takže, jdeme na to:</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">#include &quot;glext.h&quot;<span class="kom">// Hlavičkový soubor pro multitexturing</span></p>
+<p></p>
+<p class="src0">#include &lt;string.h&gt;<span class="kom">// Hlavičkový soubor pro řetězce</span></p>
+<p class="src0">#include &lt;math.h&gt;<span class="kom">// Hlavičkový soubor pro matematiku</span></p>
+
+<p>GLfloat MAX_EMBOSS udává &quot;sílu&quot; bumpmappingu. Vyšší hodnoty hodně zvýrazní efekt, ale stejně tak sníží kvalitu obrazu tím, že zanechávají v rozích ploch takzvané &quot;artefakty&quot;.</p>
+
+<p class="src0">#define MAX_EMBOSS (GLfloat)0.008f<span class="kom">// Maximální posunutí efektem</span></p>
+
+<p>Fajn, připravíme se na použití GL_ARB_multitexture. Je to celkem jednoduché:</p>
+
+<p>Většina grafických akcelerátorů má dnes více než jednu texturovací jednotku. Abychom mohli této výhody využít, musíme prověřit, zda akcelerátor podporuje GL_ARB_multitexture, který umožňuje namapovat dvě nebo více textur na jeden útvar při jednom průchodu pipeline. Nezní to příliš významně, ale opak je pravdou! Skoro vždy když něco programujete, přidáním další textury na objekt, razantně zvýšíte jeho vizuální kvalitu. Dříve bylo nutno použít dvě prokládané textury při vícenásobném vykreslování geometrie, což může vést k velkému poklesu výkonu. Dále v tutoriálu bude multitexturing ještě podrobněji popsán.</p>
+
+<p>Teď zpět ke kódu: __ARB_ENABLE je užito pro určení toho, zda chceme využít multitexturingu, když bude dostupný. Pokud chcete poznat vaší kartou podporovaná OpenGL rozšíření, pouze odkomentujte #define EXT_INFO. Dále chceme prověřit podporu extensions při běhu programu, abychom zajistili přenositelnost kódu. Proto potřebujeme místo pro pár řetězců. Dále chceme rozlišovat mezi možností používat extensions a samotným používáním. Nakonec potřebujeme vědět, kolik texturovacích jednotek máme k dispozici (použijeme ale pouze dvě). Alespoň jedna texturovací jednotka je vždy přítomna na akcelerátoru podporujícím OpenGL, takže nastavíme maxTexelUnits na hodnotu 1.</p>
+
+<p class="src0">#define __ARB_ENABLE true<span class="kom">// Použito pro vyřazení multitexturingu</span></p>
+<p></p>
+<p class="src0"><span class="kom">// #define EXT_INFO// Odkomentujte, pokud chcete při startu vidět podporovaná rozšíření OpenGL
+</span></p>
+<p></p>
+<p class="src0">#define MAX_EXTENSION_SPACE 10240<span class="kom">// Místo pro řetězce s OpenGL rozšířeními</span></p>
+<p class="src0">#define MAX_EXTENSION_LENGTH 256<span class="kom">// Maximum znaků v jednom řetězci s rozšířením</span></p>
+<p></p>
+<p class="src0">bool multitextureSupported = false;<span class="kom">// Indikátor podpory multitexturingu</span></p>
+<p class="src0">bool useMultitexture = true;<span class="kom">// Použit multitexturing?</span></p>
+<p></p>
+<p class="src0">GLint maxTexelUnits = 1;<span class="kom">// Počet texturovacích jednotek - nejméně 1</span></p>
+
+<p>Následující řádky slouží k tomu, aby spojily rozšíření s voláním funkcí v C++. Pouze využijeme PNF-kdo-to-kdy-přečetl jako předdefinovaného datového typu schopného popsat volání funkcí. Zpočátku není jisté, zda získáme přístup k těmto prototypům funkcí, tudíž je nastavíme na NULL. Příkazy glMultiTexCoordifARB odkazují na dobře známé příkazy glTexCoordif(), udávající i-rozměrné souřadnice textury. Všimněte si, že proto mohou úplně nahradit příkazy glTexCoordif. Dříve jsme používali pouze verzi pro typ GLfloat, my potřebujeme pouze prototypy k příkazům končícím na "f" - ostatní jsou potom taky dostupné (fv, i, ...). Poslední dva prototypy slouží k určení texturovací jednotky, která bude přijímat informace o textuře (glActiveTextureARB()) a k určení, která texturovací jednotka je asociována s příkazem ArrayPointer (glClientActiveTextureARB). Mimochodem: ARB je zkratkou &quot;Architectural Review Board&quot;. Rozšíření s ARB v názvu nejsou vyžadovány pro implementaci kompatibilní s OpenGL, ale jsou široce využívány a podporovány.</p>
+
+<p class="src0">PFNGLMULTITEXCOORD1FARBPROC glMultiTexCoord1fARB = NULL;</p>
+<p class="src0">PFNGLMULTITEXCOORD2FARBPROC glMultiTexCoord2fARB = NULL;</p>
+<p class="src0">PFNGLMULTITEXCOORD3FARBPROC glMultiTexCoord3fARB = NULL;</p>
+<p class="src0">PFNGLMULTITEXCOORD4FARBPROC glMultiTexCoord4fARB = NULL;</p>
+<p></p>
+<p class="src0">PFNGLACTIVETEXTUREARBPROC glActiveTextureARB = NULL;</p>
+<p class="src0">PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTextureARB = NULL;</p>
+
+<p>Potřebujeme globální proměnné:</p>
+
+<ul>
+<li>filter - udává, jaký filtr se má použít. Použijeme nejspíše GL_LINEAR, takže filter inicializujeme číslem 1.</li>
+<li>texture - textury, potřebujeme 3 - na každý filtr jednu</li>
+<li>bump - bumpmapy</li>
+<li>invbump - převrácené bump mapy - jejich význam je popsán v jedné z teoretických částí této lekce</li>
+<li>glLogo a multiLogo - využijeme pro textury, které budou přidány do scény v poslední fázi rendrování</li>
+<li>proměnné s Light v názvu - jsou pole nesoucí informace o osvětlení scény</li>
+</ul>
+
+<p class="src0">GLuint filter=1;<span class="kom">// Jaký filtr použít</span></p>
+<p class="src0">GLuint texture[3];<span class="kom">// Místo pro tři textury</span></p>
+<p></p>
+<p class="src0">GLuint bump[3];<span class="kom">// Naše bumpmapy</span></p>
+<p class="src0">GLuint invbump[3];<span class="kom">// Invertované bumpmapy</span></p>
+<p></p>
+<p class="src0">GLuint glLogo;<span class="kom">// Místo pro OpenGL Logo</span></p>
+<p class="src0">GLuint multiLogo;<span class="kom">// Místo pro logo s multitexturingem</span></p>
+<p></p>
+<p class="src0">GLfloat LightAmbient[] = { 0.2f, 0.2f, 0.2f};<span class="kom">// Barva ambientního světla je 20% bílá</span></p>
+<p class="src0">GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f};<span class="kom">// Difúzní světlo je bílé</span></p>
+<p class="src0">GLfloat LightPosition[] = { 0.0f, 0.0f, 2.0f};<span class="kom">// Pozice je někde uprostřed scény</span></p>
+<p></p>
+<p class="src0">GLfloat Gray[] = { 0.5f, 0.5f, 0.5f, 1.0f };<span class="kom">// Barva okraje textury</span></p>
+<p></p>
+<p class="src0">bool emboss = false;<span class="kom">// Jenom Emboss, žádná základní textura</span></p>
+<p class="src0">bool bumps = true;<span class="kom">// Používat bumpmapping?</span></p>
+<p></p>
+<p class="src0">GLfloat xrot;<span class="kom">// X rotace</span></p>
+<p class="src0">GLfloat yrot;<span class="kom">// Y rotace</span></p>
+<p></p>
+<p class="src0">GLfloat xspeed;<span class="kom">// Rychlost x rotace</span></p>
+<p class="src0">GLfloat yspeed;<span class="kom">// Rychlost y rotace</span></p>
+<p></p>
+<p class="src0">GLfloat z = -5.0f;<span class="kom">// Hloubka v obrazovce</span></p>
+
+<p>Další část kódu obsahuje souřadnice kostky sestavené z GL_QUADS. Každých pět čísel reprezentuje jednu sadu 2D texturovacích souřadnic a jednu sadu 3D vertexových souřadnic bodu. Data jsou uvedena v poli kvůli snazšímu vykreslování ve for smyčkách. Během jednoho renderovacího cyklu budeme tyto souřadnice potřebovat vícekrát.</p>
+
+<p class="src0">GLfloat data[] =</p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Přední stěna</span></p>
+<p class="src1">0.0f, 0.0f, -1.0f, -1.0f, +1.0f,</p>
+<p class="src1">1.0f, 0.0f, +1.0f, -1.0f, +1.0f,</p>
+<p class="src1">1.0f, 1.0f, +1.0f, +1.0f, +1.0f,</p>
+<p class="src1">0.0f, 1.0f, -1.0f, +1.0f, +1.0f,</p>
+<p class="src1"><span class="kom">// Zadní stěna</span></p>
+<p class="src1">1.0f, 0.0f, -1.0f, -1.0f, -1.0f,</p>
+<p class="src1">1.0f, 1.0f, -1.0f, +1.0f, -1.0f,</p>
+<p class="src1">0.0f, 1.0f, +1.0f, +1.0f, -1.0f,</p>
+<p class="src1">0.0f, 0.0f, +1.0f, -1.0f, -1.0f,</p>
+<p class="src1"><span class="kom">// Horní stěna</span></p>
+<p class="src1">0.0f, 1.0f, -1.0f, +1.0f, -1.0f,</p>
+<p class="src1">0.0f, 0.0f, -1.0f, +1.0f, +1.0f,</p>
+<p class="src1">1.0f, 0.0f, +1.0f, +1.0f, +1.0f,</p>
+<p class="src1">1.0f, 1.0f, +1.0f, +1.0f, -1.0f,</p>
+<p class="src1"><span class="kom">// Dolní stěna</span></p>
+<p class="src1">1.0f, 1.0f, -1.0f, -1.0f, -1.0f,</p>
+<p class="src1">0.0f, 1.0f, +1.0f, -1.0f, -1.0f,</p>
+<p class="src1">0.0f, 0.0f, +1.0f, -1.0f, +1.0f,</p>
+<p class="src1">1.0f, 0.0f, -1.0f, -1.0f, +1.0f,</p>
+<p class="src1"><span class="kom">// Pravá stěna</span></p>
+<p class="src1">1.0f, 0.0f, +1.0f, -1.0f, -1.0f,</p>
+<p class="src1">1.0f, 1.0f, +1.0f, +1.0f, -1.0f,</p>
+<p class="src1">0.0f, 1.0f, +1.0f, +1.0f, +1.0f,</p>
+<p class="src1">0.0f, 0.0f, +1.0f, -1.0f, +1.0f,</p>
+<p class="src1"><span class="kom">// Levá stěna</span></p>
+<p class="src1">0.0f, 0.0f, -1.0f, -1.0f, -1.0f,</p>
+<p class="src1">1.0f, 0.0f, -1.0f, -1.0f, +1.0f,</p>
+<p class="src1">1.0f, 1.0f, -1.0f, +1.0f, +1.0f,</p>
+<p class="src1">0.0f, 1.0f, -1.0f, +1.0f, -1.0f</p>
+<p class="src0">};</p>
+
+<p>Další část kódu rozhoduje o použití OpenGL extensions za běhu programu.</p>
+<p>Předpokládejme, že máme dlouhý řetězec obsahující názvy všech podporovaných rozšíření oddělených znakem nového řádku -'\n'. Potřebujeme vyhledat znak nového řádku a tuto část začít porovnávat s hledaným řetězcem, dokud nenarazíme na další znak nového řádku, nebo dokud nalezený řetězec neodpovídá tomu hledanému. V prvním případě vrátíme true, v druhém případě vezmeme další sub-řetězec dokud nenarazíme na konec řetězce. Budeme si muset dát pozor na to, zda řetězec nezačíná znakem nového řádku.</p>
+<p>Poznámka: Kontrola podpory rozšíření by se měla VŽDY provádět až za běhu programu.</p>
+
+<p class="src0">bool isInString(char *string, const char *search)</p>
+<p class="src0">{</p>
+<p class="src1">int pos = 0;</p>
+<p class="src1">int maxpos = strlen(search)-1;</p>
+<p class="src1">int len = strlen(string);</p>
+<p class="src1">char *other;</p>
+<p></p>
+<p class="src1">for (int i=0; i&lt;len; i++)</p>
+<p class="src1">{</p>
+<p class="src2">if ((i==0) || ((i&gt;1) &amp;&amp; string[i-1]=='\n'))<span class="kom">// Nové rozšíření začíná zde</span></p>
+<p class="src2">{</p>
+<p class="src3">other = &amp;string[i];</p>
+<p class="src3">pos=0;<span class="kom">// Začít nové hledání</span></p>
+<p></p>
+<p class="src3">while (string[i]!='\n')<span class="kom">// Hledání celého řetězce jména rozšíření</span></p>
+<p class="src3">{</p>
+<p class="src4">if (string[i]==search[pos])</p>
+<p class="src5">pos++;<span class="kom">// Další znak</span></p>
+<p></p>
+<p class="src4">if ((pos&gt;maxpos) &amp;&amp; string[i+1]=='\n')</p>
+<p class="src5">return true; <span class="kom">// A máme to!</span></p>
+<p></p>
+<p class="src4">i++;</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return false;<span class="kom">// Smůla, nic jsme nenašli!</span></p>
+<p class="src0">}</p>
+
+<p>Teď musíme získat řetězec obsahující názvy extensions a převést ho tak, aby jednotlivé názvy byly odděleny znakem nového řádku. Pokud najdeme sub-řetězec &quot;GL_ARB_multitexture&quot;, tak je tato funkce podporovaná. Ale my jí použijeme, jen když je __ARB_ENABLE nastaveno na true. Ještě potřebujeme zjistit podporu GL_EXT_texture_env_combine. Toto rozšíření zavádí nový způsob interakce s texturovacími jednotkami. My to potřebujeme, protože GL_ARB_multitexture pouze přenáší výstup z jedné texturovací jednotky do další s vyšším číslem. Než abychom používali další komplexní rovnice pro výpočet blendingu (které by ale mohly mít odlišný efekt), raději zajistíme podporu tohoto rozšíření. Pokud jsou všechna rozšíření podporována, zjistíme kolik texturovacích jednotek máme k dispozici a hodnotu uložíme do maxTexelUnits. Pak musíme spojit funkce s našimi jmény. To provedeme pomocí funkce wglGetProcAdress() s parametrem obsahujícím název funkce.</p>
+
+<p class="src0">bool initMultitexture(void)</p>
+<p class="src0">{</p>
+<p class="src1">char *extensions;</p>
+<p></p>
+<p class="src1">extensions = strdup((char *) glGetString(GL_EXTENSIONS));<span class="kom">// Získání řetězce s rozšířeními</span></p>
+<p class="src1">int len = strlen(extensions);<span class="kom">// Délka řetězce</span></p>
+<p></p>
+<p class="src1">for (int i = 0; i&lt;len; i++)<span class="kom">// Rozdělit znakem nového řádku místo mezery</span></p>
+<p class="src2">if (extensions[i] == ' ')</p>
+<p class="src3">extensions[i] = '\n';</p>
+<p></p>
+<p class="src0">#ifdef EXT_INFO</p>
+<p class="src1">MessageBox(hWnd,extensions,&quot;supported GL extensions&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src0">#endif</p>
+<p></p>
+<p class="src1">if (isInString(extensions,&quot;GL_ARB_multitexture&quot;)<span class="kom">// Je multitexturing podporován?
+</span></p>
+<p class="src1">&amp;&amp; __ARB_ENABLE<span class="kom">// Příznak pro povolení multitexturingu</span></p>
+<p class="src1">&amp;&amp; isInString(extensions,&quot;GL_EXT_texture_env_combine&quot;))<span class="kom">// Je podporováno texture-environment-combining?</span></p>
+<p class="src1">{</p>
+<p class="src2">glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB, &amp;maxTexelUnits);</p>
+<p></p>
+<p class="src2">glMultiTexCoord1fARB = (PFNGLMULTITEXCOORD1FARBPROC)wglGetProcAddress(&quot;glMultiTexCoord1fARB&quot;);</p>
+<p class="src2">glMultiTexCoord2fARB = (PFNGLMULTITEXCOORD2FARBPROC)wglGetProcAddress(&quot;glMultiTexCoord2fARB&quot;);</p>
+<p class="src2">glMultiTexCoord3fARB = (PFNGLMULTITEXCOORD3FARBPROC)wglGetProcAddress(&quot;glMultiTexCoord3fARB&quot;);</p>
+<p class="src2">glMultiTexCoord4fARB = (PFNGLMULTITEXCOORD4FARBPROC)wglGetProcAddress(&quot;glMultiTexCoord4fARB&quot;);</p>
+<p></p>
+<p class="src2">glActiveTextureARB = (PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress(&quot;glActiveTextureARB&quot;);</p>
+<p></p>
+<p class="src2">glClientActiveTextureARB = (PFNGLCLIENTACTIVETEXTUREARBPROC)wglGetProcAddress(&quot;glClientActiveTextureARB&quot;);</p>
+<p></p>
+<p class="src0">#ifdef EXT_INFO</p>
+<p class="src2">MessageBox(hWnd,&quot;The GL_ARB_multitexture extension will be used.&quot;,&quot;feature supported!&quot;,MB_OK | MB_ICONINFORMATION);</p>
+<p class="src0">#endif</p>
+<p></p>
+<p class="src2">return true;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">useMultitexture = false;<span class="kom">// Nemůžeme to používat, pokud to není podporováno!</span></p>
+<p class="src1">return false;</p>
+<p class="src0">}</p>
+
+<p>InitLights() pouze inicializuje osvětlení. Je volána funkcí initGL().</p>
+
+<p class="src0">void initLights(void)</p>
+<p class="src0">{</p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);<span class="kom">// Načtení informace o světlech do GL_LIGHT1</span></p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);</p>
+<p class="src1">glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);</p>
+<p></p>
+<p class="src1">glEnable(GL_LIGHT1);</p>
+<p class="src0">}</p>
+
+<p>V této lekci vytvoříme hodně textur. Nyní k naší načítací funkci. Nejdříve loadujeme základní bitmapu a připravíme z ní tři filtrované textury (GL_NEAREST, GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST). Použijeme pouze jednu datovou strukturu na uložení bitmap. Navíc zavedeme novou strukturu nazvanou alpha, která bude obsahovat informace o alpha kanálu (průhlednosti) textury. Proto uložíme RGBA obrázky jako dvě bitmapy: jednu 24 bitovou RGB a jednu osmi bitovou ve stupních šedi pro alpha kanál. Aby fungovalo načítání správně, musíme po každém načtení smazat Image, jinak nebudeme upozorněni na případné chyby při nahrávání textur.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_base.gif" width="128" height="128" alt="Textura Base" /></div>
+
+<p>Také je u specifikace typu textury vhodné uvést místo čísla 3 proměnnou GL_RGB8, a to kvůli lepší kompatibilitě s dalšími verzemi OpenGL. Tato změna je označena v kódu <span class="warning">takto</span>.</p>
+
+<p class="src0">int LoadGLTextures()<span class="kom">// Loading bitmapy a konverze na texturu</span></p>
+<p class="src0">{</p>
+<p class="src1">bool status=true;<span class="kom">// Indikuje chyby</span></p>
+<p class="src1">AUX_RGBImageRec *Image=NULL;<span class="kom">// Ukládá bitmapu</span></p>
+<p class="src1">char *alpha=NULL;</p>
+<p></p>
+<p class="src1">if (Image = auxDIBImageLoad(&quot;Data/Base.bmp&quot;))<span class="kom">// Nahraje bitmapu</span></p>
+<p class="src1">{</p>
+<p class="src2">glGenTextures(3, texture);<span class="kom">// Generuje tři textury</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření nelineárně filtrované textury</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[0]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);</p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, <span class="warning">GL_RGB8</span>, Image-&gt;sizeX, Image-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, Image-&gt;data);</p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření lineárně filtrované textury</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[1]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, <span class="warning">GL_RGB8</span>, Image-&gt;sizeX, Image-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, Image-&gt;data);</p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření mipmapované textury</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, texture[2]);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);</p>
+<p class="src2">gluBuild2DMipmaps(GL_TEXTURE_2D, <span class="warning">GL_RGB8</span>, Image-&gt;sizeX, Image-&gt;sizeY, GL_RGB, GL_UNSIGNED_BYTE, Image-&gt;data);</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">else</p>
+<p class="src2">status = false;</p>
+<p></p>
+<p class="src1">if (Image)<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src1">{</p>
+<p class="src2">if (Image-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src3">delete Image-&gt;data;<span class="kom">// Uvolní data obrázku</span></p>
+<p></p>
+<p class="src2">delete Image;<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p></p>
+<p class="src2">Image = NULL;<span class="kom">// Nastaví ukazatel na NULL</span></p>
+<p class="src1">}</p>
+
+<p>Načteme bumpmapu. Z důvodů uvedených níže musí mít pouze 50% intenzitu, takže ji musíme nějakým způsobem ztmavit. Já jsem se rozhodl použít funkci glPixelTransferf(), která udává jakým způsobem budou bitmapy převedeny na textury. My tuto funkci použijeme na ztmavení jednotlivých RGB kanálů bitmapy na 50% původní intenzity. Pokud dosud nepoužíváte rodinu funkcí glPixelTransfer(), měli byste se na ně podívat - jsou celkem užitečné.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_bump.gif" width="128" height="128" alt="Textura Bumpmapy" /></div>
+
+<p class="src1"><span class="kom">// Loading bumpmap</span></p>
+<p class="src1">if (Image = auxDIBImageLoad(&quot;Data/Bump.bmp&quot;))</p>
+<p class="src1">{</p>
+<p class="src2">glPixelTransferf(GL_RED_SCALE,0.5f);<span class="kom">// Snížení intenzity RGB na 50% - poloviční intenzita</span></p>
+<p class="src2">glPixelTransferf(GL_GREEN_SCALE,0.5f);</p>
+<p class="src2">glPixelTransferf(GL_BLUE_SCALE,0.5f);</p>
+
+<p>Další problém je, že nechceme, aby se bitmapa v textuře pořád opakovala, chceme ji namapovat pouze jednou na texturovací souřadnice od (0.0f,0.0f) do (1.0f,1.0f). Vše kolem nich by mělo být namapováno černou barvou. Toho dosáhneme zavoláním dvou funkcí glTexParameteri(), které není třeba popisovat.</p>
+
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP);<span class="kom">// Bez wrappingu (zalamování)</span></p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP);</p>
+<p></p>
+<p class="src2">glTexParameterfv(GL_TEXTURE_2D,GL_TEXTURE_BORDER_COLOR,Gray);<span class="kom">// Barva okraje textury</span></p>
+<p></p>
+<p class="src2">glGenTextures(3, bump);<span class="kom">// Vytvoří tři textury</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření nelineárně filtrované textury</span></p>
+<p class="src2">&gt;-&lt;</p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření lineárně filtrované textury</span></p>
+<p class="src2">&gt;-&lt;</p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření mipmapované textury</span></p>
+<p class="src2">&gt;-&lt;</p>
+
+<p>Nyní musíme vytvořit ještě invertovanou bumpmapu, o které jsme již psali a jejíž význam bude vysvětlen dále. Odečtením barvy každého bodu bumpmapy od bílé barvy {255, 255, 255} získáme obrázek s invertovanými barvami. Předtím nesmíme nastavit intenzitu zpět na 100% (než jsem na to přišel strávil jsem nad tím asi 3 hodiny), invertovaná bitmapa musí být tedy také ztmavená na 50%.</p>
+
+<p class="src2">for (int i = 0; i &lt; 3 * Image-&gt;sizeX * Image-&gt;sizeY; i++)<span class="kom">// Invertování bumpmapy</span></p>
+<p class="src3">Image-&gt;data[i] = 255 - Image-&gt;data[i];</p>
+<p></p>
+<p class="src2">glGenTextures(3, invbump);<span class="kom">// Vytvoří tři textury</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření nelineárně filtrované textury</span></p>
+<p class="src2">&gt;-&lt;</p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření lineárně filtrované textury</span></p>
+<p class="src2">&gt;-&lt;</p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoření mipmapované textury</span></p>
+<p class="src2">&gt;-&lt;</p>
+<p></p>
+<p class="src2">glPixelTransferf(GL_RED_SCALE,1.0f);<span class="kom">// Vrácení intenzity RGB zpět na 100%</span></p>
+<p class="src2">glPixelTransferf(GL_GREEN_SCALE,1.0f);</p>
+<p class="src2">glPixelTransferf(GL_BLUE_SCALE,1.0f);</p>
+<p></p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src2">status = false;</p>
+<p></p>
+<p class="src1">if (Image)<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src1">{</p>
+<p class="src2">if (Image-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src3">delete Image-&gt;data;<span class="kom">// Uvolní data obrázku</span></p>
+<p></p>
+<p class="src2">delete Image;<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p></p>
+<p class="src2">Image = NULL;<span class="kom">// Nastaví ukazatel na NULL</span></p>
+<p class="src1">}</p>
+
+<p>Načítání bitmap log je velmi jednoduché až na zkombinování RGB-A kanálů, nicméně kód by měl být dostatečně jasný. Všimněte si, že tato textura je vytvořena z dat alpha, nikoliv z dat Image. Bude zde použit pouze jeden filtr.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_opengl_alpha.gif" width="128" height="64" alt="Textura OpenGL_ALPHA" /></div>
+
+<p class="src1"><span class="kom">// Načte bitmapy log</span></p>
+<p class="src1">if (Image = auxDIBImageLoad(&quot;Data/OpenGL_ALPHA.bmp&quot;))</p>
+<p class="src1">{</p>
+<p class="src2">alpha = new char[4*Image-&gt;sizeX*Image-&gt;sizeY];<span class="kom">// Alokuje paměť pro RGBA8-Texturu</span></p>
+<p></p>
+<p class="src2">for (int a=0; a &lt; Image-&gt;sizeX * Image-&gt;sizeY; a++)</p>
+<p class="src3">alpha[4*a+3] = Image-&gt;data[a*3];<span class="kom">// Vezme pouze červenou barvu jako alpha kanál</span></p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_opengl.gif" width="128" height="64" alt="Textura OpenGL" /></div>
+
+<p></p>
+<p class="src2">if (!(Image = auxDIBImageLoad(&quot;Data/OpenGL.bmp&quot;)))</p>
+<p class="src3">status = false;</p>
+<p></p>
+<p class="src2">for (a = 0; a &lt; Image-&gt;sizeX * Image-&gt;sizeY; a++)</p>
+<p class="src2">{</p>
+<p class="src3">alpha[4*a]=Image-&gt;data[a*3];<span class="kom">// R</span></p>
+<p class="src3">alpha[4*a+1]=Image-&gt;data[a*3+1];<span class="kom">// G</span></p>
+<p class="src3">alpha[4*a+2]=Image-&gt;data[a*3+2];<span class="kom">// B</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">glGenTextures(1, &amp;glLogo);<span class="kom">// Vytvoří jednu texturu</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoří lineárně filtrovanou RGBA8-Texturu</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, glLogo);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, <span class="warning">GL_RGBA8</span>, Image-&gt;sizeX, Image-&gt;sizeY, 0, GL_RGBA, GL_UNSIGNED_BYTE, alpha);</p>
+<p></p>
+<p class="src2">delete alpha;<span class="kom">// Uvolní alokovanou paměť</span></p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src2">status = false;</p>
+<p></p>
+<p class="src1">if (Image)<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src1">{</p>
+<p class="src2">if (Image-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src3">delete Image-&gt;data;<span class="kom">// Uvolní data obrázku</span></p>
+<p></p>
+<p class="src2">delete Image;<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p></p>
+<p class="src2">Image = NULL;<span class="kom">// Nastaví ukazatel na NULL</span></p>
+<p class="src1">}</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_multi_on_alpha.gif" width="256" height="64" alt="Textura Extension Enabled ALFA" /></div>
+
+<p class="src1">if (Image = auxDIBImageLoad(&quot;Data/multi_on_alpha.bmp&quot;))</p>
+<p class="src1">{</p>
+<p class="src2">alpha = new char[4*Image-&gt;sizeX*Image-&gt;sizeY];<span class="kom">// Alokuje paměť pro RGBA8-Texturu</span></p>
+<p></p>
+<p class="src2">for (int a = 0; a &lt; Image-&gt;sizeX * Image-&gt;sizeY; a++)</p>
+<p class="src3">alpha[4*a+3]=Image-&gt;data[a*3];<span class="kom">// Vezme pouze červenou barvu jako alpha kanál</span></p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_multi_on.gif" width="256" height="64" alt="Textura Extension Enabled" /></div>
+
+<p class="src2">if (!(Image=auxDIBImageLoad(&quot;Data/multi_on.bmp&quot;)))</p>
+<p class="src3">status = false;</p>
+<p></p>
+<p class="src2">for (a=0; a &lt; Image-&gt;sizeX * Image-&gt;sizeY; a++)</p>
+<p class="src3">{</p>
+<p class="src3">alpha[4*a] = Image-&gt;data[a*3];<span class="kom">// R</span></p>
+<p class="src3">alpha[4*a+1] = Image-&gt;data[a*3+1];<span class="kom">// G</span></p>
+<p class="src3">alpha[4*a+2] = Image-&gt;data[a*3+2];<span class="kom">// B</span></p>
+<p class="src2">}</p>
+<p class="src0"></p>
+<p></p>
+<p class="src2">glGenTextures(1, &amp;multiLogo);<span class="kom">// Vytvoří jednu texturu</span></p>
+<p></p>
+<p class="src2"><span class="kom">// Vytvoří lineárně filtrovanou RGBA8-Texturu</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, multiLogo);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);</p>
+<p class="src2">glTexImage2D(GL_TEXTURE_2D, 0, <span class="warning">GL_RGBA8</span>, Image-&gt;sizeX, Image-&gt;sizeY, 0, GL_RGBA, GL_UNSIGNED_BYTE, alpha);</p>
+<p></p>
+<p class="src2">delete alpha;</p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src2">status = false;</p>
+<p></p>
+<p class="src1">if (Image)<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src1">{</p>
+<p class="src2">if (Image-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src3">delete Image-&gt;data;<span class="kom">// Uvolní data obrázku</span></p>
+<p></p>
+<p class="src2">delete Image;<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p></p>
+<p class="src2">Image = NULL;<span class="kom">// Nastaví ukazatel na NULL</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return status;<span class="kom">// Vrátí status</span></p>
+<p class="src0">}</p>
+
+<p>Následuje funkce doCube(), která kreslí krychli spolu s normálami. Všimněte si, že tato verze zatěžuje pouze texturovací jednotku #0, glTexCoord(s, t) pracuje stejně jako glMultiTexCoord(GL_TEXTURE0_ARB, s, t). Krychle může být taky vykreslena pomocí prokládaných polí, to ale teď nebudeme řešit. Nemůže však být uložena na display listu, ty používají pravděpodobně přesnost různou od GLfloat, což vede k nepěkným vedlejším efektům.</p>
+
+<p class="src0">void doCube(void)</p>
+<p class="src0">{</p>
+<p class="src1">int i;</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);</p>
+<p></p>
+<p class="src2"><span class="kom">// Přední stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f, +1.0f);</p>
+<p class="src2">for (i=0; i&lt;4; i++)</p>
+<p class="src2">{</p>
+<p class="src3">glTexCoord2f(data[5*i],data[5*i+1]);</p>
+<p class="src3">glVertex3f(data[5*i+2],data[5*i+3],data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f,-1.0f);</p>
+<p class="src2">for (i=4; i&lt;8; i++)</p>
+<p class="src2">{</p>
+<p class="src3">glTexCoord2f(data[5*i],data[5*i+1]);</p>
+<p class="src3">glVertex3f(data[5*i+2],data[5*i+3],data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Horní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 1.0f, 0.0f);</p>
+<p class="src2">for (i=8; i&lt;12; i++)</p>
+<p class="src2">{</p>
+<p class="src3">glTexCoord2f(data[5*i],data[5*i+1]);</p>
+<p class="src3">glVertex3f(data[5*i+2],data[5*i+3],data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Spodní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f,-1.0f, 0.0f);</p>
+<p class="src2">for (i=12; i&lt;16; i++)</p>
+<p class="src2">{</p>
+<p class="src3">glTexCoord2f(data[5*i],data[5*i+1]);</p>
+<p class="src3">glVertex3f(data[5*i+2],data[5*i+3],data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">glNormal3f( 1.0f, 0.0f, 0.0f);</p>
+<p class="src2">for (i=16; i&lt;20; i++)</p>
+<p class="src2">{</p>
+<p class="src3">glTexCoord2f(data[5*i],data[5*i+1]);</p>
+<p class="src3">glVertex3f(data[5*i+2],data[5*i+3],data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">glNormal3f(-1.0f, 0.0f, 0.0f);</p>
+<p class="src2">for (i=20; i&lt;24; i++)</p>
+<p class="src2">{</p>
+<p class="src3">glTexCoord2f(data[5*i],data[5*i+1]);</p>
+<p class="src3">glVertex3f(data[5*i+2],data[5*i+3],data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src1">glEnd();</p>
+<p class="src0">}</p>
+
+<p>Přichází čas na inicializaci OpenGL. Vše je jako v lekci 06, kromě toho, že zavoláme funkci initLights(), místo toho, abychom světla nastavovali zde. A ještě samozřejmě voláme nastavení případného multitexturingu.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechno nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">multitextureSupported = initMultitexture();</p>
+<p></p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Vytvoření textur</span></p>
+<p class="src2">return false;</p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturové mapování</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Zapne smooth shading</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolení testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Kvalitní výpočty perspektivy</span></p>
+<p></p>
+<p class="src1">initLights();<span class="kom">// Inicializace světel</span></p>
+<p></p>
+<p class="src1">return true;<span class="kom">// Vše v pořádku</span></p>
+<p class="src0">}</p>
+
+<hr />
+
+<p><b>Začátek teorie (Emboss Bump Mapping)</b></p>
+
+<p>Zde je asi 95% práce. Vše u čeho bylo napsáno, že bude vysvětleno později, je v následující teoretické sekci. Jedná se o přepsání prezentace v PowerPointu do HTML.</p>
+
+<p><b>Emboss Bump Mapping</b></p>
+
+<p>Michael I. Gold - NVidia Corporation</p>
+
+<p><b>Bump Mapping</b></p>
+
+<p>Skutečný bump mapping používá per-pixel osvětlení.</p>
+
+<ul>
+<li>Výpočet osvětlení na každém pixelu založené na různých normálových vektorech.</li>
+<li>Výpočetně velmi náročné.</li>
+<li>Pro více informací se podívejte na: Blinn, J. : Simulation of Wrinkled Surfaces, Computer Graphics. 12,3 (August 1978) 286-292.</li>
+<li>Pro informace na webu zajděte na: <a href="http://www.r3.nu/" target="_blank">http://www.r3.nu/</a> a podívejte se na Cass Everitt's Orthogonal Illumination Thesis. (pozn.: Jens)</li>
+</ul>
+
+<p><b>Emboss Bump Mapping</b></p>
+
+<p>Emboss Bump Mapping je pouze náhražka.</p>
+
+<ul>
+<li>Pouze difuzní osvětlení, žádné odražené.</li>
+<li>Výskyt artefaktů (může vést k rozmazanému pohybu pozn.: Jens)</li>
+<li>Dostupné na dnešním hardwaru</li>
+<li>Vypadá celkem slušně</li>
+</ul>
+
+<p><b>Výpočet difúzního osvětlení</b></p>
+
+<p>C = (L * N) x Dl x Dm</p>
+
+<ul>
+<li>L je vektor světla</li>
+<li>N je normálový vektor</li>
+<li>Dl je barva difusního světla</li>
+<li>Dm je difusní barva materiálu</li>
+<li>Bump Mapping mění pro každý pixel N</li>
+<li>Emboss Bump Mapping se blíží L * N</li>
+</ul>
+
+<p><b>Přibližný stupeň rozptylu L * N</b></p>
+
+<p>Textura reprezentuje výškovou mapu</p>
+
+<ul>
+<li>[0,1] určuje interval prohybu (výškového rozdílu)</li>
+<li>První odvození reprezentuje sklon (úhel) m - m je pouze jednorozměrné - reprezentuje sklon na souřadnicích (s,t) dané textury (pozn.: Jens)</li>
+<li>m zvyšuje nebo snižuje základní stupeň rozptylu Fd</li>
+<li>(Fd + m) se blíží (L * N) na pixel</li>
+</ul>
+
+<p><b>Přibližné odvození</b></p>
+
+<p>Zohlednění přibližných údajů</p>
+
+<ul>
+<li>Vyvýšení H0 v bodě o souřadnicích (s,t)</li>
+<li>Vyvýšení H1 v bodě mírně posunutém ke zdroji světla (s + ds, t + dt)</li>
+<li>Odečtení původní výšky H0 od posunuté H1</li>
+<li>Rozdíl je okamžitým sklonem m = H1 - H0</li>
+</ul>
+
+
+<p><b>Spočítání reliéfu</b></p>
+
+<p>1) Původní reliéf (H0).</p>
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_image002.jpg" width="140" height="48" alt="Původní reliéf (H0)" /></div>
+
+<p>2) Původní reliéf (H0) proložený druhým (H1), který je mírně posunutý směrem ke světlu.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_image004.jpg" width="216" height="91" alt="Původní reliéf (H0) proložený druhým (H1), který je mírně posunutý směrem ke světlu" /></div>
+
+<p>3) Odečtení původního od posunutého reliéfu (H0-H1) - vede ke vzniku světlých (B) a tmavých (D) ploch.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_image006.jpg" width="173" height="48" alt="Odečtení původního od posunutého reliéfu (H0-H1) - vede ke vzniku světlých (B) a tmavých (D) ploch" /></div>
+
+<p><b>Výpočet osvětlení</b></p>
+
+<p>Určíme hodnotu barvy (Cf) dané plochy</p>
+
+<ul>
+<li>Cf = (L * N) x Dl x Dm</li>
+<li>(L * N) ~ (Fd + (H0 - H1))</li>
+<li>Dm x Dl je vlastně již určen texturou Ct. Jinak můžete pracovat s Dl a Dm samostatně, pokud jste dostatečně zdatní. (To se provádí pomocí OpenGL-Lighting! pozn.: Jens)</li>
+<li>Cf = (Fd + (H0 - H1)) x Ct</li>
+</ul>
+
+<p><b>Je to vše? Takhle jednoduché?!</b></p>
+
+<p>Ještě nejsme úplně hotoví. Stále musíme:</p>
+
+<ul>
+<li>Vytvořit texturu (pomocí grafického editoru pozn.: Jens)</li>
+<li>Spočítat posunutí textury (ds,dt)</li>
+<li>Spočítat stupeň rozptylu Fd (pomocí OpenGL-Lighting! pozn.: Jens)</li>
+<li>Obojí je odvozeno z normály N a vektoru světla L (v našem případě se spočítá přesně pouze (ds,dt)! pozn.: Jens)</li>
+<li>Teď si dáme trošku matematiky</li>
+</ul>
+
+<p><b>Tvorba textury</b></p>
+
+<p>Uchovávejte textury!</p>
+
+<ul>
+<li>Současný multitexturovací hardware podporuje pouze dvě textury!</li>
+<li>Bumpmapa v alpha kanálu (my to tímto způsobem neděláme, ale můžete si to zkusit jako takové cvičení, pokud máte TNT chipset pozn.:Jens)</li>
+<li>Maximální prohyb = 1.0</li>
+<li>Základní výška = 0.5</li>
+<li>Maximální pokles = 0.0</li>
+<li>Barva povrchu v RGB kanálech</li>
+<li>Nastavit interní formát na GL_RGBA8 !!</li>
+</ul>
+
+<p><b>Výpočet offsetu textury</b></p>
+
+<p>Pootočení vektoru světla</p>
+
+<ul>
+<li>Potřeba je normální souřadnicový systém</li>
+<li>Odvození souřadnicového systému z normálového a "horního" vektoru (my předáme směr texturovacích souřadnic do našeho generátoru posunutí explicitně pozn.: Jens)</li>
+<li>Normála je osa z</li>
+<li>Meziprodukt je osa x</li>
+<li>Zahození &quot;horního&quot; vektoru, odvození osy y z os x a z</li>
+<li>Vytvoření matice Mn 3x3 ze spočítaných os</li>
+<li>Transformace vektoru světla do normálního prostoru (Mn se taky nazývá ortonormální základ pozn.: Jens)</li>
+</ul>
+
+<p><b>Výpočet offsetu textury (pokračování)</b></p>
+
+<p>Použijte pro posunutí vektor světla normálního prostoru</p>
+
+<ul>
+<li>L' = Mn x L</li>
+<li>Použít L'x, L'y pro (ds, dt)</li>
+<li>Použít L'z pro stupeň rozptylu! (Raději ne! Pokud nevlastníte TNT, použijte místo toho OpenGL-Lighting, jinak byste museli renderovat jeden cyklus navíc! pozn.: Jens)</li>
+<li>Pokud je vektor světla blízký normále, L'x, L'y jsou nízké</li>
+<li>Pokud se vektor světla blíží tangentové rovině, L'x, L'y jsou vysoké</li>
+<li>Co když je L'z menší než nula?</li>
+<li>Světlo je na opačné straně než normála</li>
+<li>Pak se bude rovnat nule.</li>
+</ul>
+
+<p><b>Implementace na TNT</b></p>
+
+<p>Spočítejte vektory, texturovací souřadnice na hostiteli</p>
+
+<ul>
+<li>Předejte stupeň rozptylu v alpha kanálu</li>
+<li>Mohli byste využít barvu vertexu pro barvu rozptýleného světla</li>
+<li>H0 a barvu z texturovací jednotky 0</li>
+<li>H1 z texturovací jednotky 1 (stejná textura jiné souřadnice)</li>
+<li>ARB_multitexture extension</li>
+<li>Zkombinuje extension (precizněji: NVIDIA_multitexture_combiners extension, podporované všemi akcelerátory rodiny TNT pozn.: Jens)</li>
+</ul>
+
+<p><b>Implementace na TNT (pokračování)</b></p>
+
+<p>Nastavení alpha kanálu na combineru</p>
+
+<ul>
+<li>(1-T0a) + T1a - 0.5 (T0a zastupuje &quot;texturovací jednotku 0, alpha kanál&quot; pozn.: Jens)</li>
+<li>(T1a-T0a) se namapuje na (-1,1), ale hardware ji připevní na (0,1)</li>
+<li>Přednastavení 0.5 vyvažuje ztrátu oproti uchycení (zvažte užití 0.5, mohli byste dosáhnout větší rozmanitosti bumpmap, pozn.: Jens)</li>
+<li>Můžete přizpůsobit barvu rozptýleného světla T0c</li>
+<li>RGB nastavení combineru 0:</li>
+<li>(T0c * C0a + T0c * Fda - 0.5)*2</li>
+<li>0.5 vyvažuje ztrátu oproti uchycení</li>
+<li>Násobení dvěma prosvětlí obraz</li>
+</ul>
+
+<p><b>Konec teorie (Emboss Bump Mapping)</b></p>
+
+<hr />
+
+<p>My to ale uděláme trochu jinak než podle TNT implementace, abychom umožnili našemu programu běžet na VŠECH akcelerátorech. Zde se můžeme přiučit dvě nebo tři věci. Jedna z nich je, že bumpmapping je více fázový algoritmus na většině karet (ne na TNT, kde se to dá nahradit jednou dvou-texturovací fází). Už byste si měli být schopni představit, jak hezký multitexturing ve skutečnosti je. Nyní implementujeme 3-fázový netexturovací algoritmus, který pak může být (a bude) vylepšen na 2 fázový texturovací algoritmus.</p>
+
+<p>Teď byste si měli uvědomit, že musíme udělat nějaké násobení matice maticí (a násobení vektoru maticí). Ale to není nic čeho bychom se měli obávat: OpenGL zvládne násobení matice maticí za nás a násobení vektoru maticí je celkem jednoduché: funkce VMatMult(M,v) vynásobí matici M s vektorem v a výsledek uloží zpět ve v: v = M * v. Všechny matice a vektory předané funkci musejí mít stejný tvar: matice 4x4 a 4-rozměrné vektory. To je pro zajištění kompatibility s OpenGL.</p>
+
+<p class="src0">void VMatMult(GLfloat *M, GLfloat *v)</p>
+<p class="src0">{</p>
+<p class="src1">GLfloat res[3];</p>
+<p></p>
+<p class="src1">res[0] = M[0]*v[0]+M[1]*v[1]+M[ 2]*v[2]+M[ 3]*v[3];</p>
+<p class="src1">res[1] = M[4]*v[0]+M[5]*v[1]+M[ 6]*v[2]+M[ 7]*v[3];</p>
+<p class="src1">res[2] = M[8]*v[0]+M[9]*v[1]+M[10]*v[2]+M[11]*v[3];</p>
+<p></p>
+<p class="src1">v[0]=res[0];</p>
+<p class="src1">v[1]=res[1];</p>
+<p class="src1">v[2]=res[2];</p>
+<p></p>
+<p class="src1">v[3]=M[15];<span class="kom">// Homogenní souřadnice</span></p>
+<p class="src0">}</p>
+
+<hr />
+
+<p><b>Začátek teorie (algoritmy pro Emboss Bump Mapping)</b></p>
+
+<p>Zde se zmíníme o dvou odlišných algoritmech. První popisuje program, který se jmenuje GL_BUMP a napsal ho Diego Tártara v roce 1999. I přes pár nevýhod velmi pěkně implementuje bumpmapping. Teď se na tento algoritmus podíváme:</p>
+
+<ol>
+<li>Všechny vektory musí být BUĎ v prostoru objektu NEBO v prostoru scény</li>
+<li>Spočítání vektoru v z aktuální pozice vertexu vzhledem ke světlu</li>
+<li>Normalizace v</li>
+<li>Promítnutí v do tangenoidního prostoru. (To je plocha, která se dotýká daného vertexu. Pokud pracujete s rovnými plochami, tak je to zpravidla plocha samotná.)</li>
+<li>Posuneme souřadnice (s,t) o složky x,y vektoru v</li>
+</ol>
+
+<p>To nevypadá špatně! V podstatě je to algoritmus popsaný Michaelem I. Goldem výše. Má však zásadní nevýhodu: Támara používá projekci pouze pro rovinu xy. To pro naše potřeby nestačí, protože zjednodušuje promítací krok pouze na složky x a y a se složkou z vektoru v vůbec nepočítá.</p>
+
+<p>Ale tato implementace vytvoří rozptýlené světlo stejným způsobem, jako ho budeme dělat my: s použitím v OpenGL zabudované podpory osvětlení. Takže nemůžeme použít metodu kombinerů, jakou navrhuje Gold (Chceme, aby naše programy běžely i na jiných než TNT kartách!), nemůžeme uložit stupeň rozptylu do alpha kanálu. Tak již máme problém s 3 fázovým netexturovaním a 2 fázovým texturováním, proč na poslední průchod nepoužít OpenGL-Lighting, aby za nás dodělal ambientní světlo a barvy? Je to možné (a výsledek vypadá celkem dobře), ale jen proto, že nyní nepoužíváme složitou geometrii. Tohle byste si měli zapamatovat. Pokud budete chtít renderovat několik tisíc bumpmapovaných trojúhelníků, zkuste objevit něco jiného.</p>
+
+<p>Navíc, používá multitexturing (jak můžeme vidět) ne tak jednoduše jako my s ohledem na tento speciální případ.</p>
+
+<p>Ale teď k naší implementaci. Vypadá podobně jako algoritmus předtím, kromě projekční fáze, kde použijeme vlastní postup:</p>
+
+<ul>
+<li>Použijeme SOUŘADNICE OBJEKTU, to znamená, že nepoužijeme matici modelu při výpočtech. Tohle má za příčinu nemilý vedlejší efekt: když chceme otáčet krychlí, souřadnice v objektu se nezmění, ale souřadnice vertexu v souřadnicích scény (vzhledem k očím) se změní. Ale pozice našeho světla by se neměla pohybovat s krychlí, měla by být statická, což znamená, že souřadnice by se neměly měnit. Abychom to vykompenzovali, použijeme malý trik, běžně užívaný s počítačové grafice: místo transformace každého vertexu do prostoru světa kvůli bumpmapám, převedeme souřadnice světla do prostoru objektu s použitím inverzní matice modelu. Tohle je velmi snadné, vzhledem k tomu, že přesně víme, jak jsme vytvořili matici modelu, není problém tento postup obrátit. K tomu se ještě dostaneme.</li>
+<li>Spočítáme daný vertex c na povrchu.</li>
+<li>Pak spočítáme normálu n s délkou 1 (většinou známe n pro každou stěnu krychle). To je důležité, můžeme tak ušetřit čas při zjišťování normalizovaných vektorů. Spočítáme vektor světla v z vektoru c směřujícímu k pozici světla l.</li>
+<li>Pokud je třeba ještě něco udělat, sestavíme matici Mn reprezentující ortonormální projekci.</li>
+<li>Spočítáme posunutí souřadnic textury vynásobením daných souřadnic textury (s a t) a v a MAX_EMBOSS: ds = s*v*MAX_EMBOSS, dt= t*v*MAX_EMBOSS. Všimněte si, že s,t a v jsou vektory, ale MAX_EMBOSS není.</li>
+<li>V druhé fázi přidáme posunutí k souřadnicím textury.</li>
+</ul>
+
+<p><b>Proč je to dobré?</b></p>
+
+<ul>
+<li>Rychlost (jen pár odmocnin a násobení vertexů)</li>
+<li>Vypadá dobře!</li>
+<li>Funguje se všemi povrchy, nejen s rovinami.</li>
+<li>Běží na všech akcelerátorech.</li>
+<li>Je glBegin/glEnd přátelská: nepotřebuje &quot;zakázané&quot; GL příkazy.</li>
+</ul>
+
+<p><b>Nevýhody:</b></p>
+
+<ul>
+<li>Není úplně fyzíkálně správné.</li>
+<li>Zanechává menší artefakty.</li>
+</ul>
+
+<p>Tento náčrtek ukazuje, kde se nacházejí jednotlivé vektory. Můžete jednoduše získat t a s odečtením jesnosti jednotlivých vektorů, ale ujistěte se, že jsou správně natočené a normalizované. Modrý bod označuje vertex, kde je namapován texCoord2f(0.0f, 0.0f).</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_image008.jpg" width="412" height="243" alt="Lokace vektorů" /></div>
+
+<p><b>Konec teorie (algoritmy pro Emboss Bump Mapping)</b></p>
+
+<hr />
+
+<p>Teď se podívejme na generátor posunutí textury. Tato funkce se jmenuje SetUpBumps().</p>
+
+<p class="src0"><span class="kom">// Funkce nastaví posunutí textury</span></p>
+<p class="src0"><span class="kom">// n : normála k ploše, musí mít délku 1</span></p>
+<p class="src0"><span class="kom">// c : nějaký bod na povrchu</span></p>
+<p class="src0"><span class="kom">// l : pozice světla</span></p>
+<p class="src0"><span class="kom">// s : směr texturovacích souřadnic s (musí být normalizován!)</span></p>
+<p class="src0"><span class="kom">// t : směr texturovacích souřadnic t (musí být normalizován!)</span></p>
+<p></p>
+<p class="src0">void SetUpBumps(GLfloat *n, GLfloat *c, GLfloat *l, GLfloat *s, GLfloat *t)</p>
+<p class="src0">{</p>
+<p class="src1">GLfloat v[3];<span class="kom">// Vertex z aktuální pozice ke světlu</span></p>
+<p class="src1">GLfloat lenQ;<span class="kom">// Použito při normalizaci</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Spočítání v z aktuálního vertexu c ke světlu a jeho normalizace</span></p>
+<p class="src1">v[0] = l[0] - c[0];</p>
+<p class="src1">v[1] = l[1] - c[1];</p>
+<p class="src1">v[2] = l[2] - c[2];</p>
+<p></p>
+<p class="src1">lenQ = (GLfloat) sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);</p>
+<p></p>
+<p class="src1">v[0] /= lenQ;</p>
+<p class="src1">v[1] /= lenQ;</p>
+<p class="src1">v[2] /= lenQ;</p>
+<p></p>
+<p class="src1"><span class="kom">// Zohlednění v tak, abychom dostali texturovací souřadnice</span></p>
+<p class="src1">c[0] = (s[0]*v[0] + s[1]*v[1] + s[2]*v[2]) * MAX_EMBOSS;</p>
+<p class="src1">c[1] = (t[0]*v[0] + t[1]*v[1] + t[2]*v[2]) * MAX_EMBOSS;</p>
+<p class="src0">}</p>
+
+<p>Nepřipadá vám to tak komplikované jako předtím? Teorie je ale důležitá, abyste pochopili jak efekt funguje a jak ho ovládat. Během psaní tutoriálu jsem se to sám naučil :-]</p>
+
+<p>Vždycky jsem chtěl zobrazit logo při běhu ukázkového programu. My teď taky dvě zobrazíme. Zavoláme funkci doLogo(). Ta vyresetuje GL_MODELVIEW matici, která musí být při posledním průchodu zavolána.</p>
+
+<p>Tato funkce zobrazí dvě loga: OpenGl logo a logo multitexturingu, pokud je povolen. Loga jsou zčásti průhledná. Protože mají alpha kanál, smícháme je pomocí GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA podle OpenGL dokumentace. Obě dvě jsou ploché, nemáme pro ně souřadnici z. Čísla použitá pro hrany jsou zjištěny "empiricky" (pokus-chyba), tak aby loga padla pěkně do rožků. Musíme zapnout blending a vypnout světla, abychom se vyhli chybným efektům. Abychom zajistili, že loga budou vždy vepředu, vyresetujeme GL_MODELVIEW matici a nastavíme funkci na testování hloubky na GL_ALWAYS.</p>
+
+<p class="src0">void doLogo(void)<span class="kom">// MUSÍ SE ZAVOLAT AŽ NAKONEC!!! Zobrazí dvě loga</span></p>
+<p class="src0">{</p>
+<p class="src1">glDepthFunc(GL_ALWAYS);</p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);</p>
+<p></p>
+<p class="src1">glEnable(GL_BLEND);</p>
+<p class="src1">glDisable(GL_LIGHTING);</p>
+<p></p>
+<p class="src1">glLoadIdentity();</p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D,glLogo);</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2">glTexCoord2f(0.0f,0.0f); glVertex3f(0.23f, -0.4f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f,0.0f); glVertex3f(0.53f, -0.4f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f,1.0f); glVertex3f(0.53f, -0.25f,-1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f,1.0f); glVertex3f(0.23f, -0.25f,-1.0f);</p>
+<p class="src1">glEnd();</p>
+<p></p>
+<p class="src1">if (useMultitexture)</p>
+<p class="src1">{</p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D,multiLogo);</p>
+<p></p>
+<p class="src2">glBegin(GL_QUADS);</p>
+<p class="src3">glTexCoord2f(0.0f,0.0f); glVertex3f(-0.53f, -0.4f,-1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f,0.0f); glVertex3f(-0.33f, -0.4f,-1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f,1.0f); glVertex3f(-0.33f, -0.3f,-1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f,1.0f); glVertex3f(-0.53f, -0.3f,-1.0f);</p>
+<p class="src2">glEnd();</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);</p>
+<p class="src0">}</p>
+
+<p>Teď přichází funkce na bumpmapping bez texturingu. Je to tří-průchodová implementace. Jako první GL_MODELVIEW matice se převrátí pomocí aplikace všech provedených kroků v opačném pořadí a obráceně na matici dané identity. Výsledkem je matice, která při aplikaci na objekt &quot;vrací&quot; GL_MODELVIEW. My jí jednoduše získáme funkcí glGetFloatv(). Pamatujte, že matice musí být pole s 16 prvky a že je tato matice &quot;přesunuta&quot;!</p>
+
+<p>Mimochodem: Když přesně nevíte, jak se s maticí manipuluje, zvažte použití globálních souřadnic, protože převracení matice je složité a náročné na čas. Ale pokud používáte mnoho vertexů, převracení matice může být daleko rychlejší.</p>
+
+<p class="src0">bool doMesh1TexelUnits(void)</p>
+<p class="src0">{</p>
+<p class="src1">GLfloat c[4] = {0.0f, 0.0f, 0.0f, 1.0f};<span class="kom">// Aktuální vertex</span></p>
+<p class="src1">GLfloat n[4] = {0.0f, 0.0f, 0.0f, 1.0f};<span class="kom">// Normalizovaná normála daného povrchu</span></p>
+<p class="src1">GLfloat s[4] = {0.0f, 0.0f, 0.0f, 1.0f};<span class="kom">// Směr texturovacích souřadnic s, normalizováno</span></p>
+<p class="src1">GLfloat t[4] = {0.0f, 0.0f, 0.0f, 1.0f};<span class="kom">// Směr texturovacích souřadnic t, normalizováno</span></p>
+<p></p>
+<p class="src1">GLfloat l[4];<span class="kom">// Pozice světla, která bude transformována do prostoru objektu</span></p>
+<p class="src1">GLfloat Minv[16];<span class="kom">// Převrácená modelview matice</span></p>
+<p></p>
+<p class="src1">int i;</p>
+<p></p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Sestavení převrácené modelview matice; nahradí funkce Push a Pop jednou funkcí glLoadIdentity()</span></p>
+<p class="src1"><span class="kom">// Jednoduché sestavení tím, že všechny transformace provedeme opačně a v opačném pořadí</span></p>
+<p></p>
+<p class="src1">glLoadIdentity();</p>
+<p></p>
+<p class="src1">glRotatef(-yrot,0.0f,1.0f,0.0f);</p>
+<p class="src1">glRotatef(-xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glTranslatef(0.0f,0.0f,-z);</p>
+<p></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX,Minv);</p>
+<p></p>
+<p class="src1">glLoadIdentity();</p>
+<p></p>
+<p class="src1">glTranslatef(0.0f,0.0f,z);</p>
+<p class="src1">glRotatef(xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glRotatef(yrot,0.0f,1.0f,0.0f);</p>
+<p></p>
+<p class="src1"><span class="kom">// Transformace pozice světla do souřadnic objektu:</span></p>
+<p class="src1">l[0] = LightPosition[0];</p>
+<p class="src1">l[1] = LightPosition[1];</p>
+<p class="src1">l[2] = LightPosition[2];</p>
+<p class="src1">l[3] = 1.0f;<span class="kom">// Homogení souřadnice</span></p>
+<p></p>
+<p class="src1">VMatMult(Minv,l);</p>
+
+<p>První fáze:</p>
+
+<ul>
+<li>Použití bump textury</li>
+<li>Vypnutí blendingu</li>
+<li>Vypnutí světel</li>
+<li>Použití texturovacích souřadnic bez posunutí</li>
+<li>Vytvoření geometrie</li>
+</ul>
+
+<p>Tohle vyrenderuje krychli pouze z bumpmap.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, bump[filter]);</p>
+<p class="src1">glDisable(GL_BLEND);</p>
+<p class="src1">glDisable(GL_LIGHTING);</p>
+<p class="src1">doCube();</p>
+<p></p>
+
+<p>Druhá fáze:</p>
+
+<ul>
+<li>Použití převrácené bumpmapy</li>
+<li>Povolení blendingu GL_ONE, GL_ONE</li>
+<li>Ponechá vypnutá světla</li>
+<li>Použití posunutých texturovacích souřadnic (Před každou stěnou krychle musíme zavolat funkci SetUpBumps())</li>
+<li>Vytvoření geometrie</li>
+</ul>
+
+<p>Tohle vyrendruje krychli se správným emboss bumpmappingem, ale bez barev.</p>
+<p>Mohli bychom ušetřit čas rotací vektoru světla opačným směrem. To však nefunguje úplně správně, tak to uděláme jinou cestou: otočíme každou normálu a prostřední bod stejně jako naši geometrii.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D,invbump[filter]);</p>
+<p class="src1">glBlendFunc(GL_ONE,GL_ONE);</p>
+<p class="src1">glDepthFunc(GL_LEQUAL);</p>
+<p class="src1">glEnable(GL_BLEND);</p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2"><span class="kom">// Přední stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = 1.0f;</p>
+<p></p>
+<p class="src2">s[0] = 1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=0; i&lt;4; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glTexCoord2f(data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = -1.0f;</p>
+<p></p>
+<p class="src2">s[0] = -1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=4; i&lt;8; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glTexCoord2f(data[5*i]+c[0], data[5*i+1]+c[1]); </p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Horní stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = 1.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = 1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 0.0f;</p>
+<p class="src2">t[2] = -1.0f;</p>
+<p></p>
+<p class="src2">for (i=8; i&lt;12; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glTexCoord2f(data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Spodní stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = -1.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = -1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 0.0f;</p>
+<p class="src2">t[2] = -1.0f;</p>
+<p></p>
+<p class="src2">for (i=12; i&lt;16; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glTexCoord2f(data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">n[0] = 1.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = 0.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = -1.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=16; i&lt;20; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glTexCoord2f(data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">n[0] = -1.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = 0.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 1.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=20; i&lt;24; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glTexCoord2f(data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p class="src1">glEnd();</p>
+
+<p>Třetí fáze:</p>
+
+<ul>
+<li>Použití základní barevné textury</li>
+<li>Povoluní blendingu GL_DST_COLOR, GL_SRC_COLOR</li>
+<li>Tuto blending rovnici násobit dvěma: (Cdst*Csrc)+(Csrc*Cdst) = 2(Csrc*Cdst)!</li>
+<li>Povolení světel, aby vytvořily ambientní a rozptýlené světlo</li>
+<li>Vrácení GL_TEXTURE matice zpět na "normální" texturovací souřadnice</li>
+<li>Vytvořit geometrii</li>
+</ul>
+
+<p>Tohle dokončí renderování krychle s osvětlením. Nejdříve musíme nastavit texture environment na GL_MODULATE. Můžeme zapínat a vypínat multitexturing. Tuto fázi provedeme, jen pokud uživatel nechce vidět pouze emboss.</p>
+
+<p class="src1">if (!emboss)</p>
+<p class="src1">{</p>
+<p class="src2">glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);</p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D,texture[filter]);</p>
+<p class="src2">glBlendFunc(GL_DST_COLOR,GL_SRC_COLOR);</p>
+<p class="src2">glEnable(GL_LIGHTING);</p>
+<p></p>
+<p class="src2">doCube();</p>
+<p class="src1">}</p>
+
+<p>Poslední fáze:</p>
+
+<ul>
+<li>Pootočení krychle pro příští kreslení</li>
+<li>Nakreslení log</li>
+</ul>
+
+<p class="src1">xrot += xspeed;</p>
+<p class="src1">yrot += yspeed;</p>
+<p></p>
+<p class="src1">if (xrot &gt; 360.0f)</p>
+<p class="src2">xrot -= 360.0f;</p>
+<p></p>
+<p class="src1">if (xrot &lt; 0.0f)</p>
+<p class="src2">xrot += 360.0f;</p>
+<p></p>
+<p class="src1">if (yrot &gt; 360.0f)</p>
+<p class="src2">yrot -= 360.0f;</p>
+<p></p>
+<p class="src1">if (yrot &lt; 0.0f)</p>
+<p class="src2">yrot += 360.0f;</p>
+<p></p>
+<p class="src1">doLogo();<span class="kom">// Nakonec loga</span></p>
+<p></p>
+<p class="src1">return true;</p>
+<p class="src0">}</p>
+
+<p>Další funkce udělá tohle všechno ve dvou fázích s podporou multitexturingu. Použijeme dvě texturovací jednotky. Více by bylo extrémně obtížné vzhledem k blendingovým rovnicím. Lépe použít TNT. Všimněte si, že se funkce liší od doMesh1TexelUnits() jen tím, že posíláme dvě sady texturovacích souřadnich na každý vertex!</p>
+
+<p class="src0">bool doMesh2TexelUnits(void)</p>
+<p class="src0">{</p>
+<p class="src1">GLfloat c[4] = {0.0f,0.0f,0.0f,1.0f};<span class="kom">// Aktuální vertex</span></p>
+<p class="src1">GLfloat n[4] = {0.0f,0.0f,0.0f,1.0f};<span class="kom">// Normalizovaná normála povrchu</span></p>
+<p class="src1">GLfloat s[4] = {0.0f,0.0f,0.0f,1.0f};<span class="kom">// Směr texturovacích souřadnic s, normalizováno</span></p>
+<p class="src1">GLfloat t[4] = {0.0f,0.0f,0.0f,1.0f};<span class="kom">// Směr texturovacích souřadnic t, normalizováno</span></p>
+<p></p>
+<p class="src1">GLfloat l[4];<span class="kom">// Pozice světla k převedení na souřadnice objektu</span></p>
+<p class="src1">GLfloat Minv[16];<span class="kom">// Převrácená modelview matice</span></p>
+<p></p>
+<p class="src1">int i;</p>
+<p></p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Sestavení převrácené modelview matice, tohle nahradí funkce Push a Pop jednou funkcí glLoadIdentity()</span></p>
+<p class="src1"><span class="kom">// Jednoduché sestavení tím, že všechny transformace provedeme opačně a v opačném pořadí</span></p>
+<p></p>
+<p class="src1">glLoadIdentity();</p>
+<p></p>
+<p class="src1">glRotatef(-yrot,0.0f,1.0f,0.0f);</p>
+<p class="src1">glRotatef(-xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glTranslatef(0.0f,0.0f,-z);</p>
+<p></p>
+<p class="src1">glGetFloatv(GL_MODELVIEW_MATRIX,Minv);</p>
+<p></p>
+<p class="src1">glLoadIdentity();</p>
+<p></p>
+<p class="src1">glTranslatef(0.0f,0.0f,z);</p>
+<p></p>
+<p class="src1">glRotatef(xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glRotatef(yrot,0.0f,1.0f,0.0f);</p>
+<p></p>
+<p class="src1"><span class="kom">// Transformace pozice světla na souřadnice objektu:</span></p>
+<p class="src1">l[0] = LightPosition[0];</p>
+<p class="src1">l[1] = LightPosition[1];</p>
+<p class="src1">l[2] = LightPosition[2];</p>
+<p class="src1">l[3] = 1.0f;<span class="kom">// Homogení souřadnice</span></p>
+<p></p>
+<p class="src1">VMatMult(Minv,l);</p>
+
+<p>První fáze:</p>
+
+<ul>
+<li>Bez blendingu</li>
+<li>Bez světel</li>
+</ul>
+
+<p>Nastavení texture combineru 0 na</p>
+
+<ul>
+<li>Použití bumpmapy</li>
+<li>Použití neposunutých texturovacích souřadnic</li>
+<li>Nastaveví operace s texturou na GL_REPLACE, která pouze vykreslí texturu</li>
+</ul>
+
+<p>Nastavení texture combineru 1 na</p>
+
+<ul>
+<li>Posunuté texturovací souřadnice</li>
+<li>Nastavení operace s texturou na GL_ADD, což je multitexturovacím ekvivalentem k ONE, ONE blendingu</li>
+</ul>
+
+<p>Tohle vyrenderuje krychli skládající se z šedých map.</p>
+
+<p class="src1"><span class="kom">// TEXTUROVACÍ JEDNOTKA #0:</span></p>
+<p class="src1">glActiveTextureARB(GL_TEXTURE0_ARB);</p>
+<p class="src1">glEnable(GL_TEXTURE_2D);</p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, bump[filter]);</p>
+<p class="src1">glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);</p>
+<p class="src1">glTexEnvf (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_REPLACE);</p>
+<p></p>
+<p class="src1"><span class="kom">// TEXTUROVACÍ JEDNOTKA #1:</span></p>
+<p class="src1">glActiveTextureARB(GL_TEXTURE1_ARB);</p>
+<p class="src1">glEnable(GL_TEXTURE_2D);</p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, invbump[filter]);</p>
+<p class="src1">glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);</p>
+<p class="src1">glTexEnvf (GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_ADD);</p>
+<p></p>
+<p class="src1"><span class="kom">// Obecné přepínače</span></p>
+<p class="src1">glDisable(GL_BLEND);</p>
+<p class="src1">glDisable(GL_LIGHTING);</p>
+
+<p>Teď pouze vyrenderujeme stěny jednu po druhé jako v doMesh1TexelUnits(). Pouze jedna novinka: používá glMultiTexCoordfARB() místo glTexCoord2f(). Všimněte si, že v prvním parametru je uvedeno, které texturovací jednotce přísluší souřadnice. Parametr musí být GL_TEXTUREi_ARB, kde i je v intervalu od 0 do 31.</p>
+
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2"><span class="kom">// Přední stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = 1.0f;</p>
+<p></p>
+<p class="src2">s[0] = 1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=0; i&lt;4; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE0_ARB, data[5*i], data[5*i+1]);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE1_ARB, data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = -1.0f;</p>
+<p></p>
+<p class="src2">s[0] = -1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=4; i&lt;8; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE0_ARB,data[5*i], data[5*i+1]);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE1_ARB,data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Horní stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = 1.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = 1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 0.0f;</p>
+<p class="src2">t[2] = -1.0f;</p>
+<p></p>
+<p class="src2">for (i=8; i&lt;12; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE0_ARB,data[5*i], data[5*i+1]);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE1_ARB,data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Dolní stěna</span></p>
+<p class="src2">n[0] = 0.0f;</p>
+<p class="src2">n[1] = -1.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = -1.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 0.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 0.0f;</p>
+<p class="src2">t[2] = -1.0f;</p>
+<p></p>
+<p class="src2">for (i=12; i&lt;16; i++)</p>
+<p class="src2">{</p>
+<p class="src3">>c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE0_ARB,data[5*i], data[5*i+1]);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE1_ARB,data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">n[0] = 1.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = 0.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = -1.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=16; i&lt;20; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE0_ARB,data[5*i], data[5*i+1]);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE1_ARB,data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">n[0] = -1.0f;</p>
+<p class="src2">n[1] = 0.0f;</p>
+<p class="src2">n[2] = 0.0f;</p>
+<p></p>
+<p class="src2">s[0] = 0.0f;</p>
+<p class="src2">s[1] = 0.0f;</p>
+<p class="src2">s[2] = 1.0f;</p>
+<p></p>
+<p class="src2">t[0] = 0.0f;</p>
+<p class="src2">t[1] = 1.0f;</p>
+<p class="src2">t[2] = 0.0f;</p>
+<p></p>
+<p class="src2">for (i=20; i&lt;24; i++)</p>
+<p class="src2">{</p>
+<p class="src3">c[0] = data[5*i+2];</p>
+<p class="src3">c[1] = data[5*i+3];</p>
+<p class="src3">c[2] = data[5*i+4];</p>
+<p></p>
+<p class="src3">SetUpBumps(n,c,l,s,t);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE0_ARB,data[5*i], data[5*i+1]);</p>
+<p class="src3">glMultiTexCoord2fARB(GL_TEXTURE1_ARB,data[5*i]+c[0], data[5*i+1]+c[1]);</p>
+<p class="src3">glVertex3f(data[5*i+2], data[5*i+3], data[5*i+4]);</p>
+<p class="src2">}</p>
+<p class="src1">glEnd();</p>
+
+<p>Druhá fáze:</p>
+
+<ul>
+<li>Použití základní textury</li>
+<li>Povolení osvětlení</li>
+<li>Neposunuté texturovací souřadnice - vyresetovat GL_TEXTURE matice</li>
+<li>Nastavení texture environment na GL_MODULATE</li>
+</ul>
+
+<p>Tohle vyrenderuje celou bumpmapovanou krychli.</p>
+
+<p class="src1">glActiveTextureARB(GL_TEXTURE1_ARB);</p>
+<p class="src1">glDisable(GL_TEXTURE_2D);</p>
+<p class="src1">glActiveTextureARB(GL_TEXTURE0_ARB);</p>
+<p></p>
+<p class="src1">if (!emboss)</p>
+<p class="src1">{</p>
+<p class="src2">glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);</p>
+<p></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D,texture[filter]);</p>
+<p class="src2">glBlendFunc(GL_DST_COLOR,GL_SRC_COLOR);</p>
+<p></p>
+<p class="src2">glEnable(GL_BLEND);</p>
+<p class="src2">glEnable(GL_LIGHTING);</p>
+<p></p>
+<p class="src2">doCube();</p>
+<p class="src1">}</p>
+
+<p>Poslední fáze:</p>
+
+<ul>
+<li>Pootočení krychle</li>
+<li>Nakreslení log</li>
+</ul>
+
+<p class="src1">xrot += xspeed;</p>
+<p class="src1">yrot += yspeed;</p>
+<p></p>
+<p class="src1">if (xrot&gt;360.0f)</p>
+<p class="src2">xrot -= 360.0f;</p>
+<p></p>
+<p class="src1">if (xrot&lt;0.0f)</p>
+<p class="src2">xrot += 360.0f;</p>
+<p></p>
+<p class="src1">if (yrot&gt;360.0f)</p>
+<p class="src2">yrot -= 360.0f;</p>
+<p></p>
+<p class="src1">if (yrot&lt;0.0f)</p>
+<p class="src2">yrot += 360.0f;</p>
+<p></p>
+<p class="src1">doLogo();<span class="kom">// Nakonec loga</span></p>
+<p></p>
+<p class="src1">return true;</p>
+<p class="src0">}</p>
+
+<p>Konečně funkce na renderování bez bumpmappingu - abychom mohli vidět ten rozdíl!</p>
+
+<p class="src0">bool doMeshNoBumps(void)</p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(0.0f,0.0f,z);</p>
+<p></p>
+<p class="src1">glRotatef(xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glRotatef(yrot,0.0f,1.0f,0.0f);</p>
+<p></p>
+<p class="src1">if (useMultitexture)</p>
+<p class="src1">{</p>
+<p class="src2">glActiveTextureARB(GL_TEXTURE1_ARB);</p>
+<p class="src2">glDisable(GL_TEXTURE_2D);</p>
+<p class="src2">glActiveTextureARB(GL_TEXTURE0_ARB);</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glDisable(GL_BLEND);</p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D,texture[filter]);</p>
+<p class="src1">glBlendFunc(GL_DST_COLOR,GL_SRC_COLOR);</p>
+<p class="src1">glEnable(GL_LIGHTING);</p>
+<p></p>
+<p class="src1">doCube();</p>
+<p></p>
+<p class="src1">xrot += xspeed;</p>
+<p class="src1">yrot += yspeed;</p>
+<p></p>
+<p class="src1">if (xrot&gt;360.0f)</p>
+<p class="src2">xrot -= 360.0f;</p>
+<p></p>
+<p class="src1">if (xrot&lt;0.0f)</p>
+<p class="src2">xrot += 360.0f;</p>
+<p></p>
+<p class="src1">if (yrot&gt;360.0f)</p>
+<p class="src2">yrot -= 360.0f;</p>
+<p></p>
+<p class="src1">if (yrot&lt;0.0f)</p>
+<p class="src2">yrot += 360.0f;</p>
+<p></p>
+<p class="src1">doLogo();<span class="kom">// Nakonec loga</span></p>
+<p></p>
+<p class="src1">return true;</p>
+<p class="src0">}</p>
+
+<p>Vše co musí drawGLScene() udělat je rozhodnout jakou doMesh funkci zavolat.</p>
+
+<p class="src0">bool DrawGLScene(GLvoid)<span class="kom">// Všechno kreslení</span></p>
+<p class="src0">{</p>
+<p class="src1">if (bumps)</p>
+<p class="src1">{</p>
+<p class="src2">if (useMultitexture &amp;&amp; maxTexelUnits &gt; 1)</p>
+<p class="src3">return doMesh2TexelUnits();</p>
+<p class="src2">else</p>
+<p class="src3">return doMesh1TexelUnits();</p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src2">return doMeshNoBumps();</p>
+<p class="src0">}</p>
+
+<p>Hlavní funkce Windows, přidány některé klávesy:</p>
+
+<ul>
+<li>E: přepínání Emboss/bumpmapový mód</li>
+<li>M: vypínání a zapínání multitexturingu</li>
+<li>B: vypínání a zapínání bumpmappingu, pouze v emboss módu</li>
+<li>F: přepínání filtrů, GL_NEAREST není vhodný pro bumpmapping</li>
+<li>KURSOROVÉ KLÁVESY: otáčení krychle</li>
+</ul>
+
+<p class="src0">int WINAPI WinMain(HINSTANCE hInstance,  HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)</p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Začátek zůstává nezměněn</span></p>
+<p class="src4">if (keys['E'])</p>
+<p class="src4">{</p>
+<p class="src5">keys['E']=false;</p>
+<p class="src5">emboss=!emboss;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys['M'])</p>
+<p class="src4">{</p>
+<p class="src5">keys['M']=false;</p>
+<p class="src5">useMultitexture=((!useMultitexture) &amp;&amp; multitextureSupported);</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys['B'])</p>
+<p class="src4">{</p>
+<p class="src5">keys['B']=false;</p>
+<p class="src5">bumps=!bumps;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys['F'])</p>
+<p class="src4">{</p>
+<p class="src5">keys['F']=false;</p>
+<p class="src5">filter++;</p>
+<p class="src5">filter%=3;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_PRIOR])</p>
+<p class="src4">{</p>
+<p class="src5">z-=0.02f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_NEXT])</p>
+<p class="src4">{</p>
+<p class="src5">z+=0.02f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_UP])</p>
+<p class="src4">{</p>
+<p class="src5">xspeed-=0.01f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_DOWN])</p>
+<p class="src4">{</p>
+<p class="src5">xspeed+=0.01f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_RIGHT])</p>
+<p class="src4">{</p>
+<p class="src5">yspeed+=0.01f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_LEFT])</p>
+<p class="src4">{</p>
+<p class="src5">yspeed-=0.01f;</p>
+<p class="src4">}</p>
+<p class="src1"><span class="kom">// Konec také nezměněn</span></p>
+<p class="src0">}</p>
+
+<p>Teď když jsme zvládli tento tutoriál, pár slov o generování textur a bumpmapových objektů. Předtím, než začnete programovat ambiciózní hry a budete se divit, proč bumpmapping není tak rychlý a nevypadá tak dobře, přečtěte si toto:</p>
+
+<ul>
+<li>Neměli byste používat textury 256x256 jako v této lekci. To vše hodně zpomalí. Používejte je pouze při demonstracích.</li>
+<li>Bumpmapovaná krychle není běžná. Točící se ještě méně. Důvodem je úhel pohledu: Čím ostřejší úhel, tím více optických chyb se kvůli filtrování objeví. Skoro všechny multifázové algoritmy tímto trpí. Abyste se vyhli používání velmi detailních textur, zredukujte úhly viditelnosti na minimum a předfiltrujte textury tak, aby dokonale sedly na tento rozptyl úhlů.</li>
+<li>Nejdříve byste měli mít barevnou texturu. Z ní se dá velmi snadno pomocí průměrnéno grafického programu udělat textura ve stupních šedi.</li>
+<li>Bumpmapa by měla být &quot;ostřejší&quot; a mít větší kontrast než barevná textura. Toho většinou docílíte použitím nějakého &quot;sparpening filtru&quot;. Z počátku to možná bude vypadat divně, ale k dosažení kvalitního efektu je to nutné.</li>
+<li>Bumpmapa by se barvama měla blížit 50% šedé (RGB 127,127,127). Tato barva znamená hladký povrch, světlejší místa reprezentují rýhy. Tohoto můžete dosáhnout užitím histogramu v některých grafických programech.</li>
+<li>Bumpmapa může být čtyřikrát menší než barevná textura bez vážného snížení kvality obrazu.</li>
+</ul>
+
+<p>Poděkování:</p>
+
+<ul>
+<li>Michael I. Gold za dokumentaci o bumpmappingu</li>
+<li>Diego Tártara za ukázkový kód</li>
+<li>nVidia za ukázky na www</li>
+<li>NeHe za to, že mě naučil mnoho o OpenGL</li>
+</ul>
+
+<p class="autor">napsal: Jens Schneider <span class="transform_email">&lt;schneide (zavináč) pool.informatik.rwth-aachen.de&gt;</span><br />
+přeložil: Václav Slováček - Wessan <span class="transform_email">&lt;horizont (zavináč) host.sk&gt;</span></p>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson22.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson22_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson22.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson22.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson22.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson22.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson22.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson22.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:lucriz@inwind.it">Luca Rizzuti</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson22.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson22.sit">Mac OS</a> kód této lekce. ( <a href="mailto:classic@sover.net">Morgan Aldridge</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson22.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson22.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson22.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_22_big.jpg" class="nehe_velky" alt="Lekce 22" /></div>
+<p class="okolni_lekce"><a href="tut_21.php">&lt;&lt;&lt; Lekce 21</a> | <a href="tut_23.php">Lekce 23 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mantharis</div>
+<div class="d_o_datumcas">05.07.2005 - 20:12:19</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_22.php&j=0">problém při převodu vertexů do prostor scény</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">jaja</div>
+<div class="d_o_datumcas">17.08.2005 - 18:15:51</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_22.php&j=1">Chybi hlavickovy soubor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.09.2005 - 22:14:37</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_22.php&j=2">Re: Chybi hlavickovy soubor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">DarkEcho</div>
+<div class="d_o_datumcas">19.01.2006 - 17:09:39</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_22.php&j=3">'Integer' and 'Pointer'</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Dusan</div>
+<div class="d_o_datumcas">25.04.2007 - 19:32:26</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_22.php&j=4">Chybny preklad?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">woq</div>
+<div class="d_o_datumcas">25.04.2007 - 19:36:17</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_22.php&j=5">Re: Chybny preklad?</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_22.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

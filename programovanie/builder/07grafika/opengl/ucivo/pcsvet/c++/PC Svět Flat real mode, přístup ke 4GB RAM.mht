@@ -1,0 +1,121 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Flat_real_mode=2C_p=F8=EDstup_ke_4GB_RAM?=
+Date: Thu, 12 Jul 2007 10:17:40 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1357
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Flat real mode, p=F8=EDstup ke =
+4GB RAM</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Flat real mode, p=F8=EDstup ke 4GB RAM</H2>
+<H4>FLAT, FLAT REAL, UNREAL, REAL BIG. Toto v=9Aechno jsou n=E1zvy pro=20
+program=E1torskou techniku s jej=ED=9E pomoc=ED m=F9=9Eete v Assembleru, =
+Pascalu nebo t=F8eba=20
+C=E9=E8ku p=F8istupovat k cel=E9 pam=ECti po=E8=EDta=E8e. Pro=E8 =
+nevyu=9E=EDvat celou pam=EC=9D po=E8=EDta=E8e=20
+m=EDsto pouh=FDch 640 kB.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>O technice FLAT, FLAT REAL, UNREAL, REAL BIG jste mo=9En=E1 u=9E =
+sly=9Aeli. V =9E=E1dn=E9m=20
+p=F8=EDpad=EC nen=ED nov=E1. U=9E nap=F8. Microsoft=ED HIMEM.SYS ji z =
+=E8=E1sti pou=9E=EDv=E1 od roku=20
+1988. Na mnoha str=E1nk=E1ch se do=E8tete, =9Ee tato technika =
+vyu=9E=EDv=E1 chybu v procesoru=20
+(p=F8esn=ECji v segmenta=E8n=ED jednotce), ale nen=ED to tak =FApln=EC =
+pravda. V podstat=EC jde=20
+o malou =FApravu.</P>
+<P>Adresujeme-li v re=E1ln=E9m m=F3du, zad=E1me dv=EC =E8=EDsla: jedno =
+pro ur=E8en=ED segmentu,=20
+druh=E9 pro offset. Segmenta=E8n=ED jednotka pak adresu segmentu rotuje =
+vlevo=20
+(vysunut=E9 bity zanikaj=ED, zprava se dopln=ED nuly) o 8 bit=F9 a =
+p=F8i=E8te k n=ED offset.=20
+Tak vznikne adresa, se kterou se provede po=9Eadovan=E1 operace. Pokud =
+ale p=F8ed=E1te=20
+segmenta=E8n=ED jednotce adresu offsetu v=ECt=9A=ED ne=9E je limit (ten =
+je po resetu=20
+procesoru v=9Edy 64k), ozn=E1m=ED procesoru chybu. Ten tedy vyvol=E1 =
+p=F8eru=9Aen=ED 13 (IRQ=20
+5), na kter=E9m v re=E1ln=E9m m=F3du nesed=ED =9E=E1dn=E1 obsluha a je =
+vr=E1ceno. Jen=9Ee zat=EDmco=20
+IRQ 5 o=E8ek=E1v=E1 dal=9A=ED instrukci, INT 13 pushne instrukci, =
+kter=E1 chybu vyvolala a=20
+tedy po n=E1vratu je tato znovu provedena. Zde tedy vid=EDte d=F9vod, =
+pro=E8 program v=20
+DOSu zatuhne poka=9Ed=E9, kdy=9E se pokus=EDte pou=9E=EDt 32-bitovou =
+adresaci v re=E1ln=E9m=20
+m=F3du.</P>
+<P>Cel=FD FLAT (dal=9A=ED n=E1zvy jmenovat nebudu) stav=ED na tom, =9Ee =
+limit segmenta=E8n=ED=20
+jednotky zm=ECn=EDme. Zm=ECn=EDme jej tak, aby n=E1m u=9E =9E=E1dn=E1 =
+32-bitov=E1 adresace zatuhnut=ED=20
+nezp=F9sobila, a to tak, =9Ee vstoup=EDme do chr=E1n=ECn=E9ho m=F3du, =
+uprav=EDme dan=FD limit=20
+segmenta=E8n=ED jednotky a z chr=E1n=ECn=E9ho m=F3du se vr=E1t=EDme. Jak =
+prost=E9.</P>
+<P>Nyn=ED tedy m=E1me k dispozici jeden segment, ale o velikosti 4GB, se =
+kter=FDm si=20
+m=F9=9Eeme d=EClat co chceme. WOW.</P>
+<P>Samoz=F8ejm=EC, jako v=9Aechno, m=E1 i tato technika sv=E9 mouchy. =
+Samoz=F8ejm=EC nem=F9=9Eeme=20
+o=E8ek=E1vat, =9Ee dan=FD po=E8=EDta=E8 bude m=EDt cel=E9 4GB pam=ECti a =
+BIOS n=E1m napo=E8=EDt=E1 max. 99=20
+MB. D=E1le u=9E si pam=EC=9D mus=EDme po=E8=EDtat sami. Dal=9A=ED =
+mouchou jsou V86 tasky. Po=20
+p=F8epnut=ED do V86 se nastaven=ED segmenta=E8n=ED jednotky op=ECt =
+vr=E1t=ED k p=F9vodn=EDm hodnot=E1m=20
+(pro zachov=E1n=ED kompatibility s 8086 a 80286), tzn. nelze =
+pou=9E=EDvat FLAT pod=20
+Windows a pod TSR poskytuj=EDc=EDmi EMS =E8i XMS, tedy EMM386, Qemm a =
+dal=9A=ED. Na druhou=20
+stranu, kdo z Pascalist=F9 si kdy dok=E1zal p=F8edstavit p=F8=EDstup ke =
+dnes zanedbateln=FDm=20
+32MB pam=ECti? Nebo v=EDce?</P>
+<P>Chcete-li v=ECd=ECt o t=E9to technice p=F8=EDstupu k pam=ECti v=EDce =
+nebo zn=E1t detailn=ED=20
+informace, doporu=E8uji dokumentaci Hermana Dullinka, z n=ED=9E tak=E9 =
+jsou =E8erp=E1ny=20
+informace pro tento =E8l=E1nek a jeho=9E implementace je jedna z =
+nejlep=9A=EDch. O t=E9to=20
+technice lze na internetu nal=E9zt spousty materi=E1l=F9 a =
+p=F8edev=9A=EDm k=F3d=F9 - samoz=F8ejm=EC=20
+anglicky. Bez v=ECt=9A=EDch probl=E9m=F9 ji lze pou=9E=EDt s Turbo =
+Pascalem 5,5 a vy=9A=9A=EDch. Na=20
+m=EDstech, kde je t=F8eba 32-bitov=E9 adresace, je ale nutno pou=9E=EDt =
+bloky=20
+assebleru.</P>
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:17:20 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,242 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Grafika_v_C++?=
+Date: Thu, 12 Jul 2007 09:50:10 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1806
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Grafika v C++</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Grafika v C++</H2>
+<H4>Popis grafick=E9 knihovny graphics.h, kter=E1 je standardn=ED =
+sou=E8=E1st=ED Borland=20
+C++.</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Nejd=F8=EDve bych n=ECco o t=E9 knihovn=EC =F8ekl. Je pomal=E1 a =
+hodn=EC zastaral=E1. Nechci=20
+t=EDm pomlouvat, ale prost=EC to nen=ED to prav=E9 na dne=9An=ED dobu. =
+</P>
+<P><FONT color=3D#0033cc><B>Nastaven=ED v Borland C++ 3.1</B></FONT></P>
+<P>Pokud pracujete v BORLANDovsk=E9m <B>IDE</B>, aby V=E1m fungovala =
+grafika, mus=EDte=20
+m=EDt v menu <B>Options - Linker - Libraries</B> za=9Akrtnuto vlevo =
+naho=F8e polo=9Eku=20
+<B>Graphics Library</B>, proto=9Ee grafika nen=ED standardn=ED =E8=E1st =
+c=E9=E8ka. Jinak V=E1m=20
+to bude hl=E1sit chybu "Undefined symbol a jm=E9no n=ECjak=E9 funkce". =
+Te=EF u=9E k=20
+samotn=E9mu programov=E1n=ED.</P>
+<P><FONT color=3D#0033cc><B>Prvn=ED program</B></FONT></P>
+<P>Jako prvn=ED si tady ud=ECl=E1me stejn=FD program. To znamen=E1 =
+vypsat na obrazovku=20
+"<B>Ahoj sv=ECte!</B>". Zdrojov=FD text vypad=E1 n=E1sledovn=EC:</P>
+<P><CODE><FONT face=3DCourier color=3D#000000>#include=20
+&lt;graphics.h&gt;<BR>#include &lt;stdlib.h&gt;<BR>#include=20
+&lt;stdio.h&gt;<BR>#include &lt;conio.h&gt;<BR><BR>int=20
+main(void)<BR>{<BR>&nbsp;&nbsp; /* request auto detection =
+*/<BR>&nbsp;&nbsp; int=20
+gdriver =3D DETECT, gmode, errorcode;<BR><BR>&nbsp;&nbsp; /* initialize =
+graphics=20
+and local variables */<BR>&nbsp;&nbsp; initgraph(&amp;gdriver, =
+&amp;gmode,=20
+"c:/bc/bgi");<BR><BR>&nbsp;&nbsp; /* read result of initialization=20
+*/<BR>&nbsp;&nbsp; errorcode =3D graphresult();<BR>&nbsp;&nbsp; if =
+(errorcode !=3D=20
+grOk)&nbsp; /* an error occurred */<BR>&nbsp;&nbsp;=20
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("Chyba grafiky: %s\n",=20
+grapherrormsg(errorcode));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+printf("Stiskni=20
+cokoliv pro konec...");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+getch();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit(1); /* terminate with an =
+error=20
+code */<BR>&nbsp;&nbsp; }<BR><BR>&nbsp;&nbsp; // funkce grafiky pro=20
+v=FDpis<BR>&nbsp;&nbsp; outtextxy(100, 100, "Ahoj =
+svete!");<BR><BR>&nbsp;&nbsp; /*=20
+clean up */<BR>&nbsp;&nbsp; getch();<BR>&nbsp;&nbsp;=20
+closegraph();<BR>&nbsp;&nbsp; return 0;<BR>}</FONT></CODE></P>
+<P>Jak jste si spr=E1vn=EC v=9Aimli, mus=EDme p=F8ilinkovat knihovnu =
+<B>graphics.h</B>=20
+(Jakou jinou, =9Ee?) a d=E1le ji=9E ji m=F9=9Eeme pln=EC vyu=9E=EDvat. =
+Konkr=E9tn=EC k na=9Aemu=20
+p=F8=EDkladu. V programu jsme si definovali <B>3</B> prom=ECnn=E9, a to =
+<B>gdriver</B>,=20
+<B>gmode</B>, <B>errorcode</B>. Na za=E8=E1tku jsme <B>gdriver</B> =
+inicializovali na=20
+hodnotu <B>DETECT</B>, co=9E znamen=E1, =9Ee po=9Eadujeme, aby byl =
+grafick=FD driver=20
+autodetekov=E1m.</P>
+<P>Funkce <B>initgraph</B> neud=ECl=E1 nic jin=E9ho, ne=9E =9Ee n=E1m =
+zapne po=9Eadovan=FD m=F3d.=20
+Pokud V=E1s zaj=EDmaj=ED jednotliv=E9 parametry, a jak=E9 mohou m=EDt =
+jin=E9 hodnoty,=20
+pod=EDvejte se do n=E1pov=ECdy, ale prozat=EDm vysta=E8=EDme s m=F3dem =
+<B>640 * 480</B> pixel=F9=20
+v <B>16</B> barv=E1ch. Jako v=9Edy zkontrolujeme, jestli v=9Ae =
+prob=EChlo v po=F8=E1dku, a=20
+pokud ano, m=F9=9Eeme u=9E v kl=EDdku kreslit na obrazovku.</P>
+<P><B>outtextxy</B>: Tato funkce tiskne text na zvolen=E9 sou=F8adnice. =
+Pozor,=20
+tiskne pouze text, abyste si nemysleli, =9Ee m=F9=9Eete form=E1tovat =
+=E8=EDsla jako u funkce=20
+<B>printf</B>. Pokud ale chcete n=ECco form=E1tov=E9ho p=F8eci jenom =
+vytisknout, m=F9=9Eete=20
+to lehce obej=EDt p=F8es <B>sprintf</B>.</P>
+<P>Pokra=E8ujeme na stisk kl=E1vesy a pot=E9 ud=ECl=E1me =F8=E1dn=E9 =
+ukon=E8en=ED grafiky, a to=20
+funkc=ED <B>closegraph();</B>, kter=E1 je bez parametr=F9.</P>
+<P><FONT color=3D#0033cc><B>Kresl=EDme =E8=E1ry</B></FONT></P>
+<P>Pozor na to, =9Ee pokud m=E1te m=F3d <B>640 * 480,</B> tak dovolen=E9 =
+hodnoty jsou=20
+<B>0-639</B> a <B>0-479</B>. Jako prvn=ED bych s dovolen=EDm uvedl =
+funkci line,=20
+kter=E1 m=E1, jak tomu b=FDv=E1, obvykle jako parametry <B>4</B> =
+=E8=EDsla nap=F8.:</P>
+<P><SPAN class=3Dsmallsource>line(10, 10, 200, 350); // nakresl=ED =
+=E8=E1ru nastavenou=20
+barvou</SPAN></P>
+<P>Jako druhou funkci pro kreslen=ED si uk=E1=9Eeme <B>circle</B>. Kde =
+prvn=ED dva=20
+parametry ukazuj=ED na jej=ED st=F8ed a t=F8et=ED jej=ED parametr je =
+polom=ECr kru=9Enice.=20
+V=9Aechny parametry jsou typu <B>int</B>.</P>
+<P>Nap=F8.:</P>
+<P><SPAN class=3Dsmallsource>circle(320, 240, 150);</SPAN></P>
+<P>Nakonec si d=E1me <B>rectangle</B>, ta nakresl=ED obd=E9ln=EDk a m=E1 =
+parametry=20
+<B>x1</B>, <B>y1</B>, <B>x2</B>, <B>y2</B> typu <B>int</B>.</P>
+<P>Nap=F8.:</P>
+<P><SPAN class=3Dsmallsource>rectangle(10, 10, 300, 300);</SPAN></P>
+<P>Existuj=ED dal=9A=ED funkce pro kreslen=ED, ale nebudu se v=9Aemi =
+zab=FDvat, pokud V=E1s=20
+ale zaj=EDmaj=ED, koukn=ECte do n=E1pov=ECdy. Jenom chci upozornit na =
+funkce, kter=E9 jsou=20
+odvozen=E9 od t=ECchto, nap=F8.: <B>lineto</B>, <B>linerel</B>, =
+<B>arc</B> atd.</P>
+<P><FONT color=3D#0033cc><B>M=ECn=EDme barvu</B></FONT></P>
+<P>Jako prvn=ED bych uvedl funkci setcolor, kter=E1 bere jako parametr =
+barvu. Je=20
+typu <B>int</B>, ale bere i n=E1zvy definovan=E9 v graphics.h, =
+nap=F8.:</P>
+<P><SPAN class=3Dsmallsource>setcolor(BLACK);</SPAN></P>
+<P>nebo</P>
+<P><SPAN class=3Dsmallsource>setcolor(0);</SPAN></P>
+<P>Pokud nev=EDte, jakou barvu pou=9E=EDv=E1te, existuje opak k t=E9to =
+funkci (jako k=20
+v=ECt=9Ain=EC funkc=ED), a to <B>getcolor</B>, kter=E1 vrac=ED =E8=EDslo =
+barvy.</P>
+<P><I><B>Pozn=E1mka:</B> Funkce setcolor nem=ECn=ED barvu pouze =E8ar, =
+ale k tomu se=20
+je=9At=EC dostaneme.</I></P>
+<P>P=F8=ED=9At=EC si pov=EDme v=EDce o vzorech a pop=ED=9Aeme si =
+dal=9A=ED funkce. <IMG height=3D1=20
+src=3D"" width=3D1 border=3D0></P>
+<P><FONT color=3D#0033cc><B>Kresl=EDme vypln=ECn=E9 =
+oblasti</B></FONT></P>
+<P>Doposud jsme se nau=E8ili jen kreslit =E8=E1ry r=F9zn=FDch tvar=F9 =
+(<B>kru=9Enici</B>,=20
+<B>obd=E9ln=EDk</B>, <B>=E8tverec</B>), ale nyn=ED si uk=E1=9Eeme jak =
+nakreslit obd=E9ln=EDk s=20
+pou=9Eit=EDm vzoru a barvy.</P>
+<P>Nejlep=9A=ED bude si v=9Ae vysv=ECtlit na p=F8=EDklad=EC.</P>
+<P><CODE><FONT face=3DCourier color=3D#000000>#include=20
+&lt;graphics.h&gt;<BR>#include &lt;stdlib.h&gt;<BR>#include=20
+&lt;stdio.h&gt;<BR>#include &lt;conio.h&gt;<BR><BR>int=20
+main(void)<BR>{<BR>&nbsp;&nbsp; /* request auto detection =
+*/<BR>&nbsp;&nbsp; int=20
+gdriver =3D DETECT, gmode, errorcode;<BR>&nbsp;&nbsp; char pattern[8] =
+=3D {0x00,=20
+0x70, 0x20, 0x27, 0x25, 0x27, 0x04, 0x04};<BR><BR>&nbsp;&nbsp; /* =
+initialize=20
+graphics and local variables */<BR>&nbsp;&nbsp; initgraph(&amp;gdriver,=20
+&amp;gmode, "./../bgi");<BR><BR>&nbsp;&nbsp; /* read result of =
+initialization=20
+*/<BR>&nbsp;&nbsp; errorcode =3D graphresult();<BR>&nbsp;&nbsp; if =
+(errorcode !=3D=20
+grOk)&nbsp; /* an error occurred */<BR>&nbsp;&nbsp;=20
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("Graphics error: %s\n",=20
+grapherrormsg(errorcode));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+printf("Press any=20
+key to halt:");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+getch();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit(1); /* terminate with an =
+error=20
+code */<BR>&nbsp;&nbsp; }<BR><BR>&nbsp;&nbsp; /* select a user defined =
+fill=20
+pattern */<BR>&nbsp;&nbsp; setfillpattern(pattern, =
+1);<BR><BR>&nbsp;&nbsp; /*=20
+fill the screen with the new pattern */<BR>&nbsp;&nbsp; bar(100, 100, =
+400,=20
+300);<BR><BR>&nbsp;&nbsp; /* clean up */<BR>&nbsp;&nbsp;=20
+getch();<BR>&nbsp;&nbsp; closegraph();<BR>&nbsp;&nbsp; return=20
+0;<BR>}</FONT></CODE></P>
+<P>Tento program nakresl=ED na =E8ernou obrazovku obd=E9ln=EDk se vzorem =
+ve zvolen=E9=20
+barv=EC. Je to program tro=9Ai=E8ku upraven=FD z helpu k <B>BC++ =
+3.1</B>.</P>
+<P><FONT color=3D#0033cc><B>Jak funguje bl=ED=9Ee</B></FONT></P>
+<P>Funkce <B>setfillpattern </B>bere jako 1. parametr <B>pole 8 char=F9, =
+</B>tedy=20
+na=9Ae pole <B>pattern</B>, kter=E9 nastavuje vzorek pomoc=ED bit=F9 o =
+velikosti <B>8*8=20
+pixel=F9.</B></P>
+<P>=8Aachovnici bychom nadefinovali nap=F8=EDklad takto:</P>
+<P>char sachovnice[8] =3D {<BR>&nbsp;&nbsp;&nbsp; =
+0xAA,&nbsp;&nbsp;&nbsp;&nbsp; /*=20
+10101010&nbsp;&nbsp; */<BR>&nbsp;&nbsp;&nbsp;=20
+0x55,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* 01010101&nbsp;&nbsp;=20
+*/<BR>&nbsp;&nbsp;&nbsp; 0xAA,&nbsp;&nbsp;&nbsp; /* 10101010 &nbsp;=20
+*/<BR>&nbsp;&nbsp;&nbsp; 0x55,&nbsp;&nbsp;&nbsp; &nbsp; /*=20
+01010101&nbsp;&nbsp;&nbsp; */<BR>&nbsp;&nbsp;&nbsp; =
+0xAA,&nbsp;&nbsp;&nbsp; /*=20
+10101010 &nbsp;&nbsp; */<BR>&nbsp;&nbsp;&nbsp; 0x55,&nbsp;&nbsp;&nbsp; =
+&nbsp; /*=20
+01010101&nbsp;&nbsp;&nbsp; */<BR>&nbsp;&nbsp;&nbsp; =
+0xAA,&nbsp;&nbsp;&nbsp; /*=20
+10101010 &nbsp;&nbsp; */<BR>&nbsp;&nbsp;&nbsp; =
+0x55&nbsp;&nbsp;&nbsp;&nbsp;=20
+&nbsp; /* 01010101&nbsp;&nbsp;&nbsp; */<BR>};</P>
+<P>A tento vzorek p=F8ed=E1me jako parametr funkci, d=EDky n=ECmu=9E =
+m=F9=9Eeme vykreslovat=20
+jednotliv=E9 tvary. Jako druh=FD parametr je barva vzoru. V na=9Aem =
+p=F8=EDklad=EC jsem=20
+pou=9Eil barvu =E8=EDslo jedna, tedy modrou. Funkce <B>bar</B> je skoro =
+stejn=E1 jako=20
+funkce <B>rectangle</B> s t=EDm rozd=EDlem, =9Ee nekresl=ED =
+obd=E9ln=EDk, ale=20
+<B>vypln=ECnou</B> <B>oblast</B> s pou=9Eit=EDm <B>barvy</B> a =
+p=F8=EDslu=9An=E9ho=20
+<B>vzoru</B>.</P>
+<HR SIZE=3D1>
+Autor: <B>Pavel Matou=9Aek</B>, <A=20
+href=3D"mailto:pavelmmm@seznam.cz">pavelmmm@seznam.cz</A><BR>Rubrika: =
+<B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 9:49:33 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

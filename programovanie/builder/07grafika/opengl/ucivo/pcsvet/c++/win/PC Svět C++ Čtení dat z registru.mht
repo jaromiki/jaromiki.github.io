@@ -1,0 +1,177 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_C++:_=C8ten=ED_dat_z_registru?=
+Date: Thu, 12 Jul 2007 10:15:25 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=2966
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: C++: =C8ten=ED dat z =
+registru</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>C++: =C8ten=ED dat z registru</H2>
+<H4>Jak z C++ =E8=EDst data ulo=9Een=E1 v registru Windows</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>V registru syst=E9mu Windows se nach=E1z=ED obrovsk=E9 mno=9Estv=ED =
+dat. Je to m=EDsto, kde=20
+mnoho aplikac=ED ukl=E1d=E1 sv=E1 nastaven=ED. I pro n=E1s zde najdeme =
+=F8adu zaj=EDmav=FDch=20
+=FAdaj=F9. A jak je z=EDskat pomoc=ED WINAPI funkc=ED, se dozv=EDte =
+pr=E1v=EC zde.</P>
+<P>K tomu n=E1m budou sta=E8it tyto WINAPI funkce:</P>
+<UL>
+  <LI><B>RegOpenKeyEx</B>=20
+  <LI><B>RegQueryValueEx</B>=20
+  <LI><B>RegCloseKey</B> </LI></UL>
+<P align=3Dleft>Nejl=E9pe si pou=9Eit=ED t=ECchto funkc=ED =
+vysv=ECtl=EDme na p=F8=EDklad=EC, kde je=20
+pochop=ED i m=E9n=EC zdatn=ED program=E1to=F8i. Na=9Aim c=EDlem bude =
+zji=9At=ECn=ED, kde je um=EDst=ECna=20
+slo=9Eka Program Files. Nejd=F8=EDve mus=EDme ale v=ECd=ECt, odkud tuto =
+informaci z registru=20
+zjist=EDme. Nach=E1z=ED se v tomto kl=ED=E8i:</P>
+<P=20
+align=3Dleft>&nbsp;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentV=
+ersion</P>
+<P align=3Dleft>... pod n=E1zvem ProgramFilesDir. Cel=E9 si to =
+m=F9=9Eete ov=EC=F8it. Spus=9Dte=20
+editor registru (tla=E8=EDtko Start, klikn=ECte na spustit a zadejte =
+regedit). Pak=20
+najd=ECte v=FD=9Ae zmi=F2ovan=FD kl=ED=E8 a pod n=E1zvem ProgramFilesDir =
+si m=F9=9Eete zjistit=20
+hodnotu (u mne C:\Program Files). A zde ji=9E slibovan=FD p=F8=EDklad. =
+S=E1m jsem pou=9Eil=20
+konzolovou aplikaci ve freeware v=FDvojov=E9m prost=F8ed=ED Dev-C++ (<A=20
+href=3D"http://www.bloodshed.net/">http://www.bloodshed.net/</A>).</P>
+<P><FONT face=3D"Courier New"><FONT size=3D2>#include =
+&lt;windows.h&gt;<BR>#include=20
+&lt;stdio.h&gt;<BR><BR></FONT><FONT size=3D2>int main()<BR>{<BR>&nbsp; =
+char=20
+retezec[100];<BR>&nbsp; DWORD dwBufLen;<BR>&nbsp; HKEY =
+hKey;<BR><BR>&nbsp;=20
+RegOpenKeyEx(HKEY_LOCAL_MACHINE,"Software\\Microsoft\\Windows\\CurrentVer=
+sion",=20
+0, KEY_READ, &amp;hKey );<BR><BR>&nbsp; RegQueryValueEx(hKey, =
+"ProgramFilesDir",=20
+0, NULL, (LPBYTE) retezec, &amp;dwBufLen);<BR><BR>&nbsp;=20
+RegCloseKey(hKey);<BR><BR>&nbsp; printf(retezec); <BR><BR>&nbsp; return=20
+0;<BR>}</FONT></FONT><BR></P>
+<P>V prvn=EDm parametru funkce <B>RegOpenKeyEx </B>zad=E1me prvn=ED =
+=E8=E1st kl=ED=E8e z n=ECho=9E=20
+budeme =E8=EDst. M=E1me na v=FDb=ECr:</P>
+<UL>
+  <LI>
+  <P align=3Dleft>HKEY_CLASSES_ROOT</P>
+  <LI>
+  <P align=3Dleft>HKEY_CURRENT_CONFIG</P>
+  <LI>
+  <P align=3Dleft>HKEY_CURRENT_USER</P>
+  <LI>
+  <P align=3Dleft>HKEY_LOCAL_MACHINE</P>
+  <LI>
+  <P align=3Dleft>HKEY_USERS</P>
+  <LI>
+  <P align=3Dleft>Windows NT: HKEY_PERFORMANCE_DATA </P>
+  <LI>
+  <P align=3Dleft>Windows 95, Windows 98:HKEY_DYN_DATA</P></LI></UL>
+<P>Druh=FDm parametrem dopln=EDme n=E1zev kl=ED=E8e, nezapome=F2te =
+pou=9E=EDt escape sekvenci \\=20
+pro znak \. T=F8et=ED parametr mus=ED b=FDt v=9Edy 0. Ve =E8tvrt=E9m =
+stanov=EDte, co budete=20
+cht=EDt prov=E1d=ECt. My budeme pouze =E8=EDst, sta=E8=ED n=E1m =
+KEY_READ. Pro zapisov=E1n=ED je=20
+t=F8eba p=F8idat KEY_WRITE. Kompletn=ED p=F8ehled v=9Aech mo=9Enost=ED =
+najdete v MSDN (<A=20
+href=3D"http://msdn.microsoft.com/library/"=20
+target=3D_blank>http://msdn.microsoft.com/library/</A>=20
+[http://www.bloodshed.net"&gt;http://www.bloodshed.net</A>).</P>
+<P><FONT face=3D"Courier New"><FONT size=3D2>#include =
+&lt;windows.h&gt;<BR>#include=20
+&lt;stdio.h&gt;<BR><BR></FONT><FONT size=3D2>int main()<BR>{<BR>&nbsp; =
+char=20
+retezec[100];<BR>&nbsp; DWORD dwBufLen;<BR>&nbsp; HKEY =
+hKey;<BR><BR>&nbsp;=20
+RegOpenKeyEx(HKEY_LOCAL_MACHINE,"Software\\Microsoft\\Windows\\CurrentVer=
+sion",=20
+0, KEY_READ, &amp;hKey );<BR><BR>&nbsp; RegQueryValueEx(hKey, =
+"ProgramFilesDir",=20
+0, NULL, (LPBYTE) retezec, &amp;dwBufLen);<BR><BR>&nbsp;=20
+RegCloseKey(hKey);<BR><BR>&nbsp; printf(retezec); <BR><BR>&nbsp; return=20
+0;<BR>}</FONT></FONT><BR></P>
+<P>V prvn=EDm parametru funkce <B>RegOpenKeyEx </B>zad=E1me prvn=ED =
+=E8=E1st kl=ED=E8e z n=ECho=9E=20
+budeme =E8=EDst. M=E1me na v=FDb=ECr:</P>
+<UL>
+  <LI>
+  <P align=3Dleft>HKEY_CLASSES_ROOT</P>
+  <LI>
+  <P align=3Dleft>HKEY_CURRENT_CONFIG</P>
+  <LI>
+  <P align=3Dleft>HKEY_CURRENT_USER</P>
+  <LI>
+  <P align=3Dleft>HKEY_LOCAL_MACHINE</P>
+  <LI>
+  <P align=3Dleft>HKEY_USERS</P>
+  <LI>
+  <P align=3Dleft>Windows NT: HKEY_PERFORMANCE_DATA </P>
+  <LI>
+  <P align=3Dleft>Windows 95, Windows 98:HKEY_DYN_DATA</P></LI></UL>
+<P>Druh=FDm parametrem dopln=EDme n=E1zev kl=ED=E8e, nezapome=F2te =
+pou=9E=EDt escape sekvenci \\=20
+pro znak \. T=F8et=ED parametr mus=ED b=FDt v=9Edy 0. Ve =E8tvrt=E9m =
+stanov=EDte, co budete=20
+cht=EDt prov=E1d=ECt. My budeme pouze =E8=EDst, sta=E8=ED n=E1m =
+KEY_READ. Pro zapisov=E1n=ED je=20
+t=F8eba p=F8idat KEY_WRITE. Kompletn=ED p=F8ehled v=9Aech mo=9Enost=ED =
+najdete v MSDN (<A=20
+href=3D"http://msdn.microsoft.com/library/]).%20V%20posledn=EDm%20paramet=
+ru%20v=9Ae%20toto%20ulo=9E=EDme%20do%20prom=ECnn=E9%20hKey.%3C/p%3E%3Cp%3=
+EFunkce%20%3Cb%3ERegQueryValueEx%3C/b%3E%20slou=9E=ED%20k%20p=F8e=E8ten=ED=
+%20hodnoty%20v%20kl=ED=E8i.%20Do%20prvn=EDho%20parametru%20pou=9Eijeme%20=
+na=9Ai%20prom=ECnnou%20hKey,%20kterou%20jsme%20naplnili%20v%20p=F8edchoz=ED=
+%20funkci.%20Do%20druh=E9ho%20zad=E1me%20n=E1zev%20ProgramFilesDir,%20odk=
+ud%20z=EDsk=E1me%20hodnotu%20(kde%20se%20nach=E1z=ED%20adres=E1=F8%20prog=
+ram%20files),%20kterou%20ulo=9E=EDme%20do%20prom=ECnn=E9%20retezec%20(p=E1=
+t=FD%20parametr).%20T=F8et=ED%20parametr%20mus=ED%20b=FDt%20v=9Edy%200,%2=
+0=E8tvrt=FD%20ud=E1v=E1,%20jak=FD%20typ%20dat%20budeme%20=E8=EDst%20(nap=F8=
+.%2032%20bitov=E9%20=E8=EDslo%20REG_DWORD,%20...).%20My%20ale%20v%20na=9A=
+em%20p=F8=EDpad=EC%20nepot=F8ebujeme%20definovat%20typ%20dat,%20zad=E1me%=
+20NULL.%20Do%20posledn=EDho%20ulo=9E=EDme%20velikost%20p=F8edposledn=EDho=
+%20parametru.%3C/p%3E%3Cp%3EFunkci%20%3Cb%3ERegCloseKey%3C/b%3E%20uvoln=ED=
+me%20handle%20na%20kl=ED=E8%20z%20prom=ECnn=E9%20hKey.%20A%20nakonec%20vy=
+p=ED=9Aeme%20na%20obrazovku%20pomoc=ED%20printf,%20kde%20se%20nach=E1z=ED=
+%20adres=E1=F8%20Program%20Files.%20A%20jak%20zapisovat%20do%20registru? =
+O tom p=F8=ED=9At=EC...</p><hr size=3D"=20
+target=3D_blank 1?> Autor: <B>Martin Kr=E8</B>, <A=20
+href=3D"mailto:MartinKrc@seznam.cz">MartinKrc@seznam.cz</A><BR>Rubrika: =
+<B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:14:58 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Práca s obrazovkou - conio.h</title>
+</head>
+
+<body>
+ Príkazy printf(), scanf(),... sú orientované na štandartnı vstup, resp. vıstup a môu
+ by OS presmerované. Pod DOSom existujú ešte príkazy orientované priamo na port obrazovky
+ resp. klávesnice a tieto nemôu by presmerované, ale poskytujú väèšie monosti.
+ <dl><dt><font size="+1" color="Blue">Vstup z klávesnice</font>
+ 	 <dd>Vstup z klávesnice prebieha:
+	 <br><ol>
+			<li>èíta sa zo špeciálneho 1-znakového buffra 
+			<li>èíta sa zo štandartného BIOS buffra klávesnice
+			<li>ak nie sú všetky poadovené premenné uspokojené program zastane a èaká kedy ukaním na
+				klávesnicu nenaplníme štandartnı BIOS buffer klávesnice
+		 </ol>
+		 Pozn.
+		 <br>Jedinı spôsob ako dosta znak do špeciálneho 1-znakového buffra je funkcia ungetch()
+		 <br>
+	<dl>	 
+		<dt><font color="Red">int cscanf( form_ret, zoznam_vyr)</font>
+		<dd>syntax: pozri scanf()
+		<br>ve¾kı rozdiel, je v tom, e vstup prebieha po kadom stlaèení znaku a nevyaduje enter
+			a teda po naèítaní nemusí odriadkova
+		<dt><font color="Red">int getch( void)</font>
+		<dd>funguje uplne rovnako ako readkey v pascale, len je pridanı špeciálny 1-znakovı buffer
+		<br>oproti getchar() je rozdiel v tom, e nerobí echo a nevyaduje enter 
+		<dt><font color="Red">int getche( void)</font>
+		<dd>funguje úplne rovnako ako getch, len robí echo
+		<dt><font color="Red">int kbhit( void)</font>
+		<dd>funguje úplne rovnako ako keypressed, len kontroluje aj špec. 1-znakovı buff.
+		<br>vráti 0 ak je všetko prázdne, 1 ak je èo èíta
+		<dt><font color="Red">int ungetch( void)</font>
+		<dd>vráti posledne naèítanı znak do špec. 1-znakového buffra, tento znak je èitate¾nı príkazmi
+			cscanf, getch, getche a je viditelnı cez kbhit
+			<br>Pouitie:
+			<br>Máme naèíta trojciferné èísla, ktoré nie sú nijak oddelené a ukonèené je to znakom 'K'. 
+				Ak sa pozriem, èi nie je na vstupe 'K' naèítam prvú cifru èísla a môem ju vráti spä. 
+				<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff" align="center">
+				<tr><th bgcolor="Blue" align="left"> ungetch.cpp</th></tr>
+				<tr><td>
+<code><pre>
+  #include &lt;stdio.h&gt;         
+  #include &lt;conio.h&gt;         
+  void main(void)            
+  { int cislo, pocet=0, suma=0;
+    char z;
+    //printf("%i:",pocet+1);            
+    while ((z = getch())!='K')
+      { 
+        ungetch(z);
+        cscanf("%3d",&amp;cislo);
+        suma+=cislo; pocet++;
+        //printf("\n%i:",pocet+1);   
+      }
+    printf("Pocet:%i, Suma=%i",pocet,suma);
+  }	
+</pre></code>
+				</td></tr>
+				</table>
+				<br>Po odremovaní prikazov v programe, vidíme, e príkaz cscanf naozaj ukonèí vstup po naklepaní 3 èíslic.
+				<br>V cscanf je pouité %3d a nie %3i, lebo by nebolo moné zadáva èísla zaèínajúce nulami (chápal by ich ako osmièkové)
+				<br>Jazyk pascal nám podobnú konštrukciu neumoòuje. 
+	</dl>	
+	<hr width="70%">
+	<dt><font size="+1" color="Blue">Vıstup na obrazovku</font>
+	<dd>V textovom reime je obrazovka rozdelená na 25 riadkov a 40 alebo 80 ståpcov. V kadom políèku
+		obrazovky môe by zobrazenı jeden znak. Znak môe by zobrazenı 16-timi rôznymi farbami, pozadie znaku
+		môe by tvorené jednou z ôsmich farieb, znak navyše môe blika.
+		<dl><dt><font color="Green">Ovládanie obrazovky</font>
+			<dd><dl><dt><font color="Red">void textmode( int mod)</font>
+					<dd>pre nás budú zaujímavé konštanty: C40 a C80, ktoré urèujú poèet ståpcov obrazovky 
+					<dt><font color="Red">void window( int vlavo, int dole, int vpravo, int hore)</font> 
+					<dd>parametre urèujú oblas ktorá bude urèená na vıstup, riadky i ståpce sú èíslované od 1.
+						Kadé ïalšie volanie ruší predošlé nastavenie a nastavuje nové
+				</dl>
+			<dt><font color="Green">Pozícia kurzora na obrazovke</font>
+			<dd><dl><dt><font color="Red">void gotoxy( int x, int y)</font>
+					<dd>presunie kurzor na urèené súradnice
+					<dt><font color="Red">int wherex( void)</font>
+					<dt><font color="Red">int wherey( void)</font>
+					<dd>vráti polohu kurzora na obrazovke, resp. aktívnom okne 
+				</dl>	
+			<dt><font color="Green">Farba </font>
+			<dd><dl><dt><font color="Red">void background( int color)</font>
+					<dd>povolené sú farby 0-7, urèí sa farba pozadia pre príkazy vıstupu
+					<dt><font color="Red">void textcolor( int color)</font>
+					<dd>povolené sú farby 0-15+128, urèí sa farba písma pre príkazy vıstupu
+					    pridaním 128 sa nastaví blikanie.
+				</dl>		
+			<dt><font color="Green">Mazanie textu </font>
+			<dd><dl><dt><font color="Red">void clrscr( void)</font>
+					<dd>Zotrie obrazovku, resp. aktívne okno
+					<dt><font color="Red">void clreol( void)</font>
+					<dd>Zotrie riadok od kurzora po jeho koniec
+					<dt><font color="Red">void delline( void)</font>
+					<dd>Odstráni riadok v ktorom je kurzor, na spodu vzniká prázdny riadok
+					<dt><font color="Red">void insline( void)</font>
+					<dd>Vloí riadok tam kde je kurzor, spodnı riadok vypadáva 
+				</dl>		
+			<dt><font color="Green">Vıstup na obrazovku</font>
+			<dd><dl><dt><font color="Red">int cprintf( form_ret, zoznam_vyr)</font>
+					<dd>Príkaz pracuje rovnako ako printf, len sa nedá presmerova, a rešpektuje navolenú farbu.
+					<dt><font color="Red">int cputs( reazec)</font>
+					<dd>poloí na obrazovku poadovanı reazec - podobne ako puts()
+					<dt><font color="Red">int putch( znak)</font>
+					<dd>Príkaz pracuje rovnako ako putchar, len sa nedá presmerova, a rešpektuje navolenú farbu.
+				</dl>	
+		</dl>
+	<dt>Úlohy:
+	<dd>Napíš program, ktorı:
+	<br> &nbsp; - pohybuje kurzorom pomocou kurzorovıch šipiek
+	<br> &nbsp; - stlaèením Ctrl Ins vloí na miesto kurzora novı riadok
+	<br> &nbsp; - stlaèením Ctrl Del odstráni riadok
+	<br> &nbsp; - stlaèením znaku zapíše znak na dané miesto
+	<br>Napíš semigrafickı editor:
+	<br> &nbsp; - èísla 1,2,3,4,6,7,8,9 riadia pohyb kurzora
+	<br> &nbsp; - èíslo 5 prepína pero hore-dole
+	<br> &nbsp; - èíslo 0 prepína farbu
+	<br>Napíš program na vyhodnotenie nasledovnıch vırazov: (kadı vıraz je na samostatnom riadku)
+	<br> &nbsp; - a+b=
+	<br> &nbsp; - a-b=
+	<br> &nbsp; - a*b=
+	<br> &nbsp; - a/b=
+	<br> &nbsp; vısledok program zapíše inou farbou za rovná sa. Program konèí zadaním znaku ESC na novom riadku.
+	<br>
+</dl>
+
+
+</body>
+</html>

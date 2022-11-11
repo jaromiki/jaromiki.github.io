@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Dynamické programovanie</title>
+</head>
+
+<body>
+<h2>Dynamické programovanie</h2>
+<p>Princíp dynamického programovania spoèíva v myšlienke rozdeli úlohu na podúlohy, ktoré vyriešime a potom z tıchto èiastkovıch
+úloh potom relatívne jednoducho/rıchlo nájdeme celkové riešenie. Èasto sa stretávame s úlohami, ktoré riešime tak, e najprv nájdeme
+postup/riešenie pre 2 prvky a pomocou tohoto riešenia potom urèíme riešenie pre 3 prvky, potom podobne pre pre 4 atï. Všeobecne
+mám riešenie pre n prvkov a h¾adám riešenie pre (n+1) prvkov.
+<br>Hlavnı problém je urèenie èo všetko musím vedie okrem h¾adaného vısledku pri n prvkoch, aby som jednoducho našiel riešenie pre (n+1)prvkov.
+<br>Myšlienka je teda podobná myšlienke "dôkazu matematickou indukciou" a matematickou indukciou sa èasto dá dokáza/zdôvodni správnos
+takéhoto nájdeného algoritmu. 
+</p>
+<p>Teraz to vysvetlíme na príklade h¾adania najdlhšej rastúcej nesúvislej vybratej podpostupnosti z danej postupnosti.
+<br>Postupnos budeme ma zadanú v poli, napr.<b> 5 8 9 7 6 4 2 8 1 9</b>
+<br>Najdlhšia nesúvislá podpostupnos v tomto prípade je <b>5 6 8 9</b>
+<br>Riešenie
+<br>Nech poèet prvkov v poli A je zatia¾ <b>n</b> a mám riešenia pre všetky dåky (i=1..n) zapísané v poli R 
+a teraz pridáme ïalší (n+1) prvok do po¾a A a h¾adáme riešenie pre n+1 prvkov.
+<br>Zaèneme prezera pole A od prvku 1 po n a pre všetky prvky, kde platí A[i]&lt;A[n+1] a nájdeme z nich to (A[j]) 
+kde odpovedajúci prvok v poli R[j] má najväèšiu hodnotu. 
+<br>Inak povedané, h¾adáme prvok v A[] za ktorı sa nám oplatí pripnú novı prvok (A[n+1]) aby postupnos konèiaca v A[n+1]
+bola èo najväèšia.  Do R[n+1] potom zapíšeme R[j]+1. Ak iadny prvok v A[i] i=1..n nie je menší ako A[n+1], tak do R[n+1] zapíšeme 1.
+<br>Ukáem, ako to bude pre n=7, pridáva budeme prvok 8
+<br>pole A = 5 8 9 7 6 4 2
+<br>pole R = 1 2 3 2 2 1 1
+<br>vidíme, e sa oplatí pripnú za A[5]==6 a teda do R[n+1] zapíšeme 2+1.
+<br>Nájdenı algoritmus je triedy O(n^2) a vieme ním teda rieši úlohu pre n<= niekoåko tisíc
+<br>Pre poriadok, treba poveda, e tento algoritmus mono vylepši na triedu O(n*ln n), èo umoní rieši aj pre n = nieko¾ko stotisíc
+<br>Pôvodnı popísanı algoritmus musí pri pridaní (n+1) prvku preh¾adáva n prvkov aby našiel prijate¾né maximum v poli R[].
+    Teraz popíšem ako tento problém obís. 
+<ol><li>Vytvoríme pole P[], kde budú prvky pola A[] poukladané pod¾a ve¾kosti. 
+        V poli P bude na i-tej pozícii najmenšie A[i] také, e v A[i] konèí postupnos dåky i 
+        <br>Tu ukaem ako sa bude menit pole P
+        <table cellpadding=5 rules=all frame=Box>
+        <tr><th>n<th>P<th>A[n]</tr> 
+        <tr><td>1<td>5<td>5</tr> 
+        <tr><td>2<td>5 8<td>8</tr> 
+        <tr><td>3<td>5 8 9<td>9</tr> 
+        <tr><td>4<td>5 7 9<td>7</tr> 
+        <tr><td>5<td>5 6 9<td>6</tr> 
+        <tr><td>6<td>4 6 9<td>4</tr> 
+        <tr><td>7<td>2 6 9<td>2</tr> 
+        <tr><td>8<td>2 6 8<td>8</tr> 
+        <tr><td>9<td>1 6 8<td>1</tr> 
+        <tr><td>10<td>1 6 8 9<td>9</tr> 
+        </table>
+        V poli P teda pridavanı prvok pripíšeme (ak je najväèší), alebo prepíše prvú väèšiu hodnotu
+    <li>Pole R[] bude ma rovnakú funkciu ako v predošlom postupe
+</ol>     
+Postup: 
+<ol>
+<li>(nech n prvkov u máme spracovanıch a ideme na (n+1)-vı prvok, nech v P[] u máme m èísel)
+<li>Ak A[n+1]>P[m] tak P[m++]=A[n+1] a R[n+1]=m, èím sa poèet èísel v poli P[] zväèšil o 1
+<li>inak v poli P[] nájdeme najmenšie väèšie ako A[n+1] (nech je na pozícii k) 
+    nako¾ko P je stále utriedené vieme to urobi v O(ln m) 
+    <br>potom P[k]=A[n+1] a R[n+1]=k (v tomto prípade poèet prvkov v poli P sa nemení)
+<li>Po pridaní všetkıch prvkov vieme hneï urèi poèet èlenov rastúcej postupnosti (m)
+    <br>ak chceme vymenova tieto prvky, urobíme to spätnım chodom
+    <br>- nájdem prvé èíslo m v poli R (napr. R[k]) a vypíšem A[k]
+    <br>- h¾adám (m-1) od indexu k klesajúco aby A[i] bolo < A[k] atï
+<li>Z postupu je zrejme, e ak nepotrebujeme vypisova nájdene prvky postupnosti, tak pole R[] ani nepotrebujeme
+</ol>
+<h3>Príklady na riešenie</h3>  
+<ul>	<li>problém alkoholu - na polici sú flaše s rôznym mnostvom alkoholu/tekutiny (xi), chceme vypit èo najviac
+		<br>flašky sú reprezentované po¾om s n nezápornımi èíslami
+		<br>pravidlá pitia
+		<br>1. zobranú f¾ašu musíme vypi dodna a vráti naspä
+		<br>2. flaše nesmieme prehadzova
+		<br>3. po ukonèení pitia nesmú zosta dve prázdne flaše ved¾a seba
+		<br>4. zistite aké najväèšie mnostvo tekutiny sa dá vypi pri dodraní tıchto pravidiel
+		<br>5. vypíšte vypité flaše nášho riešenia
+		<br><input type="Button"  value="Pomoc" onclick="alert('Vytvorím polia ANO[], NIE[]\nv ANO[i] bude zapísané max. mnozstvo tekutiny, pri podmienke, ze i-tu flasu vypijem\nv NIE[i] bude zapísané max. mnozstvo tekutiny, pri podmienke, ze i-tu flasu nevypijem')">
+	<li>Problém domina
+		<br>Dominá majú dve èísla horné Hi a dolné Di a sú pokladané za sebou. Rozdiel súètu hornıch a dolnıch 
+		oznaème R. Ko¾ko minimálne domín treba otoèi aby 
+		<br>- rozdiel bol minimálny
+		<br>- rozdiel bol =K (dané)
+                <br>- predpokladajme však, e RozdielMax-Rozdielmin<10^5 a n<1000
+                <br>(jasné, e skontrolova všetky monosti je varianta len pre malé n (2^n))
+		<br><input type="Button"  value="Pomoc" onclick="alert('Vytvorim si pole Vstup[], kde bude Hi-Di\npole Sucty[], kde na indexe i bude >0 ak sa danı súèet dá dosiahnu i sèítancami\nlineárny zoznam P, kde budem pridáva moné súèty\nnové èíslo prièítam/odèítam ku všetkım èíslam v P ak v Sucty[NOVE]>0 tak NOVE pridam do P a nastavím Sucty[NOVE]')">
+</ul>
+Doteraz sme pracovali len s jednorozmernımi poliami, niekedy úloha vedie ku dvojrozmernım poliam
+<ul>
+	<li>Majme dané dve postupnosti zapísané v poliach
+		<br>A[] poèet n
+		<br>B[] poèet m
+		<br>h¾adáme najdlhšie rovnaké nesúvislé podpostupnosti z po¾a A,B 
+		<br><input type="Button"  value="Pomoc-a" onclick="alert('Vytvoríme pole V[n][m], kde V[i][j] je dåka max. rovnakej podpostupnosti, kde A má len i prvkov a B má len j prvkov ')">
+	<li>problém palindróm - Máme danı text dåky n  v poli A[], ko¾ko písmen musíme z textu odobra aby sme získali palindróm
+		<br><input type="Button"  value="Pomoc-a" onclick="alert('¾ahko zistíme, e úlohu mono transformova na predošlú')">
+<li>najkratšia cesta - v rovine je zadanı štart a cie¾ - leia na osi x
+		<br>ïalej steny - medzi štartom a cie¾om zvislé úseèky, kolmé na os	x
+<li>Máme danú mapu v tvare obdånika a x b. (1< a,b <1000). Kadı štvorèek má zadanú vlastnos ANO/NIE môe/nomôe sa na òom stava. 
+		Našou úlohou je postavi èo najväèšiu pyramídu so štvorcovou podstavou prièom hrany podstavy môu by len vodorovné a zvislé 
+               (pyramída z náboenskıch dôvodov nemôe stá šikmo). Na vstupe máme zadanú mapu ('.' ==ANO, 'x'==NIE) 
+		<ul><li>Nájdite plochu najväèšej  pyramídy, ktorá sa na pozemku dá postavi
+		    <li>Urète polohu tejto pyramídy (¾avı hornı roh)
+		</ul> 
+	
+<li >Problém batohu
+			<br>Do batohu o objeme V chceme zobra veci z vıberu N vecí, o objeme Vi a cene Ci.
+			<br>Èo poradíte aby náklad bol èo najdrahší
+	<li>Ko¾ko postupností tvorenıch len 0 a 1 a nemajúcich za sebou 2 (k) núl môme vytvori
+	<li>problém testovania mobilov - máme k dispozícii k - mobilov a n-poschodovı dom.
+		<br>Na ko¾ko pokusov nájdeme poschodie, kde sa mobil u rozbije		
+</ul>	</ul>			
+</p>		 
+
+</body>
+</html>

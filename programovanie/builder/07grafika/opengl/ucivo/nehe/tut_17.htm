@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 17 - 2D fonty z textur</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_17.jpg" class="nehe_maly" alt="Lekce 17" />
+
+<h1>Lekce 17 - 2D fonty z textur</h1>
+
+<p class="nadpis_clanku">V této lekci se naučíte, jak vykreslit font pomocí texturou omapovaného obdélníku. Dozvíte se také, jak používat pixely místo jednotek. I když nemáte rádi mapování 2D znaků, najdete zde spoustu nových informací o OpenGL.</p>
+
+<p>Tuším, že už vás asi fonty unavují. Textové lekce vás, nicméně nenaučili jenom "něco vypsat na monitor", naučili jste se také 3D fonty, mapování textur na cokoli a spoustu dalších věcí. Nicméně, co se stane pokud budete kompilovat projekt pro platformu, která nepodporuje fonty? Podíváte se do lekce 17... Pokud si pamatujete na první lekci o fontech (13), tak jsem tam vysvětloval používání textur pro vykreslování znaků na obrazovku. Obyčejně, když používáte textury ke kreslení textu na obrazovku, spustíte grafický program, zvolíte font, napíšete znaky, uložíte bitmapu a "loadujete" ji do svého programu. Tento postup není zrovna efektivní pro program, ve kterém používáte hodně textů nebo texty, které se neustále mění. Ale jak to udělat lépe? Program v této lekci používá pouze JEDNU! texturu. Každý znak na tomto obrázku bude zabírat 16x16 pixelů. Bitmapa tedy celkem zabírá čtverec o straně 256 bodů (16*16=256) - standardní velikost. Takže... pojďme vytvořit 2D font z textury. Jako obyčejně, i tentokrát rozvíjíme první lekci.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+<p></p>
+<p class="src0">GLuint base;<span class="kom">// Ukazatel na první z display listů pro font</span></p>
+<p class="src0">GLuint texture[2];<span class="kom">// Ukládá textury</span></p>
+<p class="src0">GLuint loop;<span class="kom">// Pomocná pro cykly</span></p>
+<p></p>
+<p class="src0">GLfloat cnt1;<span class="kom">// Čítač 1 pro pohyb a barvu textu</span></p>
+<p class="src0">GLfloat cnt2;<span class="kom">// Čítač 2 pro pohyb a barvu textu</span></p>
+
+<p>Následující kód je trochu odlišný, od toho z předchozích lekcí. Všimněte si, že TextureImage[] ukládá dva záznamy o obrázcích. Je velmi důležité zdvojit paměťové místo a loading. Jedno špatné číslo by mohlo zplodí přetečení paměti nebo totální error.</p>
+
+<p class="src0">int LoadGLTextures()<span class="kom">// Nahraje bitmapu a konvertuje na texturu </span></p>
+<p class="src0">{</p>
+<p class="src1">int Status=FALSE;<span class="kom">// Indikuje chyby</span></p>
+<p class="src1">AUX_RGBImageRec *TextureImage[2];<span class="kom">// Alokuje místo pro bitmapy</span></p>
+
+<p>Pokud byste zaměnili číslo 2 za jakékoli jiné, budou se dít věci. Vždy se musí rovnat číslu z předchozí řádky (tedy v TextureImage[] ). Textury, které chceme nahrát se jmenují font.bmp a bumps.bmp. Tu druhou můžete zaměnit - není až tak podstatná.</p>
+
+<p class="src1">memset(TextureImage,0,sizeof(void *)*2);<span class="kom">// Nastaví ukazatel na NULL</span></p>
+<p></p>
+<p class="src1">if ((TextureImage[0]=LoadBMP(&quot;Data/Font.bmp&quot;)) &amp;&amp; (TextureImage[1]=LoadBMP(&quot;Data/Bumps.bmp&quot;)))</p>
+<p class="src1">{</p>
+<p class="src2">Status=TRUE;<span class="kom">// Nastaví status na TRUE</span></p>
+
+<p>Nebudu vám ani říkat kolik emailů jsem obdržel od lidí ptajících se: "Proč vidím jenom jednu texturu?" nebo "Proč jsou všechny moje textury bílé!?!". Většinou bývá problém v tomto řádku. Opět pokud přepíšete 2 na 1, bude vidět jenom jedna textura (druhá bude bílá). A naopak, zaměníte-li 2 za 3, program se zhroutí. Příkaz glGenTextures() by se měl volat jenom jednou a tímto jedním voláním vytvořit najednou všechny textury, které hodláte použít. Už jsem viděl lidi, kteří tvořili každou texturu zvlášť. Je dobré, si vždy na začátku rozmyslet, kolik jich budete používat.</p>
+
+<p class="src2">glGenTextures(2, &amp;texture[0]);<span class="kom">// 2 textury</span></p>
+<p class="src2"></p>
+<p class="src2">for (loop=0; loop&lt;2; loop++)</p>
+<p class="src2">{</p>
+<p class="src3">glBindTexture(GL_TEXTURE_2D, texture[loop]);</p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);</p>
+<p class="src3">glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);</p>
+<p class="src3">glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[loop]-&gt;sizeX, TextureImage[loop]-&gt;sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[loop]-&gt;data);</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+
+<p>Na konci funkce uvolníme všechnu paměť, kterou jsme alokovali pro vytvoření textur. I zde si všimněte uvolňování dvou záznamů.</p>
+
+<p class="src1">for (loop=0; loop&lt;2; loop++)</p>
+<p class="src1">{</p>
+<p class="src2">if (TextureImage[loop])<span class="kom">// Pokud obrázek existuje</span></p>
+<p class="src2">{</p>
+<p class="src3">if (TextureImage[loop]-&gt;data)<span class="kom">// Pokud existují data obrázku</span></p>
+<p class="src3">{</p>
+<p class="src4">free(TextureImage[loop]-&gt;data);<span class="kom">// Uvolní paměť obrázku</span></p>
+<p class="src3">}</p>
+<p class="src3">free(TextureImage[loop]);<span class="kom">// Uvolní strukturu obrázku</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src1">return Status;</p>
+<p class="src0">}</p>
+
+<p>Teď vytvoříme font. Protože použijeme trochu matematiky, zaběhneme trochu do detailů.</p>
+
+<p class="src0">GLvoid BuildFont(GLvoid)<span class="kom">// Vytvoření display listů fontu</span></p>
+<p class="src0">{</p>
+
+<p>Jak už plyne z názvu, budou proměnné použity k určení pozice, každého znaku na textuře fontu.</p>
+
+<p class="src1">float cx;<span class="kom">// Koordináty x</span></p>
+<p class="src1">float cy;<span class="kom">// Koordináty y</span></p>
+
+<p>Dále řekneme OpenGL, že chceme vytvořit 256 display listů. "base" ukazuje na první display list. Potom vybereme texturu.</p>
+
+<p class="src1">base=glGenLists(256);<span class="kom">// 256 display listů</span></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Výběr textury</span></p>
+
+<p>Začneme cyklus generující všech 256 znaků.</p>
+
+<p class="src1">for (loop=0; loop&lt;256; loop++)<span class="kom">// Vytváří 256 display listů</span></p>
+<p class="src1">{</p>
+
+<p>První řádka může vypadat trochu nejasně. Symbol % vyjadřuje celočíselný zbytek po dělení 16. Pomocí cx se budeme přesunovat na textuře po řádcích (zleva doprava), cy zajišťuje pohyb ve sloupcích (od shora dolů). Dalších operace "/16.0f" konvertuje výsledek do koordinátů textury. Pokud bude loop rovno 16 - cx bude rovno zbytku z 16/16 tedy nule (16/16=1 zbytek 0). Ale cy bude výsledkem "normálního" dělení - 16/16=1. Dále bychom se tedy měli na textuře přesunout na dalších řádek, dolů o výšku jednoho znaku a přesunovat se opět zleva doprava. loop se tedy rovná 17, cx=17/16=1,0625. Desetinná část (0,0625) je vlastně rovna jedné šestnáctině. Z toho plyne, že jsme se přesunuli o jeden znak doprava. cy je stále jedna (viz. dále). 18/16 udává posun o 2 znaky doprava a jeden znak dolů. Analogicky se dostaneme k loop=32. cx bude rovno 0 (32/16=2 zbytek 0). cy=2, tím se na textuře posuneme o dva znaky dolů. Dává to smysl? (Pozn. překladatele: Já bych asi použil vnořený cyklus - vnějším jít po sloupcích a vnitřním po řádcích. Bylo by to možná pochopitelnější (...a hlavně snadnější na překlad :-))</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_17_font.gif" width="256" height="256" alt="Textura fontu" /></div>
+
+<p class="src2">cx=float(loop%16)/16.0f;<span class="kom">// X pozice aktuálního znaku</span></p>
+<p class="src2">cy=float(loop/16)/16.0f;<span class="kom">// Y pozice aktuálního znaku</span></p>
+
+<p>Teď, po troše matematického vysvětlování, začneme vytvářet 2D font. Pomocí cx a cy vyjmeme každý znak z textury fontu. Přičteme loop k hodnotě base - aby se znaky nepřepisovaly ukládáním vždy do prvního. Každý znak se uloží do vlastního display listu.</p>
+
+<p class="src2">glNewList(base+loop,GL_COMPILE);<span class="kom">// Vytvoření display listu</span></p>
+
+<p>Po zvolení display listu do něj nakreslíme obdélník otexturovaný znakem.</p>
+
+<p class="src3">glBegin(GL_QUADS);<span class="kom">// Pro každý znak jeden obdélník</span></p>
+
+<p>Cx a cy jsou schopny uložit velmi malou desetinnou hodnotu. Pokud cx a zároveň cy budou 0, tak bude příkaz vypadat takto: glTexCoord2f(0.0f,1-0.0f-0.0625f); Pamatujte si, že 0,0625 je přesně 1/16 naší textury nebo šířka/výška jednoho znaku. Koordináty mohou ukazovat na levý dolní roh naší textury. Všimněte si, že používáme glVertex2i(x,y) namísto glVertex3f(x,y,z). Nebudeme potřebovat hodnotu z, protože pracujeme s 2D fontem. Protože používáme kolnou projekci (ortho), nemusíme se přesunout do hloubky - stačí tedy pouze x, y. Okno má velikost 0-639 a 0-479 (640x480) pixelů, tudíž nemusíme používat desetinné nebo dokonce záporné hodnoty. Cesta jak nastavit ortho obraz je určit 0, 0 jako levý dolní roh a 640, 480 jako pravý horní roh. Zjednodušeně řečeno: zbavili jsme se záporných koordinátů. Užitečná věc, pro lidi, kteří se nechtějí starat o perspektivu, a kteří více preferují práci s pixely než s jednotkami :)</p>
+
+<p class="src4">glTexCoord2f(cx,1-cy-0.0625f); glVertex2i(0,0);<span class="kom">// Levý dolní</span></p>
+
+<p>Druhý koordinát je teď posunut o 1/16 doprava (šířka znaku) - přičteme k x-ové hodnotě 0,0625f.</p>
+
+<p class="src4">glTexCoord2f(cx+0.0625f,1-cy-0.0625f); glVertex2i(16,0);<span class="kom">// Pravý dolní</span></p>
+
+<p>Třetí koordinát zůstává vpravo, ale přesunul se nahoru (o výšku znaku).</p>
+
+<p class="src4">glTexCoord2f(cx+0.0625f,1-cy); glVertex2i(16,16);<span class="kom">// Pravý horní</span></p>
+
+<p>Určíme levý horní roh znaku.</p>
+
+<p class="src4">glTexCoord2f(cx,1-cy); glVertex2i(0,16);<span class="kom">// Levý horní</span></p>
+<p></p>
+<p class="src3">glEnd();<span class="kom">// Konec znaku</span></p>
+
+
+<p>Přesuneme se o 10 pixelů doprava, tím se umístíme doprava od právě nakreslené textury. Pokud bychom se nepřesunuli, všechny znaky by se nakupily na jedno místo. Protože je font trošku "hubenější" (užší), nepřesuneme se o celých 16 pixelů (šířku znaku), ale pouze o 10. Mezi jednotlivými písmeny by byly velké mezery.</p>
+
+<p class="src3">glTranslated(10,0,0);<span class="kom">// Přesun na pravou stranu znaku</span></p>
+<p></p>
+<p class="src2">glEndList();<span class="kom">// Konec kreslení display listu</span></p>
+<p></p>
+<p class="src1">}<span class="kom">// Cyklus pokračuje dokud se nevytvoří všech 256 znaků</span></p>
+<p class="src0">}</p>
+
+<p>Opět přidáme kód pro uvolnění všech 256 display listů znaku. Provede se při ukončování programu.</p>
+
+<p class="src0">GLvoid KillFont(GLvoid)<span class="kom">// Uvolní paměť fontu</span></p>
+<p class="src0">{</p>
+<p class="src1">glDeleteLists(base,256);<span class="kom">// Smaže 256 display listů</span></p>
+<p class="src0">}</p>
+
+<p>V následující funkci se provádí výstup textu. Všechno je pro vás nové, tudíž vysvětlím každou řádku hodně podrobně. Do tohoto kódu by mohla být přidána spousta dalších funkcí, jako je podpora proměnných, zvětšování znaků, rozestupy ap. Funkci glPrint() předáváme tři parametry. První a druhý je pozice textu v okně (u Y je nula dole!), třetí je žádaný řetězec a poslední je znaková sada. Podívejte se na bitmapu fontu. Jsou tam dvě rozdílené znakové sady (v tomto případě je první obyčejná - 0, druhá kurzívou - cokoli jiného).</p>
+
+<p class="src0">GLvoid glPrint(GLint x, GLint y, char *string, int set)<span class="kom">// Provádí výpis textu</span></p>
+<p class="src0">{</p>
+
+<p>Napřed se ujistíme, zda je set buď 1 nebo 0. Pokud je větší než 1, přiřadíme jí 0. (Pozn. překladatele: Autor asi zapomněl na častou obranu uživatelů při zhroucení programu: "Ne určitě jsem tam nezadal záporné číslo!" :-)</p>
+
+<p class="src1">if (set&gt;1)</p>
+<p class="src1">{</p>
+<p class="src2">set=1;</p>
+<p class="src1">}</p>
+
+<p>Protože je možné, že máme před spuštěním funkce vybranou (na tomto místě) "randomovou" texturu, zvolíme tu "fontovou".</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Výběr textury</span></p>
+
+<p>Vypneme hloubkové textování - blending vypadá lépe (text by mohl skončit za nějakým objektem, nemusí vypadat správně...). Okolí textu vám nemusí vadit, když používáte černé pozadí.</p>
+
+<p class="src1">glDisable(GL_DEPTH_TEST);<span class="kom">// Vypne hloubkové testování</span></p>
+
+<p>Hodně důležitá věc! Zvolíme projekční matici (Projection Matrix) a příkazem glPushMatrix() ji uložíme (něco jako paměť na kalkulačce). Do původního stavu ji můžeme obnovit voláním glPopMatrix() (viz. dále).</p>
+
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Vybere projekční matici</span></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uloží projekční matici</span></p>
+
+<p>Poté, co byla projekční matice uložena, resetujeme matici a nastavíme ji pro kolmou projekci (Ortho screen). Parametry mají význam ořezávacích rovin (v pořadí): levá, pravá, dolní, horní, nejbližší, nejvzdálenější. Levou stranu bychom mohli určit na -640, ale proč pracovat se zápornými čísly? Je moudré nastavit tyto hodnoty, abyste si zvolili meze (rozlišení), ve kterých právě pracujete.</p>
+
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glOrtho(0,640,0,480,-1,1);<span class="kom">// Nastavení kolmé projekce</span></p>
+
+<p>Teď určíme matici modelview a opět voláním glPushMatrix() uložíme stávající nastavení. Poté resetujeme matici modelview, takže budeme moci pracovat s kolmou projekcí.</p>
+
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Výběr matice</span></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uložení matice</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>S uloženými nastaveními pro perspektivu a kolmou projekci, můžeme začít vykreslovat text. Začneme translací na místo, kam ho chceme vykreslit. Místo glTranslatef() použijeme glTranslated(), protože není důležitá desetinná hodnota. Nelze určit půlku pixelu :-) (Pozn. překladatele: Tady bude asi jeden totálně velký error, jelikož glTranslated() pracuje v přesnosti double, tedy ještě ve větší - nicméně stane se. (Alespoň, že víme o co jde :-). Jo, ten smajlík u půlky pixelu byl i v původní verzi.)</p>
+
+<p class="src1">glTranslated(x,y,0);<span class="kom">// Pozice textu (0,0 - levá dolní)</span></p>
+
+<p>Řádek níže určí znakovou sadu. Při použití druhé přičteme 128 k display listu base (128 je polovina z 256 znaků). Přičtením 128 "přeskočíme" prvních 128 znaků.</p>
+
+<p class="src1">glListBase(base-32+(128*set));<span class="kom">// Zvolí znakovou sadu (0 nebo 1)</span></p>
+
+<p>Zbývá vykreslení. Jako pokaždé v minulých lekcích to provedeme i zde voláním glCallLists(). strlen(string) je délka řetězce (ve znacích), GL_BYTE znamená, že každý znak je reprezentován bytem (hodnoty 0 až 255). Nakonec, ve string předáváme konkrétní text pro vykreslení.</p>
+
+<p class="src1">glCallLists(strlen(string),GL_BYTE,string);<span class="kom">// Vykreslení textu na obrazovku</span></p>
+
+<p>Obnovíme perspektivní pohled. Zvolíme projekční matici a použijeme glPopMatrix() k odvolání se na dříve uložená (glPushMatrix()) nastavení.</p>
+
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Výběr projekční matice</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení uložené projekční matice</span></p>
+
+<p>Zvolíme matice modelview a uděláme to samé jako před chvílí.</p>
+
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Výběr matice modelview</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení uložené modelview matice</span></p>
+
+<p>Povolíme hloubkové testování. Pokud jste ho na začátku nevypínali, tak tuto řádku nepotřebujete.</p>
+
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne hloubkové testování</span></p>
+<p class="src0">}</p>
+
+<p>Vytvoříme textury a display listy. Pokud se něco nepovede vrátíme false. Tím program zjistí, že vznikl error a ukončí se.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechno nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Nahraje textury</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">BuildFont();<span class="kom">// Vytvoří font</span></p>
+
+<p>Následují obvyklé nastavení OpenGL.</p>
+
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.0f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ hloubkového testování</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA,GL_ONE);<span class="kom">// Vybere typ blendingu</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Povolí jemné stínování</span></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování 2D textur</span></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Začneme kreslit scénu - na začátku stvoříme 3D objekt a až potom text. Důvod proč jsem se rozhodl přidat 3D objekt je prostý: chci demonstrovat současné použití perspektivní i kolmé projekce v jednom programu.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>Zvolíme texturu vytvořenou z bumps.bmp, přesuneme se o pět jednotek dovnitř a provedeme rotaci o 45° na ose Z. Toto pootočení po směru hodinových ručiček vyvolá dojem diamantu a ne dvou čtverců.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[1]);<span class="kom">// Výběr textury</span></p>
+<p class="src1">glTranslatef(0.0f,0.0f,-5.0f);<span class="kom">// Přesun o pět do obrazovky</span></p>
+<p class="src1">glRotatef(45.0f, 0.0f,0.0f,1.0f);<span class="kom">// Rotace o 45° po směru hodinových ručiček na ose z</span></p>
+
+<p>Provedeme další rotaci na osách X a Y, která je závislá na proměnné cnt1*30. Má za následek otáčení objektu dokola, stejně jako se otáčí diamant na jednom místě.</p>
+
+<p class="src1">glRotatef(cnt1*30.0f,1.0f,1.0f,0.0f);<span class="kom">// Rotace na osách x a y</span></p>
+
+<p>Protože chceme aby se jevil jako pevný, vypneme blending a nastavíme bílou barvu. Vykreslíme texturou namapovaný čtyřúhelník.</p>
+
+<p class="src1">glDisable(GL_BLEND);<span class="kom">// Vypnutí blendingu</span></p>
+<p class="src1">glColor3f(1.0f,1.0f,1.0f);<span class="kom">// Bílá barva</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníku</span></p>
+<p class="src2">glTexCoord2d(0.0f,0.0f);</p>
+<p class="src2">glVertex2f(-1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2d(1.0f,0.0f);</p>
+<p class="src2">glVertex2f( 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2d(1.0f,1.0f);</p>
+<p class="src2">glVertex2f( 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2d(0.0f,1.0f);</p>
+<p class="src2">glVertex2f(-1.0f,-1.0f);</p>
+<p class="src1">glEnd();<span class="kom">// Konec obdélníku</span></p>
+
+<p>Dále provedeme rotaci o 90° na osách X a Y. Opět vykreslíme čtyřúhelník. Tento nový uprostřed protíná prvně kreslený a je na něj kolmý (90°). Hezký souměrný tvar.</p>
+
+<p class="src1">glRotatef(90.0f,1.0f,1.0f,0.0f);<span class="kom">// Rotace na osách X a Y o 90°</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníku</span></p>
+<p class="src2">glTexCoord2d(0.0f,0.0f);</p>
+<p class="src2">glVertex2f(-1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2d(1.0f,0.0f);</p>
+<p class="src2">glVertex2f( 1.0f, 1.0f);</p>
+<p class="src2">glTexCoord2d(1.0f,1.0f);</p>
+<p class="src2">glVertex2f( 1.0f,-1.0f);</p>
+<p class="src2">glTexCoord2d(0.0f,1.0f);</p>
+<p class="src2">glVertex2f(-1.0f,-1.0f);</p>
+<p class="src1">glEnd();<span class="kom">// Konec obdélníku</span></p>
+
+<p>Zapneme blending a začneme vypisovat text. Použijeme stejné pulzování barev jako v některých minulých lekcích.</p>
+
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapnutí blendingu</span></p>
+<p class="src1"></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Změna barvy založená na pozici textu</span></p>
+<p class="src1">glColor3f(1.0f*float(cos(cnt1)),1.0f*float(sin(cnt2)),1.0f-0.5f*float(cos(cnt1+cnt2)));</p>
+
+<p>Pro vykreslení stále využíváme funkci glPrint(). Prvními parametry jsou x-ová a Y-ová souřadnice, třetí atribut, "NeHe", bude výstupem a poslední určuje znakovou sadu (0-normální, 1-kurzíva). Asi jste si domysleli, že textem pohybujeme pomocí sinů a kosinů. Pokud jste tak trochu "v pasti", vraťte se do minulých lekcí, ale není podmínkou tomu až tak rozumět.</p>
+
+<p class="src1">glPrint(int((280+250*cos(cnt1))),int(235+200*sin(cnt2)),&quot;NeHe&quot;,0);<span class="kom">// Vypíše text</span></p>
+<p></p>
+<p class="src1">glColor3f(1.0f*float(sin(cnt2)),1.0f-0.5f*float(cos(cnt1+cnt2)),1.0f*float(cos(cnt1)));</p>
+<p></p>
+<p class="src1">glPrint(int((280+230*cos(cnt2))),int(235+200*sin(cnt1)),&quot;OpenGL&quot;,1);<span class="kom">// Vypíše text</span></p>
+
+<p>Nastavíme barvu na modrou a na spodní část okna napíšeme jméno autora této lekce. Celé to zopakujeme s bílou barvou a posunutím o dva pixely doprava - jednoduchý stín (není-li zapnutý blending nebude to fungovat).</p>
+
+<p class="src1">glColor3f(0.0f,0.0f,1.0f);<span class="kom">// Modrá barva</span></p>
+<p class="src1">glPrint(int(240+200*cos((cnt2+cnt1)/5)),2,&quot;Giuseppe D'Agata&quot;,0);<span class="kom">// Vypíše text</span></p>
+<p></p>
+<p class="src1">glColor3f(1.0f,1.0f,1.0f);<span class="kom">// Bílá barva</span></p>
+<p class="src1">glPrint(int(242+200*cos((cnt2+cnt1)/5)),2,&quot;Giuseppe D'Agata&quot;,0);<span class="kom">// Vypíše text</span></p>
+
+<p>Inkrementujeme čítače - text se bude pohybovat a objekt rotovat.</p>
+
+
+<p class="src1">cnt1+=0.01f;</p>
+<p class="src1">cnt2+=0.0081f;</p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Myslím, že teď mohu oficiálně prohlásit, že moje tutoriály nyní vysvětlují všechny možné cesty k vykreslení textu. Kód z této lekce může být použit na jakékoli platformě, na které funguje OpenGL, je snadný k používání. Vykreslování tímto způsobem &quot;užírá&quot; velmi málo procesorového času. Rád bych poděkoval Guiseppu D'Agatovi za originální verzi této lekce. Hodně jsem ji upravil a konvertoval na nový základní kód, ale bez něj bych to asi nesvedl. Jeho verze má trochu více možností, jako vzdálenost znaků apod., ale já jsem zase stvořil &quot;extrémně skvělý 3D objekt&quot;. </p>
+
+<p class="autor">napsal: Giuseppe D'Agata <span class="transform_email">&lt;waveform (zavináč) tiscalinet.it&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson17.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson17_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson17.zip">C#</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson17.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson17.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson17.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson17.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson17.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson17.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson17.tar.gz">Irix / GLUT</a> kód této lekce. ( <a href="mailto:rpf1@york.ac.uk">Rob Fletcher</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson17.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson17.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson17.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson17.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson17.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson17.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson17.zip">MASM</a> kód této lekce. ( <a href="mailto:greg@ozducati.com">Greg Helps</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson17.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson17.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:rosscogl@email.com">Ross Dawson</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson17.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_17_big.jpg" class="nehe_velky" alt="Lekce 17" /></div>
+<p class="okolni_lekce"><a href="tut_16.php">&lt;&lt;&lt; Lekce 16</a> | <a href="tut_18.php">Lekce 18 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Adam</div>
+<div class="d_o_datumcas">05.02.2005 - 13:14:49</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_17.php&j=0">Čeština</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Adam</div>
+<div class="d_o_datumcas">07.02.2005 - 12:08:34</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_17.php&j=1">Re: Čeština</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.02.2005 - 14:58:22</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_17.php&j=2">Re: Pruhledne pozadi</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">JudoVana</div>
+<div class="d_o_datumcas">04.04.2007 - 17:39:54</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_17.php&j=8">Re: Čeština</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">20.08.2005 - 08:37:04</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_17.php&j=3">TEXTURE všechno nebo nic</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">20.08.2005 - 10:03:07</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_17.php&j=4">Re: TEXTURE všechno nebo nic</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">20.08.2005 - 10:56:08</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_17.php&j=5">Re: TEXTURE všechno nebo nic</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">ssil</div>
+<div class="d_o_datumcas">20.08.2005 - 14:02:23</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_17.php&j=6">Proměnná</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">20.08.2005 - 15:08:13</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_17.php&j=7">Re: Proměnná</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_17.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

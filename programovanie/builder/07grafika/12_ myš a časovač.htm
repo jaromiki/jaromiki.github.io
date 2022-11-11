@@ -1,0 +1,1094 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0036)http://www.delphi.input.sk/pz12.html -->
+<HTML><HEAD><TITLE>12. Myš a časovač</TITLE>
+<META http-equiv=content-type content="text/html; charset=windows-1250">
+<META content="MSHTML 5.50.4522.1800" name=GENERATOR><LINK 
+href="12_ Myš a časovač_soubory/default.css" rel=stylesheet>
+<META content=a name=namo-theme>
+<META content="Andrej Blaho" name=author>
+<SCRIPT language=JavaScript>
+<!--
+function na_change_img_src(name, nsdoc, rpath, preload)
+{ 
+  var img = eval((navigator.appName.indexOf('Netscape', 0) != -1) ? nsdoc+'.'+name : 'document.all.'+name);
+  if (name == '')
+    return;
+  if (img) {
+    img.altsrc = img.src;
+    img.src    = rpath;
+  } 
+}
+
+function na_restore_img_src(name, nsdoc)
+{
+  var img = eval((navigator.appName.indexOf('Netscape', 0) != -1) ? nsdoc+'.'+name : 'document.all.'+name);
+  if (name == '')
+    return;
+  if (img && img.altsrc) {
+    img.src    = img.altsrc;
+    img.altsrc = null;
+  } 
+}
+
+// -->
+</SCRIPT>
+</HEAD>
+<BODY text=#000000 vLink=gray aLink=green link=red bgColor=#f5f4d3 
+background="12_ Myš a časovač_soubory/nth_a_bg.gif">
+<TABLE cellSpacing=1 borderColorDark=gray width=750 borderColorLight=silver 
+border=0>
+  <TBODY>
+  <TR>
+    <TD align=middle><!--NAMO_NAVBAR_START B H    -->
+      <DIV><IMG class=namo-banner alt="12. Myš a časovač" 
+      src="12_ Myš a časovač_soubory/nav_a_pz12_bhb.gif" border=0 
+      name=nav_pz12_BH0></DIV><!--NAMO_NAVBAR_END--></TD></TR>
+  <TR>
+    <TD vAlign=top align=middle>
+      <P align=left><BR></P>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" align=center>
+        <TBODY>
+        <TR>
+          <TD width=365><FONT size=2><!--NAMO_NAVBAR_START O P L h-->
+            <DIV align=left><A href="http://www.delphi.input.sk/pz11.html"><IMG 
+            src="12_ Myš a časovač_soubory/nth_a_back.gif" border=0></A><A 
+            href="http://www.delphi.input.sk/index.html"><IMG 
+            src="12_ Myš a časovač_soubory/nth_a_home.gif" border=0></A><A 
+            href="http://www.delphi.input.sk/pz13.html"><IMG 
+            src="12_ Myš a časovač_soubory/nth_a_next.gif" border=0></A></DIV><!--NAMO_NAVBAR_END--></FONT></TD>
+          <TD width=365>
+            <P class=namo-sublist align=right><FONT size=1><I>posledná zmena: 
+            29.10.2001</I></FONT></P></TD></TR></TBODY></TABLE>
+      <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+      cellPadding=3 width="100%" align=center borderColorLight=#ffe7a6 
+        border=0><TBODY>
+        <TR>
+          <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+            <P align=right><B><IMG class=namo-bullet1 height=11 
+            alt="Banner Text" src="12_ Myš a časovač_soubory/nth_a_bullet_l.gif" 
+            width=11 border=0> 25.10.2001</B></P></TD></TR>
+        <TR>
+          <TD vAlign=top>
+            <UL>
+              <P class=namo-list><BR><FONT size=2><IMG height=7 
+              src="12_ Myš a časovač_soubory/nth_a_bullet_s.gif" width=7 
+              border=0> čo sme sa doteraz naučili</FONT></P>
+              <UL>
+                <LI type=disc>do grafickej plochy zatiaľ vieme kresliť pomocou 
+                algoritmov </LI></UL>
+              <P class=namo-list><FONT size=2><IMG height=7 
+              src="12_ Myš a časovač_soubory/nth_a_bullet_s.gif" width=7 
+              border=0> čo sa budeme dnes učiť</FONT></P>
+              <UL type=disc>
+                <LI>ako môžeme používateľovi umožniť kresliť do grafickej plochy 
+                pomocou myši </LI></UL></UL>
+            <H2>Myš</H2>
+            <UL type=disc>
+              <LI>pri práci s <B>Pixels</B> v grafickej ploche sme trochu 
+              experimentovali aj s myšou: pri pohyboch myšou nad grafickou 
+              plochou Image2 sme zobrazovali príslušné bodky obrázka - využili 
+              sme udalosť <B>onMouseMove</B>, ktorá do obslužnej procedúry 
+              <B>Image2MouseMove</B> posiela aj súradnice myši v parametroch 
+              <B>X</B> a <B>Y</B> 
+              <LI>naučíme sa, ako sa pracuje s myšou - grafická plocha má 3 
+              rôzne udalosti: 
+              <UL type=disc>
+                <LI><B>onMouseDown</B> - zatlačili sme nad plochou niektoré 
+                tlačidlo myši 
+                <LI><B>onMouseMove</B> - myš sa hýbe nad plochou 
+                <LI><B>onMouseUp</B> - pustili sme tlačidlo myši </LI></UL>
+              <LI>začneme najjednoduchším prípadom: &nbsp;vo formulári máme 
+              grafickú plochu Image1 a priradíme jej udalosť onMouseMove 
+              (dvojklikneme na riadok s onMouseMove v záložke Events pre Image1 
+              v Inšpektore objektov): </LI></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>pohyb myši kreslí bodky:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; <B>X</B>,<B>Y</B>:Integer);
+begin
+  Image1.Canvas.Pixels[X,Y]:=clBlack;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>pohybom myši na plochou sa na príslušných miestach zobrazujú 
+              bodky 
+              <LI>už sme si možno zvykli, že veľmi často, keď robíme s grafikou 
+              a táto bliká, treba do FormCreate pridať riadok: </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>aby grafická plocha neblikala:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.FormCreate(Sender: TObject);
+begin
+  DoubleBuffered:=true;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>kreslením bodiek sa veľmi ťažko niečo naozaj nakreslí, preto 
+              sa môžeme pokúsiť namiesto bodky (Pixels) kresliť čiary (LineTo): 
+              </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>pohyb myši spája čiary:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; X,Y:Integer);
+begin
+  Image1.Canvas.LineTo(X,Y);
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>teraz&nbsp;sa naozaj spájajú čiary podľa pohybu myši, lenže 
+              čiary sa kreslia aj keď sa tlačidlo myši nezatlačí 
+              <LI>využijeme parameter <B>Shift</B>: je typu 
+              <TT><B>TShiftState</B> a</TT> pre tento platí<BR><FONT 
+              face="Courier New">&nbsp;&nbsp;type </FONT><TT><FONT 
+              face="Courier New">TShiftState = set of 
+              (ssShift,ssAlt,ssCtrl,ssLeft,ssRight,ssMiddle,ssDouble);</FONT></TT> 
+
+              <LI>v tomto parametri sa môžeme dozvedieť či sú zatlačené tlačidlá 
+              na myši alebo niektoré špeciálne klávesy na klávesnici 
+              <LI>využijeme to na to, že čiary sa kresliť len, ak je zatlačené 
+              ľavé tlačidlo myši </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>kreslí sa len pri zatlačenom tlačidle myši:</I></U> 
+                  </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; X,Y:Integer);
+begin
+  if <B>Shift=[ssLeft]</B> then
+    Image1.Canvas.LineTo(X,Y);
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>ešte stále to nie je správne riešenie - po zatlačení tlačidla 
+              by sa grafické pero malo posunúť do štartového bodu kreslenia, ale 
+              bez spojenia s predchádzajúcim bodom - využijeme udalosť 
+              <B>onMouseDown</B>, v ktorej sa nastavíme do štartového bodu 
+              pomocou <B>MoveTo</B> </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>pridáme začiatok kreslenej čiary:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.<B>Image1MouseDown</B>(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if Shift=[ssLeft] then
+    Image1.Canvas.<B>MoveTo</B>(X,Y);
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>toto riešenie môže niekedy robiť problémy (vyskúšajte počas 
+              kreslenia zatlačiť kláves <B>Ctrl</B>), preto môžeme použiť 
+              pomocnú logickú premennú <B>dole</B>, ktorá označuje, či práve 
+              kreslíme (či sme začali kresliť) a ďalej sa už nepozerá na 
+              parameter <B>Shift</B> </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>použitie pomocnej premennej"</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  <B>dole</B>:boolean = false;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+ 				     Shift: TShiftState; X, Y: Integer);
+begin
+  dole:=Shift=[ssLeft];    <I><FONT color=navy>// alebo aj dole:=ssLeft in Shift;</FONT></I>
+  if dole then Image1.Canvas.MoveTo(X,Y);
+end;
+
+procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; X,Y:Integer);
+begin
+  if dole then Image1.Canvas.LineTo(X,Y);
+end;
+
+procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  dole:=false;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>v procedúre pre udalosť onMouseMove môžeme na nejaké miesto vo 
+              formulári vypisovať momentálnu pozíciu myši: 
+              <LI>niekam do formulára umiestnime nový komponent <B>Label</B> - 
+              text vo formulári -&nbsp;keď budeme meniť jeho stavovú premennú 
+              (property) <B>Caption</B>, bude sa meniť jeho zobrazenie 
+              </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>kontrolné výpisy počas pohybu myši nad grafickou 
+                  plochou:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; X,Y:Integer);
+begin
+  <B>Label1.Caption</B>:=IntToStr(X)+','+IntToStr(Y);
+  ...
+end;</PRE></TD></TR></TBODY></TABLE>
+            <H2 align=left>Skicár - kresliaca aplikácia</H2>
+            <P align=left>ďalej ukážeme postupnú konštrukciu jednoduchej 
+            kresliacej aplikácie:</P>
+            <UL>
+              <DIV align=left>
+              <LI>do formulára vložíme grafickú plochu (Image1), pod ňu textový 
+              informačný riadok (Label1), nad plochu tlačidlo s textom 
+              <B>zmaž</B> (Button1) </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>prvá verzia programu:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  dole:boolean = false;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  DoubleBuffered:=true;
+  Button1.Click;   <I><FONT color=navy>// zmaže sa grafická plocha</FONT></I>
+  Label1.Caption:='';
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  with Image1, Canvas do begin
+    Brush.Color:=clWhite;
+    Brush.Style:=bsSolid;
+    FillRect(ClientRect);
+  end;
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  dole:=ssLeft in Shift;
+  if dole then Image1.Canvas.MoveTo(X,Y);
+end;
+
+procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState;
+  X,Y: Integer);
+begin
+  Label1.Caption:=IntToStr(X)+' '+IntToStr(Y);
+  if dole then Image1.Canvas.LineTo(X,Y);
+end;
+
+procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  dole:=false;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <DIV align=left>
+            <H3>Paleta farieb</H3></DIV>
+            <UL>
+              <DIV align=left>
+              <LI>druhým krokom bude pridanie farebnej palety, aby sme mohli 
+              zvoliť farbu kreslenia: </LI></DIV>
+              <DIV align=left>
+              <UL type=disc>
+                <LI>nad grafickú plochu najprv položíme menšiu grafickú plochu 
+                <B>Image2</B>, ktorá bude obsahovať nejaký obrázok palety (ak 
+                použijete bitmapu <A 
+                href="http://www.delphi.input.sk/SUBORY/paleta.bmp">paleta.bmp</A>, 
+                zvoľte veľkosť Image2 225x33) - umiestnite ju napr. úplne vpravo 
+
+                <LI>pred Image2 položte malú plôšku <B>Image3</B>, napr. 
+                veľkosti 25x25 - sem sa bude vykresľovať aktuálna zvolená farba 
+                - pri štarte programu čierna </LI></UL></DIV></UL>
+            <DIV align=left>
+            <LI>kliknutím do Image2 sa zvolí farba kresliaceho pera: nastaví sa 
+            farba pera pre <B>Image1</B> a tiež sa zafarbí <B>Image3</B>: 
+            </LI></DIV>
+            <UL></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>spracovanie vybranej farby pera:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image2MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  <B>Image1.Canvas.Pen.Color:=Image2.Canvas.Pixels[X,Y];
+</B>
+  with Image3, Canvas do begin
+    Brush.Color:=Image1.Canvas.Pen.Color;
+    FillRect(ClientRect);
+  end;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>asi by bolo dobré, keby bolo&nbsp;<B>Image3</B> zafarbené už 
+              pri štarte programu: do <B>FormCreate</B> pridáme jeho zafarbenie 
+              </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>inicializácia zobrazenia aktuálnej farby:</I></U> 
+                </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.FormCreate(Sender: TObject);
+begin
+  ...
+  with Image3, Canvas do begin
+    Brush.Color:=Image1.Canvas.Pen.Color;
+    FillRect(ClientRect);
+  end;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <H3 align=left>Posuvná lišta</H3>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>na nastavenie hrúbky pera môžeme použiť posuvnú lištu, napr. 
+              komponent <B>TrackBar</B> (môžete použiť aj ScrollBar): 
+              <UL type=disc>
+                <LI><B>TrackBar1</B> položíme naľavo od Image3 a trochu 
+                prispôsobíme jeho veľkosť voľnej ploche vo formulári 
+                <LI>ešte musíme zmeniť dve stavové premenné (property) 
+                <B>Min</B> a <B>Max</B>, ktoré vyjadrujú minimálnu a maximálnu 
+                dosiahnuteľnú hodnotu pre posuvnú lištu - nastavíme <B>Min</B> 
+                na 1 a <B>Max</B> napr. na 20 
+                <LI>pre tento komponent využijeme udalosť <B>onChange</B>, ktorá 
+                je zavolaná vždy, keď používateľ posúva bežca na lište - podľa 
+                momentálnej pozície bežca budeme nastavovať hrúbku pera 
+                grafickej plochy </LI></UL></LI></DIV>
+              <DIV align=left>
+              <LI>onChange procedúra sa automaticky pripraví dvojklikom na 
+              komponent vo formulári </LI></DIV></UL>
+            <UL></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>spracovanie nastavovania hrúbky pera:</I></U> 
+              </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.TrackBar1Change(Sender: TObject);
+begin
+  Image1.Canvas.Pen.Width:=<B>TrackBar1.Position</B>;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <H3 align=left>Tlačidlá nástrojov kreslenia</H3>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>každý aj najjednoduchší kresliaci program umožňuje kresliť 
+              rôznymi nástrojmi - napr. nielen od ruky perom, ale aj úsečky, 
+              obdĺžniky, elipsy ale aj vypĺňať farbou nejaké oblasti 
+              <LI>na to zadefinujeme 5 malých tlačidiel - komponentov 
+              <B>SpeedButton</B> - tieto majú na rozdiel od klasického 
+              <B>Button</B> viac vylepšení: 
+              <UL type=disc>
+                <LI>keď na ne klikneme, môžu ostať zatlačené (vyjadruje zvolený 
+                nástroj) 
+                <LI>okrem textu môžu obsahovať obrázok (môžete poexperimentovať 
+                s <B>Glyph</B>) 
+                <LI>môžeme ich zoskupiť do skupiny, v ktorej iba jedno tlačidlo 
+                bude zatlačené (zatlačenie iného spôsobí automatické vyskočenie 
+                predchádzajúceho) - do stavovej premennej (property) 
+                <B>GroupIndex</B> všetkým nastavíme rovnaké číslo, napr. 1 
+              </LI></UL>
+              <LI>na tlačidlá napíšeme texty (je vhodné zvoliť nejaký malý 
+              font): pero, úsečka, obdĺžnik, elipsa, vyplň 
+              <LI>prvému tlačidlu (s textom pero) nastavíme stavovú 
+              premennú&nbsp;<B>Down</B> na true - tlačidlo bude zatlačené 
+              <LI>zadefinujeme globálnu premennú <B>rezim</B>, ktorá bude 
+              obsahovať momentálne zvolený nástroj - táto premenná sa bude 
+              nastavovať v udalosti onClick pre všetky SpeedButton1, 
+              SpeedButton2, ... </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>napr.</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE><B>var
+  rezim:(pero,usecka,obdlznik,elipsa,vypln) = pero;</B>
+
+procedure TForm1.SpeedButton1Click(Sender: TObject);
+begin
+  rezim:=pero;
+end;
+
+procedure TForm1.SpeedButton2Click(Sender: TObject);
+begin
+  rezim:=usecka;
+end;
+
+procedure TForm1.SpeedButton3Click(Sender: TObject);
+begin
+  rezim:=obdlznik;
+end;
+
+...</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>asi&nbsp;by bolo krajšie, keby sme nemuseli vytvárať pre každé 
+              tlačidlo zvlášť procedúru (v inej aplikácii by ich mohlo byť oveľa 
+              viac) - ale napísali jednu univerzálnu - napr. SpeedButton1Click 
+              by mohla byť spoločná pre všetky 
+              <LI>potom, ako&nbsp;ju zadefinujeme, ju nastavíme všetkým ostatným 
+              tlačidlám nástrojov: v záložke udalosti (Events) inšpektora 
+              objektov pre <B>SpeedButton2</B> sa nastavíme na riadok s 
+              udalosťou <B>onClick</B> a z ponuky vyberieme 
+              <B>SpeedButton1Click</B> - toto urobíme pre všetky tlačidlá 
+              nástrojov (ak sme stihli vytvoriť SpeedButton2Click, ... - zrušíme 
+              ich tak, že vyprázdnime telo procedúr a po uložení - Save unitu sa 
+              korektne zrušia celé procedúry) 
+              <LI>SpeedButton1Click teraz na základe parametra Sender zistí, 
+              ktorý komponent ju zavolal a na základe toho nastaví premennú 
+              <B>rezim</B> </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>univerzálna SpeedButton1Click procedúra:</I></U> 
+                </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.SpeedButton1Click(Sender: TObject);
+begin
+  if Sender = SpeedButton1 then
+    rezim:=pero
+  else if Sender = SpeedButton2 then
+    rezim:=usecka
+  else if Sender = SpeedButton3 then
+    rezim:=obdlznik
+  else if Sender = SpeedButton4 then
+    rezim:=elipsa
+  else if Sender = SpeedButton5 then
+    rezim:=vypln;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL>
+              <DIV align=left>
+              <LI>skôr ako sa pustíme do upravovania procedúr 
+              <B>Image1MouseDown</B> a&nbsp;<B>Image1MouseMove</B>, aby zvládali 
+              nové nástroje, musíme vysvetliť ako budú pracovať: 
+              <UL>
+                <LI type=disc>úsečka, obdĺžnik a elipsa budú pracovať na veľmi 
+                podobnom&nbsp;princípe - pri štarte nástroja (teda zatlačení 
+                myšou) sa zapamätá momentálny stav grafickej plochy v pomocnej 
+                bitmape <B>bmp</B> (globálna premenná typu <B>TBitmap</B>) a pre 
+                každom ťahaní nástroja, napr. úsečky, sa najprv grafická plocha 
+                vráti do tohoto pôvodného stavu a potom sa nakreslí nová úsečka 
+                - musíme si pri tom pamätať počiatočný bod kreslenia, napr. v 
+                globálnych premenných <B>x0</B> a <B>y0</B> </LI></UL></LI></DIV>
+              <DIV align=left>
+              <LI>pomocná premenná <B>bmp</B> sa musí inicializovať v 
+              <B>FormCreate</B> 
+              <LI>režim vypĺňania oblasti je ešte jednoduchší - celý sa 
+              zrealizuje pri zatlačení tlačidla myši, t.j. v Image1MouseDown 
+              (mohol by byť v Image1MouseDown - premyslite si, čo by sa tým 
+              zmenilo) - na vypĺňanie oblasti použijeme metódu <B>FloodFill</B> 
+              </LI></DIV></UL>
+            <UL></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>spracovanie všetkých režimov:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  dole:boolean = false;
+  rezim:(pero,usecka,obdlznik,elipsa,vypln) = pero;
+  <B>bmp:TBitmap;</B>
+  <B>x0,y0:integer;</B>
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  DoubleBuffered:=true;
+  Button1.Click;   <I><FONT color=navy>// zmaže sa grafická plocha</FONT></I>
+  Label1.Caption:='';
+  with Image3, Canvas do begin
+    Brush.Color:=Image1.Canvas.Pen.Color;
+    FillRect(ClientRect);
+  end;
+  <B>bmp:=TBitmap.Create;</B>
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  dole:=ssLeft in Shift;
+  if dole then
+    with Image1.Canvas do
+      case rezim of
+        pero:
+          MoveTo(X,Y);
+        usecka,obdlznik,elipsa:
+          begin
+            b<B>mp.Assign(Image1.Picture);</B>
+            x0:=X; y0:=Y;
+          end;
+        vypln:
+          begin
+            Brush.Color:=Pen.Color;
+            <B>FloodFill(X,Y,Pixels[X,Y],fsSurface);</B>
+          end;
+      end;
+end;
+
+procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState;
+  X,Y: Integer);
+begin
+  Label1.Caption:=IntToStr(X)+' '+IntToStr(Y);
+  if dole then
+    with Image1.Canvas do
+      case rezim of
+        pero:
+          LineTo(X,Y);
+        usecka:
+          begin
+            <B>Draw(0,0,bmp);</B>
+            MoveTo(x0,y0); LineTo(X,Y);
+          end;
+        obdlznik:
+          begin
+            <B>Draw(0,0,bmp);</B>
+            Brush.Color:=Pen.Color;
+            Brush.Style:=bsClear;
+            Rectangle(x0,y0,X,Y);
+          end;
+        elipsa:
+          begin
+            <B>Draw(0,0,bmp);</B>
+            Brush.Color:=Pen.Color;
+            Brush.Style:=bsClear;
+            Ellipse(x0,y0,X,Y);
+          end;
+      end;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <H3 align=left>Zaškrtávacie políčko</H3>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>ešte urobíme posledné vylepšenie: umožníme používateľovi 
+              programu aby si mohol zvoliť, či obdĺžnik, resp. elipsa budú pri 
+              vykreslení vyplnené farbou (zatiaľ sme ich vyrobili "deravé" - 
+              nastavili sme <B>Brush.Style:=bsClear;</B>) 
+              <LI>do formulára vložíme ešte jeden komponent - zaškrtávacie 
+              políčko <B>CheckBox</B> - nastavíme mu popis (Caption) napr. na 
+              <B>plný</B> a opravíme v metóde <B>Image1MouseMove</B> kreslenie 
+              obdĺžnika a elipsy </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>použitie CheckBoxu:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState;
+  X,Y: Integer);
+begin
+ ...
+        obdlznik:
+          begin
+            Draw(0,0,bmp);
+            Brush.Color:=Pen.Color;
+            <B>if CheckBox1.Checked then
+              Brush.Style:=bsSolid
+            else
+              Brush.Style:=bsClear;</B>
+            Rectangle(x0,y0,X,Y);
+          end;
+        elipsa:
+          begin
+            Draw(0,0,bmp);
+            Brush.Color:=Pen.Color;
+            <B>if CheckBox1.Checked then
+              Brush.Style:=bsSolid
+            else
+              Brush.Style:=bsClear;</B>
+            Ellipse(x0,y0,X,Y);
+          end;
+      end;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>a projekt je hotový - rozloženie komponentov môže byť takéto: 
+              </LI></DIV></UL>
+            <P align=center><IMG height=318 
+            src="12_ Myš a časovač_soubory/pz12_1.jpg" width=625 border=0></P>
+            <H2>Zhrnutie</H2>
+            <UL>
+              <LI><B>stavové premenné</B> komponentov (vidíme ich v inšpektore 
+              objektov) sú podobné položkám záznamu (record) 
+              <LI>pri ich zmene v inšpektore objektov sa automaticky prejaví aj 
+              ich vizuálna zmena vo formulári (napr. šírka, text, bublinkový 
+              help a pod.) 
+              <LI>v Delphi sa takýto typ stavových premenných nazýva Vlastnosť, 
+              t.j. <B>Property</B> 
+              <LI>niektoré sú pre nás užitočné už počas tvorby formulára 
+              (Caption, Name, Hint, Min, Max, ...), iné využijeme hlavne za behu 
+              programu (niektoré fungujú len za behu, a preto v inšpektore 
+              objektov nie sú) 
+              <LI>meno komponentu (<B>Name</B>) treba zmeniť hneď ako sa položí 
+              do formulára (ak ho chceme meniť), inak niektoré situácie Delphi 
+              nemusia správne uhádnuť a opraviť túto zmenu korektne 
+              <LI>niektoré užitočné vlastnosti (property) nám známych 
+              komponentov: 
+              <UL>
+                <LI><U>formulár TForm</U> 
+                <UL>
+                  <LI>Caption - reťazec - titulok okna 
+                  <LI>ClientWidth, ClientHeight - veľkosť vnútra okna (nie 
+                  obvodu okna, pre ten je veľkosť Width a Height) 
+                  <LI>Left, Top - x-ová a y-ová súradnica okna na obrazovke - 
+                  môžeme celé okno posúvať 
+                  <LI>Visible - či je okno viditeľné 
+                  <LI>WindowState - okno môžeme zminimalizovať, zmaximalizovať 
+                  <LI>Canvas (funguje len počas behu programu) - šedá plocha - 
+                  môžeme do nej kresliť (v udalosti <B>OnPaint</B>) </LI></UL>
+                <LI><U>tlačidlo TButton</U> 
+                <UL>
+                  <LI>Caption - text na tlačidle 
+                  <LI>Font - rovnako ako v grafickej ploche 
+                  <LI>Height, Width - veľkosť 
+                  <LI>Left, Top - poloha vo formulári 
+                  <LI>Visible - môžeme ho skryť 
+                  <LI>Hint, ShowHint - string a boolean - bublinkový help a či 
+                  sa má zobrazovať 
+                  <LI>Enabled - môžeme ho zablokovať, false znamená, že tlačidlo 
+                  bude zašedené </LI></UL></LI></UL>
+              <LI>vlastnosti Width, Height, Left, Top, Visible, Hint, ShowHint, 
+              Enabled - fungujú skoro rovnako pre skoro všetky typy komponentov 
+              <UL>
+                <LI><U>grafická plocha TImage</U> 
+                <UL>
+                  <LI>Canvas (funguje len počas behu programu) - sprístupnenie 
+                  kreslenia do grafickej plochy 
+                  <LI>ClientRect (funguje len počas behu programu) - hodnota 
+                  typu TRect, t.j. obdĺžnik, ktorý popisuje veľkosť plochy 
+                </LI></UL>
+                <LI><U>malé tlačidlo TSpeedButton</U> - veľmi podobné obyčajnému 
+                tlačidlu, ale tieto tlačidlá môžu tvoriť skupinu (vzájomne sa 
+                vylučujú - maximálne jedno z nich je zatlačené), môže mať aj 
+                obrázok 
+                <UL>
+                  <LI>Caption - text na tlačidle (môže byť spolu s obrázkom) 
+                  <LI>GroupIndex - poradové číslo skupiny tlačidiel, ktoré sa 
+                  navzájom vylučujú 
+                  <LI>Down - či je zatlačené 
+                  <LI>Glyph - obrázok </LI></UL>
+                <LI><U>posuvná lišta TTrackBar</U> 
+                <UL>
+                  <LI>Min, Max - minimálna a maximálna hodnota 
+                  <LI>Position - momentálna hodnota 
+                  <LI>Orientation - (trHorizontal,trVertical) </LI></UL>
+                <LI><U>zaškrtávacie políčko TCheckBox</U> 
+                <UL>
+                  <LI>Caption - text za políčkom 
+                  <LI>Font - písmo pre text 
+                  <LI>Checked - či je zaškrtnuté </LI></UL>
+                <LI><U>text TLabel</U> 
+                <UL>
+                  <LI>Caption - ak reťazec obsahuje #13#10, bude viacriadkový 
+                  <LI>Font - písmo pre text </LI></UL>
+                <LI><U>textová plocha TMemo</U> 
+                <UL>
+                  <LI>Color - farba podkladu 
+                  <LI>Font - písmo 
+                  <LI>Lines - obsah textovej plochy - pole reťazcov 
+                  <LI>ReadOnly - či má používateľ zakázané meniť obsah </LI></UL>
+                <LI><U>editovací riadok TEdit</U> - je veľmi podobný TMemo 
+                <UL>
+                  <LI>Color - farba podkladu 
+                  <LI>Font - písmo 
+                  <LI>Text - momentálny obsah riadka 
+                  <LI>ReadOnly - či má používateľ zakázané meniť obsah 
+                  <LI>PasswordChar - ak obsahuje napr. <TT>'*'</TT>, tak sa 
+                  namiesto zadávaných znakov budú vypisovať hviezdičky - používa 
+                  sa pri zadávaní hesla </LI></UL></LI></UL></LI></UL>
+            <UL>
+              <LI>udalosti (<B>Events</B>) = záložka v inšpektore objektov = 
+              môžeme definovať správanie pri špecifických situáciách 
+              <LI>inšpektor nám pomôže správne zadeklarovať takú procedúru, 
+              ktorú vyvolá Windows, keď vznikne príslušná udalosť (napr. klikne 
+              sa, zmení sa, hýbe sa a pod.) 
+              <LI>tieto procedúry definujeme tak, že v záložke Events (v riadku) 
+              pri danej udalosti dvojklikneme v pravom stĺpci (alebo si zvolíme 
+              procedúru z už existujúcej ponuky procedúr) 
+              <LI>nedopisujte manuálne žiadne nové procedúry na spracovávanie 
+              udalostí - vždy použite inšpektor objektov 
+              <LI>ak potrebujete nejakú procedúru obsluhujúcu udalosť zrušiť, 
+              najlepšie to urobíte tak, že vyčistíte obsah procedúry - necháte v 
+              nej len počiatočný <B>begin</B> a koncový <B>end</B> a pri 
+              nasledujúcom uložení na disk (napr. Ctrl+S) ju Delphi automaticky 
+              vyhodí </LI></UL>
+            <H2 align=left>Myš a korytnačky</H2>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>korytnačka je grafické pero, ktoré dokáže nejaké veci navyše: 
+              môže mať vizualizovaný tvar, jednoducho "vie natočiť súradnicovú 
+              sústavu", v grafickej ploche ich môžeme definovať ľubovoľný počet, 
+              ... 
+              <LI>prvý príklad ilustruje použitie korytnačky ako obyčajného 
+              grafického pera </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>kreslenie korytnačkou:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  k:TKor;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  k:=TKor.Create; k.PH; k.Ukaz;    <I><FONT color=navy>// spomal:=1;</FONT></I>
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  k.PD;
+end;
+
+procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; X,Y:Integer);
+begin
+  <I><FONT color=navy>// k.ZmenSmer(k.Smerom(X,Y));</FONT></I>
+  k.ZmenXY(X,Y);
+  <B>Image1.Repaint;</B>
+end;
+
+procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  k.PH;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>pri práci s myšou sa budeme vyhýbať spomaľovaniu kreslenia 
+              pomocou <B>spomal:=1;</B> - namiesto toho by sme mali používať 
+              <B>Image1.Repaint;</B> 
+              <LI>v tomto programe je korytnačka "prilepená" ku myši - ak do 
+              programu pridáme aj zakomentované <B>ZmenSmer</B>, korytnačka sa 
+              bude otáčať v smere pohybu myši 
+              <LI>do Image1MouseMove môžeme pridať aj iné akcie, napr. 
+              </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>pri pohybe korytnačka kreslí hviezdičky:</I></U> 
+                </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseMove(Sender:TObject; Shift:TShiftState; X,Y:Integer);
+var
+  i:integer;
+begin
+  k.ZmenSmer(k.Smerom(X,Y));
+  k.ZmenXY(X,Y);
+  for i:=1 to 5 do begin
+    k.Dopredu(10); k.Vpravo(144);
+  end;
+  Image1.Repaint;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>ďalší príklad ukáže generovanie korytnačiek pri klikaní myšou: 
+              kliknutie na voľné miesto vygeneruje novú korytnačku, kliknutie na 
+              už existujúcu korytnačku ju mierne otočí </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>klikanie na korytnačky:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  k:array[1..100] of TKor;
+  n:integer = 0;     <I><FONT color=navy>// aktuálny počet korytnačiek</FONT></I>
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  zmaz;   <I><FONT color=navy>// aby sa grafická plocha zobrazila už pri štarte</FONT></I>
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  i:integer;
+begin
+  i:=1; while (i&lt;=n) and not <B>k[i].Blizko(X,Y)</B> do inc(i);
+  if i&lt;=n then k[i].Vpravo(15)
+  else begin
+    inc(n); k[n]:=TKor.Create(X,Y); k[n].Ukaz;
+  end;
+  Image1.Repaint;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>použili sme korytnačiu preddefinovanú funkciu (metódu) 
+              <B>Blizko</B>, ktorá pre daný bod v rovine odpovie, či je 
+              korytnačka od neho blízko </LI></DIV></UL>
+            <H3 align=left>NDÚ</H3>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>nové korytnačky by mohli vznikať na kliknutie so zatlačeným 
+              pravým tlačidlom myši, na ľavé tlačidlo môže korytnačka urobiť 
+              nejakú akciu - nakresliť nejaký obrázok, alebo sa prilepí na myš a 
+              do nasledujúceho kliknutia putuje s myšou </LI></DIV></UL>
+            <H2 align=left>Časovač</H2>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>predchádzajúcu úlohu, v ktorej sme klikaním vytvárali nové 
+              korytnačky, resp. ich otáčali trochu pozmeníme: kliknutie na 
+              korytnačku ju naštartuje kresliť kružnicu - a to pomaly - použime 
+              známu procedúru <B>cakaj</B> </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>kliknutie naštartuje kružnicu:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  i,j:integer;
+begin
+  i:=1; while (i&lt;=n) and not k[i].Blizko(X,Y) do inc(i);
+  if i&gt;n then begin
+    inc(n); k[n]:=TKor.Create(X,Y); k[n].Ukaz;
+  end
+  else
+    with k[i] do
+      for j:=1 to 36 do begin
+        Dopredu(10); Vpravo(10);
+        cakaj(50);       <I><FONT color=navy>// sleep(50); Image1.Repaint;</FONT></I>
+      end;
+  Image1.Repaint;
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>&nbsp;vzniká zaujímavý efekt: kliknutie na korytnačku ju 
+              rozbehne - počas tohoto klikania môžeme ďalej klikať do plochy, na 
+              iné korytnačky ale aj na už rozbehnutú korytnačku - asi ľahko 
+              odhalíte, že každé nové kliknutie na korytnačku, zastaví 
+              predchádzajúci pohyb a naštartuje nový pohyb - po skončení tohoto 
+              nového pohybu sa dokončí aj ten pozastavený... 
+              <LI>ak namiesto <B>cakaj</B> použijeme systémový podprogram 
+              <B>sleep</B> (zakomentovaná časť), tak sa tento efekt stratí: po 
+              rozbehnutí korytnačky program nereaguje, až kým korytnačka 
+              nedobehne celú kružnicu 
+              <UL>
+                <LI>celé je to spôsobené tým, že v procedúre <B>cakaj</B> je 
+                ukryté aj <B>Application.ProcessMessages</B> - to znamená, že 
+                počas čakania 50 milisekúnd dovolíme&nbsp;Windows reagovať na 
+                iné udalosti, napr. aj na kliknutie myšou a teda umožníme znovu 
+                naštartovať novú kružnicu (po jej skončení sa pokračuje v 
+                prerušenej akcii) 
+                <LI>procedúra <B>sleep</B> nemá v sebe zabudované takéto 
+                mechanizmy a preto je veľmi nebezpečná </LI></UL></LI></DIV></UL>
+            <UL type=disc>
+              <LI>ukážeme iný spôsob, ako sa rieši problém so spomaľovaním 
+              akcií: použijeme nový komponent časovač -&nbsp;<B>Timer</B> (z 
+              palety komponentov System) - položíme ho niekam do plochy - je to 
+              nevizuálny komponent a teda po spustení aplikácie nebude zobrazený 
+
+              <LI>časovač si môžeme predstaviť ako hodiny, ktoré s nejakou 
+              frekvenciou "tikajú" -&nbsp;pri každom tiknutí môžu vykonať nejakú 
+              akciu 
+              <LI>frekvenciu "tikania" nastavíme v stavovej premennej 
+              <B>Interval</B>, pozastavenie / naštartovanie časovača môžeme 
+              urobiť logickou stavovou premennou <B>Enabled</B> - <I>true</I> 
+              znamená, že hodiny bežia, <I>false</I> znamená, že sme ich 
+              pozastavili 
+              <LI>časovač má jedinú udalosť <B>onTimer</B>, ktorá sa naštartuje 
+              po uplynutí "tikacieho" intervalu, t.j. zodpovedá jej procedúra 
+              <B>Timer1Timer</B> 
+              <LI>v nasledujúcom príklade predpokladáme časovač so sekundovým 
+              tikaním, t.j. <B>Interval</B> je 1000; korytnačke nastavíme tvar 
+              úsečku dĺžky 100 
+              <DIV></DIV></LI></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>sekundová ručička:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  k:TKor;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  k:=TKor.Create; k.ZmenTvar([0,100]); k.Ukaz;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  k.Vpravo(6);
+  <B>Image1.Repaint;</B>
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>príklad s korytnačkami, ktoré sa po kliknutí rozbehnú po 
+              kružnici preprogramujeme pomocou časovača: pre každú korytnačku si 
+              budeme pamätať v poli <B>kolko</B>, koľko krokov po kružnici ešte 
+              musí prebehnúť </LI></DIV></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>korytnačky krúžia po svojich kružniciach:</I></U> 
+                </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  k:array[1..100] of TKor;
+  kolko:array[1..100] of integer;
+  n:integer = 0;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  zmaz;
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  i,j:integer;
+begin
+  i:=1; while (i&lt;=n) and not k[i].Blizko(X,Y) do inc(i);
+  if i&gt;n then begin
+    inc(n); k[n]:=TKor.Create(X,Y); k[n].Ukaz;
+    kolko[n]:=0;
+  end
+  else if kolko[i]=0 then kolko[i]:=36;
+  <I><FONT color=navy>// Image1.Repaint;</FONT></I>
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+var
+  i:integer;
+begin
+  for i:=1 to n do
+    if kolko[i]&gt;0 then
+      with k[i] do begin
+        dopredu(10); vpravo(10);
+        dec(kolko[i]);
+      end;
+  <B>Image1.Repaint;</B>
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>časovaču <B>Timer1</B> sme nastavili <B>Interval</B> na 50 
+              milisekúnd </LI></DIV></UL>
+            <UL type=disc>
+              <LI>na záver ukážeme príklad práce s časovačom a bitmapami: na 
+              nejakom pozadí, napr. na fotografii <B>tiger.bmp</B> sa bude 
+              pomaly pohybovať nejaký obrázok, napr. <B>opica.bmp</B> - táto sa 
+              bude odrážať od bočných stien grafickej plochy ako lopta od stien 
+              miestnosti 
+              <LI>okrem grafickej plochy (Image1) umiestnime časovač 
+              <B>Timer1</B> s premennou&nbsp;<B>Intreval</B> nastavenou na 100 
+              <DIV></DIV></LI></UL>
+            <TABLE class=namo-table cellSpacing=1 borderColorDark=#9d7c31 
+            cellPadding=3 width="90%" align=center bgColor=white 
+            borderColorLight=#ffe7a6 border=0>
+              <TBODY>
+              <TR>
+                <TD class=namo-th vAlign=" top" bgColor=#e2dab8>
+                  <P><U><I>jednoduchá animácia:</I></U> </P></TD></TR>
+              <TR>
+                <TD vAlign=top><PRE>var
+  pozadie,obr:TBitmap;
+  x,y,dx,dy,x2,y2:integer;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  DoubleBuffered:=true;
+  pozadie:=TBitmap.Create;
+  pozadie.LoadFromFile('tiger.bmp');
+  obr:=TBitmap.Create;
+  obr.LoadFromFile('opica.bmp');
+  obr.TransparentColor:=clWhite;
+  obr.Transparent:=true;
+  x:=100; y:=50; dx:=3; dy:=4;
+  x2:=obr.Width div 2; y2:=obr.Height div 2;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  Image1.Canvas.Draw(0,0,pozadie);
+  <I><FONT color=navy>// Image1.Canvas.StretchDraw(Image1.ClientRect,pozadie);</FONT></I>
+  inc(x,dx); if (x&lt;x2)or(x&gt;=Image1.Width-x2) then dx:=-dx;
+  inc(y,dy); if (y&lt;y2)or(y&gt;=Image1.Height-y2) then dy:=-dy;
+  Image1.Canvas.Draw(x-x2,y-y2,obr);
+end;</PRE></TD></TR></TBODY></TABLE>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>namiesto <B>Draw</B> pri kreslení pozadia môžeme použiť aj iné 
+              prostriedky, napr. vykachličkovanie alebo <B>StretchDraw</B>, ale 
+              tie môžu výrazne spomaliť priebeh animácie </LI></DIV></UL>
+            <H3 align=left>NDÚ</H3>
+            <UL type=disc>
+              <DIV align=left>
+              <LI>umiestnite do plochy väčší počet korytnačiek - napr. 
+              pravidelne ich rozmiestnite na priamke alebo kružnici a nechajte 
+              sa ich hýbať podľa nejakých pravidiel, napr. rôznou rýchlosťou po 
+              kružnici, alebo kmitať hore - dolu, tiež s rôznou rýchlosťou - 
+              napr. prvá nech má rýchlosť 1, druhá 1.1, tretia 1.2, ... 
+              </LI></DIV></UL></TD></TR></TBODY></TABLE>
+      <P align=center><IMG class=namo-hr height=3 
+      src="12_ Myš a časovač_soubory/nth_a_hr.gif" width=450 border=0></P><!--NAMO_NAVBAR_START O P C  -->
+      <DIV align=center><A href="http://www.delphi.input.sk/pz11.html"><IMG 
+      src="12_ Myš a časovač_soubory/nth_a_back.gif" border=0></A><A 
+      href="http://www.delphi.input.sk/index.html"><IMG 
+      src="12_ Myš a časovač_soubory/nth_a_home.gif" border=0></A><A 
+      href="http://www.delphi.input.sk/pz13.html"><IMG 
+      src="12_ Myš a časovač_soubory/nth_a_next.gif" border=0></A></DIV><!--NAMO_NAVBAR_END-->
+      <HR width=550 SIZE=1>
+
+      <P align=center><FONT size=1>© 2001 AB, KVI<BR><A 
+      href="mailto:blaho@fmph.uniba.sk">blaho@fmph.uniba.sk</A></FONT></P></TD></TR></TBODY></TABLE>
+<P>&nbsp;</P></BODY></HTML>

@@ -1,0 +1,216 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+    <meta name="Content-language" content="sk"> 
+    <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Kreslenie</h3>
+<dl>
+<dt>Double Buffering
+<dd>Z programovania grafiky (najmä animácií) pod Delphi resp. Lazarus poznáme príkaz 
+	<br><code>DoubleBuffered:=True;</code>,
+	<br>ktorý zabezpečil, aby nám animácie neblikali. Myšlienka je v tom, že kreslenie nebeží priamo na obrazovku
+	ale len do buffra v pamäti a až po ukončení celého kreslenia sa obraz ukáže (dáta sa nekopírujú, len karte sa povie, 
+	že dáta na zobrazenie má v buffri). V OpenGl som v úvodných "zaklínadlách"	dvojité bafrovanie zapol a výsledok kreslenia 
+	uvidíme, až keď dáme príkaz na prepnutie bafrov:
+	<br><font color="Red" style="font-family:'Courier'">SwapBuffers(DC);</font>
+	<br>Tento príkaz bude vždy ukončovať každé kreslenie.
+<dt>Kreslenie primitív
+<dd>Ak chceme kresliť niektorú z primitív (elementárny graf. objekt) použijeme konštrukciu:
+	<pre>
+glBegin(zvolená_primitiva);
+   ...
+	zadávanie súradníc a farieb zvoleného objektu
+	...
+glEnd();	
+	</pre>
+	Budeme používať nasledovné primitiva:
+	<ul><li>GL_POINTS - kreslí body
+		<li>GL_LINES - kreslí čiary-úsečky
+		<li>GL_TRIANGLES - kreslí trojuholníky
+		<li>GL_LINE_STRIP - kreslí lomenú čiaru
+		<li>GL_LINE_LOOP - uzavretá lomená čiara
+		<li>GL_TRIANGLES - trojuholník (každé tri vrcholy definujú jeden trojúholník)
+		<li>GL_TRIANGLE_FAN - vejář z trojuholníkov
+		<li>GL_TRIANGLE_STRIP - pás trojuholníkov
+		<li>GL_QUADS - štvoruholníky (quadrilateral)
+		<li>GL_QUAD_STRIP - pás štvoruholníkov
+		<li>GL_POLYGON - polygony (len konvexné polygony s nepretínajúcimi sa hranami) 
+ 	</ul>
+	Na vykreslenie obdĺžnika ležiaceho v rovine xy možno použiť príkaz glRect(x1,y1,x2,y2);
+<dt>Súradnice
+<dd>Každé primitivum je jednoznačne určené postupnosťou bodov. Body zadávame jednotlivo príkazom
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">GlVertex(suradnice_bodu);</font>
+	<br>Súradnice možno zadať 2 - pre dvojrozmerný priestor, alebo 3 - pre trojrozmerný oriestor,
+	<br>zadávať ich možno celými alebo desatinnými číslami.
+	<br>Pre tých, ktorým je "ľúto" systému Opengl, že musí skúmať akého typu sú parametre a tiež koľko ich je možné voliť upresnený príkaz
+	<br><font color="#cc0000" style="font-family:'Courier';">GlVertex3(suradnice_bodu);</font> &nbsp; &nbsp;//pre 3 súradnice
+	<br><font color="#cc0000" style="font-family:'Courier';">GlVertex2(suradnice_bodu);</font> &nbsp; &nbsp;//pre 2 súradnice
+	<br><font color="#cc0000" style="font-family:'Courier';">GlVertexf(suradnice_bodu);</font> &nbsp; &nbsp;//pre desatinné súradnice
+	<br><font color="#cc0000" style="font-family:'Courier';">GlVertexi(suradnice_bodu);</font> &nbsp; &nbsp;//pre celé súradnice
+	<br><font color="#cc0000" style="font-family:'Courier';">GlVertex3i(suradnice_bodu);</font> &nbsp; &nbsp;//pre 3 celé súradnice a pod.
+	<br><br>V prípade úsečiek vždy dvojica bodov (2 príkazy glvertex) tvorí úsečku
+		<br>V prípade 3-uholníka trojica vrchol vytvorí trojuholník a tak ďalej
+		<br>Prebývajúce vrcholy sa ignorujú. 
+<dt>Farba
+<dd>Vkladaním príkazov na nastavenie farby určíme farbu kresleného objektu. Príkaz je tiež vo viacerých variantách
+	<br>font color="#cc0000" style="font-family:'Courier'; font-weight:700">glColor(r,g,b,p)</font>
+	<br>r,g,b - určujú množtvo farby v RGB modeli a p určuje priesvitnosť (nemusí byť zadaná)
+	<br>parametre môžu byť všetky celé - vtedy volíme hodnoty od 0 po 255, alebo desatinné, tu zadávame hodnoty od 0 po 1
+	<br>Tiež je možné už v mene príkazu určiť aké a koľko parametrov zadáme
+	<br>glColor3f - zadávame 3 reálne čísla, glColor4i - zadávame 4 celé čísla 
+	<br>Príklady  
+	<br>glColor3f(1,0,0) - kriklavá červená
+	<br>glColor3i(1,0,0) - čierna s nádychom do červena
+	<br>Ak chceme používať priesvitné farby, musíme priesvitnosť aktivovať príkazom:
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">  glEnable(GL_BLEND);</font>
+	<br>a potom zvoliť, čo sa má s farbami pri zmiešavaní udiať, napr. môžme zadať toto: 
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);</font>
+
+<dt>Transformácia súradníc
+<dd>Štandartný pohľad na objekt je pri nulových natočeniach, teda ak dáme vykresliť súradné osi x,y,z budeme vidieť neskreslené osi x a y ale os z nevidno
+	lebo smeruje kolmo z obrazu smerom ku nám. Aby sme mohli voliť iný pohľad na zobrazovaný priestor používame transformácie. Transformácie sa zapisujú do
+	modelovej matice už vieme, že ak chceme meniť niektorú transformačnú maticu musíme systému najprv povedať v ktorej matici chceme robiť zmeny (v tomto prípade modelú maticu), to urobíme
+	príkazom:
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glMatrixMode(GL_MODELVIEW);</font>
+	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glLoadIdentity();</font> &nbsp; &nbsp;//načítanie základnej matice
+	<br>po zadaní týchto príkazov možno zadávať trasformačné príkazy:
+	<ul><li>rotačné ... glRotate
+		<li>posuvné ... glTranslate
+		<li>mierkové ... glScale
+		<li>priblíženie (má význam pri perspektíve) ... gluLookAt
+	</ul>	  
+	<dl><dt>glTranslate(dx,dy,dz); 
+		<dd>Hodnota dx bude pripočítaná ku x-ovej súradnici všetkých vykreslovaných objektov. Pri perspektíve si musíme uvedomiť pravidlá perspektívy - pri priblížení
+			sa objekt na obrazovke zväčšuje a naopak. 
+			Pri Ortho zobrazení nám teleso alebo jeho časť môžu vybehnúť zo zobrazovaného priestoru a teleso teda nebudeme vidieť prípadne bude orezané.
+			<br>Posunutia sú reálne a je možné to aj určiť upresnením v názve podrogramu glTranslatef.
+		<dt>glRotate(uhol, vektorx, vektory, vektorz)
+		<dd>uhol ... reálne číslo udáva uhol o ktorý chceme otáčať (uhol je zadaný v stupňoch)
+			<br>vektor zadaný svojimi zložkami určuje os okolo ktorej budeme otáčať, smer určujeme pravidlom pravej ruky. Otáčať teda vieme okolo priamok prechádzajúcich počiatkom
+			<br>Príklady
+			<br>glRotate(30, 0, 1, 0); &nbsp; &nbsp;//otočenie okolo osi y o 30 stupňov
+		<dt>glScale(mx,my,mz)
+		<dd>parametre udávajú koeficient, ktorým budú "akoby" všetkým objektom prepočítané súradnice (x:= x*mx, ...). V prípade ak je parameter väčší ako 1 ide o zväčšovanie a naopak.
+			V prípade perspektívy je potrebné si uvedomiť rozdiel medzi priblížením a mierkovaním/zväčšením
+	</dl>
+	<dt>Kreslíme prvý obrázok
+	<dd>Už na tomto jednoduchom obrázku využijeme niektoré výhody systému
+		<ul><li>nemusíme robiť prevod medzi reálnymi a obrazovkovými súradniciami
+			<li>pri otáčaní nemusíme robiť výpočty kam sa ten ktorý bod presunie
+		</ul>
+	No na tentoraz už dosť teórie a ideme kresliť. Zvolíme ortogonálne zobrazenie lebo je jednoduchšie. Celá kresba bude spočívať v kreslení súradných osí a navyše nakreslíme 
+	<ol><li>trojuholník majúci vrcholy na osiach vo vzdialenosti 6 od počiatku farby modrej
+		<li>štvouholník-obdĺžnik majúci farbu žltú polovičnej priesvitnosti a vrcholy [3,0,0],[0,0,3],[3,7,0],[0,7,3] 
+	</ol>		
+	Ešte sa vrátim ku spôsobu zobrazenia, kde máme určiť zobrazovaný priestor, zvolím pre každú súradnicu interval &lt;-8; +8&gt;, čo evidentne bude stačiť aby mi žiadny bod pri ľubovoňom otáčaní
+	z neho nevybehol. Aby sme mali ten správny priestorový dojem nechám objekty rotovať okolo osi y (zvislá os).
+	<br>Inicializácia OpenGl prebehne vo FormCreate a kreslenie bude prebiehať v Timeri. Deklaráciu potrebných premenných
+	a tiež inicializáciu spomínanú v časti "inicializácia" tu už neuvádzam.
+	<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glRotate(uholx,1,0,0);
+  glRotate(uholy,0,1,0);
+
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glBegin(gl_lines);
+  glVertex3i(0,0,0);glVertex3i(7,0,0);
+  glVertex3i(0,0,0);glVertex3i(0,7,0);
+  glVertex3i(0,0,0);glVertex3i(0,0,7);
+   glend();
+
+  glBegin(GL_TRIANGLES);
+  glColor3f(0.5,0.5,1.0);
+  glVertex3i(6,0,0);glVertex3i(0,6,0);glVertex3i(0,0,6);
+   glend();
+  glColor4f(1.0,1.0,0.2,0.7);
+   glBegin(GL_POLYGON);
+  glVertex3i(3,0,0);glVertex3i(0,0,3);glVertex3i(0,7,3);glVertex3i(3,7,0);
+   glend();
+  uholx:=(uholx+2) mod 360;
+   uholy:=(uholy+1) mod 360;
+  SwapBuffers(DC);
+end;
+</div></div></div>
+Iný spôsob ako zvýrazniť, že ide o 3D priestor spočíva v tom, že necháme užívateľa aby si myšou natáčal priestor podľa svojich potrieb. Časovač je tu ponechaný aby sa okno prekrytím, alebo zbalením dole samo "opravilo".
+	<br>Rotácia sa bude vykonávať ošetrovaním udalostí 
+	<br>OnMousedown - tu si zapíšeme, kde sa to stalo a premennú mdole nastavíme na 1
+	<br>OnMouseUp - tu zapíšeme do premennej mdole 0 a vypočítame nové základné otočenie uholx0 a uholy0 
+	<br>OnMouseMove - tu podľa pohybu myši určíme o koľko treba treba otočiť okolo osi y a koľko okolo x
+	<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
+<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
+</div>
+<div style="background-color:#dddddd; width:690px;" >
+<div style="margin:10px">
+<pre>
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+//   timer1.Enabled:=False;
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glBegin(gl_lines);
+  glVertex3i(0,0,0);glVertex3i(7,0,0);
+  glVertex3i(0,0,0);glVertex3i(0,7,0);
+  glVertex3i(0,0,0);glVertex3i(0,0,7);
+   glend();
+
+  glBegin(GL_TRIANGLES);
+  glColor4f(0.5,0.5,1.0,0.7);
+  glVertex3i(6,0,0);glVertex3i(0,6,0);glVertex3i(0,0,6);
+   glend();
+  glColor4f(1.0,1.0,0.2,0.8);
+   glBegin(GL_POLYGON);
+  glColor4f(1.0,1.0,0.2,0.8);
+  glVertex3i(3,0,0);glVertex3i(0,0,3);glVertex3i(0,7,3);glVertex3i(3,7,0);
+   glend();
+  SwapBuffers(DC);
+end;
+
+procedure TForm1.dole(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+mx:=X; my:=Y;
+mdole:=1;
+end;
+
+procedure TForm1.hore(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+    mdole:=0;
+    uholx0:=uholx;
+    uholy0:=uholy;
+end;
+
+procedure TForm1.pohyb(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+if mdole =1 then
+Begin
+  uholx:=uholx0-(my-Y) div 2; uholy:=uholy0-(mx-X) div 2;
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glRotate(uholx,1,0,0);
+  glRotate(uholy,0,1,0);
+  Timer1Timer(Form1);
+End;
+
+</div></div></div>
+a výsledok by mohol vyzerať nasledovne
+<br><img src="obr/u1.png" width="692" height="460" border="0" alt="">
+<br>obrázok možno chytením myšou otáčať okolo osi x (vodorovnej osi) a okolo osi y (zvislá os)		
+
+
+</body>
+</html>

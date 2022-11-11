@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_28.jpg" class="nehe_maly" alt="Lekce 28" />
+
+<h1>Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix</h1>
+
+<p class="nadpis_clanku">David Nikdel je osoba stojící za tímto skvělým tutoriálem, ve kterém se naučíte, jak se vytvářejí Bezierovy křivky. Díky nim lze velice jednoduše zakřivit povrch a provádět jeho plynulou animaci pouhou modifikací několika kontrolních bodů. Aby byl výsledný povrch modelu ještě zajímavější, je na něj namapována textura. Tutoriál také eliminuje problémy s fullscreenem, kdy se po návratu do systému neobnovilo původní rozlišení obrazovky.</p>
+
+<p>Tento tutoriál je od začátku zamýšlen pouze jako úvod do Bezierových křivek, aby někdo mnohem šikovnější než já dokázal vytvořit něco opravdu skvělého. Neberte ho jako kompletní Bezier knihovnu, ale spíše jako koncept, jak tyto křivky pracují a co dokáží. Také prosím omluvte mou, v některých případech, ne až tak správnou terminologii. Doufám, že bude alespoň trochu srozumitelná. Abych tak řekl: Nikdo není dokonalý...</p>
+
+<p>Pochopit Bezierovy křivky s nulovými znalostmi matematiky je nemožné. Proto bude následovat maličko delší sekce teorie, která by vás měla do problematiky alespoň trochu zasvětit. Pokud všechno už znáte, nic vám nebrání tuto nut(d)nou sekci přeskočit a věnovat se kódu.</p>
+
+<p>Bezierovy křivky bývají primární metodou, jak v grafických editorech či obyčejných programech vykreslovat zakřivené linky. Jsou obvykle reprezentovány sérií bodů, z nich každé dva reprezentují tečnu ke grafu funkce.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_28_krivka1.gif" width="260" height="110" alt="Bezierova křivka" /></div>
+
+<p>Toto je nejjednodušší možná Bezierova křivka. Delší jsou tvořeny spojením několika dohromady. Je tvořena pouze čtyřmi body, dva konce a dva středové kontrolní body. Pro počítač jsou všechny úplně stejné, ale abychom si pomohli, spojujeme první a poslední dva. Linky budou vždy tečnami k ukončovacím bodům. Parametrické křivky jsou kresleny nalezením libovolného počtu bodů rovnoměrně rozprostřených po křivce, které se spojí čárami. Počtem bodů můžeme ovládat hranatost křivky a samozřejmě také dobu trvání výpočtů. Podaří-li se nám množství bodů správně regulovat, pozorovatel v každém okamžiku uvidí perfektně zakřivený povrch bez trhání animace.</p>
+
+<p>Všechny Bezierovy křivky jsou v založeny na základním vzorci funkce. Komplikovanější verze jsou z něj odvozeny.</p>
+
+<p class="src0">t + (1 - t) = 1</p>
+
+<p>Vypadá jednoduše? Ano, rovnice jednoduchá určitě je, ale nesmíme zapomenout na to, že je to pouze Bezierova křivka prvního stupně. Použijeme-li trochu terminologie: Bezierovy křivky jsou polynomiální (mnohočlenné). Jak si zajisté pamatujete z algebry, první stupeň z polynomu je přímka - nic zajímavého. Základní funkce vychází, dosadíme-li libovolné číslo t. Rovnici můžeme ovšem také mocnit na druhou, na třetí, na jakékoli číslo, protože se obě strany rovnají jedné. Zkusíme ji tedy umocnit na třetí.</p>
+
+<p class="src0">(t + (1 - t))<sup>3</sup> = 1<sup>3</sup></p>
+<p class="src0">t<sup>3</sup> + 3t<sup>2</sup>(1 - t) + 3t(1 - t)<sup>2</sup> + (1 - t)<sup>3</sup> = 1</p>
+
+<p>Tuto rovnici použijeme k výpočtu mnohem více používanější křivky - Bezierovy křivky třetího stupně. Pro toto rozhodnutí existují dva důvody:</p>
+
+<ul>
+<li>Tento polynomiál je nejnižšího možného stupně, kdy už křivka nemusí ležet v rovině, ale i v prostoru.</li>
+<li>Tečny k funkci už nejsou závislé na jiných (křivky 2. stupně mohou mýt pouze tři kontrolní body, my potřebujeme čtyři).</li>
+</ul>
+
+<p>Zbývá ale dodat ještě jedna věc... Celá levá strana rovnice se rovná jedné, takže je bezpečné předpokládat, že pokud přidáme všechny složky měla by se stále rovnat jedné. Zní to, jako by to mohlo být použito k rozhodnutí kolik z každého kontrolního bodu lze použít při výpočtu bodu na křivce? (nápověda: Prostě řekni ano ;-) Ano. Správně! Pokud chceme spočítat hodnotu bodu v procentech vzdálenosti na křivce, jednoduše násobíme každou složku kontrolním bodem (stejně jako vektor) a nalezneme součet. Obecně budeme pracovat s hodnotami 0 &gt;= t &gt;= 1, ale není to technicky nutné. Dokonale zmateni? Raději napíšu tu funkci.</p>
+
+<p class="src0">P1*t<sup>3</sup> + P2*3*t<sup>2</sup>*(1-t) + P3*3*t*(1-t)<sup>2</sup> + P4*(1-t)<sup>3</sup> = P<sub>new</sub></p>
+
+<p>Protože jsou polynomiály vždy spojité, jsou dobrou cestou k pohybu mezi čtyřmi body. Můžeme dosáhnout ale vždy pouze okrajových bodů (P1 a P4). Pokud tuto větu nechápete, podívejte se na první obrázek. V těchto případech se t = 0 popř. t = 1.</p>
+
+<p>To je sice hezké, ale jak mám použít Bezierovy křivky ve 3D? Je to docela jednoduché. Potřebujeme 16 kontrolních bodů (4x4) a dvě proměnné t a v. Vytvoříme z nich čtyři paralelní křivky. Na každé z nich spočítáme jeden bod při určitém v a použijeme tyto čtyři body k vytvoření nové křivky a spočítáme t. Nalezením více bodů můžeme nakreslit triangle strip a tím zobrazit Bezierův povrch.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_28_krivka2.gif" width="280" height="145" alt="Bezierův povrch" />
+<img src="images/nehe_tut/tut_28_krivka3.jpg" width="280" height="145" alt="Princip vytváření Bezierova povrchu" />
+</div>
+
+<p>Přepokládám, že matematiky už bylo dost. Pojďme se vrhnout na kód této lekce. ( Ze všeho nejdříve vytvoříme struktury. POINT_3D je obyčejný bod ve třírozměrném prostoru. Druhá struktura je už trochu zajímavější - představuje Bezierův povrch. Anchors[4][4] je dvourozměrné pole 16 řídících bodů. Do display listu dlBPatch uložíme výsledný model a texture ukládá texturu, kterou na něj namapujeme.</p>
+
+<p class="src0">typedef struct point_3d<span class="kom">// Struktura bodu</span></p>
+<p class="src0">{</p>
+<p class="src1">double x, y, z;</p>
+<p class="src0">} POINT_3D;</p>
+<p></p>
+<p class="src0">typedef struct bpatch<span class="kom">// Struktura Bezierova povrchu</span></p>
+<p class="src0">{</p>
+<p class="src1">POINT_3D anchors[4][4];<span class="kom">// Mřížka řídících bodů (4x4)</span></p>
+<p class="src1">GLuint dlBPatch;<span class="kom">// Display list</span></p>
+<p class="src1">GLuint texture;<span class="kom">// Textura</span></p>
+<p class="src0">} BEZIER_PATCH;</p>
+
+<p>Mybezier je objektem právě vytvořené textury, rotz kontroluje úhel natočení scény. ShowCPoints indikuje, jestli vykreslujeme mřížku mezi řídícími body nebo ne. Divs určuje hladkost (hranatost) výsledného povrchu.</p>
+
+<p class="src0">BEZIER_PATCH mybezier;<span class="kom">// Bezierův povrch</span></p>
+<p></p>
+<p class="src0">GLfloat rotz = 0.0f;<span class="kom">// Rotace na ose z</span></p>
+<p class="src0">BOOL showCPoints = TRUE;<span class="kom">// Flag pro zobrazení mřížky mezi kontrolními body</span></p>
+<p class="src0">int divs = 7;<span class="kom">// Počet interpolací (množství vykreslovaných polygonů)</span></p>
+
+<p>Jestli si pamatujete, tak v úvodu jsem psal, že budeme maličko upravovat kód pro vytváření okna tak, aby se při návratu z fullscreenu obnovilo původní rozlišení obrazovky (některé grafické karty s tím mají problémy). DMsaved ukládá původní nastavení monitoru před vstupem do fullscreenu.</p>
+
+<p class="src0">DEVMODE DMsaved;<span class="kom">// Ukládá původní nastavení monitoru</span></p>
+
+<p>Následuje několik pomocných funkcí pro jednoduchou vektorovou matematiku. Sčítání, násobení a vytváření 3D bodů. Nic složitého.</p>
+
+<p class="src0">POINT_3D pointAdd(POINT_3D p, POINT_3D q)<span class="kom">// Sčítání dvou bodů</span></p>
+<p class="src0">{</p>
+<p class="src1">p.x += q.x;</p>
+<p class="src1">p.y += q.y;</p>
+<p class="src1">p.z += q.z;</p>
+<p></p>
+<p class="src1">return p;</p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">POINT_3D pointTimes(double c, POINT_3D p)<span class="kom">// Násobení bodu konstantou</span></p>
+<p class="src0">{</p>
+<p class="src1">p.x *= c;</p>
+<p class="src1">p.y *= c;</p>
+<p class="src1">p.z *= c;</p>
+<p></p>
+<p class="src1">return p;</p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">POINT_3D makePoint(double a, double b, double c)<span class="kom">// Vytvoření bodu ze tří čísel</span></p>
+<p class="src0">{</p>
+<p class="src1">POINT_3D p;</p>
+<p></p>
+<p class="src1">p.x = a;</p>
+<p class="src1">p.y = b;</p>
+<p class="src1">p.z = c;</p>
+<p></p>
+<p class="src1">return p;</p>
+<p class="src0">}</p>
+
+<p>Funkcí Bernstein() počítáme bod, který leží na Bezierově křivce. V parametrech jí předáváme proměnnou u, která specifikuje procentuální vzdálenost bodu od okraje křivky vzhledem k její délce a pole čtyř bodů, které jednoznačně definují křivku. Vícenásobným voláním a krokováním u vždy o stejný přírůstek můžeme získat aproximaci křivky.</p>
+
+<p class="src0">POINT_3D Bernstein(float u, POINT_3D *p)<span class="kom">// Spočítá souřadnice bodu ležícího na křivce</span></p>
+<p class="src0">{</p>
+<p class="src1">POINT_3D a, b, c, d, r;<span class="kom">// Pomocné proměnné</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Výpočet podle vzorce</span></p>
+<p class="src1">a = pointTimes(pow(u,3), p[0]);</p>
+<p class="src1">b = pointTimes(3 * pow(u,2) * (1-u), p[1]);</p>
+<p class="src1">c = pointTimes(3 * u * pow((1-u), 2), p[2]);</p>
+<p class="src1">d = pointTimes(pow((1-u), 3), p[3]);</p>
+<p></p>
+<p class="src1">r = pointAdd(pointAdd(a, b), pointAdd(c, d));<span class="kom">// Sečtení násobků a, b, c, d</span></p>
+<p class="src1"></p>
+<p class="src1">return r;<span class="kom">// Vrácení výsledného bodu</span></p>
+<p class="src0">}</p>
+
+<p>Největší část práce odvádí funkce genBezier(). Spočítá křivky, vygeneruje triangle strip a výsledek uloží do display listu. Použití display listu je v tomto případě více než vhodné, protože nemusíme provádět složité výpočty při každém framu, ale pouze při změnách vyžádaných uživatelem. Odstraní se tím zbytečné zatížení procesoru. Funkci předáváme strukturu BEZIER_PATCH, v níž jsou uloženy všechny potřebné řídící body. Divs určuje kolikrát budeme provádět výpočty - ovládá hranatost výsledného modelu. Následující obrázky jsou získány přepnutím do režimu vykreslování linek místo polygonů (glPolygonMode(GL_FRONT_AND_BACK, GL_LINES)) a zakázáním textur. Jasně je vidět, že čím je číslo v divs větší, tím je objekt zaoblenější.</p>
+
+<div class="okolo_img">
+<img src="images/nehe_tut/tut_28_bezier1.gif" width="200" height="183" alt="Drátový model Bezierova povrchu" />
+<img src="images/nehe_tut/tut_28_bezier2.gif" width="200" height="183" alt="Drátový model Bezierova povrchu" />
+<img src="images/nehe_tut/tut_28_bezier3.gif" width="200" height="183" alt="Drátový model Bezierova povrchu" />
+<img src="images/nehe_tut/tut_28_bezier4.gif" width="200" height="183" alt="Drátový model Bezierova povrchu" />
+<img src="images/nehe_tut/tut_28_bezier5.gif" width="200" height="183" alt="Drátový model Bezierova povrchu" />
+<img src="images/nehe_tut/tut_28_bezier6.gif" width="200" height="183" alt="Drátový model Bezierova povrchu" />
+</div>
+
+<p class="src0">GLuint genBezier(BEZIER_PATCH patch, int divs)<span class="kom">// Generuje display list Bezierova povrchu</span></p>
+<p class="src0">{</p>
+
+<p>Proměnné u, v řídí cykly generující jednotlivé body na Bezierově křivce a py, px, pyold jsou jejich procentuální hodnoty, které slouží k určení místa na křivce. Nabývají hodnot v intervalu od 0 do 1, takže je můžeme bez komplikací použít i jako texturovací koordináty. Drawlist je display list, do kterého kreslíme výsledný povrch. Do temp uložíme čtyři body pro získání pomocné Bezierovy křivky. Dynamické pole last ukládá minulý řádek bodů, protože pro triangle strip potřebujeme dva řádky.</p>
+
+<p class="src1">int u = 0, v;<span class="kom">// Řídící proměnné</span></p>
+<p class="src1">float py, px, pyold;<span class="kom">// Procentuální hodnoty</span></p>
+<p></p>
+<p class="src1">GLuint drawlist = glGenLists(1);<span class="kom">// Display list</span></p>
+<p></p>
+<p class="src1">POINT_3D temp[4];<span class="kom">// Řídící body pomocné křivky</span></p>
+<p class="src1">POINT_3D* last = (POINT_3D*) malloc(sizeof(POINT_3D) * (divs+1));<span class="kom">// První řada polygonů</span></p>
+<p></p>
+<p class="src1">if (patch.dlBPatch != NULL)<span class="kom">// Pokud existuje starý display list</span></p>
+<p class="src2">glDeleteLists(patch.dlBPatch, 1);<span class="kom">// Smažeme ho</span></p>
+<p></p>
+<p class="src1">temp[0] = patch.anchors[0][3];<span class="kom">// První odvozená křivka (osa x)</span></p>
+<p class="src1">temp[1] = patch.anchors[1][3];</p>
+<p class="src1">temp[2] = patch.anchors[2][3];</p>
+<p class="src1">temp[3] = patch.anchors[3][3];</p>
+<p></p>
+<p class="src1">for (v = 0; v &lt;= divs; v++)<span class="kom">// Vytvoří první řádek bodů</span></p>
+<p class="src1">{</p>
+<p class="src2">px = ((float)v) / ((float)divs);<span class="kom">// Px je procentuální hodnota v</span></p>
+<p class="src2">last[v] = Bernstein(px, temp);<span class="kom">// Spočítá bod na křivce ve vzdálenosti px</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glNewList(drawlist, GL_COMPILE);<span class="kom">// Nový display list</span></p>
+<p class="src2">glBindTexture(GL_TEXTURE_2D, patch.texture);<span class="kom">// Zvolí texturu</span></p>
+
+<p>Vnější cyklus prochází řádky a vnitřní jednotlivé sloupce. Nebo to může být i naopak. Záleží na tom, co si každý představí pod pojmy řádek a sloupec :-)</p>
+
+<p class="src2">for (u = 1; u &lt;= divs; u++)<span class="kom">// Prochází body na křivce</span></p>
+<p class="src2">{</p>
+<p class="src3">py  = ((float)u) / ((float)divs);<span class="kom">// Py je procentuální hodnota u</span></p>
+<p class="src3">pyold = ((float)u - 1.0f) / ((float)divs);<span class="kom">// Pyold má hodnotu py při minulém průchodu cyklem</span></p>
+
+<p>V každém prvku pole patch.anchors[] máme uloženy čtyři řídící body (dvourozměrné pole). Celé pole dohromady tvoří čtyři paralelní křivky, které si označíme jako řádky. Nyní spočítáme body, které jsou umístěny na všech čtyřech křivkách ve stejné vzdálenosti py a uložíme je do pole temp[], které představuje sloupec v řádku a celkově tvoří čtyři řídící body nové křivky pro sloupec.</p>
+
+<p>Celou akci si představte jako trochu komplikovanější procházení dvourozměrného pole - vnější cyklus prochází řádky a vnitřní sloupce. Z upravených řídících proměnných si vybíráme pozice bodů a texturovací koordináty. Py s pyold představuje dva &quot;rovněběžné&quot; řádky a px sloupec. (Překl.: Než jsem tohle pochopil... v originále o tom nebyla ani zmínka).</p>
+
+<p class="src3">temp[0] = Bernstein(py, patch.anchors[0]);<span class="kom">// Spočítá Bezierovy body pro křivku</span></p>
+<p class="src3">temp[1] = Bernstein(py, patch.anchors[1]);</p>
+<p class="src3">temp[2] = Bernstein(py, patch.anchors[2]);</p>
+<p class="src3">temp[3] = Bernstein(py, patch.anchors[3]);</p>
+<p></p>
+<p class="src3">glBegin(GL_TRIANGLE_STRIP);<span class="kom">// Začátek kreslení triangle stripu</span></p>
+<p class="src4">for (v = 0; v &lt;= divs; v++)<span class="kom">// Prochází body na křivce</span></p>
+<p class="src4">{</p>
+<p class="src5">px = ((float)v) / ((float)divs);<span class="kom">// Px je procentuální hodnota v</span></p>
+<p></p>
+<p class="src5">glTexCoord2f(pyold, px);<span class="kom">// Texturovací koordináty z minulého průchodu</span></p>
+<p class="src5">glVertex3d(last[v].x, last[v].y, last[v].z);<span class="kom">// Bod z minulého průchodu</span></p>
+
+<p>Do pole last nyní uložíme nové hodnoty, které se při dalším průchodu cyklem stanou opět starými.</p>
+
+<p class="src5">last[v] = Bernstein(px, temp);<span class="kom">// Generuje nový bod</span></p>
+<p></p>
+<p class="src5">glTexCoord2f(py, px);<span class="kom">// Nové texturové koordináty</span></p>
+<p class="src5">glVertex3d(last[v].x, last[v].y, last[v].z);<span class="kom">// Nový bod</span></p>
+<p class="src4">}</p>
+<p class="src3">glEnd();<span class="kom">// Konec triangle stripu</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src1">glEndList();<span class="kom">// Konec display listu</span></p>
+<p></p>
+<p class="src1">free(last);<span class="kom">// Uvolní dynamické pole vertexů</span></p>
+<p class="src1">return drawlist;<span class="kom">// Vrátí právě vytvořený display list</span></p>
+<p class="src0">}</p>
+
+<p>Jediná věc, kterou neděláme, ale která by se určitě mohla hodit, jsou normálové vektory pro světlo. Když na ně přijde, máme dvě možnosti. V první nalezneme střed každého trojúhelníku, aplikujeme na něj několik výpočtu k získáním tečen k Bezierově křivce na osách x a y, vektorově je vynásobíme a tím získáme vektor kolmý současně k oběma tečnám. Po normalizování ho můžeme použít jako normálu. Druhý způsob je rychlejší a jednodušší, ale méně přesný. Můžeme cheatovat a použít normálový vektor trojúhelníku (spočítaný libovolným způsobem). Tím získáme docela dobrou aproximaci. Osobně preferuji druhou, jednodušší cestu, která ovšem nevypadá tak realistiky.</p>
+
+<p>Ve funkci initBezier() inicializujeme matici kontrolních bodů na výchozí hodnoty. Pohrajte si s nimi, ať vidíte, jak jednoduše se dají měnit tvary povrchů.</p>
+
+<p class="src0">void initBezier(void)<span class="kom">// Počáteční nastavení kontrolních bodů</span></p>
+<p class="src0">{</p>
+<p class="src1">mybezier.anchors[0][0] = makePoint(-0.75,-0.75,-0.5);</p>
+<p class="src1">mybezier.anchors[0][1] = makePoint(-0.25,-0.75, 0.0);</p>
+<p class="src1">mybezier.anchors[0][2] = makePoint( 0.25,-0.75, 0.0);</p>
+<p class="src1">mybezier.anchors[0][3] = makePoint( 0.75,-0.75,-0.5);</p>
+<p class="src1">mybezier.anchors[1][0] = makePoint(-0.75,-0.25,-0.75);</p>
+<p class="src1">mybezier.anchors[1][1] = makePoint(-0.25,-0.25, 0.5);</p>
+<p class="src1">mybezier.anchors[1][2] = makePoint( 0.25,-0.25, 0.5);</p>
+<p class="src1">mybezier.anchors[1][3] = makePoint( 0.75,-0.25,-0.75);</p>
+<p class="src1">mybezier.anchors[2][0] = makePoint(-0.75, 0.25, 0.0);</p>
+<p class="src1">mybezier.anchors[2][1] = makePoint(-0.25, 0.25,-0.5);</p>
+<p class="src1">mybezier.anchors[2][2] = makePoint( 0.25, 0.25,-0.5);</p>
+<p class="src1">mybezier.anchors[2][3] = makePoint( 0.75, 0.25, 0.0);</p>
+<p class="src1">mybezier.anchors[3][0] = makePoint(-0.75, 0.75,-0.5);</p>
+<p class="src1">mybezier.anchors[3][1] = makePoint(-0.25, 0.75,-1.0);</p>
+<p class="src1">mybezier.anchors[3][2] = makePoint( 0.25, 0.75,-1.0);</p>
+<p class="src1">mybezier.anchors[3][3] = makePoint( 0.75, 0.75,-0.5);</p>
+<p></p>
+<p class="src1">mybezier.dlBPatch = NULL;<span class="kom">// Display list ještě neexistuje</span></p>
+<p class="src0">}</p>
+
+<p>InitGL() je celkem standardní. Na jejím konci zavoláme funkce pro inicializaci kontrolních bodů, nahrání textury a vygenerování display listu Bezierova povrchu.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Inicializace</span></p>
+<p class="src0">{</p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturování</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Perspektivní korekce</span></p>
+<p></p>
+<p class="src1">initBezier();<span class="kom">// Inicializace kontrolních bodů</span></p>
+<p class="src1">LoadGLTexture(&amp;(mybezier.texture), &quot;./data/NeHe.bmp&quot;);<span class="kom">// Loading textury</span></p>
+<p class="src1">mybezier.dlBPatch = genBezier(mybezier, divs);<span class="kom">// Generuje display list Bezierova povrchu</span></p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace v pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Vykreslování není oproti minulým tutoriálům vůbec složité. Po všech translacích a rotacích zavoláme display list a potom případně propojíme řídící body červenými čarami. Chcete-li linky zapnout nebo vypnout stiskněte mezerník.</p>
+
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Všechno kreslení</span></p>
+<p class="src0">{</p>
+<p class="src1">int i, j;<span class="kom">// Řídící proměnné cyklů</span></p>
+<p></p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -4.0f);<span class="kom">// Přesun do hloubky</span></p>
+<p class="src1">glRotatef(-75.0f, 1.0f, 0.0f, 0.0f);<span class="kom">// Rotace na ose x</span></p>
+<p class="src1">glRotatef(rotz, 0.0f, 0.0f, 1.0f);<span class="kom">// Rotace na ose z</span></p>
+<p></p>
+<p class="src1">glCallList(mybezier.dlBPatch);<span class="kom">// Vykreslí display list Bezierova povrchu</span></p>
+<p></p>
+<p class="src1">if (showCPoints)<span class="kom">// Pokud je zapnuté vykreslování mřížky</span></p>
+<p class="src1">{</p>
+<p class="src2">glDisable(GL_TEXTURE_2D);<span class="kom">// Vypne texturování</span></p>
+<p class="src2">glColor3f(1.0f, 0.0f, 0.0f);<span class="kom">// Červená barva</span></p>
+<p></p>
+<p class="src2">for(i = 0; i &lt; 4; i++)<span class="kom">// Horizontální linky</span></p>
+<p class="src2">{</p>
+<p class="src3">glBegin(GL_LINE_STRIP);<span class="kom">// Kreslení linek</span></p>
+<p class="src4">for(j = 0; j &lt; 4; j++)<span class="kom">// Čtyři linky</span></p>
+<p class="src4">{</p>
+<p class="src5">glVertex3d(mybezier.anchors[i][j].x, mybezier.anchors[i][j].y, mybezier.anchors[i][j].z);</p>
+<p class="src4">}</p>
+<p class="src3">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">for(i = 0; i &lt; 4; i++)<span class="kom">// Vertikální linky</span></p>
+<p class="src2">{</p>
+<p class="src3">glBegin(GL_LINE_STRIP);<span class="kom">// Kreslení linek</span></p>
+<p class="src4">for(j = 0; j &lt; 4; j++)<span class="kom">// Čtyři linky</span></p>
+<p class="src4">{</p>
+<p class="src5">glVertex3d(mybezier.anchors[j][i].x, mybezier.anchors[j][i].y, mybezier.anchors[j][i].z);</p>
+<p class="src4">}</p>
+<p class="src3">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">glColor3f(1.0f, 1.0f, 1.0f);<span class="kom">// Bílá barva</span></p>
+<p class="src2">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturování</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// V pořádku</span></p>
+<p class="src0">}</p>
+
+<p>Práci s Bezierovými křivkami jsme úspěšně dokončili, ale ještě nesmíme zapomenout na fullscreen fix. Odstraňuje problém s přepínám z fullscreenu do okenního módu, kdy některé grafické karty správně neobnovují původní rozlišení obrazovky (např. moje stařičká ATI Rage PRO a několik dalších). Doufám, že budete používat tento pozměněný kód, aby si každý mohl bez komplikací vychutnat vaše skvělá OpenGL dema. V tutoriálu jsme provedli celkem tři změny. První při deklaraci proměnných, kdy jsme vytvořili proměnnou DEVMODE DMsaved. Druhou najdete v CreateGLWindow(), kde jsme tuto pomocnou strukturu naplnili informacemi o aktuálním nastavení. Třetí změna je v KillGLWindow(), kde se obnovuje původní uložené nastavení.</p>
+
+<p class="src0">BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscreenflag)<span class="kom">// Vytváření okna</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Deklarace proměnných</span></p>
+<p></p>
+<p class="src1">EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &amp;DMsaved);<span class="kom">// Uloží aktuální nastavení obrazovky</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Vše ostatní zůstává stejné</span></p>
+<p class="src0">}</p>
+<p></p>
+<p class="src0">GLvoid KillGLWindow(GLvoid)<span class="kom">// Zavření okna</span></p>
+<p class="src0">{</p>
+<p class="src1">if (fullscreen)<span class="kom">// Jsme ve fullscreenu?</span></p>
+<p class="src1">{</p>
+<p class="src2">if (!ChangeDisplaySettings(NULL, CDS_TEST))<span class="kom">// Pokud pokusná změna nefunguje</span></p>
+<p class="src2">{</p>
+<p class="src3">ChangeDisplaySettings(NULL, CDS_RESET);<span class="kom">// Odstraní hodnoty z registrů</span></p>
+<p class="src3">ChangeDisplaySettings(&amp;DMsaved, CDS_RESET);<span class="kom">// Použije uložené nastavení</span></p>
+<p class="src2">}</p>
+<p class="src2">else</p>
+<p class="src2">{</p>
+<p class="src3">ChangeDisplaySettings(NULL, CDS_RESET);</p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">ShowCursor(TRUE);<span class="kom">// Zobrazí ukazatel myši</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1"><span class="kom">// Vše ostatní zůstává stejné</span></p>
+<p class="src0">}</p>
+
+<p>Poslední věcí jsou už standardní testy stisku kláves.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src3">if (keys[VK_LEFT])<span class="kom">// Šipka doleva</span></p>
+<p class="src3">{</p>
+<p class="src4">rotz -= 0.8f;<span class="kom">// Rotace doleva</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (keys[VK_RIGHT])<span class="kom">// Šipka doprava</span></p>
+<p class="src3">{</p>
+<p class="src4">rotz += 0.8f;<span class="kom">// Rotace doprava</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (keys[VK_UP])<span class="kom">// Šipka nahoru</span></p>
+<p class="src3">{</p>
+<p class="src4">divs++;<span class="kom">// Menší hranatost povrchu</span></p>
+<p class="src4">mybezier.dlBPatch = genBezier(mybezier, divs);<span class="kom">// Aktualizace display listu</span></p>
+<p class="src4">keys[VK_UP] = FALSE;</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (keys[VK_DOWN] &amp;&amp; divs &gt; 1)<span class="kom">// Šipka dolů</span></p>
+<p class="src3">{</p>
+<p class="src4">divs--;<span class="kom">// Větší hranatost povrchu</span></p>
+<p class="src4">mybezier.dlBPatch = genBezier(mybezier, divs);<span class="kom">// Aktualizace display listu</span></p>
+<p class="src4">keys[VK_DOWN] = FALSE;</p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if (keys[VK_SPACE])<span class="kom">// Mezerník</span></p>
+<p class="src3">{</p>
+<p class="src4">showCPoints = !showCPoints;<span class="kom">// Zobrazí/skryje linky mezi řídícími body</span></p>
+<p class="src4">keys[VK_SPACE] = FALSE;</p>
+<p class="src3">}</p>
+
+<p>Doufám, že pro vás byl tento tutoriál poučný a že od nynějška miluje Bezierovy křivky stejně jako já ;-) Ještě jsem se o tom nezmínil, ale mnohé z vás jistě napadlo, že se s nimi dá vytvořit perfektní morfovací efekt. A velmi jednoduše! Nezapomeňte, se mění poloha pouze šestnácti bodů. Zkuste o tom popřemýšlet...</p>
+
+<p class="autor">napsal: David Nikdel <span class="transform_email">&lt;ogapo (zavináč) ithink.net&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul>
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson28.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson28_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson28.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson28.zip">Delphi</a> kód této lekce. ( <a href="mailto:webmaster@joachimrohde.de">Joachim Rohde</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson28.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson28.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson28.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson28.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:rodolphe.suescun@wanadoo.fr">Rodolphe Suescun</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson28.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson28.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_28_big.jpg" class="nehe_velky" alt="Lekce 28" /></div>
+<p class="okolni_lekce"><a href="tut_27.php">&lt;&lt;&lt; Lekce 27</a> | <a href="tut_29.php">Lekce 29 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+Žádné příspěvky...<form action="d_view.php" method="post" class="d_o_obsah">
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_28.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

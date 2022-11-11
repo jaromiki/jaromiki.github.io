@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Pole</title>
+</head>
+
+<body>
+<h3>Pole</h3>
+<dl><dt>Použitie
+	<dd>Doteraz sme používali jednoduché premenné, t.j. premenné do ktorých možno zapísať jedno číslo alebo jeden znak. Teraz si ukážeme,
+		ako vytvoriť premennú do ktorej možno zapísať hodnôt viac. Je to podobné ako keď stavbári stavajú domy - do jedného domu možno
+		ubytovať len jednu rodinu, teraz si ukážeme ako postaviť hotel (premenná), ktorý má očíslované izby a my v každej izbe môžme ubytovať
+		rodinu/osobu. Koľko má hotel izieb, toľko hodnôt možno do premennej zapísať. Prístup ku položkám/izbám je pomocou hranatých zátvoriek
+		v ktorých je uvedené číslo izby. 
+		<br>int hotel[100]; &nbsp; &nbsp; &nbsp;//postavil som hotel pre cel0 čísla so 100 izbami očíslovanými od 0 po 99
+		<br>hotel[5]=100; &nbsp; &nbsp; &nbsp;//do izby 5 som ubytoval pána číslo 100
+		<br>hotel[99]=hotel[99]+10; &nbsp; &nbsp; &nbsp;//v izbe 99 odteraz býva číslo o 10 väčšie
+	<dt>Presnejšie:
+	<dd>Pole je dátový typ, skladajúci sa z pevného počtu objektov rovnakého typu. Prístup ku položkám je pomocou indexu uvedeného v hranatých zátvorkách. 
+		Indexovanie je v jazyku C od 0 do (pocet-1).
+		<br>Statické pole - počet prvkov je daný deklaráciou a nedá sa meniť
+		<br>Dynamické pole - počet prvkov určíme za behu programu a možno aj meniť
+	<dt>Deklarácia statického poľa:
+	<dd><i>typ meno [pocet] </i>
+		<br>typ ......... identifikátor typu položiek poľa
+		<br>meno ........ identifikátor poľa
+		<br>pocet ....... celočíselná konštanta
+		<br>položky poľa majú indexy 0 .. pocet-1
+	<dt>Inicializácia
+	<dd>Podobne ako pri jednoduchých premenných možno v deklarácii určiť počiatočné hodnoty 
+		<br>Možnosti:
+		<ul><li>uvedieme počet a daný počet prvkov aj uvedieme int a[5]={1,2,3,4,5}
+			<li>uvedieme počet a menší počet prvkov aj uvedieme int a[5]={1,2} //...zvyšné sú nulové/nenastavené
+			<li>neuvedieme počet a nejaký počet prvkov uvedieme int a[]={1,2,3,4,5}  // vytvorí pole 5 prvkov
+			<LI>znakové pole char z[5]={'A','h','o','j','!'}
+			<LI>znakové pole char z[5]={"Ahoj"}  // je povolené pole znakov zadávať ako reťazec, do poslednej bunky zapíše '\0'
+			
+		</ul>	 
+	<dt>Poznámka:
+	<dd><ul><li>sizeof(pole) ................. vráti velkosť poľa v B
+			<li>sizeof(*pole)................. vráti velkosť položky poľa
+			<li>sizeof(pole+1)................ vráti veľkosť smerníka
+		</ul>		
+	<dt>Práca s poľom
+	<dd><ol><li>celé pole - ak uvedieme identifikátor poľa bez indexu je to chápané ako smerníkový výraz ukazujúci na nultú polozku poľa.
+			<li>položka - identifikátor[index], alebo *(identifikátor+index). Oba tieto zápisy sú rovnocenné a môžeme ich ľubovoľne zamieňať
+		</ol>
+		Ak chceme naplniť všetky položky poľa alebo vypísať všetky položky poľa musíme prejsť cez všetky prvky poľa, čo urobíme najjednoduhšie pomocou cykla for.
+		<table width="60%" bgcolor="#dddddd" border="1">
+		<tr><th bgcolor=#33ccff align="left">Naplnenie poľa hotel postupnosťou 1, 3, 5, 7, ...</tr>
+		<tr><td bgcolor=#dddddd><pre>...
+for (i=0; i&lt;n ; i++) hotel[i]=2*i+1;	
+...</pre><tr>
+		</table>
+		<br>
+		<table width="60%" bgcolor="#dddddd" border="1">
+		<tr><th bgcolor=#33ccff align="left">Naplnenie poľa hotel náhodnými 3-cifernými číslami</tr>
+		<tr><td bgcolor=#dddddd><pre>...
+for (i=0; i&lt;n ; i++) hotel[i]=100+Random(900);	</pre><tr>
+		</table>
+		<br>
+		<table width="60%" bgcolor="#dddddd" border="1">
+		<tr><th bgcolor=#33ccff align="left">Výpis poľa na samostatné riadky</tr>
+		<tr><td bgcolor=#dddddd><pre>...
+for (i=0; i&lt;n ; i++) cout &lt;&lt; hotel[i]&lt;&lt; endl;	
+...</pre><tr>
+		</table>
+		<br>
+		<table width="60%" bgcolor="#dddddd" border="1">
+		<tr><th bgcolor=#33ccff align="left">Výpis čísla izby aj s nájomníkom na samostatných riadkoch</tr>
+		<tr><td bgcolor=#dddddd><pre>...
+for (i=0; i&lt;n ; i++) {cout.width(4);cout &lt;&lt; i; cout.width(5);cout &lt;&lt; hotel[i]&lt;&lt; endl;}
+...</pre><tr>
+		</table>
+	<dt>Pole ako parameter funkcie
+	<dd>Tak ako sme zvyknutý preniesť celé pole ako parameter to tu nejde, ale prenáša sa smerník na pole. Treba si uvedomiť, že zmenou poľa v podprograme 
+		sa zmení aj príslušné pole v hlavnom programe. 
+		<br>Možnosti v deklarácii/definícii funkcie:
+			<ul><li>void citaj(int pole[], int n) // počet prvkov pola je neznámy - musíme dať cez druhý parameter
+				<li>void citaj(int *pole, int n) // počet prvkov pola je neznámy - musíme dať cez druhý parameter
+					<br>{ for (int i=0; i&lt;n;i++) scanf("%i",pole[i]);
+					<br> &nbsp; for (int i=0; i&lt;n;i++) printf("%i ",*(pole+i));
+					<br>}	  
+			</ul>
+		Tieto dva spôsoby sú pri statickom poli rovnocenné.		
+	<dt>Ukážky
+	<dd><table bgcolor="Silver"><tr><td>
+<pre>int a[10], *pa=a;    // vytvorí 10 prvkové pole a jeho adresu zapíše do smerníkovej premennej pa
+                                // nedávame operátor & ako pri iných premenných
+</pre>
+		</table>
+	<dt>Úlohy
+	<dd><ul><li>Na vstupe je text. Zisti početnosť jednotlivých znakov a vypíš tie s nenulovým výskytom.
+			<li>Vygeneruj 100 náhodných dvojciferných čísel. 
+				<ul><li>Zisti maximálnu/minimálnu hodnotu v poli
+					<li>Otoč pole
+					<li>Zarotuj pole N-krát
+					<li>Vypočítaj priemenú hodnotu
+					<li>Zisti najčastejšie sa vyskytujúcu hodnotu
+					<li>Zisti najdlší súvislý rastúci úsek v poli
+					<li>Načítaj číslo S a zisti, či existuje súvislý úsek v poli, ktorého súčet je rovný S
+					<li>Na poličke sú hrnčeky - modré a červené. Treba ich rýchlo poukladať - najprv modré a potom červené.
+						<br>Návod: vygenerujeme pole naplnené 0-modrý a 1-červený a premiestňujeme :-)
+					<li>Utrieď ich.
+				</ul>
+			<li>Naplň pole číslami 1-100 a náhodne ich zamiešaj	
+		</ul>	
+    <dt>Deklarácia dynamického poľa:
+	<dd><i>typ *meno</i>
+		<br>typ ......... identifikátor typu položiek poľa
+		<br>Takto zadeklarované pole zatiaľ neexistuje, musíme ho vytvoriť pomocou príkazu calloc alebo malloc.
+		Takto vytvorené pole možno zäčšovať alebo zmenšovať pomocou realloc.	
+</dl>
+</body>
+</html>

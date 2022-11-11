@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 18 - Quadratics</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_18.jpg" class="nehe_maly" alt="Lekce 18" />
+
+<h1>Lekce 18 - Kvadriky</h1>
+
+<p class="nadpis_clanku">Představuje se vám báječný svět kvadriků. Jedním řádkem kódu snadno vytváříte komplexní objekty typu koule, disku, válce ap. Pomocí matematiky a trochy plánování lze snadno morphovat jeden do druhého.</p>
+
+<p>Quadratic (neznám český ekvivalent slova, takže zůstanu u původní verze) je jednoduchou cestou k vykreslení komplexních objektů. Na pozadí pracují na několika cyklech for a troše trigonometrie. Rozvineme kód z lekce 7, přidáme pár proměnných a aby byla také nějaká změna, použijeme jinou texturu</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+<p></p>
+<p class="src0">bool light;<span class="kom">// Světlo ON/OFF</span></p>
+<p class="src0">bool lp;<span class="kom">// L stisknuté? </span></p>
+<p class="src0">bool fp;<span class="kom">// F stisknuté? </span></p>
+<p class="src0">bool sp;<span class="kom">// Stisknutý mezerník?</span></p>
+<p></p>
+<p class="src0">int part1;<span class="kom">// Začátek disku</span></p>
+<p class="src0">int part2;<span class="kom">// Konec disku</span></p>
+<p class="src0">int p1=0;<span class="kom">// Přírůstek 1</span></p>
+<p class="src0">int p2=1;<span class="kom">// Přírůstek 2</span></p>
+<p></p>
+<p class="src0">GLfloat xrot;<span class="kom">// X rotace</span></p>
+<p class="src0">GLfloat yrot;<span class="kom">// Y rotace</span></p>
+<p class="src0">GLfloat xspeed;<span class="kom">// Rychlost x rotace</span></p>
+<p class="src0">GLfloat yspeed;<span class="kom">// Rychlost y rotace</span></p>
+<p class="src0">GLfloat z=-5.0f;<span class="kom">// Hloubka v obrazovce</span></p>
+<p></p>
+<p class="src0">GLUquadricObj *quadratic;<span class="kom">// Bude ukládat kvadrik</span></p>
+<p class="src0"></p>
+<p></p>
+<p class="src0">GLfloat LightAmbient[]= { 0.5f, 0.5f, 0.5f, 1.0f };<span class="kom">// Okolní světlo</span></p>
+<p class="src0">GLfloat LightDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };<span class="kom">// Přímé světlo</span></p>
+<p class="src0">GLfloat LightPosition[]= { 0.0f, 0.0f, 2.0f, 1.0f };<span class="kom">// Pozice světla</span></p>
+<p></p>
+<p class="src0">GLuint filter;<span class="kom">// Typ filtru</span></p>
+<p class="src0">GLuint texture[3];<span class="kom">// Místo pro 3 textury</span></p>
+<p class="src0">GLuint object=0;<span class="kom">// Určuje aktuálně vykreslovaný objekt</span></p>
+
+<p>Přesuneme se do funkce InitGL(), kde inicializujeme kvadrik. Na konec, ale před return, přidáme následující kód této lekce. ( V prvním řádku vytvoříme nový kvadrik (funkce na něj vrátí ukazatel, při chybě nulu). Aby světlo vypadalo opravdu perfektně nastavíme normálové vektory na GLU_SMOOTH (další možné hodnoty GLU_NONE a GLU_FLAT). Nakonec zapneme texturové mapování. Je celkem "neohrabané", protože nemůžeme naplánovat, co kam namapujeme - všechno se generuje automaticky.</p>
+
+<p class="src0">quadratic=gluNewQuadric();<span class="kom">// Vrátí ukazatel na nový kvadrik</span></p>
+<p class="src0">gluQuadricNormals(quadratic, GLU_SMOOTH);<span class="kom">// Vygeneruje normálové vektory (hladké)</span></p>
+<p class="src0">gluQuadricTexture(quadratic, GL_TRUE);<span class="kom">// Vygeneruje texturové koordináty</span></p>
+
+<p>Rozhodl jsem se, že původní krychli z lekce 7 nesmažu, ale že ji zde ponechám. Měli byste si uvědomit, že stejně jako mapujeme textury na námi vytvořený objekt, tak se úplně stejně mapují na kvadriky.</p>
+
+<p class="src0">GLvoid glDrawCube()<span class="kom">// Vykreslí krychli</span></p>
+<p class="src0">{</p>
+<p class="src1">glBegin(GL_QUADS);</p>
+<p class="src2"><span class="kom">// Přední stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f, 1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Zadní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 0.0f,-1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2"><span class="kom">// Vrchní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f, 1.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2"><span class="kom">// Spodní stěna</span></p>
+<p class="src2">glNormal3f( 0.0f,-1.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Pravá stěna</span></p>
+<p class="src2">glNormal3f( 1.0f, 0.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src2"><span class="kom">// Levá stěna</span></p>
+<p class="src2">glNormal3f(-1.0f, 0.0f, 0.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src1">glEnd();</p>
+<p class="src0">}</p>
+
+<p>Ve funkci DrawGLScene() se program větví podle druhu objektu, který chceme kreslit (kužel, válec, koule...). Do všech funkcí zajišťujících vykreslování (kromě naší krychle) se přidává parametr &quot;quadratic&quot;.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)</p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glTranslatef(0.0f,0.0f,z);</p>
+<p class="src1">glRotatef(xrot,1.0f,0.0f,0.0f);</p>
+<p class="src1">glRotatef(yrot,0.0f,1.0f,0.0f);</p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[filter]);<span class="kom">// Vybere texturu</span></p>
+<p></p>
+<p class="src1">switch(object)<span class="kom">// Vybere, co se bude kreslit</span></p>
+<p class="src1">{</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_krychle.jpg" width="127" height="129" alt="Krychle" /></div>
+
+<p class="src2">case 0:</p>
+<p class="src3">glDrawCube();<span class="kom">// Krychle</span></p>
+<p class="src3">break;</p>
+
+<p>Dalším objektem bude válec. Prvním parametrem je spodní poloměr. Druhý určuje horní poloměr. Předáním rozdílných hodnot se vykreslí jiný tvar (zužující trubka, popř. kužel). Třetí parametr specifikuje výšku/délku (vzdálenost základen). Čtvrtá hodnota značí množství polygonů "kolem" osy Z a pátá počet polygonů &quot;na&quot; ose Z. Například použitím 5 místo první 32 nevykreslíte válec, ale hranatou trubku, jejíž podstava je tvořena pravidelným pětiúhelníkem. Naopak rozdíl při záměně druhé 32 snad ani nepoznáte. Čím je těchto polygonů více, tím se zvětší kvalita (počet detailů) výstupu. Musím ale podtrhnout, že se program zpomalí. Snažte se vždy najít nějakou rozumnou hodnotu.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_valec.jpg" width="127" height="129" alt="Válec" /></div>
+
+<p class="src2">case 1:</p>
+<p class="src3">glTranslatef(0.0f,0.0f,-1.5f);<span class="kom">// Vycentrování válce</span></p>
+<p class="src3">gluCylinder(quadratic,1.0f,1.0f,3.0f,32,32);<span class="kom">// Válec</span></p>
+<p class="src3">break;</p>
+
+<p>Třetím vytvářeným objektem bude disk tvaru CD. První parametr určuje vnitřní poloměr - pokud zadáte nulu vykreslí se celistvý (bez středového kruhu). Druhu hodnotou je vnější poloměr (zadá-li se o málo větší než vnitřní vytvoříte prsten). Dejte si pozor, abyste nezadali vnější menší než vnitřní. Nespadne vám sice program, ale nic neuvidíte. Třetím parametrem je počet plátků, jako když se krájí pizza. Čím jich bude více, tím budou okraje méně zubaté (napři. zadáním 5 vykreslíte pravidelný pětiúhelník). Posledním předávané číslo značí počet kružnic - analogie spirále na CD nebo gramofonové desce. Opět nemá moc velký vliv na kvalitu.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_disk.jpg" width="127" height="129" alt="Disk" /></div>
+
+<p class="src2">case 2:</p>
+<p class="src3">gluDisk(quadratic,0.5f,1.5f,32,32);<span class="kom">// Disk ve tvaru CD</span></p>
+<p class="src3">break;</p>
+
+<p>Následuje objekt, o kterém přemýšlíte v dlouhých bezesných nocích... koule. Stačí jedna funkce. Nejdůležitějším parametrem je poloměr - netřeba vysvětlovat. Pokud byste ale chtěli jít ještě dál, změňte před vykreslením měřítko jednotlivých os (glScalef(x,y,z)). Vytvoříte zaoblený tvar, který mi v první chvíli připomínal ozdobu na stromeček (šiška - zploštělá koule). Popř. zkuste zmenšit první 32 na 5. Vytvoříte hranatou (krychloidní :-o) kouli. Jak to popsat... kdybyste ji přes střed rozdělili rovinou, řezem bude pětiúhelník, ale druhým řezem kolmým na první bude stále koule.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_koule.jpg" width="127" height="129" alt="Koule" /></div>
+
+<p class="src2">case 3:</p>
+<p class="src3"><span class="kom">// glScalef(1.0f,0.5f,1.0f);// Překl.: Změna měřítka</span></p>
+<p class="src3">gluSphere(quadratic,1.3f,32,32);<span class="kom">// Koule</span></p>
+<p class="src3"><span class="kom">// glScalef(1.0f,2.0f,1.0f);// Překl.: Obnovení měřítka</span></p>
+<p class="src3">break;</p>
+
+<p>Už jsem trochu nakousl u válce, že kužel se vytváří téměř stejně. Předáte jeden poloměr rovný nule, tudíž se na jednom konci objeví špička.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_kuzel.jpg" width="127" height="129" alt="Kužel" /></div>
+
+<p class="src2">case 4:</p>
+<p class="src3">glTranslatef(0.0f,0.0f,-1.5f);<span class="kom">// Vycentrování kužele</span></p>
+<p class="src3">gluCylinder(quadratic,1.0f,0.0f,3.0f,32,32);<span class="kom">// Kužel</span></p>
+<p class="src3">break;</p>
+
+<p>Šestý tvar vytvoříme příkazem gluPartialDisk(). Tento disk bude skoro stejný jako disk výše, nicméně další dva parametry funkce zajistí, že se nebude vykreslovat celý. Parametr part1 specifikuje počáteční úhel, od kterého chceme kreslit a asi si domyslíte, že ten druhý určuje úhel, za kterým se už nic nevykreslí. Je vztažen k tomu prvnímu, takže pokud první nastavíme na 30 a druhý na 90 přestane se kreslit na 30° + 90° = 120°. My se rovnou pokusíme o "level 2" - zkusíme přidat jednoduchou animaci, kdy se disk bude překreslovat (po směru hodinových ručiček). Nejdříve zvyšujeme přírůstkový úhel. Jakmile dosáhne 360° (jeden oběh), začneme zvyšovat počáteční úhel - opět do 360° atd.</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_part_disk.jpg" width="127" height="129" alt="Částečný disk" /></div>
+
+<p class="src2">case 5:</p>
+<p class="src3">part1+=p1;<span class="kom">// Inkrementace počátečního úhlu</span></p>
+<p class="src3">part2+=p2;<span class="kom">// Inkrementace přírůstkového úhlu</span></p>
+<p></p>
+<p class="src3">if(part1&gt;359)<span class="kom">// 360°</span></p>
+<p class="src3">{</p>
+<p class="src4">p1=0;<span class="kom">// Zastaví zvětšování počátečního úhlu (part1+=0;)</span></p>
+<p class="src4">part1=0;<span class="kom">// Vynulování počátečního úhlu</span></p>
+<p class="src4">p2=1;<span class="kom">// Začne zvětšovat přírůstkový úhel</span></p>
+<p class="src4">part2=0;<span class="kom">// Vynulování přírůstkového úhlu</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">if(part2&gt;359)<span class="kom">// 360°</span></p>
+<p class="src3">{</p>
+<p class="src4">p1=1;<span class="kom">// Začne zvětšovat počáteční úhel</span></p>
+<p class="src4">p2=0;<span class="kom">// Přestane zvětšovat přírůstkový úhel</span></p>
+<p class="src3">}</p>
+<p></p>
+<p class="src3">gluPartialDisk(quadratic,0.5f,1.5f,32,32,part1,part2-part1);<span class="kom">// Neúplný disk</span></p>
+<p class="src3">break;</p>
+<p class="src1">};</p>
+<p></p>
+<p class="src1">xrot+=xspeed;<span class="kom">// Inkrementace rotace</span></p>
+<p class="src1">yrot+=yspeed;<span class="kom">// Inkrementace rotace</span></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Přidáme ovládání klávesnicí - pokud stisknete mezerník objekt se změní na následující v pořadí.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src1">if(keys[' '] &amp;&amp; !sp)<span class="kom">// Stisknutý mezerník?</span></p>
+<p class="src1">{</p>
+<p class="src2">sp=TRUE;</p>
+<p class="src2">object++;<span class="kom">// Cyklování objekty</span></p>
+<p class="src2">if(object>5)<span class="kom">// Ošetření přetečení</span></p>
+<p class="src3">object=0;</p>
+<p class="src1">}</p>
+<p class="src1">if(!keys[' '])<span class="kom">// Uvolnění mezerníku?</span></p>
+<p class="src1">{</p>
+<p class="src2">sp=FALSE;</p>
+<p class="src1">}</p>
+
+<p>Takže to je vše. Měli byste umět v OpenGL vykreslovat jakýkoli kvadrik. Pomocí morphingu a kvadriků se dá dosáhnout zajímavých efektů. Příkladem budiž námi animovaný disk.</p>
+
+<p class="autor">napsal: <a href="http://www.tiptup.com/" target="_blank" title="http://www.tiptup.com/">GB Schmick - TipTup</a><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson18.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson18_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson18.zip">C#</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson18.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson18.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson18.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson18.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson18.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson18.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson18.tar.gz">Irix / GLUT</a> kód této lekce. ( <a href="mailto:rpf1@york.ac.uk">Rob Fletcher</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson18.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson18.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson18.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson18.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:rgbe@yahoo.com">Simon Werner</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson18.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:miqster@gmx.net">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson18.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson18.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson18.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson18.zip">MASM</a> kód této lekce. ( <a href="mailto:chris.j84@free.fr">Christophe</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson18.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/sdl/lesson18.tar.gz">SDL</a> kód této lekce. ( <a href="mailto:kjrockot@home.com">Ken Rockot</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson18.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:thegilb@hotmail.com">The Gilb</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson18.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_18_big.jpg" class="nehe_velky" alt="Lekce 18" /></div>
+<p class="okolni_lekce"><a href="tut_17.php">&lt;&lt;&lt; Lekce 17</a> | <a href="tut_19.php">Lekce 19 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">myn</div>
+<div class="d_o_datumcas">01.12.2004 - 15:23:44</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_18.php&j=0">velikost textury max 256x256 ?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">03.12.2004 - 17:12:27</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_18.php&j=1">Re: velikost textury max 256x256 ?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">whisper</div>
+<div class="d_o_datumcas">08.12.2004 - 13:55:53</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_18.php&j=2">chyba</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">SivySaint</div>
+<div class="d_o_datumcas">27.01.2005 - 03:26:59</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_18.php&j=3">Re: chyba</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">BiShop</div>
+<div class="d_o_datumcas">25.02.2005 - 21:58:52</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_18.php&j=4">kvadriky</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">26.02.2005 - 16:27:07</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_18.php&j=5">Re: kvadriky</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">23.04.2005 - 18:00:45</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_18.php&j=6">Call list</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_18.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

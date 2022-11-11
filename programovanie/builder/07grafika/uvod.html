@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<center><h3 class=nadpis>Grafika</h3></center>
+Na kreslenie na plochu je viacero možností, je vhodné si do formulára vložiť objekt <b>Image</b> (karta Additional), niečo ako stôl na kreslenie, vkladanie obrazkov. 
+Jeden z objektov patriacich <b>Image</b> je <b>Canvas</b>, čo je ako maliarske plátno a naň už možno umiestňovať grafické obekty - kresliť,. Hlavnou výhodou je: 
+<ul><li>väčšie množstvo farieb
+    <li>"ľubovoľná" veľkosť maliarskeho plátna (rozlíšenie XxY)
+	<li>podstatne väčšia množina grafických príkazov
+	<li>animácie neblikajú (blikanie sa dá potlačiť)
+	<li>možnosť používať časovač v animáciách
+</ul>
+Nevýhodou stále ostáva pomalosť vykreslovania - máloktorá hra je písaná v takejto základnej grafike - ak chceme
+vykreslovať 3D objekty v reálnom čase aj s viditelnosťou, musíme siahnuť po nástrojoch OpenGl alebo DirectX.	
+<dl>
+	<dt class=main>Začíname
+	<dd>Vložíme grafický objekt Image1 na plochu a určíme mu nami zvolenú veľkosť. Ak teraz spustíme aplikáciu
+		budeme zaskočený, že sa nám na ploche tento objekt neobjavil. Treba si zapamätať, že objekt Image1 sa zobrazí až po 
+		nakreslení nejakej čiary alebo plochy. Ja to riešim tak, že vo FormCreate dám príkaz na zotretie kresliacej plochy
+		(v skutočnosti cez celú kresliacu plochu nakreslím biely obdĺžnik).
+		<br>Image1.Canvas.FillRectangle(Image1.ClientRect);
+		<br>Podrobnejšie tento príkaz bude popísaný v časti Kreslenie plôch.
+		<br>Keď teraz pustíme aplikáciu vidíme objekt Image1 ako biely obdĺžnik položený na Forme.
+		<br><img src="../obr/image1.png" width="235" height="192" border="0" alt="">
+		<br>Polohu bodu v Image1 možno zadávať pomocou dvojíc [x,y] kde x udáva vodorovnú 
+		vzdialenosť bodu od ľavého okraja Image1. 
+		<br>a y udáva zvislú vzdialenosť od horného okraja Image1 
+		<br>Treba si zvyknúť, že y-súradnica je oproti matematike orientovaná opačne (zväčšovaním hodnoty klesáme a nie stúpame).
+	<dt class=main>Počiatočné hodnoty
+	<dd>Základné kreslené prvky majú nastavené počiatočné vlastnosti:
+	     Počiatočná poloha gr. kurzora: [0;0] (vľavo hore)
+	     Čiary - farba-čierna, hrúbka-1, style-solid (súvislá)	
+		 Plochy- farba-biela, style-solid (súvislá)
+
+	<dt class=main>Práca s farbami
+	<dd>Na určenie farby objektov v štádiu tvorby projektu využijeme vlastnosť <b>Color</b>
+		a vyberieme si z ponúkaných farieb.
+		<br>Ak chceme meniť farbu za behu programu, môžeme použiť nasledovné postupy:
+		<ol>
+		<li>Vlastnosti Color priradíme slovné označenie farby (napr. clred)
+		<li>Vlastnosti Color priradíme číselné označenie farby - 0x00bbggrr, ide o štvoricu bajtov
+		<li>Vlastnosti Color priradíme funkciu RGB(r,g,b), kde r,g,b sú čísla 0..255 
+		<li>Použijeme objekt ColorBox, kde si užívateľ môže vybrať farbu,  vybraná farba je vo vlastnosti  Selected
+		<li>Použijeme objekt ColorDialog, zvolená farba je vo vlastnosti Color
+		<li>Použijeme objekt CColorGrid, kde užívateľ ľavým tlačídkom myši volí farbu fg (farba čiar)
+			<br> &nbsp; &nbsp;pravým tlačídkom volíme farbu bg (farba plôch) 
+		<li>Použijeme 3 objekty ScrollBar, na každom necháme užívateľa, aby nastavil jas farby a pomocou RGB vytvoríme výslednú farbu.  
+		</ol>
+		Viac o zadávaní farieb si pozri kap. <a href="../01zaciname/farby.html" target="obsah">Začíname/Farby</a>
+</dl>
+
+</body>
+</html>

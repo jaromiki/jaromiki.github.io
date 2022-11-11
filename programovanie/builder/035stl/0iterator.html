@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	 <title>Iterátory</title>
+
+</head>
+
+<body>
+<dl>
+<h3>Iterátory</h3>
+Niektoré objekty umožňujú priamy prístup ku položkám (pomocou indexu) a pomocou indexov možno takýto objekt prebehnúť cez všetky prvky
+<br>Napr. objekt vector nazvaný pole
+<br>for (int i=0; i&lt;pole.size(); i++) cout << pole[i]<<' ';  //vypise vsetky prvky objektu pole 
+<br><br>Niektoré objekty neumožňujú priamy prístup ku svojim prvkom ale prístup je umožnený pomocou iterátorov. 
+Tieto objekty majú dva (konštantné = nemožno ich meniť) iterátory preddefinované 
+<ol><li>objekt.begin() ... ukazuje na prvú položku objektu(ak je prázdne neukazuje nikam - nekorektné použitie)
+<li>objekt.end() ... ukazuje za poslednú položku poľa
+<dt>iterátory
+<dd>iterátory sú v nejekom zmysle ukazovatele, ale ak chceme takúto premennú musíme ich "špeciálne" zadeklarovať. 	
+    Na získanie hodnoty na ktorú ukazuje iterátor použijeme dereferenčný operátor * (napr. *vector.begin() predstavuje hodnotu prvého prvku).
+	<br>Iterátory teda používame na prechod prvkami objektu a aj na niektoré operácie s objektom, ktoré ako parameter vyžadujú zadať iterátor (napr. insert).
+	<br><b>deklarácia</b>
+	<br>vector&lt;<i>typ</i>&gt;::iterator <i>nazov</i>	
+	<br> &nbsp; typ ... typ prvkov vektora na ktoré môže ukazovať
+	<br> &nbsp; nazov ... identifikátor iterátora
+	<br> &nbsp; zvyčajne deklarovaný iterátor hneď inicializujeme,  vector&lt;int>::iterator it = v.begin(), ale môžme to urobiť aj neskôr
+	<br>
+	<br><b>operátory pracujúce s iterátormi</b> 
+	<br>++ ... zväčší/posunie ukazovateľ o 1
+	<br>-- ... zmenší/posunie ukazovateľ o 1
+	<br>iterator + c ... zväčší/posunie ukazovateľ o c
+	<br>iterator - c ... zmenší/posunie ukazovateľ o c
+	<br>iterator2-iterator1 ... vypočíta počet prvkov medzi iterátormi (vector.size()==vector.end()-vector.begin() )
+	<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+	<tr><td bgcolor="White">	
+<pre>
+// inserting into a vector
+#include &lt;iostream>
+#include &lt;vector>
+int main ()
+{
+  std::vector&lt;int> myvector (3);            //0, 0, 0
+  std::vector&lt;int>::iterator it;
+  it = myvector.begin();                      //sme na prvom prvku
+  it = myvector.insert ( it , 200 );           //200, 0, 0, 0
+  for ((it=myvector.begin(); it&lt;myvector.end(); it++) *it=random(90)+10;
+  for (it=myvector.begin(); it&lt;myvector.end(); it++)
+  std::cout &lt;&lt; ' ' &lt;&lt; *it;
+  std::cout &lt;&lt; '\n';
+  return 0;
+}
+</pre>
+	</tr></table>
+
+
+
+</body>
+</html>

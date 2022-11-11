@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Úvod</title>
+</head>
+
+<body>
+<h2>Úvod</h2>
+MySQL je vytvorený švédskou firmou MySQL AB. Jeho hlavnými autormi sú Michael Widenius a David Axmark. Oficiálna stránka je www.mysql.com. 
+Stále si získava väcšiu popularitu vďaka svojej stabilite, rýchlosti, jednoduchosti, nenáročnosti a najmä preto, 
+že takmer pre všetky platformy je zadarmo. Dá sa inštalovať na Linux, MS Windows a ďalšie operačné systémy. 
+Vzhľadom k tomu MySQL chýbajú niektoré možnosti, ktoré majú iné databázové systémy. 
+Tieto vlastnosti boli doplnené v posledných rokoch. Vďaka tomu je MySQL nenáročný na zdroje počítača a zvyšuje rýchlosť pri niektorých operáciách. 
+MySQL je navrhnutý pre jednoduché databázy s veľkým množstvom dát. Je určený najmä pre malé webovské databázy. 
+
+MySQL je dnes najpoužívanejší nástroj na použitie databázy v prostredí PHP. MySQL je mohutný nástroj na správu
+databázy tu si ukážeme základné nástroje na 
+<ul><li>tvorbu databázy
+	<li>vytváranie/rušenie tabuliek
+	<li>modifikácia tabulky
+	<li>výber dát z tabuľky
+	<li>spolupráca MySQL s PHP
+</ul>	
+Keďže nám pôjde hlavne o spoluprácu s PHP je jasné že sa predpokladajú aspoň základné znalosti s PHP. Celé učivo bude možno
+testovať na na našom LINUX serveri, kde je PHP aj MySQL nainštalované. 
+<br>Možné je skúšať aj na PC pod Win spustením programu  server_start 
+(je časťou <a href="miniserver/mini_server_21_xoops.exe"><font size="+1" color="Blue">mini_server_21_xoops</font></a>), stačí načítať a rozbaliť.
+<br>Ide o výborný-jednoduchý program na skúšanie/ladenie práce s databázami a tiež s PHP. Ukončenie programu urobíme spustením programu server_stop.
+<dl>
+<dt>Databáza
+<dd>Dnes sa najviac používajú relačné databázy, kde dáta sú zapisované do tabuliek. Jednotlivé tabuľky majú pridelené mená. 
+	Riadky tabuľky voláme vety alebo záznamy, stĺpce nazývame atribúty. Každá veta má rovnakú štruktúru (postupnosť atribútov). 
+	Atributy majú mená (napr. meno, rodisko, ročník) a majú určený typ (číselný, textový,...), ktorý určí tvorca tabuľky pri vzniku. 
+	Vety sú určené poradovým číslom a poradie viet je určené postupnosťou zápisu viet - nová veta sa zapíše vždy nakoniec.
+<dt>Spustenie my_sql interpretera príkazov
+<dd>Po prihlásení na LINUXe (alebo po spusteni mini_servera) dáme príkaz: mysql -uuser -ppass
+	<table>
+	<tr valign="top"><td><img src="obr/mini1.png" width="669" height="590" border="0" alt="">
+	<td>
+	<ul><li>user je váš login 
+		<li>pass je vaše heslo
+	</ul>	
+	Týmto príkazom zavoláme príkazový interpret príkazov (príkazový riadok dostane tvar mysql>. Zadané príkazy sa potom hneď aj vykonajú.
+	<br>Základný príkaz bude pre nás 
+	<br><b>help</b>  	
+	<br>ktorým sa dozvieme, aké príkazy môžme zo vstupného riadku zadať. Takto sa napr. dozvieme, že ukončiť prácu s príkazovým interpretrom možno 
+	zadaním príkazu
+	<br><b>exit</b>
+	<br>čím sa pod Unixom dostaneme naspäť do shellu, v miniserveri sa nám okno mysql zavrie. Príkazy, ktoré budeme používať možno rozdeliť
+	na príkazy jazyka SQL, tieto interpreter samozrejme interpretuje a vyžadujú ako ukončenie bodkočiarku a príkazy na administráciu práce 
+	s databázami, ktoré bodkočiarku nevyžadujú (ale môže byť).
+	</tr>
+	</table>
+<dt>Výpis dostupných databáz, tvorba databázy, voľba databázy
+<dd><b>SHOW DATABASES</b>
+	<BR>Tento príkaz vypíše zoznam všetkých dostupných databáz
+
+	<br><b>CREATE DATABASE</b> nazov
+	<br>Týmto príkazom sa vytvorí nová databáza. Táto databáza je ale prázdna. Aby sme mohli zadávať dáta musíme v databáze vytvoriť tabuľky.
+	<br><b>USE nazov_databazy</b>
+	<br>Týmto preberieme databázu do používania.
+<dt>Tvorba tabuliek	
+<dd>Základom databázy sú tabuľky. Pred vytváraním tabuliek je vhodné dobre si premyslieť štruktúru tabuliek a väzby medzi nimi.
+	<div style="background:black; color:white; width:50%; padding:10">
+	<br><b>CREATE TABLE</b> meno
+	<br>atribut1 typ1 [modifikator1]
+	<br>, atribut2 typ2 [modifikator2]
+	<br>, ...
+	<br>;
+	</div>
+	<TABLE cellpadding="10">
+	<TR><TH>Základné typy<TH>Modifikátor</tr>
+	<tr><td>
+	<table border="1">
+	<tr><th>Skupina<th>Dátový typ<th>Rozsah</tr>
+	<tr><td rowspan="5">Celočíselné<td>tinyint<td>-128 .. 127</tr>
+	<tr>				<td>SMALLINT<td>-2<sup>15</sup> .. 2<sup>15</sup></tr>
+	<tr>				<td>MEDIUMINT<td>-2<sup>23</sup> .. 2<sup>23</sup></tr>
+	<tr>				<td>INT, INTEGER<td>-2<sup>31</sup> .. 2<sup>31</sup></tr>
+	<tr>				<td>BIGINT<td>-2<sup>63</sup> .. 2<sup>63</sup></tr>
+	<tr><td rowspan="2">Desatinné<td>FLOAT<td>-10<sup>38</sup> .. 10<sup>38</sup></tr>
+	<tr>				<td>DOUBLE, REAL<td>-10<sup>308</sup> .. 10<sup>308</sup></tr>
+	<tr><td rowspan="6">Dátumové,<br>časové<td>DATE<td>&nbsp;</tr>
+	<tr>				<td>DATETIME<td>&nbsp;</tr>
+	<tr>				<td>TIME<td>&nbsp;</tr>
+	<tr>				<td>TIMESTAMP<td>&nbsp;</tr>
+	<tr>				<td>YEAR<td>&nbsp;</tr>
+	<tr>				<td>YEAR(2)<td>&nbsp;</tr>
+	<tr><td rowspan="6">Textové<td>CHAR(x)<td>&nbsp;</tr>
+	<tr>				<td>VARCHAR(x)<td>&nbsp;</tr>
+	<tr>				<td>TINITEXT<td>max. 255B</tr>
+	<tr>				<td>TEXT<td>max. 65 535B</tr>
+	<tr>				<td>MEDIUMTEXT<td>max. 2<sup>24</sup>B</tr>
+	<tr>				<td>LONGTEXT<td>max. 2<sup>64</sup>B</tr>
+	<tr><td >výpočtový<td>ENUM(hod1,hod2,...)<td>Použitie: napr radiobutton</tr>
+	<tr><td >množina<td>SET(hod1,hod2,...)<td>&nbsp;</tr>
+	</table>
+	<td valign="top">
+	<table border="1">
+	<tr><th>Modifikátor<th>Význam</tr>
+	<tr><td>UNSIGNED<TD>Pre celočíselné typy.
+	<tr><td>NOT NULL<TD>Atribúty, ktoré majú tento modifikátor nemožno pri zadávaní vety nechať prázdne.
+	<tr><td>UNIQUE<TD>Atribúty, ktoré majú tento modifikátor musia mať jedinečnú hodnotu.
+	<tr><td>PRIMARY KEY<TD>V tabuľke môže byť maximálne 1 primárny kľúč.
+	<tr><td>AUTO INCREMENT<TD>Len na celočíselné a maximálne 1 atribút.
+	<tr><td>DEFAULT hodnota<TD>Ak nezadáme hodnotu tak sa uplatní táto.
+	</table>
+	</table>
+	<br>
+	Typ CHAR má pevný počet znakov (dopĺňa medzerami), VARCHAR zaberá len toľko miesta koľko znakov zadáme.
+	<br>Názvy príkazov môžme písať malými i velkými písmenami, názvy polí radšej píšme malými písmenami.
+	<br>Keďže ide o dlhý príkaz môžme ho zadať vo viacerých riadkoch.
+	<br>Štruktúru tabuľky môžme vypísať pomocou príkazu: 
+	<br><b>DESCRIBE</b> tabulka;
+<dt>Modifikácia tabuliek - Zmena názvu tabuľky
+<dd><b>ALTER TABLE</b> nazov_tabulky <b>RENAME</b> novy_nazov_tabulky;
+	<br>Tabuľky je možné premenovať. Dáta aj štruktúra sa zachová.
+<dt>Odstránenie tabulky/dát
+<dd><b>DROP TABLE</b> tabulka; //odstráni tabuľku z databázy
+	<br>DELETE FROM </b> tabulka; //odstráni dáta z tabuľky
+<dt>Modifikácia tabuliek - Pridávanie stĺpca
+<dd>Do existujúcich tabuliek je možné pridávať stĺpce, meniť ich názvy a rušiť nepotrebné stĺpce. Na všetky tieto akcie možno použiť príkaz ALTER TABLE.
+	<br><b>Pridať stĺpec nakoniec</b>
+	<br><b>ALTER TABLE</b> tabulka <b>ADD COLUMN</b> stlpec typ modif;
+	<br><b>Pridať stĺpec nazačiatok</b>
+	<br><b>ALTER TABLE</b> tabulka <b>ADD COLUMN</b> stlpec typ modif <b>FIRST</b>;
+	<br><b>Pridať stĺpec za niektoré pole</b>
+	<br><b>ALTER TABLE</b> tabulka <b>ADD COLUMN</b> stlpec typ modif <b>AFTER</b> stlpec;
+<dt>Modifikácia tabuliek - Ostránenie stĺpca
+<dd><b>ALTER TABLE</b> tabulka <b>DROP</b> stlpec
+    <br>Tento príkaz odstráni z tabulky stĺpec
+<dt>Modifikácia tabuliek - Zmena vlastnosti stĺpca
+<dd><b>ALTER TABLE</b> tabulka <b>MODIFY</b> stlpec nove_vlastnosti
+    <br>Tento príkaz môže zmeniť typ stĺpca, prípadne nastaviť niektorý modifikátor
+	<br><b>ALTER TABLE</b> tabulka <b>CHANGE</b> stlpec nove_meno vsetky_vlast
+	<br>Tento príkaz môže zmeniť aj meno stĺpca
+<dt>Modifikácia tabuliek - Odstránenie primárneho kľúča
+<dd><b>ALTER TABLE</b> tabulka <b>DROP PRIMARY KEY;</b>
+	<br>Zruší tabuľke primárny klúč (len označenie)
+<dt>Modifikácia tabuliek - Nastavenie primárneho kľúča
+<dd><b>ALTER TABLE</b> tabulka <b>ADD PRIMARY KEY (nazov_stlpca);</b>
+	<br>Nastaví stĺpec ako primárny tabuľke primárny klúč (len označenie)
+<dt>Modifikácia tabuliek - Vkladanie záznamov
+<dd><b>INSERT INTO</b> tabulka <b>VALUES</b> (zoznam hodnôt oddelených čiarkou)
+	<br>Týmto príkazom môžme/musíme zadať hodnoty pre všetky stĺpce. A má stĺpec modifikátor AUTO INCREMENT zadáme hodnotu 0.
+	Ak zadáme číslo>0 musí byť jedinečné, inak zahlási chybu. Textové hodnoty zadávame v úvodzovkách.
+	<br><b>INSERT INTO</b> tabulka (zoznam stĺpcov oddelených čiarkou) <b>VALUES</b> (zoznam hodnôt oddelených čiarkou);
+	<br>Týmto príkazom môžme zadať hodnoty niektorých stĺpcov. Ak niektorý stĺpec má modifikáror NOT NULL, tak tento stĺpec musí byť zadaný. 
+	<br><b>INSERT INTO</b> tabulka (zoznam stĺpcov oddelených čiarkou) <b>VALUES</b> (zoznam hodnôt oddelených čiarkou), (zoznam hodnôt oddelených čiarkou);
+	<br>Týmto príkazom môžme zadať hodnoty niektorých stĺpcov, koľko zoznamov uvedieme toľko riadkov sa vytvorí.
+	<br><b>INSERT INTO</b> tabulka (zoznam stĺpcov oddelených čiarkou) <b>SELECT</b> výberový príkaz;
+	<br>Týmto príkazom môžme zadať hodnoty z výberu pomocou príkazu SELECT.
+<dt>Modifikácia tabuliek - Práca s indexami
+<dd>Pre rýchlejšie vyhľadávanie dát v tabuľkách je možné zriadiť indexové súbory. Indexovať možno podľa jedného alebo viacerých stĺpcov.
+	<br><b>ALTER TABLE</b> nazov_tabulky <b>ADD INDEX</b> nazov_indexu (nazov_stlpca,...); 
+	<br><b>ALTER TABLE</b> nazov_tabulky <b>ADD UNIQUE</b> nazov_indexu (nazov_stlpca,...);
+	<br>UNIQUE zaručí, že vkladané hodnoty stĺpcov uvedených v zátvorke budú jedinečné (nedovolí vkladať duplicitné dáta).
+	<br>ALTER TABLE klienti DROP INDEX nazov_indexu;
+	<br>odstráni indexový súbor
+<dt>Mazanie záznamov
+<dd><b>DELETE FROM</b> tabulka
+	<br>vymaže všetky záznamy	 
+	<br><b>DELETE FROM</b> tabulka 	WHERE podmienka
+	<br>vymaže záznamy spĺňajúce podmienku
+	<br>Podmienky - operátory	 
+	<ul><li>číselné - &lt;, &gt;, &lt;&gt;,=
+		<li>textové - =, &lt;&gt;, LIKE
+		<li>logické - AND, OR, NOT 
+	</ul>
+	Operátor LIKE používame na zisťovanie, či daný reťazec obsahuje zadaný podreťazec. Pri zadávaní podreťazca používame 
+	"žolíky"
+	<ul><li>podtržník(_) - ľubovoľný jeden znak
+		<li>percento(%) - ľub. skupina znakov
+	</ul>
+	Príklady:
+<table border="1"><tr><td>'%retazec'<td>Vráti všetky stĺpce končiace sa zadaným reťazcom </tr>
+		<tr><td>'retazec%'<td> Vráti všetky stĺpce začínajúce sa zadaným reťazcom </tr>
+		<tr><td>'%retazec%'<td> Vráti všetky stĺpce, v ktorých sa kdekoľvek vyskytuje zadaný reťazec </tr>
+		<tr><td>'_retazec'<td> Vráti všetky stĺpce s jedným ľubovoľným znakom pred zadaným reťazcom </tr>
+		<tr><td>'retazec_'<td> Vráti všetky stĺpce s jedným ľubovoľným znakom za zadaným reťazcom </tr>
+		<tr><td>'_retazec_'<td> Vráti všetky stĺpce s jedným ľubovoľným znakom pred a za zadaným reťazcom</tr> 
+		<tr><td>'_____'<td> Vráti všetky stĺpce s ľubovoľnými 5 znakmi zadaného stĺpca </tr>
+</table>
+	<dt>Úprava záznamov
+	<dd><b>UPDATE</b> nazov_tabulky <b>SET</b>
+       <br>polozka1 = nova_hodnota1,
+       <br>polozka2 = nova_hodnota2;
+       <br><br>Uvedené stĺpce sa vo všetkých vetách nastavia na nové hodnoty. 
+	   <br><b>UPDATE</b> nazov_tabulky <b>SET</b>
+       <br>polozka1 = nova_hodnota1,
+       <br>polozka2 = nova_hodnota2
+	   <br>WHERE podmienka;
+       <br><br>Uvedené stĺpce sa vo vetách spĺňajúcich podmienku nastavia na nové hodnoty. Ak žiadna veta nevyhovuje
+	   nezmení sa žiadna položka.
+	   <br>nova_hodnota - je povolený aj výraz, ktorý môže obsahovať názvy stĺpcov a zoberú sa hodnoty z daného riadka. 
+	<dt>Výber dát
+	<dd>SELECT zoznam_poloziek FROM nazvy_tabuliek         //povinná časť
+       <br>WHERE podmienky
+       <br>GROUP BY nazov_stlpca_pre_zoskupenie
+       <br>HAVING skupinova_podmienka
+       <br>ORDER BY polozka; 
+
+	
+
+		
+</dl>		   
+</body>
+</html>

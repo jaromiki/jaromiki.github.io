@@ -1,0 +1,348 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_pro_Windows_v_C++?=
+	=?windows-1250?Q?_=2814.=29?=
+Date: Thu, 12 Jul 2007 10:08:06 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1522
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED pro =
+Windows v C++ (14.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED pro Windows v C++ (14.)</H2>
+<H4>Standartn=ED ovl=E1dac=ED prvky - edita=E8n=ED pole</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Mezi standardn=EDmi Common controls pro Windows nalezneme dv=EC =
+t=F8=EDdy, =F8e=9A=EDc=ED=20
+tento probl=E9m. T=F8=EDdu "EDIT" a t=F8=EDdu "RICHEDIT". Proto=9Ee je =
+Richedit trochu=20
+slo=9Eit=ECj=9A=ED, za=E8neme klasick=FDmi edita=E8n=EDmi pol=ED=E8ky =
+"EDIT".=20
+<P>Vytvo=F8en=EDm okna za pou=9Eit=ED t=F8=EDdy EDIT z=EDsk=E1me =
+b=EC=9En=E9 edita=E8n=ED pol=ED=E8ko, jak=E9=20
+zn=E1me ze spousty program=F9 a pomoc=ED kter=E9ho m=F9=9Eeme =
+komunikovat s u=9Eivatelem=20
+na=9Aeho programu. Do takov=E9hoto b=EC=9En=E9ho pol=ED=E8ka m=F9=9Eeme =
+nechat u=9Eivatele vepsat=20
+libovoln=FD text a na jeho z=E1klad=EC se d=E1le rozhodnout, jak bude =
+program=20
+pokra=E8ovat. Pokud p=F8i tvorb=EC nespecifikujeme =9E=E1dn=FD styl, =
+vytvo=F8=ED n=E1m Windows jen=20
+b=EDl=E9 pole, do kter=E9ho je mo=9En=E9 text vepsat. Pro =FApravu =
+vzhledu pol=ED=E8ka m=F9=9Eeme=20
+pou=9E=EDt tyto styly:=20
+<UL>
+  <LI><B>ES_AUTOHSCROLL</B> - definov=E1n=EDm tohoto stylu =
+specifikujeme, =9Ee pokud=20
+  u=9Eivatel za=E8ne vepisovat text del=9A=ED ne=9E je velikost =
+pol=ED=E8ka, je tento text=20
+  posouv=E1n sm=ECrem vlevo. V p=F8=EDpad=EC, =9Ee tento styl =
+nespecifikujeme, nelze do=20
+  pol=ED=E8ka vepsat v=EDce znak=F9, ne=9E je mo=9En=E9 zobrazit =
+najednou.=20
+  <LI><B>ES_AUTOVSCROLL</B> - pro v=EDce=F8=E1dkov=E1 edita=E8n=ED pole. =
+Tento styl=20
+  specifikuje, =9Ee v p=F8=EDpad=EC, stiskne-li u=9Eivatel na konci =
+v=ECty ENTER a je tento=20
+  konec na posledn=EDm zobraziteln=E9m =F8=E1dku, text je posunut =
+sm=ECrem nahoru.=20
+  <LI><B>ES_CENTER</B> - je-li pole v=EDce=F8=E1dkov=E9, je text v n=ECm =
+zarovn=E1n na=20
+  st=F8ed.=20
+  <LI><B>ES_LEFT</B> - zarovn=E1 text vlevo - implicitn=ED, nen=ED =
+t=F8eba uv=E1d=ECt=20
+  <LI><B>ES_LOWERCASE</B> - v=9Aechna velk=E1 p=EDsmena vepsan=E1 do =
+pole jsou=20
+  automaticky konvertov=E1na na mal=E1=20
+  <LI><B>ES_MULTILINE</B> - specifikuje, =9Ee dan=E9 pole je =
+v=EDce=F8=E1dkov=E9.=20
+  <LI><B>ES_NOHIDESEL</B> - pole s t=EDmto stylem zobrazuje vybranou =
+=E8=E1st textu i=20
+  v p=F8=EDpad=EC, =9Ee nem=E1 fokus.=20
+  <LI><B>ES_NUMBER</B> - do pole s t=EDmto stylem mohou b=FDt veps=E1na =
+pouze =E8=EDslice.=20
+
+  <LI><B>ES_OEMCONVERT</B> - text zadan=FD do tohoto pole je p=F8eveden =
+ze znakov=E9=20
+  sady Windows do OEM znakov=E9 sady a zp=ECt. Vhodn=E9 pro pou=9Eit=ED =
+pro edita=E8n=ED pole,=20
+  kter=E1 obsahuj=ED n=E1zvy soubor=F9.=20
+  <LI><B>ES_PASSWORD</B> - definuje, =9Ee pole obsahuje heslo. V =
+takov=E9mto p=F8=EDpad=EC=20
+  v poli nelze pou=9E=EDt kop=EDrov=E1n=ED a text je zobrazen pomoc=ED =
+z=E1stupn=E9ho znaku=20
+  (implicitn=EC hv=ECzdi=E8ka)=20
+  <LI><B>ES_READONLY</B> - specifikuje, =9Ee dan=E9 pole je jen pro =
+=E8ten=ED. Do=20
+  takov=E9hoto pol=ED=E8ka nem=F9=9Ee u=9Eivatel nic vepsat.=20
+  <LI><B>ES_RIGHT</B> - v p=F8=EDpad=EC v=EDce=F8=E1dkov=E9ho =
+edita=E8n=EDho pole, zarovn=E1 text=20
+  vpravo.=20
+  <LI><B>ES_UPPERCASE</B> - v=9Aechna p=EDsmena zapsan=E1 do pole s =
+t=EDmto stylem jsou=20
+  automaticky p=F8ev=E1d=ECna na velk=E1.=20
+  <LI><B>ES_WANTRETURN</B> - v p=F8=EDpad=EC v=EDce=F8=E1dkov=E9ho =
+edita=E8n=EDho pole=20
+  specifikuje, =9Ee do n=ECj lze zapsat i znak nov=E9ho =F8=E1dku, =
+kl=E1vesou ENTER.=20
+</LI></UL>D=E1le m=F9=9Eeme pou=9E=EDt i standardn=ED styly pro =
+v=9Aechna okna, p=F8edev=9A=EDm ale=20
+vyu=9Eijeme styl WS_BORDER, kter=FD dod=E1 pol=ED=E8ku okraj. Pole, =
+kter=E9 nem=E1 tento styl,=20
+je vykreslov=E1no jako b=EDl=FD obd=E9ln=EDk bez okraje.=20
+<P>Ka=9Ed=FD takto vytvo=F8en=FD prvek z=EDsk=E1 od Windows ur=E8it=FD =
+pam=EC=9Dov=FD prostor, do=20
+kter=E9ho si ukl=E1d=E1 sv=F9j obsah. Implicitn=EC je tento prostor =
+nastaven 32k. Obsah=20
+tohoto prostoru m=F9=9Eeme do vlastn=EDho bufferu zkop=EDrovat bu=EF =
+pomoc=ED standardn=ED=20
+zpr=E1vy WM_GETTEXT a nastavit obsah pole pomoc=ED WM_SETTEXT, anebo k =
+tomu=20
+pou=9Eijeme funkce GetDlgItemText a SetDlgItemText, kter=E9 je vhodn=E9 =
+pou=9E=EDt=20
+p=F8edev=9A=EDm u dialog=F9. Standardn=ED edita=E8n=ED pole maj=ED =
+d=E1le integrov=E1nu jednoduchou=20
+schopnost technik Undo a Redo a pomoc=ED schr=E1nky lze kop=EDrovat a =
+vkl=E1dat bloky=20
+textu.=20
+<P>S edita=E8n=EDm pol=ED=E8kem m=F9=9Eeme komunikovat pomoc=ED t=ECchto =
+zpr=E1v:=20
+<UL>
+  <LI><B>EM_CANUNDO</B> - parametry =9E=E1dn=E9 - zjist=ED, zda je =
+mo=9Eno pou=9E=EDt zpr=E1vu=20
+  EM_UNDO.=20
+  <LI><B>EM_CHARFROMPOS</B> - lParam =3D MAKELPARAM(x, y), kde x a y =
+jsou pozice=20
+  bodu v edita=E8n=EDm poli. - vr=E1t=ED ASCII hodnotu znaku, kter=FD je =
+v edita=E8n=EDm poli=20
+  na pozici dan=E9 x a y nebo -1 je-li bod mimo oblast edita=E8n=EDho =
+pole.=20
+  <LI><B>EM_EMPTYUNDOBUFFER</B> - parametry =9E=E1dn=E9 - odstran=ED =
+p=F8=EDpadn=FD z=E1znam o=20
+  posledn=ED =FAprav=EC bufferu. Po pou=9Eit=ED t=E9to zpr=E1vy ji=9E =
+nelze pou=9E=EDt funkci Undo.=20
+  <LI><B>EM_FMTLINES</B> - wParam =3D [TRUE/FALSE] - p=F8ep=EDn=E1 mezi =
+soft-break a=20
+  hard-break zalomen=EDmi, je-li nutno zalomit text v p=F8=EDpad=EC, =
+=9Ee p=F8esahuje =F8=E1dek.=20
+  V=EDce viz MSDN.=20
+  <LI><B>EM_GETFIRSTVISIBLELINE</B> - parametry =9E=E1dn=E9 - =
+edita=E8n=ED pole vr=E1t=ED=20
+  index prvn=EDho viditeln=E9ho =F8=E1dku textu.=20
+  <LI><B>EM_GETHANDLE</B> - parametry =9E=E1dn=E9 - vr=E1t=ED handle na =
+blok pam=ECti=20
+  aktu=E1ln=EC alokovan=FD pro edita=E8n=ED pole=20
+  <LI><B>EM_GETLIMITTEXT</B> - parametry =9E=E1dn=E9 - vr=E1t=ED po=E8et =
+znak=F9, kter=E9 lze=20
+  maxim=E1ln=EC zapsat do edita=E8n=EDho pole - viz EM_SETLIMITTEXT=20
+  <LI><B>EM_GETLINE</B> - wParam - index =F8=E1dku; lParam - adresa =
+bufferu pro=20
+  =F8et=ECzec; - do bufferu um=EDst=ED text, kter=FD obsahuje dan=FD =
+=F8=E1dek a vr=E1t=ED po=E8et=20
+  zkop=EDrovan=FDch znak=F9.=20
+  <LI><B>EM_GETLINECOUNT</B> - parametry =9E=E1dn=E9 - vr=E1t=ED po=E8et =
+=F8=E1dk=F9 ve=20
+  v=EDce=F8=E1dkov=E9m edita=E8n=EDm pol=ED=E8ku.=20
+  <LI><B>EM_GETMARGINS</B> - parametry =9E=E1dn=E9 - vr=E1t=ED =
+=9A=ED=F8ku lev=E9ho (LOWORD) a=20
+  prav=E9ho (HIWORD) okraje edita=E8n=EDho pole=20
+  <LI><B>EM_GETMODIFY</B> - parametry =9E=E1dn=E9 - vr=E1t=ED informaci =
+o tom, zda bylo=20
+  edita=E8n=ED pole modifikov=E1no=20
+  <LI><B>EM_GETPASSWORDCHAR</B> - parametry =9E=E1dn=E9 - vr=E1t=ED =
+ASCII hodnotu znaku,=20
+  kter=FD je pou=9Eit pro p=F8ekryt=ED hesla=20
+  <LI><B>EM_GETRECT</B> - lParam =3D (LPRECT) lprc - lprc je adresa =
+struktury=20
+  RECT, kter=E1 obdr=9E=ED informace o aktu=E1ln=EDm form=E1tovac=EDm =
+obd=E9ln=EDku pro dan=E9 pole.=20
+  Viz EM_SETRECT=20
+  <LI><B>EM_GETSEL</B> - wParam =3D adresa DWORDu, kter=FD obdr=9E=ED =
+za=E8=E1tek v=FDb=ECru;=20
+  wParam =3D adresa DWORDu, kter=FD obdr=9E=ED konec v=FDb=ECru - do =
+dan=FDch prom=ECnn=FDch se=20
+  p=F8enese pozice aktu=E1ln=EDho v=FDb=ECru=20
+  <LI><B>EM_GETWORDBREAKPROC</B> - parametry =9E=E1dn=E9 - vr=E1t=ED =
+adresu funkce, kter=E1=20
+  vyhodnocuje zalamov=E1n=ED =F8=E1dk=F9=20
+  <LI><B>EM_LINEFROMCHAR</B> - wParam =3D =E8=EDslo znaku - vr=E1t=ED =
+=E8=EDslo =F8=E1dku, na=20
+  kter=E9m je znak udan=FD wParam=20
+  <LI><B>EM_LINEINDEX</B> - wParam =3D =E8=EDslo znaku, -1 znamen=E1 =
+aktu=E1ln=ED =F8=E1dek -=20
+  vr=E1t=ED index znaku specifikovan=FD =F8=E1dkem=20
+  <LI><B>EM_LINELENGTH</B> - wParam =3D =E8=EDslo znaku - vr=E1t=ED =
+d=E9lku =F8=E1dku=20
+  specifikovan=E9ho wParam=20
+  <LI><B>EM_LINESCROLL</B> - wParam =3D po=E8et znak=F9 =
+horizont=E1ln=EC; lParam =3D po=E8et=20
+  znak=F9 vertik=E1ln=EC - posune obsah okna o uveden=FD po=E8et znak=F9 =
+
+  <LI><B>EM_POSFROMCHAR</B> - wParam =3D =E8=EDslo znaku - vr=E1t=ED =
+pozici znaku, jeho=9E=20
+  pozice v =F8et=ECzci je d=E1na wParam=20
+  <LI><B>EM_REPLACESEL</B> - wParam =3D vlajka, zda je mo=9En=E9 tuto =
+operaci vr=E1tit=20
+  (prov=E9st Undo); lParam =3D ukazatel na =F8et=ECzec - vym=ECn=ED =
+aktu=E1ln=EC vybran=FD text za=20
+  text dan=FD lParam=20
+  <LI><B>EM_SCROLL</B> - wParam m=F9=9Ee b=FDt jedna z t=ECchto hodnot: =
+SB_LINEDOWN =3D=20
+  posune o =F8=E1dek dol=F9; SB_LINEUP =3D posune o =F8=E1dek nahoru; =
+SB_PAGEDOWN =3D posune o=20
+  str=E1nku dol=F9; SB_PAGEUP =3D posune o str=E1nku nahoru&nbsp;- =
+provede vertik=E1ln=ED=20
+  posun textu v okn=EC edita=E8n=EDho pole podle parametru=20
+  <LI><B>EM_SCROLLCARET</B> - parametry =9E=E1dn=E9 - um=EDst=ED do okna =
+str=E1nku textu, ve=20
+  kter=E9 je pr=E1v=EC kurzor=20
+  <LI><B>EM_SETHANDLE</B> - wParam =3D handle na blok pam=ECti - =
+nastav=ED sou=E8asn=FD=20
+  buffer pro edita=E8n=ED pole dle p=F8edan=E9ho handle na pam=EC=9D=20
+  <LI><B>EM_SETLIMITTEXT</B> - wParam =3D limit pro edita=E8n=ED pole - =
+nastav=ED=20
+  limitn=ED po=E8et znak=F9 pro edita=E8n=ED pole. Maxim=E1ln=EC 65535.=20
+  <LI><B>EM_SETMARGINS</B> - wParam =3D vlajky parametr=F9, kter=E9 se =
+budou m=ECnit:=20
+  EC_LEFTMARGIN - lev=FD okraj, EC_RIGHTMARGIN - prav=FD okraj, =
+EC_USEFONTINFO -=20
+  budou pou=9Eity informace o aktu=E1ln=EDm fontu pro edita=E8n=ED pole. =
+Je-li=20
+  EC_USEFONTINFO specifikov=E1no, je lParam ignorov=E1n; lParam - =
+spodn=ED slovo=20
+  specifikuje =9A=ED=F8ku lev=E9ho okraje, horn=ED slovo specifikuje =
+=9A=ED=F8ku prav=E9ho okraje=20
+  - nastav=ED lev=FD a prav=FD okraj edita=E8n=EDho pole dle parametr=F9 =
+
+  <LI><B>EM_SETMODIFY</B> - wParam =3D nov=E1 vlajka - nastav=ED =
+vnit=F8n=ED vlajku=20
+  modifikace na uvedenou hodnotu=20
+  <LI><B>EM_SETPASSWORDCHAR</B> - wParam =3D ASCII hodnota znaku - =
+nastav=ED znak=20
+  p=F8edan=FD parametrem jako znak, kter=FD se v pol=EDch pro heslo =
+zobrazuje m=EDsto=20
+  znak=F9.=20
+  <LI><B>EM_SETREADONLY</B> - wParam =3D nov=E1 vlajka - nastav=ED =
+vnit=F8n=ED vlajku dle=20
+  hodnoty wParam. Tato vlajka ur=E8uje, zda je edita=E8n=ED pole pouze =
+pro =E8ten=ED=20
+  <LI><B>EM_SETRECT</B> - lParam je adresa struktury RECT s nov=FDmi =
+hodnotami -=20
+  nastav=ED form=E1tovac=ED okraje na hodnoty uveden=E9 strukturou RECT=20
+  <LI><B>EM_SETRECTNP</B> - tato zpr=E1va je identick=E1 se zpr=E1vou =
+p=F8edchoz=ED vyjma=20
+  toho, =9Ee edita=E8n=ED pole nen=ED v tomto p=F8=EDpad=EC =
+p=F8ekreslov=E1no=20
+  <LI><B>EM_SETSEL</B> - parametry jako EM_GETSEL - nastav=ED =
+aktu=E1ln=ED v=FDb=ECr na=20
+  pozice dan=E9 parametry=20
+  <LI><B>EM_SETTABSTOPS</B> - wParam =3D celkov=FD po=E8et tabstop=F9; =
+lParam =3D ukazatel=20
+  na pole obsahuj=EDc=ED definice v=9Aech tabstop=F9 - pro =
+v=EDce=F8=E1dkov=E1 okna nastav=ED=20
+  zar=E1=9Eky pro tabul=E1tor - tabstopy. Okno nen=ED p=F8ekresleno.=20
+  <LI><B>EM_SETWORDBREAKPROC</B> - lParam =3D ukazatel na proceduru - =
+nastav=ED=20
+  proceduru danou lParam jako proceduru, kter=E1 bude vyhodnocovat =
+zalomen=ED =F8=E1dk=F9=20
+  v dan=E9m edita=E8n=EDm poli.=20
+  <LI><B>EM_UNDO</B> - parametry =9E=E1dn=E9 - provede vr=E1cen=ED =
+posledn=ED zm=ECny v=20
+  edita=E8n=EDm poli </LI></UL>V mnoha aplikac=EDch je pot=F8eba =
+vyu=9E=EDvat spousty=20
+edita=E8n=EDch pol=ED, a to jak pro standardn=ED jedno=F8=E1dkov=FD =
+vstup, tak i pro z=E1pis=20
+slo=9Eit=ECj=9A=EDch informac=ED. Pomoc=ED v=FD=9Ae uveden=FDch zpr=E1v =
+m=F9=9Eete prov=E1d=ECt akce p=F8=EDmo s=20
+edita=E8n=EDm polem na nejni=9E=9A=ED =FArovni, kterou n=E1m Windows =
+poskytuj=ED. Pro standardn=ED=20
+edita=E8n=ED pole lze je=9At=EC pou=9E=EDt tyto zpr=E1vy Windows:=20
+<UL>
+  <LI><B>WM_COPY</B> - parametry =9E=E1dn=E9 - zkop=EDruje aktu=E1ln=EC =
+vybran=FD text do=20
+  schr=E1nky=20
+  <LI><B>WM_CUT</B> - parametry =9E=E1dn=E9 - vyjme aktu=E1ln=EC =
+vybran=FD blok textu a=20
+  um=EDst=ED jej do schr=E1nky=20
+  <LI><B>WM_PASTE</B> - parametry =9E=E1dn=E9 - vlo=9E=ED text ze =
+schr=E1nky na aktu=E1ln=ED=20
+  pozici kurzoru=20
+  <LI><B>WM_UNDO</B> - parametry =9E=E1dn=E9 - vr=E1t=ED posledn=ED =
+provedenou operaci s=20
+  edita=E8n=EDm polem (jako EM_UNDO) </LI></UL>U ka=9Ed=E9ho =
+standardn=EDho ovl=E1dac=EDho prvku=20
+n=E1m Windows pos=EDlaj=ED v kontextu zpr=E1vy WM_COMMAND =
+notifika=E8n=ED zpr=E1vy o zm=ECn=E1ch=20
+proveden=FDch v dan=E9m ovl=E1dac=EDm prvku. Tato notifika=E8n=ED =
+zpr=E1va je d=E1na horn=EDm=20
+slovem parametru wParam (HIWORD(wParam)), handle okna ovl=E1dac=EDho =
+prvku je d=E1no=20
+parametrem lParam. U edita=E8n=EDch pol=ED jsou to tyto zpr=E1vy:=20
+<UL>
+  <LI><B>EN_CHANGE</B> - informuje o tom, =9Ee obsah edita=E8n=EDho pole =
+byl zm=ECn=ECn=20
+  <LI><B>EN_ERRSPACE</B> - informuje o tom, =9Ee edita=E8n=ED pole =
+nem=E1 dostatek=20
+  pam=ECti na proveden=ED po=9Eadovan=E9 operace=20
+  <LI><B>EN_HSCROLL</B> - informuje, =9Ee u=9Eivatel provedl n=ECjakou =
+akci vzhledem k=20
+  horizont=E1ln=EDmu posuvn=EDku edita=E8n=EDho pole. Zpr=E1va je =
+posl=E1na p=F8edt=EDm, ne=9E je=20
+  obsah okna p=F8ekreslen.=20
+  <LI><B>EN_KILLFOCUS</B> - informuje, =9Ee edita=E8n=ED pole ztratilo =
+fokus=20
+  kl=E1vesnice=20
+  <LI><B>EN_MAXTEXT</B> - informuje, =9Ee se u=9Eivatel pokusil zadat =
+v=EDce znak=F9 ne=9E=20
+  p=F8ipou=9At=ED limit edita=E8n=EDho pole=20
+  <LI><B>EN_SETFOCUS</B> - informuje o tom, =9Ee edita=E8n=ED pole =
+z=EDskalo fokus=20
+  kl=E1vesnice a je tedy do n=ECj mo=9Eno ps=E1t=20
+  <LI><B>EN_UPDATE</B> - informuje o tom, =9Ee obsah edita=E8n=EDho pole =
+byl zm=ECn=ECn,=20
+  ale pole je=9At=EC nebylo p=F8ekresleno.=20
+  <LI><B>EN_VSCROLL</B> - informuje, =9Ee u=9Eivatel provedl n=ECjakou =
+akci vzhledem k=20
+  vertik=E1ln=EDmu posuvn=EDku edita=E8n=EDho pole. Zpr=E1va je =
+posl=E1na p=F8edt=EDm, ne=9E je=20
+  obsah okna p=F8ekreslen. </LI></UL>Edita=E8n=ED pole jsou jedn=EDm z =
+d=F9le=9Eit=FDch prvk=F9=20
+pro komunikaci s u=9Eivatelem. Pro jednoduch=E9 aplikace nejsp=ED=9A =
+celou tuto=20
+referenci nevyu=9Eijete, ale ur=E8it=EC se v=E1m bude hodit jako pomoc =
+p=F8i programov=E1n=ED=20
+slo=9Eit=ECj=9A=EDch program=F9.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:07:54 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

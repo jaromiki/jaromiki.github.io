@@ -1,0 +1,50 @@
+<?PHP
+//$hrubka=1; $style=array(0,0,1,1);
+//$tile=$brush='obr/cbrd.png';
+
+
+//if (_GET[hrubka]) {$hrubka=_GET[hrubka]; $farba=_GET[farba];}
+//if (_GET[tile]) {$tile=_GET[tile]; $farba=_IMG_COLOR_TILED;
+//if (_GET[brush]) {$brush=_GET[brush];$farba=IMG_COLOR_TILED;
+//if (_GET[style]) $style=_GET[style]; 
+
+// Step 1. Create a new blank image
+$im = imageCreate(301, 101);
+
+// Step 2. Add Content
+// begin by defining the colors used in the image
+// with imageCreate, the first allocated color becomes the background
+$white = imageColorAllocate ($im, 0xcc, 0xFF, 0xFF); 
+$blue = imageColorAllocate ($im, 0x00, 0x00, 0xff);
+$green = imageColorAllocate ($im, 0x00, 0xFF, 0x00);
+$silver = ImageColorAllocate ($im, 0xCC, 0xCC, 0xCC); 
+$red = imageColorAllocate ($im, 0xFF, 0x00, 0x00);
+$black = imageColorAllocate ($im, 0x00, 0x00, 0x00);
+//imageSetThickness ($im,5); ImageLine($im, 0,0,100,100,$blue); ImageRectangle($im,100,0,200,100,$blue);
+if ($_GET[hrubka]) imageSetThickness ($im,$_GET[hrubka]); else imageSetThickness (1);
+if ($_GET[farba]) {ImageLine($im, 1,1,100,100,$_GET[farba]); ImageLine($im, 1,100,100,1,$_GET[farba]);
+					ImageRectangle($im,100,1,200,100,$_GET[farba]);
+					ImageEllipse($im,250,50,80,80,$_GET[farba]);}
+if ($_GET[tile])   {$im2=imagecreatefrompng($_GET[tile]); 
+					imageSetTile($im,$im2); 
+					ImageLine($im, 1,1,100,100,IMG_COLOR_TILED); ImageLine($im, 1,100,100,1,IMG_COLOR_TILED);
+					ImageRectangle($im,100,1,200,100,IMG_COLOR_TILED);
+					ImageEllipse($im,250,50,80,80,IMG_COLOR_TILED);
+					ImageDestroy($im2);}
+//if (_GET[style]) {imageSetStyle($im,_GET[style]);
+if ($_GET[brush]) {$im2=imagecreatefrompng($_GET[brush]);
+					imageSetBrush ( $im,$im2);
+					ImageLine($im, 1,1,100,100,IMG_COLOR_BRUSHED); 
+					ImageLine($im, 1,100,100,1,IMG_COLOR_BRUSHED);
+					ImageRectangle($im,100,1,200,100,IMG_COLOR_BRUSHED );
+					ImageEllipse($im,250,50,80,80,IMG_COLOR_BRUSHED);
+					ImageDestroy($im2);}
+
+
+// Steps 3-5. Send headers, image data, & destroy image
+// refresh won't work for most browsers & not within HTML
+header('Content-type: image/png');
+imagePNG ($im); 
+imageDestroy ($im); 
+
+?> 

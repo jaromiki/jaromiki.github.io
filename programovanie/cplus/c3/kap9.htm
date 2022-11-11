@@ -1,0 +1,931 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Smerniky</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+
+<h1>9 Smerníky</h1>
+
+<ul>
+<li><a href="#premenna">Smerník a&nbsp; premenná</a></li>
+
+<li><a href="#POLE">Smerník a&nbsp; pole</a></li>
+
+<li><a href="#RETAZEC">Smerník a&nbsp; reťazec</a></li>
+
+<li><a href="#PARAMETRE">Smerník a&nbsp;parametre funkcie</a></li>
+
+<li><a href="#PAMAT">Smerník a&nbsp;dynamické prideľovanie pamäte</a></li>
+
+<li><a href="#FUNKCIE">Smerník a&nbsp; funkcie</a></li>
+
+<li><a href="#STRUKTURA">Smerník na štruktúru</a></li>
+
+<li><a href="#POLIA">Polia smerníkov</a></li>
+</ul>
+
+
+
+
+<p align="justify">Charakteristickým rysom jazyka C je možnosť komplexného využívania smerníkov (pointrov) a&nbsp;smerníkovej aritmetiky. S&nbsp;použitím smerníkov sa stretávame pri spracovaní</p>
+
+<ul>
+<li>premenných</li>
+
+<li>polí</li>
+
+<li>reťazcov</li>
+
+<li>parametrov funkcií</li>
+
+<li>dynamických objektov</li>
+
+<li>funkcií (smerník na funkciu).</li>
+</ul>
+
+<p>Správne pochopenie a&nbsp;používanie smerníkov je na jednej strane silnou stránkou a&nbsp;prednosťou jazyka C, kým na druhej strane ich nesprávne použitie sa mení v&nbsp;rukách užívateľa na nebezpečnú zbraň, čo môže v&nbsp;lepšom prípade mať za následok prístup k&nbsp;"nesprávnyn" údajom, v&nbsp;horšom prípade i&nbsp;haváriu úlohy. "Voľnosť" užívateľa pri práci so smerníkmi je podmienená jeho vedomosťami a&nbsp;disciplínou, pretože systém niektoré okolnosti nekontroluje (ako ukážeme v&nbsp; ďalšom na konkrétnom príklade).</p>
+
+<p>Smerník je deklarovaný pomocou operátora * (* označuje operátor dereferencie, resp. indirekcie, ktorý sprístupňuje obsah uložený na danej adrese) v&nbsp;tvare</p>
+
+<pre>
+    typ *meno;
+kde     typ   - ľubovoľný typ jazyka C
+        meno - identifikátor premennej typu smerník
+</pre>
+
+<p align="justify">Smerník teda obsahuje dve základné informácie o&nbsp;objekte, na ktorý ukazuje:</p>
+
+<ul>
+<li>adresu, ktorá identifikuje umiestnenie objektu (meno)</li>
+
+<li>veľkosť (dĺžku) objektu (typ).
+
+<p align="justify">Môže nadobúdať hodnoty z&nbsp;množiny prirodzených čísel (adries), alebo prázdnu adresu NULL ( = 0 ). So smerníkmi súvisia 2 základné operátory:</p>
+</li>
+
+<li>&amp; - referencia (získanie adresy objektu)</li>
+
+<li>* - indirekcia, dereferencia (získanie hodnoty, uloženej na adrese).</li>
+</ul>
+
+<pre>
+Príklad p9.1 ilustruje použitie smerníka.
+
+/*    p9_1.c ilustracia pouzitia smernika (pointra)   */
+main()
+{
+int index,*pt1,*pt2;
+
+  index = 39;    /* any numerical value */
+  pt1 = &amp;index;    /* the address of index */
+  pt2 = pt1;
+  printf("1. hodnota %d %d %d\n",index,*pt1,*pt2);
+  *pt1 = 13;      /* this changes the value of index */
+  printf("2. hodnota %d %d %d\n",index,*pt1,*pt2);
+}
+</pre>
+
+<h2><a id="PREMENNA" name="PREMENNA">9.1 Smerník a&nbsp;premenná</a></h2>
+
+
+<p align="justify">V&nbsp;príklade</p>
+
+<pre>
+     int i, *ip;
+      i=3;
+      ip=&amp;i;
+</pre>
+
+<p align="justify">je i&nbsp;premenná typu int, ip je premenná typu smerník na int. Adresa premennej i&nbsp;je uložená do premennej ip, ktorá v&nbsp;dôsledku toho ukazuje na hodnotu 3, uloženú v&nbsp;i. Adresa i&nbsp;nesúvisí s&nbsp;hodnotou 3, ako to ukazuje príkaz</p>
+
+<pre>
+   printf("Hodnota i = %d  Adresa i = %x\n",*ip,ip);
+</pre>
+
+<p align="justify">výsledkom ktorého je</p>
+
+<pre>
+Hodnota i = 3  Adresa i = fff4   (hexa)
+</pre>
+
+<p align="justify">Smerník môže byť inicializovaný už pri deklarácii, v&nbsp;našom prípade</p>
+
+<pre>
+      int i=3, *ip=&amp;i;
+</pre>
+
+<p align="justify">Majme</p>
+
+<pre>
+      int a,b,*c;
+</pre>
+
+<p align="justify">Vzájomnú súvislosť operátorov * a&nbsp;&amp; ilustrujú následujúce príkazy</p>
+
+<pre>
+     c=&amp;a;    /* c obsahuje adresu a */
+      b=*c; /* b obsahuje obsah adresy, uloženej v c */
+</pre>
+
+<p align="justify">čo je to isté ako</p>
+
+<pre>
+   b=*&amp;a;
+</pre>
+
+<p align="justify">a&nbsp;teda</p>
+
+<pre>
+   b=a;
+</pre>
+
+<p align="justify">Smerník môže mať priradenú i&nbsp;konštantnú hodnotu v&nbsp;tvare c = NULL; alebo c = (data_type *) MEM_LOC;</p>
+
+<p>V prvom prípade sa využíva skutočnosť, že smerník nemôže mať platnú hodnotu 0. Priradením symbolickej konštanty NULL (ktorá obsahuje 0) sa indikuje nejaká chybová podmienka. Predpokladajme napríklad, že funkcia má vrátiť smerník na polohu podreťazca v&nbsp;rámci daného reťazca. Ak sa takýto podreťazec v&nbsp;danom reťazci nenachádza, smerník môže na indikáciu tejto okolnosti vrátiť NULL.</p>
+
+<p>V druhom prípade ide o&nbsp;priradenie absolútnej adresy s&nbsp;využitím typovej konverzie na typ, aký má definovaný smerník. Majme napr.</p>
+
+<pre>
+   #define MEM_LOC B000
+</pre>
+
+<p align="justify">(začiatok videopamäte na PC, decimálne 720896L) a&nbsp;chceme inicializovať smerník typu char:</p>
+
+<pre>
+      char *c;
+      c = (char *) MEM_LOC;
+resp. stručnejšie
+
+      char *c = (char *) MEM_LOC;
+</pre>
+
+<p align="justify">Smerník však nemôže ukazovať na konštanty, výrazy, resp. registrové premenné, t.j. na objekty, ktoré nie sú prístupné cez adresy pamäte. Avšak aj formálne správne použitie smerníka môže viesť k&nbsp;chybnému výsledku, ako môžeme vidieť v&nbsp;príklade</p>
+
+<pre>
+     float x,y;
+      char *c;
+      c=&amp;x;
+      y=*c;
+</pre>
+
+<p align="justify">Uvedená postupnosť nezabezpečí priradenie x do y v&nbsp;dôsledku rôznych typov (a teda aj dĺžok) x,y (float) a&nbsp;c (char). Pri presune dochádza k&nbsp;zmene rozsahu presúvaných hodnôt, čo ale systém nestráži, ale musí si to zabezpečiť programátor.</p>
+
+<p><b>Smerníková</b> aritmetika disponuje 4 aritmetickými operátormi +, -, ++, --. Ak p je smerník na daný typ, potom výraz p + 1 ukazuje na adresu bezprostredne následujúcu po p (vzdialenú práve o&nbsp;dĺžku typu p). Pri aritmetických operáciách so smerníkmi sa zohľadňuje dĺžka typu, na ktorý smerník ukazuje. Rozdiel medzi vzdialenosťami objektov v&nbsp;pamäti a&nbsp;ich skutočnou vzdialenosťou v&nbsp;bytoch ilustruje práklad 8.2. Majme napr.</p>
+
+<pre>
+   float *fp;
+</pre>
+
+<p align="justify">pričom nech adresa fp je napr. 65524 a&nbsp;jeho dĺžka 4 byte. Potom výraz p + 1 ukazuje na následujúcu premennú typu float, t.j. na adresu 65528.</p>
+
+<p>Smerníky je možné odčítať, nie však sčítať. Je však možné pripočítať i&nbsp;odpočítať celočíselnú konštantu, napr.:</p>
+
+<pre>
+   fp + i, resp. fp - i
+</pre>
+
+<pre>
+/*   p9_2.c   smernikova aritmetika 1   */
+
+main()
+{
+  char c,*cp1,*cp2;
+  int i,*ip1,*ip2;
+
+  cp1=&amp;c;
+  cp2=cp1+1;
+  ip1=&amp;i;
+  ip2=ip1+2;
+  printf("ip1 ip2: %x %x\n",ip1,ip2);
+  printf("Vzdialenost objektov %d %d\n",cp2-cp1,ip2-ip1);
+  printf("Vzdialenost v byte  %d %d\n",
+   (int)cp2-(int)cp1,(int)ip2-(int)ip1);
+}
+</pre>
+
+<h2><a id="POLE" name="POLE">9.2 Smerník a&nbsp;pole</a></h2>
+
+
+<p align="justify">Pole je množina prvkov rovnakého typu, ktorá je označená spoločným názvom. Pole je uložené v&nbsp;operačnej pamäti spojite, pričom prvý prvok (index 0) má najnižšiu a&nbsp;posledný prvok najvyššiu adresu. Medzi poľami a&nbsp;smerníkmi existuje úzka súvislosť. Práca s&nbsp;poľom a&nbsp;jeho prvkami formou používania názvu poľa a&nbsp;indexov je jednoduchšia, názornejšia a&nbsp;možno povedať apriori akceptovateľná. Používanie smerníkov vedie k&nbsp;rýchlejšiemu behu programu, umožňuje dynamickú alokáciu pamäte a&nbsp;môže redukovať celkové požiadavky na pamäť.</p>
+
+<p>Meno poľa je v&nbsp;skutočnosti symbolická konštanta, ktorej hodnota je smerník na umiestneni prvého prvku poľa. Teda pre pole data[] identifikátor data znamená to isté ako &amp;data[0], data + i&nbsp;to isté ako &amp;data[i], čo môžeme zapísať v&nbsp;tvare</p>
+
+<pre>
+   data + i == &amp;data[i]
+</pre>
+
+<p align="justify">Aplikáciou operátora indirekcie * na obe strany výrazu dostaneme</p>
+
+<pre>
+   *(data+i) == data[i]
+</pre>
+
+<p align="justify">Ak sa i&nbsp;zvyšuje o&nbsp;1, referencované miesto pamäte sa zvyšuje o&nbsp;počet bytov (dĺžku), daný veľkosťou daného typu.</p>
+
+<p>Jazyk C netestuje hranice polí, čo umožňuje zápis i&nbsp;čítanie mimo rozsahu poľa, pravda, so všetkými z&nbsp;toho vyplývajúcimi dôsledkami. Za kontrolu dodržania rozsahu poľa je preto zodpovedný programátor.</p>
+
+<p>Použitie smerníka a&nbsp;poľa si ilustrujeme časťou programu</p>
+
+<pre>
+     int *p, data[10];
+      p=&amp;data[0];
+</pre>
+
+<p align="justify">potom *p = data[0] a&nbsp;my môžeme namiesto data[0] v&nbsp;ľubovoľnom výraze používať *p, resp. pre prvok data[i] *(p + i), lebo</p>
+
+<pre>
+       p + i  == &amp;data[i]
+     *(p + i) == data[i]
+</pre>
+
+<p align="justify">Z&nbsp;uvedeného by sa mohlo zdať, že identifikátory data a&nbsp;p sú ekvivalentné. Je tu však jeden podstatný rozdiel, ktorý spočíva v&nbsp;tom, že data je symbolická smerníková konątanta, zatiaľ čo p je smerníková premenná. Preto operácie ako p++, p = data sú prípustné, zatiaľ čo data++, resp. data = p nie sú povolené. Majme napr.</p>
+
+<pre>
+     float array[100];
+      fp = &amp;array[0];
+</pre>
+
+<p align="justify">potom fp++ ukazuje na array[1]. Podobne fp = fp + 10 bude ukazovať na array[10]. Predpokladajme, že</p>
+
+<pre>
+      fp1 = &amp;array[100];
+</pre>
+
+<p align="justify">Potom fp-- ukazuje na array[99], resp. fp1 = fp1 - 10 alebo fp1 -= 10 bude ukazovať na array[90].</p>
+
+<p>Na smerníky (ak sa vzťahujú na prvky toho istého poľa) je možné aplikovať aj 4 relačné operátory (&lt;, &lt;=, &gt;, &gt;= ) a&nbsp;testovať ich rovnosť, resp. nerovnosť ( ==, != ). Použitie týchto operátorov ilustruje následujúci príklad pre nájdenie najväčšieho prvku v&nbsp;poli data.</p>
+
+<pre>
+/*   p9_3.c   smernikova aritmetika 2 najst maximalny prvok pola   */
+#include &lt;STDIO.H&gt;
+
+int max(int *p,int n);
+main()
+{
+  int i,data[]={1,0,3,4,7,9,6,8,5,2};
+
+  i=max(data,10);
+  printf("Index  najvacsieho prvku pola 'data': %d\n",i);
+  printf("Hodnota najvacsieho prvku pola 'data': %d\n",data[i]);
+}
+
+int max(int *p,int n)
+{
+  int *scan=p, *loc=p; /* *scan - pracovny smernik,
+           *loc - maximum */
+  while(scan-p &lt; n){
+   if(*scan &gt; *loc)
+      loc=scan;
+   scan++;
+   }
+  return(loc-p);
+}
+</pre>
+
+<p align="justify">Funkcia <b>max</b>(p,n) dostane smerník na pole p a&nbsp;jeho dĺžku n. Nájdenie najväčšieho prvku je realizované porovnávaním hodnôt poľa s&nbsp;hodnotou najväčšieho prvku (na začiatku je to hodnota 0 - prvku). Keď sa nájde väčšia hodnota, jej index sa uloží do smerníka <b>loc</b>. Na začiatku hľadania obidva smerníky <b>scan i&nbsp;loc</b> ukazujú na začiatok poľa, potom smerník <b>scan</b> postupne ukazuje na ďalšie prvky poľa, až kým scan - p = n, kedy sa príkaz while ukončí. V&nbsp;každom kroku prehľadávania sa porovnáva hodnota prvku, na ktorý ukazuje <b>scan</b>, s&nbsp;priebežným maximom, na ktoré ukazuje <b>loc</b>. Ak nastane <b>*scan &gt; *loc, loc</b> sa nastaví na <b>scan,</b>. Takto po skončení cyklu while bude loc ukazovať na najväčší prvok poľa data. Poloha, resp. index najväčšieho prvku je vrátená ako posun od začiatku poľa v&nbsp;tvare loc - p. Následujúci obrázok ilustruje pohyb smerníkov po poli.</p>
+
+<p>Je dôležité uvedomiť si, že deklarácia int data[100]; deklaruje pole a&nbsp;alokuje miesto pre jeho prvky, zatiaľ čo deklarácia int *p; deklaruje premennú typu smerník na int a&nbsp;rezervuje miesto iba pre túto premennú, nie pre prvky poľa. V&nbsp;takom prípade je potrebné priradiť</p>
+
+<pre>
+   p = data;
+</pre>
+
+<p align="justify">a potom môžeme pracovať s&nbsp;prvkami poľa jedným z&nbsp;nasledujúcich spôsobov</p>
+
+<pre>
+   data[i], *(data+i), p[i], *(p+i).
+</pre>
+
+<p align="justify">Ako príklad uvedieme časť programu pre súčet prvkov poľa:</p>
+
+<pre>
+      #define N 40
+      int data[N],i,sum=0;
+      for (i=0;i&lt;N;) PRE &lt; sum+="data[i++];"&gt;
+</pre>
+
+<p align="justify">Posledný príkaz môže mať aj tvar</p>
+
+<pre>
+      sum += *(data + i++);
+</pre>
+
+<p align="justify">resp. v&nbsp;prevedení so smerníkom</p>
+
+<pre>
+   int data[N], *p=data, *q=data+N, sum=0;
+      for(;p&lt;Q;++P) PRE &lt; +="*p;" sum&gt;
+</pre>
+
+<p align="justify">alebo v&nbsp;ešte kompaktnejšom tvare</p>
+
+<pre>
+   for (;p &lt; q;) sum += *p++;
+</pre>
+
+<p align="justify">pričom *p++ znamená pripočítať hodnotu, na ktorú ukazuje *p a&nbsp;potom zvýšiť p tak, aby ukazoval na ďalšiu hodnotu. Všimnime si, že nemôžeme použiť</p>
+
+<pre>
+      sum += *data++;
+</pre>
+
+<h2><a id="RETAZEC" name="RETAZEC">9.3 Smerník a&nbsp;reťazec</a></h2>
+
+
+<p align="justify">Reťazec je jednorozmerné pole znakov, t.j. prvkov typu char, ktoré je deklarované v&nbsp;tvare</p>
+
+<pre>
+      char s[N];
+</pre>
+
+<p align="justify">Konvencia jazyka C určuje, že reťazec je štandardne ukončený binárnou nulou - znakom '\0', čím sa reťazec líši od ostatných polí a&nbsp;preto je uvádzaný ako samostatný typ. Konštanty typu reťazec zapisujeme v&nbsp;tvare "abc". Dĺžka tohoto reťazca je 4 (počíta sa aj miesto pre posledný znak binárna nula). Hodnotou konštanty typu reťazec je adresa v&nbsp;pamäti, na ktorej je reťazec uložený. Porovnajme príkazy printf ("%s","abc"); a&nbsp;printf ("%x", "abc"); Výstupom prvého príkazu budú všetky znaky reťazca (bez koncového '\0'), t.j. abc. Výstupom druhého príkazu bude adresa uloženia reťazca v&nbsp;pamäti v&nbsp;hexa tvare, napr. d3. Pretože sa jedná o&nbsp;smerníkovú konštantu, sú povolené rôzne konštrukcie, napr. "abc"+1:</p>
+
+<pre>
+     printf ("%s","abc"+1);
+      printf ("%x","abc"+1);
+</pre>
+
+<p align="justify">Prvý príkaz vytlačí reťazec, ktorý začína na adrese o&nbsp;1 väčšej ako predtým, t.j. výstupom bude bc. Druhý príkaz vytlačí adresu o&nbsp;1 väčšiu, ako je adresa "abc", napr. d4.</p>
+
+<p>Všimnime si rozdiel medzi medzi konštantou "a" typu reťazec a&nbsp;konštantou 'a' typu char. Konštanta "a" je reťazec, musí byť preto zakončená znakom '\0' a&nbsp;je to preto pole 2 znakov (má dĺžku 2).</p>
+
+<p>Externé a&nbsp;statické premenné typu reťazec môžu byť inicializované konštantou typu reťazec, napr.</p>
+
+<pre>
+   char s[] = "Mama";
+(dĺžka poľa sa dopočíta automaticky), čo je ekvivalentné príkazu
+
+      char s[] = {'M','a','m','a','\0'};
+Všimnite si rozdiel
+
+      char *ps = "Mama";
+</pre>
+
+<p align="justify">kde ps je smerník na znak (char) s&nbsp;počiatočnou hodnotou adresy reťazca "Mama".</p>
+
+<pre>
+/*   p9_4.c   smernik a retazec   */
+main()
+{
+char strg[40],*there,one,two;
+int *pt,list[100],index;
+
+  strcpy(strg,"To je retazec znakov (character string).");
+
+  one = strg[0];     /* one and two are identical */
+  two = *strg;
+  printf("Vystup 1: %c %c\n",one,two);
+
+  one = strg[8];    /* one and two are indentical */
+  two = *(strg+8);
+  printf("Vystup 2: %c %c\n",one,two);
+  there = strg+10;  /* strg+10 is identical to strg[10] */
+  printf("Vystup 3: %c\n",strg[10]);
+  printf("Vystup 4: %c\n",*there);
+
+  for (index = 0;index &lt; 100;index++)
+   list[index] = index + 100;
+  pt = list + 27;
+  printf("Vystup 5: %d\n",list[27]);
+  printf("Vystup 6: %d\n",*pt);
+}
+Príklad zápisu funkcie pre určenie dĺžky reťazca (viď aj kap. 6.1):
+
+      unsigned int strlen(register char *s)
+      {
+         register unsigned int n=0;
+         while (*s++) ++n;
+         return(n);
+      }
+</pre>
+
+<p align="justify">Majme deklaráciu</p>
+
+<pre>
+     char c, *p, s[10];
+      s[0]='a'; s[1]='b'; s[2]='c'; s[3]='\0';
+      printf("%s %c %s",s,*(s+1),s+1);
+</pre>
+
+<p align="justify">Výstupom posledného príkazu bude abc b bc, lebo *(s+1) je to isté ako s[1], a&nbsp;s++ znamená začať tlač od s[1] po koncový znak.</p>
+
+<p>Priradenie po znakoch je účelné nahradiť zápisom</p>
+
+<pre>
+strcpy(s,"abc");
+</pre>
+
+<p align="justify">Spracujme tento reťazec príkazmi</p>
+
+<pre>
+      for(p=s; *p; ++*p++);
+      printf("%s\n",s);
+</pre>
+
+<p align="justify">"Čudne vyzerajúci" výraz ++*p++ je povolený výraz a&nbsp;znamená vlastne postupnosť dvoch príkazov</p>
+
+<pre>
+     *p = *p +1;
+      p = p + 1;
+</pre>
+
+<p align="justify">takže výstupom bude reťazec bcd (najprv sa zvýši o&nbsp;1 obsah, na ktorý ukazuje smerník, t.j. a&nbsp;sa zmení na b, potom sa zvýši o&nbsp;1 hodnota smerníka).</p>
+
+<p>Príklad p9_5 ukazuje použitie funkcie pre zrušenie všetkých výskytov znaku c v&nbsp;reťazci s&nbsp;so súčasným určením počtu týchto výskytov.</p>
+
+<pre>
+/*   p9_5.c   smernik a retazec  rusenie znaku   */
+#include &lt;STDIO.H&gt;
+#include &lt;STRING.H&gt;
+
+int rusznak(char *s, char c);
+main()
+{
+char str[60],*ps,c='e';
+
+  strcpy(str,"Priklad pre zrusenie vyskytov znakov v retazci.");
+
+  printf("Text pred zrusenim znakov '%c':\n%s\n",c,str);
+  printf("Pocet znakov '%c' v texte: %d\n",c,rusznak(str,c));
+  printf("Text po zruseni znakov '%c':\n%s\n",c,str);
+}
+
+int rusznak(char *s, char c)
+{
+  char *p=s;
+  int count=0;
+  while(*s){
+   if(*s!=c) *p++=*s;
+   else count++;
+   s++;
+   }
+  *p='\0';
+  return(count);
+}
+</pre>
+
+<p align="justify">Ako je vidieť, funkcia <b>rusznak</b> pracuje len so smerníkmi s&nbsp;a p. Smerník s&nbsp;sa pohybuje nad starým obsahom reťazca, smerník p nad novým. Smerník p sa zvyšuje vtedy, keď sa znak starého poľa nerovná znaku c. V&nbsp;opačnom prípade sa zvyšuje hodnota počítadla výskytu znakov v&nbsp;reťazci <b>count</b>. Nakoniec je reťazec ukončený znakom '\0'. Deklarácia (a tým priestor) pre samotný reťazec musí byť uvedená tam, kde dochádza k&nbsp;volaniu funkcie <b>rusznak</b>, v&nbsp;našom prípade v&nbsp;hlavnom programe. Upozorňujeme na potrebu dostatočnej rezervy v&nbsp;tých prípadoch, kedy dochádza pôsobením funkcií (tak štandardných ako aj vlastných) k&nbsp;predĺženiu reťazca.</p>
+
+<h2><a id="PARAMETRE" name="PARAMETRE">9.4 Smerník a&nbsp;parametre funkcie</a></h2>
+
+
+<p align="justify">Pri štandardnom volaní parametrov funkcie hodnotou funkcia nemení hodnoty parametrov a&nbsp;vracia len jednu hodnotu (špecifikovanú pri deklarácii funkcie). Ak použijeme parametre typu smerník, hovoríme o&nbsp;parametroch volaných odkazom. Ich použitím sa odovzdáva funkcii adresa skutočného parametra, čo umožňuje vo vnútri funkcie modifikovať príslušný počet parametrov prostredia, odkiaľ bola funkcia vyvolaná (nadradená funkcia, resp. hlavný program). Príklad p9_6 názorne ilustruje takúto modifikáciu.</p>
+
+<pre>
+/*   p9_6.c parametre funkcie  hodnotou a odkazom   */
+void fixup(int nuts,int *fruit);
+main()
+{
+  int hruska,mrkva;
+
+  hruska = 100;
+  mrkva = 101;
+  printf("Pociatocne hodnoty %d %d\n",hruska,mrkva);
+  fixup(hruska,&amp;mrkva);
+  printf("Hodnoty po prepocte %d %d\n",hruska,mrkva);
+}
+
+void fixup(int nuts,int *fruit)
+{
+  printf("Vstup %d %d\n",nuts,*fruit);
+  nuts = 135;
+  *fruit = 172;
+  printf("Vystup %d %d\n",nuts,*fruit);
+}
+</pre>
+
+<h2><a id="PAMAT" name="PAMAT">9.5 Smerník a&nbsp;dynamické prideľovanie pamäte</a></h2>
+
+
+<p align="justify">Každý program pracuje so svojimi dátami a&nbsp;dátovými štruktúrami, ktoré môžu byť statické aj dynamické. Statické existujú po celý čas behu programu, v&nbsp;ktorom sú deklarované príslušnými deklaráciami. Miesto pre nich vyhradí kompilátor už počas prekladu. Dynamické štruktúry vznikajú a&nbsp;zanikajú dynamicky počas činnosti programu.</p>
+
+<p>Pre dynamické prideľovanie, resp. uvoľňovanie pamäte je v&nbsp;rôznych implementáciách jazyka C k&nbsp;dispozícii rôzny počet štandardných funkcií. Na tomto mieste preto uvedieme iba dve základné funkcie - <b>malloc() a&nbsp;free()</b>.</p>
+
+<p>Funkcia <b>malloc</b> slúži pre pridelenie (alokáciu) pamäte. Má jeden argument typu unsigned int, ktorý udáva požadovaný rozsah dynamicky pridelenej pamäte. Vracia smerník (adresu) pamäťovej oblasti požadovanej dĺžky. Táto oblasť je pre úlohu rezervovaná až do jej uvoľnenia. Na uvoľnenie slúži funkcia free, ktorá má jeden argument typu smerník na rezervovanú oblasť pamäte. Príklad p9_7 ilustruje dynamické pridelenie pamäte reťazcu a&nbsp;jej uvoľnenie.</p>
+
+<pre>
+/*   p9_7.c   dynamicke pridelovanie pamate   */
+#include &lt;STDIO.H&gt;
+#include &lt;ALLOC.H&gt;
+#include &lt;STRING.H&gt;
+
+main()
+{
+char str[200];
+register char *t;
+
+  strcpy(str,"Ukazka dynamickeho pridelovania pamate.");
+  printf("Retazec str: %s\n",str);
+  t = (char *)malloc(strlen(str)+1);
+  strcpy(t,str);
+  printf("Retazec t:  %s\n",t);
+  free(t);
+}
+</pre>
+
+<p align="justify">Do reťazca s&nbsp;priradíme text, potom alokujeme dynamickú pamäť pre tento reťazec (veľkosť pamäte je daná dĺžkou reťazca, t.j. strlen(s) +1). Do takto priradenej pamäte tento reťazec skopírujeme - t. Po vytlačení obsahu dynamicky pridelenej pamäte uvoľníme pamäť príkazom free(t).</p>
+
+<h2>
+<a id="FUNKCIE" name="FUNKCIE">9.6 Smerník a&nbsp;funkcie</a></h2>
+
+
+<p align="justify">Použitie smerníka na funkciu umožňuje v&nbsp;jazyku C prenášať identifikátor funkcie ako parameter. Deklarácia smerníka na funkciu má tvar</p>
+
+<pre>
+      typ (*meno)();
+</pre>
+
+<p align="justify">kde typ je typ hodnoty, ktorú funkcia vracia</p>
+
+<p>meno je identifikátor typu smerník na funkciu</p>
+
+<p>Všimnime si rozdiel medzi deklaráciami</p>
+
+<pre>
+      int *f1();
+      int (*f2)();
+</pre>
+
+<p align="justify">Prvá deklarácia určuje, že f1 je funkcia, ktorá vracia hodnotu typu smerník na int. Druhá definuje f2 ako smerník na funkciu, ktorá vracia hodnotu typu int. Posledná dvojica zátvoriek () v&nbsp;oboch prípadoch udáva, že sa jedná o&nbsp;funkciu (abc je premenná, abc() označuje funkciu).</p>
+
+<p>Použitie smerníka na funkciu ukážeme na troch príkladoch. Prvý p9_8 ukazuje výpočet hodnôt zadanej funkcie pomocou funkcie tabel. V&nbsp;príklade sú tabelizované dve funkcie f1(x) = 1 + x; a&nbsp;f2(x) = x2;</p>
+
+<pre>
+/*   p9_8.c   smernik a funkcia  tabelacia funkcie   */
+#include &lt;STDIO.H&gt;
+
+void tabel(float a, float b, float krok, float (*f)(float c));
+float f1(float x);
+float f2(float x);
+
+main()
+{
+  float z=1,a=1,b=4;
+  printf("Tabelacia funkcie y = 1 + x\n");
+  printf("  x    y\n");
+  tabel(b,a,z,f1);
+  printf("\nTabelacia funkcie y = x*x\n");
+  printf("  x    y\n");
+  tabel(a,b,z,f2);
+}
+
+void tabel(float a, float b, float krok, float (*f)(float c))
+{
+  float p;
+
+  if(b&lt;a){p=b;b=a;a=p;};
+  for(p=a;p&lt;b;p+=krok)
+      printf("%f %f\n", p, f(p));
+}
+
+float f1(float x)
+{
+   return(1.+x);
+}
+
+float f2(float x)
+{
+   return(x*x);
+}
+</pre>
+
+<p align="justify">Tretí príklad p9_10 je prevzatý z&nbsp;[Richta93, str. 117] a&nbsp;zaoberá sa vynechaním komentára zo zdrojového textu programu v&nbsp;jazyku C. Komentár sa začína dvojicou znakov /* a&nbsp;končí dvojicou */. Program sa preto môže nachádzať v&nbsp;jednom zo štyroch možných stavov:</p>
+
+<ul>
+<li>mimo komentára (stav mimo)</li>
+
+<li>mimo komentára a&nbsp;práve prečítal znak /, ale ešte nevie, či ide o&nbsp;začiatok komentára (stav zackom)</li>
+
+<li>vo vnútri komentára (stav vnútri)</li>
+
+<li>vo vnútri komentára a&nbsp;práve prečítal znak *, ale ešte nevie, či ide o&nbsp;koniec komentára (stav konkom)</li>
+</ul>
+
+<p align="justify">Na tieto stavy sa viažu rôzne činnosti. V&nbsp;stave mimo sa kopírujú vstupné znaky na výstup - funkcia kopíruj. V&nbsp;stave vnútri sa vstupné znaky na výstup nekopírujú - funkcia nekopíruj. Pri prechode zo stavu mimo do stavu zackom sa nebude znak / kopírovať, lebo nevieme, či nebude súčasťou komentára. Pri prechode zo stavu zackom do stavu mimo (po znaku / nenasledoval znak *) treba toto lomítko doplniť - funkcia lomítko. Tabuľka prechodov medzi jednotlivými stavmi a&nbsp;volanie príslušných funkcií v&nbsp;závislosti na vstupnom znaku potom má tvar:</p>
+
+<p>Stavy sú v&nbsp;programe reprezentované vymenovaným typom STAV, tabuľka dvojrozmerným poľom tabulka typu POLOZKA, ktorá obsahuje smerník na funkciu a&nbsp;identifikátor nového (následujúceho) stavu. Logika činnosti programu:</p>
+
+<pre>
+         stav = mimo
+      while(nie je koniec vstupu){
+         čítaj znak
+         preveď znak na stĺpec tabuľky
+         vykonaj funkciu podľa tabuľky
+         prejdi do nového stavu podľa tabuľky
+         }
+</pre>
+
+<p align="justify">Príklad je dobrou ukážkou programu, riadeného dátami. Všimnime si pozorne spôsob zápisu vykonania funkcie podľa tabuľky. Na rozdiel od deklarácie smerníka na funkciu v&nbsp;zátvorkách sú uvedené príslušné parametre funkcie.</p>
+
+<p>Všimnime si tiež rozdiel medzi obidvoma príkladmi. V&nbsp;prvom prípade je použitý priamo identifikátor funkcie bez parametrov, v&nbsp;druhom sa užíva smerník na funkciu s&nbsp;uvedením príslušného parametra. Zapamätajte si, že všetky funkcie, ktoré budú referencované pomocou smerníka na funkciu, musia byť rovnakého typu a&nbsp;mať rovnaký počet parametrov rovnakých typov (viď funkcie f1, f2, resp. kopíruj, nekopíruj a&nbsp;lomítko).</p>
+
+<pre>
+/*   p9_10.c   smernik a funkcia 2      spracovanie komentara   */
+#include &lt;STDIO.H&gt;
+
+typedef enum {mimo,zackom,vnutri,konkom} STAV;
+typedef struct {
+   void (*funkcia)();
+   STAV novy_stav;
+   } POLOZKA;
+
+void kopiruj(char c);
+void nekopiruj(char c);
+void lomitko(char c);
+
+main()
+{
+  POLOZKA tab[4][3] = {
+   {{nekopiruj,zackom},{kopiruj,mimo},{kopiruj,mimo}},
+   {{lomitko,mimo},{nekopiruj,vnutri},{lomitko,mimo}},
+   {{nekopiruj,vnutri},{nekopiruj,konkom},{nekopiruj,vnutri}},
+   {{nekopiruj,mimo},{nekopiruj,vnutri},{nekopiruj,vnutri}}
+   };
+  STAV stav;
+  char znak;
+  int stlpec;
+
+  stav = mimo;
+  while((znak=getchar()) != EOF){
+/*   prevod znaku na stlpec tab      */
+   switch (znak) {
+    case '/' :   stlpec = 0;         break;
+    case '*' :   stlpec = 1;         break;
+    default :   stlpec = 2;         break;
+    };
+
+/*   vykonaj funkciu podla tabulky      */
+   (*tab[stav][stlpec].funkcia)(znak);
+
+/*    prechod do noveho stavu         */
+   stav = tab[stav][stlpec].novy_stav;
+   };
+  if (stav == zackom) putchar('/');
+}
+
+void kopiruj(char c)
+{
+   putchar(c);
+}
+
+void nekopiruj(char c)
+{
+}
+
+void lomitko(char c)
+{
+   putchar('/');
+   putchar(c);
+}
+</pre>
+
+<h2><a id="STRUKTURA" name="STRUKTURA">9.7 Smerník na štruktúru</a></h2>
+
+
+<p align="justify">Štruktúra je súhrn jednej alebo viacerých premenných aj rôznych typov (vrátane ďalších štruktúr), ktoré sú združené pod jedným názvom. To umožňuje pracovať so súvisiacimi dátami ako s&nbsp;celkom. Prístup k&nbsp;zložkám štruktúry sa zadáva názvom štruktúry a&nbsp;názvom zložky, oddelených bodkou (.). Majme napr. štruktúry o&nbsp;dátume a&nbsp;študentovi</p>
+
+<pre>
+   struct datum{
+         int den;
+         int mesiac;
+         int rok;
+         }
+
+   struct student{
+         char meno[20];
+         int rodne_cislo;
+         struct datum dnar;
+         int rocnik;
+         float priemer[5];
+         } st;
+</pre>
+
+<p align="justify">Štruktúra s&nbsp;menovkou datum spája údaje o&nbsp;dni, mesiaci a&nbsp;roku, štruktúra student rôzne údaje o&nbsp;študentovi, pričom dátum narodenia je reprezentovaný štruktúrou dnar typu datum. Prístup k&nbsp;zložke ročník má tvar</p>
+
+<pre>
+      st.rocnik = 2;
+ku zložke rok narodenia
+
+      st.dnar.rok = 1973;
+</pre>
+
+<p align="justify">Smerníky na štruktúru sa najčastejšie používajú pre prístup k&nbsp;štandardným štruktúram, definovaným v&nbsp;jazyku C. Prístup k&nbsp;zložkám štruktúry student s&nbsp;využitím smerníka na štruktúru ilustrujú následujúce príkazy:</p>
+
+<pre>
+    struct student *pst;
+      ...
+      (*pst).rocnik = 2;
+      (*pst).dnar.rok = 1973;
+</pre>
+
+<p align="justify">Okrúhle zátvorky sú nevyhnutné, lebo operátor bodka (.) má vyššiu prioritu ako operátor indirekcie (*). Pretože používanie smerníka pre prístup k&nbsp;štruktúre v&nbsp;jazyku C je značne frekventované, je k&nbsp;dispozícii špeciálny operátor -&gt; (tvorený dvojicou znakov mínus a&nbsp;väčší), pomocou ktorého môžeme predchádzajúce priradenie vyjadriť v&nbsp;zaužívanom tvare</p>
+
+<pre>
+      pst-&gt;rocnik = 2;
+      pst-&gt;dnar.rok = 1973;
+</pre>
+
+<p align="justify">Obidva spôsoby zápisu sú ekvivalentné.</p>
+
+<pre>
+/*   p9_11.c   smernik a struktura   */
+#include &lt;STDIO.H&gt;
+
+main()
+{
+  struct datum{
+   int den;
+   int mesiac;
+   int rok;
+   };
+  struct student{
+   char meno[20];
+   int rodne_cislo;
+   struct datum dnar;
+   int rocnik;
+   float priemer[5];
+   } st;
+  struct student *pst=&amp;st;
+
+   st.rocnik = 2;
+   st.dnar.rok = 1975;
+
+   printf("1. vypis rocnik: %d rok narodenia: %d\n",
+      st.rocnik, st.dnar.rok);
+   printf("2. vypis rocnik: %d rok narodenia: %d\n",
+      (*pst).rocnik, (*pst).dnar.rok);
+   printf("3. vypis rocnik: %d rok narodenia: %d\n",
+      pst-&gt;rocnik, pst-&gt;dnar.rok);
+
+   (*pst).dnar.den = 13;
+   pst-&gt;dnar.mesiac = 3;
+   printf("4. vypis den: %d a mesiac narodenia: %d\n",
+      (*pst).dnar.den, st.dnar.mesiac);
+}
+</pre>
+
+<h2><a id="POLIA" name="POLIA">9.8 Polia smerníkov</a></h2>
+
+
+<p align="justify">Typické použitie polí smerníkov je spojené s&nbsp;triedením rôznych záznamov, polí, štruktúr a&nbsp;pod. Vtedy je výhodné vytvoriť pole smerníkov tak, že každý jeho prvok ukazuje na príslušný objekt (riadok, položka štruktúry) triedenia. Pri triedení môžeme potom ku každému prvku pristupovať prostredníctvom jeho smerníka a&nbsp;prípadné operácie s&nbsp;prvkami nahradiť operáciami s&nbsp;im odpovedajúcimi smerníkmi. Toto riešenie odstraňuje tak zložitú správu pamäte ako aj veľkú réžiu, spojenú s&nbsp;presúvaním celých objektov. Je to podstatne efektívnejší postup.</p>
+
+<p>V databázových systémoch pri ukladaní dát do súborov sa priebežne vytvára pole smerníkov, ktoré sa po utriedení uloží na disk ako tzv. indexový súbor. V&nbsp;praxi takýto súbor neobsahuje adresy, ale úspornejšie indexy [Galan91]. Takýchto indexových súborov môže byť maximálne toľko, koľko položiek štruktúra obsahuje. Indexové súbory môžu byť aj zložitejšie útvary, napr. lineárne zoznamy alebo binárne stromy. Indexové súbory sú vytvárané za účelom zrýchlenia manipulácie a&nbsp;prístupu k&nbsp;jednotlivým údajom.</p>
+
+<p>Triedenie záznamov s&nbsp;využitím polí smerníkov ilustrujú príklady p9_12 a&nbsp;p9_13.</p>
+
+<pre>
+/*   p9_12.c   pole smernikov      usporiadanie   */
+#include &lt;STDIO.H&gt;
+#include &lt;STRING.H&gt;
+#include &lt;STDLIB.H&gt;
+#define N 6
+
+main()
+{
+  struct ex1{
+   char m[6];
+   int vyska;
+   int vaha;
+   int vzdial;
+   } st[N], *pst[N], *t;
+  int i,j;
+
+  randomize();
+/*   inicializacia struktury a smernikov   */
+  for(i=0;i&lt;N;I++){ * } if(pst[i]- for(j="i+1;j&lt;N;j++)" for(i="0;i&lt;N-1;i++)" vysky podla zotriedenie pst[i]="&amp;st[i];" st[i].vzdial="random(200);" st[i].vaha="70+i;" st[i].vyska="180-i;" sprintf(st[i].m,?Meno%1d?,i);&gt;vyska &gt; pst[j]-&gt;vyska){
+    t=pst[i];
+    pst[i]=pst[j];
+    pst[j]=t;
+    }
+  printf("\nUsporiadanie podla vysky\n");
+  for(i=0;i&lt;N;I++) vzdial='%d\n",pst[i]-' vaha="%d" vyska="%d" printf(?%s&gt;m,
+    pst[i]-&gt;vyska,pst[i]-&gt;vaha,pst[i]-&gt;vzdial);
+
+/*   zotriedenie podla vahy         */
+  for(i=0;i&lt;N-1;I++) if(pst[i]- for(j="i+1;j&lt;N;j++)"&gt;vaha &gt; pst[j]-&gt;vaha){
+    t=pst[i];
+    pst[i]=pst[j];
+    pst[j]=t;
+    }
+  printf("\nUsporiadanie podla vahy\n");
+  for(i=0;i&lt;N;I++) vzdial='%d\n",pst[i]-' vaha="%d" vyska="%d" printf(?%s&gt;m,
+    pst[i]-&gt;vyska,pst[i]-&gt;vaha,pst[i]-&gt;vzdial);
+
+/*   zotriedenie podla vzdialenosti      */
+  for(i=0;i&lt;N-1;I++) if(pst[i]- for(j="i+1;j&lt;N;j++)"&gt;vzdial &gt; pst[j]-&gt;vzdial){
+    t=pst[i];
+    pst[i]=pst[j];
+    pst[j]=t;
+    }
+  printf("\nUsporiadanie podla vzdialenosti\n");
+  for(i=0;i&lt;N;I++) vzdial='%d\n",pst[i]-' vaha="%d" vyska="%d" printf(?%s&gt;m,
+    pst[i]-&gt;vyska,pst[i]-&gt;vaha,pst[i]-&gt;vzdial);
+}
+
+/*      p9_13.c      pole smernikov - indexy           usporiadanie      */
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#define N 6
+
+main()
+{
+   struct ex1{
+      char m[6];
+      int vyska;
+      int vaha;
+      int v;
+      } st[N], *i1[N], *i2[N], *i3[N], *p;
+   int i,j;
+
+/*      inicializacia struktury a smernikov      */
+   for(i=0;i&lt;N;i++){
+     sprintf(st[i].m,"Meno%1d",i);
+     st[i].vyska = 180-i;
+     st[i].vaha  = 40+5*i;
+     st[i].v     = 3*i % 4;
+     i1[i]=&amp;st[i];
+     i2[i]=&amp;st[i];
+     i3[i]=&amp;st[i];
+     }
+
+/*      zotriedenie podla vysky */
+   for(i=0;i&lt;N-1;i++)
+     for(j=i+1;j&lt;N;j++){
+       if(i1[i]-&gt;vyska &gt; i1[j]-&gt;vyska){
+       p=i1[i];
+       i1[i]=i1[j];
+       i1[j]=p;
+       }
+/*      zotriedenie podla vahy                  */
+       if(i2[i]-&gt;vaha &gt; i2[j]-&gt;vaha){
+       p=i2[i];
+       i2[i]=i2[j];
+       i2[j]=p;
+       }
+/*      zotriedenie podla vzdialenosti            */
+       if(i3[i]-&gt;v &gt; i3[j]-&gt;v){
+       p=i3[i];
+       i3[i]=i3[j];
+       i3[j]=p;
+       }
+    }
+     printf("\nZotriedene podla vysky      Netriedene hodnoty:\n");
+     for(i=0;i&lt;N;i++)
+     printf("%s   %d   %d  %d         %s   %d   %d   %d\n",i1[i]-&gt;m,
+      i1[i]-&gt;vyska,i1[i]-&gt;vaha,i1[i]-&gt;v,
+      st[i].m,st[i].vyska,st[i].vaha,st[i].v);
+     printf("\nPodla vahy:\n");
+     for(i=0;i&lt;N;i++)
+     printf("%s   %d   %d  %d\n",i2[i]-&gt;m,
+      i2[i]-&gt;vyska,i2[i]-&gt;vaha,i2[i]-&gt;v);
+     printf("\nPodla vzdialenosti:\n");
+     for(i=0;i&lt;N;i++)
+     printf("%s   %d   %d  %d\n",i3[i]-&gt;m,
+      i3[i]-&gt;vyska,i3[i]-&gt;vaha,i3[i]-&gt;v);
+}
+</pre>
+</div>
+
+
+</body>
+
+</html>
+

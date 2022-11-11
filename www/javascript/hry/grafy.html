@@ -1,0 +1,137 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">	
+	 <title>Graf funkcie</title>
+	 <script>
+      function kresli1()
+	  { var spanvrch=parseInt(g1.style.top); spanvyska=parseInt(g1.style.height); 
+	    var spanspodok=spanvrch+spanvyska;
+        var xx=parseInt(g1.style.left), x1=parseFloat(xx1.value), x2=parseFloat(xx2.value), dx=(x2-x1)/50.;
+        var                             y1=parseFloat(yy1.value), y2=parseFloat(yy2.value);y=0;
+        var v=0, x=x1;
+          for(var i=0;i<50;i++) 
+		  { with (Math) 
+		    {
+		    y=eval(fun.value);
+		    v=Math.floor((y-y1)/(y2-y1)*spanvyska); 
+			}
+            document.images[i].style.height=v;     
+            document.images[i].style.left= xx+8*i;
+            document.images[i].style.top=spanspodok-v-1;
+            x=x+dx;
+          }
+	  }	 
+      function kresli2()
+	  { var spanvrch=parseInt(g2.style.top); spanvyska=parseInt(g2.style.height); 
+	    var spanspodok=spanvrch+spanvyska;
+        var xx=parseInt(g2.style.left), x1=parseFloat(xx1.value), x2=parseFloat(xx2.value), dx=(x2-x1)/100.;
+        var                             y1=parseFloat(yy1.value), y2=parseFloat(yy2.value);y=0;
+        var v=0, x=x1;
+          for(var i=0;i<100;i++) 
+		  { with (Math) 
+		    {
+		    y=eval(fun.value);
+		    v=Math.floor((y-y1)/(y2-y1)*spanvyska); 
+			}
+            document.images[50+i].style.left= xx+4*i;
+            document.images[50+i].style.top=spanspodok-v-2;
+            x=x+dx;
+          }
+	  }	 
+      function kresli()
+	  { kresli1();  kresli2(); }
+
+
+      function vypis()
+	  {
+ 	    nove=window.open("about:blank","okno","scrollbars=yes");
+		nove.document.open();
+        nove.document.writeln('<font color="blue">Funkcie v hlavičke</font>');
+        nove.document.writeln('<code><pre>');
+        nove.document.writeln('function kresli1()');
+	    nove.document.writeln('{ var spanvrch=parseInt(g1.style.top); spanvyska=parseInt(g1.style.height);'); 
+	    nove.document.writeln('  var spanspodok=spanvrch+spanvyska;');
+        nove.document.writeln('var xx=parseInt(g1.style.left), x1=parseFloat(xx1.value), x2=parseFloat(xx2.value), dx=(x2-x1)/50.;');
+        nove.document.writeln('var                             y1=parseFloat(yy1.value), y2=parseFloat(yy2.value);y=0;');
+        nove.document.writeln('var v=0, x=x1;');
+        nove.document.writeln('  for(var i=0;i<50;i++)');
+		nove.document.writeln('  { with (Math)'); 
+		nove.document.writeln('    {');
+		nove.document.writeln('    y=eval(fun.value);');
+		nove.document.writeln('    v=Math.floor((y-y1)/(y2-y1)*spanvyska); ');
+		nove.document.writeln('	}');
+        nove.document.writeln('    document.images[i].style.height=v;');
+        nove.document.writeln('    document.images[i].style.left= xx+8*i;');
+        nove.document.writeln('    document.images[i].style.top=spanspodok-v-1;');
+        nove.document.writeln('    x=x+dx;');
+        nove.document.writeln('  }');
+	  nove.document.writeln('}');
+      nove.document.writeln('function kresli2()');
+	  nove.document.writeln('{ var spanvrch=parseInt(g2.style.top); spanvyska=parseInt(g2.style.height);');
+	  nove.document.writeln('  var spanspodok=spanvrch+spanvyska;');
+      nove.document.writeln('  var xx=parseInt(g2.style.left), x1=parseFloat(xx1.value), x2=parseFloat(xx2.value), dx=(x2-x1)/100.;');
+      nove.document.writeln('  var                             y1=parseFloat(yy1.value), y2=parseFloat(yy2.value);y=0;');
+      nove.document.writeln('  var v=0, x=x1;');
+      nove.document.writeln('    for(var i=0;i<100;i++) ');
+	  nove.document.writeln('	  { with (Math)');
+	  nove.document.writeln('	    {');
+	  nove.document.writeln('	    y=eval(fun.value);');
+	  nove.document.writeln('	    v=Math.floor((y-y1)/(y2-y1)*spanvyska);');
+      nove.document.writeln('		}');
+      nove.document.writeln('      document.images[50+i].style.left= xx+4*i;');
+      nove.document.writeln('      document.images[50+i].style.top=spanspodok-v-2;');
+      nove.document.writeln('      x=x+dx;');
+      nove.document.writeln('    }');
+	  nove.document.writeln('}');
+      nove.document.writeln('function kresli()');
+	  nove.document.writeln('{ kresli1();  kresli2(); }');
+	  nove.document.writeln('');
+nove.document.writeln('<br><font color="blue">A časť v tele</font>');
+nove.document.writeln('');
+nove.document.writeln('funkcia y = &lt;input type="Text" id="fun" value="sin(x)">');
+nove.document.writeln('&lt;br>interval na osi x ...  &lt;input type="Text" size="5" id="xx1" value=0> , &lt;input type="Text" size="5" id="xx2" value=10>');
+nove.document.writeln('&lt;br>interval na osi y ...  &lt;input type="Text" size="5" value=-1  id="yy1"> , &lt;input type="Text" size="5" value=1  id="yy2">');
+nove.document.writeln('&lt;br>');
+nove.document.writeln('&lt;br>');
+nove.document.writeln('&lt;input type="Button" value=" Kresli " onclick="kresli()"> &nbsp; &nbsp; &lt;input type="Button" value=" Zdroj " onclick="vypis()">');
+nove.document.writeln('');
+nove.document.writeln('&lt;span style="background:#eeeeee; width:400; height:200; border-width:2; border-color:#0; border-style:solid;position:absolute; left:0;   top:250 " id="g1"> &lt;/span>');
+nove.document.writeln('&lt;span style="background:#eeeeee; width:400; height:200; border-width:2; border-color:#0; border-style:solid;position:absolute; left:400; top:250 " id="g2"> &lt;/span>');
+nove.document.writeln('&lt;script>');
+nove.document.writeln('  for(i=0;i<50;i++)');
+nove.document.write("   document.write('&lt;img src=");
+nove.document.write('"x.gif" border="1 " width="6" height="50" style="position:absolute; top:400">');
+nove.document.writeln("');");
+nove.document.writeln('  for(i=0;i<100;i++)'); 
+nove.document.writeln('   document.write(\'&lt;img src="x.gif" border="1 " width="2" height="2" style="position:absolute; top:600">\');');
+nove.document.writeln('  kresli(); ');
+nove.document.writeln('&lt;/script>');
+
+	  nove.document.close; 	  
+	  }
+	   </script>
+</head>
+
+<body bgcolor="#ffffdd">
+JavaScript nemá grafické nástroje ako ich poznáme napr. v Delphi. Priebeh funkcie môžme zachytiť
+pomocou izolovaných bodov, ktoré zobrazíme napr. orámovaným obrázkom malých rozmerov (obr. nemusí existovať).
+<h3>Vstup</h3>
+funkcia y = <input type="Text" id="fun" value="sin(x)">
+<br>interval na osi x ... ( <input type="Text" size="5" id="xx1" value=0> , <input type="Text" size="5" id="xx2" value=10> )
+<br>interval na osi y ... ( <input type="Text" size="5" value=-1  id="yy1"> , <input type="Text" size="5" value=1  id="yy2"> )
+<br>
+<br>
+<input type="Button" value=" Kresli " onclick="kresli()"> &nbsp; &nbsp; <input type="Button" value=" Zdroj " onclick="vypis()">
+
+<span style="background:#eeeeee; width:400; height:200; border-width:2; border-color:#0; border-style:solid;position:absolute; left:0;   top:250 " id="g1"> </span>
+<span style="background:#eeeeee; width:400; height:200; border-width:2; border-color:#0; border-style:solid;position:absolute; left:400; top:250 " id="g2"> </span>
+<script>
+  for(i=0;i<50;i++) 
+   document.write('<img src="x.gif" border="1 " width="6" height="50" style="background:#ff9999 ;position:absolute; top:400">');
+  for(i=0;i<100;i++) 
+   document.write('<img src="x.gif" border="1 " width="2" height="2" style="background:red; position:absolute; top:600">');
+  kresli(); 
+</script>
+
+</body>
+</html>

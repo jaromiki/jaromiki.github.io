@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Textové súbory</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<center><H3 class=nadpis>&nbsp;Binárne súbory</H3></center>
+<dl><dt class=main>Súbor
+	<dd><b>Textové súbory</b> majú výhodu, že je možné kedykoľvek si prehliadnuť ich obsah, vytvoriť ich alebo upraviť bežným editorom. To je aj dôvod, prečo sú vhodné na ukladanie textu.
+		Na ukladanie iných dátových typov sa síce môžu použiť, ale nie je to výhodné, pretože napríklad číslo 65535 zaberie v textovom súbore priestor 5 Byte a v binárnom len 2 Byte.
+		Ďalej nie sú vhodné na ukladanie polí, pretože medzi jednotlivé prvky poľa ešte musíme vložiť nejaký separátor, napriklad medzeru a tým je súbor automaticky väčší.
+		<br>Za najväčší nedostatok týchto súborov je ale prístup ku dátam:
+		<ul><li>čítať aj zapisoavať môžeme len sekvenčne
+			<li>Zmena textového súboru je možná len obtiažne (vytvoriť kópiu so žiadanou zmenou, odstránenie pôvodného a napokon premenovanie kopie na originál)
+		</ul>	
+		<b>Binárne súbory</b> majú nevýhodu, že síce si ich obsah môžme prehliadnuť napríklad PSPad editorom, ale dáta okrem textových sú prakticky nečitateľné a editorom niečo v nich meniť 
+		je prinajmenšom nevhodné, pretože môžeme viac pokaziť ako napraviť.
+		<br>Výhodou je, že sú väčšinou menšie, rýchlejšie sa s nimi pracuje a pri ukladaní polí nepotrebujú separátor, hlavná výhoda ale tkvie v tom že:
+		<ul><li>môžeme ich čítať v ľubovoľnom poradí
+			<li>vetu možno aj meniť (samozrejme sa musí zachovať dĺžka vety)
+		</ul>	
+		Podobne ako pri textových súboroch môžme voliť "klasiku" a prúdy, teraz sa obmedzím len na prácu s prúdmi (fstream)
+
+	
+	<dd><h3>Prúdy - knižnica fstream.h</h3>
+Podobne ako pri práci so štandartným vstupom-klávesnicou a štandartným výstupom-monitor aj tu možno prácu riešiť objektovo - pomocou streamov.
+<dl>
+<dt>Knižnica
+<dd>Príkazy, deklarácia typov, konštánt sú v knižnici <b>fstream</b>
+<dt>Deklarácia premenných
+<dd>ifstream prem1; // premenná pre vstup zo súboru
+	<br>ofstream prem2; // premenná pre výstup do súboru 
+	<br>fstream prem3; // umožňuje čítanie i zápis - my toto budeme používať keď budeme chcieť meniť súbor
+	<br>Pri deklarácii možno hneď aj otvoriť prepojenie na konkrétny súbor
+	<br>ifstream prem1(text);
+	<br>ofstream prem1(text);
+	<br>V texte je adresa s názvom súboru, takto zadefinovanú premennú už netreba otvárať, overenie či sa otvorenie podarilo
+	urobíme pomocou testu <b>if (prem1)</b> čo vráti <b>true</b> ak sa otvorenie podarilo.
+	<br>alebo pomocou <b>if (prem1.is_open())</b>
+	
+<dt>Otvorenie súboru - čítanie
+<dd>Ak v deklarácii neuvedieme názov súboru je nutné vytvoriť spojenie našej premennej so súborom pomocou príkazu open.
+    <ul><li><b>prem1.open(string)</b> // v stringu je zapísaný názov súboru (prípadne aj s cestou), otvorí na čítanie, kurzor je na začiatku
+		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ak súbor neexistuje (otvorenie sa nepodarí) môžme otestovať pomocou 
+		<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; logickej funkcie prem1.fail() alebo testom priamo premennej prem1
+		<br><b>prem2.open(string)</b> // v stringu je zapísaný názov súboru (prípadne aj s cestou), otvorí na zápis
+		<li><b>prem1.open(string, ios::binary)</b> //je vhodné systému povedať, že chceme používať binárny prístup ku súboru
+	</ul>	
+<dt>Otvorenie súboru - zápis
+<dd><ul><li><b>prem2.open(string)</b> // v stringu je zapísaný názov súboru (prípadne aj s cestou), 
+		<br>súbor (string) ak existuje tak sa vymaže, inak sa vytvorí nový prázdny a otvorí na zápis. Implicitne sa navolí mód ios::out.
+		<li><b>prem2.open(string, mod)</b> 
+			Možnosti pre mod:
+			<ul><li><b>ios::out</b> - ak existuje tak sa vymaže, inak sa vytvorí nový prázdny a otvorí na zápis
+					<br>vety teraz zapísané možno meniť zmenou polohy zapisovacieho kurzora
+					<br>keďže otvorenie súboru nám vymaže všetko, čo v súbore bolo, je jasné, že týmto postupom "staré" vety v súbore nemožno meniť 
+				<li><b>ios::app</b> - otvorí existujúci súbor a kurzor nastaví za poslednú vetu, zápis bude robený pridávaním viet
+					<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; v tomto móde nemožno presúvať kurzor
+				<li><b>ios::binary</b> - budeme robiť binárny zápis
+			</ul> 
+			Jednotlivé módy možno zadať aj viaceré pomocou operátora | (čo je bitový OR = pipeline)
+<dt>Otvorenie súboru - zmena
+<dd>Ak chceme meniť zapísané dáta, musíme súbor otvoriť aj na zápis aj na otvorenie - premenná musí byť typu fstream a potom mod musí byť uvedený.
+	<br>Uvediem len spôsob otvorenia súboru ak chceme meniť už zapísané vety.
+	<ul><li>prem3.open("data.dat", ios::in|ios::out|ios::binary)
+			<br>názov súboru som zvolil data.dat
+	</ul>		 
+	
+
+<dt>Zápis do súboru
+<dd>Zápis možno robiť pomocou funkcie write() alebo pomocou funkcie put() 
+	<br>Zmenu polohy zapisovacieho kurzora môžme robiť funkciou seekp()
+	<ul><li>seekp(int pos);  //pozíciu kurzora nastavujeme v bajtoch, 
+			<br>toto používame len ak <i>nepoužívame</i> mod= <b>app</b>
+			<br>zmenou polohy zapisovacieho kurzora možno prepísať už zapísané vety
+		<li>prem.write(char * p, pocet) 
+			<br>predpísaný počet bajtov z pola p sa zapíše do súboru od polohy zapisovacieho kurzora
+			<br>zapisovací kurzor bude po skončení zápisu za posledným zapísaným znakom (čo nemusí byť koniec súboru)
+			<br>ak chceme zapísať údaje z iného typu ako je pole charov, musíme tú premennú pretypovať
+			<br>pretypovanie spočíva v príkaze: túto adresu cháp ako pole charov
+		<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor="Blue" align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>
+#include &lt;fstream&gt;
+using namespace std;
+...
+typedef struct {double x,y,z;}Tbod;
+Tbod a[100];
+...
+ofstream fo;
+fo.open("body.dat", ios::out|ios::binary);
+for (i=0; i<100; i++)  fo.write( (char *)&amp;a[i], sizeof(Tbod) );
+//alebo fo.write( (char *)(a+i), sizeof(Tbod) );
+fo.close();
+</pre>
+		</td></tr>
+		</table>
+	</ul>		
+Otvorením súboru v móde out sa z neho vymazali všetky dáta (ak tam nejaké boli)
+<br>každým wrajtom som zapísal jeden bod (tri premenné typu double)
+<br>údaje sú zapísané "natesno" t.j. bez oddelovačov a bez ukončovača vety 
+
+<dt>Čítanie zo súboru
+<dd>Čítanie možno robiť pomocou funkcie read(), ktorá má rovnaké parametre ako write()
+	<br>pri čítaní sa nerobí žiadna kontrola nad čítanými znakmi - načítame aj medzery, nulové znaky atď.
+	<ul><li>seekq(int pos);  //pozíciu kurzora nastavujeme v bajtoch, 
+			<br>súbor teda možno čítať v ľubovoľnom poradí
+		<li>prem.read(char * p, pocet) 
+			<br>predpísaný počet bajtov zo súboru (od polohy čítacieho kurzora) sa zapíše na zadanú adresu pola p od polohy zapisovacieho kurzora
+			<br>čítací kurzor bude po skončení čítania za posledným prečítaným znakom (čo nemusí byť koniec súboru)
+			<br>ak chceme čítať údaje do iného typu ako je pole charov, musíme tú premennú pretypovať
+			<br>pretypovanie spočíva v príkaze: túto adresu cháp ako pole charov
+		<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor="Blue" align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>
+#include &lt;fstream&gt;
+using namespace std;
+...
+typedef struct {double x,y,z;}Tbod;
+Tbod a[100];
+...
+ifstream fi;
+fi.open("body.dat", ios::in|ios::binary);
+for (i=0; i<100; i++)  fi.read( (char *)&amp;a[i], sizeof(Tbod) );
+//alebo fi.write( (char *)(a+i), sizeof(Tbod) );
+fo.close();
+</pre>
+		</td></tr>
+		</table>
+	</ul>		
+	Každým readom som načísal jeden bod (tri premenné typu double), využívam to, že všetky vety sú rovnako dlhé
+	<br>to však nie je nutná podmienka.
+	<dl><dt>test vykonania operácie
+		<dd><ul><li>good(prem1) - vráti 1 ak posledná operácia dopadla dobre, 0 ak zle
+				<li>fail(prem1) - vráti 0 ak posledná operácia dopadla dobre, 1 ak zle
+			</ul>
+	</dl>
+	<dt>Zmena súboru
+	<dd>Máme binárny súbor, v ňom dáta a niektoré chceme zmeniť (napr. jednému bodu zmeníme súradnice)
+		<br>premenná bude typu fstream a otvoríme ju v móde in aj out
+		<br>Používať budeme príkazy ako pri zápise do súboru, len pomocou tohoto "čudného" otvorenia zabezpečím
+		že sa dáta pri otáraní nestratia a pomocou seekp() môžeme nastavovať kurzor na tieto vety.
+		<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
+		<tr><th bgcolor="Blue" align="left"> Unit1.cpp</th></tr>
+		<tr><td>
+<pre>
+#include &lt;fstream&gt;
+using namespace std;
+...
+typedef struct {double x,y,z;}Tbod;
+Tbod a[100];
+...
+fstream f;
+f.open("body.dat", ios::in|ios::out|ios::binary);
+f.seekp(5*sizeof(Tbod));                           //kurzor na vetu cislo 5
+f.write( (char *)&amp;a[5], sizeof(Tbod) );        //veta prepisana
+//alebo f.write( (char *)(a+5), sizeof(Tbod) );
+fo.close();
+</pre>
+		</td></tr>
+		</table>
+		V tejto ukážke som zmenil vetu číslo 5 (šiestu vetu). Je možné meniť/zapisovať aj jednotlivé súradnice, napríklad ak chcem zapísať len sur. y:
+		<br>f.seekp(5*sizeof(Tbod)+sizeof(double));                           //kurzor na vetu cislo 5 sur. y
+		<br> 
+</dl>
+</body>
+</html>

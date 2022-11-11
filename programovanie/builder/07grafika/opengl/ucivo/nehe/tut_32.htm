@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 32 - Picking, alfa blending, alfa testing, sorting</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_32.jpg" class="nehe_maly" alt="Lekce 32" />
+
+<h1>Lekce 32 - Picking, alfa blending, alfa testing, sorting</h1>
+
+<p class="nadpis_clanku">V tomto tutoriálu se pokusím zodpovědět několik otázek, na které jsem denně dotazován. Chcete vědět, jak při kliknutí tlačítkem myši identifikovat OpenGL objekt nacházející se pod kurzorem (picking). Dále byste se chtěli dozvědět, jak vykreslit objekt bez zobrazení určité barvy (alfa blending, alfa testing). Třetí věcí, se kterou si nevíte rady, je, jak řadit objekty, aby se při blendingu správně zobrazily (sorting). Naprogramujeme hru, na které si vše vysvětlíme.</p>
+
+<p>Vítejte do 32. lekce. Je asi nejdelší, jakou jsem kdy napsal - přes 1000 řádků kódu a více než 1500 řádků HTML. Také je prvním, který používá nový NeHeGL základní kód. Tutoriál zabral hodně času, ale myslím si, že stojí za to. Probírá se v něm především: alfa blending, alfa testing, čtení zpráv myši, současné používání perspektivní i pravoúhlé projekce, zobrazování kurzoru myši pomocí OpenGL, ruční řazení objektů podle hloubky, snímky animace z jedné textury a to nejdůležitější: naučíte se vše o pickingu.</p>
+
+<p>V první verzi program zobrazoval tři polygony, které po kliknutí měnily barvu. Jak vzrušující! Tak, jako vždycky, chci zapůsobit super cool tutoriálem. Nejen, že jsou v něm zahrnuty všechny informace k probíranému tématu, ale samozřejmě musí být také hezký na pohled. Dokonce i tehdy, pokud neprogramujete, vás může zaujmout - kompletní hra. Objekty se sestřelují tak dlouho, dokud vám neochabne ruka držící myš, takže už nejste schopni stisknout tlačítko.</p>
+
+<p>Poznámka ohledně kódu: Budu vysvětlovat pouze lesson33.cpp. V NeHeGL jsou změny především v podpoře myši ve funkci WindowProc(). Také už nebudu vysvětlovat loading textur, vytváření display listů fontu a výstup textu. Vše bylo vysvětleno v minulých tutoriálech.</p>
+
+<p>Textury, používané v tomto programu, byly nakresleny v Adobe Photoshopu. Každý z .TGA obrázků má barevnou hloubku 32 bitů na pixel, obsahuje tedy alfa kanál. Pokud si nejste jistí, jak ho přidat, kupte si nějakou knihu, prozkoumejte internet nebo zkuste help. Postup je podobný vytváření masky v tutoriálu o maskingu, nahrajte svůj obrázek do Adobe Photoshopu nebo jakéhokoli grafického editoru s podporou alfa kanálu. Proveďte výběr barvy, abyste označili oblast okolo objektu, zkopírujte výběr a vložte ho do nového obrázku. Negujte obrázek, takže oblast, kde by měl být, bude černá. Změňte okolí na bílé, vyberte celý obrázek a zkopírujte ho. Vraťte se na originál a vytvořte alfa kanál, do kterého vložte masku. Uložte obrázek jako 32 bitový .TGA soubor. Ujistěte se, že je zaškrtnuto Uchovat průhlednost a ukládejte bez komprese.</p>
+
+<p>Zjistíme, jestli je definovaná symbolická konstanta CDS_FULLSCREEN a pokud ne, nadefinujeme ji na hodnotu 4. Pro ty z vás, kteří se úplně ztratili... některé kompilátory nepřiřazují CDS_FULLSCREEN hodnotu. Pokud ji pak v programu použijeme, kompilace skončí s chybovou zprávou. Abychom tomuto předešli, tak ji v případě potřeby nadefinujeme ručně.</p>
+
+<p class="src0">#ifndef CDS_FULLSCREEN<span class="kom">// Některé kompilátory nedefinují CDS_FULLSCREEN</span></p>
+<p class="src1">#define CDS_FULLSCREEN 4<span class="kom">// Ruční nadefinování</span></p>
+<p class="src0">#endif</p>
+
+<p>Deklarujeme funkci DrawTargets(), potom proměnnou okna a kláves.</p>
+
+<p class="src0">void DrawTargets();<span class="kom">// Deklarace funkce</span></p>
+<p></p>
+<p class="src0">GL_Window* g_window;<span class="kom">// Okno</span></p>
+<p class="src0">Keys* g_keys;<span class="kom">// Klávesy</span></p>
+
+<p>Každý program potřebuje proměnné. Base ukládá display listy fontu, roll slouží k pohybu země a rolování mraků. Jako ve všech hrách i my začínáme prvním levelem. Miss vede záznam, do kolika objektů se v daném levelu střelec nestrefil, kill je jeho pravý opak. Score zahrnuje součty zasažených objektů z jednotlivých levelů. Game signalizuje konec hry.</p>
+
+<p class="src0">GLuint base;<span class="kom">// Display listy fontu</span></p>
+<p class="src0">GLfloat roll;<span class="kom">// Rolování mraků</span></p>
+<p></p>
+<p class="src0">GLint level = 1;<span class="kom">// Aktuální level</span></p>
+<p class="src0">GLint miss;<span class="kom">// Počet nesestřelených objektů</span></p>
+<p class="src0">GLint kills;<span class="kom">// Počet sestřelených objektů v daném levelu</span></p>
+<p class="src0">GLint score;<span class="kom">// Aktuální skóre</span></p>
+<p></p>
+<p class="src0">bool game;<span class="kom">// Konec hry?</span></p>
+
+<p>Nadefinujeme nový datový typ, díky kterému budeme moci předat struktury porovnávací funkci. Qsort() totiž očekává v posledním parametru ukazatel na funkci s parametry (const* void, const* void).</p>
+
+<p class="src0">typedef int (*compfn)(const void*, const void*);<span class="kom">// Ukazatel na porovnávací funkci</span></p>
+
+<p>Struktura objects bude ukládat všechny informace popisující sestřelovaný objekt. Rychlý průzkum proměnných: rot určuje směr rotace na ose z. Pokud ještě nebyl objekt sestřelen, hit bude obsahovat false. Frame definuje snímek animace při explozi, dir určuje směr pohybu. Texid je indexem do pole textur, nabývá hodnot nula až čtyři, z čehož plyne, že máme celkem pět druhů objektů. X a y definuje aktuální pozici, spin úhel rotace na ose z. Distance je hodně důležitá proměnná, určuje hloubku ve scéně. Právě podle ní budeme při blendingu řadit objekty, aby se nejdříve vykreslovali vzdálenější a až po nich bližší.</p>
+
+<p class="src0">struct objects<span class="kom">// Struktura objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">GLuint rot;<span class="kom">// Rotace (0 - žádná, 1 - po směru hodinových ručiček, 2 - proti směru)</span></p>
+<p class="src1">bool hit;<span class="kom">// Byl objekt zasažen?</span></p>
+<p></p>
+<p class="src1">GLuint frame;<span class="kom">// Aktuální snímek exploze</span></p>
+<p class="src1">GLuint dir;<span class="kom">// Směr pohybu (0 - vlevo, 1 - vpravo, 2 - nahoru, 3 - dolů)</span></p>
+<p class="src1">GLuint texid;<span class="kom">// Index do pole textur</span></p>
+<p></p>
+<p class="src1">GLfloat x;<span class="kom">// X pozice</span></p>
+<p class="src1">GLfloat y;<span class="kom">// Y pozice</span></p>
+<p class="src1">GLfloat spin;<span class="kom">// Směr rotace na ose z</span></p>
+<p class="src1">GLfloat distance;<span class="kom">// Hloubka ve scéně</span></p>
+<p class="src0">};</p>
+
+<p>Následující pole vedou záznamy o deseti texturách a třiceti objektech.</p>
+
+<p class="src0">TextureImage textures[10];<span class="kom">// Deset textur</span></p>
+<p class="src0">objects object[30];<span class="kom">// 30 Objektů</span></p>
+
+<p>Nebudeme limitovat velikost objektů. Váza by měla být vyšší než plechovka coly a kýbl naopak širší než váza. Abychom si ulehčili život, vytvoříme strukturu obsahující výšku a šířku. Definujeme a ihned inicializujeme pole těchto struktur o pěti prvcích. Na každém indexu se nachází jeden z pěti typů objektů.</p>
+
+<p class="src0">struct dimensions<span class="kom">// Rozměr objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">GLfloat w;<span class="kom">// Šířka</span></p>
+<p class="src1">GLfloat h;<span class="kom">// Výška</span></p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0"><span class="kom">// Velikost každého objektu: Modrá tvář, kýbl, terč, Coca-cola, Váza</span></p>
+<p class="src0">dimensions size[5] = {{1.0f,1.0f}, {1.0f,1.0f}, {1.0f,1.0f}, {0.5f,1.0f}, {0.75f,1.5f}};</p>
+
+<p>Tento kód bude volán funkcí qsort(). Porovnává hloubku dvou objektů ve scéně a vrací -1, pokud je první objekt dále, bude-li ale vzdálenější druhý objekt vrátí funkce 1. Získáme-li 0, znamená to, že jsou oba ve stejné vzdálenosti od pozorovatele.</p>
+
+<p class="src0"><span class="kom">// *** Modifikovaný MSDN kód pro tento tutoriál ***</span></p>
+<p class="src0">int Compare(struct objects *elem1, struct objects *elem2)<span class="kom">// Porovnávací funkce</span></p>
+<p class="src0">{</p>
+<p class="src1">if (elem1-&gt;distance &lt; elem2-&gt;distance)<span class="kom">// První je vzdálenější</span></p>
+<p class="src1">{</p>
+<p class="src2">return -1;</p>
+<p class="src1">}</p>
+<p class="src1">else if (elem1-&gt;distance &gt; elem2-&gt;distance)<span class="kom">// První je bližší</span></p>
+<p class="src1">{</p>
+<p class="src2">return 1;</p>
+<p class="src1">}</p>
+<p class="src1">else<span class="kom">// Vzdálenosti jsou stejné</span></p>
+<p class="src1">{</p>
+<p class="src2">return 0;</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Ve funkci InitObject() nastavujeme objekt na výchozí hodnoty. Přiřadíme mu rotaci po směru hodinových ručiček. Animace exploze samozřejmě začíná na prvním (nultém) snímku. Objekt ještě nebyl zasažen, takže nastavíme hit na false. Randomem zvolíme jednu z pěti dostupných textur.</p>
+
+<p class="src0">GLvoid InitObject(int num)<span class="kom">// Inicializace objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">object[num].rot = 1;<span class="kom">// Rotace po směru hodinových ručiček</span></p>
+<p class="src1">object[num].frame = 0;<span class="kom">// První snímek exploze</span></p>
+<p class="src1">object[num].hit = FALSE;<span class="kom">// Ještě nebyl zasažen</span></p>
+<p class="src1">object[num].texid = rand() % 5;<span class="kom">// Náhodný index textury</span></p>
+
+<p>Vzdálenost od pozorovatele nastavíme opět náhodně na hodnotu 0.0f až -40.0f (4000/100 = 40). Před renderingem objektu však scénu ještě posouváme do hloubky o dalších deset jednotek, takže se objekt defakto zobrazí v rozmezí od -10.0f do -50.0f. Ani příliš blízko ani příliš daleko.</p>
+
+<p class="src1">object[num].distance = -(float(rand() % 4001) / 100.0f);<span class="kom">// Náhodná hloubka</span></p>
+
+<p>Po definování hloubky určíme výšku nad zemí. Nechceme, aby se objekt nacházel níže než -1.5f, protože by byl pod zemí. Také by neměl být výše než 3.0f. Abychom zůstali v tomto rozmezí, výsledek randomu nesmí být vyšší než 4.5f (-1.5f + 4.5f = 3.0f).</p>
+
+<p class="src1">object[num].y = -1.5f + (float(rand() % 451) / 100.0f);<span class="kom">// Náhodná y pozice</span></p>
+
+<p>Výpočet počáteční x pozice je maličko složitější. Vezmeme pozici objektu v hloubce a odečteme od ní 15.0f. Výsledek operace vydělíme dvěma a odečteme od něj 5*level. Následuje další odčítání. Tentokrát odečteme náhodné číslo od 0 do 5 násobené aktuálním levelem. Předpokládám, že nechápete :-). Objekty se nyní ve vyšších levelech zobrazují dále od viditelné části scény (vlevo nebo vpravo). Kdybychom toto neudělali, zobrazovaly by se rychle jeden za druhým, takže by bylo velmi obtížné všechny zasáhnout a dostat se tak do dalšího levelu.</p>
+
+<p>Abyste lépe pochopili určování x pozice, uvedu příklad. Řekněme, že se objekt nachází -30.0f jednotek hluboko ve scéně a aktuální level je 1.</p>
+
+<p class="src0"><span class="kom">object[num].x = ((-30.0f - 15.0f) / 2.0f) - (5*1) - float(rand() % (5*1));</span></p>
+<p class="src0"><span class="kom">object[num].x = (-45.0f / 2.0f) - 5 - float(rand() % 5);</span></p>
+<p class="src0"><span class="kom">object[num].x = (-22.5f) - 5 - { řekněme 3.0f };</span></p>
+<p class="src0"><span class="kom">object[num].x = (-22.5f) - 5 - { 3.0f };</span></p>
+<p class="src0"><span class="kom">object[num].x = -27.5f - { 3.0f };</span></p>
+<p class="src0"><span class="kom">object[num].x = -30.5f;</span></p>
+
+<p>Před renderingem objektu provádíme translaci o deset jednotek do scény na ose z a hloubka v našem příkladu je -30.0f. Celková hloubka ve scéně je tedy -40.0f. Používáním perspektivního kódu z NeHeGL můžeme předpokládat, že levý okraj viditelné scény je -20.0f a pravý okraj se nachází na +20.0f. Před odečítáním randomů se rovná x-ová pozice -22.5f, což je PRÁVĚ okraj viditelné scény. Po těchto operacích to už je ale -30.0f a to znamená, že než se poprvé objeví, musí nejdříve urazit celých 8 jednotek doprava. Už je to jasnější?</p>
+
+<p class="src1"><span class="kom">// Náhodná x pozice založená na hloubce v obrazovce a s náhodným zpožděním před vstupem na scénu</span></p>
+<p class="src1">object[num].x = ((object[num].distance - 15.0f) / 2.0f) - (5*level) - float(rand() % (5*level));</p>
+
+<p>Nakonec zvolíme náhodný směr pohybu: 0 vlevo nebo 1 vpravo.</p>
+
+<p class="src1">object[num].dir = (rand() % 2);<span class="kom">// Náhodný směr pohybu</span></p>
+
+<p>Nyní se podíváme, kterým směrem se bude objekt posunovat. Pokud půjde doleva (dir == 0), změníme rotaci na proti směru hodinových ručiček (rot = 2). Pozice na ose x je defaultně záporná. Nicméně, pokud se máme pohybovat vlevo, musíme se na začátku nacházet vpravo. Negujeme tedy hodnotu x.</p>
+
+<p class="src1">if (object[num].dir == 0)<span class="kom">// Pohybuje se doleva?</span></p>
+<p class="src1">{</p>
+<p class="src2">object[num].rot = 2;<span class="kom">// Rotace proti směru hodinových ručiček</span></p>
+<p class="src2">object[num].x = -object[num].x;<span class="kom">// Výchozí pozice vpravo</span></p>
+<p class="src1">}</p>
+
+<p>Zjistíme, který druh objektu počítač vybral. Pokud se index textury rovná nule, zvolil texturu modré tváře a ty se vždy pohybují těsně nad zemí. Ručně nastavíme y pozici na -2.0f.</p>
+
+<p class="src1">if (object[num].texid == 0)<span class="kom">// Modrá tvář</span></p>
+<p class="src1">{</p>
+<p class="src2">object[num].y = -2.0f;<span class="kom">// Vždy těsně nad zemí</span></p>
+<p class="src1">}</p>
+
+<p>Práce s objektem kýblu bude složitější. Padají totiž z nebe (dir = 3). Z toho také plyne, že bychom měli nastavit novou x-ovou pozici, protože by nikdy nebyl vidět (objekty jsou na začátku vždy vlevo nebo vpravo od scény). Namísto odečítání 15 z minulého příkladu odečteme pouze 10. Tímto dosáhneme menšího rozmezí hodnot, které udrží objekt viditelně na scéně. Předpokládáme-li, že se hloubka rovná -30.0f, skončíme s náhodnou hodnotou od 0.0f do +40.0f. Horní hodnota je kladná a ne záporná, jak by se mohlo zdát, protože rand() vždy vrací kladné číslo. Získali jsme tedy číslo od 0.0f do 40.0f, k němu přičteme hloubku (záporné číslo) mínus 10.0f a to celé dělené dvěma. Opět příklad: přepokládáme, že vrácená náhodná hodnota je 15 a objekt se nachází ve vzdálenosti -30.0f jednotek.</p>
+
+<p class="src0"><span class="kom">object[num].x = float(rand() % int(-30.0f - 10.0f)) + ((-30.0f - 10.0f) / 2.0f);</span></p>
+<p class="src0"><span class="kom">object[num].x = float(rand() % int(-40.0f) + (-40.0f) / 2.0f);</span></p>
+<p class="src0"><span class="kom">object[num].x = { předpokládejme 15 } + (-20.0f);</span></p>
+<p class="src0"><span class="kom">object[num].x = 15.0f - 20.0f;</span></p>
+<p class="src0"><span class="kom">object[num].x = -5.0f;</span></p>
+
+<p>Nakonec určíme umístění na ose y. Chceme, aby padal z oblohy, ale nevystupoval z mraků. Číslo 4.5f odpovídá pozici maličko níže pod mraky.</p>
+
+<p class="src1">if (object[num].texid == 1)<span class="kom">// Kýbl</span></p>
+<p class="src1">{</p>
+<p class="src2">object[num].dir = 3;<span class="kom">// Padá dolů</span></p>
+<p class="src2">object[num].x = float(rand() % int(object[num].distance - 10.0f)) + ((object[num].distance - 10.0f) / 2.0f);</p>
+<p class="src2">object[num].y = 4.5f;<span class="kom">// Těsně pod mraky</span></p>
+<p class="src1">}</p>
+
+<p>Objekt terče by měl vystoupit nahoru ze země (dir = 2). Pro umístění na ose x použijeme stejný postup jako před chvílí. Nechceme, aby jeho počáteční poloha začínala nad zemí, takže nastavíme y na -3.0f (pod zemí). Od něj odečteme náhodné číslo od nuly do 5*level, aby se neobjevil hned, ale se zpožděním až po chvíli. Čím vyšší level, tím déle trvá, než se objeví. To dává hráči trochu času na vzpamatování se - bez této operace by terče vyskakovaly rychle jeden za druhým.</p>
+
+<p class="src1">if (object[num].texid == 2)<span class="kom">// Terč</span></p>
+<p class="src1">{</p>
+<p class="src2">object[num].dir = 2;<span class="kom">// Vyletí vzhůru</span></p>
+<p class="src2">object[num].x = float(rand() % int(object[num].distance - 10.0f)) + ((object[num].distance - 10.0f) / 2.0f);</p>
+<p class="src2">object[num].y = -3.0f - float(rand() % (5*level));<span class="kom">// Pod zemí</span></p>
+<p class="src1">}</p>
+
+<p>Všechny ostatní objekty se pohybují zleva doprava, a proto není nutné, abychom jejich nastavení nějakým způsobem měnili.</p>
+
+<p>Mohli bychom už skončit, ale zbývá ještě udělat jednu velice důležitou věc. Aby alfa blending pracoval správně, musí být průhledné polygony vykreslovány od nejvzdálenějších po nejbližší a nesmí se protínat. Z buffer totiž vyřazuje vzdálenější polygony, jsou-li již nějaké před nimi. Kdyby ty přední nebyly průhledné, ničemu by to nevadilo a navíc by se rendering urychlil, nicméně, když jsou objekty vepředu průhledné, tak by objekty za nimi měly být vidět. Nyní se buď nezobrazí nebo je kolem předních vykreslen čtvercový tvar, reprezentující původní polygon bez průhlednosti... nic hezkého.</p>
+
+<p>Známe hloubku všech objektů, takže není žádný problém, abychom je po inicializaci nového seřadili, jak potřebujeme. Použijeme standardní funkci qsort() (quick sort - rychlé řazení). Při následném renderingu vezmeme první prvek pole a vykreslíme ho. Nebudeme se muset o nic starat, protože víme, že je ve scéně nejhlouběji.</p>
+
+<p>Tento kód jsem nalezl v MSDN, ale úspěchu předcházelo dlouhé hledání na internetu. Funkce qsort() pracuje dobře a dovoluje řadit celé struktury. Předáváme jí čtyři parametry. První ukazuje na pole objektů, které mají být seřazeny, druhý určuje jejich počet (odpovídá aktuálnímu levelu). Třetí parametr definuje velikost jedné struktury a čtvrtý je ukazatelem na porovnávací funkci Compare(). S největší pravděpodobností existuje nějaká lepší metoda pro řazení struktur, ale qsort() vyhovuje. Je rychlá a snadno se používá.</p>
+
+<p>Důležitá poznámka: Pokud používáte glAlphaFunc() a glEnable(GL_ALPHA_TEST) namísto &quot;klasického&quot; blendingu, není řazení nutné. Používáním alpha funkcí jste ale omezeni na úplnou průhlednost nebo úplnou neprůhlednost, nic mezi tím. Používání BlendFunc() a řazení objektů stojí sice trochu práce navíc, ale dovoluje mít objekty poloprůhledné.</p>
+
+<p class="src1"><span class="kom">// *** Modifikovaný MSDN kód pro tento tutoriál ***</span></p>
+<p class="src1">qsort((void *) &amp;object, level, sizeof(struct objects), (compfn)Compare);<span class="kom">// Řazení objektů podle hloubky</span></p>
+<p class="src0">}</p>
+
+<p>První dva příkazy v inicializačním kódu nagrabují informace o okně a indikátoru stisknutých kláves. Funkcí srand() inicializujeme generátor náhodných čísel, potom loadujeme textury a vytvoříme display listy fontu.</p>
+
+<p class="src0">BOOL Initialize (GL_Window* window, Keys* keys)<span class="kom">// Inicializace OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">g_window = window;</p>
+<p class="src1">g_keys = keys;</p>
+<p></p>
+<p class="src1">srand((unsigned)time(NULL));<span class="kom">// Inicializace generátoru náhodných čísel</span></p>
+<p></p>
+<p class="src1">if ((!LoadTGA(&amp;textures[0],&quot;Data/BlueFace.tga&quot;)) ||<span class="kom">// Modrá tvář</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[1],&quot;Data/Bucket.tga&quot;)) ||<span class="kom">// Kbelík</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[2],&quot;Data/Target.tga&quot;)) ||<span class="kom">// Terč</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[3],&quot;Data/Coke.tga&quot;)) ||<span class="kom">// Coca-Cola</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[4],&quot;Data/Vase.tga&quot;)) ||<span class="kom">// Váza</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[5],&quot;Data/Explode.tga&quot;)) ||<span class="kom">// Exploze</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[6],&quot;Data/Ground.tga&quot;)) ||<span class="kom">// Země</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[7],&quot;Data/Sky.tga&quot;)) ||<span class="kom">// Obloha</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[8],&quot;Data/Crosshair.tga&quot;)) ||<span class="kom">// Kurzor</span></p>
+<p class="src2">(!LoadTGA(&amp;textures[9],&quot;Data/Font.tga&quot;)))<span class="kom">// Font</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;<span class="kom">// Inicializace se nezdařila</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">BuildFont();<span class="kom">// Vytvoří display listy fontu</span></p>
+
+<p>Nastavíme černé pozadí. Depth bufferem testujeme na méně nebo rovno (GL_LEQUAL).</p>
+
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.0f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení depth bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ testování hloubky</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne testování hloubky</span></p>
+
+<p>Příkaz glBlendFunc() je VELMI důležitý. Parametry GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA oznamují OpenGL, aby při renderingu používalo alfa hodnoty uložené v textuře. Aby se blending mohl projevit, musíme ho zapnout. Dále zapínáme i mapování 2D textur a ořezávání zadních stran polygonů. Při kreslení zadáváme souřadnice polygonů proti směru hodinových ručiček, takže odstranění zadních stran polygonů ničemu nevadí. Navíc se program urychlí, protože má s kreslením pouze polovinu práce.</p>
+
+<p>Výše v tutoriálu jsem psal o použití glAlphaFunc() namísto blendingu. Pokud chcete používat raději alfa funkci, zakomentářujte dva řádky důležité pro blending a odkomentářujte dva řádky alfy. Zakomentářovat můžete také řazení objektů pomocí qsort() a vše s ním spojené. Při alfa testingu není pořadí renderingu důležité.</p>
+
+<p>Program půjde v pořádku, ale obloha se nezobrazí. Příčinou je její textura, která má alfa hodnotu 0.5f. Alfa, narozdíl od blendingu, však může být buď nula nebo jedna, nic mezi. Problém lze vyřešit modifikací alfa kanálu textury. Obě metody přinášejí velmi dobré výsledky.</p>
+
+<p class="src1">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);<span class="kom">// Nastavení alfa blendingu</span></p>
+<p class="src1">glEnable(GL_BLEND);<span class="kom">// Zapne alfa blending</span></p>
+<p></p>
+<p class="src1"><span class="kom">// glAlphaFunc(GL_GREATER, 0.1f);// Nastavení alfa testingu</span></p>
+<p class="src1"><span class="kom">// glEnable(GL_ALPHA_TEST);// Zapne alfa testing</span></p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+<p class="src1">glEnable(GL_CULL_FACE);<span class="kom">// Ořezávání zadních stran polygonů</span></p>
+
+<p>Na tomto místě inicializujeme všechny objekty, které program používá a potom ukončíme funkci.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; 30; loop++)<span class="kom">// Prochází všechny objekty</span></p>
+<p class="src1">{</p>
+<p class="src2">InitObject(loop);<span class="kom">// Inicializace každého z nich</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;<span class="kom">// Inicializace úspěšná</span></p>
+<p class="src0">}</p>
+
+<p>Naprogramujeme detekci zásahů do objektů. Ze všeho nejdříve deklarujeme buffer, který použijeme k uložení informací o vybraných objektech. Proměnná hits slouží k počítání zásahů.</p>
+
+<p class="src0">void Selection(void)<span class="kom">// Detekce zasažení objektů</span></p>
+<p class="src0">{</p>
+<p class="src1">GLuint buffer[512];<span class="kom">// Deklarace selection bufferu</span></p>
+<p class="src1">GLint hits;<span class="kom">// Počet zasažených objektů</span></p>
+
+<p>Skončila-li hra, není žádný důvod, abychom hledali, který objekt byl zasažen, a proto ukončíme funkci. Pokud je hráč stále ve hře, přehrajeme zvuk výstřelu. Tato funkce je volána pouze tehdy, když hráč stiskl tlačítko myši. A pokud stiskl tlačítko myši, znamená to, že chtěl vystřelit. Nezáleží, jestli zasáhl nebo ne, zvuk výstřelu je slyšet vždy. Přehrajeme ho v asynchroním módu (SND_ASYNC), aby běžel na pozadí a program nemusel čekat až skončí.</p>
+
+<p class="src1">if (game)<span class="kom">// Konec hry?</span></p>
+<p class="src1">{</p>
+<p class="src2">return;<span class="kom">// Není důvod testovat na zásah</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">PlaySound(&quot;data/shot.wav&quot;, NULL, SND_ASYNC);<span class="kom">// Přehraje zvuk výstřelu</span></p>
+
+<p>Nastavíme pole viewport tak, aby obsahovalo pozici x, y se šířkou a výškou aktuálního viewportu (OpenGL okna). Voláním funkce glSelectBuffer() nařídíme OpenGL, aby použilo naše pole buffer pro svůj selection buffer.</p>
+
+<p class="src1">GLint viewport[4];<span class="kom">// Velikost viewportu. [0] = x, [1] = y, [2] = výška, [3] = šířka</span></p>
+<p></p>
+<p class="src1">glGetIntegerv(GL_VIEWPORT, viewport);<span class="kom">// Nastaví pole podle velikosti a lokace scény relativně k oknu</span></p>
+<p class="src1">glSelectBuffer(512, buffer);<span class="kom">// Přikáže OpenGL, aby pro selekci objektů použilo pole buffer</span></p>
+
+<p>Všechen kód níže je velmi důležitý. Nejdříve převedeme OpenGL do selection módu. Nic, co se vykresluje, se nezobrazí, ale namísto toho se informace o renderovaných objektech uloží do selection bufferu. Potom voláním glInitNames() a glPushName(0) inicializujeme name stack (stack jmen). Kdyby OpenGL nebylo v selection módu, glPushName() by bylo ignorováno.</p>
+
+<p class="src1">(void) glRenderMode(GL_SELECT);<span class="kom">// Převedení OpenGL do selection módu</span></p>
+<p></p>
+<p class="src1">glInitNames();<span class="kom">// Inicializace name stacku</span></p>
+<p class="src1">glPushName(0);<span class="kom">// Vloží 0 (nejméně jedna položka) na stack</span></p>
+
+<p>Po přípravě name stacku musíme omezit kreslení na oblast pod kurzorem. Zvolíme projekční matici, pushneme ji na stack a resetujeme ji voláním glLoadIdentity().</p>
+
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Zvolí projekční matici</span></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uložení projekční matice</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>Oblast kreslení omezíme příkazem gluPickMatrix(). První parametr určuje pozice myši na ose x, druhý je na ose y. Jedničky představují šířku a výšku picking regionu. Posledním parametrem je pole viewport, které určuje aktuální okraje viewportu. Mouse_x a mouse_y budou středem picking regionu.</p>
+
+<p class="src1"><span class="kom">// Vytvoření matice, která zvětší malou část obrazovky okolo kurzoru myši</span></p>
+<p class="src1">gluPickMatrix((GLdouble) mouse_x, (GLdouble) (viewport[3] - mouse_y), 1.0f, 1.0f, viewport);</p>
+
+<p>Voláním gluPerspective vynásobíme perspektivní matici pick maticí, která omezuje vykreslování na oblast vyžádanou od gluPickMatrix(). Potom přepneme na matici modelview a vykreslíme sestřelované objekty. Kreslíme je funkcí DrawTargets() a ne Draw(), protože chceme určit zásahy do objektů a ne do oblohy, země nebo kurzoru. Po vykreslení objektů přepneme zpět na projekční matici a popneme ji ze stacku. Nakonec se znovu vrátíme k matici modelview. Posledním příkazem přepneme OpenGL zpět do renderovacího módu, takže se opět budou vykreslované objekty zobrazovat na scénu. Proměnná hits bude po přiřazení obsahovat počet objektů, které byly vykresleny na oblast specifikovanou gluPickMatrix(). Tedy tam, kde se nacházel kurzor myši při výstřelu.</p>
+
+<p class="src1"><span class="kom">// Aplikování perspektivní matice</span></p>
+<p class="src1">gluPerspective(45.0f, (GLfloat) (viewport[2] - viewport[0]) / (GLfloat) (viewport[3] - viewport[1]), 0.1f, 100.0f);</p>
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Modelview matice</span></p>
+<p></p>
+<p class="src1">DrawTargets();<span class="kom">// Renderuje objekty do selection bufferu</span></p>
+<p></p>
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení projekční matice</span></p>
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Modelview matice</span></p>
+<p></p>
+<p class="src1">hits = glRenderMode(GL_RENDER);<span class="kom">// Přepnutí do renderovacího módu, uložení počtu objektů pod kurzorem</span></p>
+
+<p>Zjistíme, jestli bylo zaznamenáno více než nula zásahů. Pokud ano, přiřadíme proměnné choose jméno prvního objektu, který byl vykreslen do picking oblasti. Depth ukládá, jak hluboko ve scéně se tento objekt nachází. Každý zásah zabírá v bufferu čtyři položky. První je počtem jmen v name stacku, když se zásah udál. Druhá položka představuje minimální z hodnotu (hloubku) ze všech vertexů, které protínaly zobrazenou oblast v čase zásahu. Třetí naopak obsahuje maximální z hodnotu a poslední položka je obsahem name stacku v čase zásahu, nebo-li jméno objektu. V tomto programu nás zajímá minimální z hodnota a jméno objektu.</p>
+
+<p class="src1">if (hits &gt; 0)<span class="kom">// Bylo více než nula zásahů?</span></p>
+<p class="src1">{</p>
+<p class="src2">int choose = buffer[3];<span class="kom">// Uloží jméno prvního objektu</span></p>
+<p class="src2">int depth = buffer[1];<span class="kom">// Uloží jeho hloubku</span></p>
+
+<p>Založíme cyklus skrz všechny zásahy, abychom se ujistili, že žádný z objektů není blíže než ten první. Jinými slovy potřebujeme najít nejbližší objekt ke střelci. Kdybychom ho nehledali a střelec zasáhl dva překrývající se objekty najednou, mohl by ten v pořadí pole první být vzdálenější od pozorovatele. kliknutí myší by sestřelilo špatný objekt. Je jasné, že pokud je několik terčů za sebou, tak se při výstřelu zasáhne vždy ten nejbližší.</p>
+
+<p>Každý objekt má v poli buffer čtyři položky, takže násobíme aktuální průběh čtyřmi. Abychom získali hloubku objektu (druhá položka), přičítáme jedničku. pokud je právě testovaná hloubka menší než aktuálně nejnižší, připíšeme informace o jménu objektu a jeho hloubce. Po všech průchodech cyklem, bude choose obsahovat jméno ke střelci nejbližšího zasaženého objektu a depth jeho hloubku.</p>
+
+<p class="src2">for (int loop = 1; loop &lt; hits; loop++)<span class="kom">// Prochází všechny detekované zásahy</span></p>
+<p class="src2">{</p>
+<p class="src3">if (buffer[loop*4 + 1] &lt; GLuint(depth))<span class="kom">// Je tento objekt blíže než některý z předchozích?</span></p>
+<p class="src3">{</p>
+<p class="src4">choose = buffer[loop*4 + 3];<span class="kom">// Uloží jméno bližšího objektu</span></p>
+<p class="src4">depth = buffer[loop*4 + 1];<span class="kom">// Uloží jeho hloubku</span></p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+
+<p>Našli jsme zasažený objekt. Přiřazením TRUE do hit ho označíme, aby nemohl být zasažen po druhé nebo zničen automaticky po opuštění scény. Přičteme k hráčovu score jedničku a také inkrementujeme počet zásahů v daném levelu.</p>
+
+<p class="src2">if (!object[choose].hit)<span class="kom">// Nebyl ještě objekt zasažen?</span></p>
+<p class="src2">{</p>
+<p class="src3">object[choose].hit = TRUE;<span class="kom">// Označí ho jako zasažený</span></p>
+<p></p>
+<p class="src3">score += 1;<span class="kom">// Zvýší celkové skóre</span></p>
+<p class="src3">kills += 1;<span class="kom">// Zvýší počet zásahů v levelu</span></p>
+
+<p>Chceme, aby v každém následujícím levelu musel hráč sestřelit větší počet objektů. Tím se znesnadňuje postup mezi levely. Zkontrolujeme, jestli je kills větší než aktuální level násobený pěti. V levelu jedna stačí pro postup sestřelit pouze pět objektů (1*5). V druhém levelu už je to deset (2*5), atd. Hra začíná být těžší a těžší.</p>
+
+<p>Nastal-li čas pro přesun do následujího levelu, nastavíme počet nezasažených objektů na nulu, aby jím měl hráč větší šanci úspěšně projít. Ale aby vše nebylo zase tak jednoduché, vynulujeme i počet zasažených objektů. Nakonec nesmíme zapomenout inkrementovat level a otestovat, jestli už nebyl poslední. Důvod proč máme zrovna třicet levelů je velice jednoduchý. Třicátý level je už šíleně obtížný, myslím, že nikdo nemá šanci ho dosáhnout. Druhým důvodem je maximální počet objektů - je jich právě třicet. Chcete-li jich více poupravujte program.</p>
+
+<p>Na scéně můžete mít ale MAXIMÁLNĚ 64 objektů (0 až 63). Pokud jich zkusíte renderovat 65 a více, PICKING PŘESTANE PRACOVAT SPRÁVNĚ a začnou se dít podivné věci. Všechno od náhodně vybuchujících objektů až k celému vašemu počítači se kompletně zhroutí. 64 objektů je fyzikální limit OpenGL, stejně jako například 8 světel ve scéně.</p>
+
+<p>Pokud jste nějakou šťastnou náhodou bohem :-) a dostanete se až k třicátému levelu, výše už bohužel nepostoupíte. Nicméně celkové skóre se bude stále zvyšovat a počet zasažených i nezasažených objektů se vždy na tomto místě resetuje.</p>
+
+<p class="src3">if (kills &gt; level*5)<span class="kom">// Čas pro další level?</span></p>
+<p class="src3">{</p>
+<p class="src4">miss = 0;<span class="kom">// Nulování nezasažených objektů</span></p>
+<p class="src4">kills = 0;<span class="kom">// Nulování zasažených objektů v tomto levelu</span></p>
+<p class="src4">level += 1;<span class="kom">// Posun na další level</span></p>
+<p></p>
+<p class="src4">if (level &gt; 30)<span class="kom">// Poslední level?</span></p>
+<p class="src4">{</p>
+<p class="src5">level = 30;<span class="kom">// Nastavení levelu na poslední</span></p>
+<p class="src4">}</p>
+<p class="src3">}</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Ve funkci Update() testujeme stisk kláves a aktualizujeme umístění objektů ve scéně. Jednou z příjemných věcí je předávaný parametr miliseconds, který definuje uplynulý čas od předchozího volání. Na jeho bázi posuneme objekt o danou vzdálenost. A výsledek? Hra půjde stejně rychle na libovolném procesoru. ALE je zde jeden nedostatek. Řekněme, že máme objekt pohybující se pět jednotek za deset sekund. Rychlý počítač posune objektem o půl jednotky za sekundu. Na pomalém systému může trvat 2 sekundy, než se funkce znovu zavolá. Tím vznikají různá zpoždění a trhání, zkrátka animace už není plynulá. Lepší řešení však neexistuje. Pomalý počítač nezrychlíte, leda koupit nový...</p>
+
+<p>Ale zpátky ke kódu. První podmínka zjišťuje stisk klávesy ESC, který ukončuje aplikaci.</p>
+
+<p class="src0">void Update(DWORD milliseconds)<span class="kom">// Aktualizace pohybů ve scéně a stisk kláves</span></p>
+<p class="src0">{</p>
+<p class="src1">if (g_keys-&gt;keyDown[VK_ESCAPE])<span class="kom">// Klávesa ESC?</span></p>
+<p class="src1">{</p>
+<p class="src2">TerminateApplication(g_window);<span class="kom">// Ukončení programu</span></p>
+<p class="src1">}</p>
+
+<p>Klávesa F1 přepíná mód okna mezi systémem a fullscreenem.</p>
+
+<p class="src1">if (g_keys-&gt;keyDown[VK_F1])<span class="kom">// Klávesa F1?</span></p>
+<p class="src1">{</p>
+<p class="src2">ToggleFullscreen(g_window);<span class="kom">// Přepnutí fullscreen/okno</span></p>
+<p class="src1">}</p>
+
+<p>Stisk mezerníku po skončení hry založí novou. Inicializujeme všech třicet objektů, nastavíme konec hry na false, skóre na nulu, první level a zasažené i nezasažené objekty v tomto levelu také na nulu. Nic nepochopitelného.</p>
+
+<p class="src1">if (g_keys-&gt;keyDown[' '] &amp;&amp; game)<span class="kom">// Mezerník na konci hry?</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int loop = 0; loop &lt; 30; loop++)<span class="kom">// Prochází všechny objekty</span></p>
+<p class="src2">{</p>
+<p class="src3">InitObject(loop);<span class="kom">// Jejich inicializace</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2">game = FALSE;<span class="kom">// Ještě není konec hry</span></p>
+<p></p>
+<p class="src2">score = 0;<span class="kom">// Nulové skóre</span></p>
+<p class="src2">level = 1;<span class="kom">// První level</span></p>
+<p class="src2">kills = 0;<span class="kom">// Nula zasažených objektů</span></p>
+<p class="src2">miss = 0;<span class="kom">// Nula nezasažených objektů</span></p>
+<p class="src1">}</p>
+
+<p>K vytvoření iluze plujících mraků a pohybující se země, odečteme od roll číslo 0.00005f násobené počtem milisekund od minulého renderingu. Princip časování jsme si vysvětlili výše.</p>
+
+<p class="src1">roll -= milliseconds * 0.00005f;<span class="kom">// Mraky plují a země se pohybuje</span></p>
+
+<p>Založíme cyklus, který prochází všechny objekty ve scéně a aktualizuje je. Jejich počet je roven aktuálnímu levelu.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; level; loop++)<span class="kom">// Aktualizace všech viditelných objektů</span></p>
+<p class="src1">{</p>
+
+<p>Potřebujeme zjistit, kterým směrem se který objekt otáčí. Podle směru rotace upravíme aktuální úhel natočení o 0.2 stupňů vynásobených řídící proměnnou cyklu sečtenou s milisekundami. Přičítáním loop získáme rozdílnou rotaci pro každý objekt. Druhý objekt se nyní otáčí rychleji než první a třetí objekt ještě rychleji než druhý.</p>
+
+<p class="src2">if (object[loop].rot == 1)<span class="kom">// Rotace po směru hodinových ručiček?</span></p>
+<p class="src3">object[loop].spin -= 0.2f * (float(loop + milliseconds));</p>
+<p></p>
+<p class="src2">if (object[loop].rot == 2)<span class="kom">// Rotace proti směru hodinových ručiček?</span></p>
+<p class="src3">object[loop].spin += 0.2f * (float(loop + milliseconds));</p>
+
+<p>Přesuneme se ke kódu zajišťujícímu pohyby. Pokud se objekt pohybuje doprava (dir == 1), přičteme k x pozici 0.0012f. Podobným způsobem ošetříme posun doleva (dir == 0). Při směru nahoru (dir == 2) zvětšíme y hodnotu, protože kladná část osy y leží nahoře. Směr dolů (dir == 3) je úplně stejný jako předchozí. Odečítáme však menší číslo, aby byl pád pomalejší.</p>
+
+<p class="src2">if (object[loop].dir == 1)<span class="kom">// Pohyb doprava?</span></p>
+<p class="src3">object[loop].x += 0.012f * float(milliseconds);</p>
+<p></p>
+<p class="src2">if (object[loop].dir == 0)<span class="kom">// Pohyb doleva?</span></p>
+<p class="src3">object[loop].x -= 0.012f * float(milliseconds);</p>
+<p></p>
+<p class="src2">if (object[loop].dir == 2)<span class="kom">// Pohyb nahoru?</span></p>
+<p class="src3">object[loop].y += 0.012f * float(milliseconds);</p>
+<p></p>
+<p class="src2">if (object[loop].dir == 3)<span class="kom">// Pohyb dolů?</span></p>
+<p class="src3">object[loop].y -= 0.0025f * float(milliseconds);</p>
+
+<p>Posunuli jsme objektem a nyní potřebujeme otestovat, jestli je na scéně ještě vidět. Můžeme to zjistit podle hloubky ve scéně mínus 15.0f (malá tolerance navíc) a dělením dvěma. Pro ty z vás, kteří od inicializace objektů už zapomněli... Pokud jste dvacet jednotek ve scéně, máte z každé strany zhruba deset jednotek viditelné scény (záleží na nastavení perspektivy). Takže -20.0f (hloubka) -15.0f (extra okraj) = -35.0f. Vydělíme 2.0f a získáme -17.5f, což je přibližně 7.5 jednotek vlevo od viditelné scény. Objekt tedy už určitě není vidět.</p>
+
+<p>Musí také platit podmínka, že se objekt pohybuje doleva (dir == 0). Pokud ne, nestaráme se o něj. Poslední část logického výrazu představuje test zásahu. Shrneme to: pokud objekt vyletěl vlevo ze scény, pohybuje se doleva a nebyl zasažen, uživatel ho už nemá šanci zasáhnout. Zvýšíme počet nezasažených objektů a označíme objekt jako zasažený, aby se o něj program už příště nestaral. Touto cestou (hit = true) také zajistíme autodestrukci, což nám po nějaké době umožní jeho automatickou reinicializaci - nová textura, směr pohybu, rotace ap.</p>
+
+<p class="src2"><span class="kom">// Objekt vyletěl vlevo ze scény, pohybuje se vlevo a ještě nebyl zasažen</span></p>
+<p class="src2">if ((object[loop].x &lt; (object[loop].distance - 15.0f) / 2.0f) &amp;&amp; (object[loop].dir == 0) &amp;&amp; !object[loop].hit)</p>
+<p class="src2">{</p>
+<p class="src3">miss += 1;<span class="kom">// Zvýšení počtu nezasažených objektů</span></p>
+<p class="src3">object[loop].hit = TRUE;<span class="kom">// Odstranění objektu (zajišťuje animaci exploze a reinicializaci)</span></p>
+<p class="src2">}</p>
+
+<p>Analogicky ošetříme opuštění scény vpravo a náraz do země.</p>
+
+<p class="src2"><span class="kom">// Objekt vyletěl vpravo ze scény, pohybuje se vpravo a ještě nebyl zasažen</span></p>
+<p class="src2">if ((object[loop].x &gt; -(object[loop].distance - 15.0f) / 2.0f) &amp;&amp; (object[loop].dir == 1) &amp;&amp; !object[loop].hit)</p>
+<p class="src2">{</p>
+<p class="src3">miss += 1;<span class="kom">// Zvýšení počtu nezasažených objektů</span></p>
+<p class="src3">object[loop].hit = TRUE;<span class="kom">// Odstranění objektu (zajišťuje animaci exploze a reinicializaci)</span></p>
+<p class="src2">}</p>
+<p></p>
+<p class="src2"><span class="kom">// Objekt narazil do země, pohybuje se dolů a ještě nebyl zasažen</span></p>
+<p class="src2">if ((object[loop].y &lt; -2.0f) &amp;&amp; (object[loop].dir == 3) &amp;&amp; !object[loop].hit)</p>
+<p class="src2">{</p>
+<p class="src3">miss += 1;<span class="kom">// Zvýšení počtu nezasažených objektů</span></p>
+<p class="src3">object[loop].hit = TRUE;<span class="kom">// Odstranění objektu (zajišťuje animaci exploze a reinicializaci)</span></p>
+<p class="src2">}</p>
+
+<p>Narozdíl od předchozích testů při letu vzhůru uděláme menší změnu. Pokud se objekt dostane na ose y výše než 4.5f jednotek (těsně pod mraky), nezničíme ho, ale pouze změníme jeho směr, aby se pohyboval dolů. Destrukci zajistí předchozí kód pro naražení do země.</p>
+
+<p class="src2">if ((object[loop].y &gt; 4.5f) &amp;&amp; (object[loop].dir == 2))<span class="kom">// Objekt je pod mraky a směřuje vzhůru</span></p>
+<p class="src3">object[loop].dir = 3;<span class="kom">// Změna směru na pád</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Do mapy zpráv ve funkci WindowProc() přidáme dvě větve, které obsluhují události myši. Při stisknutí levého tlačítka uložíme pozici kliknutí v okně a ve funkci Selection() zjistíme, jestli se hráč strefil do některého z objektů nebo ne. Protože vykreslujeme vlastní OpenGL kurzor, potřebujeme při renderingu znát jeho pozici. O to se stará WM_MOUSEMOVE.</p>
+
+<p class="src0"><span class="kom">// Funkce WindowProc</span></p>
+<p class="src1">case WM_LBUTTONDOWN:<span class="kom">// Stisknutí levého tlačítka myši</span></p>
+<p class="src2">mouse_x = LOWORD(lParam);</p>
+<p class="src2">mouse_y = HIWORD(lParam);</p>
+<p class="src2">Selection();</p>
+<p class="src2">break;</p>
+<p></p>
+<p class="src1">case WM_MOUSEMOVE:<span class="kom">// Pohyb myši</span></p>
+<p class="src2">mouse_x = LOWORD(lParam);</p>
+<p class="src2">mouse_y = HIWORD(lParam);</p>
+<p class="src2">break;</p>
+
+<p>Přistoupíme k vykreslení objektu. Funkci se předávají celkem tři parametry, které ho dostatečně popisují - šířka, výška a textura. Obdélník renderujeme zadáváním bodů proti směru hodinových ručiček, abychom mohli použít culling.</p>
+
+<p class="src0">void Object(float width, float height, GLuint texid)<span class="kom">// Vykreslí objekt</span></p>
+<p class="src0">{</p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, textures[texid].texID);<span class="kom">// Zvolí správnou texturu</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníků</span></p>
+<p class="src2">glTexCoord2f(0.0f, 0.0f); glVertex3f(-width,-height, 0.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glTexCoord2f(1.0f, 0.0f); glVertex3f( width,-height, 0.0f);<span class="kom">// Pravý dolní</span></p>
+<p class="src2">glTexCoord2f(1.0f, 1.0f); glVertex3f( width, height, 0.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f, 1.0f); glVertex3f(-width, height, 0.0f);<span class="kom">// Levý horní</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+<p class="src0">}</p>
+
+<p>Kód pro renderování exploze dostává pouze jeden parametr - identifikátor objektu. Potřebujeme nagrabovat souřadnice oblasti na textuře exploze. Uděláme to podobnou cestou, jako když jsme získávali jednotlivé znaky z textury fontu. Ex a ey představují sloupec a řádek závislý na pořadí snímku animace (framu).</p>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_32_exploze.jpg" width="256" height="256" alt="Textura snímků exploze" /></div>
+
+<p>Pozici na ose x získáme dělením aktuálního snímku čtyřmi. Protože máme 64 snímků a pouze 16 obrázků, potřebujeme animaci zpomalit. Zbytek po dělení upraví číslo na hodnoty 0 až 3 a aby texturové koordináty byly v rozmezí 0.0f a 1.0f, dělíme čtyřmi. Získali jsme sloupec, nyní ještě řádek. První dělení opět zmenšuje číslo, druhé dělení eliminuje celý řádek a posledním dělením získáme vertikální souřadnici na textuře.</p>
+
+<p>Pokud je aktuální snímek 16, ey = 16/4/4/4 = 4/4/4 = 0,25. Jeden řádek dolů. je-li snímek 60, ey = 60/4/4/4 = 15/4/4 = 3/4 = 0,75. Matematici nevěří vlastním očím... Důvod proč se 15/4 nerovná 3,75 je to, že do posledního dělení pracujeme s celými čísly. Počítáme-li se zaokrouhlováním dojdeme k závěru, že výsledkem jsou vždy čísla 0.0f, 0.25f, 0.50f nebo 0.75f. Doufám, že to dává smysl. Je to jednoduché, ale matematika zastrašuje.</p>
+
+<p class="src0">void Explosion(int num)<span class="kom">// Animace exploze objektu</span></p>
+<p class="src0">{</p>
+<p class="src1">float ex = (float)((object[num].frame/4)%4)/4.0f;<span class="kom">// Výpočet x snímku exploze (0.0f - 0.75f)</span></p>
+<p class="src1">float ey = (float)((object[num].frame/4)/4)/4.0f;<span class="kom">// Výpočet y snímku exploze (0.0f - 0.75f)</span></p>
+
+<p>Získali jsme texturovací koordináty, zbývá vykreslit obdélník. Vertexy jsou fixovány na -1.0f a 1.0f. U textur odečítáme ey od 1.0f. Pokud bychom to neudělali animace by probíhala v opačném pořadí. Počátek texturovacích souřadnic je vlevo dole.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, textures[5].texID);<span class="kom">// Textura exploze</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníků</span></p>
+<p class="src2">glTexCoord2f(ex, 1.0f - (ey));</p>
+<p class="src2">glVertex3f(-1.0f, -1.0f, 0.0f);<span class="kom">// Levý dolní</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(ex + 0.25f, 1.0f - (ey));</p>
+<p class="src2">glVertex3f( 1.0f, -1.0f, 0.0f);<span class="kom">// Pravý dolní</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(ex + 0.25f, 1.0f - (ey + 0.25f));</p>
+<p class="src2">glVertex3f( 1.0f, 1.0f, 0.0f);<span class="kom">// Pravý horní</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(ex, 1.0f - (ey + 0.25f));</p>
+<p class="src2">glVertex3f(-1.0f, 1.0f, 0.0f);<span class="kom">// Levý horní</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Jak je vysvětleno výše, snímek nesmí být vyšší než 63, jinak by animace začala nanovo. Při přesáhnutí tohoto čísla reinicializujeme objekt.</p>
+
+<p class="src1">object[num].frame += 1;<span class="kom">// Zvýší snímek exploze</span></p>
+<p></p>
+<p class="src1">if (object[num].frame &gt; 63)<span class="kom">// Poslední snímek?</span></p>
+<p class="src1">{</p>
+<p class="src2">InitObject(num);<span class="kom">// Reinicializace objektu</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Následující sekce kódu vykresluje objekty. Začneme resetováním matice a přesunem o deset jednotek do hloubky.</p>
+
+<p class="src0">void DrawTargets(void)<span class="kom">// Vykreslí objekty</span></p>
+<p class="src0">{</p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p class="src1">glTranslatef(0.0f, 0.0f, -10.0f);<span class="kom">// Posun do hloubky</span></p>
+
+<p>Založíme cyklus procházející všechny aktivní objekty. Funkcí glLoadName() skrytě označíme individuální objekty - každému se určí jméno (číslo), které odpovídá indexu v poli. Prvnímu se přiřadí nula, druhému jednička atd. Podle tohoto jména můžeme zjistit, který objekt byl zasažen. Pokud program není v selection módu glLoadName() je ignorováno. Po přiřazení jména uložíme matici.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; level; loop++)<span class="kom">// Prochází aktivní objekty</span></p>
+<p class="src1">{</p>
+<p class="src2">glLoadName(loop);<span class="kom">// Přiřadí objektu jméno (pro detekci zásahů)</span></p>
+<p class="src2">glPushMatrix();<span class="kom">// Uložení matice</span></p>
+
+<p>Přesuneme se na pozici objektu, kde má být vykreslen.</p>
+
+<p class="src2">glTranslatef(object[loop].x, object[loop].y, object[loop].distance);<span class="kom">// Umístění objektu</span></p>
+
+<p>Před renderingem testujeme, jestli byl zasažen nebo ne. Pokud podmínka platí, vykreslíme místo objektu snímek animace exploze, jinak otočíme objektem na ose z o jeho úhel spin a až potom ho vykreslíme. Pro určení rozměrů použijeme pole size, které jsme vytvořili na začátku programu. Texid reprezentuje typ objektu (texturu).</p>
+
+<p class="src2">if (object[loop].hit)<span class="kom">// Byl objekt zasažen?</span></p>
+<p class="src2">{</p>
+<p class="src3">Explosion(loop);<span class="kom">// Vykreslí snímek exploze</span></p>
+<p class="src2">}</p>
+<p class="src2">else<span class="kom">// Objekt nebyl zasažen</span></p>
+<p class="src2">{</p>
+<p class="src3">glRotatef(object[loop].spin,0.0f,0.0f,1.0f);<span class="kom">// Natočení na ose z</span></p>
+<p class="src3">Object(size[object[loop].texid].w, size[object[loop].texid].h, object[loop].texid);<span class="kom">// Vykreslení</span></p>
+<p class="src2">}</p>
+
+<p>Po renderingu popneme matici, abychom zrušili posun a natočení.</p>
+
+<p class="src2">glPopMatrix();<span class="kom">// Obnoví matici</span></p>
+<p class="src1">}</p>
+<p class="src0">}</p>
+
+<p>Draw() je hlavní vykreslovací funkcí. Jako obvykle smažeme buffery a resetujeme matici, kterou následně pushneme.</p>
+
+<p class="src0">void Draw(void)<span class="kom">// Vykreslení scény</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže buffery</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uloží matici</span></p>
+
+<p>Zvolíme texturu (v pořadí sedmá) a pokusíme se vykreslit oblohu. Je složena ze čtyř otexturovaných obdélníků. První představuje oblohu od země přímo vzhůru. Textura na něm roluje docela pomalu. Druhý obdélník je vykreslen na stejném místě, ale jeho textura roluje rychleji. Obě textury se blendingem spojí dohromady a vytvoří tak hezký vícevrstvý efekt.</p>
+
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníků</span></p>
+<p class="src2">glTexCoord2f(1.0f,roll/1.5f+1.0f); glVertex3f( 28.0f,+7.0f,-50.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f,roll/1.5f+1.0f); glVertex3f(-28.0f,+7.0f,-50.0f);<span class="kom">// Levý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f,roll/1.5f+0.0f); glVertex3f(-28.0f,-3.0f,-50.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glTexCoord2f(1.0f,roll/1.5f+0.0f); glVertex3f( 28.0f,-3.0f,-50.0f);<span class="kom">// Pravý dolní</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(1.5f,roll+1.0f); glVertex3f( 28.0f,+7.0f,-50.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glTexCoord2f(0.5f,roll+1.0f); glVertex3f(-28.0f,+7.0f,-50.0f);<span class="kom">// Levý horní</span></p>
+<p class="src2">glTexCoord2f(0.5f,roll+0.0f); glVertex3f(-28.0f,-3.0f,-50.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glTexCoord2f(1.5f,roll+0.0f); glVertex3f( 28.0f,-3.0f,-50.0f);<span class="kom">// Pravý dolní</span></p>
+
+<p>Abychom přidali iluzi, že mraky plují směrem k pozorovateli, třetí obdélník směřuje z hloubky dopředu. Další obdélník je opět na stejné místě, ale textura roluje rychleji. Výsledkem čtyř obyčejných obdélníků je obloha, která se jeví, jako by stoupala od země vzhůru a přibližovala se k pozorovateli. Mohl jsem použít otexturovanou polokouli, ale byl jsem příliš líný. Efekt s obdélníky vypadá celkem slušně.</p>
+
+<p class="src2">glTexCoord2f(1.0f,roll/1.5f+1.0f); glVertex3f( 28.0f,+7.0f,0.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f,roll/1.5f+1.0f); glVertex3f(-28.0f,+7.0f,0.0f);<span class="kom">// Levý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f,roll/1.5f+0.0f); glVertex3f(-28.0f,+7.0f,-50.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glTexCoord2f(1.0f,roll/1.5f+0.0f); glVertex3f( 28.0f,+7.0f,-50.0f);<span class="kom">// Bottom Right</span></p>
+<p></p>
+<p class="src2">glTexCoord2f(1.5f,roll+1.0f); glVertex3f( 28.0f,+7.0f,0.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glTexCoord2f(0.5f,roll+1.0f); glVertex3f(-28.0f,+7.0f,0.0f);<span class="kom">// Levý horní</span></p>
+<p class="src2">glTexCoord2f(0.5f,roll+0.0f); glVertex3f(-28.0f,+7.0f,-50.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glTexCoord2f(1.5f,roll+0.0f); glVertex3f( 28.0f,+7.0f,-50.0f);<span class="kom">// Pravý dolní</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Nyní vykreslíme zemi. Začíná tam, kde se nachází nejnižší bod oblohy a směřuje směrem k pozorovateli. Roluje stejně rychle jako mraky. Abychom přidali trochu více detailů a zamezili tak nepříjemnému kostičkování při velkém zvětšení, namapujeme texturu sedmkrát na ose x a čtyřikrát na ose y.</p>
+
+<p class="src1">glBindTexture(GL_TEXTURE_2D, textures[6].texID);<span class="kom">// Textura země</span></p>
+<p></p>
+<p class="src1">glBegin(GL_QUADS);<span class="kom">// Kreslení obdélníků</span></p>
+<p class="src2">glTexCoord2f(7.0f,4.0f-roll); glVertex3f( 27.0f,-3.0f,-50.0f);<span class="kom">// Pravý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f,4.0f-roll); glVertex3f(-27.0f,-3.0f,-50.0f);<span class="kom">// Levý horní</span></p>
+<p class="src2">glTexCoord2f(0.0f,0.0f-roll); glVertex3f(-27.0f,-3.0f,0.0f);<span class="kom">// Levý dolní</span></p>
+<p class="src2">glTexCoord2f(7.0f,0.0f-roll); glVertex3f( 27.0f,-3.0f,0.0f);<span class="kom">// Pravý dolní</span></p>
+<p class="src1">glEnd();<span class="kom">// Konec kreslení</span></p>
+
+<p>Pozadí je vykresleno, přistoupíme k sestřelovaným objektům. Napsali jsme pro ně speciální funkci. Potom obnovíme matici.</p>
+
+<p class="src1">DrawTargets();<span class="kom">// Sestřelované objekty</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení matice</span></p>
+
+<p>Vykreslíme kurzor myši. Nagrabované rozměry okna uložíme do struktury obdélníku window. Zvolíme projekční matici a pushneme ji, resetujeme ji a převedeme scénu z perspektivního módu do pravoúhlé projekce. Souřadnice 0, 0 se nacházejí vlevo dole.</p>
+
+<p>Ve funkci glOrtho() prohodíme třetí a čtvrtý parametr, aby byl kurzor renderován proti směru hodinových ručiček a culling pracoval tak, jak chceme. Kdyby byl počátek souřadnic nahoře, zadávání bodů by probíhalo v opačném směru a kurzor s textem by se nezobrazil.</p>
+
+<p class="src1">RECT window;<span class="kom">// Proměnná obdélníku</span></p>
+<p class="src1">GetClientRect (g_window-&gt;hWnd,&amp;window);<span class="kom">// Grabování rozměrů okna</span></p>
+<p></p>
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src1">glPushMatrix();<span class="kom">// Uloží projekční matici</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset projekční matice</span></p>
+<p></p>
+<p class="src1">glOrtho(0, window.right, 0, window.bottom, -1, 1);<span class="kom">// Nastavení pravoúhlé scény</span></p>
+
+<p>Po nastavení kolmé projekce zvolíme modelview matici a umístíme kurzor. Problém je v tom, že počátek scény (0, 0) je vlevo dole, ale okno (systém) ho má vlevo nahoře. Kdybychom pozici kurzoru neinvertovali, tak by se při posunutí dolů, pohyboval nahoru. Od spodního okraje okna odečteme mouse_y. Namísto předávání velikosti v OpenGL jednotkách, specifikujeme šířku a výšku v pixelech.</p>
+
+<p>Rozhodl jsem se použít vlastní a ne systémový kurzor ze dvou důvodů. První a více důležitý je, že vypadá lépe a může být modifikován v jakémkoli grafickém editoru, který podporuje alfa kanál. Druhým důvodem je, že některé grafické karty kurzor ve fullscreenu nezobrazují. Hrát hru podobného typu bez kurzoru není vůbec snadné :-).</p>
+
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Zvolí matici modelview</span></p>
+<p class="src1">glTranslated(mouse_x, window.bottom-mouse_y, 0.0f);<span class="kom">// Posun na pozici kurzoru</span></p>
+<p></p>
+<p class="src1">Object(16, 16, 8);<span class="kom">// Vykreslí kurzor myši</span></p>
+
+<p>Vypíšeme logo NeHe Productions zarovnané na střed horní části okna, dále zobrazíme aktuální level a skóre.</p>
+
+<p class="src1">glPrint(240, 450, &quot;NeHe Productions&quot;);<span class="kom">// Logo</span></p>
+<p class="src1">glPrint(10, 10, &quot;Level: %i&quot;, level);<span class="kom">// Level</span></p>
+<p class="src1">glPrint(250, 10, &quot;Score: %i&quot;, score);<span class="kom">// Skóre</span></p>
+
+<p>Otestujeme, jestli hráč nestrefil více než devět objektů. Pokud ano, nastavíme game na true, čímž indikujeme konec hry.</p>
+
+<p class="src1">if (miss &gt; 9)<span class="kom">// Nestrefil hráč více než devět objektů?</span></p>
+<p class="src1">{</p>
+<p class="src2">miss = 9;<span class="kom">// Limit je devět</span></p>
+<p class="src2">game = TRUE;<span class="kom">// Konec hry</span></p>
+<p class="src1">}</p>
+
+<p>Po skončení hry vypisujeme text GAME OVER. Je-li hráč ještě ve hře, vypíšeme kolik objektů mu může ještě uniknout. Text je ve formátu např. '6/10' - může ještě nezasáhnout šest objektů z deseti.</p>
+
+<p class="src1">if (game)<span class="kom">// Konec hry?</span></p>
+<p class="src1">{</p>
+<p class="src2">glPrint(490, 10, &quot;GAME OVER&quot;);<span class="kom">// Vypíše konec hry</span></p>
+<p class="src1">}</p>
+<p class="src1">else</p>
+<p class="src1">{</p>
+<p class="src2">glPrint(490, 10, &quot;Morale: %i/10&quot;, 10-miss);<span class="kom">// Vypíše počet objektů, které nemusí sestřelit</span></p>
+<p class="src1">}</p>
+
+<p>Zbývá obnovit původní nastavení. Zvolíme projekční matici, obnovíme ji, zvolíme modelview matici a vyprázdníme buffer, abychom se ujistili, že všechny objekty byly v pořádku zobrazeny.</p>
+
+<p class="src1">glMatrixMode(GL_PROJECTION);<span class="kom">// Projekční matice</span></p>
+<p class="src1">glPopMatrix();<span class="kom">// Obnovení projekční matice</span></p>
+<p class="src1">glMatrixMode(GL_MODELVIEW);<span class="kom">// Modelview matice</span></p>
+<p></p>
+<p class="src1">glFlush();<span class="kom">// Vyprázdní OpenGL renderovací pipeline</span></p>
+<p class="src0">}</p>
+
+<p>Tento tutoriál je výsledkem mnoha probdělých nocí při kódování a psaní HTML. Nyní byste měli rozumět pickingu, alfa testingu a řazení podle hloubky při alfa blendingu. Picking umožňuje vytvořit interaktivní software, který se ovládá myší. Všechno od her až po nádherné GUI. Největší výhodou pickingu je, že si nemusíme vést složitý záznam, kde se objekty nacházejí, o translacích a rotacích ani nemluvě. Objektu stačí přiřadit jméno a počkat na výsledek. S alfa blendingem a testingem můžete vykreslit objekt kompletně neprůhledný a/nebo plný otvorů. Výsledek je úžasný, nemusíte se starat o prosvítání textur.</p>
+
+<p>Mohl jsem strávit spoustu času přidáváním pohybů podle fyzikálních zákonů, grafiky, zvuků a podobně. Nicméně jsem vysvětlil OpenGL techniky bez dalších zbytečností. Doufám, že se po čase objeví nějaké skvělé modifikace kódu, které už ale nechám na vás.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson32.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson32_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson32.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson32.zip">Delphi</a> kód této lekce. ( <a href="mailto:Hugh@mikespike.freeserve.co.uk">Hugh Waite</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson32.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson32.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson32.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:edgarcostanzo@tiscalinet.it">Edgar Costanzo</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson32.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson32.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_32_big.jpg" class="nehe_velky" alt="Lekce 32" /></div>
+<p class="okolni_lekce"><a href="tut_31.php">&lt;&lt;&lt; Lekce 31</a> | <a href="tut_33.php">Lekce 33 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Centurion</div>
+<div class="d_o_datumcas">28.10.2004 - 10:47:41</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=0">Maximálne 64 objektov?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">28.06.2005 - 19:50:09</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=1">polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">08.07.2005 - 08:52:24</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_32.php&j=3">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">08.07.2005 - 18:09:54</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_32.php&j=4">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">09.07.2005 - 08:04:45</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_32.php&j=5">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">10.07.2005 - 20:26:55</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_32.php&j=6">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">10.07.2005 - 20:28:31</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 100px;"><a href="d_view.php?f=tut_32.php&j=7">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">17.07.2005 - 17:32:56</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 120px;"><a href="d_view.php?f=tut_32.php&j=8">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">26.07.2005 - 15:54:08</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 140px;"><a href="d_view.php?f=tut_32.php&j=9">Re: polprimka(paprsek)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">08.07.2005 - 08:35:49</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=2">Picking a OpenGL souřadnice?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">25.08.2005 - 19:58:56</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=10">Díra po zásahu kulkou???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">26.08.2005 - 20:05:14</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_32.php&j=11">Re: Díra po zásahu kulkou???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">26.08.2005 - 20:47:01</div>
+<div>
+<input type="checkbox" name="id_12" id="id_12" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_32.php&j=12">Re: Díra po zásahu kulkou???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">29.08.2005 - 19:10:18</div>
+<div>
+<input type="checkbox" name="id_13" id="id_13" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=13">Z - úroveň polygonů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">29.08.2005 - 22:49:04</div>
+<div>
+<input type="checkbox" name="id_14" id="id_14" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_32.php&j=14">Re: Z - úroveň polygonů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">30.08.2005 - 06:15:40</div>
+<div>
+<input type="checkbox" name="id_15" id="id_15" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_32.php&j=15">Re: Z - úroveň polygonů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">30.08.2005 - 18:32:01</div>
+<div>
+<input type="checkbox" name="id_16" id="id_16" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_32.php&j=16">Re: Z - úroveň polygonů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.09.2005 - 22:21:48</div>
+<div>
+<input type="checkbox" name="id_18" id="id_18" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_32.php&j=18">Re: Z - úroveň polygonů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">03.09.2005 - 12:18:07</div>
+<div>
+<input type="checkbox" name="id_17" id="id_17" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=17">Alfa razeni</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.09.2005 - 22:26:45</div>
+<div>
+<input type="checkbox" name="id_19" id="id_19" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_32.php&j=19">Re: Alfa razeni</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">23.04.2006 - 19:17:48</div>
+<div>
+<input type="checkbox" name="id_20" id="id_20" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_32.php&j=20">Re: Alfa razeni</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">24.04.2006 - 20:40:58</div>
+<div>
+<input type="checkbox" name="id_21" id="id_21" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_32.php&j=21">Re: Alfa razeni</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">.::]|DEAD|[::.Screamer</div>
+<div class="d_o_datumcas">28.04.2006 - 21:27:32</div>
+<div>
+<input type="checkbox" name="id_22" id="id_22" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_32.php&j=22">Re: Alfa razeni</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">mp</div>
+<div class="d_o_datumcas">29.04.2006 - 19:57:21</div>
+<div>
+<input type="checkbox" name="id_23" id="id_23" value="1" />
+<span class="d_o_nadpis" style="margin-left: 100px;"><a href="d_view.php?f=tut_32.php&j=23">Re: Alfa razeni</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">k4r7m3n</div>
+<div class="d_o_datumcas">31.08.2006 - 13:24:01</div>
+<div>
+<input type="checkbox" name="id_24" id="id_24" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_32.php&j=24">Xlib a cursor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">k4r7m3n</div>
+<div class="d_o_datumcas">02.09.2006 - 19:48:46</div>
+<div>
+<input type="checkbox" name="id_25" id="id_25" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_32.php&j=25">Re: Xlib a cursor</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_32.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

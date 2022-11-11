@@ -1,0 +1,138 @@
+From: <Uloženo v aplikaci Windows Internet Explorer 7>
+Subject: =?windows-1250?Q?PC_Sv=ECt:_Z=E1klad_programov=E1n=ED_ve_Windows_a_C++_?=
+	=?windows-1250?Q?=2812.=29?=
+Date: Thu, 12 Jul 2007 10:07:30 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="windows-1250"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.pcsvet.cz/art/article_print.php?id=1130
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--nic--><HTML><HEAD><TITLE>PC Sv=ECt: Z=E1klad programov=E1n=ED ve =
+Windows a C++ (12.)</TITLE>
+<META lang=3Dcz content=3Dpcsvet name=3Ddescription>
+<META lang=3Den content=3Dpcsvet name=3Ddescription>
+<META lang=3Dcz content=3Dpcsvet name=3Dkeywords>
+<META lang=3Den content=3Dpcsvet name=3Dkeywords>
+<META http-equiv=3Ddescription content=3Dpcsvet>
+<META http-equiv=3Dcontent-language content=3Dcz>
+<META http-equiv=3Dcontent-type content=3D"text/html; =
+charset=3Dwindows-1250">
+<STYLE type=3Dtext/css>.sc {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+.kod {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New
+}
+</STYLE>
+
+<META content=3D"MSHTML 6.00.6000.16481" name=3DGENERATOR></HEAD>
+<BODY>
+<H2 align=3Dcenter>PC Sv=ECt - <A=20
+href=3D"http://www.pcsvet.cz/">http://www.pcsvet.cz/</A></H2>
+<HR SIZE=3D1>
+
+<H2>Z=E1klad programov=E1n=ED ve Windows a C++ (12.)</H2>
+<H4>Popis funkc=ED a postup pro kreslen=ED bitmap a ikon do va=9Aeho =
+formul=E1=F8e</H4>
+<HR color=3D#777777 SIZE=3D1>
+
+<P>Nakreslen=ED bitmapy do okna je dal=9A=ED z d=F9le=9Eit=FDch =
+znalost=ED autor=F9 program=F9 pro=20
+Windows. I v profesion=E1ln=EDch programech se v=9Edy najde v okn=EC =
+m=EDsto, kam vlo=9Eit=20
+logo.
+<P>Pr=E1ce s bitmapami BMP je relativn=EC slo=9Eit=E1. Z d=F9vod=F9 =
+pam=EC=9Dov=E9 n=E1ro=E8nosti a=20
+p=F8edev=9A=EDm kv=F9li tzv. flicker free kreslen=ED neboli kreslen=ED =
+bez problik=E1v=E1n=ED=20
+obrazu je t=F8eba bitmapy p=F8en=E1=9Aet na obrazovku pomoc=ED =
+dal=9A=EDho kontextu za=F8=EDzen=ED,=20
+kter=FD je um=EDst=ECn v pam=ECti.=20
+<P>Jak tedy na to. Nejprve, nejl=E9pe p=F8i zpr=E1v=EC WM_CREATE =
+na=E8teme n=E1=9A obr=E1zek=20
+funkc=ED LoadBitmap a k udr=9Een=ED handle na obr=E1zek si mimo =
+proceduru okna=20
+definujeme prom=ECnnou HBITMAP. P=F8edpokl=E1dejme tedy, =9Ee m=E1me ve =
+zdroj=EDch um=EDst=ECn=20
+obr=E1zek, jeho=9E identifik=E1tor je 100: <FONT face=3D"Courier New" =
+color=3D#000044>
+<P><FONT size=3D2>100 BITMAP PRELOAD MOVEABLE "obr.bmp" </FONT></FONT>
+<P>Programujeme tedy: <FONT face=3D"Courier New" color=3D#000044>
+<P><FONT size=3D2>HBITMAP hb; <BR>&nbsp;... <BR>hb =3D =
+LoadBitmap(hInstance,=20
+MAKEINTRESOURCE(100)); </FONT></FONT>
+<P>Prvn=ED parametr funkce LoadBitmap (hInstance) je handle na instanci =
+aplikace,=20
+kter=E9 obdr=9E=EDme p=F8i vstupu do funkce WinMain. Jako odpov=EC=EF na =
+WM_PAINT nejprve=20
+zavol=E1me funkci BeginPaint (viz d=EDl 10.). A nyn=ED u=9E =
+vytvo=F8=EDme kontext za=F8=EDzen=ED,=20
+kter=FD bude v pam=ECti a do n=ECho=9E nahrajeme n=E1=9A obr=E1zek. =
+<FONT face=3D"Courier New"=20
+color=3D#000044>
+<P><FONT size=3D2>HDC hMemory =3D CreateCompatibleDC(hDC); =
+</FONT></FONT>
+<P>A funkc=ED SelectObjekt zvol=EDme do tohoto kontextu na=9Ai bitmapu. =
+<FONT=20
+face=3D"Courier New" color=3D#000044>
+<P><FONT size=3D2>SelectObject(hMemory, hb); </FONT></FONT>
+<P>Windows n=E1m d=E1le poskytuj=ED velmi rychlou funkci BitBlt, kterou =
+pou=9Eijeme k=20
+p=F8enesen=ED bitmapy z pam=EC=9Dov=E9ho kontextu do kontextu na=9A=ED =
+aplikace.=20
+P=F8edpokl=E1d=E1me, =9Ee velikost bitmapy je 123x456 pixel=F9. <FONT =
+face=3D"Courier New"=20
+color=3D#000044>
+<P><FONT size=3D2>BitBlt(hDC, 0,0, 123, 456, hMemory, 0, 0, SRCCOPY);=20
+</FONT></FONT>
+<P>A nyn=ED u=9E m=F9=9Eeme vytvo=F8en=FD pam=EC=9Dov=FD kontext =
+odstranit a uvolnit tak pam=EC=9D.=20
+<FONT face=3D"Courier New" color=3D#000044>
+<P><FONT size=3D2>DeleteDC(hMemory); </FONT></FONT>
+<P>Takto m=F9=9Eeme nakreslit na obrazovku libovolnou bitmapu. =
+Pot=F8ebujeme-li=20
+nakreslit do okna jednoduchou ikonku, rozhodn=EC nebudeme ale =
+pou=9E=EDvat takto=20
+slo=9Eit=FD postup. Ke kreslen=ED ikon m=F9=9Eeme pou=9E=EDt funkci =
+DrawIcon nebo DrawIconEx,=20
+nejprve ale mus=EDme ikonku na=E8=EDst. To m=F9=9Eeme prov=E9st funkc=ED =
+LoadIcon nebo=20
+LoadImage. Tyto funkce jsou rozd=EDln=E9 v tom, =9Ee funkc=ED LoadImage =
+m=F9=9Eeme na=E8=EDst i=20
+kuzor a bitmapy, definovat rozm=ECry ikony, nastaven=ED pr=F9hledn=FDch =
+=E8=E1st=ED a barev,=20
+zat=EDmco funkce LoadIcon na=E8te ikonu s u=9Eivatelem nastaven=FDmi =
+rozm=ECry (SM_CXICON=20
+a SM_CYICON). Funkc=ED LoadImage m=F9=9Eeme na=E8=EDtat tak=E9 ikony ze =
+soubor=F9 a to tak, =9Ee=20
+n=E1zev souboru uvedeme m=EDsto n=E1zvu zdroje a specifikujeme vlajku =
+LR_LOADFROMFILE.=20
+P=F8=EDklady na=E8ten=ED ikony: <FONT face=3D"Courier New" =
+color=3D#000044>
+<P><FONT size=3D2>hi =3D LoadIcon(hInstance, MAKEINTRESOURCE(200) ); =
+</FONT>
+<P><FONT size=3D2>hi =3D LoadImage(hInstance, MAKEINTRESOURCE(200), =
+IMAGE_ICON, 48,=20
+48, LR_DEFAULTCOLOR ); </FONT></FONT>
+<P>Prom=ECnn=E1 hi bude typu HICON a udr=9Euje n=E1m handle na =
+na=E8tenou ikonu. A do=20
+na=9Aeho okna m=F9=9Eeme nakreslit ikonku na pozici [10,10] t=F8eba =
+takto: <FONT=20
+face=3D"Courier New" color=3D#000044>
+<P><FONT size=3D2>DrawIcon( hDC, 10, 10, hi ); </FONT></FONT>
+<P>Mysl=EDm, =9Ee kreslen=ED grafick=FDch prvk=F9 pod Windows je nyn=ED =
+dostate=E8n=EC=20
+objasn=ECno. V=EDce informac=ED o kreslen=ED pod Windows hledejte =
+p=F8edev=9A=EDm v=20
+referenc=EDch Windows API.=20
+<HR SIZE=3D1>
+Autor: <B>Jan Ringo=9A</B>, <A=20
+href=3D"mailto:Tringi@mx-3.cz">Tringi@mx-3.cz</A><BR>Rubrika: <B><A=20
+href=3D"http://www.pcsvet.cz/c/">Programov=E1n=ED - C, C++</A></B><BR>
+<HR SIZE=3D1>
+
+<P align=3Dcenter>--- Vyti=9At=ECno 12.7.2007 10:07:18 ze serveru PC =
+Sv=ECt ---</P><!--nic--></BODY></HTML>

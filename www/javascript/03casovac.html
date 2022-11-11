@@ -1,0 +1,257 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
+	<title>Časovač</title>
+	<script>
+	  function okno()
+	  {	
+ 	    nove=window.open("about:blank","okno","status=no");
+		nove.resizeTo(165,30);
+		nove.document.open();
+	    nove.document.write("<html>");
+	    nove.document.write("<head>\n");
+		nove.document.write("<META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'>\n");
+		nove.document.write('<title>Ukážka času</title>\n');
+		nove.document.write("<script>\n");
+		nove.document.write("function hodiny()\n");
+		nove.document.write("{  var a = new Date();\n");
+		nove.document.write("ncas.innerText=a.getHours()+':'+a.getMinutes()+':'+a.getSeconds();}\n");
+		nove.document.write("<"+"/"+"script>\n");
+	    nove.document.write("</head>\n");
+		nove.document.write("<body  onload=\"window.ntr=window.setInterval('hodiny()',1000)\">\n");
+		nove.document.write("<div id='ncas' align='center'>\n");
+		nove.document.write("....\n");
+		nove.document.write("</div>\n");
+	    nove.document.write("</body>");
+	    nove.document.write("</html>");
+		nove.document.close();
+		nove.resizeTo(165,30);
+	  }
+	  function zdroj()
+	  { 
+	    novez=window.open("","okno","status=no");
+		novez.document.open();
+	    novez.document.write("&lt;html><br>");
+	    novez.document.write("&lt;head><br>");
+		novez.document.write("&lt;META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'><br>");
+		novez.document.write('&lt;title>Ukážka času&lt;/title><br>');
+		novez.document.write("&lt;script><br>");
+		novez.document.write("function hodiny()<br>");
+		novez.document.write("{  var a = new Date();<br>");
+		novez.document.write("ncas.innerText=a.getHours()+':'+a.getMinutes()+':'+a.getSeconds();}<br>");
+		novez.document.write("&lt;"+"/"+"script><br>");
+	    novez.document.write("&lt;/head><br>");
+		novez.document.write("&lt;body  onload=\"window.ntr=window.setInterval('hodiny()',1000)\"><br>");
+		novez.document.write("&lt;div id='ncas'><br>");
+		novez.document.write("....<br>");
+		novez.document.write("&lt;/div><br>");
+	    novez.document.write("&lt;/body><br>");
+	    novez.document.write("&lt;/html>");
+		novez.document.close();
+	  }
+	    var dx1=2; var dy1=2;var x1=10;var y1=10;
+	    var dx2=3; var dy2=0;var x2=100;var y2=10;
+		var kon=100; var poc=10;
+	function anim()
+	{
+		 x1+=dx1; y1+=dy1;
+		 if (x1<3) dx1=2;
+		 if (y1<3) dy1=2; 
+		 if (x1>385) dx1=-2; 
+		 if (y1>285) dy1=-2; 
+		 document.images[0].style.left=x1;
+		 document.images[0].style.top=y1;
+		 x2+=dx2; y2+=dy2;
+		 if (x2<-17) dx2=3;
+		 if (x2>365) dx2=-3; 
+		 if (y2>285) dy2=-dy2; else  dy2+=0.3;
+		 document.images[1].style.left=x2;
+		 document.images[1].style.top=Math.round(y2);
+	} 
+	function start()
+	{ 	var i= Math.round(2.45*Math.random(3));
+			sp[i].innerText=Math.round(9.5*Math.random(10)) +'';
+			sp[i].style.background=' silver';
+		
+	}
+	function init()
+	{ 
+			if (sp[0].innerText=='X')
+			{ konto.value=100;
+			sp[0].innerText=1;
+			sp[0].style.background=' silver';
+			sp[1].innerText=2;
+			sp[1].style.background=' silver';
+			sp[2].innerText=3;
+			sp[2].style.background=' silver';
+			} 
+	}
+	function stop()
+	{ var aa=1;
+          poc-=1;
+		  window.clearInterval(window.tr1);
+		  if (sp[0].innerText == sp[1].innerText) {kon+=5; aa=0;}
+		  if (sp[1].innerText == sp[2].innerText) {kon+=5; aa=0;}
+		  if (sp[0].innerText == sp[2].innerText) {kon+=5; aa=0;}
+		  if (aa) kon-=5;
+		  konto.value= kon;
+		  if (!poc)
+		  {
+			sp[0].innerText='X';
+			sp[0].style.background='darkblue';
+			sp[1].innerText='X';
+			sp[1].style.background='darkblue';
+			sp[2].innerText='X';
+			sp[2].style.background='darkblue';
+		  }	
+	}
+	function vypis_lopty()
+	{   novez=window.open("","okno","status=no");
+		novez.document.open();
+		novez.document.writeln('<B><code>'); 
+		novez.document.writeln('&lt;Head>');
+		novez.document.writeln('<DIV style="margin:0 0 0 20">&lt;Script>');
+		novez.document.writeln('function anim()');
+		novez.document.writeln('<DIV style="margin:0 0 0 20">{ x1+=dx1; y1+=dy1;<br>');
+		novez.document.writeln('if (x1<3) dx1=2;<br>if (y1<3) dy1=2;<br>');
+		novez.document.writeln('if (x1>385) dx1=-2;<br>if (y1>285) dy1=-2;<br>');
+		novez.document.writeln('document.images[0].style.left=x1;<br>');
+		novez.document.writeln('document.images[0].style.top=y1;<br>');
+		novez.document.writeln('if (x2<-17) dx2=3;<br>if (x2>365) dx2=-3;<br>');
+		novez.document.writeln('if (y2>285) dy2=-dy2; &nbsp; else dy2+=0.3;<br>');
+		novez.document.writeln('document.images[1].style.left=x2;<br>');
+		novez.document.writeln('document.images[1].style.top=Math.round(y2);}</DIV>');
+		novez.document.writeln('&lt;/Script></DIV>&lt;/Head><br>&lt;BODY>');
+		novez.document.writeln('<DIV style="margin:0 0 0 20">&lt;div style="width:400; height:300; background:white"><br>');
+		novez.document.writeln('&lt;img src="gulicka.gif" style="position:relative; top=10; left=10;"><br>'); 
+		novez.document.writeln('&lt;img src="gulicka.gif" style="position:relative; top=10; left=100;"><br>'); 
+		novez.document.writeln('&lt;/div>'); 
+		novez.document.writeln('&lt;input type="Button" onclick="window.tr=window.setInterval(');
+		novez.document.writeln("'anim()',30)");
+		novez.document.writeln(' value="Štart"><br>');
+		novez.document.writeln('&lt;input type="Button" onclick="window.clearInterval(window.tr)" value="Stop"><br>'); 
+		novez.document.writeln('</div>&lt;/BODY><br>'); 
+		novez.document.close();
+	}	
+	function vypis_video()
+	{   novez=window.open("","okno","Scrollbars=yes");
+		novez.document.open();
+		novez.document.writeln('<B><code>'); 
+		novez.document.writeln('&lt;Head>');
+		novez.document.writeln('<DIV style="margin:0 0 0 20">&lt;Script><br>');
+		novez.document.writeln('function start()');
+		novez.document.writeln('<DIV style="margin:0 0 0 20">{ 	var i= Math.round(2.45*Math.random(3));<br>');
+		novez.document.writeln('sp[i].innerText=Math.round(9.5*Math.random(10)) +"";<br>');
+		novez.document.writeln('sp[i].style.background="silver }";<br></div>'); 
+		novez.document.writeln('function stop()'); 
+		novez.document.writeln('<DIV style="margin:0 0 0 20">{ var aa=1;<br>'); 
+		novez.document.writeln('poc-=1;<br>window.clearInterval(window.tr1);<br>'); 
+		novez.document.writeln('if (sp[0].innerText == sp[1].innerText) {kon+=5; aa=0;}<br>'); 
+		novez.document.writeln('if (sp[1].innerText == sp[2].innerText) {kon+=5; aa=0;}<br>'); 
+		novez.document.writeln('if (sp[2].innerText == sp[0].innerText) {kon+=5; aa=0;}<br>'); 
+		novez.document.writeln('if (aa) kon-=5;<br>konto.value= kon;<br>'); 
+		novez.document.writeln('if (!poc) {'); 
+		novez.document.writeln('<DIV style="margin:0 0 0 20">sp[0].innerText="X";<br>'); 
+		novez.document.writeln('sp[0].style.background="darkblue";<br>'); 
+		novez.document.writeln('sp[1].innerText="X";<br>sp[1].style.background="darkblue";<br>'); 
+		novez.document.writeln('sp[2].innerText="X";<br>sp[2].style.background="darkblue"; }</div></div>'); 
+		novez.document.writeln('function init()'); 
+		novez.document.writeln('<DIV style="margin:0 0 0 20">{ if (document.all[42].innerText=="X")<br>')
+		novez.document.writeln('{<DIV style="margin:0 0 0 20">konto.value=100;<br>'); 
+		novez.document.writeln('sp[0].innerText=1;<br>sp[0].style.background="silver";<br>'); 
+		novez.document.writeln('sp[1].innerText=2;<br>sp[1].style.background="silver";<br>'); 
+		novez.document.writeln('sp[2].innerText="X";<br>sp[2].style.background="darkblue";');
+		novez.document.writeln('</div>}</div>'); 
+		novez.document.writeln('&lt;/Script></div>&lt;/Head><br></div>&lt;BODY>'); 
+		novez.document.writeln('<DIV style="margin:0 0 0 20">&lt;code><br>');
+		novez.document.writeln('&lt;div  id="36" style="width:236; height:100; background:darkblue; padding:10"><br>'); 
+		novez.document.writeln('&lt;span  id="37" style="font-size:64; width:58; height:55; border-size:medium; border-style:ridge; border-color:silver; padding:10 ">X&lt;/span><br>'); 
+		novez.document.writeln('&lt;span  style="font-size:64; width:58; height:55; border-size:medium; border-style:ridge; border-color:silver; padding:10 ">X&lt;/span><br>'); 
+		novez.document.writeln('&lt;span  style="font-size:64; width:58; height:55; border-size:medium; border-style:ridge; border-color:silver; padding:10 ">X&lt;/span><br>'); 
+		novez.document.writeln('&lt;script>');
+		novez.document.writeln('  var sp= document.all.tags("span")');
+		novez.document.writeln('&lt;/script><br>');
+		novez.document.writeln('&lt;input type="Button" value="Start" onClick="init();window.tr1=window.setInterval(');
+		novez.document.writeln("'start()',400)");
+		novez.document.writeln('id="mstart"><br>'); 
+		novez.document.writeln('&lt;br>&lt;br>&lt;input type="Button" value="Stop " onClick="stop();" id="mstop">'); 
+		novez.document.writeln('&lt;br>&lt;br>Konto: &lt;input type="Text" value="100" size="5" id="konto">'); 
+		novez.document.writeln('</div>'); 
+		novez.document.writeln('&lt;/BODY>'); 
+		novez.document.close();
+	}	
+	</script>
+</head>
+
+<body>
+Na animáciu obrázkov, textov s výhodou možno použiť časovač. V ňom možno nastaviť ktoré príkazy
+sa majú každých n ms vykonať, alebo odložiť vykonanie príkazov o n ms.
+<dl><dt>window.tr= setInterval(text-príkazy, cislo)
+	<dd> setInterval je funkcia, návratová hodnota je jedinečný kód
+	<br> text-príkazy ... text v ktorom sú zapísané príkazy, ktoré sa majú pravidelne spúšťať - obyčajne funkcia
+	<br> cislo ... časový interval v ms (zrýchlovanie zmenšovaním tejto hodnoty funguje len po určitú hranicu.
+	<br> tr ... je premenná v ktorej bude id-kód potrebný na zrušenie opakovania
+    <dt>clearInterval(tr)
+	<dd>zruší setInterval
+	<br>tr ... premenná v ktorej je kód priradený pomocou setInterval
+    <dt>setTimeout(text-príkazy, cislo-cas)
+	<dd>setTimeout je funkcia, návratová hodnota je jedinečný kód, použitie na spomalené vykonávanie
+	<br> text-príkazy ... text v ktorom sú zapísané príkazy, ktoré sa majú "o chvíľu" vykonať
+	<br> cislo-cas ... časový interval v ms 
+	<br> návratovú adresu možno použiť na zrušenie vykonania
+    <dt>clearTimeout(tr)
+	<dd>clearTimeout je funkcia na zrušenie setTimeout
+<br>
+</dl>	
+<dl><dt>Digitálne hodiny
+	<dd>
+		<dl><dt>Čo k tomu potrebujeme"
+		<dd>miesto, kde budeme čas vypisovať ... &lt;div id="ncas"> tu bude čas&lt;/div>
+		<br>premennú s aktuálnym časom ... var a= new Date()
+		<br>vybratie hodín, minút a sek. z prem. a ... a.getHours(), a.getMinutes(), a.getSeconds()
+		<br>zápis na stránku ncas.innerText=...<br>
+		<br>tlačítko na spustenie časovača (poprípade na zastavenie)
+		<input type="Button" onclick="okno();nove.focus()" value="Ukážka">
+		<input type="Button" onclick="zdroj()" value="Zdroj">
+		</dl>
+	<dt>Animácia-obrázku
+	<dd><dl><dt>Čo k tomu potrebujeme
+			<dd>- objekt ktorý sa má pohybovať (obyčajne obrázok) a ktorému určíme súradnice.
+			<br>- podprogram, ktorý určí novú pozíciu a objekt presunie
+			<br> &nbsp; (ak je obrázkov viac využijeme pole <font color="Green">document.images[])</font> 
+				<br><div style="width:400; height:300; background:white">
+			 		<img src="gulicka.gif" style="position:relative; top=10; left=10;">
+			 		<img src="gulicka.gif" style="position:relative; top=10; left=100;">
+					</div>
+		<input type="Button" onclick="window.tr=window.setInterval('anim()',30)" value="Štart">
+		<input type="Button" onclick="window.clearInterval(window.tr)" value="Stop">
+		<br><br>
+		</dl>
+	<dt>Animácia textu - videostop
+	<dd>Časovač sa spustí po stlačení štart a po stlačení stop sa časovač zastaví a upraví konto.
+		<table cellspacing="20" id=30><tr id="34"><td id="35">
+		<code>
+		<div  id="36" style="width:236; height:100; background:darkblue; padding:10">
+		<span  id="37" style="font-size:64; width:58; height:55; border-size:medium; border-style:ridge; border-color:silver; padding:10 ">X</span>
+		<span  style="font-size:64; width:58; height:55; border-size:medium; border-style:ridge; border-color:silver; padding:10 ">X</span>	
+		<span  style="font-size:64; width:58; height:55; border-size:medium; border-style:ridge; border-color:silver; padding:10 ">X</span>
+		</code>
+		<script>
+		  var sp= document.all.tags('span');
+		</script>
+		<td>
+		<code>
+		<input type="Button" value="Start" onClick="init();window.tr1=window.setInterval('start()',400)" id="mstart">
+		<br><br><input type="Button" value="Stop " onClick="stop();" id="mstop">
+		<br><br>Konto: <input type="Text" value='100' size="5" id="konto">
+		</code>
+		</table>
+</dl>
+</dl>
+		<br>
+		<div style="height=16; width=700; border-width:0 0 8 0;border-color:'blue';border-style:ridge;filter:shadow(Color=#3333ff,Direction=45)"> </div><br>
+		<input type="Button" value="Zdroj ku loptičkám" onclick="vypis_lopty()"> &nbsp; 
+		<input type="Button" value="Zdroj ku videostopu" onclick="vypis_video()">
+</body>
+</html>

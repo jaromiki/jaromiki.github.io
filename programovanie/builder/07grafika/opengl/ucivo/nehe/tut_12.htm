@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 12 - Display list</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_12.jpg" class="nehe_maly" alt="Lekce 12" />
+
+<h1>Lekce 12 - Display list</h1>
+
+<p class="nadpis_clanku">Chcete vědět, jak urychlit vaše programy v OpenGL? Jste unaveni z nesmyslného opisování již napsaného kódu? Nejde to nějak jednodušeji? Nešlo by například jedním příkazem vykreslit otexturovanou krychli? Samozřejmě, že jde. Tento tutoriál je určený speciálně pro vás. Předvytvořené objekty a jejich vykreslování jedním řádkem kódu. Jak snadné...</p>
+
+<p>Řekněme, že programujete hru &quot;Asteroidy&quot;. Každý level začíná alespoň se dvěma. No, takže se v klidu posadíte a přijdete na to, jak vytvořit 3d asteroid. Jistě bude z polygonů, jak jinak. Třeba osmistěnný. Pokud byste chtěli pracovat elegantně, vytvoříte cyklus a v něm můžete vše vykreslovat. Skončíte s osmnácti nebo více řádky. V klidu. Ale pozor! Pokud tento cyklus proběhne vícekrát, znatelně zpomalí vykreslování. Jednou, až budete vytvářet mnohem komplexnější objekty a scény, pochopíte, co mám na mysli.</p>
+
+<p>Takže, jaké je řešení? Display list, neboli předvytvořené objekty! Tímto způsobem vytváříte vše pouze jednou. Namapovat textury, barvy, cokoli, co chcete. A samozřejmě musíte tento display list pojmenovat. Jelikož vytváříme asteroidy nazveme display list "asteroid". Ve chvíli, kdy budete chtít vykreslit texturovaný/obarvený asteroid na monitor, všechno, co uděláte je zavolání funkce glCallList(asteroid). Předvytvořený asteroid se okamžitě zobrazí. Protože je jednou vytvořený v paměti (display listu), OpenGL nemusí vše znovu přepočítávat. Odstranili jsme velké zatížení procesoru a umožnili programu běžet o mnoho rychleji.</p>
+
+<p>Připraveni? Vytvoříme scénu skládající se z patnácti krychlí. Tyto krychle jsou vytvořeny z krabice a víka - celkem dva display listy. Víko bude vybarveno na tmavší odstín. Kód vychází z šesté lekce. Přepíšeme většinu programu, aby bylo snazší najít změny.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+
+<p>Deklarujeme proměnné. Napřed místo pro texturu. Další dvě proměnné budou vystupovat jako pointery na místo do paměti RAM, kde jsou uloženy display listy.</p>
+
+<p class="src0">GLuint texture[1];<span class="kom">// Ukládá texturu</span></p>
+<p class="src0">GLuint box;<span class="kom">// Ukládá display list krabice</span></p>
+<p class="src0">GLuint top;<span class="kom">// Ukládá display list víka</span></p>
+<p></p>
+<p class="src0">GLuint xloop;<span class="kom">// Pozice na ose x</span></p>
+<p class="src0">GLuint yloop;<span class="kom">// Pozice na ose y</span></p>
+<p class="src0">GLfloat xrot;<span class="kom">// Rotace na ose x</span></p>
+<p class="src0">GLfloat yrot;<span class="kom">// Rotace na ose y</span></p>
+
+<p>Vytvoříme dvě pole barev. První ukládá světlé barvy. Hodnoty ve složených závorkách reprezentují červené, zelené a modré složky. Druhé pole určuje tmavší barvy, které použijeme ke kreslení víka krychlí. Chceme, aby bylo tmavší než ostatní stěny.</p>
+
+<p class="src0">static GLfloat boxcol[5][3]=<span class="kom">// Pole pro barvy stěn krychle</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Světlé: červená, oranžová, žlutá, zelená, modrá</span></p>
+<p class="src1">{1.0f,0.0f,0.0f},{1.0f,0.5f,0.0f},{1.0f,1.0f,0.0f},{0.0f,1.0f,0.0f},{0.0f,1.0f,1.0f}</p>
+<p class="src0">};</p>
+<p></p>
+<p class="src0">static GLfloat topcol[5][3]=<span class="kom">// Pole pro barvy víka krychle</span></p>
+<p class="src0">{</p>
+<p class="src1"><span class="kom">// Tmavé: červená, oranžová, žlutá, zelená, modrá</span></p>
+<p class="src1">{0.5f,0.0f,0.0f},{0.5f,0.25f,0.0f},{0.5f,0.5f,0.0f},{0.0f,0.5f,0.0f},{0.0f,0.5f,0.5f}</p>
+<p class="src0">};</p>
+
+<p>Následující funkce generuje display listy.</p>
+
+<p class="src0">GLvoid BuildLists(<span class="kom">// Generuje display listy</span>)</p>
+<p class="src0">{</p>
+
+<p>Začneme oznámením OpenGL, že chceme vytvořit dva listy. glGenList(2) pro ně alokuje místo v paměti a vrátí pointer na první z nich.</p>
+
+<p class="src1">box=glGenLists(2);<span class="kom">// 2 listy</span></p>
+
+<p>Vytvoříme první list. Už jsme zabrali místo pro dva listy a víme, že box ukazuje na začátek připravené paměti. Použijeme příkaz glNewList(). První parametr box řekne, že chceme uložit list do paměti, kam ukazuje. Druhý parametr GL_COMPILE říká, že chceme předvytvořit list v paměti tak, aby se nemuselo při každém vykreslování znovu všechno generovat a přepočítávat. GL_COMPILE je stejné jako programování. Pokud napíšete program a nahrajete ho do vašeho překladače (kompileru), musíte ho zkompilovat vždy, když ho chcete spustit. Ale pokud bude zkompilován do .exe souboru, všechno, co se musí pro spuštění vykonat je kliknout myší na tento .exe soubor a spustit ho. Samozřejmě bez kompilace. Cokoli OpenGL zkompiluje v display listu je možno použít bez jakékoli další potřeby přepočítávání. Urychlí se vykreslování.</p>
+
+<p class="src1">glNewList(box,GL_COMPILE);<span class="kom">// Nový kompilovaný display list - krabice</span></p>
+<p class="src2">glBegin(GL_QUADS);</p>
+<p class="src3"><span class="kom">// Spodní stěna</span></p>
+<p class="src3">glNormal3f( 0.0f,-1.0f, 0.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src3"><span class="kom">// Přední stěna</span></p>
+<p class="src3">glNormal3f( 0.0f, 0.0f, 1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src3"><span class="kom">// Zadní stěna</span></p>
+<p class="src3">glNormal3f( 0.0f, 0.0f,-1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src3"><span class="kom">// Pravá stěna</span></p>
+<p class="src3">glNormal3f( 1.0f, 0.0f, 0.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);</p>
+<p class="src3"><span class="kom">// Levá stěna</span></p>
+<p class="src3">glNormal3f(-1.0f, 0.0f, 0.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glEnd();</p>
+<p class="src1">glEndList();</p>
+
+<p>Příkazem glEndList() oznámíme, že končíme vytváření listu. Cokoli je mezi glNewList() a glEndList() je součástí display listu a naopak, pokud je něco před nebo za už k němu nepatří. Abychom zjistili, kam ho uložíme druhý display list, vezmeme hodnotu již vytvořeného a přičteme k němu jedničku (na začátku funkce jsme řekli, že děláme 2 display listy, takže je to v pořádku).</p>
+
+<p class="src1">top=box+1;<span class="kom">// Do top vložíme adresu druhého display listu</span></p>
+<p></p>
+<p class="src1">glNewList(top,GL_COMPILE);<span class="kom">// Kompilovaný display list - víko</span></p>
+<p class="src2">glBegin(GL_QUADS);</p>
+<p class="src3"><span class="kom">// Horní stěna</span></p>
+<p class="src3">glNormal3f( 0.0f, 1.0f, 0.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);</p>
+<p class="src3">glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);</p>
+<p class="src3">glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);</p>
+<p class="src2">glEnd();</p>
+<p class="src1">glEndList();</p>
+<p class="src0">}</p>
+
+<p>Vytvořili jsme oba display listy. Nahrávání textur je stejné, jako v minulých lekcích. Rozhodl jsem se použít mimapping, protože nemám rád, když vidím pixely. Použijeme obrázek cube.bmp uložený v adresáři data. Najděte funkci LoadBMP() a upravte řádek se jménem bitmapy.</p>
+
+<p class="src1">if (TextureImage[0]=LoadBMP(&quot;Data/Cube.bmp&quot;))<span class="kom">// Loading textury</span></p>
+
+<p>V inicializační funkci je jen několik změn. Přidáme řádek BuildList(). Všimněte si, že jsme ho umístili až za LoadGLTextures(). Display list by se zkompiloval bez textur.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechna nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Nahraje texturu</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p class="src1">BuildLists();<span class="kom">// Vytvoří display listy</span></p>
+<p class="src1"></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne texturové mapování</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Jemné stínování</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.5f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0f);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Povolí hloubkové testování</span></p>
+<p class="src1">glDepthFunc(GL_LEQUAL);<span class="kom">// Typ hloubkového testování</span></p>
+
+<p>Následující tři řádky zapínají rychlé a špinavé osvětlení (quick and dirty lighting). Light0 je předdefinováno na většině video karet, takže zamezí nepříjemnostem při nastavení světel. Po light0 nastavíme osvětlení. Pokud vaše karta nepodporuje light0, uvidíte černý monitor - musíte vypnout světla. Poslední řádka přidává barvu do mapování textur. Nezapneme-li vybarvování materiálu, textura bude mít vždy originální barvu. glColor3f(r,g,b) nebude mít žádný efekt (ve vykreslovací funkci.</p>
+
+<p class="src1">glEnable(GL_LIGHT0);<span class="kom">// Zapne implicitní světlo</span></p>
+<p class="src1">glEnable(GL_LIGHTING);<span class="kom">// Zapne světla</span></p>
+<p class="src1">glEnable(GL_COLOR_MATERIAL);<span class="kom">// Zapne vybarvování materiálů</span></p>
+
+<p>Nakonec nastavíme perspektivní korekce, aby obraz vypadal lépe. Vrácením true oznámíme programu, že inicializace proběhla v pořádku.</p>
+
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nejlepší perspektivní korekce</span></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Přichází na řadu vykreslovací funkce. Jako obyčejně, přidáme pár šíleností s matematikou. Tentokrát, ale nebudou žádné siny a kosiny. Začneme vymazáním obrazovky a depth bufferu. Potom namapujeme texturu na krychli. Mohl bych tento příkaz přidat do kódu display listu, Ale teď kdykoli mohu vyměnit aktuální texturu za jinou. Doufám, že už rozumíte, že cokoli je v display listu, tak se nemůže změnit.</p>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Smaže obrazovku a hloubkový buffer</span></p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[0]);<span class="kom">// Výběr textury</span></p>
+
+<p>Máme cyklus s řídící proměnnou yloop. Tato smyčka je použita k určení pozice krychlí na ose y. Vykreslujeme pět řádků, proto kód proběhne pětkrát.</p>
+
+<p class="src1">for (yloop=1;yloop&lt;6;yloop++)<span class="kom">// Prochází řádky</span></p>
+<p class="src1">{</p>
+
+<p>Dále máme vnořený cyklus s proměnnou xloop. Je použitý pro pozici krychlí na ose x. Jejich počet závisí na tom, ve kterém řádku se nacházejí. Pokud se nacházíme v horním řádku vykreslíme jednu, ve druhém dvě, atd.</p>
+
+<p class="src2">for (xloop=0;xloop&lt;yloop;xloop++)<span class="kom">// Prochází sloupce</span></p>
+<p class="src2">{</p>
+<p class="src3">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+
+<p>Následující řádek přesune počátek souřadnic na daný bod obrazovky. První pohled je to trochu matoucí.</p>
+
+<p>Na ose x: Posuneme se doprava o 1,4 jednotky, takže pyramida je na středu obrazovky. Potom násobíme proměnnou xloop hodnotou 2,8 a přičteme 1,4. (Násobíme hodnotou 2,8, takže krychle nejsou jedna nad druhou. 2,8 je přibližně jejich šířka, když jsou pootočeny o 45 stupňů.) Nakonec odečteme yloop*1,4. To je posune doleva v závislosti na tom, ve které řadě jsme. Pokud bychom je nepřesunuli, seřadí se na levé straně. (A nevypadají jako pyramida.)</p>
+
+<p>Na ose y: Odečteme proměnnou yloop od šesti jinak by pyramida byla vytvořena vzhůru nohama. Poté násobíme výsledek hodnotou 2,4. Jinak krychle budou jedna na vrcholu druhé na ose Y. (2,4 se přibližně rovná výšce krychle). Poté odečteme 7, takže pyramida začíná na spodku obrazovky a je sestavována ze zdola nahoru.</p>
+
+<p>Na ose z: Posuneme 20 jednotek dovnitř. Takže se pyramida vejde akorát na obrazovku.</p>
+
+<p class="src3"><span class="kom">// Pozice krychle na obrazovce</span></p>
+<p class="src3">glTranslatef(1.4f+(float(xloop)*2.8f)-(float(yloop)*1.4f),((6.0f-float(yloop))*2.4f)-7.0f,-20.0f);</p>
+
+<p>Nakloníme krychle o 45 stupňů k pohledu a odečteme 2*yloop. Perspektivní mód nachýlí krychle automaticky, takže odečítáme, abychom vykompenzovali naklonění. Není to nejlepší cesta, ale pracuje to. Potom přičteme xrot. To nám dává možnost ovládat úhel klávesnicí. Také použijeme rotaci o 45 stupňů na ose y. Přičteme yroot kvůli ovládání klávesnicí.</p>
+
+<p class="src3"><span class="kom">// Rotace</span></p>
+<p class="src3">glRotatef(45.0f-(2.0f*yloop)+xrot,1.0f,0.0f,0.0f);</p>
+<p class="src3">glRotatef(45.0f+yrot,0.0f,1.0f,0.0f);</p>
+
+<p>Vybereme barvu krabice (světlou). Všimněte si, že používáme glColor3fv(). Tato funkce vybírá najednou všechny tři hodnoty (červená, zelená, modrá) najednou a tím nastaví barvu. V tomto případě ji najdeme v poli boxcol s indexem yloop-1. Tím zajistíme rozlišnou barvu, pro každý řádek pyramidy. Kdybychom použili xloop-1, dostali bychom stejné barvy pro každý sloupec.</p>
+
+<p class="src3">glColor3fv(boxcol[yloop-1]);<span class="kom">// Barva</span></p>
+
+<p>Po nastavení barvy zbývá jediné - vykreslit krabici. Pro vykreslení zavoláme pouze funkci glCallList(box). Parametr řekne OpenGL, který display list máme na mysli. Krabice bude vybarvená dříve vybranou barvou, bude posunutá a taky natočená.</p>
+
+<p class="src3">glCallList(box);<span class="kom">// Vykreslení</span></p>
+
+<p>Barvu víka vybíráme úplně stejně, jako před chvílí, akorát z pole tmavších barev. Potom ho vykreslíme.</p>
+
+<p class="src3">glColor3fv(topcol[yloop-1])<span class="kom">// Barva</span>;</p>
+<p></p>
+<p class="src3">glCallList(top);<span class="kom">// Vykreslení</span></p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Poslední zbytek změn uděláme ve funkci WinMain(). Kód přidáme za příkaz SwapBuffers(hDC). Ověříme, zda jsou stisknuty šipky a podle výsledku pohybujeme krychlemi.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src4">SwapBuffers(hDC);<span class="kom">// Výměna bufferů</span></p>
+<p></p>
+<p class="src4">if (keys[VK_LEFT])<span class="kom">// Šipka vlevo</span></p>
+<p class="src4">{</p>
+<p class="src5">yrot-=0.2f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_RIGHT])<span class="kom">// Šipka vpravo</span></p>
+<p class="src4">{</p>
+<p class="src5">yrot+=0.2f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_UP])<span class="kom">// Šipka nahoru</span></p>
+<p class="src4">{</p>
+<p class="src5">xrot-=0.2f;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_DOWN])<span class="kom">// Šipka dolu</span></p>
+<p class="src4">{</p>
+<p class="src5">xrot+=0.2f;</p>
+<p class="src4">}</p>
+
+<p>Po dočtení této lekce, byste měli rozumět, jak display list pracuje, jak ho vytvořit a jak ho vykreslit. Jsou velkým přínosem. Nejen, že zjednoduší psaní složitějších projektů, ale také přidají trochu na rychlosti celého programu.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson12.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson12_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson12.zip">C#</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson12.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson12.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson12.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson12.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson12.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson12.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson12.zip">Irix</a> kód této lekce. ( <a href="mailto:rpf1@york.ac.uk">Rob Fletcher</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson12.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jedisdl/lesson12.zip">Jedi-SDL</a> kód této lekce. ( <a href="mailto:Dominique@SavageSoftware.com.au">Dominique Louis</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson12.jar">JoGL</a> kód této lekce. ( <a href="mailto:abezrati@hotmail.com">Abdul Bezrati</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson12.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson12.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:ulmont@bellsouth.net">Richard Campbell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson12.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson12.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson12.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson12.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson12.zip">MASM</a> kód této lekce. ( <a href="mailto:scalp@bigfoot.com">Nico (Scalp)</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson12.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson12.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:rosscogl@email.com">Ross Dawson</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson12.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_12_big.jpg" class="nehe_velky" alt="Lekce 12" /></div>
+<p class="okolni_lekce"><a href="tut_11.php">&lt;&lt;&lt; Lekce 11</a> | <a href="tut_13.php">Lekce 13 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">06.07.2005 - 19:10:40</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_12.php&j=0">Textury?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">17.07.2005 - 17:36:57</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_12.php&j=1">Re: Textury?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">kropi</div>
+<div class="d_o_datumcas">28.08.2006 - 13:17:59</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_12.php&j=2">procesor</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">:-)</div>
+<div class="d_o_datumcas">16.03.2007 - 08:54:22</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_12.php&j=3">není zač</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">nardew</div>
+<div class="d_o_datumcas">05.07.2007 - 12:09:36</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_12.php&j=4">glTranslatef a glRotatef</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_12.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

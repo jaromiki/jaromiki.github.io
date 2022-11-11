@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="CS">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2" />
+<meta http-equiv="content-language" content="cs" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+
+<meta name="robots" content="all, follow" />
+<meta name="resource-type" content="document" />
+
+<meta name="description" content="NeHe OpenGL Tutoriály v češtině, programování 3D grafiky, články, programy se zdrojovými kódy..." />
+<meta name="keywords" content="opengl, nehe, tutoriály, woq, programování, 3D" />
+<meta name="author" content="all: Michal Turek - Woq; woq (zavináč) seznam.cz" />
+<meta name="copyright" content="Copyright (c) 2002, 2003, 2004 Michal Turek - Woq" />
+
+<title>CZ NeHe OpenGL - Lekce 10 - Vytvoření 3D světa a pohyb v něm</title>
+
+<link rel="shortcut icon" href="skin/default/web.ico" type="image/x-icon" />
+<link href="skin/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="skin/print.css" rel="stylesheet" type="text/css" media="print" />
+
+</head>
+
+<body>
+
+<!-- Levý sloupec -->
+<div class="levy">
+<div id="main_menu">
+<a href="http://nehe.ceske-hry.cz/"><img src="skin/default/web_logo.gif" width="135" height="135" style="margin-left: 5px;" alt="CZ NeHe OpenGL" /></a>
+
+<div class="main_menu_bez_loga">
+
+<ul class="text_main_menu">
+<li><a href="my.php" title="Překladatelé NeHe Tutoriálů a autoři článků">My</a></li>
+<li><a href="novinky.php" title="Co je nového">Novinky</a></li>
+<li><a href="navigacni_mapa.php" title="Přehledná navigace na jednotlivé stránky, které dohromady tvoří tento web">Navigační mapa</a></li>
+<li><a href="kontakt.php" title="Kontakt na správce tohoto webu">Kontakt</a></li>
+<li><a href="http://forum.programovani.com/" title="Diskusní fórum">Fórum</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="clanky.php" title="Obsah článků">Články</a></li>
+<li><a href="tut_obsah.php" title="Obsah NeHe OpenGL Tutoriálů">NeHe Tutoriály</a></li>
+<li><a href="33D_index.php" title="Obsah Free3D (33D) Basecode">33D Basecode</a></li>
+<li><a href="programy.php" title="Programy od českých autorů">České programy</a></li>
+<li><a href="cl_gl_zacinam.php" title="Kde začít při učení OpenGL">Pomoc, začínám</a></li>
+<li><a href="odkazy.php" title="Jiné zdroje informací">Odkazy</a></li>
+<li><a href="cl_gl_faq.php" title="FAQ: Často kladené dotazy">FAQ</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li><a href="spoluprace.php" title="Nechcete se podílet na tvorbě těchto webových stránek?">Spolupráce...?</a></li>
+<li><a href="download.php" title="Stahujte">Download</a></li>
+<li><a href="skiny.php" title="Nastavte si jiný layout a design stránek">Skiny</a></li>
+<li><a href="javascript:window.print();" title="Vytiskne tuto stránku">Tisk</a></li>
+</ul>
+
+<ul class="text_main_menu">
+<li>
+<form action="p_fulltext.php" method="post" onsubmit="if(!this.najit.value || this.najit.value=='výraz ...') { alert('Byl zadán prázdný řetězec!'); this.najit.focus(); return false; }">
+<input type="text" name="najit" size="12" value="výraz ..." onclick="this.value=''" /><br />
+<input type="submit" value="Najít" />
+</form>
+</li>
+</ul>
+
+<ul class="text_main_menu">
+<li>Online čtenářů: 2</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+<!-- Levý sloupec (konec) -->
+
+<!-- Pravý sloupec -->
+<div class="pravy">
+<div id="tut_menu">
+
+<ul class="text_tut_menu">
+<li class="li_tut"><a href="tut_00.php" title="Lekce 0 - Předmluva k NeHe Tutoriálům">00</a></li>
+<li class="li_tut"><a href="tut_01.php" title="Lekce 1 - Vytvoření OpenGL okna ve Windows">01</a></li>
+<li class="li_tut"><a href="tut_02.php" title="Lekce 2 - Vytváření trojúhelníků a čtyřúhelníků">02</a></li>
+<li class="li_tut"><a href="tut_03.php" title="Lekce 3 - Barvy">03</a></li>
+<li class="li_tut"><a href="tut_04.php" title="Lekce 4 - Rotace">04</a></li>
+<li class="li_tut"><a href="tut_05.php" title="Lekce 5 - Pevné objekty">05</a></li>
+<li class="li_tut"><a href="tut_06.php" title="Lekce 6 - Textury">06</a></li>
+<li class="li_tut"><a href="tut_07.php" title="Lekce 7 - Texturové filtry, osvětlení, ovládání pomocí klávesnice">07</a></li>
+<li class="li_tut"><a href="tut_08.php" title="Lekce 8 - Blending">08</a></li>
+<li class="li_tut"><a href="tut_09.php" title="Lekce 9 - Pohyb bitmap ve 3D prostoru">09</a></li>
+<li class="li_tut"><a href="tut_10.php" title="Lekce 10 - Vytvoření 3D světa a pohyb v něm">10</a></li>
+<li class="li_tut"><a href="tut_11.php" title="Lekce 11 - Efekt vlnící se vlajky">11</a></li>
+<li class="li_tut"><a href="tut_12.php" title="Lekce 12 - Display list">12</a></li>
+<li class="li_tut"><a href="tut_13.php" title="Lekce 13 - Bitmapové fonty">13</a></li>
+<li class="li_tut"><a href="tut_14.php" title="Lekce 14 - Outline fonty">14</a></li>
+<li class="li_tut"><a href="tut_15.php" title="Lekce 15 - Mapování textur na fonty">15</a></li>
+<li class="li_tut"><a href="tut_16.php" title="Lekce 16 - Mlha">16</a></li>
+<li class="li_tut"><a href="tut_17.php" title="Lekce 17 - 2D fonty z textur">17</a></li>
+<li class="li_tut"><a href="tut_18.php" title="Lekce 18 - Kvadriky">18</a></li>
+<li class="li_tut"><a href="tut_19.php" title="Lekce 19 - Částicové systémy">19</a></li>
+<li class="li_tut"><a href="tut_20.php" title="Lekce 20 - Maskování">20</a></li>
+<li class="li_tut"><a href="tut_21.php" title="Lekce 21 - Přímky, antialiasing, časování, pravoúhlá projekce, základní zvuky a jednoduchá herní logika">21</a></li>
+<li class="li_tut"><a href="tut_22.php" title="Lekce 22 - Bump Mapping &amp; Multi Texturing">22</a></li>
+<li class="li_tut"><a href="tut_23.php" title="Lekce 23 - Mapování textur na kulové kvadriky">23</a></li>
+<li class="li_tut"><a href="tut_24.php" title="Lekce 24 - Výpis OpenGL rozšíření, ořezávací testy a textury z TGA obrázků">24</a></li>
+<li class="li_tut"><a href="tut_25.php" title="Lekce 25 - Morfování objektů a jejich nahrávání z textového souboru">25</a></li>
+<li class="li_tut"><a href="tut_26.php" title="Lekce 26 - Odrazy a jejich ořezávání za použití stencil bufferu">26</a></li>
+<li class="li_tut"><a href="tut_27.php" title="Lekce 27 - Stíny">27</a></li>
+<li class="li_tut"><a href="tut_28.php" title="Lekce 28 - Bezierovy křivky a povrchy, fullscreen fix">28</a></li>
+<li class="li_tut"><a href="tut_29.php" title="Lekce 29 - Blitter, nahrávání .RAW textur">29</a></li>
+<li class="li_tut"><a href="tut_30.php" title="Lekce 30 - Detekce kolizí">30</a></li>
+<li class="li_tut"><a href="tut_31.php" title="Lekce 31 - Nahrávání a renderování modelů">31</a></li>
+<li class="li_tut"><a href="tut_32.php" title="Lekce 32 - Picking, alfa blending, alfa testing, sorting">32</a></li>
+<li class="li_tut"><a href="tut_33.php" title="Lekce 33 - Nahrávání komprimovaných i nekomprimovaných obrázků TGA">33</a></li>
+<li class="li_tut"><a href="tut_34.php" title="Lekce 34 - Generování terénů a krajin za použití výškového mapování textur">34</a></li>
+<li class="li_tut"><a href="tut_35.php" title="Lekce 35 - Přehrávání videa ve formátu AVI">35</a></li>
+<li class="li_tut"><a href="tut_36.php" title="Lekce 36 - Radial Blur, renderování do textury">36</a></li>
+<li class="li_tut"><a href="tut_37.php" title="Lekce 37 - Cel-Shading">37</a></li>
+<li class="li_tut"><a href="tut_38.php" title="Lekce 38 - Nahrávání textur z resource souboru &amp; texturování trojúhelníků">38</a></li>
+<li class="li_tut"><a href="tut_39.php" title="Lekce 39 - Úvod do fyzikálních simulací">39</a></li>
+<li class="li_tut"><a href="tut_40.php" title="Lekce 40 - Fyzikální simulace lana">40</a></li>
+<li class="li_tut"><a href="tut_41.php" title="Lekce 41 - Volumetrická mlha a nahrávání obrázků pomocí IPicture">41</a></li>
+<li class="li_tut"><a href="tut_42.php" title="Lekce 42 - Více viewportů">42</a></li>
+<li class="li_tut"><a href="tut_43.php" title="Lekce 43 - FreeType Fonty v OpenGL">43</a></li>
+<li class="li_tut"><a href="tut_44.php" title="Lekce 44 - Čočkové efekty">44</a></li>
+<li class="li_tut"><a href="tut_45.php" title="Lekce 45 - Vertex Buffer Object (VBO)">45</a></li>
+<li class="li_tut"><a href="tut_46.php" title="Lekce 46 - Fullscreenový antialiasing">46</a></li>
+<li class="li_tut"><a href="tut_47.php" title="Lekce 47 - CG vertex shader">47</a></li>
+<li class="li_tut"><a href="tut_48.php" title="Lekce 48 - ArcBall rotace">48</a></li>
+</ul>
+
+</div>
+</div>
+<!-- Pravý sloupec (konec) -->
+
+<!-- Vlastní obsah stránky -->
+<div class="stred">
+
+<!--[if IE ]>
+<div style="text-align: center;">
+<a href="http://firefox.czilla.cz/"><img alt="Mozilla Firefox: Objevte znovu web" title="Mozilla Firefox: Objevte znovu web" style="border:none; width:468px;height:60px" src="http://firefox.czilla.cz/img/p/cz-ff-468x60-w-objevte.png" /></a>
+</div>
+<![endif]-->
+
+<img src="images/nehe_tut/tut_10.jpg" class="nehe_maly" alt="Lekce 10" />
+
+<h1>Lekce 10 - Vytvoření 3D světa a pohyb v něm</h1>
+
+<p class="nadpis_clanku">Do současnosti jsme programovali otáčející se kostku nebo pár hvězd. Máte (měli byste mít :-) základní pojem o 3D. Ale rotující krychle asi nejsou to nejlepší k tvorbě dobrých deathmatchových protivníků! Nečekejte a začněte s Quakem IV ještě dnes! Tyto dny potřebujete k velkému, komplikovanému a dynamickému 3D světu s pohybem do všech směrů, skvělými efekty zrcadel, portálů, deformacemi a třeba také vysokým frameratem. Tato lekce vám vysvětlí základní strukturu 3D světa a pohybu v něm.</p>
+
+<p class="src0">#include &lt;windows.h&gt;<span class="kom">// Hlavičkový soubor pro Windows</span></p>
+<p class="src0">#include &lt;stdio.h&gt;<span class="kom">// Hlavičkový soubor pro standardní vstup/výstup</span></p>
+<p class="src0">#include &lt;math.h&gt;<span class="kom">// Hlavičkový soubor pro matematickou knihovnu</span></p>
+<p></p>
+<p class="src0">#include &lt;gl\gl.h&gt;<span class="kom">// Hlavičkový soubor pro OpenGL32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glu.h&gt;<span class="kom">// Hlavičkový soubor pro Glu32 knihovnu</span></p>
+<p class="src0">#include &lt;gl\glaux.h&gt;<span class="kom">// Hlavičkový soubor pro Glaux knihovnu</span></p>
+<p></p>
+<p class="src0">HDC hDC = NULL;<span class="kom">// Privátní GDI Device Context</span></p>
+<p class="src0">HGLRC hRC = NULL;<span class="kom">// Trvalý Rendering Context</span></p>
+<p class="src0">HWND hWnd = NULL;<span class="kom">// Obsahuje Handle našeho okna</span></p>
+<p class="src0">HINSTANCE hInstance;<span class="kom">// Obsahuje instanci aplikace</span></p>
+<p></p>
+<p class="src0">bool keys[256];<span class="kom">// Pole pro ukládání vstupu z klávesnice</span></p>
+<p class="src0">bool active = TRUE;<span class="kom">// Ponese informaci o tom, zda je okno aktivní</span></p>
+<p class="src0">bool fullscreen = TRUE;<span class="kom">// Ponese informaci o tom, zda je program ve fullscreenu</span></p>
+<p></p>
+<p class="src0">bool blend;<span class="kom">// Blending ON/OFF</span></p>
+<p class="src0">bool bp;<span class="kom">// B stisknuto? (blending)</span></p>
+<p class="src0">bool fp;<span class="kom">// F stisknuto? (texturové filtry)</span></p>
+<p></p>
+<p class="src0">const float piover180 = 0.0174532925f;<span class="kom">// Zjednoduší převod mezi stupni a radiány</span></p>
+<p class="src0">float heading;<span class="kom">// Pomocná pro přepočítávání xpos a zpos při pohybu</span></p>
+<p class="src0">float xpos;<span class="kom">// Určuje x-ové souřadnice na podlaze</span></p>
+<p class="src0">float zpos;<span class="kom">// Určuje z-ové souřadnice na podlaze</span></p>
+<p></p>
+<p class="src0">GLfloat yrot;<span class="kom">// Y rotace (natočení scény doleva/doprava - směr pohledu)</span></p>
+<p class="src0">GLfloat walkbias = 0;<span class="kom">// Houpání scény při pohybu (simulace kroků)</span></p>
+<p class="src0">GLfloat walkbiasangle = 0;<span class="kom">// Pomocná pro vypočítání walkbias</span></p>
+<p class="src0">GLfloat lookupdown = 0.0f;<span class="kom">// Určuje úhel natočení pohledu nahoru/dolů</span></p>
+<p class="src0">GLfloat z=0.0f;<span class="kom">// Hloubka v obrazovce</span></p>
+<p></p>
+<p class="src0">GLuint filter;<span class="kom">// Použitý texturový filtr</span></p>
+<p class="src0">GLuint texture[3];<span class="kom">// Ukládá textury</span></p>
+
+<p>Během definování 3D světa stylem dlouhých sérií čísel se stává stále obtížnějším udržet složitý kód přehledný. Musíme třídit data do jednoduchého a především funkčního tvaru. Pro zpřehlednění vytvoříme celkem tři struktury.</p>
+
+<p>Body obsahují skutečná data, která zajímají OGL. Každý bod definujeme pozicí v prostoru (x,y,z) a koordináty textury (u,v).</p>
+
+<p class="src0">typedef struct tagVERTEX<span class="kom">// Struktura bodu</span></p>
+<p class="src0">{</p>
+<p class="src1">float x, y, z;<span class="kom">// Souřadnice v prostoru</span></p>
+<p class="src1">float u, v;<span class="kom">// Texturové koordináty</span></p>
+<p class="src0">} VERTEX;</p>
+
+<p>Všechno se skládá z ploch. Protože trojúhelníky jsou nejjednodušší, využijeme právě je.</p>
+
+<p class="src0">typedef struct tagTRIANGLE<span class="kom">// Struktura trojúhelníku</span></p>
+<p class="src0">{</p>
+<p class="src1">VERTEX vertex[3];<span class="kom">// Pole tří bodů</span></p>
+<p class="src0">} TRIANGLE;</p>
+
+<p>Na počátku všeho je sektor. Každý 3D svět je v základě celý ze sektorů. Může jím být místnost, kostka či jakýkoli jiný větší útvar.</p>
+
+<p class="src0">typedef struct tagSECTOR<span class="kom">// Struktura sektoru</span></p>
+<p class="src0">{</p>
+<p class="src1">int numtriangles;<span class="kom">// Počet trojúhelníků v sektoru</span></p>
+<p class="src1">TRIANGLE* triangle;<span class="kom">// Ukazatel na dynamické pole trojúhelníků</span></p>
+<p class="src0">} SECTOR;</p>
+<p></p>
+<p class="src0">SECTOR sector1;<span class="kom">// Bude obsahovat všechna data 3D světa</span></p>
+
+<p>Abychom program ještě více zpřehlednili, ve zdrojovém kódu, který se kompiluje, nebudou žádné číselné souřadnice. K exe souboru - výsledku naší práce - přiložíme textový soubor. V něm nadefinujeme všechny body 3D prostoru a k nim odpovídající texturové koordináty. Z důvodu větší přehlednosti přidáme komentáře. Bez nich by byl totální zmatek. Obsah souboru se může kdykoli změnit. Hodit se to bude především při vytváření prostředí - metoda pokusů a omylů, kdy nemusíte pokaždé rekompilovat program. Upravovat může i uživatel a tím si vytvořit vlastní prostředí. Nemusíte mu poskytovat nic navíc, neřkuli zdrojové kódy. Tento soubor by přece stejně dostal. Ze začátku bude lepší používat textové soubory (snadná editace, méně kódu), binární odložíme na později.</p>
+
+<p>První řádka NUMPOLLIES xx určuje celkový počet trojúhelníků. Text za zpětnými lomítky značí komentář. V každém následujícím řádku je definován jeden bod v prostoru a texturové koordináty. Tři řádky určí trojúhelník, celý soubor sektor.</p>
+
+<p class="src0">NUMPOLLIES 36</p>
+<p></p>
+<p class="src0"><span class="kom">// Floor 1</span></p>
+<p class="src0">-3.0 0.0 -3.0 0.0 6.0</p>
+<p class="src0">-3.0 0.0&nbsp;&nbsp;3.0 0.0 0.0</p>
+<p class="src0">&nbsp;3.0 0.0&nbsp;&nbsp;3.0 6.0 0.0</p>
+<p class="src0">-3.0 0.0 -3.0 0.0 6.0</p>
+<p class="src0">&nbsp;3.0 0.0 -3.0 6.0 6.0</p>
+<p class="src0">&nbsp;3.0 0.0&nbsp;&nbsp;3.0 6.0 0.0</p>
+<p></p>
+<p class="src0"><span class="kom">// Ceiling 1</span></p>
+<p class="src0">-3.0 1.0 -3.0 0.0 6.0</p>
+<p class="src0">-3.0 1.0&nbsp;&nbsp;3.0 0.0 0.0</p>
+<p class="src0">&nbsp;3.0 1.0&nbsp;&nbsp;3.0 6.0 0.0</p>
+<p class="src0">-3.0 1.0 -3.0 0.0 6.0</p>
+<p class="src0">&nbsp;3.0 1.0 -3.0 6.0 6.0</p>
+<p class="src0">&nbsp;3.0 1.0&nbsp;&nbsp;3.0 6.0 0.0</p>
+
+<p>... atd. Data jednoho trojúhelníku tedy obecně vypadají takto:</p>
+
+<p class="src0">x1 y1 z1 u1 v1</p>
+<p class="src0">x2 y2 z2 u2 v2</p>
+<p class="src0">x3 y3 z3 u3 v3</p>
+
+<p>Otázkou je, jak tyto data vyjmeme ze souboru. Vytvoříme funkci readstr(), která načte jeden <b>použitelný</b> řádek.</p>
+
+<p class="src0">void readstr(FILE *f,char *string)<span class="kom">// Načte jeden použitelný řádek ze souboru</span></p>
+<p class="src0">{</p>
+<p class="src1">do</p>
+<p class="src1">{</p>
+<p class="src2">fgets(string, 255, f);<span class="kom">// Načti řádek</span></p>
+<p class="src1">} while ((string[0] == '/') || (string[0] == '\n'));<span class="kom">// Pokud není použitelný načti další</span></p>
+<p></p>
+<p class="src1">return;</p>
+<p class="src0">}</p>
+
+<p>Tuto funkci budeme volat v SetupWorld(). Nadefinujeme náš soubor jako filein a otevřeme ho pouze pro čtení. Na konci ho samozřejmě zavřeme.</p>
+
+<p class="src0">void SetupWorld()<span class="kom">// Načti 3D svět ze souboru</span></p>
+<p class="src0">{</p>
+<p class="src1">float x, y, z, u, v;<span class="kom">// body v prostoru a koordináty textur</span></p>
+<p class="src1">int numtriangles;<span class="kom">// Počet trojúhelníků</span></p>
+<p class="src1">FILE *filein;<span class="kom">// Ukazatel na soubor</span></p>
+<p class="src1">char oneline[255];<span class="kom">// Znakový buffer</span></p>
+<p class="src1">filein = fopen(&quot;data/world.txt&quot;, &quot;rt&quot;);<span class="kom">// Otevření souboru pro čtení</span></p>
+
+<p>Přečteme data sektoru. Tato lekce bude počítat pouze s jedním sektorem, ale není těžké provést malou úpravu. Program potřebuje znát počet trojúhelníků v sektoru, aby věděl, kolik informací má přečíst. Tato hodnota může být definována jako konstanta přímo v programu, ale určitě uděláme lépe, když ji uložíme přímo do souboru (program se přizpůsobí).</p>
+
+<p class="src1">readstr(filein,oneline);<span class="kom">// Načtení prvního použitelného řádku</span></p>
+<p class="src1">sscanf(oneline, &quot;NUMPOLLIES %d\n&quot;, &amp;numtriangles);<span class="kom">// Vyjmeme počet trojúhelníků</span></p>
+
+<p>Alokujeme potřebnou paměť pro všechny trojúhelníky a uložíme jejich počet do položky struktury.</p>
+
+<p class="src1">sector1.triangle = new TRIANGLE[numtriangles];<span class="kom">// Alokace potřebné paměti</span></p>
+<p class="src1">sector1.numtriangles = numtriangles;<span class="kom">// Uložení počtu trojúhelníků</span></p>
+
+<p>Po alokaci paměti můžeme přistoupit k inicializaci všech datových složek sektoru.</p>
+
+<p class="src1">for (int loop = 0; loop &lt; numtriangles; loop++)<span class="kom">// Prochází trojúhelníky</span></p>
+<p class="src1">{</p>
+<p class="src2">for (int vert = 0; vert &lt; 3; vert++)<span class="kom">// Prochází vrcholy trojúhelníků</span></p>
+<p class="src2">{</p>
+
+<p>Načteme řádek, do pomocných proměnných uložíme jednotlivé hodnoty a ty znovu uložíme do položek struktury. S mezikrokem je kód mnohem přehlednější.</p>
+
+<p class="src3">readstr(filein,oneline);<span class="kom">// Načte řádek</span></p>
+<p class="src3">sscanf(oneline, &quot;%f %f %f %f %f&quot;, &amp;x, &amp;y, &amp;z, &amp;u, &amp;v);<span class="kom">// Načtení do pomocných proměnných</span></p>
+<p></p>
+<p class="src3"><span class="kom">// Inicializuje jednotlivé položky struktury</span></p>
+<p class="src3">sector1.triangle[loop].vertex[vert].x = x;</p>
+<p class="src3">sector1.triangle[loop].vertex[vert].y = y;</p>
+<p class="src3">sector1.triangle[loop].vertex[vert].z = z;</p>
+<p class="src3">sector1.triangle[loop].vertex[vert].u = u;</p>
+<p class="src3">sector1.triangle[loop].vertex[vert].v = v;</p>
+<p class="src2">}</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">fclose(filein);<span class="kom">// Zavře soubor</span></p>
+<p class="src1">return;</p>
+<p class="src0">}</p>
+
+<p>Právě napsanou funkci zavoláme při inicializaci programu.</p>
+
+<p class="src0">int InitGL(GLvoid)<span class="kom">// Všechna nastavení OpenGL</span></p>
+<p class="src0">{</p>
+<p class="src1">if (!LoadGLTextures())<span class="kom">// Nahraje texturu</span></p>
+<p class="src1">{</p>
+<p class="src2">return FALSE;</p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">glEnable(GL_TEXTURE_2D);<span class="kom">// Zapne mapování textur</span></p>
+<p class="src1">glBlendFunc(GL_SRC_ALPHA,GL_ONE);<span class="kom">// Nastavení blendingu pro průhlednost</span></p>
+<p class="src1">glClearColor(0.0f, 0.0f, 0.0f, 0.0f);<span class="kom">// Černé pozadí</span></p>
+<p class="src1">glClearDepth(1.0);<span class="kom">// Nastavení hloubkového bufferu</span></p>
+<p class="src1">glDepthFunc(GL_LESS);<span class="kom">// Typ hloubkového testování</span></p>
+<p class="src1">glEnable(GL_DEPTH_TEST);<span class="kom">// Zapne hloubkové testování</span></p>
+<p class="src1">glShadeModel(GL_SMOOTH);<span class="kom">// Povolíme jemné stínování</span></p>
+<p class="src1">glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);<span class="kom">// Nejlepší perspektivní korekce</span></p>
+<p></p>
+<p class="src1">SetupWorld();<span class="kom">// Loading 3D světa</span></p>
+<p></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Teď když máme sektor načtený do paměti, potřebujeme ho zobrazit. Už dlouho známe nějaké ty rotace a pohyb, ale kamera vždy směřovala do středu (0,0,0). Každý dobrý 3D engine umožňuje chodit kolem a objevovat svět. Jedna možnost, jak k tomu dospět je točit kamerou a kreslit 3D prostředí relativně k pozici kamery - funkce gluLookAt(). Protože tohle ještě neznáme budeme kameru simulovat takto:</p>
+
+<ul>
+<li>Uživatel stiskne šipku</li>
+<li>Vlevo/vpravo - otočíme svět okolo středu v opačném směru než je rotace kamery - glRoratef()</li>
+<li>Dopředu/dozadu - posuneme svět v opačném směru než je pohyb kamery - glTranslatef()</li>
+</ul>
+
+<p class="src0">int DrawGLScene(GLvoid)<span class="kom">// Vykreslování</span></p>
+<p class="src0">{</p>
+<p class="src1">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<span class="kom">// Vymaže obrazovku a hloubkový buffer</span></p>
+<p class="src1">glLoadIdentity();<span class="kom">// Reset matice</span></p>
+<p></p>
+<p class="src1">GLfloat x_m, y_m, z_m, u_m, v_m;<span class="kom">// Pomocné souřadnice a koordináty textury</span></p>
+<p class="src1">GLfloat xtrans = -xpos;<span class="kom">// Pro pohyb na ose x</span></p>
+<p class="src1">GLfloat ztrans = -zpos;<span class="kom">// Pro pohyb na ose z</span></p>
+<p class="src1">GLfloat ytrans = -walkbias-0.25f;<span class="kom">// Poskakování kamery (simulace kroků)</span></p>
+<p class="src1">GLfloat sceneroty = 360.0f - yrot;<span class="kom">// Úhel směru pohledu</span></p>
+<p></p>
+<p class="src1">int numtriangles;<span class="kom">// Počet trojúhelníků</span></p>
+<p></p>
+<p class="src1">glRotatef(lookupdown, 1.0f,0.0f,0.0f);<span class="kom">// Rotace na ose x - pohled nahoru/dolů</span></p>
+<p class="src1">glRotatef(sceneroty, 0.0f,1.0f,0.0f);<span class="kom">// Rotace na ose y - otočení doleva/doprava</span></p>
+<p class="src1">glTranslatef(xtrans, ytrans, ztrans);<span class="kom">// Posun na pozici ve scéně</span></p>
+<p></p>
+<p class="src1">glBindTexture(GL_TEXTURE_2D, texture[filter]);<span class="kom">// Výběr textury podle filtru</span></p>
+<p></p>
+<p class="src1">numtriangles = sector1.numtriangles;<span class="kom">// Počet trojúhelníků - pro přehlednost</span></p>
+<p></p>
+<p class="src1"><span class="kom">// Projde a vykreslí všechny trojúhelníky</span></p>
+<p class="src1">for (int loop_m = 0; loop_m &lt; numtriangles; loop_m++)</p>
+<p class="src1">{</p>
+<p class="src2">glBegin(GL_TRIANGLES);<span class="kom">// Začátek kreslení trojúhelníků</span></p>
+<p class="src3">glNormal3f(0.0f, 0.0f, 1.0f);<span class="kom">// Normála ukazuje dopředu - světlo</span></p>
+<p></p>
+<p class="src3">x_m = sector1.triangle[loop_m].vertex[0].x;<span class="kom">// První vrchol</span></p>
+<p class="src3">y_m = sector1.triangle[loop_m].vertex[0].y;</p>
+<p class="src3">z_m = sector1.triangle[loop_m].vertex[0].z;</p>
+<p class="src3">u_m = sector1.triangle[loop_m].vertex[0].u;</p>
+<p class="src3">v_m = sector1.triangle[loop_m].vertex[0].v;</p>
+<p class="src3">glTexCoord2f(u_m,v_m); glVertex3f(x_m,y_m,z_m);<span class="kom">// Vykreslení</span></p>
+<p></p>
+<p class="src3">x_m = sector1.triangle[loop_m].vertex[1].x;<span class="kom">// Druhý vrchol</span></p>
+<p class="src3">y_m = sector1.triangle[loop_m].vertex[1].y;</p>
+<p class="src3">z_m = sector1.triangle[loop_m].vertex[1].z;</p>
+<p class="src3">u_m = sector1.triangle[loop_m].vertex[1].u;</p>
+<p class="src3">v_m = sector1.triangle[loop_m].vertex[1].v;</p>
+<p class="src3">glTexCoord2f(u_m,v_m); glVertex3f(x_m,y_m,z_m);<span class="kom">// Vykreslení</span></p>
+<p></p>
+<p class="src3">x_m = sector1.triangle[loop_m].vertex[2].x;<span class="kom">// Třetí vrchol</span></p>
+<p class="src3">y_m = sector1.triangle[loop_m].vertex[2].y;</p>
+<p class="src3">z_m = sector1.triangle[loop_m].vertex[2].z;</p>
+<p class="src3">u_m = sector1.triangle[loop_m].vertex[2].u;</p>
+<p class="src3">v_m = sector1.triangle[loop_m].vertex[2].v;</p>
+<p class="src3">glTexCoord2f(u_m,v_m); glVertex3f(x_m,y_m,z_m);<span class="kom">// Vykreslení</span></p>
+<p></p>
+<p class="src2">glEnd();<span class="kom">// Konec kreslení trojúhelníků</span></p>
+<p class="src1">}</p>
+<p></p>
+<p class="src1">return TRUE;</p>
+<p class="src0">}</p>
+
+<p>Přejdeme do funkce WinMain() na ovládání klávesnicí. Když je stisknuta šipka vlevo/vpravo, proměnná yrot je zvýšena/snížena, tudíž se natočí výhled. Když je stisknuta šipka dopředu/dozadu, spočítá se nová pozice pro kameru s použitím sinu a kosinu - vyžaduje trochu znalostí trigonometrie. Piover180 je pouze číslo pro konverzi mezi stupni a radiány. Walkbias je offset vytvářející houpání scény při simulaci kroků. Jednoduše upraví y pozici kamery podle sinové vlny. Jako jednoduchý pohyb vpřed a vzad nevypadá špatně.</p>
+
+<p class="src0"><span class="kom">// Funkce WinMain()</span></p>
+<p class="src4">if (keys['B'] &amp;&amp; !bp)<span class="kom">// Klávesa B - zapne/vypne blending</span></p>
+<p class="src4">{</p>
+<p class="src5">bp=TRUE;</p>
+<p class="src5">blend=!blend;</p>
+<p class="src5">if (!blend)</p>
+<p class="src5">{</p>
+<p class="src6">glDisable(GL_BLEND);</p>
+<p class="src6">glEnable(GL_DEPTH_TEST);</p>
+<p class="src5">}</p>
+<p class="src5">else</p>
+<p class="src5">{</p>
+<p class="src6">glEnable(GL_BLEND);</p>
+<p class="src6">glDisable(GL_DEPTH_TEST);</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src4">if (!keys['B'])</p>
+<p class="src4">{</p>
+<p class="src5">bp=FALSE;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys['F'] &amp;&amp; !fp)<span class="kom">// Klávesa F - cyklování mezi texturovými filtry</span></p>
+<p class="src4">{</p>
+<p class="src5">fp=TRUE;</p>
+<p class="src5">filter+=1;</p>
+<p class="src5">if (filter&gt;2)</p>
+<p class="src5">{</p>
+<p class="src6">filter=0;</p>
+<p class="src5">}</p>
+<p class="src4">}</p>
+<p class="src4">if (!keys['F'])</p>
+<p class="src4">{</p>
+<p class="src5">fp=FALSE;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_UP])<span class="kom">// Šipka nahoru - pohyb dopředu</span></p>
+<p class="src4">{</p>
+<p></p>
+<p class="src5">xpos -= (float)sin(heading*piover180) * 0.05f;<span class="kom">// Pohyb na ose x</span></p>
+<p class="src5">zpos -= (float)cos(heading*piover180) * 0.05f;<span class="kom">// Pohyb na ose z</span></p>
+<p class="src5">if (walkbiasangle &gt;= 359.0f)</p>
+<p class="src5">{</p>
+<p class="src6">walkbiasangle = 0.0f;</p>
+<p class="src5">}</p>
+<p class="src5">else</p>
+<p class="src5">{</p>
+<p class="src6">walkbiasangle+= 10;</p>
+<p class="src5">}</p>
+<p class="src5">walkbias = (float)sin(walkbiasangle * piover180)/20.0f;<span class="kom">// Simulace kroků</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_DOWN])<span class="kom">// Šipka dolů - pohyb dozadu</span></p>
+<p class="src4">{</p>
+<p class="src5">xpos += (float)sin(heading*piover180) * 0.05f;<span class="kom">// Pohyb na ose x</span></p>
+<p class="src5">zpos += (float)cos(heading*piover180) * 0.05f;<span class="kom">// Pohyb na ose z</span></p>
+<p class="src5">if (walkbiasangle &lt;= 1.0f)</p>
+<p class="src5">{</p>
+<p class="src6">walkbiasangle = 359.0f;</p>
+<p class="src5">}</p>
+<p class="src5">else</p>
+<p class="src5">{</p>
+<p class="src6">walkbiasangle-= 10;</p>
+<p class="src5">}</p>
+<p class="src5">walkbias = (float)sin(walkbiasangle * piover180)/20.0f;<span class="kom">// Simulace kroků</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_RIGHT])<span class="kom">// Šipka doprava</span></p>
+<p class="src4">{</p>
+<p class="src5">heading -= 1.0f;<span class="kom">// Natočení scény</span></p>
+<p class="src5">yrot = heading;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_LEFT])<span class="kom">// Šipka doleva</span></p>
+<p class="src4">{</p>
+<p class="src5">heading += 1.0f;<span class="kom">// Natočení scény</span></p>
+<p class="src5">yrot = heading;</p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_PRIOR])<span class="kom">// Page Up</span></p>
+<p class="src4">{</p>
+<p class="src5">lookupdown-= 1.0f;<span class="kom">// Natočení scény</span></p>
+<p class="src4">}</p>
+<p></p>
+<p class="src4">if (keys[VK_NEXT])<span class="kom">// Page Down</span></p>
+<p class="src4">{</p>
+<p class="src5">lookupdown+= 1.0f;<span class="kom">// Natočení scény</span></p>
+<p class="src4">}</p>
+
+<p>Vytvořili jsme první 3D svět. Nevypadá sice jako v Quake-ovi, ale my také nejsme Carmack nebo Abrash. Zkuste tlačítka F - texturový filtr a B - blending. PgUp/PgDown nachýlí kameru nahoru/dolů. Pohyb šipkami vás doufám napadne.</p>
+
+<p>Teď asi přemýšlíte co dál. Možná použijete tento kód na plnohodnotný 3D engine, měli byste být schopni ho vytvořit. Pravděpodobně budete mít ve hře více než jeden sektor, zvláště při použití vchodů.</p>
+
+<p>Tato implementace kódu umožňuje nahrávání mnohonásobných sektorů a má zpětné vykreslování /backface culling/ (nekreslí polygony od kamery). Hodně štěstí v dalších pokusech.</p>
+
+<p class="autor">napsal: Jeff Molofee - NeHe <span class="transform_email">&lt;nehe (zavináč) connect.ab.ca&gt;</span><br />
+přeložil: Jiří Rajský - RAJSOFT junior <span class="transform_email">&lt;predator.jr (zavináč) seznam.cz&gt;</span><br />
+kompletně přepsal: Michal Turek - Woq <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></p>
+
+<p>Pozn.: Tuto lekci nepsal NeHe, ale Lionel Brits. Jak sám autor uvádí, je to jeho první tutoriál - a bohužel bylo to vidět. Pokud se podíváte do anglické verze, tak zjistíte, že bez zdrojových kódů nemáte absolutní šanci něco pochopit. Někdy je dokonce velmi těžké identifikovat, která část kódu patří ke které funkci. Aby byl text kratší používal vynechávky (někdy i u hodně důležitého kódu - třeba načítání pozic ze souboru), ap. Překlad Jiřího Rajského byl, dá se říct, přesný a to v tomto případě, byla možná chyba. Proto jsem se rozhodl větší část lekce přepsat. Vím, že ani teď to není nijak zvlášť slavné, ale snažil jsem se. Kód jsem samozřejmě neupravoval (i když by si to také zasloužil).</p>
+
+<p><b>Chyby v kódu:</b> Když jsem přepisoval tuto lekci, musel jsem ji pochopit ze zdrojových kódů a při tom jsem našel několik chyb. Je mi to tak trochu blbý, protože bych kód asi sám nedokázal napsat, ale na druhou stranu byste o tom měli vědět.</p>
+
+<p>Zbytečná deklarace proměnné z. Tuto proměnnou autor pravděpodobně používal ze začátku a pak ji nahradil jinou. Svědčí o tom i dvojité testování PageUp/PageDown (do lekce nevypisováno). Nikde jinde ji nenajdete.</p>
+
+<p>Neuvolnění dynamicky alokované paměti. Ve funkci SetupWorld() jsme pomocí operátoru new alokovali paměť pro trojúhelníky. Nikdy v programu, ale není její uvolnění. I když by měl operační systém po skončení programu rušit všechny systémové zdroje, nelze se na to spoléhat. Tuto chybu odstraníte například takto:</p>
+
+<p class="src0"><span class="kom">// Přidat na konec funkce KillGLWindow()</span></p>
+<p class="src1">delete [] sector1.triangle;<span class="kom">// Uvolnění dynamicky alokované paměti</span></p>
+<p></p>
+
+<h3 class="zdroj_kody_nadpis">Zdrojové kódy</h3>
+
+<ul class="zdroj_kody">
+<li><a href="http://nehe.gamedev.net/data/lessons/vc/lesson10.zip">Visual C++</a> kód této lekce.</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/bcb6/lesson10_bcb6.zip">Borland C++ Builder 6</a> kód této lekce. ( <a href="mailto:christian@tugzip.com">Christian Kindahl</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/c_sharp/lesson10.zip">C#</a> kód této lekce. ( <a href="mailto:bholley@unlnotes.unl.edu">Brian Holley</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cwarrior/lesson10.zip">Code Warrior 5.3</a> kód této lekce. ( <a href="mailto:DelusionalBeing@hotmail.com">Scott Lupton</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/cygwin/lesson10.tar.gz">Cygwin</a> kód této lekce. ( <a href="mailto:stephan@lazyfellow.com">Stephan Ferraro</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/delphi/lesson10.zip">Delphi</a> kód této lekce. ( <a href="mailto:marca@stack.nl">Marc Aarts</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/devc/lesson10.zip">Dev C++</a> kód této lekce. ( <a href="mailto:danprogram@hotmail.com">Dan</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/euphoria/lesson10.zip">Euphoria</a> kód této lekce. ( <a href="mailto:1evan@sbcglobal.net">Evan Marshall</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/gameglut/lesson10.zip">Game GLUT</a> kód této lekce. ( <a href="mailto:milix_gr@hotmail.com">Milikas Anastasios</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/irix/lesson10.zip">Irix</a> kód této lekce. ( <a href="mailto:rpf1@york.ac.uk">Rob Fletcher</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/java/lesson10.zip">Java</a> kód této lekce. ( <a href="mailto:jeff@consunet.com.au">Jeff Kirby</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jedisdl/lesson10.zip">Jedi-SDL</a> kód této lekce. ( <a href="mailto:Dominique@SavageSoftware.com.au">Dominique Louis</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/jogl/lesson10.jar">JoGL</a> kód této lekce. ( <a href="mailto:ncb000gt65@hotmail.com">Nicholas Campbell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/lccwin32/lccwin32_lesson10.zip">LCC Win32</a> kód této lekce. ( <a href="mailto:rwishlaw@shaw.ca">Robert Wishlaw</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linux/lesson10.tar.gz">Linux</a> kód této lekce. ( <a href="mailto:ulmont@bellsouth.net">Richard Campbell</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxglx/lesson10.tar.gz">Linux/GLX</a> kód této lekce. ( <a href="mailto:Mihael.Vrbanec@stud.uni-karlsruhe.de">Mihael Vrbanec</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/linuxsdl/lesson10.tar.gz">Linux/SDL</a> kód této lekce. ( <a href="mailto:leggett@eecs.tulane.edu">Ti Leggett</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/mac/lesson10.sit">Mac OS</a> kód této lekce. ( <a href="mailto:asp@usc.edu">Anthony Parker</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/macosxcocoa/lesson10.zip">Mac OS X/Cocoa</a> kód této lekce. ( <a href="mailto:blb@pobox.com">Bryan Blackburn</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/masm/lesson10.zip">MASM</a> kód této lekce. ( <a href="mailto:scalp@bigfoot.com">Nico (Scalp)</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/openil/lesson10.zip">Visual C++ / OpenIL</a> kód této lekce. ( <a href="mailto:doomwiz@ticnet.com">Denton Woods</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/pbasic/lesson10.zip">Power Basic</a> kód této lekce. ( <a href="mailto:anguslaw@net.ntl.com">Angus Law</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson10-2.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:jcapellman@hotmail.com">Jarred Capellman</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vb/lesson10.zip">Visual Basic</a> kód této lekce. ( <a href="mailto:rosscogl@email.com">Ross Dawson</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vfortran/lesson10.zip">Visual Fortran</a> kód této lekce. ( <a href="mailto:Jean-Philippe.Perois@wanadoo.fr">Jean-Philippe Perois</a> )</li>
+<li><a href="http://nehe.gamedev.net/data/lessons/vs_net/lesson10.zip">Visual Studio .NET</a> kód této lekce. ( <a href="mailto:ultimatezeus@hotmail.com">Grant James</a> )</li>
+</ul>
+
+<div class="okolo_img"><img src="images/nehe_tut/tut_10_big.jpg" class="nehe_velky" alt="Lekce 10" /></div>
+<p class="okolni_lekce"><a href="tut_09.php">&lt;&lt;&lt; Lekce 9</a> | <a href="tut_11.php">Lekce 11 &gt;&gt;&gt;</a></p>
+
+
+<div class="netisk">
+<h3 class="d_nadpis">Diskuze ke článku</h3>
+
+<form action="d_view.php" method="post" class="d_o_obsah">
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">DannyFilth</div>
+<div class="d_o_datumcas">09.12.2003 - 12:20:59</div>
+<div>
+<input type="checkbox" name="id_0" id="id_0" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=0">world.txt???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">09.12.2003 - 18:15:51</div>
+<div>
+<input type="checkbox" name="id_1" id="id_1" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=1">Re: world.txt???</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Josef Kafka</div>
+<div class="d_o_datumcas">25.11.2004 - 18:07:53</div>
+<div>
+<input type="checkbox" name="id_2" id="id_2" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=2">kolize se stenami</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">25.11.2004 - 23:56:03</div>
+<div>
+<input type="checkbox" name="id_3" id="id_3" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=3">Re: kolize se stenami</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">10.12.2004 - 15:25:04</div>
+<div>
+<input type="checkbox" name="id_4" id="id_4" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=4">Collision problem</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tomáš</div>
+<div class="d_o_datumcas">17.12.2004 - 20:41:36</div>
+<div>
+<input type="checkbox" name="id_5" id="id_5" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=5">Kolize na stěny (C++)</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kecka</div>
+<div class="d_o_datumcas">09.04.2006 - 19:01:37</div>
+<div>
+<input type="checkbox" name="id_26" id="id_26" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=26">Re: Kolize na stěny (C++) Lepší</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Skakadlo</div>
+<div class="d_o_datumcas">24.03.2007 - 11:18:53</div>
+<div>
+<input type="checkbox" name="id_32" id="id_32" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_10.php&j=32">Re: Kolize na stěny (C  ) Lepší</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Tomáš</div>
+<div class="d_o_datumcas">17.12.2004 - 20:43:39</div>
+<div>
+<input type="checkbox" name="id_6" id="id_6" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=6">Potřebuji nutně editor tohoto typu souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kecka</div>
+<div class="d_o_datumcas">09.04.2006 - 18:56:18</div>
+<div>
+<input type="checkbox" name="id_25" id="id_25" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=25">Re: Potřebuji nutně editor tohoto typu souboru</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">10.01.2005 - 15:46:31</div>
+<div>
+<input type="checkbox" name="id_7" id="id_7" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=7">Rozklad na prvotrojuhelniky?</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Ondra</div>
+<div class="d_o_datumcas">06.02.2005 - 16:22:45</div>
+<div>
+<input type="checkbox" name="id_8" id="id_8" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=8">Vypínání</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">14.02.2005 - 19:24:49</div>
+<div>
+<input type="checkbox" name="id_9" id="id_9" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=9">Pomalý rendering</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">15.02.2005 - 20:02:55</div>
+<div>
+<input type="checkbox" name="id_10" id="id_10" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=10">Re: Pomalý rendering</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">18.02.2005 - 06:48:36</div>
+<div>
+<input type="checkbox" name="id_11" id="id_11" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_10.php&j=11">Re: Pomalý rendering</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">eMan</div>
+<div class="d_o_datumcas">26.02.2005 - 18:43:41</div>
+<div>
+<input type="checkbox" name="id_12" id="id_12" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_10.php&j=12">Re: Pomalý rendering</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">MP</div>
+<div class="d_o_datumcas">28.02.2005 - 19:20:46</div>
+<div>
+<input type="checkbox" name="id_13" id="id_13" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=13">Re: Pomalý rendering</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Dont</div>
+<div class="d_o_datumcas">23.06.2005 - 14:56:44</div>
+<div>
+<input type="checkbox" name="id_14" id="id_14" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=14">Chyba 2d objektů</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Dont</div>
+<div class="d_o_datumcas">23.06.2005 - 15:15:28</div>
+<div>
+<input type="checkbox" name="id_15" id="id_15" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=15">Chyba 2d objektů storno</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">23.06.2005 - 16:56:54</div>
+<div>
+<input type="checkbox" name="id_16" id="id_16" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_10.php&j=16">Re: billboarding</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Dont</div>
+<div class="d_o_datumcas">24.06.2005 - 13:11:19</div>
+<div>
+<input type="checkbox" name="id_17" id="id_17" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_10.php&j=17">Re: billboarding</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">09.07.2005 - 12:32:06</div>
+<div>
+<input type="checkbox" name="id_18" id="id_18" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_10.php&j=18">Re: billboarding</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">dr.eamer</div>
+<div class="d_o_datumcas">11.09.2005 - 16:01:12</div>
+<div>
+<input type="checkbox" name="id_19" id="id_19" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=19">glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">11.09.2005 - 19:28:37</div>
+<div>
+<input type="checkbox" name="id_20" id="id_20" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=20">Re: glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">dr.eamer</div>
+<div class="d_o_datumcas">12.09.2005 - 18:57:38</div>
+<div>
+<input type="checkbox" name="id_21" id="id_21" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_10.php&j=21">Re: glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">28.09.2005 - 22:11:41</div>
+<div>
+<input type="checkbox" name="id_24" id="id_24" value="1" />
+<span class="d_o_nadpis" style="margin-left: 60px;"><a href="d_view.php?f=tut_10.php&j=24">Re: glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Mato</div>
+<div class="d_o_datumcas">01.05.2006 - 12:52:10</div>
+<div>
+<input type="checkbox" name="id_27" id="id_27" value="1" />
+<span class="d_o_nadpis" style="margin-left: 80px;"><a href="d_view.php?f=tut_10.php&j=27">Re: glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Kecka</div>
+<div class="d_o_datumcas">01.05.2006 - 14:09:10</div>
+<div>
+<input type="checkbox" name="id_28" id="id_28" value="1" />
+<span class="d_o_nadpis" style="margin-left: 100px;"><a href="d_view.php?f=tut_10.php&j=28">Re: glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Garland</div>
+<div class="d_o_datumcas">17.09.2007 - 09:50:07</div>
+<div>
+<input type="checkbox" name="id_34" id="id_34" value="1" />
+<span class="d_o_nadpis" style="margin-left: 120px;"><a href="d_view.php?f=tut_10.php&j=34">Re: glRotatef</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">dr.eamer</div>
+<div class="d_o_datumcas">16.09.2005 - 17:55:39</div>
+<div>
+<input type="checkbox" name="id_22" id="id_22" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=22">Mimo mísu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Woq</div>
+<div class="d_o_datumcas">17.09.2005 - 13:24:32</div>
+<div>
+<input type="checkbox" name="id_23" id="id_23" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=23">Re: Mimo mísu</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">arnir</div>
+<div class="d_o_datumcas">25.01.2007 - 10:44:41</div>
+<div>
+<input type="checkbox" name="id_29" id="id_29" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=29">pridani zbrane ke kamere</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">Millhouse</div>
+<div class="d_o_datumcas">25.01.2007 - 23:12:58</div>
+<div>
+<input type="checkbox" name="id_30" id="id_30" value="1" />
+<span class="d_o_nadpis" style="margin-left: 20px;"><a href="d_view.php?f=tut_10.php&j=30">Re: pridani zbrane ke kamere</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">arnir</div>
+<div class="d_o_datumcas">26.01.2007 - 13:02:00</div>
+<div>
+<input type="checkbox" name="id_31" id="id_31" value="1" />
+<span class="d_o_nadpis" style="margin-left: 40px;"><a href="d_view.php?f=tut_10.php&j=31">Re: pridani zbrane ke kamere</a></span>
+</div>
+</div>
+
+<div class="d_o_zprava">
+<div class="d_o_jmeno">lurker</div>
+<div class="d_o_datumcas">28.05.2007 - 16:34:10</div>
+<div>
+<input type="checkbox" name="id_33" id="id_33" value="1" />
+<span class="d_o_nadpis" style="margin-left: 0px;"><a href="d_view.php?f=tut_10.php&j=33">zly preklad z anglickeho originalu</a></span>
+</div>
+</div>
+
+<div class="okolo_img" style="margin-top: 20px;">
+<input type="submit" name="zobrazit_vybrane" id="zobrazit_vybrane" value="Zobrazit vybrané" class="tlacitko" />
+<input type="submit" name="zobrazit_vse" id="zobrazit_vse" value="Zobrazit vše" class="tlacitko" />
+<input type="submit" name="vlozit_novy" id="vlozit_novy" value="Vložit nový" class="tlacitko" />
+<input type="hidden" name="f" id="f" value="tut_10.php" />
+</div>
+</form>
+</div>
+<!-- Informace o webu -->
+<center><div id="informace">
+<img src="images/my/woq.gif" width="60" height="60" align="left" alt="Woq logo" />
+<div style="margin-left: 70px">
+<div><strong>CZ NeHe OpenGL, vše o programování 3D grafiky</strong></div>
+<div>Copyright &copy; 2002-2007 Michal Turek <span class="transform_email">&lt;WOQ (zavináč) seznam.cz&gt;</span></div>
+<div style="margin-top: 5px">Komerční publikování v tištěné, elektronické nebo jiné podobě je bez výslovného souhlasu zakázáno. Redistribuce pro výukové účely nebo osobní použití je však povolena.</div>
+</div>
+</div></center>
+<!-- Informace o webu (konec) -->
+
+</div>
+<!-- Vlastní obsah stránky (konec) -->
+
+<script src="http://c1.navrcholu.cz/code?site=56575;t=b14"
+type="text/javascript"></script><noscript><div><a
+href="http://navrcholu.cz/"><img
+src="http://c1.navrcholu.cz/hit?site=56575;t=b14;ref=;jss=0"
+width="14" height="14" alt="NAVRCHOLU.cz"
+style="border:none" /></a></div></noscript>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+var d=document;var r="";var b="border=\"0\" style=\"border:0;position:absolute\"";d.write("<img src=\"http://stats.atlas.cz/i.ashx?smid=15140&typeid=1007&companyid=570&areaid=4722&runid=160159&campaignid=56108&bannerid=143403&amp;ref="+escape(r)+"&amp;seed="+Math.random()+"\" width=\"1\" height=\"1\" alt=\"\" "+b+" />");

@@ -1,0 +1,1852 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-language" content="cs" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+	<title>Grafická knihovna OpenGL (34): seznam příkladů - Root.cz</title>
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_global_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_other_print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_base.css" media="All" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_colors.css" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="http://f.root.cz/css/ro_urs_print.css" media="print" />
+<meta name="description" content="V závěrečné části seriálu o grafické knihovně OpenGL naleznete seznam všech demonstračních příkladů použitých v seriálu. Ke konci článku budou také uvedeny seznamy funkcí OpenGL s odkazy na díly, ve kterých jsou tyto funkce popsány." />	<meta name="copyright" content="Copyright Internet Info, s.r.o." />
+	<meta name="author" content="HTML code: Adam Hauner; e-mail: hauner@iinfo.cz" />
+	<meta name="robots" content="index,follow" />
+	<meta name="DC.Identifier" content="(SCHEME=ISSN) 12128309" />
+	<link rel="SHORTCUT ICON" href="http://i.iinfo.cz/r2/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" title="Root RSS - články" href="http://rss.root.cz/clanky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - zprávičky" href="http://rss.root.cz/zpravicky/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - diskusní fóra" href="http://rss.root.cz/diskuse/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - blogy" href="http://rss.root.cz/blogy/" type="application/rss+xml" />
+	<link rel="alternate" title="Root RSS - wiki" href="http://rss.root.cz/wiki/" type="application/rss+xml" />
+	<script language="JavaScript" src="http://f.root.cz/js/ro_global.js" type="text/javascript"></script>
+</head>
+<body class="body" id="www-root-cz">
+<div class="page">
+<div id="head" class="rev">
+<div class="ad" id="ad-ahead">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:260");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ab479b50' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:260&amp;n=ab479b50' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-1">
+		<div id="kshx"></div>
+<div class="sefa">
+	<a href="http://www.iinfo.cz/" class="feat">Internet Info</a>
+	|
+	<a href="http://www.lupa.cz/" title="Lupa: server o českém Internetu">Lupa</a>
+	&middot;
+	<a href="http://www.mesec.cz/" title="Měšec: server o osobních financích">Měšec</a>
+	&middot;
+	<a href="http://www.root.cz/" title="Root: informace nejen ze světa Linuxu">Root</a>
+	&middot;
+	<a href="http://www.digizone.cz/" title="DigiZone: vše o digitálním vysílání">DigiZone</a>
+	&middot;
+	<a href="http://navrcholu.cz/" title="Navrcholu: měření a vyhodnocování návštěvnosti www stránek">Navrcholu</a>
+	&middot;
+	<a href="http://www.slunecnice.cz/" title="Slunečnice: server freeware a shareware">Slunečnice</a>
+	&middot;
+	<a href="http://www.woko.cz/" title="Woko: pamatuje si za vás">Woko</a>
+	&middot;
+	<a href="http://www.dobryweb.cz/" title="Dobrý web: váš pomocník pro úspěch na Internetu">Dobrý web</a>
+	&middot;
+	<a href="http://www.bomba.cz/" title="Bomba: loga, melodie, hry pro mobilní telefony">Bomba</a>
+	&middot;
+	<a href="http://www.computer.cz/" title="Computer.cz: váš dodavatel hardware">Computer.cz</a>
+</div>
+		<a href="/" title="Návrat na titulní stránku serveru"
+			id="head-logo">Root.cz<span><!-- --></span></a>
+		<div class="cb"><!-- --></div>
+	</div>
+<div class="ad" id="ad-banner-top">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-r">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:266");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2d7019' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:266&amp;n=aa2d7019' border='0' alt='' /></a></noscript>
+</div>
+</div>
+	<div class="strip-2">
+		<div id="head-sections">
+			<ul>
+				<li><a href="/clanky/">Články</a></li>
+				<li><a href="/zpravicky/">Zprávičky</a></li> 
+				<li><a href="/diskuse/">Diskuse</a></li>
+				<li><a href="http://blog.root.cz/">Blogy</a></li>
+				<li><a href="http://wiki.root.cz/">Wiki</a></li>
+				<li><a href="/texty/zaklady-linuxu/">Jak na Linux</a></li>
+				<li><a href="/texty/akademie-root-cz/">Školení</a></li>
+				<li><a href="/texty/butik/">Butik</a></li>
+			</ul>
+		</div>
+		<div id="usr">
+	<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-34-seznam-prikladu%2F" title="Přihlášení k uživatelskému systému">Přihlásit</a>
+	<a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-34-seznam-prikladu%2F" title="Zaregistrujte se a získejte přístup k řadě dalších funkcí a vylepšení">Registrace</a>
+			<a href="/styl/classic/?kam_vratit=%2Fclanky%2Fopengl-34-seznam-prikladu%2F"><img
+				src="http://i.iinfo.cz/r2/ss.gif" alt="Styl vzhledu" title="Změna stylu vzhledu" /></a>
+		</div>
+	</div>
+	<hr />
+</div>
+<div id="p-article" class="cont">
+<div class="main"><div class="main-cnt">
+
+<div class="path">
+	<a href="/" title="Návrat na titulní stránku">Root.cz</a>
+ &gt; <a href="/vyvoj/">Vývoj</a> &gt; <a href="/vyvoj/knihovny/">Knihovny</a> &gt; <span>Grafická knihovna OpenGL (34): seznam příkladů</span></div>
+
+	<div class="mth">
+	
+<a href="/autori/pavel-tisnovsky/">Pavel Tišnovský</a> - 24. 2. 2004 0:00	</div>
+
+<!-- google_ad_section_start -->
+	<h1><span>Grafická knihovna OpenGL (34): seznam příkladů</span></h1>
+
+	<p class="perex">
+<img src="http://i.iinfo.cz/urs/Vyvoj-115754947249086.png" alt="Vývoj" width="80" height="80">
+V závěrečné části seriálu o grafické knihovně OpenGL naleznete seznam všech demonstračních příkladů použitých v seriálu. Ke konci článku budou také uvedeny seznamy funkcí OpenGL s odkazy na díly, ve kterých jsou tyto funkce popsány.
+
+		<span class="cb"><!-- --></span>
+	</p>
+
+<div class="ad" id="ad-article-300x300">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:259");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=aa2288de' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:259&amp;n=aa2288de' border='0' alt='' /></a></noscript>
+</div>
+</div>
+
+
+	<div class="lbtr">
+		<h2>Více k tématu článku (nálepky a slovníček)</h2>
+	
+		<h3><a href="/n/">Nálepky</a></h3>
+		<ol>
+			<li><a href="/n/opengl/">OpenGL</a></li>
+		</ol>
+	</div>
+
+	<div class="urs">
+
+
+<h3>Obsah</h3>
+
+<a href="#hrf2">Seznam demonstračních příkladů</a><br />
+<a href="#hrf3">Odkazy na příkazy OpenGL rozdělené podle jednotlivých dílů </a><br />
+<a href="#hrf4">Odkazy na příkazy OpenGL setříděné podle abecedy</a><span id="hrf2"></span><h3>Seznam demonstračních příkladů</h3>
+
+<a href="#hrfd01">01</a><p>  
+<a href="#hrfd02">02</a>  
+<a href="#hrfd03">03</a>  
+<a href="#hrfd04">04</a>  
+<a href="#hrfd05">05</a>  
+
+<a href="#hrfd06">06</a>  
+<a href="#hrfd07">07</a>  
+<a href="#hrfd08">08</a>  
+<a href="#hrfd09">09</a>  
+<a href="#hrfd10">10</a><br />
+<a href="#hrfd11">11</a>  
+
+<a href="#hrfd12">12</a>  
+<a href="#hrfd13">13</a>  
+<a href="#hrfd14">14</a>  
+<a href="#hrfd15">15</a>  
+<a href="#hrfd16">16</a>  
+<a href="#hrfd17">17</a>  
+
+<a href="#hrfd18">18</a>  
+<a href="#hrfd19">19</a>  
+<a href="#hrfd20">20</a><br />
+<a href="#hrfd21">21</a>  
+<a href="#hrfd22">22</a>  
+<a href="#hrfd23">23</a>  
+
+<a href="#hrfd24">24</a>  
+<a href="#hrfd25">25</a>  
+<a href="#hrfd26">26</a>  
+<a href="#hrfd27">27</a>  
+<a href="#hrfd28">28</a>  
+<a href="#hrfd29">29</a>  
+
+<a href="#hrfd30">30</a><br />
+<a href="#hrfd31">31</a>  
+<a href="#hrfd32">32</a>  
+<a href="#hrfd33">33</a>  
+<a href="#hrfd34">34</a>  
+<a href="#hrfd35">35</a>  
+
+<a href="#hrfd36">36</a>  
+<a href="#hrfd37">37</a>  
+<a href="#hrfd38">38</a>  
+<a href="#hrfd39">39</a>  
+<a href="#hrfd40">40</a><br />
+<a href="#hrfd41">41</a>  
+
+<a href="#hrfd42">42</a>  
+<a href="#hrfd43">43</a>  
+<a href="#hrfd44">44</a>  
+<a href="#hrfd45">45</a>  
+<a href="#hrfd46">46</a>  
+<a href="#hrfd47">47</a>  
+
+<a href="#hrfd48">48</a>  
+<a href="#hrfd49">49</a>  
+<a href="#hrfd50">50</a><br />
+<a href="#hrfd51">51</a>  
+<a href="#hrfd52">52</a>  
+<a href="#hrfd53">53</a>  
+
+<a href="#hrfd54">54</a>  
+<a href="#hrfd55">55</a>  
+<a href="#hrfd56">56</a>  
+<a href="#hrfd57">57</a>  
+<a href="#hrfd58">58</a>  
+<a href="#hrfd59">59</a>  
+
+<a href="#hrfd60">60</a><br />
+<a href="#hrfd61">61</a>  
+<a href="#hrfd62">62</a>  
+<a href="#hrfd63">63</a>  
+<a href="#hrfd64">64</a>  
+<a href="#hrfd65">65</a>  
+
+<a href="#hrfd66">66</a>  
+<a href="#hrfd67">67</a>  
+<a href="#hrfd68">68</a>  
+<a href="#hrfd69">69</a>  
+<a href="#hrfd70">70</a><br />
+<a href="#hrfd71">71</a>  
+
+<a href="#hrfd72">72</a>  
+<a href="#hrfd73">73</a>  
+<a href="#hrfd74">74</a>  
+<a href="#hrfd75">75</a>  
+<a href="#hrfd76">76</a>  
+<a href="#hrfd77">77</a>  
+
+<a href="#hrfd78">78</a>  
+<a href="#hrfd79">79</a>  
+<a href="#hrfd80">80</a><br />
+<a href="#hrfd81">81</a><br />
+</p>
+
+<p><span id="hrfd01"></span><strong>01</strong>
+<a href="/clanek/photos/opengl/opengl_02_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_02_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení zeleného trojúhelníka pomocí grafické primitivy GL_TRIANGLE.
+</p>
+
+<p><span id="hrfd02"></span><strong>02</strong>
+<a href="/clanek/photos/opengl/opengl_03_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_03_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení všech grafických primitiv podporovaných v OpenGL.
+</p>
+
+<p><span id="hrfd03"></span><strong>03</strong>
+<a href="/clanek/photos/opengl/opengl_04_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_04_1.html">HTML kód (syntaxe)</a><br />
+Změna vlastností vykreslovaných bodů.
+</p>
+
+<p><span id="hrfd04"></span><strong>04</strong>
+<a href="/clanek/photos/opengl/opengl_04_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_04_2.html">HTML kód (syntaxe)</a><br />
+Změna vlastností vykreslovaných úseček.
+</p>
+
+<p><span id="hrfd05"></span><strong>05</strong>
+<a href="/clanek/photos/opengl/opengl_04_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_04_3.html">HTML kód (syntaxe)</a><br />
+Změna vlastností vykreslovaných plošných polygonů.
+</p>
+
+<p><span id="hrfd06"></span><strong>06</strong>
+<a href="/clanek/photos/opengl/opengl_05_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_05_1.html">HTML kód (syntaxe)</a><br />
+Základy práce s transformačními maticemi.
+</p>
+
+<p><span id="hrfd07"></span><strong>07</strong>
+<a href="/clanek/photos/opengl/opengl_06_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_06_1.html">HTML kód (syntaxe)</a><br />
+Posun těles pomocí transformačních matic.
+</p>
+
+<p><span id="hrfd08"></span><strong>08</strong>
+<a href="/clanek/photos/opengl/opengl_06_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_06_2.html">HTML kód (syntaxe)</a><br />
+Vliv změny pořadí aplikovaných transformací na těleso.
+</p>
+
+<p><span id="hrfd09"></span><strong>09</strong>
+<a href="/clanek/photos/opengl/opengl_06_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_06_3.html">HTML kód (syntaxe)</a><br />
+Použití zásobníku matic, skládání transformací.
+</p>
+
+<p><span id="hrfd10"></span><strong>10</strong>
+<a href="/clanek/photos/opengl/opengl_07_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_07_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení jednoduché bitmapy.
+</p>
+
+<p><span id="hrfd11"></span><strong>11</strong>
+<a href="/clanek/photos/opengl/opengl_07_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_07_2.html">HTML kód (syntaxe)</a><br />
+Řetězové zobrazení více bitmap.
+</p>
+
+<p><span id="hrfd12"></span><strong>12</strong>
+<a href="/clanek/photos/opengl/opengl_07_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_07_3.html">HTML kód (syntaxe)</a><br />
+Bitmapy s jiným režimem uložení pixelů.
+</p>
+
+<p><span id="hrfd13"></span><strong>13</strong>
+<a href="/clanek/photos/opengl/opengl_08_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_08_1.html">HTML kód (syntaxe)</a><br />
+Vypsání řetězce pomocí bitmap.
+</p>
+
+<p><span id="hrfd14"></span><strong>14</strong>
+<a href="/clanek/photos/opengl/opengl_08_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_08_2.html">HTML kód (syntaxe)</a><br />
+Vypsání řetězce pomocí bitmap a display listů.
+</p>
+
+<p><span id="hrfd15"></span><strong>15</strong>
+<a href="/clanek/photos/opengl/opengl_08_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_08_3.html">HTML kód (syntaxe)</a><br />
+Zjednodušené vypsání řetězce pomocí bitmap a display listů.
+</p>
+
+<p><span id="hrfd16"></span><strong>16</strong>
+<a href="/clanek/photos/opengl/opengl_09_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_09_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení pixmapy v režimu RGB.
+</p>
+
+<p><span id="hrfd17"></span><strong>17</strong>
+<a href="/clanek/photos/opengl/opengl_09_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_09_2.html">HTML kód (syntaxe)</a><br />
+Vykreslení pixmapy se zapnutým zrcadlením.
+</p>
+
+<p><span id="hrfd18"></span><strong>18</strong>
+<a href="/clanek/photos/opengl/opengl_09_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_09_3.html">HTML kód (syntaxe)</a><br />
+Prohození bitů v pixmapě pomocí změny režimu ukládání pixelů.
+</p>
+
+<p><span id="hrfd19"></span><strong>19</strong>
+<a href="/clanek/photos/opengl/opengl_10_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_10_1.html">HTML kód (syntaxe)</a><br />
+Čtení pixelů z framebufferu.
+</p>
+
+<p><span id="hrfd20"></span><strong>20</strong>
+<a href="/clanek/photos/opengl/opengl_10_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_10_2.html">HTML kód (syntaxe)</a><br />
+Kopírování pixelů v barvových bufferech.
+</p>
+
+<p><span id="hrfd21"></span><strong>21</strong>
+<a href="/clanek/photos/opengl/opengl_10_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_10_3.html">HTML kód (syntaxe)</a><br />
+Změna kopírovaných pixelů v barvových bufferech.
+</p>
+
+<p><span id="hrfd22"></span><strong>22</strong>
+<a href="/clanek/photos/opengl/opengl_12_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_12_1.html">HTML kód (syntaxe)</a><br />
+Zjištění informací o jednotlivých bufferech.
+</p>
+
+<p><span id="hrfd23"></span><strong>23</strong>
+<a href="/clanek/photos/opengl/opengl_13_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_13_1.html">HTML kód (syntaxe)</a><br />
+Základy práce s ortografickou kamerou.
+</p>
+
+<p><span id="hrfd24"></span><strong>24</strong>
+<a href="/clanek/photos/opengl/opengl_13_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_13_2.html">HTML kód (syntaxe)</a><br />
+Změna způsobu vykreslování tělesa.
+</p>
+
+<p><span id="hrfd25"></span><strong>25</strong>
+<a href="/clanek/photos/opengl/opengl_13_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_13_3.html">HTML kód (syntaxe)</a><br />
+Použití double-bufferingu při tvorbě animací.
+</p>
+
+<p><span id="hrfd26"></span><strong>26</strong>
+<a href="/clanek/photos/opengl/opengl_14_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_14_1.html">HTML kód (syntaxe)</a><br />
+Základy práce s perspektivní kamerou.
+</p>
+
+<p><span id="hrfd27"></span><strong>27</strong>
+<a href="/clanek/photos/opengl/opengl_14_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_14_2.html">HTML kód (syntaxe)</a><br />
+Práce s pamětí hloubky.
+</p>
+
+<p><span id="hrfd28"></span><strong>28</strong>
+<a href="/clanek/photos/opengl/opengl_14_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_14_3.c">HTML kód (syntaxe)</a><br />
+Rotace a posun tělesa pomocí myši - základ pro další příklady.
+</p>
+
+<p><span id="hrfd29"></span><strong>29</strong>
+<a href="/clanek/photos/opengl/opengl_15_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_15_1.html">HTML kód (syntaxe)</a><br />
+Výpis počtu ořezávacích rovin.
+</p>
+
+<p><span id="hrfd30"></span><strong>30</strong>
+<a href="/clanek/photos/opengl/opengl_15_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_15_2.html">HTML kód (syntaxe)</a><br />
+Ořezání tělesa rovinou x-z.
+</p>
+
+<p><span id="hrfd31"></span><strong>31</strong>
+<a href="/clanek/photos/opengl/opengl_15_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_15_3.html">HTML kód (syntaxe)</a><br />
+Nastavování parametrů ořezávací roviny.
+</p>
+
+<p><span id="hrfd32"></span><strong>32</strong>
+<a href="/clanek/photos/opengl/opengl_16_1.c">zdrojový kód</a><br />
+Ukázka použití funkce glArrayElement().
+</p>
+
+<p><span id="hrfd33"></span><strong>33</strong>
+<a href="/clanek/photos/opengl/opengl_16_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_16_2.html">HTML kód (syntaxe)</a><br />
+Ukázka použití funkce glDrawArrays().
+</p>
+
+<p><span id="hrfd34"></span><strong>34</strong>
+<a href="/clanek/photos/opengl/opengl_16_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_16_3.html">HTML kód (syntaxe)</a><br />
+Ukázka použití funkce glDrawElement().
+</p>
+
+<p><span id="hrfd35"></span><strong>35</strong>
+<a href="/clanek/photos/opengl/opengl_17_1.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_17_1.html">HTML kód (syntaxe)</a><br />
+Jednoduché použití grafického efektu mlhy.
+</p>
+
+<p><span id="hrfd36"></span><strong>36</strong>
+<a href="/clanek/photos/opengl/opengl_17_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_17_2.html">HTML kód (syntaxe)</a><br />
+Vykreslování objektů se zapnutým a vypnutým efektem mlhy.
+</p>
+
+<p><span id="hrfd37"></span><strong>37</strong>
+<a href="/clanek/photos/opengl/opengl_17_3.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_17_3.html">HTML kód (syntaxe)</a><br />
+Přidání podpory mlhy do komplexního příkladu z předchozích dílů.
+</p>
+
+<p><span id="hrfd38"></span><strong>38</strong>
+<a href="/clanek/photos/opengl/opengl_18_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_18_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení tělesa osvětleného ambientním světlem.
+</p>
+
+<p><span id="hrfd39"></span><strong>39</strong>
+<a href="/clanek/photos/opengl/opengl_18_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_18_2.html">HTML kód (syntaxe)</a><br />
+Vykreslení tělesa osvětleného difúzním světlem.
+</p>
+
+<p><span id="hrfd40"></span><strong>40</strong>
+<a href="/clanek/photos/opengl/opengl_18_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_18_3.html">HTML kód (syntaxe)</a><br />
+Změna barvy difúzního světla.
+</p>
+
+<p><span id="hrfd41"></span><strong>41</strong>
+<a href="/clanek/photos/opengl/opengl_18_4.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_18_4.html">HTML kód (syntaxe)</a><br />
+Přidání podpory pro osvětlení do komplexního příkladu z minulých dílů.
+</p>
+
+<p><span id="hrfd42"></span><strong>42</strong>
+<a href="/clanek/photos/opengl/opengl_19_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_19_1.html">HTML kód (syntaxe)</a><br />
+Zobrazení tělesa s odlesky a ambientní i difúzní složkou světla. Flat stínování.
+</p>
+
+<p><span id="hrfd43"></span><strong>43</strong>
+<a href="/clanek/photos/opengl/opengl_19_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_19_2.html">HTML kód (syntaxe)</a><br />
+Zobrazení tělesa s odlesky a ambientní i difúzní složkou světla. Gouraudovo stínování.
+</p>
+
+<p><span id="hrfd44"></span><strong>44</strong>
+<a href="/clanek/photos/opengl/opengl_19_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_19_3.html">HTML kód (syntaxe)</a><br />
+Způsob definice normálových vektorů u plošek.
+</p>
+
+<p><span id="hrfd45"></span><strong>45</strong>
+<a href="/clanek/photos/opengl/opengl_19_4.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_19_4.html">HTML kód (syntaxe)</a><br />
+Použití normálových vektorů, které nejsou normalizované.
+</p>
+
+<p><span id="hrfd46"></span><strong>46</strong>
+<a href="/clanek/photos/opengl/opengl_20_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_20_1.html">HTML kód (syntaxe)</a><br />
+Použití bodového zdroje světla.
+</p>
+
+<p><span id="hrfd47"></span><strong>47</strong>
+<a href="/clanek/photos/opengl/opengl_20_2.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_20_2.html">HTML kód (syntaxe)</a><br />
+Použití směrového zdroje světla.
+</p>
+
+<p><span id="hrfd48"></span><strong>48</strong>
+<a href="/clanek/photos/opengl/opengl_20_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_20_3.html">HTML kód (syntaxe)</a><br />
+Osvětlení tělesa více zdroji světla.
+</p>
+
+<p><span id="hrfd49"></span><strong>49</strong>
+<a href="/clanek/photos/opengl/opengl_20_4.c">zdrojový kód</a>
+
+<a href="/clanek/photos/opengl/opengl_20_4.html">HTML kód (syntaxe)</a><br />
+Světelný zdroj se zápornými světelnými složkami.
+</p>
+
+<p><span id="hrfd50"></span><strong>50</strong>
+<a href="/clanek/photos/opengl/opengl_21_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_21_1.html">HTML kód (syntaxe)</a><br />
+Použití reflektorového zdroje světla.
+</p>
+
+<p><span id="hrfd51"></span><strong>51</strong>
+
+<a href="/clanek/photos/opengl/opengl_21_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_21_2.html">HTML kód (syntaxe)</a><br />
+Světelný zdroj s neměnnou pozicí ve scéně.
+</p>
+
+<p><span id="hrfd52"></span><strong>52</strong>
+<a href="/clanek/photos/opengl/opengl_21_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_21_3.html">HTML kód (syntaxe)</a><br />
+Světelný zdroj, který se pohybuje současně s kamerou.
+</p>
+
+<p><span id="hrfd53"></span><strong>53</strong>
+
+<a href="/clanek/photos/opengl/opengl_21_4.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_21_4.html">HTML kód (syntaxe)</a><br />
+Kombinace dvou světelných zdrojů, jeden je pevný a druhý pohyblivý.
+</p>
+
+<p><span id="hrfd54"></span><strong>54</strong>
+<a href="/clanek/photos/opengl/opengl_21_5.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_21_5.html">HTML kód (syntaxe)</a><br />
+Animace světelného zdroje s využitím zásobníku matic.
+</p>
+
+<p><span id="hrfd55"></span><strong>55</strong>
+
+<a href="/clanek/photos/opengl/opengl_22_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_22_1.html">HTML kód (syntaxe)</a><br />
+Získání informací o maximální velikosti textury.
+</p>
+
+<p><span id="hrfd56"></span><strong>56</strong>
+<a href="/clanek/photos/opengl/opengl_23_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_23_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení čtverce s nanesenou texturou.
+</p>
+
+<p><span id="hrfd57"></span><strong>57</strong>
+
+<a href="/clanek/photos/opengl/opengl_23_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_23_2.html">HTML kód (syntaxe)</a><br />
+Změna souřadnic v textuře.
+</p>
+
+<p><span id="hrfd58"></span><strong>58</strong>
+<a href="/clanek/photos/opengl/opengl_23_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_23_3.html">HTML kód (syntaxe)</a><br />
+Zobrazení trojrozměrného tělesa s nanesenou texturou.
+</p>
+
+<p><span id="hrfd59"></span><strong>59</strong>
+
+<a href="/clanek/photos/opengl/opengl_24_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_24_1.html">HTML kód (syntaxe)</a><br />
+Opakování 2D textury v obou směrech.
+</p>
+
+<p><span id="hrfd60"></span><strong>60</strong>
+<a href="/clanek/photos/opengl/opengl_24_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_24_2.html">HTML kód (syntaxe)</a><br />
+Protažení 2D textury v obou směrech.
+</p>
+
+<p><span id="hrfd61"></span><strong>61</strong>
+
+<a href="/clanek/photos/opengl/opengl_24_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_24_3.html">HTML kód (syntaxe)</a><br />
+Protažení 2D textury v jednom směru, opakování ve směru druhém.
+</p>
+
+<p><span id="hrfd62"></span><strong>62</strong>
+<a href="/clanek/photos/opengl/opengl_24_4.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_24_4.html">HTML kód (syntaxe)</a><br />
+Stejné jako předchozí příklad, ale s prohozením směrů opakování a protažení.
+</p>
+
+<p><span id="hrfd63"></span><strong>63</strong>
+
+<a href="/clanek/photos/opengl/opengl_25_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_25_1.html">HTML kód (syntaxe)</a><br />
+Použití mipmapy bez filtrace.
+</p>
+
+<p><span id="hrfd64"></span><strong>64</strong>
+<a href="/clanek/photos/opengl/opengl_25_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_25_2.html">HTML kód (syntaxe)</a><br />
+Použití mipmapy s bilineární interpolací texelů.
+</p>
+
+<p><span id="hrfd65"></span><strong>65</strong>
+
+<a href="/clanek/photos/opengl/opengl_25_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_25_3.html">HTML kód (syntaxe)</a><br />
+Použití mipmapy s interpolací barvy ze dvou textur.
+</p>
+
+<p><span id="hrfd66"></span><strong>66</strong>
+<a href="/clanek/photos/opengl/opengl_25_4.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_25_4.html">HTML kód (syntaxe)</a><br />
+Použití mipmapy s bilineární interpolací texelů a lineární interpolací barvy.
+</p>
+
+<p><span id="hrfd67"></span><strong>67</strong>
+
+<a href="/clanek/photos/opengl/opengl_26_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_26_1.html">HTML kód (syntaxe)</a><br />
+Načtení textur z BMP souborů, vykreslení 3D scény s fotkou Rootky :-)
+</p>
+
+<p><span id="hrfd68"></span><strong>68</strong>
+<a href="/clanek/photos/opengl/opengl_27_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_27_1.html">HTML kód (syntaxe)</a><br />
+Načtení textur z TGA souborů, vykreslení 3D scény.
+</p>
+
+<p><span id="hrfd69"></span><strong>69</strong>
+
+<a href="/clanek/photos/opengl/opengl_28_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_28_1.html">HTML kód (syntaxe)</a><br />
+Vykreslování těles s povoleným blendingem, poloprůhlednost.
+</p>
+
+<p><span id="hrfd70"></span><strong>70</strong>
+<a href="/clanek/photos/opengl/opengl_29_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_29_1.html">HTML kód (syntaxe)</a><br />
+Vykreslení tělesa s nanesenou texturou bez osvětlení.
+</p>
+
+<p><span id="hrfd71"></span><strong>71</strong>
+
+<a href="/clanek/photos/opengl/opengl_29_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_29_2.html">HTML kód (syntaxe)</a><br />
+Vykreslení tělesa s nanesenou texturou a s osvětlením, režim GL_DECAL.
+</p>
+
+<p><span id="hrfd72"></span><strong>72</strong>
+<a href="/clanek/photos/opengl/opengl_29_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_29_3.html">HTML kód (syntaxe)</a><br />
+Vykreslení tělesa bez nanesené textury, ale s osvětlením.
+</p>
+
+<p><span id="hrfd73"></span><strong>73</strong>
+
+<a href="/clanek/photos/opengl/opengl_29_4.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_29_4.html">HTML kód (syntaxe)</a><br />
+Vykreslení tělesa s nanesenou texturou a s osvětlením, režim GL_MODULATE.
+</p>
+
+<p><span id="hrfd74"></span><strong>74</strong>
+<a href="/clanek/photos/opengl/opengl_30_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_30_1.html">HTML kód (syntaxe)</a><br />
+Zobrazení tělesa s nanesenou texturou, automatické souřadnice do textury, automatické normály.
+</p>
+
+<p><span id="hrfd75"></span><strong>75</strong>
+
+<a href="/clanek/photos/opengl/opengl_30_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_30_2.html">HTML kód (syntaxe)</a><br />
+Zobrazení tělesa s nanesenými jednorozměrnými konturami. Výpočet texturovacích souřadnic z polohy vertexů.
+</p>
+
+<p><span id="hrfd76"></span><strong>76</strong>
+<a href="/clanek/photos/opengl/opengl_30_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_30_3.html">HTML kód (syntaxe)</a><br />
+Zobrazení tělesa s nanesenými jednorozměrnými konturami. Výpočet texturovacích souřadnic v pohledovém prostoru.
+</p>
+
+<p><span id="hrfd77"></span><strong>77</strong>
+
+<a href="/clanek/photos/opengl/opengl_30_4.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_30_4.html">HTML kód (syntaxe)</a><br />
+Ukázka použití mapování prostředí (environment mapping).
+</p>
+
+<p><span id="hrfd78"></span><strong>78</strong>
+<a href="/clanek/photos/opengl/opengl_30_5.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_30_5.html">HTML kód (syntaxe)</a><br />
+Kombinace lineárního a sférického environment mappingu.
+</p>
+
+<p><span id="hrfd79"></span><strong>79</strong>
+
+<a href="/clanek/photos/opengl/opengl_32_1.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_32_1.html">HTML kód (syntaxe)</a><br />
+Použití scissor testu při zákazu překreslení části scény.
+</p>
+
+<p><span id="hrfd80"></span><strong>80</strong>
+<a href="/clanek/photos/opengl/opengl_32_2.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_32_2.html">HTML kód (syntaxe)</a><br />
+Použití stencil bufferu (paměti šablony) při výběru plochy pro vykreslování.
+</p>
+
+<p><span id="hrfd81"></span><strong>81</strong>
+
+<a href="/clanek/photos/opengl/opengl_32_3.c">zdrojový kód</a>
+<a href="/clanek/photos/opengl/opengl_32_3.html">HTML kód (syntaxe)</a><br />
+Maskování zápisu do jednotlivých barevných složek barvových bufferů.
+</p>
+
+<span id="hrf3"></span><h3>Odkazy na příkazy OpenGL rozdělené podle jednotlivých dílů</h3>
+
+<a href="#hrfg01">I</a><p>  
+<a href="#hrfg02">II</a>  
+
+<a href="#hrfg03">III</a>  
+<a href="#hrfg04">IV</a>  
+<a href="#hrfg05">V</a>  
+<a href="#hrfg06">VI</a>  
+<a href="#hrfg07">VII</a>  
+<a href="#hrfg08">VIII</a>  
+
+<a href="#hrfg09">IX</a>  
+<a href="#hrfg10">X</a>  
+<a href="#hrfg11">XI</a>  
+<a href="#hrfg12">XII</a>  
+<a href="#hrfg13">XIII</a>  
+<a href="#hrfg14">XIV</a>  
+
+<a href="#hrfg15">XV</a>  
+<a href="#hrfg16">XVI</a>  
+<a href="#hrfg17">XVII</a>  
+<a href="#hrfg18">XVIII</a>  
+<a href="#hrfg19">XIX</a>  
+<a href="#hrfg20">XX</a>  
+
+<a href="#hrfg21">XXI</a>  
+<a href="#hrfg22">XXII</a>  
+<a href="#hrfg23">XXIII</a>  
+<a href="#hrfg24">XXIV</a>  
+<a href="#hrfg25">XXV</a>  
+<a href="#hrfg26">XXVI</a>  
+
+<a href="#hrfg27">XXVII</a>  
+<a href="#hrfg28">XXVIII</a>  
+<a href="#hrfg29">XXIX</a>  
+<a href="#hrfg30">XXX</a>  
+<a href="#hrfg31">XXXI</a>  
+<a href="#hrfg32">XXXII</a>  
+
+</p>
+
+<p><span id="hrfg01"></span><strong>I</strong>   <a href="/clanky/graficka-knihovna-opengl-1/" title="Pavel Tišnovský: Grafická knihovna OpenGL (1) (01. 07. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1713</a><br />
+žádné příkazy neuvedeny
+</p>
+
+<p><span id="hrfg02"></span><strong>II</strong>   <a href="/clanky/opengl-2-syntaxe-funkci/" title="Pavel Tišnovský: Grafická knihovna OpenGL (2): syntaxe funkcí (08. 07. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1722</a><br />
+glColor3f, glColor3b, glColor4b, glVertex2i, glVertex2f, glVertex2d, glVertex3d, glVertex3f, glVertex3i,
+glVertex4d, glVertex4f, glVertex4i, glClearColor, glClear, glBegin, glEnd, glFlush
+</p>
+
+<p><span id="hrfg03"></span><strong>III</strong>   <a href="/clanky/opengl-3-zakladni-geometricke-prvky/" title="Pavel Tišnovský: Grafická knihovna OpenGL (3): základní geometrické prvky (15. 07. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1731</a><br />
+glBegin, glEnd
+</p>
+
+<p><span id="hrfg04"></span><strong>IV</strong>   <a href="/clanky/opengl-4-zakladni-geometricke-utvary/" title="Pavel Tišnovský: Grafická knihovna OpenGL (4): základní geometrické útvary (22. 07. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1740</a><br />
+glBegin, glEnd, glPointSize, glGetFloatv, glEnable, glDisable,  glLineWidth,
+glLineStipple, glPolygonMode, glFrontFace, glCullFace, glPolygonStipple
+</p>
+
+<p><span id="hrfg05"></span><strong>V</strong>   <a href="/clanky/opengl-5-transformacni-matice-a-linearni-transformace/" title="Pavel Tišnovský: Grafická knihovna OpenGL (5): transformační matice a lineární transformace (29. 07. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1751</a><br />
+glMatrixMode, glGetIntegerv, glLoadIdentity, glLoadMatrixd, glLoadMatrixf,
+glMultMatrixd, glMultMatrixf, glTranslated, glTranslatef, glScaled, glScalef,
+glRotated, glRotatef, glGetDoublev, glGetFloatv
+</p>
+
+<p><span id="hrfg06"></span><strong>VI</strong>   <a href="/clanky/opengl-6-vyuziti-transformacnich-matic/" title="Pavel Tišnovský: Grafická knihovna OpenGL (6): využití transformačních matic (05. 08. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1761</a><br />
+glLoadIdentity, glTranslatef, glRotatef, glPushMatrix, glPopMatrix,
+glGetIntegerv 
+</p>
+
+<p><span id="hrfg07"></span><strong>VII</strong>   <a href="/clanky/opengl-7-jednobarevne-rastrove-obrazky/" title="Pavel Tišnovský: Grafická knihovna OpenGL (7): jednobarevné rastrové obrázky (12. 08. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1770</a><br />
+glPixelStorei, glGetFloatv, glGetBooleanv, glBitmap
+</p>
+
+<p><span id="hrfg08"></span><strong>VIII</strong>   <a href="/clanky/opengl-8-display-listy/" title="Pavel Tišnovský: Grafická knihovna OpenGL (8): display-listy (19. 08. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1780</a><br />
+glBitmap, glNewList, glEndList, glCallList, glCallLists, glListBase, glGetLists
+</p>
+
+<p><span id="hrfg09"></span><strong>IX</strong>   <a href="/clanky/opengl-9-pixmapy/" title="Pavel Tišnovský: Grafická knihovna OpenGL (9): pixmapy (26. 08. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1791</a><br />
+glDrawPixels, glPixelTransfer, glPixelZoom, glPixelStorei, glDrawBuffer
+</p>
+
+<p><span id="hrfg10"></span><strong>X</strong>   <a href="/clanky/opengl-10-operace-s-bitmapami-a-pixmapami/" title="Pavel Tišnovský: Grafická knihovna OpenGL (10): operace s bitmapami a pixmapami (02. 09. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1801</a><br />
+glReadPixels, glDrawPixels, glPixelTransferi, glPixelTransferf
+</p>
+
+<p><span id="hrfg11"></span><strong>XI</strong>   <a href="/clanky/opengl-11-vykreslovaci-retezec/" title="Pavel Tišnovský: Grafická knihovna OpenGL (11): vykreslovací řetězec (10. 09. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1812</a><br />
+žádné příkazy neuvedeny
+</p>
+
+<p><span id="hrfg12"></span><strong>XII</strong>   <a href="/clanky/opengl-12-vlastnosti-framebufferu/" title="Pavel Tišnovský: Grafická knihovna OpenGL (12): vlastnosti framebufferu (16. 09. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1821</a><br />
+glClear, glDrawBuffer
+</p>
+
+<p><span id="hrfg13"></span><strong>XIII</strong>   <a href="/clanky/opengl-13-double-buffering/" title="Pavel Tišnovský: Grafická knihovna OpenGL (13): double-buffering (23. 09. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1833</a><br />
+glOrtho, glFrustum, gluLookAt, gluPerspective, glMatrixMode, glLoadIdentity, glFlush
+</p>
+
+<p><span id="hrfg14"></span><strong>XIV</strong>   <a href="/clanky/opengl-14-nastaveni-perspektivni-kamery/" title="Pavel Tišnovský: Grafická knihovna OpenGL (14): nastavení perspektivní kamery (30. 09. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1843</a><br />
+gluLookAt, glOrtho, glFrustum, glMatrixMode, glLoadIdentity, gluPerspective, glEnable,
+glClearDepth, glDepthFunc, glClear
+</p>
+
+<p><span id="hrfg15"></span><strong>XV</strong>   <a href="/clanky/opengl-15-orezani-teles-ve-scene/" title="Pavel Tišnovský: Grafická knihovna OpenGL (15): ořezání těles ve scéně (07. 10. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1854</a><br />
+glOrtho, glFrustum, gluPerspective, glClipPlane, glGetIntegerv, glEnable, glDisable, glIsEnabled,
+glBegin, glEnd, glGetClipPlane
+</p>
+
+<p><span id="hrfg16"></span><strong>XVI</strong>   <a href="/clanky/opengl-16-pole-vrcholu-vertex-arrays/" title="Pavel Tišnovský: Grafická knihovna OpenGL (16): pole vrcholů (vertex arrays) (14. 10. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1864</a><br />
+glBegin, glEnd, glTexCoord, glMaterial, glEdgeFlag, glVertex, glVertexPointer, glEnableClientState,
+glDisableClientState, glIsEnabled, glColorPointer, glIndexPointer, glNormalPointer, glTexCoordPointer,
+glEdgeFlagPointer, glArrayElement, glDrawElements, glDrawArrays
+</p>
+
+<p><span id="hrfg17"></span><strong>XVII</strong>   <a href="/clanky/opengl-17-pridani-mlhy/" title="Pavel Tišnovský: Grafická knihovna OpenGL (17): přidání &quot;mlhy&quot; (21. 10. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1874</a><br />
+glEnable, glDisable, glIsEnabled, glGetBooleanv, glFogi, glFogf, glFogfv, glFogiv, glHint, glClearColor
+</p>
+
+<p><span id="hrfg18"></span><strong>XVIII</strong>   <a href="/clanky/opengl-18-vykreslovani-osvetlenych-teles/" title="Pavel Tišnovský: Grafická knihovna OpenGL (18): vykreslování osvětlených těles (04. 11. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1894</a><br />
+glEnable, glDisable, glLighti, glLightiv, glLightf, glLightfv, glMateriali, glMaterialiv, glMaterialf, glMaterialfv
+</p>
+
+<p><span id="hrfg19"></span><strong>XIX</strong>   <a href="/clanky/opengl-19-phonguv-osvetlovaci-model/" title="Pavel Tišnovský: Grafická knihovna OpenGL (19): Phongův osvětlovací model (11. 11. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1905</a><br />
+glEnable, glDisable, glShadeModel
+</p>
+
+<p><span id="hrfg20"></span><strong>XX</strong>   <a href="/clanky/opengl-20-bodove-svetlo-smerove-svetlo-a-reflektor/" title="Pavel Tišnovský: Grafická knihovna OpenGL (20): bodové světlo, směrové světlo a reflektor (18. 11. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1915</a><br />
+glEnable, glDisable, glIsEnabled, glLightf, glLighti, glLightfv, glLightiv
+</p>
+
+<p><span id="hrfg21"></span><strong>XXI</strong>   <a href="/clanky/opengl-21-nastaveni-svetelnych-zdroju/" title="Pavel Tišnovský: Grafická knihovna OpenGL (21): nastavení světelných zdrojů (25. 11. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1928</a><br />
+glLightf, glLighti, glLightfv, glLightiv, glViewport, glMatrixMode, glLoadIdentity, glOrtho, glClear, glFlush, glPushMatrix, glRotated, glPopMatrix
+</p>
+
+<p><span id="hrfg22"></span><strong>XXII</strong>   <a href="/clanky/opengl-22-texturovani/" title="Pavel Tišnovský: Grafická knihovna OpenGL (22): texturování (02. 12. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1940</a><br />
+glDrawPixels
+</p>
+
+<p><span id="hrfg23"></span><strong>XXIII</strong>   <a href="/clanky/opengl-23-korektni-otexturovani/" title="Pavel Tišnovský: Grafická knihovna OpenGL (23): korektní otexturování (09. 12. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1951</a><br />
+glDrawPixels, glReadPixels, glHint, glEnable, glDisable
+</p>
+
+<p><span id="hrfg24"></span><strong>XXIV</strong>   <a href="/clanky/opengl-24-vlastnosti-textur/" title="Pavel Tišnovský: Grafická knihovna OpenGL (24): vlastnosti textur (16. 12. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1964</a><br />
+glTexParameterf, glTexParameteri, glTexParameterfv, glTexParameteriv, glTexImage1D, glTexImage2D, glTexImage3D
+</p>
+
+<p><span id="hrfg25"></span><strong>XXV</strong>   <a href="/clanky/opengl-25-mipmapping/" title="Pavel Tišnovský: Grafická knihovna OpenGL (25): mipmapping (23. 12. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1974</a><br />
+glTexParameteri, glPixelStorei, glGenTextures, glBindTexture, glHint, glTexEnvf, glEnable
+</p>
+
+<p><span id="hrfg26"></span><strong>XXVI</strong>   <a href="/clanky/opengl-26-formaty-rastrovych-souboru/" title="Pavel Tišnovský: Grafická knihovna OpenGL (26): formáty rastrových souborů (30. 12. 2003 00:00)" class="urs-clanek">http://www.root.cz/clanek/1978</a><br />
+glTexParameteri, glTexParameterf
+</p>
+
+<p><span id="hrfg27"></span><strong>XXVII</strong>   <a href="/clanky/opengl-27-tga/" title="Pavel Tišnovský: Grafická knihovna OpenGL (27): TGA (06. 01. 2004 00:00)" class="urs-clanek">http://www.root.cz/clanek/1986</a><br />
+žádné příkazy neuvedeny
+</p>
+
+<p><span id="hrfg28"></span><strong>XXVIII</strong>   <a href="/clanky/opengl-28-blending/" title="Pavel Tišnovský: Grafická knihovna OpenGL (28): blending (13. 01. 2004 00:00)" class="urs-clanek">http://www.root.cz/clanek/1995</a><br />
+glBlendFunc, glEnable, glDepthMask
+</p>
+
+<p><span id="hrfg29"></span><strong>XXIX</strong>   <a href="/clanky/opengl-29-modulace-textur/" title="Pavel Tišnovský: Grafická knihovna OpenGL (29): modulace textur (20. 01. 2004 00:00)" class="urs-clanek">http://www.root.cz/clanek/2004</a><br />
+glTexEnvf, glTexEnvi, glTexEnvfv, glTexEnviv, glTexImage
+</p>
+
+<p><span id="hrfg30"></span><strong>XXX</strong>   <a href="/clanky/opengl-30-automaticke-generovani-texturovacich-souradnic/" title="Pavel Tišnovský: Grafická knihovna OpenGL (30): automatické generování texturovacích souřadnic (27. 01. 2004 00:00)" class="urs-clanek">http://www.root.cz/clanek/2018</a><br />
+glTexGeni, glTexGenf, glTexGend, glTexGeniv, glTexGenfv, glTexGendv, glTexParameteri, glPixelStorei, glTexEnvi, glHint, glEnable
+</p>
+
+<p><span id="hrfg31"></span><strong>XXXI</strong>   <a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/" title="Pavel Tišnovský: Grafická knihovna OpenGL (31): význam jednotlivých bufferů (03. 02. 2004 00:00)" class="urs-clanek">http://www.root.cz/clanek/2022</a><br />
+glXChooseVisual, glXGetConfig, glGetIntegerv, glGetBooleanv, glDrawPixels, glReadPixels, glCopyPixels
+</p>
+
+<p><span id="hrfg32"></span><strong>XXXII</strong>   <a href="/clanky/opengl-32-operace-s-fragmenty/" title="Pavel Tišnovský: Grafická knihovna OpenGL (32): operace s fragmenty  (10. 02. 2004 00:00)" class="urs-clanek">http://www.root.cz/clanek/2033</a><br />
+glScissor, glEnable, glDisable, glIsEnabled, glGetIntegerv, glAlphaFunc,
+glStencilFunc, glStencilOp, glDepthFunc, glBlendFunc, glIndexMask,
+glColorMask, glDepthMask, glStencilMask, glIndexMask, glClear,
+glClearColor, glClearIndex, glDrawBuffer, glGetDoublev, glClearDepth,
+glClearAccum, glClearStencil </p>
+
+<span id="hrf4"></span><h3>Odkazy na příkazy OpenGL setříděné podle abecedy</h3>
+
+<p>void glAlphaFunc<br />
+ XXXII</p>
+
+<p>void glArrayElement<br />
+ XVI</p>
+
+<p>void glBegin<br />
+ II, III, IV, XV, XVI</p>
+
+<p>void glBindTexture<br />
+ XXV</p>
+
+<p>void glBitmap<br />
+ VII, VIII</p>
+
+<p>void glBlendFunc<br />
+ XXVIII, XXXII</p>
+
+<p>void glCallList<br />
+ VIII</p>
+
+<p>void glCallLists<br />
+ VIII</p>
+
+<p>void glClear<br />
+ II, XII, XIV, XXI, XXXII</p>
+
+<p>void glClearAccum<br />
+ XXXII</p>
+
+<p>void glClearColor<br />
+ II, XVII, XXXII</p>
+
+<p>void glClearDepth<br />
+ XIV, XXXII</p>
+
+<p>void glClearIndex<br />
+ XXXII</p>
+
+<p>void glClearStencil<br />
+ XXXII</p>
+
+<p>void glClipPlane<br />
+ XV</p>
+
+<p>void glColor3b<br />
+ II</p>
+
+<p>void glColor3f<br />
+ II</p>
+
+<p>void glColor4b<br />
+ II</p>
+
+<p>void glColorPointer<br />
+ XVI</p>
+
+<p>void glCopyPixels<br />
+ XXXI</p>
+
+<p>void glCullFace<br />
+ IV</p>
+
+<p>void glDepthFunc<br />
+ XIV, XXXII</p>
+
+<p>void glDepthMask<br />
+ XXVIII, XXXII</p>
+
+<p>void glDisable<br />
+ IV, XV, XVII, XVIII, XIX, XX, XXIII, XXXII</p>
+
+<p>void glDrawArrays<br />
+ XVI</p>
+
+<p>void glDrawBuffer<br />
+ IX, XII, XXXII</p>
+
+<p>void glDrawElements<br />
+ XVI</p>
+
+<p>void glDrawPixels<br />
+ IX, X, XXII, XXIII, XXXI</p>
+
+<p>void glEdgeFlag<br />
+ XVI</p>
+
+<p>void glEdgeFlagPointer<br />
+ XVI</p>
+
+<p>void glEnable<br />
+ IV, XIV, XV, XVII, XVIII, XIX, XX, XXIII, XXV, XXVIII, XXX, XXXII</p>
+
+<p>void glEnd<br />
+ II, III, IV, XV, XVI, </p>
+
+<p>void glEndList<br />
+ VIII</p>
+
+<p>void glFlush<br />
+ XIII</p>
+
+<p>void glFogf<br />
+ XVII</p>
+
+<p>void glFogfv<br />
+ XVII</p>
+
+<p>void glFogi<br />
+ XVII</p>
+
+<p>void glFogiv<br />
+ XVII</p>
+
+<p>void glFrontFace<br />
+ IV</p>
+
+<p>void glFrustum<br />
+ XIII, XIV, XV</p>
+
+<p>void glGenTextures<br />
+ XXV</p>
+
+<p>void glGetBooleanv<br />
+ VII, XVII, XXXI</p>
+
+<p>void glGetClipPlane<br />
+ XV</p>
+
+<p>void glGetDoublev<br />
+ V, XXXII</p>
+
+<p>void glGetFloatv<br />
+ IV, V, VII</p>
+
+<p>void glGetIntegerv<br />
+ V, VI, XV, XXXI, XXXII</p>
+
+<p>void glHint<br />
+ XVII, XXIII, XXV, XXX</p>
+
+<p>void glIndexMask<br />
+ XXXII</p>
+
+<p>void glIndexPointer<br />
+ XVI</p>
+
+<p>GLboolean glIsEnabled<br />
+ XV, XVI, XVII, XX, XXXII</p>
+
+<p>void glLightf<br />
+ XVIII, XX, XXI</p>
+
+<p>void glLightfv<br />
+ XVIII, XX, XXI</p>
+
+<p>void glLighti<br />
+ XVIII, XX, XXI</p>
+
+<p>void glLightiv<br />
+ XVIII, XX, XXI</p>
+
+<p>void glLineStipple<br />
+ IV</p>
+
+<p>void glLineWidth<br />
+ IV</p>
+
+<p>void glListBase<br />
+ VIII</p>
+
+<p>void glLoadIdentity<br />
+ V, VI, XIII, XIV, XXI</p>
+
+<p>void glLoadMatrixd<br />
+ V</p>
+
+<p>void glLoadMatrixf<br />
+ V</p>
+
+<p>void glMaterialf<br />
+ XVIII</p>
+
+<p>void glMaterialfv<br />
+ XVIII</p>
+
+<p>void glMateriali<br />
+ XVIII</p>
+
+<p>void glMaterialiv<br />
+ XVIII</p>
+
+<p>void glMatrixMode<br />
+ V, XIII, XIV, XXI</p>
+
+<p>void glMultMatrixd<br />
+ V</p>
+
+<p>void glMultMatrixf<br />
+ V</p>
+
+<p>void glNewList<br />
+ VIII</p>
+
+<p>void glNormalPointer<br />
+ XVI</p>
+
+<p>void glOrtho<br />
+ XIII, XIV, XV, XXI</p>
+
+<p>void glPixelStorei<br />
+ VII, VIII, XXV, XXX</p>
+
+<p>void glPixelTransferf<br />
+ X</p>
+
+<p>void glPixelTransferi<br />
+ X</p>
+
+<p>void glPixelZoom<br />
+ IX</p>
+
+<p>void glPointSize<br />
+ IV</p>
+
+<p>void glPolygonMode<br />
+ IV</p>
+
+<p>void glPolygonStipple<br />
+ IV</p>
+
+<p>void glPopMatrix<br />
+ VI, XXI</p>
+
+<p>void glPushMatrix<br />
+ VI, XXI</p>
+
+<p>void glReadPixels<br />
+ X, XXIII, XXXI</p>
+
+<p>void glRotated<br />
+ V, XXI</p>
+
+<p>void glRotatef<br />
+ V, VI</p>
+
+<p>void glScaled<br />
+ V</p>
+
+<p>void glScalef<br />
+ V</p>
+
+<p>void glScissor<br />
+ XXXII</p>
+
+<p>void glShadeModel<br />
+ XIX</p>
+
+<p>void glStencilFunc<br />
+ XXXII</p>
+
+<p>void glStencilMask<br />
+ XXXII</p>
+
+<p>void glStencilOp<br />
+ XXXII</p>
+
+<p>void glTexCoordPointer<br />
+ XVI</p>
+
+<p>void glTexEnvf<br />
+ XXV, XXIX</p>
+
+<p>void glTexEnvfv<br />
+ XXIX</p>
+
+<p>void glTexEnvi<br />
+ XXIX, XXX</p>
+
+<p>void glTexEnviv<br />
+ XXIX</p>
+
+<p>void glTexGend<br />
+ XXX</p>
+
+<p>void glTexGendv<br />
+ XXX</p>
+
+<p>void glTexGenf<br />
+ XXX</p>
+
+<p>void glTexGenfv<br />
+ XXX</p>
+
+<p>void glTexGeni<br />
+ XXX</p>
+
+<p>void glTexGeniv<br />
+ XXX</p>
+
+<p>void glTexImage1D<br />
+ XXIV</p>
+
+<p>void glTexImage2D<br />
+ XXIV</p>
+
+<p>void glTexImage3D<br />
+ XXIV</p>
+
+<p>void glTexParameterf<br />
+ XXIV, XXVI</p>
+
+<p>void glTexParameterfv<br />
+ XXIV</p>
+
+<p>void glTexParameteri<br />
+ XXIV, XXVI</p>
+
+<p>void glTexParameteriv<br />
+ XXIV</p>
+
+<p>void glTranslated<br />
+ V</p>
+
+<p>void glTranslatef<br />
+ V, VI</p>
+
+<p>void glVertex2d<br />
+ II</p>
+
+<p>void glVertex2f<br />
+ II</p>
+
+<p>void glVertex2i<br />
+ II</p>
+
+<p>void glVertex3d<br />
+ II</p>
+
+<p>void glVertex3f<br />
+ II</p>
+
+<p>void glVertex3i<br />
+ II</p>
+
+<p>void glVertex4d<br />
+ II</p>
+
+<p>void glVertex4f<br />
+ II</p>
+
+<p>void glVertex4i<br />
+ II</p>
+
+<p>void glVertexPointer<br />
+ XVI</p>
+
+<p>void glViewport<br />
+ XXI</p>
+
+
+
+	</div>
+<!-- google_ad_section_end -->
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "eeeeee";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "text";
+//2007-02-25: ro-clanky-300x250
+google_ad_channel = "9152195075";
+google_color_border = "EEEEEE";
+google_color_bg = "EEEEEE";
+google_color_link = "CC6600";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+
+<div class="serial">
+	<h2>Seriál <a href="/serialy/graficka-knihovna-opengl/">Grafická knihovna OpenGL</a></h2>
+	<ul>
+			<li><a href="/clanky/opengl-30-automaticke-generovani-texturovacich-souradnic/">Grafická knihovna OpenGL (30): automatické generování texturovacích souřadnic</a></li>
+			<li><a href="/clanky/opengl-31-vyznam-jednotlivych-bufferu/">Grafická knihovna OpenGL (31): význam jednotlivých bufferů</a></li>
+			<li><a href="/clanky/opengl-32-operace-s-fragmenty/">Grafická knihovna OpenGL (32): operace s fragmenty </a></li>
+			<li><a href="/clanky/opengl-33-souhrn-temat/">Grafická knihovna OpenGL (33): souhrn témat</a></li>
+			<li class="actual">Grafická knihovna OpenGL (34): seznam příkladů</li>
+			<li class="all"><a href="/serialy/graficka-knihovna-opengl/">všechny díly seriálu ...</a></li>
+	</ul>	
+</div>
+
+	<div class="links">
+<span onclick="if(confirm('Moderní prohlížeče vytisknou stránku s využitím stylů zvlášť připravených pro tisk.\n\n Chcete vytisknout aktuální stránku?')) window.print();"
+	class="link-print">Tiskni</span> 
+<span class="link-recommend"><a 
+	href="doporucit/">Doporuč</a></span>
+	</div>
+
+	<div class="dp-n">
+	<h2>Názory</h2>
+<div class="op-sub">
+<h3 id="opinions-subscribe"><span>Sledování názorů</span></h3>
+<div class="op-sub-c">
+	<p>Zasílání upozornění na nové názory je dostupné jen registrovaným uživatelům.</p>
+	<p>Prosím, 
+		<a href="/prihlasit/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-34-seznam-prikladu%2F">přihlašte se</a> a nebo se <a href="http://us.root.cz/registrovat/?us_ref=http%3A%2F%2Fwww.root.cz%2Fclanky%2Fopengl-34-seznam-prikladu%2F">zaregistrujte</a>. </p>
+</div>
+</div>
+<div class="op-list">
+<h3 id="opinions-list"><span>Přehled názorů</span></h3>
+<div class="op-qc">
+<span>Nastavení kvality:</span>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/">Vlastní</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/vse/">Vše</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q2/">2</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q3/">3</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q4/">4</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q5/">5</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q6/">6</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q7/">7</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q8/">8</a>
+<a href="/clanky/opengl-34-seznam-prikladu/nazory/q9/" class="last">9</a>
+</div>
+<form action="/clanky/opengl-34-seznam-prikladu/nazory/" method="get" class="op-list-c">
+<table>
+<col width="4%" align="center" class="dn-p" />
+<col width="55%" />
+<col width="24%*" />
+<col width="17%" />
+<tbody>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[31255]" /></td>
+	<th><a href="/clanky/opengl-34-seznam-prikladu/nazory/31255/">King</a></th>
+	<td class="op-au">&lt;Head&gt;</td>
+	<td class="op-dt">24. 2. 2004 00:58	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[31268]" /></td>
+	<th><a href="/clanky/opengl-34-seznam-prikladu/nazory/31268/">2 autor</a></th>
+	<td class="op-au">honza_s</td>
+	<td class="op-dt">24. 2. 2004 10:58	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31274]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31274/">Re: 2 autor</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">24. 2. 2004 12:19	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[31272]" /></td>
+	<th><a href="/clanky/opengl-34-seznam-prikladu/nazory/31272/">super</a></th>
+	<td class="op-au">zdenek stepanek</td>
+	<td class="op-dt">24. 2. 2004 12:13	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[31279]" /></td>
+	<th><a href="/clanky/opengl-34-seznam-prikladu/nazory/31279/">Chvala autorovi</a></th>
+	<td class="op-au">Razi</td>
+	<td class="op-dt">24. 2. 2004 13:23	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31284]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31284/">Re: Chvala autorovi</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">24. 2. 2004 15:05	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31319]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31319/">Re: Chvala autorovi</a></th>
+	<td class="op-au">rookie</td>
+	<td class="op-dt">25. 2. 2004 08:59	Nový
+	</td>
+</tr>
+<tr class="op-qg op-tb">
+	<td class="dn-p"><input type="checkbox" name="o[31647]" /></td>
+	<th><a href="/clanky/opengl-34-seznam-prikladu/nazory/31647/">Lekce IV</a></th>
+	<td class="op-au">Martin</td>
+	<td class="op-dt">27. 2. 2004 11:03	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31648]" /></td>
+	<th><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31648/">Re: Lekce IV</a></th>
+	<td class="op-au">Martin</td>
+	<td class="op-dt">27. 2. 2004 11:05	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31656]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31656/">Re: Lekce IV</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">27. 2. 2004 13:17	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31721]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31721/">Re: Lekce IV</a></th>
+	<td class="op-au">&lt;Head&gt;</td>
+	<td class="op-dt">29. 2. 2004 17:24	Nový
+	</td>
+</tr>
+<tr class="op-qg">
+	<td class="dn-p"><input type="checkbox" name="o[31729]" /></td>
+	<th><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/bt.gif" align="left" width="9" height="21" alt="&nbsp;" /><img src="http://i.iinfo.cz/r2/l.gif" align="left" width="9" height="21" alt="&#9492;" />&nbsp;<a href="/clanky/opengl-34-seznam-prikladu/nazory/31729/">Re: Lekce IV</a></th>
+	<td class="op-au">Pavel Tišnovský</td>
+	<td class="op-dt">1. 3. 2004 09:07	Nový
+	</td>
+</tr>
+</tbody>
+</table>
+<div class="but-area">
+	<input type="image" name="show"
+		src="http://i.iinfo.cz/r2/cs-b-showmarked.gif"
+		alt="Zobrazit označené"
+		class="but-img cs-b-showmarked" /><a
+	href="/clanky/opengl-34-seznam-prikladu/nazory/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showquality.gif"
+		alt="Zobrazit kvalitní"
+		class="but-img cs-b-showquality" /></a><a
+	href="/clanky/opengl-34-seznam-prikladu/nazory/vse/"><img
+		src="http://i.iinfo.cz/r2/cs-b-showall.gif"
+		alt="Zobrazit vše"
+		class="but-img cs-b-showall" /></a><a
+	href="/clanky/opengl-34-seznam-prikladu/nazory/pridat/"><img
+		src="http://i.iinfo.cz/r2/cs-b-add.gif"
+		alt="Přidat"
+		class="but-img cs-b-add" /></a>
+</div>
+</form>
+</div>
+	</div>
+
+</div></div>
+
+<div class="side">
+	<h2>Další informace</h2>
+
+<div class="sbox"><div class="sbox-cnt">
+<h3><a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Vyhledávání</a></h3>
+<form method="get" action="/vyhledavani/" class="rev">
+<div>
+<input type="text" size="14" maxlength="255" name="qs" value="" class="input" />
+<input type="submit" name="search" value="Hledej" class="submit" />
+<input type="hidden" name="kde[vsude]" value="1" />
+<a href="/vyhledavani/"
+	title="Rozšířené vyhledávání">Rozšířené</a>
+</div>
+</form>
+</div></div>
+<div class="box ad" id="ad-training">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+
+<div>
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:271");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=affb9f17' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:271&amp;n=affb9f17' border='0' alt='' /></a></noscript>
+
+	</div>
+
+</div>
+</div>
+<div class="box ad" id="ad-textbox-1">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:269");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:269&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div id="ad-maycon" class="ad ad-holder-t">
+	<div class="ad-ad box">
+			<h3>Reklama</h3>
+		<div id="may-txt">
+		<h4><a href="http://r.iinfo.cz/?f=root&amp;i=145478">May Consulting zaměstnání &raquo;</a></h4>
+			<div><a href="http://r.iinfo.cz/?f=root&i=145258"><img src="http://i.iinfo.cz/r2/logo-maycon.gif" width="120" height="49" alt="May Consulting" /></a></div>
+			<ul>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3919">ADMINISTRÁTOR ZÁKAZNICKÝCH SYSTÉMŮ (i7170) / 35-45.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3799">PROGRAMÁTOR ASP.NET - WEBFORMS (i5216) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D2961">DEVELOPER JAVA (i4993) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3594">IT ANALYTIK / KONZULTANT (i1613) / až 65.000,- / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3720">JUNIOR/SENIOR PROGRAMÁTOR C++ WINDOWS (i6973) / 25-55.000,- / BRNO</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D4102">ANALYTIK TESTŮ SW APLIKACÍ (i3234) / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D3759">KONZULTANT (i4567) / ZAJÍMAVÁ NABÍDKA / PRAHA</a></li>
+				<li><a href="http://r.iinfo.cz/?f=root&amp;u=http%3A%2F%2Fwww.mayconsulting.cz%2Fdetail.php%3Fid%3D1987">SENIOR TESTER (i6212)</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="box ad" id="ad-textbox-2-5">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:394");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:394&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-3">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:392");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a459905a' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:392&amp;n=a459905a' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="ad" id="ad-200x200">
+<div class="ad-marker">Reklama</div>
+<div class="ad-ad ad-holder-tr">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random());
+phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:262");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=a0b93936' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:262&amp;n=a0b93936' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box ad" id="ad-textbox-2">
+<h3>Reklama</h3>
+<div class="ad-ad box-cnt ad-textbox">
+<script language='JavaScript' type='text/javascript' src='http://k.iinfo.cz/adx.js'></script>
+<script language='JavaScript' type='text/javascript'>
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("http://k.iinfo.cz/adjs.php?n=" + phpAds_random);
+document.write ("&amp;what=zone:270");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referer)
+document.write ("&amp;referer=" + escape(document.referer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href='http://k.iinfo.cz/adclick.php?n=ac01974c' target='_blank'><img
+	src='http://k.iinfo.cz/adview.php?what=zone:270&amp;n=ac01974c' border='0' alt='' /></a></noscript>
+</div>
+</div>
+<div class="box most">
+<h3><a href="/r/knihovny/">Další články v rubrice Knihovny</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/menu-a-stavovy-radek-v-pyqt4/">Menu a stavový řádek v PyQt4</a></li>
+		<li><a href="/clanky/prepinace-zaskrtavaci-pole-a-seznamy-v-pyqt4/">Přepínače, zaškrtávací pole a seznamy v PyQt4</a></li>
+		<li><a href="/clanky/prace-s-textem-v-pyqt4/">Práce s textem v PyQt4</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box most">
+<h3><a href="/vyvoj/">Další články v sekci Vývoj</a></h3>
+<div class="box-cnt">
+	<ol>
+		<li><a href="/clanky/hra-tanky-v-open-inventoru/">Hra Tanky v Open Inventoru</a></li>
+		<li><a href="/clanky/piseme-3d-strilecku-v-open-inventoru/">Píšeme 3D střílečku v Open Inventoru</a></li>
+		<li><a href="/clanky/novy-planovac-jadra-nabizi-rychlejsi-reakce/">Nový plánovač jádra nabízí rychlejší reakce</a></li>
+		<li><a href="/clanky/php-konecne-s-podporou-unicode/">PHP konečně s podporou unicode</a></li>
+		<li><a href="/clanky/export-open-xml-php/">Export do Open XML v PHP</a></li>
+	</ol>	
+</div>
+</div>
+<div class="box">
+<h3>Vyzkoušejte na Root.cz</h3>
+<div class="box-cnt">
+	<ul>
+		<li><a href="/uzivatel/">Uživatelský profil</a></li>
+		<li><a href="/diskuse/">Diskusní fóra</a></li>
+		<li><a href="/r/">Rubriky</a>,
+			<a href="/n/">Nálepky</a>,
+			<a href="/serialy/">Seriály</a></li>
+		<li><a href="/slovnicek/">Slovníček pojmů</a></li>
+		<li><a href="http://tutorialy.root.cz/">Tutoriály</a></li>
+		<li><a href="/jinde/">Píšou jinde</a>, <a href="/texty/kalendar-akci/">Kalendář akcí</a></li>
+		<li><a href="/hlidac/">Hlídač</a></li>
+		<li><a href="/newsletter/">Novinky e-mailem (Newsletter)</a></li>
+		<li><a href="/texty/butik/">Butik &ndash; trička, mikiny, tanga</a></li>
+		<li><a href="/redakce/exporty/#sidebar">Postranní lišta do Mozilly</a></li>
+		<li><a href="http://www.iinfo.cz/text/root_reklama/">Reklama na Root.cz</a></li>
+	</ul>
+</div>
+</div>
+
+<div id="as-sb-160x600">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4771975420977819";
+google_alternate_color = "cccccc";
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = "160x600_as";
+google_ad_type = "text";
+//2007-01-31: ro - sidebar - 160x600
+google_ad_channel = "3012629080";
+google_color_border = "CCCCCC";
+google_color_bg = "CCCCCC";
+google_color_link = "000000";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+</div>
+<div class="cb"><!-- --></div>
+</div>
+<div class="colophon">
+	<hr />
+	<div><strong>Root.cz</strong> (www.root.cz),
+		informace nejen ze světa Linuxu. ISSN 1212-8309</div>
+	<div class="colophon-2"><small>
+		Copyright &copy; 1998&ndash;2007		<a href="http://www.iinfo.cz/">Internet Info, s.r.o.</a> Všechna práva vyhrazena.
+		Powered by  <a href="http://www.root.cz/">Linux</a>.<br />
+
+		<span>
+		<a href="/redakce/kontakt/"
+			title="Kontakty na provozovatele, kontaktní formulář">Kontakt</a> |
+		<a href="http://www.iinfo.cz/text/root_reklama/"
+			title="Reklamní možnosti serveru, ceník reklamy">Reklama</a> |
+		<a href="/redakce/podminky-uzivani/"
+			title="Podmínky užívání serveru Root.cz, autorská práva atd.">Podmínky užívání</a> |
+		<a href="/redakce/podpora/"
+			title="Líbí se vám server Root.cz? Vyjádřete mu svou podporu umístěním ikonky na své stránky.">Podpořte Root.cz</a> |
+		<a href="/redakce/exporty/"
+				title="Exporty syndikovaného obsahu">RSS exporty</a> | 
+		tip: <a href="http://www.a-prague.com" title="Accommodation in Prague Hotels and
+				Apartments">Prague Hotels</a>
+		</span>
+	</small></div>
+</div>
+<div id="webstats">
+	<script src="http://c1.navrcholu.cz/code?site=14;t=t1x1" type="text/javascript"></script><noscript><div><img
+		src="http://c1.navrcholu.cz/hit?site=14;t=t1x1;ref=;jss=0" width="1" height="1" alt="" /></div></noscript>
+	<!-- NetMonitor Audience Ostatni -->
+	<script language="javascript" type="text/javascript">
+		<!--
+			gemius_identifier = new String('d1zrQktRrA.1DMJeqrR6CpchXkFId4eUZ8HsOjyaf07.v7');
+			gemius_href= new String(document.location);
+			if (document.referrer) { gemius_ref = new String(document.referrer); } else { gemius_ref = ""; }
+			if(typeof(Error)!='undefined') eval("try { if (typeof(top.document.referrer)=='string') { gemius_ref = top.document.referrer } } catch(gemius_ex) {}");
+			iname = new String('id='+gemius_identifier+';ref='+escape(gemius_ref.substring(0,299))+';href='+escape(gemius_href.substring(0,299))+';');
+			document.write('<div style="position: absolute; left:-500px; top:-500px;"><iframe src="http://spir.hit.gemius.pl/gemiusaudience.html" name="'+iname+'" width="1" height="1" frameborder="0" scrolling="no"><\/iframe><\/div>');
+		//-->
+	</script>
+</div></div>
+<!--[if IE]>
+<script language="JavaScript" type="text/javascript">rebuild_ie_flash()</script>
+<![endif]-->
+
+<div id="lista-acomware">
+<table id="tblAcomware">
+<tr>
+<td><a href="#">Tipy</a></td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hshop.cz/notebooky/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=795&amp;advert=932&amp;url=http://www.hshop.cz/notebooky/';return true;">Notebooky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.parfums.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=796&amp;advert=936&amp;url=http://www.parfums.cz/';return true;">Parfémy</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.batteryshop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=797&amp;advert=941&amp;url=http://www.batteryshop.cz/';return true;">Baterie do Notebooku</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=798&amp;advert=945&amp;url=http://www.eternity.cz/';return true;">LCD televize, MP3</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.eternity.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=799&amp;advert=949&amp;url=http://www.eternity.cz/';return true;">Hodinky, jízdní kola</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://bila-technika.elektrosvet.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=800&amp;advert=953&amp;url=http://bila-technika.elektrosvet.cz/';return true;">Bílé zboží</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.netdirect.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=801&amp;advert=958&amp;url=http://www.netdirect.cz/';return true;">Tvorba webů</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=802&amp;advert=963&amp;url=http://www.e-pneumatiky.cz/infoCategory.asp?CatID=373&TYPTREE=1';return true;">Levné pneu</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.lita-kola-pneumatiky.cz" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=803&amp;advert=964&amp;url=http://www.lita-kola-pneumatiky.cz';return true;">Pneumatiky prodej</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.dilna-zahrada.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=804&amp;advert=965&amp;url=http://www.dilna-zahrada.cz/';return true;">Nářadí</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.elektrohome.cz/inshop/zahradni-technika-naradi/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=805&amp;advert=1124&amp;url=http://www.elektrohome.cz/inshop/zahradni-technika-naradi/';return true;">Zahradní technika</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.hifishop.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=847&amp;advert=1036&amp;url=http://www.hifishop.cz/';return true;">DVD rekordéry</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.reklamni-listy.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=848&amp;advert=1031&amp;url=http://www.reklamni-listy.cz/';return true;">Chci do lišty</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.letenky-1.cz/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=981&amp;advert=1111&amp;url=http://www.letenky-1.cz/';return true;">letenky</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://povinne-ruceni.kurzy.cz/povinne-ruceni/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=982&amp;advert=1112&amp;url=http://povinne-ruceni.kurzy.cz/povinne-ruceni/';return true;">povinné ručení</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/last-minute/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=983&amp;advert=1113&amp;url=http://www.zajezdy.cz/last-minute/';return true;">last minute</a> </td>
+<td><img src="http://i.iinfo.cz/r2/l-ad-oddel.png" width="2" height="28" alt="|" /></td>
+<td><a href="http://www.zajezdy.cz/recko/" onclick="this.href='http://s.efektiv.net/click/?server=115&amp;space=984&amp;advert=1114&amp;url=http://www.zajezdy.cz/recko/';return true;">Řecko</a> </td>
+		
+</tr>
+</table>
+</div>
+
+</body>
+</html>

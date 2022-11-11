@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	<title>Hmla</title>
+</head>
+
+<body>
+<h2>Hmla</h2>
+Grafická knižnica OpenGL podporuje metódu, pomocou ktorej sa dá do vykreslovanej scény pridať takzvanú hmlu (fog). 
+Ide o grafický efekt, pri ktorom sa zo vzrastajúcou vzdialenosťou od pozorovatela postupne mení farba vykreslovaných telies. 
+V blízkosti pozorovateľa (malej vzdialenosti) má teleso svoju pôvodnú farbu (zadanú príkazom glColor*(), texturou, alebo materiálom), 
+vo velkej vzdialenosti potom farbu hmly. Pokiaľ je farba hmly totožná s farbou pozadia, dosiahne se vcelku realistický efekt, 
+kedy se teleso stráca v hmle alebo v tme. Farba hmly a pozadia však môže byť odlišná, čo sa dá využiť pre tvorbu rôznych nerealistických 
+efektů.
+Ukázka použitia tejto metódy znázorňuje prvý obrázok. Na obrázku je vidieť, že trávnatý povrch je zobrazený pôvodnou farbou 
+(resp. barvou textury), vzdialenejší povrch a budova sa však stráca v hmle, ktorá je, podobne ako pozadie, nastavená na šedú farbu.
+<br>
+Obrázok1: Priestorová scéna s aplikovaným efektom hmly 
+<br>
+<img src="hmla1.jpg" width="410" height="392" border="0" alt="">
+<h3>Princip efektu</h3>
+Na prvý pohľad vypadá tento efekt velmi složitý. V skutočnosti je jeho princíp veľmi jednoduchý. 
+Pomocí príkazov z grafickej knižnice OpenGL sa zadajú základné vlastnosti hmly. 
+Potom sa pri výpočte farby každého fragmentu získa jeho farba bez pôsobenia hmly (tj. použije se napríklad texturovánie alebo 
+osvetlenie) a potom sa táto farba mieša s farbou hmly. Pomer pôvodnej farby fragmentu a farby hmly vo výslednej farbe je daný 
+parametrami funkcie hmly a vzdialenosťou fragmentu od pozorovateľa (táto vzdialenost sa ak tak musí počítať, 
+minimálne pre potreby hĺbkového buffra). Princip tohto efektu je naznačený na druhom obrázku.
+<img src="hmla2.gif" width="320" height="240" border="0" alt="">
+<h3>Zadanie hmly v programe</h3>
+<dl><dt>glEnable(GL_FOG); glDisable(GL_FOG);
+	<dd>Tento príkaz povolí efekt hmly alebo zakáže. Príkaz nemení nastavenie parametrov hmly.
+	<dt>glFog(GL_FOG_MODE, fogmode);
+	<dd>Parameter hmly - tento určuje ako má hmla hustnúť so zväčšujúcou sa vzdialenosťou.
+		<img align="left" src="hmla3.gif" width="450" height="250" border="0" alt=""> 
+		fogmode=
+		<ul><li>GL_LINEAR <li>GL_EXP <li>GL_EXP2 </ul>  
+
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3 class="main"><b>stack</b></h3>
+Stack/zásobník je objekt na dočasné odloženie nejakej hodnoty a jej opätovné získanie, takýto objekt sa nazýva tiež LIFO
+(posledný dnu ide prvý von), ako keď vkladáme knihy do úzkej krabice naležato -> vidieť resp. vybrať možno len posledne vloženú knihu.
+K dispozícii máme tieto operácie: vlož, vyber, zisti_posledný
+Tento objekt je najjednoduchší a má aj najmenej členských funkcií
+<dl><dt>pripnutie knižnice
+		<dd>Aby sme mohli používať zásobník musíme pripnúť príslušnú knižnicu
+			<br><b>#include &lt;stack></b>
+			<br>Po pripnutí môžme začať používať objekty popísané v tejto knižnici a teraz si základ popíšeme.
+	<dt>deklarácia
+	<dd>Je úplne podobné ako pri deklarácii poľa.
+		<ul><li>stack &lt;typ> v1; //vytvorí prázdny zásobník
+			<li>stack &lt;typ> v2(v1); //vytvorí kópiu zásobníka
+		</ul>
+	<dt>členské funkcie
+	<dd><ul><li><b>size()</b>; // vráti počet prvkov v zásobníku v konšt. čase
+			<li><b>empty();</b> // funkcia vráti TRUE ak je zásobník prázdny
+			<li><b>push(hodnota)</b>; //vloží hodnotu do zásobníka
+			<li><b>pop()</b>; // odstráni hodnotu z vrchola zásobníka
+			<li><b>top()</b>; // vráti hodnotu z vrchola zásobníka
+			<li><b>swap()</b>; // vymení obsah dvoch zásobníkov v konšt. čase
+		</ul>	 
+	<dt>Použitie
+	<dd>Úloha: máme zadaný matematický výraz ozátvorkovaný tromi možnými zátvorkami (), [], {}
+		<br>Zisti, či je výraz korektne uzátvorkovaný
+		<br>Riešenie:
+						<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+				<tr><td bgcolor="White">	
+<pre>
+// stack example
+#include &lt;vcl.h>
+#include &lt;stack>
+#include &lt;fstream>
+#include &lt;iostream>
+using namespace std;
+
+ifstream f("data.dat");
+stack &lt;char> s;
+char z;
+int main(int argc, char* argv[])
+{   while ( (z=f.get())!=EOF)
+        switch (z)
+        { case '(':
+          case '{':
+          case '[': s.push(z);break;
+          case ')': if (s.empty() || s.top()!='(') {cout &lt;&lt; "chyba znak ("&lt;&lt;endl; return 0;}
+          case '}': if (s.empty() || s.top()!='{') {cout &lt;&lt; "chyba znak {"&lt;&lt;endl; return 0;}
+          case ']': if (s.empty() || s.top()!='[') {cout &lt;&lt; "chyba znak ["&lt;&lt;endl; return 0;}
+                    s.pop();
+        }
+        cout &lt;&lt;"text je OK"&lt;&lt;endl;
+        cin.get();
+        return 0;
+}
+</pre>
+				</tr></table>
+		<br>Úloha:
+		<br>V súbore je mapa rovinného bludiska, ktoré je ohraničené múrom len na jednom mieste je otvor,
+		ďalej je daná naša poloha vnútri bludiska, našou úlohou je zistiť, či sa z bludiska možno dostať
+		von.
+		<br>Bludisko bude zadané znakmi 
+		<br>X --- stena
+		<br>. --- voľné miesto
+		<br>súbor bude mať v prvom riadku rozmery bludiska R,S, v druhom bude mať našu východziu polohu
+		<br>riadky bludiska sú číslované 0 až R-1, stĺpce 0 až S-1 
+		<br>My sa môžme pohybovať vodorovne alebo zvislo
+		<br>Príklad bludiska:
+		<pre>10 15
+1 1
+XXXXXXXXXXXXXXX
+X.............X
+XXX..XXXXXXXX.X
+XXX.....XXXXX.X
+XXXXXXXXX.....X
+X.........XXXXX
+X.XXXXXX....XXX
+X.......XXXXXXX
+XXXXXXX........
+XXXXXXXXXXXXXXX
+</PRE>
+		Riešenie:
+			<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
+			<tr><td bgcolor="White">	
+<pre>
+#include &lt;stack>
+#include &lt;fstream>
+#include &lt;iostream>
+using namespace std;
+ifstream f("data.dat");
+stack <int> s;
+char mapa[100][100];
+char z;
+int rr,ss,jr,js,i,j;
+int main(int argc, char* argv[])
+{    f >>rr>>ss;      //rozmer bludisk
+     f >>jr>>js;      //moja poloha
+     //nacitanie+vykreslenie mapy
+     for (i=0; i<rr;i++)
+     {  for (j=0; j&lt;ss;j++) {f>>mapa[i][j]; cout &lt;&lt;mapa[i][j];}
+        cout &lt;&lt;endl;
+     }
+     //moja poloha do zasobnika
+     s.push(jr);s.push(js);
+     while (!s.empty())
+     {js=s.top();s.pop();
+      jr=s.top();s.pop();  //vyber polohu
+      if (js*(js-ss+1)==0 || jr*(jr-rr+1)==0) {cout &lt;&lt;"som von"&lt;&lt;endl;cin.get();return 0;}
+      if (mapa[jr-1][js]=='.') {s.push(jr-1);s.push(js);}
+      if (mapa[jr+1][js]=='.') {s.push(jr+1);s.push(js);}
+      if (mapa[jr][js-1]=='.') {s.push(jr);s.push(js-1);}
+      if (mapa[jr][js+1]=='.') {s.push(jr);s.push(js+1);} //vloz polohu
+      mapa[jr][js]='o';             //oznac tu som uz bol
+     }
+     cout&lt;&lt;"nenasiel som cestu"&lt;&lt;endl;
+     cin.get();
+   return 0;
+}
+</pre>
+			</tr></table>
+	<dt>Úloha
+	<dd>Máme daný orientovaný graf s n vrcholmi a m hranami, ktorý zapíšeme do 2D vektora v2d tak, 
+		že v v2d[i] bude zapísaný vector kde bude výpis jeho priamych susedov.
+		<br>Načítaj start,ciel ( 0&lt;= start,ciel &lt;n ) a zisti, či existuje cesta zo start do ciel
+		<br> &nbsp; &nbsp; (pozri 2D vector)
+
+</dl>			
+</body>
+</html>

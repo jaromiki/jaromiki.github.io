@@ -1,0 +1,295 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+ 	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
+	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<dl>
+<dt class=main>Operácie s prvkami poľa
+<dd>Tu už budeme predpokladať, že pole je už naplnené, poprípade aj vypísané na kontrolu správnosti načítania. Teraz si ukážeme ako môžme položky poľa meniť, hľadať v nich hodnoty a pod. 
+Postupne si ukážeme postupy pri nasledovných úlohách:
+<ul><li>Zmena jednej položky poľa
+	<li><a href="#zmena1">Zmena všetkých položiek poľa</a>
+	<li><a href="#zmena2">Zmena niekoľkých položiek poľa</a>
+	<li><a href="#hladanie1">Hľadanie hodnoty v neutriedenom poli</a>
+	<li><a href="#hladanie2">Hľadanie hodnoty v utriedenom poli</a>
+	<li><a href="#hladanie3">Hľadanie počtu výskytov hodnoty v poli</a>
+	<li><a href="#hladanie4">Hľadanie maximálnej hodnoty v poli</a>
+	<li><a href="#sucet">Výpočet súčtu/priemeru čísel v poli</a>
+	<li><a href="#vlozenie">Vkladanie nového čísla do utriedeného poľa</a>
+	<li><a href="#rusenie">Rušenie čísla z utriedeného poľa</a>
+	<li><a href="#rotacia">Rotácia prvkov poľa</a>
+</ul>	
+<dt>Zmena jednej hodnoty
+<dd>Situácia môže byť dvojaká:
+	<ul><li>adresu (index) prvku, ktorý chceme meniť už máme v premennej <b>KAM</b>
+			<br>potom stačí užívateľovi zadať novú hodnotu do Editu (alebo InputBoxu) a zapísať ju do pola do bunky KAM
+			<br><code>Pole[KAM] = StrToInt(Edit1->Text);</code>
+		<li>necháme užívateľa, aby si sám určil ktorá bunka sa má meniť. Potrebujeme teda dve hodnoty.
+			<br><code>KAM = StrToInt(Edit1->Text);
+			<br>Pole[KAM] = StrToInt(Edit1->Text);</code>
+			<br><br>alebo použitím InputBoxu: 
+			<br><code>KAM = StrToInt(InputBox("Index", "Zadaj index poľa",1);
+			<br>Pole[KAM] = StrToInt(InputBox("Hodnota prvku č.:"+IntToStr(KAM), "Zadaj novú hodnotu:",0));</code>
+	</ul>		
+<a name="zmena1"><dt>Zmena všetkých položiek poľa</a>
+<dd>chceme napr. zväčšiť hodnotu v každej bunke o 1. Urobíme to nasledovne:
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>zmena prvkov poľa o 1</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+				<code><b>for</b> (i=0;i&lt;n;i++) pole[i]++;</code></tr>
+			</table>
+<a name="zmena2"><dt>Zmena niektorých položiek poľa</a>
+<dd>Nech máme zmeniť všetky záporné položky poľa na hodnotu -1 a všetky kladné na hodnotu 2. Postup bude nasledujúci:
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>zmena prvkov poľa</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+				<code><b>for</b>(i=0;i&lt;n;i++) 
+				<br>{  if (pole[i]&lt;0) pole[i] = -1;
+				<br> &nbsp; &nbsp; &nbsp;else if (pole[i]&gt;0) pole[i]=2; 
+				<br>}</code></tr>
+			</table>
+
+<a name="hladanie1"><dt>Hľadanie hodnoty v neutriedenom poli</a>
+<dd>Máme zistiť, či sa v poli niekde na indexoch 1 až N nachádza hodnota X. Výsledkom môže byť:
+	<ul><li>hodnota (TRUE alebo FALSE) v logickej premennej (napr. NASIEL)
+		<li>výpis, oznam o výsledku hľadania v Edite
+		<li>poradové číslo kde našiel prvý krát hľadanú hodnotu zapísané v premennej (Napr. KDE)
+			(Ak sme nenašli v poli hľadanú hodnotu zapíšeme do kde 0)
+	</ul>	 
+  V nasledovnej ukážke urobím všetky odpovede.
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>hľadanie hodnoty v poli</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+				<code>NASIEL = 0; &nbsp; &nbsp; &nbsp;//zatial som nenasiel
+				<br>KDE = -1; &nbsp; &nbsp; &nbsp;//zatial som nenasiel
+				<br>Edit1->Text = "nenasiel"; &nbsp; &nbsp; &nbsp;//zatial som nenasiel
+				<br><b>for</b> (i=0;i&lt;n; i++) 
+				<br> &nbsp;if (pole[i]=X) 
+				<br> &nbsp;{ NASIEL = 1;
+				<br> &nbsp; &nbsp; &nbsp; &nbsp;KDE = i; &nbsp; &nbsp; &nbsp;//zapíšem si kde sa to stalo 
+				<br> &nbsp; &nbsp; &nbsp; &nbsp;Edit1->Text = "nasiel";
+				<br> &nbsp; &nbsp; &nbsp; &nbsp;break; &nbsp; &nbsp; &nbsp;//cyklus môžem skončiť
+				<br> &nbsp;}
+				<br>}</code></tr>
+			</table>
+	Myšlienka je teda, že pred cyklus natipujem odpovede, že som nenašiel a v cykle, ak nájdem, tak tie odpovede opravím.
+	Po nájdení prvej hľadanej hodnoty cyklus ukončím príkazom <b>break</b> (program bude pokračovať za príkazom cyklu). 
+	Programátorov zaujímala stredná hodnota počtu položiek, ktoré musíme skontrolovať, kým nájdeme požadovanú hodnotu
+	a štatistika vraví, že N/2 (kde N je počet položiek poľa). 
+	<br>Je to ako keď v hoteli hľadáme ubytovaného kamaráta - do koľkých izieb musíme priemerne nakuknúť kým ho nájdeme
+	<br>Ak sú položky v poli poukladané podľa veľkosti (utriedené) vieme to spraviť omnoho rýchlejšie.
+
+<!--                 H L A D A N I E   V   U T R I E D E N O M  P O L I          -->	
+<a name="hladanie2"><dt>Hľadanie hodnoty v utriedenom poli</a>
+<dd>Nech položky poľa sú utriedené od najmenšieho po najväčšie (ak sú niektoré položky rovnaké - to nevadí). 
+	<br>Hodnotu X budeme hľadať v indexoch od a=1 po b=N. Pri hľadaní hodnoty X v poli použijeme nasledovnú fintu:
+	<br> Vypočítam si index stredného prvku nášho intervalu:
+		<br> &nbsp; &nbsp;<code>ab = (a+b)/2;</code>
+	<br>môžu nastať prípady
+		<br> &nbsp; &nbsp;pole[ab] == X, to je najlepší prípad, našli sme môžeme končiť
+		<br> &nbsp; &nbsp;pole[ab] &gt; X, zmeníme b = ab-1; &nbsp; hľadanie už robíme len vľavo
+		<br> &nbsp; &nbsp;pole[ab] &lt; X, zmeníme a = ab+1; &nbsp; hľadanie už robíme len vľavo
+		<br>teraz ak a>b, tak sme nenašli môžme končiť
+	<br><br>Naprogramované môže vyzerať nasledovne
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>hľadanie hodnoty v utriedenom poli</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+				<code>int A = 0; &nbsp; &nbsp; &nbsp;//dolná hranica indexu odkade hľadáme
+				<br>int B = N; &nbsp; &nbsp; &nbsp;//holná hranica indexu pokade hľadáme
+				<br>int AB; &nbsp; &nbsp; &nbsp;//stred intervalu
+
+				<br>int KDE = -1; &nbsp; &nbsp; &nbsp;//zatiaľ som nenašiel
+				<br>while (A &lt;= B) 
+				<br>{
+				<br> &nbsp; &nbsp; AB = (A+B) / 2;
+				<br> &nbsp; &nbsp;if (Pole[AB] == X) { KDE = AB; break; }
+				<br> &nbsp; &nbsp;if (Pole[AB] &gt; X) B = AB-1; 
+				<br> &nbsp; &nbsp;if (Pole[AB] &lt; X) A = AB+1;
+				<br>} 
+                                <br>if (KDE>-1) {;}   // nasiel
+                                <br>else {;}          // nenasiel 
+				</code></tr>
+	</table>			
+	Programátorov zaujímala stredná hodnota počtu položiek, ktoré musíme skontrolovať, kým nájdeme požadovanú hodnotu
+	a štatistika vraví, že je to log<sub>2</sub>(N) (kde N je počet položiek poľa).
+	Tento rozdiel oproti predošlému príkladu (neutriedené) je obrovský. Napríklad:
+	<table border="1">
+	<tr><th>počet prvkov<th>počet hľadaní<br>neutriedené<th>počet hľadaní<br>utriedené</tr>
+	<tr align="center"><td>1 000<td>500<td>10</tr>
+	<tr align="center"><td>1 000 000<td>500 000<td>20</tr>
+	<tr align="center"><td>1 000 000 000<td>500 000 000<td>30</tr>
+	</table>
+	<br>Dôsledok
+	<br>Ak sa vo veľkom poli bude často hľadať, je dobré mať to pole utriedené - ako pole utriediť je samostatná téma pri poli.
+    <br>Úloha
+	<br>skús naprogramovať <a href="ulohy/hadanie.exe">"hádanie čísel"</a>
+<!--                 H L A D A N I E   P O C T U   V Y S K Y T O V                   -->	
+
+	<a name="hladanie3"><dt>Hľadanie hodnoty - počet výskytov </a>
+	<dd>Niekedy nestačí zistiť, či sa daná hodnota v poli nachádza, ale chceme zistiť koľko krát sa nachádza. V neutriedenom poli sa úloha od predošlej líši v tom,
+		že po nájdení hodnoty nemôžme hľadanie ukončiť, ale musíme prehľadávať do konca poľa a pri nájdení hľadanej hodnoty si nejakú pomocnú premennú zväčšíme o 1. 
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>hľadanie hodnoty v poli</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+			<code>{ POCET = 0; &nbsp; &nbsp; &nbsp;//zatial som nenasiel
+			<br><b> for</b> (i=0; i&lt;n; i++) 
+			<br> &nbsp; if (pole[i]==X) POCET++;
+			<br>}</code></tr>
+	</table>
+<!--                 H L A D A N I E   M A X I M A                                   -->	
+
+	<a name="hladanie4"><dt>Hľadanie maximálnej hodnoty v poli</a>
+	<dd>Ide o častú úlohu, pri hľadaní algoritmu treba porozmýšlať ako by sme tento problém riešili bez počítača (počítačové algoritmy sa často inšpirujú bežným životom človeka).
+		Napr. na dvore školy sú nastúpený všetci žiaci a my chceme nájsť najvyššieho. Návod môže byť nasledovný:
+		<ul><li>tipneme, že najväčší je prvý žiak a zoberieme ho z radu
+			<li>postupne ho porovnávame s ďalšími, pričom ak nájdeme niekoho väčšieho, tak toho menšieho pošleme zaradiť sa kde bol a väčšieho si vytiahneme k sebe
+			<li>keď dôjdeme na koniec radu, máme pri sebe toho najvyššieho
+		</ul>
+		no a na počítači to môže byť nasledne:
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>hľadanie hodnoty v poli</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+			<code>{ KDE = 0; &nbsp; &nbsp; &nbsp;//tipol som, kde je najväčšie číslo
+			<br><b> for</b> (i=1; i&lt;n;i++) 
+			<br> &nbsp; if (pole[KDE] &lt; pole[i]) KDE = i; &nbsp; &nbsp; &nbsp;//ak nájdem väčšieho tip upravím
+			<br>}
+			<br>//a tu viem, že najväčšie číslo je na adrese <b>KDE</b> a najväčšia hodnota je <b>pole[KDE]</b>.
+			</code></tr>
+	</table>
+	
+	<!--                 H L A D A N I E   S U C T U                                     -->	
+<a name="sucet"><dt>Výpočet súčtu/priemeru prvkov poľa</a>
+	<dd>Myšlienka je jednoduchá, vytvoríme si premennú SUCET do ktorej dáme nulu. Prejdeme postupne všetkými položkami poľa a každú pripočítame do SUCET.
+		Po prejdení poľa bude v premennej SUCET súčet všetkých prvkov. 
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>Výpočet súčtu a priemeru z položiek poľa</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+			<code>{ SUCET = 0; &nbsp; &nbsp; &nbsp;//zatiaľ je súčet nula
+			<br><b> for</b> (i=0; i&lt;n; i++) 
+			<br> &nbsp; SUCET += pole[i]; &nbsp; &nbsp; &nbsp;//každé číslo pripočítam ku SUCET
+			<br>}
+			<br>//cyklus skončil -&gt; súčet už mám
+			<br>PRIEMER = 1.0*SUCET / N; &nbsp; &nbsp; &nbsp;//priemerná PRIEMER by mala byť desatinná
+			<br>}</code></tr>
+	</table>
+	
+	<!--                 V L O Z E N I E   C I S L A                                     -->	
+	<a name="vlozenie"><dt>Vkladanie nového čísla do utriedeného poľa</a>
+	<dd>Častým prípadom je že prvky poľa máme utriedené a máme do poľa pridať nové číslo a samozrejme chceme aby pole aj po pridaní bolo utriedené.
+		<br>Predpoklady:		 
+		<br>Nech počet čísel v poli je N a nové číslo máme v premennej CISLO
+		<br>Postup pozostáva z dvoch krokov
+		<ul><li>nájdenie miesta medzi ktoré čísla chceme nové číslo vložiť
+			<li>odsunutie tých čísel, ktoré sú od nového väčšie o jedno miesto vpravo
+			<li>vloženie na nového čísla na uvolnené číslo
+		</ul>
+		Hľadanie miesta kam máme vložiť nové číslo môžme robiť odpredu poľa alebo od konca poľa. Ľahko zistíme, že ak to budeme zisťovať od konca, tak to
+		môžme výhodne spojiť s odsúvaním tých väčších čísel. 		
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>Vsúvanie čísla do utriedeného poľa</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+			<code>i = N-1; &nbsp; &nbsp; &nbsp;//odtiaľto začneme hľadať a odsúvať
+			<br>while (i&gt;=0 && pole[i]>CISLO) do 
+			<br>{
+			<br> &nbsp; pole[i+1] = pole[i]; &nbsp; &nbsp; &nbsp;//ak si väčší ako nový posuň sa doprava 
+			<br> &nbsp; i--;
+			<br>}
+			<br>pole[i+1] = CISLO; &nbsp; &nbsp; &nbsp;//na uvolnené číslo vložíme nové číslo
+			</code></tr>
+	</table>
+	
+	<!--                 R U S E N I E   C I S L A                                     -->	
+	<a name="rusenie"><dt>Rušenie prvku v poli</a>
+	<dd>Rušením K-teho prvku v poli rozumieme posunutie všetkých čísel napravo od neho o 1 miesto vľavo (ako keď z police kníh odstránime jednu a všetky napravo od nej 
+		posunieme o jedno miesto vľavo). 
+	<TABLE cellSpacing=0  bgColor=white border=1> 
+	<TR><TD bgColor=#99cccc><I>Rušenie K-teho čísla v poli</I></tr>
+	<TR><TD style="padding:5" vAlign=top>
+			<code>//predpokladám, že v poli nejaké čísla mám (N&gt;0) a ešte (0 &lt;=K &lt;= N-1)
+			<br>for (i = K+1; i&lt; N; i++) &nbsp; &nbsp; &nbsp;//všetky čísla od (K+1) do konca sa posunú o 1 vľavo
+			<br> &nbsp; Pole[i-1] = Pole[i]; 
+			<br>N--; &nbsp; &nbsp; &nbsp;//nesmieme zabudnúť upraviť počet čísel v poli  
+			</code></tr>
+	</table>
+	
+	<!--                 R O T A C I A   P O L A                                     -->	
+	<a name="rotacia"><dt>Rotácia poľa</a>
+	<dd>Pod rotáciou poľa vpravo rozumieme posun všetkých prvkov (okrem posledného) o jedno miesto vpravo a posledný prvok sa presunie do do položky číslo 1.
+		<br>(Pohyb položiek poľa pripomína krútivý pohyb na kolotoči)
+		<br>Obyčajne pod rotáciou automaticky myslíme posúvanie o jedno miesto vpravo ale myšlienku možno zovšeobecniť na rotaciaN, ktorá posúva prvky o N miest.
+		<br>Podobne možno zadefinovať rotáciu vľavo.
+		<br>No a teraz ako by to bolo na počítači
+		<TABLE cellSpacing=0  bgColor=white border=1> 
+		<TR><TD bgColor=#99cccc><I>Rotácia poľa vpravo o 1</I></tr>
+		<TR><TD style="padding:5" vAlign=top>
+			<code>pom = Pole[N-1]; &nbsp; &nbsp; &nbsp;//posledné číslo si odložím nabok
+			<br>for (i = N-2; i>=0;i--) Pole[i+1] = Pole[i]; &nbsp; &nbsp; &nbsp;//každé číslo sa posunie doprava
+			<br>Pole[0] = pom; &nbsp; &nbsp; &nbsp;//odložené číslo zapíšem na uvoľnené miesto
+		</code></tr>
+		</table>	
+		Pozn.
+		<br>Naprogramujte to s výpisom do StringGrid (stĺpec 0 pred rotáciou, stĺpec 1 po rotácii)
+		<br>Porozmýšľajte ako efektívne urobiť rotáciu o K miest
+	<dt>ďalšie zaujímavé úlohy
+	<dd><ul>
+		<li>hľadanie najdlhšej súvislej rastúcej oblasti v poli
+		<li>problém dvojfarebných hrnčekov - ako ich najrýchlejšie utriediť
+		<li>problém trojfarebných hrnčekov - ako ich najrýchlešie utriediť
+		<li>hľadanie najdlhšej nesúvislej rastúcej podpostupnosti z postupnosti zapísanej v poli
+		<li>hľadanie súvislej podoblasti poľa s maximálnym súčtom
+		<li>hľadanie súvislej podoblasti poľa so súčtom najbližším číslu Z
+		<li>majmä postupnosť {a<sub>i</sub>}=1,3,9,27,81,... a číslo Z&gt;0
+			<br>zapíšte číslo Z v tvare c<sub>1</sub>*1 + c<sub>2</sub>*3+c<sub>3</sub>*9 + c<sub>4</sub>*27 + ..., kde c<sub>i</sub> je z množiny {-1;0;+1}
+			a vypíšte nenulové sčítance
+		<li>Zisti koľko rôznych postupností dĺžky n sa dá vytvoriť z čísel {0,1} ak nuly nesmú byť dve za sebou	
+		<li>Máme dané poukážky v hodnote 7€ a 17€ (nekonečné množstvo), treba zaplatiť sumu  Z€, zisti či sa dá zaplatiť presne len poukážkami 	
+		<li>Máme dané poukážky v hodnote 7€, 13€ a 21€ (nekonečné množstvo), treba zaplatiť sumu  Z€, zisti či sa dá zaplatiť presne len poukážkami
+		<li>Máme dané poukážky v hodnote 7€, 13€ a 21€ (v počte n<sub>7</sub>, n<sub>13</sub>, n<sub>21</sub>), treba zaplatiť sumu  Z€, zisti či sa dá zaplatiť presne len poukážkami
+		<li>v n prvkovom poli sú čísla od 1 po 1000. Zisti, ktoré číslo sa vyskytuje najčastejšie
+		<li>máme N dominových kockiek (na každej koske sú dve čísla) a číslo Z. Určte natočenie kociek aby (súčet vrchných čísel) mínus (súčet dolných čísel) bol
+			najbližie ku číslu Z
+		<li>Problém alkoholika
+			<br>na dlhej polici sú flaše s alkoholom, v každej je nejaké nenulové množstvo alkoholu a<sub>i</sub>. Nesmieme flaše prehadzovať, zvolenú flašu
+			musíme dopiť dodna a po skončení pitia nesmú vzniknúť 2 (alebo N) prázdne fľaše za sebou
+			<br>Koľko sa dá vypiť najviac
+		<li>Problém zlodeja
+			<br>Je N rôznych tovarov a o každom tovare je zadané 
+				<br>-počet kusov p<sub>i</sub>
+				<br>-váha jedného kusa m<sub>i</sub>
+				<br>-cena jedného kusa c<sub>i</sub>	
+				<br>ďalej je daná nosnosť našeho auta NOS
+				<br>Zistite aká najväčšia hodnota sa dá ukradnúť
+		<li>Permutácie
+			<br>Máme 4-prvkové pole, kde položky poľa sú rôzne  - vypíš všetky permutácie poľa
+			<br>Zmeň na 5-prvkové pole
+			<br>Zmeň na N-prvkové pole
+		<li>Máme dve postupnosti A a B, kde počet prvkov v poli A je PA a počet prvkov v poli B je PB
+			<br>Zisti najdlhšiu spoločnú podpostupnosť poľa A a poľa B, výsledok zapíš do poľa C
+		<li>Máme dve postupnosti A a B, kde počet prvkov v poli A je PA a počet prvkov v poli B je PB
+			<br>Koľko najmenej prvkov musíme pridať/povsúvať do polí A resp. B aby vznikli rovnaké polia 
+		<li>Máme postupnosť v poli A
+			<br>Zisti, koľko najmenej prvkov musíme vynechať aby vznikol palindrom (rovnaké poradie spredu aj od zadu)
+		</ul>
+<dt class=main>Príklady na precvičenie:
+<dd><table cellspacing="20">
+	<tr><td><img src="../obr/ktstrofa.png" border="0" alt="" height="50">		
+	<td>
+		<ol>
+		<li>Naprogramuj: <a href="project1.exe">uloha</a> 
+		<li>Napíš funkciu na výpočet súčtu dvoch vektorov. 
+			<br>Vygeneruj vektor1 a zobraz v memo1 (každé číslo je v samostatnom riadku) 
+			<br>Vygeneruj vektor2 a zobraz v memo2
+			<br>Súčet vektorov zobraz v memo3. 
+		<li>Napíš funkciu na výpočet súčtu dvoch matíc typu pole (10x10 dvojciferných).
+			<br>Vygeneruj pole1 a zobraz v memo1 
+			<br>Vygeneruj pole2 a zobraz v memo2
+			<br>Súčet polí zobraz v memo3. 
+	</ol></tr>	
+	</table>
+</dl>
+</body>
+</html>

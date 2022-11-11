@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	 <title>Časovač a dialógy</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<h3>Odhad časovej náročnosti algoritmu</h3>
+<dl>
+	<dt class=main>Časová náročnosť
+	<dd>Pri písaní programu nie je dôležité len správnosť algoritmu (t.j. či dáva správne výsledky), ale aj efektivita programu. Niektoré algoritmy papierovo dávajú správne výsledky ale v reálnom čase
+		sa výsledku nedočkáme, lebo čas výpočtu presahuje aj niekoľko rokov, alebo pamäťové nároky sú také rozsiahle, že ju počítač nedokáže splniť. Pri bežnom písaní programov (školské úlohy) 
+		uprednostňujeme algoritmy, ktoré sa ľahšie programujú (napr. na triedenie rýchlejšie "spichneme" bublinky, minimum a pod. ako napr. quicksort).
+		Pri písaní komerčných programov (alebo pri súťažení v programátorských súťažiach) je dôležité aby náš algoritmus pracoval efektívne	jak s pamäťou tak aj s časom výpočtu. 
+		Programátori potrebovali nejaké objektívne kritériá na určenie, ktorý algoritmus je lepší. Kritériá, že vyhrá ten, ktorý zbehne rýchlejšie na PC nie sú dobré, lebo to, že mne program 
+		zbehol pomalšie ako "kolegovi" v Japonsku neznamená hneď, že môj algoritmus je pomalší. Hľadali sa spôsoby ako porovnávať algoritmy - ako určiť rebríček algoritmov na riešenie konkrétneho 
+		problému bez toho aby sme ich museli písať do počítača.
+		<br>Zvíťazila myšlienka, že pre každý typ úlohy sa určí základná (typická) operácia a my len spočítame počet vykonaní tejto operácie a čím bude číslo menšie je algoritmus lepší.
+		<br>Napr. chceme nájsť maximum z N prvkov v neutriedenom poli A
+		<br>Typická operácia pri hľadaní maxima je porovnávanie a ideme zisťovať koľko tých porovnávaní je treba
+		<br>myšlienka "môjho" algoritmu je nasledovná:
+		<ul><li>zvolím, že max je v prvej položke poľa
+			<li>postupne porovnávam maximálnu položku s ďalšími položkami a ak nájdem položku väčšiu označím ju za maximálnu
+		</ul>	
+		program by vyzeral asi takto:
+		<pre> 
+...
+imax = 0;
+for (i=1; i&lt;N; i++)
+  if (A[imax]&lt;A[i]) imax:=i;
+...
+</pre>
+		počet porovnaní teda bude N-1
+		<br>Informatici však prišli na to, že takéto jemné triedenie rýchlosti algoritmu nepotrebujú 
+		(že ak sa algoritmy líšia napr. o 2 porovnávania, tak to nehrá úlohu), 
+		<br>tiež spočítať takto presne ten požadovaný počet je niekedy aj dosť náročné,
+		a tak vymysleli <b>asymptotickú</b> náročnosť, ktorá určuje rýchlosť algoritmu pre "veľké" rozsahy vstupných dát. 
+		<br><br>Napr. Nech počet operácií algoritmu A je: 10*n
+		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Nech počet operácií algoritmu B je: n<sup>2</sup>
+		<br>Je zrejmé, že pre n&lt;10 je vhodnejší algoritmus B a pre n&gt;10 je vhodnejší algoritmus A. V porovnávaní je lepší ten algoritmus, ktorý je rýchlejší
+		pre "väčšie" hodnoty. Podľa tejto asymptotickej náročnosti zaraďujeme algoritmy do tried, pričom trieda určuje určuje rýchlosť algoritmu
+		<br><br>podľa rýchlosti rastu základných bežných funkcií možno určiť "rebríček sily" - ja tu uvádzam základné funkcie zoradené od najsilnejšej po najslabšiu.
+		Ak sa vo výslednom vzorci nachádzajú v ščítancoch viaceré základné funkcie nechá sa vo výsledku len sčítanec s najsilnejšou funkciou, pričom ak sčítanec obsahuje v súčine konštantu, 
+		tak tá sa zanedbá (napr. 5n<sup>2</sup> -&gt;n<sup>2</sup> 
+		<ul><li><b>n<sup>n</sup></b>
+			<li><b>n!</b>
+			<li><b>a<sup>n</sup></b> (kde konštanta a&gt;1)
+				<br>sila exponencialnej funkcie je rozlíšitelná podľa veľkosti konštanty a (3<sup>n</sup> je "mocnejšie" ako 2.5<sup>n</sup>
+			<li><b>n<sup>a</sup></b> (kde  konštanta a&gt;1)
+				<br>sila mocninovej funkcie je rozlíšitelná podľa veľkosti konštanty a 
+				<br>sila n<sup>3</sup> a (n+b)<sup>3</sup> (kde b je koštanta) sú rovnaké
+			<li><b>n</b>
+			<li><b>log n</b>
+				<br>sila všetkých log funkcií je rovnaká (nezáleží na základe)
+			<li><b>1</b>
+				<br>čas výpočtu nezávisí od rozsahu dát (napr. hľadáme max. v utriedenom poli)	
+		</ul>
+		<br>
+		Asi to bude treba vysvetliť na príklade.
+		<br>Nech spočítaním počtu vykonaní základnej operácie dostaneme vzťah: 5*n<sup>5</sup> + 2*n*3<sup>n</sup>
+		<br>najsilnejšia použitá funkcia je 3<sup>n</sup> a tak vyberieme sšítanec 2*n*3<sup>n</sup> a po zahodení konštanty v súčine
+			získame výsledok n*3<sup>n</sup>, ktorý zapisujeme v tvare O(n*3<sup>n</sup>) a čítame že algoritmus je triedy n*3<sup>n</sup>
+		<br><br>
+		Asi zarmútim tých, čo čakali, že už je všetko jasné a môžme podľa tohoto návodu "jednoducho" zaraďovať algoritmy do tried, 
+		situácia sa komplikuje, ak počet vykonaní základnej operácie závisí od vstupných dát
+		<br>Opäť vysvetlím na príklade:
+		<br>Máme zistiť či sa číslo B nachádza v N prvkovom poli A
+		<pre>
+			ii:=0;
+			while (ii&lt;N &amp;&amp; A[ii]!=B) ii:=ii+1;
+			if (ii>N-1) nenachadza else nachadza;
+		</pre>
+		Pri cykle while nevieme koľko krát robí porovnanie (niekedy stačí aj jedno, inokedy musíme testovať až do konca poľa)
+		<br>Informatici sa dohodli, že v takýchto prípadoch budeme brať do úvahy priemernú (štatistickú) hodnotu počtu vykonaní základnej operácie
+		<br>(keby sme nechali hľadať počet porovnávaní pre rôzne náhodné dáta v poli a zapisovali si počet nutných porovnaní a nakoniec by sme z týchto čísel určili priemer)
+		<br>V tomto prípade sa dá výsledok "vytušiť" N/2 - priemerná dĺžka, kým číslo v poli nájdem, 
+		<br>Odhad tohto priemerného počtu (čo je najpravdepodobnejší výsledok) býva dosť zložitý a ja odporúčam používať namiesto neho "najhorší" prípad čo v 99% určí algoritmu rovnakú (správnu) triedu. 
+			Treba si ale uvedomiť, že tento postup nemusí vždy viesť ku správnemu výsledku - niekedy určí vyššiu=&gt;horšiu triedu.
+			(asi vás trápi, čo keď to bude akurát ten prípad 1% - žiaľ náš (stredoškolský) matematický aparát v niektorých príkladoch jednoducho na niektoré úlohy nestačí)
+			Tu by som asi mal povedať, že sa s takýmito prípadmi nestretnete, že sú vzácne, ale už pri analýze triedenia quickSort získame naším aparátom triedu n<sup>2</sup>, tiež
+			Shellov algoritmus triedenie nám spadne do triedy O(n<sup>2</sup>) a vieme, že to nie je tak. 
+	<dt>Ukážka výpočtu počtu operácií
+	<dd>Pre predstavu o tom, ako sa zložitosť prejavuje na skutočnom počítači, sa pozrieme, ako dlho pobežia algoritmy na počítači, ktorý robí 10<sup>9</sup> (miliardu) operácií za sekundu. 
+		Tento počítač je porovnatelný s tými, ktoré dnes bežne používáme. Pozrime sa, ako dlho na ňom pobežia algoritmy s následujícími zložitosťami:
+	<table border="1"><tr><th rowspan="2">funkcia<th colspan="6">n
+			<tr><td>10<td>20<td>50<td>100<td>1000<td>10<sup>6</sup>
+			<tr><td>log n		<td>3,3ns<td>4,3ns<td>4,9ns<td>6,6ns<td>10,0ns<td>19,9ns
+			<tr><td>n			<td>10ns<td>20ns<td>30ns<td>100ns<td>1&micro;s<td>1ms
+			<tr><td>n*log n		<td>33ns<td>86ns<td>282ns<td>664ns<td>10&micro;s<td>20ms
+			<tr><td>n<sup>2</sup><td>100ns<td>400ns<td>900ns<td>100&micro;s<td>1ms<td>1000s
+			<tr><td>n<sup>3</sup><td>1&micro;s<td>8&micro;s<td>27&micro;s<td>1ms<td>1s<td>10<sup>9</sup>s
+			<tr><td>2<sup>n</sup><td>1&micro;s<td>1ms<td>1s<td>10<sup>21</sup>s<td>10<sup>292</sup>s<td>nekon.
+			<tr><td>n!<td>3&micro;s<td>10<sup>9</sup>s<td>10<sup>23</sup>s<td>10<sup>149</sup>s<td>10<sup>2558</sup>s<td>nekon.
+	</table>			
+	Pre predstavu: 
+	<br>1 000 s je asi tak čtvrť hodiny, 
+	<br>1 000 000 s je necelých 12 dní, 
+	<br>10<sup>9</sup>s je 31 rokov a 10<sup>18</sup>s je asi tak vek Vesmíru. 
+	<br>Takže nepolynomiálne algoritmy sú pre väčšie rozsahy velmi rýchlo nepoužiteľné.
+	<dt>Sumár
+	<dd>Niektoré typické algoritmy netreba už analyzovať z hľadiska časovej náročnosti, ale odvoláme sa na všeobecnú znalosť algoritmu a aj jeho časovú náročnosť.
+	<table>
+	<tr><th>Algoritmus<th>Časová náročnosť</tr>
+	<tr><td>hľadanie v neutriedenom poli<td>O(n)
+	<tr><td>hľadanie v utriedenom poli<td>O(log n)</tr>
+	<tr><td>hľadanie k-teho najväčšieho prvku<td>O(n)</tr>
+	<tr><td>hľadanie mediána<td>O(n)</tr>
+	<tr><td>jednoduché triedenia (max, bubliny, vsúvanie)<td>O(n<sup>2</sup>)</tr>
+	<tr><td>triedenie quick <td>O(n*log n)</tr>
+	<tr><td>vsúvanie prvku (odstránenie prvku) z utriedeného poľa<td>O(n)</tr>
+	</table> 
+</dl>
+</body>
+</html>

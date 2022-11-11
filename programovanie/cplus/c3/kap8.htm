@@ -1,0 +1,992 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org" />
+<title>Subory</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link type="text/css" href="../style/udpc.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="booktitle">
+<h1 class="title">Úvod do programovania v jazyku C</h1>
+<h2 class="authors">Doc. Ing. Pavel Horovčák, CSc., <a href="http://www.tuke.sk/podlubny">Prof. RNDr. Igor Podlubný, CSc.</a></h2>
+<p>Táto on-line príručka vznikla v&nbsp;rámci riešenia výskumného projektu KEGA&nbsp;č.&nbsp;112/97 "<font color="#000">uni</font><font
+color="#000">WWW</font><font color="#000">erzita</font>"</p>
+</div>
+
+<div id="obsah">
+<ol>
+  <li><a href="index.htm">Úvod</a></li>
+  <li><a href="Kap2.htm">Preprocesor jazyka C</a></li>
+  <li><a href="Kap3.htm">Premenné</a></li>
+  <li><a href="Kap4.htm">Lexikálne prvky
+  jazyka</a></li>
+  <li><a href="Kap5.htm">Riadiace štruktúry</a></li>
+  <li><a href="Kap6.htm">Štandardný vstup a
+  výstup</a></li>
+  <li><a href="Kap7.htm">Reťazce</a></li>
+  <li><a href="Kap8.htm">Súbory</a></li>
+  <li><a href="Kap9.htm">Smerníky</a></li>
+  <li><a href="Kap10.htm">Datové štruktúry</a></li>
+  <li><a href="Kap11.htm">Triedenie</a></li>
+  <li><a href="Kap12.htm">Terminálové funkcie
+  (QNX)</a></li>
+  <li><a href="Kap13.htm">Doporučená
+  literatúra</a> </li></ol>
+</div>
+
+<div id="content">
+<h1>8 Súbory</h1>
+
+<ul>
+<li><a href="#prudy">Práca s&nbsp;prúdmi</a></li>
+
+<li><a href="#praca">Práca so súbormi na nižšej úrovni</a></li>
+
+<li><a href="#parametre">Parametre programu</a></li>
+
+<li><a href="#priklady">Príklady práce so súbormi</a></li>
+</ul>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Okrem práce so štandardnými vstupnými a&nbsp;výstupnými zariadeniami je možné vykonávať zápis a&nbsp;čítanie informácií zo súborov. Táto činnosť je podporovaná dvoma skupinami štandardných funkcií pre dve úrovne práce so súbormi.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Nižšiu úroveň reprezentuje skupina funkcií, ktoré priamo využívajú služby operačného systému. Celú réžiu s&nbsp;tým spojenú musí zabezpečovať samotný program.<br />
+&nbsp;&nbsp;&nbsp;&nbsp; Vyššiu úroveň predstavuje práca s&nbsp;prúdmi (stream) údajov. Táto úroveň sa používa najčastejšie a&nbsp;je užívateľsky prijateľnejšia ako prv spomínaná nižšia úroveň.<br />
+<br />
+</p>
+
+<p>Každá činnosť spojená s&nbsp;komunikáciou so súborom môže pozostávať z&nbsp; týchto krokov :</p>
+
+<ul>
+<li>otvorenie súboru</li>
+
+<li>manipulácia so súborom (čítanie, zápis, nastavenie)</li>
+
+<li>zatvorenie súboru</li>
+</ul>
+
+<p align="justify">Pri práci so súbormi sa stretávame s&nbsp;niektorými preddefinovanými konštantami :</p>
+
+<table width="80%" align="center">
+<tbody>
+<tr>
+<td valign="top" width="7%">EOF</td>
+<td width="93%">koniec súboru</td>
+</tr>
+
+<tr>
+<td valign="top" width="7%">FOPEN_MAX</td>
+<td width="93%">maximálny počet súčasne otvorených súborov</td>
+</tr>
+
+<tr>
+<td valign="top" width="7%">FILENAME_MAX&nbsp;&nbsp;&nbsp;</td>
+<td width="93%">maximálna dĺžka názvu súboru</td>
+</tr>
+
+<tr>
+<td valign="top" width="7%">TMP_MAX</td>
+<td width="93%">maximálny počet súčasne otvorených pracovných prúdov</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2><a id="prudy" name="prudy">8.1 Práca s&nbsp;prúdmi (stream I/O)</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Je charakteristická použitím dátového typu FILE pre identifikáciu súboru. Tento typ (presnejšie smerník na typ) obsahuje všetky informácie o&nbsp;spracovávanom prúde. Užívateľ, ktorý chce pracovať s&nbsp;týmto typom, musí pre svoj súbor deklarovať premennú typu FILE * (vždy veľkými písmenami), v&nbsp;ktorej budú udržované informácie o&nbsp;danom prúde. Inicializácia tejto štruktúry sa vykonáva pri vytváraní alebo otváraní prúdu, spätný prenos sa uskutoční pri uzatváraní prúdu. Štandardné zariadenia vstupu - výstupu podľa kap. 7 sú deklarované tiež ako prúdy v&nbsp;tvare :</p>
+
+<pre>
+   FILE *stdin
+   FILE *stdout
+   FILE *stderr
+</pre>
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Podľa spôsobu práce existujú dva režimy prúdov - textový a&nbsp;binárny. Voľba režimu prúdu je vecou užívateľa v&nbsp;závislosti na charaktere úlohy. V&nbsp;textovom režime sa pomocou príslušných knižničných funkcií čítajú a&nbsp;zapisujú obyčajné textové riadky, kým v&nbsp;binárnom režime sa jedná o&nbsp;vnútorný tvar zápisu. Obsah binárneho súboru nie je funkciami čítania - zápisu nijako ovplyvňovaný. Práca s&nbsp;binárnym súborom je rýchlejšia a&nbsp; zaberá menej miesta v&nbsp;pamäti. Textový súbor je však na druhej strane možno prezerať, resp. i&nbsp;vytvárať bežnými prostriedkami (editormi). Je nutné poznamenať, že aj tu je rozdiel pri použití kompilátora. No najväčší rozdiel je cítiť pri prechode medzi rôznymi platformami (pod UNIX-om nie je žiaden rozdiel medzi textovým a&nbsp;binárnym režimom).</p>
+
+<p>Pre otvorenie prúdu je k&nbsp;dispozícii funkcia:</p>
+
+<pre>
+  FILE *fopen(const char *name, const char *mode);
+</pre>
+
+<table width="80%" align="center">
+<tbody>
+<tr>
+<td valign="top">name -</td>
+<td>názov otváraného (vytváraného) súboru</td>
+</tr>
+
+<tr>
+<td valign="top">mode -</td>
+<td>
+<pre>
+r    textový súbor čítanie
+w    textový súbor zápis
+a   textový súbor pripojenie na koniec
+rb   binárny súbor čítanie
+wb   binárny súbor zápis
+r+   textový súbor čítanie a zápis
+w+   textový súbor zápis
+a+   textový súbor čítanie a zápis na koniec
+ab   binárny súbor pripojenie na koniec
+rb+  binárny súbor čítanie a zápis
+wb+  binárny súbor zápis
+ab+  binárny súbor čítanie a zápis na koniec
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p align="justify">Ak je operácia otvorenia úspešná, vráti funkcia smerník na daný súbor, pomocou ktorého ďalej so súborom pracujeme. V&nbsp;opačnom prípade vráti hodnotu NULL, ktorú je možné i&nbsp;potrebné testovať.<br />
+Test na koniec súboru pri práci s&nbsp;prúdmi namiesto kombinácie EOF využíva funkciu</p>
+
+<pre>
+  int feof(FILE *stream)
+</pre>
+
+<p align="justify">ktorá vracia hodnotu != 0 (true), ak je aktuálna pozícia nastavená na koniec prúdu. V&nbsp;opačnom prípade vracia hodnotu 0 (false).</p>
+
+<p>Na zatvorenie súboru (po skončení práce s&nbsp;daným súborom) je k&nbsp;dispozícii funkcia :</p>
+
+<pre>
+  int fclose(FILE *stream);
+</pre>
+
+<p align="justify">Pre ďalšiu prácu s&nbsp;prúdmi platí všetko, čo bolo uvedené v&nbsp;kap. 6 pre štandardný vstup - výstup s&nbsp;tým, že sa to vzťahuje na príslušný prúd. Pre prácu so znakmi sú k&nbsp;dispozícii funkcie :</p>
+
+<pre>
+int getc(FILE *stream);
+int ungetc(int c,FILE *stream);
+int putc(int c,FILE *stream);
+</pre>
+
+<p align="justify">Nová je funkcia ungetc, ktorá umožňuje vrátiť prečítaný znak späť do prúdu. Vstup a&nbsp;výstup reťazcov podporujú funkcie :</p>
+
+<pre>
+  char *fgets(char *string, FILE *stream);
+  int  fputs(char *string, FILE *stream);
+</pre>
+
+<p align="justify">Podobne formátovaný vstup - výstup podporujú funkcie :</p>
+
+<pre>
+  int fprintf(FILE *stream,char *format,arg1,arg2,...,argn);
+  int fscanf(FILE *stream,char *format, &amp;arg1,&amp;arg2,...,&amp;argn);
+</pre>
+
+<p align="justify">Ďalej sú k&nbsp;dispozícii funkcie pre vstup - výstup celých čísel :</p>
+
+<pre>
+  int getw(FILE *stream);
+  int putw(int i, FILE *stream);
+</pre>
+
+<p align="justify">a pre prenos údajov po blokoch :</p>
+
+<pre>
+  int fread(char *buffer,int size,int count,FILE *stream);
+  int fwrite(char *buffer,int size,int count,FILE *stream);
+  cez pole buffer. Veľkosť bloku je (size x count).
+</pre>
+
+<p align="justify">Pre nastavenie pozície v&nbsp;súbore, od ktorej sa bude čítať, resp. zapisovať, slúži funkcia :</p>
+
+<pre>
+  int fseek(FILE *stream,long int offset,int mode);
+</pre>
+
+<table width="80%" align="center">
+<tbody>
+<tr>
+<td valign="top">offset -</td>
+<td>veľkosť posunu v&nbsp;súbore od pozície, danej parametrom mode</td>
+</tr>
+
+<tr>
+<td valign="top">mode -</td>
+<td>
+<pre>
+SEEK_SET od začiatku súboru
+SEEK_CUR od aktuálnej pozície v súbore
+SEEK_END od konca súboru
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p align="justify">Aktuálnu pozíciu v&nbsp;súbore je možné zistiť pomocou funkcie :</p>
+
+<pre>
+  long int ftell(FILE *stream);
+</pre>
+
+<p align="justify">Uchovanie a&nbsp;obnovenie aktuálnej pozície v&nbsp;súbore pomocou dátovej štruktúry preddefinovaného typu fpos_t umožňujú funkcie :</p>
+
+<pre>
+  int fgetpos(FILE *stream, fpos_t *position);
+  int fsetpos(FILE *stream, const fpos_t *position);
+</pre>
+
+<p align="justify">Pre prácu so súbormi typu stream je k&nbsp;dispozícii ešte celý rad ďalších funkcií pre testovanie vzniku chyby, vyprázdnenie bufra, nastavenie na začiatok súboru, riadenie práce s&nbsp;prúdom, chybové správy (podrobne viď popis knižnice jazyka C). Spoločným znakom všetkých týchto funkcií je to, že všetky sa začínajú písmenom "f" a&nbsp;všetky pracujú s&nbsp;identifikátorom súboru typu FILE *.</p>
+
+<h2><a id="praca" name="praca">8.2 Práca so súbormi na nižšej úrovni (basic I/O)</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Podstatným aj formálnym rozdielom pri práci so súbormi na nižšej úrovni vzhľadom na súbory typu stream je použitie identifikátora súboru typu int (tzv. manipulačné číslo) namiesto FILE *, pomocou ktorého pracujeme so súborom v&nbsp;jednotlivých štandardných funkciách.<br />
+Pre <b>otvorenie</b> súboru je k&nbsp;dispozícii funkcia :</p>
+
+<pre>
+  int open(char *name,int mode);
+  kde <i>name</i> - meno súboru
+      <i>mode</i> - prístup k súboru (čítanie, zápis, oboje)
+                    (podrobne viď popis knižnice jazyka)
+</pre>
+
+<p align="justify">Funkcia vracia celé číslo - identifikátor súboru v&nbsp;prípade úspešného otvorenia, v&nbsp;opačnom prípade vracia -1. Tento identifikátor (handle) potom je používaný vo všetkých ďalších funkciách.</p>
+
+<p>Pre <b>zatvorenie</b> súboru je k&nbsp;dispozícii funkcia :</p>
+
+<pre>
+  int close(int handle);
+</pre>
+
+<p align="justify"><b>Čítanie a&nbsp;zápis</b> do súboru sa realizuje funkciami read a&nbsp; write s&nbsp;využitím bufra a&nbsp;jeho veľkosti v&nbsp;tvare :</p>
+
+<pre>
+  int read(int handle,char *buffer,int size);
+  int write(int handle,char *buffer,int size);
+  kde <i>handle</i> identifikátor súboru
+      <i>buffer</i> názov bufra
+      <i>size</i>   dĺžka bufra
+</pre>
+
+<p align="justify">Nastavenie pozície v&nbsp;súbore je možné s&nbsp;využitím funkcie :</p>
+
+<pre>
+  int lseek(int handle,long int offset,int mode);
+</pre>
+
+<p align="justify">ktorá je úplne analogická vyššie popísanej funkcii fseek.</p>
+
+<h2><a id="parametre" name="parametre">8.3 Parametre programu</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; V&nbsp;jazyku C je definovaná možnosť dovozu parametrov do programu pri jeho spustení. Na tento účel sa využíva hlavička programu s&nbsp;dvoma parametrami v&nbsp;tvare :</p>
+
+<pre>
+  void main(int argc, char *argv[])
+  kde <i>argc</i>   skutočný počet parametrov dovážaných do programu, zväčšený o 1
+      <i>argv[]</i> pole reťazcov, obsahujúcich jednotlivé dovážané parametre
+             argv[0] obsahuje názov programu, argv[1] prvý parameter, atď.
+</pre>
+
+<p align="justify">Príklad použitia uvedeného aparátu viď v&nbsp;nasledujúcej kapitole.</p>
+
+<h2><a id="priklady" name="priklady">8.4 Príklady práce so súbormi</a></h2>
+
+
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp; Uvedená príklady riešia postupne formátovaný výstup do súboru, výstup zo súboru po znakoch, čítanie zo súboru po znakoch, čítanie zo súboru po slovách, po riadkoch, tlač súboru na tlačiareň, kopírovanie súborov a&nbsp;rôzne ich kombinácie, nastavovanie i&nbsp;vyhľadávanie pozície v&nbsp;súbore. Časť príkladov pracuje s&nbsp;pevne zadanými názvami súborov, druhá časť je univerzálnejšia - názvy súborov sú prenášané formou parametrov (viď kap. 8.3).</p>
+
+<p><a href="Zdrojaky/Pr8_1.c.html">Príklad pr8_1.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_1.c   formatovany vystup   */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> stuff<font color="#800000">[</font><font color="#ff0080">25</font><font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font> index<font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;S.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;w&quot;</font><font color="#800000">);</font>  <font color="#0000a0"><i>/* open for writing */</i></font>
+  strcpy<font color="#800000">(</font>stuff<font color="#800000">,</font><font color="#0080c0">&quot;To je riadok.&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>for</b> (</font>index <font color="#800000">=</font> <font color="#ff0080">1</font><font color="#800000">;</font>index <font color="#800000">&lt;=</font> <font color="#ff0080">10</font><font color="#800000">;</font>index<font color="#800000">++)</font>
+    fprintf<font color="#800000">(</font>fp<font color="#800000">,</font><font color="#0080c0">&quot;%s Cislo riadku %d\n&quot;</font><font color="#800000">,</font>stuff<font color="#800000">,</font>index<font color="#800000">);</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* close the file before ending program */</i></font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_2.c.html">Príklad pr8_2.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_2.c  vystup po znakoch   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> others<font color="#800000">[</font><font color="#ff0080">35</font><font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font>  indexer<font color="#800000">,</font>count<font color="#800000">;</font>
+
+  strcpy<font color="#800000">(</font>others<font color="#800000">,</font><font color="#0080c0">&quot;Pridane riadky.&quot;</font><font color="#800000">);</font>
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;s.txt&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;a&quot;</font><font color="#800000">);</font> <font color="#0000a0"><i>/* open for appending */</i></font>
+  <font color="#800000"><b>for</b> (</font>count <font color="#800000">=</font> <font color="#ff0080">1</font><font color="#800000">;</font>count <font color="#800000">&lt;=</font> <font color="#ff0080">5</font><font color="#800000">;</font>count<font color="#800000">++)</font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>for</b> (</font>indexer <font color="#800000">=</font> <font color="#ff0080">0</font><font color="#800000">;</font>others<font color="#800000">[</font>indexer<font color="#800000">];</font>indexer<font color="#800000">++)</font>
+    <font color="#0000a0"><i>/*    kym others[indexer] != 0      */</i></font>
+    putc<font color="#800000">(</font>others<font color="#800000">[</font>indexer<font color="#800000">],</font>fp<font color="#800000">);</font> <font color="#0000a0"><i>/* output a single character */</i></font>
+    putc<font color="#800000">(</font><font color="#ff8080">'\n'</font><font color="#800000">,</font>fp<font color="#800000">);</font>        <font color="#0000a0"><i>/* output a linefeed */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_3.c.html">Príklad pr8_3.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_3.c  citanie po znakoch   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> c<font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;S.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File S.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> getc<font color="#800000">(</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one character from the file */</i></font>
+      putchar<font color="#800000">(</font>c<font color="#800000">);</font>    <font color="#0000a0"><i>/* display it on the monitor    */</i></font>
+    <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> EOF<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_4.c.html">Príklad pr8_4.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_4.c citanie po znakoch a cislovanie riadkov (posledny riadok nie) */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> c<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font>  pocet<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;S.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File S.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;%d: &quot;</font><font color="#800000">,</font>pocet<font color="#800000">);</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> getc<font color="#800000">(</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one character from the file */</i></font>
+      <font color="#800000"><b>if</b>(</font>c<font color="#800000">==</font><font color="#ff8080">'\n'</font><font color="#800000">)</font>
+      <font color="#800000">{</font>
+        c<font color="#800000">=</font>getc<font color="#800000">(</font>fp<font color="#800000">);</font>
+        <font color="#800000"><b>if</b>(</font>feof<font color="#800000">(</font>fp<font color="#800000">)==</font><font color="#ff0080">0</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;\n%d: &quot;</font><font color="#800000">,++</font>pocet<font color="#800000">);</font>
+        ungetc<font color="#800000">(</font>c<font color="#800000">,</font>fp<font color="#800000">);</font>
+      <font color="#800000">}</font>
+      <font color="#800000"><b>else</b></font> putchar<font color="#800000">(</font>c<font color="#800000">);</font>   <font color="#0000a0"><i>/* display it on the monitor   */</i></font>
+    <font color="#800000">} <b>while</b> (</font>feof<font color="#800000">(</font>fp<font color="#800000">) ==</font> <font color="#ff0080">0</font><font color="#800000">);</font> <font color="#0000a0"><i>/* repeat until end of file */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr8_5.c.html">Príklad pr8_5.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_5.c citanie po slovach   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> oneword<font color="#800000">[</font><font color="#ff0080">100</font><font color="#800000">];</font>
+  <font color="#800000"><b>char</b></font> c<font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;S.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File S.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> fscanf<font color="#800000">(</font>fp<font color="#800000">,</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one word from the file */</i></font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;%s\n&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>     <font color="#0000a0"><i>/* display it on the monitor */</i></font>
+    <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> EOF<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr8_6.c.html">Príklad pr8_6.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_6.c  spravne citanie po slovach   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> oneword<font color="#800000">[</font><font color="#ff0080">100</font><font color="#800000">];</font>
+  <font color="#800000"><b>char</b></font> c<font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;S.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File S.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> fscanf<font color="#800000">(</font>fp<font color="#800000">,</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one word from the file */</i></font>
+      <font color="#800000"><b>if</b>(</font>c <font color="#800000">!=</font> EOF<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;%s\n&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>     <font color="#0000a0"><i>/* display it on the monitor */</i></font>
+    <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> EOF<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_7.c.html">Príklad pr8_7.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_7.c citanie po riadkoch   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> oneword<font color="#800000">[</font><font color="#ff0080">100</font><font color="#800000">];</font>
+  <font color="#800000"><b>char</b> *</font>c<font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;S.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File S.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> fgets<font color="#800000">(</font>oneword<font color="#800000">,</font><font color="#ff0080">100</font><font color="#800000">,</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one word from the file */</i></font>
+      <font color="#800000"><b>if</b>(</font>c <font color="#800000">!=</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>     <font color="#0000a0"><i>/* display it on the monitor */</i></font>
+    <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> NULL<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_8.c.html">Príklad pr8_8.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_8.c citanie po slovach so zadanim nazvu suboru   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> oneword<font color="#800000">[</font><font color="#ff0080">100</font><font color="#800000">],</font>filename<font color="#800000">[</font><font color="#ff0080">25</font><font color="#800000">];</font>
+  <font color="#800000"><b>char</b> *</font>c<font color="#800000">;</font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Enter filename: &quot;</font><font color="#800000">);</font>
+  scanf<font color="#800000">(</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>filename<font color="#800000">);</font>
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font>filename<font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File [%s] doesn't exist\n&quot;</font><font color="#800000">,</font>filename<font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> fgets<font color="#800000">(</font>oneword<font color="#800000">,</font><font color="#ff0080">100</font><font color="#800000">,</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one word from the file */</i></font>
+      <font color="#800000"><b>if</b>(</font>c <font color="#800000">!=</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;%s\n&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>     <font color="#0000a0"><i>/* display it on the monitor */</i></font>
+    <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> NULL<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_9.c.html">Príklad pr8_9.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_9.c tlac suboru po znakoch  na tlaciaren   */</i></font>
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">,*</font>printer<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> fname<font color="#800000">[</font><font color="#ff0080">25</font><font color="#800000">];</font>
+  <font color="#800000"><b>char</b></font> c<font color="#800000">;</font>
+
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Enter filename: &quot;</font><font color="#800000">);</font>
+  scanf<font color="#800000">(</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>filename<font color="#800000">);</font>
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font>filename<font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+  printer<font color="#800000">=</font>fopen<font color="#800000">(</font><font color="#0080c0">&quot;$LPT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;w&quot;</font><font color="#800000">);</font>
+  <font color="#0000a0"><i>/*  printer=fopen(&quot;PRN&quot;,&quot;w&quot;); pre DOS  */</i></font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else if</b> (</font>printer<font color="#800000">==</font>NULL<font color="#800000">)</font>printf<font color="#800000">(</font><font color="#0080c0">&quot;PRN doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>do</b></font>
+    <font color="#800000">{</font>
+      c <font color="#800000">=</font> fgetc<font color="#800000">(</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one character from the file */</i></font>
+      <font color="#800000"><b>if</b> (</font>c <font color="#800000">!=</font> EOF<font color="#800000">)</font>
+      <font color="#800000">{</font>
+        putchar<font color="#800000">(</font>c<font color="#800000">);</font>
+        putc<font color="#800000">(</font>c<font color="#800000">,</font>printer<font color="#800000">);</font>
+      <font color="#800000">}</font>
+    <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> EOF<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+  <font color="#800000">}</font>
+  fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+  fclose<font color="#800000">(</font>printer<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_10.c.html">Príklad pr8_10.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_10.c citanie po slovach
+   so zadanim nazvu suboru cez parametre*/</i></font>
+
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>int</b></font> argc<font color="#800000">, <b>char</b> *</font>argv<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> oneword<font color="#800000">[</font><font color="#ff0080">100</font><font color="#800000">];</font>
+  <font color="#800000"><b>char</b> *</font>c<font color="#800000">;</font>
+
+  <font color="#800000"><b>if</b>(</font>argc<font color="#800000">==</font><font color="#ff0080">1</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s filename\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b>(</font>argc <font color="#800000">&gt;</font> <font color="#ff0080">2</font><font color="#800000">)</font>printf<font color="#800000">(</font><font color="#0080c0">&quot;Pozor! Spracuje sa iba 1. parameter!\n&quot;</font><font color="#800000">);</font>
+    fp <font color="#800000">=</font> fopen<font color="#800000">(</font>argv<font color="#800000">[</font><font color="#ff0080">1</font><font color="#800000">],</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+    <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File [%s] doesn't exist\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">1</font><font color="#800000">]);</font>
+    <font color="#800000"><b>else</b></font>
+    <font color="#800000">{</font>
+      <font color="#800000"><b>do</b></font>
+      <font color="#800000">{</font>
+        c <font color="#800000">=</font> fgets<font color="#800000">(</font>oneword<font color="#800000">,</font><font color="#ff0080">100</font><font color="#800000">,</font>fp<font color="#800000">);</font>  <font color="#0000a0"><i>/* get one word from the file */</i></font>
+        <font color="#800000"><b>if</b>(</font>c <font color="#800000">!=</font> NULL<font color="#800000">)</font>
+        printf<font color="#800000">(</font><font color="#0080c0">&quot;%s&quot;</font><font color="#800000">,</font>oneword<font color="#800000">);</font>     <font color="#0000a0"><i>/* display it on the monitor */</i></font>
+      <font color="#800000">} <b>while</b> (</font>c <font color="#800000">!=</font> NULL<font color="#800000">);</font>  <font color="#0000a0"><i>/* repeat until EOF (end of file) */</i></font>
+    <font color="#800000">}</font>
+    fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_11.c.html">Príklad pr8_11.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_11.c cislovanie riadkov
+   so zadanim nazvu suboru cez parametre*/</i></font>
+
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+<font color="#008000">#define MAX 80</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>int</b></font> argc<font color="#800000">, <b>char</b> *</font>argv<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> line<font color="#800000">[</font>MAX<font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font> ln<font color="#800000">;</font>
+
+  <font color="#800000"><b>if</b> (</font>argc <font color="#800000">==</font> <font color="#ff0080">1</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s filename\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b> (</font>argc <font color="#800000">&gt;</font> <font color="#ff0080">2</font><font color="#800000">)</font>printf<font color="#800000">(</font><font color="#0080c0">&quot;Pozor! Spracuje sa iba 1. parameter!\n&quot;</font><font color="#800000">);</font>
+    fp <font color="#800000">=</font> fopen<font color="#800000">(*++</font>argv<font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">);</font>
+    <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font>
+    <font color="#800000">{</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>else</b></font>
+    <font color="#800000">{</font>
+      ln<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+      <font color="#800000"><b>while</b> (</font>fgets<font color="#800000">(</font>line<font color="#800000">,</font>MAX<font color="#800000">,</font>fp<font color="#800000">))</font>  <font color="#0000a0"><i>/* get one line from the file */</i></font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;%3d : %s&quot;</font><font color="#800000">,++</font>ln<font color="#800000">,</font>line<font color="#800000">);</font>
+      fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+    <font color="#800000">}</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_12.c.html">Príklad pr8_12.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_12.c kopirovanie so zadanim
+   nazvov suborov cez parametre*/</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;io.h&gt;</font>
+<font color="#008000">#include &lt;fcntl.h&gt;</font>
+<font color="#008000">#include &lt;sys/stat.h&gt;</font>
+<font color="#008000">#define MAXB 512</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>int</b></font> argc<font color="#800000">, <b>char</b> *</font>argv<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>char</b></font> buf<font color="#800000">[</font>MAXB<font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font> in<font color="#800000">,</font>out<font color="#800000">,</font>lng<font color="#800000">;</font>
+
+  <font color="#800000"><b>if</b> (</font>argc <font color="#800000">==</font> <font color="#ff0080">1</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1 file2\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else if</b> (</font>argc <font color="#800000">==</font> <font color="#ff0080">2</font><font color="#800000">)</font>printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1 file2\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b>((</font>in<font color="#800000">=</font>open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_RDONLY<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>if</b>((</font>out<font color="#800000">=</font>open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_CREAT<font color="#800000">|</font>O_RDWR<font color="#800000">,</font>S_IWRITE<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>while</b>((</font>lng<font color="#800000">=</font>read<font color="#800000">(</font>in<font color="#800000">,</font>buf<font color="#800000">,</font>MAXB<font color="#800000">)) &gt;</font> <font color="#ff0080">0</font><font color="#800000">)</font> write<font color="#800000">(</font>out<font color="#800000">,</font>buf<font color="#800000">,</font>lng<font color="#800000">);</font>
+    close<font color="#800000">(</font>in<font color="#800000">);</font>
+    close<font color="#800000">(</font>out<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_13.c.html">Príklad pr8_13.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_13.c zapis a citanie v rezime text,
+   binarny a na nižšej &#250;rovni IO</i></font>
+<font color="#0000a0"><i>   porovnanie prístupu k s&#250;boru   */</i></font>
+
+<font color="#008000">#include &quot;stdio.h&quot;</font>
+<font color="#008000">#include &lt;io.h&gt;</font>
+<font color="#008000">#include &lt;fcntl.h&gt;</font>
+<font color="#008000">#include &lt;sys/stat.h&gt;</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>fp<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> c<font color="#800000">[</font><font color="#ff0080">2</font><font color="#800000">];</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">,</font>h<font color="#800000">;</font>
+
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;SS.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;w&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File SS.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    fprintf<font color="#800000">(</font>fp<font color="#800000">,</font><font color="#0080c0">&quot;%d&quot;</font><font color="#800000">,</font>pocet<font color="#800000">);</font>
+    fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;SS.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;rb&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File SS.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    fscanf<font color="#800000">(</font>fp<font color="#800000">,</font><font color="#0080c0">&quot;%d&quot;</font><font color="#800000">,&amp;</font>pocet<font color="#800000">);</font>
+    fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet (text) = %d\n&quot;</font><font color="#800000">,</font>pocet<font color="#800000">);</font>
+  fp <font color="#800000">=</font> fopen<font color="#800000">(</font><font color="#0080c0">&quot;SS.TXT&quot;</font><font color="#800000">,</font><font color="#0080c0">&quot;rb&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>fp <font color="#800000">==</font> NULL<font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File SS.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    fread<font color="#800000">(</font>c<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">),</font><font color="#ff0080">1</font><font color="#800000">,</font>fp<font color="#800000">);</font>
+    fclose<font color="#800000">(</font>fp<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  sscanf<font color="#800000">(</font>c<font color="#800000">,</font><font color="#0080c0">&quot;%d&quot;</font><font color="#800000">,&amp;</font>pocet<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet (blok) = %d c=%c%c\n&quot;</font><font color="#800000">,</font>pocet<font color="#800000">,</font>c<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">],</font>c<font color="#800000">[</font><font color="#ff0080">1</font><font color="#800000">]);</font>
+  h <font color="#800000">=</font> open<font color="#800000">(</font><font color="#0080c0">&quot;SS.TXT&quot;</font><font color="#800000">,</font>O_RDONLY<font color="#800000">);</font>
+  <font color="#800000"><b>if</b> (</font>h <font color="#800000">== -</font><font color="#ff0080">1</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;File SS.TXT doesn't exist\n&quot;</font><font color="#800000">);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    read<font color="#800000">(</font>h<font color="#800000">,</font>c<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">));</font>
+    close<font color="#800000">(</font>h<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  sscanf<font color="#800000">(</font>c<font color="#800000">,</font><font color="#0080c0">&quot;%d&quot;</font><font color="#800000">,&amp;</font>pocet<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet (IO uroven) = %d c=%c%c\n&quot;</font><font color="#800000">,</font>pocet<font color="#800000">,</font>c<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">],</font>c<font color="#800000">[</font><font color="#ff0080">1</font><font color="#800000">]);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_14.c.html">Príklad pr8_14.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_14.c zapis do suboru p.txt
+   so zadanim nazvu suboru cez parametre*/</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;io.h&gt;</font>
+<font color="#008000">#include &lt;fcntl.h&gt;</font>
+<font color="#008000">#include &lt;sys/stat.h&gt;</font>
+
+<font color="#008000">#define MAX 10</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>int</b></font> argc<font color="#800000">, <b>char</b> *</font>argv<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> in<font color="#800000">,</font>out<font color="#800000">,</font>lng<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">,</font>min<font color="#800000">=</font><font color="#ff0080">1</font><font color="#800000">,</font>max<font color="#800000">=</font><font color="#ff0080">99</font><font color="#800000">;</font>
+  <font color="#800000"><b>float</b></font> x<font color="#800000">[</font>MAX<font color="#800000">],</font>y<font color="#800000">[</font>MAX<font color="#800000">];</font>
+
+  <font color="#800000"><b>for</b>(</font>lng<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>lng<font color="#800000">&lt;</font>MAX<font color="#800000">;</font>lng<font color="#800000">++)</font>
+  <font color="#800000">{</font>
+    x<font color="#800000">[</font>lng<font color="#800000">]=</font>lng<font color="#800000">+</font><font color="#ff0080">1</font><font color="#800000">;</font>
+    y<font color="#800000">[</font>lng<font color="#800000">]=</font><font color="#ff0080">2.5</font><font color="#800000">+</font>lng<font color="#800000">;</font>
+  <font color="#800000">}</font>
+  <font color="#800000"><b>if</b> (</font>argc <font color="#800000">==</font> <font color="#ff0080">1</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1 file2\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else if</b>(</font>argc <font color="#800000">==</font> <font color="#ff0080">2</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1 file2\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b> ((</font>in <font color="#800000">=</font> open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_RDONLY<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>if</b>((</font>out<font color="#800000">=</font>open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_CREAT<font color="#800000">|</font>O_TRUNC<font color="#800000">|</font>O_BINARY<font color="#800000">,</font>S_IWRITE<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>pocet<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">));</font>
+    write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(</font>min<font color="#800000">));</font>
+    write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>max<font color="#800000">,<b>sizeof</b>(</font>max<font color="#800000">));</font>
+    <font color="#800000"><b>for</b>(</font>lng<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>lng<font color="#800000">&lt;</font>MAX<font color="#800000">;</font>lng<font color="#800000">++)</font>
+    <font color="#800000">{</font>
+      write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>x<font color="#800000">[</font>lng<font color="#800000">],<b>sizeof</b>(<b>float</b>));</font>
+      write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>y<font color="#800000">[</font>lng<font color="#800000">],<b>sizeof</b>(<b>float</b>));</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;i=%d x=%f y=%f\n&quot;</font><font color="#800000">,</font>lng<font color="#800000">,</font>x<font color="#800000">[</font>lng<font color="#800000">],</font>y<font color="#800000">[</font>lng<font color="#800000">]);</font>
+    <font color="#800000">}</font>
+    close<font color="#800000">(</font>in<font color="#800000">);</font> close<font color="#800000">(</font>out<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr8_15.c.html">Príklad pr8_15.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_15.c zapis do suboru nacitanim z 2 suborov</i></font>
+<font color="#0000a0"><i> so zadanim nazvu suboru cez parametre</i></font>
+<font color="#0000a0"><i> 1.subor   - vytvoreny ulohou pr8_14 (p.txt)</i></font>
+<font color="#0000a0"><i> 2.subor - ASCII, pocet+1 riadkov  (p1.txt)</i></font>
+<font color="#0000a0"><i> 3.subor - kombinacia 1. a 2.suboru (p2.txt)  */</i></font>
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;string.h&gt;</font>
+<font color="#008000">#include &lt;io.h&gt;</font>
+<font color="#008000">#include &lt;fcntl.h&gt;</font>
+<font color="#008000">#include &lt;sys/stat.h&gt;</font>
+
+<font color="#008000">#define MAX 50</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>int</b></font> argc<font color="#800000">, <b>char</b> *</font>argv<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  FILE <font color="#800000">*</font>in2<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> in1<font color="#800000">,</font>out<font color="#800000">,</font>lng<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">,</font>min<font color="#800000">,</font>max<font color="#800000">;</font>
+  <font color="#800000"><b>float</b></font> x<font color="#800000">,</font>y<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> line<font color="#800000">[</font>MAX<font color="#800000">];</font>
+
+  <font color="#800000"><b>if</b> (</font>argc <font color="#800000">&lt;</font> <font color="#ff0080">4</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1 file2 file3\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b> ((</font>in1 <font color="#800000">=</font> open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_RDONLY<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>if</b> ((</font>in2 <font color="#800000">=</font> fopen<font color="#800000">(*++</font>argv<font color="#800000">,</font><font color="#0080c0">&quot;r&quot;</font><font color="#800000">)) ==</font> NULL<font color="#800000">)</font>
+    <font color="#800000">{</font>
+      perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>if</b>((</font>out<font color="#800000">=</font>open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_CREAT<font color="#800000">|</font>O_TRUNC<font color="#800000">,</font>S_IWRITE<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>pocet<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">));</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(</font>min<font color="#800000">));</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>max<font color="#800000">,<b>sizeof</b>(</font>max<font color="#800000">));</font>
+    write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>pocet<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">));</font>
+    write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(</font>min<font color="#800000">));</font>
+    write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>max<font color="#800000">,<b>sizeof</b>(</font>max<font color="#800000">));</font>
+    <font color="#800000"><b>for</b>(</font>lng<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>lng<font color="#800000">&lt;</font>pocet<font color="#800000">+</font><font color="#ff0080">1</font><font color="#800000">;</font>lng<font color="#800000">++)</font>
+    <font color="#800000">{</font>
+      fgets<font color="#800000">(</font>line<font color="#800000">,</font>MAX<font color="#800000">,</font>in2<font color="#800000">);</font>
+      min<font color="#800000">=</font>strlen<font color="#800000">(</font>line<font color="#800000">);</font>
+      write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(<b>int</b>));</font>
+      write<font color="#800000">(</font>out<font color="#800000">,</font>line<font color="#800000">,</font>strlen<font color="#800000">(</font>line<font color="#800000">));</font>
+    <font color="#800000">}</font>
+    min<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>
+    <font color="#800000"><b>while</b>((</font>lng<font color="#800000">=</font>read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>x<font color="#800000">,<b>sizeof</b>(<b>float</b>)))&gt;</font><font color="#ff0080">0</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>y<font color="#800000">,<b>sizeof</b>(<b>float</b>));</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;%d x=%f y=%f\n&quot;</font><font color="#800000">,</font>min<font color="#800000">++,</font>x<font color="#800000">,</font>y<font color="#800000">);</font>
+      write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>x<font color="#800000">,<b>sizeof</b>(<b>float</b>));</font>
+      write<font color="#800000">(</font>out<font color="#800000">,&amp;</font>y<font color="#800000">,<b>sizeof</b>(<b>float</b>));</font>
+    <font color="#800000">}</font>
+    close<font color="#800000">(</font>in1<font color="#800000">);</font>
+    fclose<font color="#800000">(</font>in2<font color="#800000">);</font>
+    close<font color="#800000">(</font>out<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+<p><a href="Zdrojaky/Pr8_16.c.html">Príklad pr8_16.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_16.c citanie zo suboru
+   so zadanim nazvu suboru cez parametre</i></font>
+<font color="#0000a0"><i>   vytvoreneho ulohou pr8_15   */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;string.h&gt;</font>
+<font color="#008000">#include &lt;io.h&gt;</font>
+<font color="#008000">#include &lt;fcntl.h&gt;</font>
+<font color="#008000">#include &lt;sys/stat.h&gt;</font>
+
+<font color="#008000">#define MAX 50</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>int</b></font> argc<font color="#800000">, <b>char</b> *</font>argv<font color="#800000">[])</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> in1<font color="#800000">,</font>lng<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">,</font>min<font color="#800000">,</font>max<font color="#800000">;</font>
+  <font color="#800000"><b>float</b></font> x<font color="#800000">,</font>y<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> line<font color="#800000">[</font>MAX<font color="#800000">];</font>
+
+  <font color="#800000"><b>if</b> (</font>argc <font color="#800000">==</font> <font color="#ff0080">1</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else if</b> (</font>argc <font color="#800000">&gt;</font> <font color="#ff0080">2</font><font color="#800000">)</font> printf<font color="#800000">(</font><font color="#0080c0">&quot;Volanie: %s file1\n&quot;</font><font color="#800000">,</font>argv<font color="#800000">[</font><font color="#ff0080">0</font><font color="#800000">]);</font>
+  <font color="#800000"><b>else</b></font>
+  <font color="#800000">{</font>
+    <font color="#800000"><b>if</b>((</font>in1<font color="#800000">=</font>open<font color="#800000">(*++</font>argv<font color="#800000">,</font>O_RDONLY<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [%s]\n&quot;</font><font color="#800000">,*</font>argv<font color="#800000">);</font>
+      exit<font color="#800000">();</font>
+    <font color="#800000">}</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>pocet<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">));</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(</font>min<font color="#800000">));</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>max<font color="#800000">,<b>sizeof</b>(</font>max<font color="#800000">));</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet = %d\n&quot;</font><font color="#800000">,</font>pocet<font color="#800000">);</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Min = %d   Max = %d\n&quot;</font><font color="#800000">,</font>min<font color="#800000">,</font>max<font color="#800000">);</font>
+    <font color="#800000"><b>for</b>(</font>lng<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>lng<font color="#800000">&lt;</font>pocet<font color="#800000">+</font><font color="#ff0080">1</font><font color="#800000">;</font>lng<font color="#800000">++)</font>
+    <font color="#800000">{</font>
+      read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(<b>int</b>));</font>
+      read<font color="#800000">(</font>in1<font color="#800000">,</font>line<font color="#800000">,</font>min<font color="#800000">);</font>
+      line<font color="#800000">[</font>min<font color="#800000">]=</font><font color="#ff8080">'\0'</font><font color="#800000">;</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;%d. %s&quot;</font><font color="#800000">,</font>lng<font color="#800000">,</font>line<font color="#800000">);</font>
+    <font color="#800000">}</font>
+    <font color="#800000"><b>while</b>((</font>lng<font color="#800000">=</font>read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>x<font color="#800000">,<b>sizeof</b>(<b>float</b>)))&gt;</font><font color="#ff0080">0</font><font color="#800000">)</font>
+    <font color="#800000">{</font>
+      read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>y<font color="#800000">,<b>sizeof</b>(<b>float</b>));</font>
+      printf<font color="#800000">(</font><font color="#0080c0">&quot;x,y: %f %f\n&quot;</font><font color="#800000">,</font>x<font color="#800000">,</font>y<font color="#800000">);</font>
+    <font color="#800000">}</font>
+    close<font color="#800000">(</font>in1<font color="#800000">);</font>
+  <font color="#800000">}</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+
+<p><a href="Zdrojaky/Pr8_17.c.html">Príklad pr8_17.c</a> :</p>
+
+<pre><code><font color="#000000">
+<font color="#0000a0"><i>/* priklad pr8_17.c citanie
+   zo suboru vytvoreneho ulohou p7_13 (p2.txt)</i></font>
+<font color="#0000a0"><i>   prikazy tell a seek  */</i></font>
+
+<font color="#008000">#include &lt;stdio.h&gt;</font>
+<font color="#008000">#include &lt;string.h&gt;</font>
+<font color="#008000">#include &lt;io.h&gt;</font>
+<font color="#008000">#include &lt;fcntl.h&gt;</font>
+<font color="#008000">#include &lt;sys/stat.h&gt;</font>
+
+<font color="#008000">#define MAX 50</font>
+
+<font color="#800000"><b>void</b></font> main<font color="#800000">(<b>void</b>)</font>
+<font color="#800000">{</font>
+  <font color="#800000"><b>int</b></font> in1<font color="#800000">,</font>lng<font color="#800000">;</font>
+  <font color="#800000"><b>int</b></font> pocet<font color="#800000">,</font>min<font color="#800000">,</font>max<font color="#800000">;</font>
+  <font color="#800000"><b>float</b></font> x<font color="#800000">,</font>y<font color="#800000">;</font>
+  <font color="#800000"><b>char</b></font> line<font color="#800000">[</font>MAX<font color="#800000">];</font>
+
+  <font color="#800000"><b>if</b> ((</font>in1 <font color="#800000">=</font> open<font color="#800000">(</font><font color="#0080c0">&quot;p2.txt&quot;</font><font color="#800000">,</font>O_RDONLY<font color="#800000">)) == -</font><font color="#ff0080">1</font><font color="#800000">)</font>
+  <font color="#800000">{</font>
+    perror<font color="#800000">(</font><font color="#0080c0">&quot;Error &quot;</font><font color="#800000">);</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;Can't open [p2.txt]\n&quot;</font><font color="#800000">);</font>
+    exit<font color="#800000">();</font>
+  <font color="#800000">}</font>
+  read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>pocet<font color="#800000">,<b>sizeof</b>(</font>pocet<font color="#800000">));</font>
+  read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(</font>min<font color="#800000">));</font>
+  read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>max<font color="#800000">,<b>sizeof</b>(</font>max<font color="#800000">));</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Pocet = %d\n&quot;</font><font color="#800000">,</font>pocet<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Min = %d   Max = %d\n&quot;</font><font color="#800000">,</font>min<font color="#800000">,</font>max<font color="#800000">);</font>
+  max<font color="#800000">=</font>tell<font color="#800000">(</font>in1<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Poloha 1 v subore je %d\n&quot;</font><font color="#800000">,</font>max<font color="#800000">);</font>
+  <font color="#800000"><b>for</b>(</font>lng<font color="#800000">=</font><font color="#ff0080">0</font><font color="#800000">;</font>lng<font color="#800000">&lt;</font>pocet<font color="#800000">+</font><font color="#ff0080">1</font><font color="#800000">;</font>lng<font color="#800000">++)</font>
+  <font color="#800000">{</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,&amp;</font>min<font color="#800000">,<b>sizeof</b>(<b>int</b>));</font>
+    read<font color="#800000">(</font>in1<font color="#800000">,</font>line<font color="#800000">,</font>min<font color="#800000">);</font>
+    line<font color="#800000">[</font>min<font color="#800000">]=</font><font color="#ff8080">'\0'</font><font color="#800000">;</font>
+    printf<font color="#800000">(</font><font color="#0080c0">&quot;%d. %s&quot;</font><font color="#800000">,</font>lng<font color="#800000">,</font>line<font color="#800000">);</font>
+  <font color="#800000">}</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Poloha 2 v subore je %d\n&quot;</font><font color="#800000">,</font>tell<font color="#800000">(</font>in1<font color="#800000">));</font>
+  lseek<font color="#800000">(</font>in1<font color="#800000">,</font>max<font color="#800000">,</font>SEEK_SET<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Poloha (SEEK_SET) v subore je %d\n&quot;</font><font color="#800000">,</font>tell<font color="#800000">(</font>in1<font color="#800000">));</font>
+  lseek<font color="#800000">(</font>in1<font color="#800000">,</font><font color="#ff0080">0L</font><font color="#800000">,</font>SEEK_CUR<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Poloha (SEEK_CUR) v subore je %d\n&quot;</font><font color="#800000">,</font>tell<font color="#800000">(</font>in1<font color="#800000">));</font>
+  lseek<font color="#800000">(</font>in1<font color="#800000">,</font><font color="#ff0080">0L</font><font color="#800000">,</font>SEEK_END<font color="#800000">);</font>
+  printf<font color="#800000">(</font><font color="#0080c0">&quot;Poloha (SEEK_END) v subore je %d\n&quot;</font><font color="#800000">,</font>tell<font color="#800000">(</font>in1<font color="#800000">));</font>
+  close<font color="#800000">(</font>in1<font color="#800000">);</font>
+<font color="#800000">}</font>
+
+</font>
+</code></pre>
+
+</div>
+
+
+</body>
+
+</html>
+

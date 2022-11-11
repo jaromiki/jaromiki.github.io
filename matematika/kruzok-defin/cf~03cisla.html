@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+<meta name="Content-language" content="sk">
+	<LINK href="../css/style.css" type="text/css" rel=stylesheet>
+</head>
+
+<body>
+<H4>Vlastnosti čísel - deliteľnosť</h4>
+
+<br>Deliteľnosť je definovaná na množine celých čísel (v tejto časti uvažujem každé číslo ako celé)
+	<br><font size="+1" color="Blue">Def.</font>
+	<br>Hovoríme, že a delí b (píšeme a|b ) práve vtedy keď existuje také c že a*c=b
+	<br>(dá sa ukázať, že hľadané c je jediné)
+	<hr>
+	<br><font size="+1" color="Blue">Vlastnosti:</font>
+	<br>reflexívnosť: x|x
+	<br>tranzitívnosť: x|y a y|z =&gt; x|z
+	<br>x|y a x|z =&gt; x|(y+z)
+	<br>x|y alebo x|z =&gt; x|(y*z)
+	<br>x|y a x|(y+z) =&gt; x|z
+	<br>x|y a x|z =&gt; pre ľubovoľné a,b platí: x|(ay+bz) 
+	<hr>
+	<br>Ku ľubovoľnému číslu vytvorme množinu jeho deliteľov, potom pre túto množinu platí:
+	<br>Lema: táto množina je konečná
+	<br>Lema: táto množina obsahuje 1
+	<br>Ak ku dvom číslam vytvoríme množinu deliteľov, tak tieto množiny majú neprázdny prienik
+	<br><br><font size="+1" color="Blue">Def. najväčší spoločný deliteľ</font>
+	<br>Majmä dve celé čísla a,b. Vytvorme množinu M všetkých <b>c</b> takých že <b>c</b>|<b>a</b> a <b>c</b>|<b>b</b> 
+	<br>Maximum množiny M nazveme najväčší spoločný deliteľ (píšeme nsd(a,b))
+	<br><font color="Blue">Vlastnosti:</font>
+	<br>nsd(a,0) = |a|
+	<br>nsd(a,a) = |a|
+	<br>nsd(a,b) = nsd(b,a)
+	<br>nsd(a,b) = nsd(|a|,|b|)
+	<br>nsd(a,b) = nsd(a-b,b)
+	<br>nsd(a,b,c) = nsd(nsd(a,b),c) = nsd(a,nsd(b,c))
+	<br>Veta: nsd(a,b)=nsd(a%b,b) 
+	<br><font color="Blue">Príklady:</font>
+	<br>Zisti koľko riešení v NxN má rovnica: NSD(a,b)+NSN(a,b) = 63
+	<br>Príklad 2.1.6. Dokážte, že po sebe idúce hodnoty polynómu f(n) = n^4 + n^2 + 1 pre pridzené n sú súdeliteľné:
+	<br>Riešenie:		
+	<br>f(1) = 3
+	<br>f(2) = 21 = 3.7
+	<br>f(3) = 91 = 7.13
+	<br>f(4) = 273 = 3.7.13
+	<br>f(5) = 651 = 3.7.31
+	<br>Z prvých vypočítaných hodnôt sa zdá, že po sebe idúce čísla majú vždy spoločného deliteľa väčšieho ako 1, teda, že sú súdeliteľné. Ľahko sa môžeme presvedčiť 		o tom, že to tak bude skutočne pre ľubovoľné n. Platí totiž
+	<br>f(n) = n^4 + n^2 + 1 = (n^2 - n + 1)(n^2 + n + 1),
+	<br>f(n + 1) = [(n + 1)2 - (n + 1) + 1][(n + 1)2 + (n + 1) + 1] = (n^2 + n + 1)(n^2 + 3n + 3).
+	<br>Nájdi nsd(f(n),f(n+1))
+	<br>Nájdi nsd(n^3-1, n^2-1)
+	<br>Nájdi nsd(2n+1, 2n-1)
+	<br>Veta2: Nech a|b, a|c. Potom pre ľubovoľné celé x,y platí: a|bx+cy. &nbsp; &nbsp;Urob dôkaz.
+	<br>Veta3: Nech nsd(a,b)=d. Potom existujú také celé čísla x<sub>0</sub>,y<sub>0</sub> že, d= ax<sub>0</sub>+by<sub>0</sub>. 	
+	<br>Dôkaz: Nájdeme x<sub>1</sub> a y<sub>1</sub> také že dd=ax<sub>1</sub>+by<sub>1</sub> bude najmenšie kladné ukážeme, že je rovné nsd
+	<br> &nbsp; &nbsp;nájdime q,r tak aby a=dd*q+r, kde 0&lt;=r&lt;dd
+	<br> &nbsp; &nbsp;teda r=a-dd*q=a-(ax<sub>1</sub>+by<sub>1</sub>)*q=a*(1-x<sub>1</sub>)+b*(-qy<sub>1</sub>)
+	<br> &nbsp; &nbsp;teda aj r sme zapísali v tvare lin. kombinácie ako aj dd a r je &gt;=0 a menšie ako dd, čiže r musí byť 0
+	<br> &nbsp; &nbsp;čiže dd delí a. Podobne sa dá dokázať že dd delí aj b.
+	<br> &nbsp; &nbsp;podľa vety2 d|ax<sub>1</sub>+by<sub>1</sub> a teda dd=d
+	<br><br><br><font size="+1" color="Blue">Def. Súdeliteľnosť</font>
+	<br>Čísla a,b nazveme súdeliteľné &lt;=&gt; nsd(a,b)&gt;1	  
+	<br>Čísla a,b nazveme nesúdeliteľné &lt;=&gt; nsd(a,b)=1	  
+	<br><br><font size="+1" color="Blue">Def. Kongruentnosť</font>
+	<br>Hovoríme, že čísla a,b sú kongruentné modulo m ak po delení m dávajú rovnaké zvyšky (a%m == b%m)
+	<br>Iná def.
+	<br>Hovoríme, že a je kongruentné s b modulo m a píšeme a = b (mod m), ak rozdiel a-b je deliteľný m. 
+	<br>Číslo m nazývame modul kongruencie.
+
+	<br><font color="Blue">Vlastnosti</font>	
+	<br>(a+b)%m == (a%m + b%m)%m ... použitie chceme zistiť zvyšok po deleni súčtu viacerých veľmi veľkých čísel
+	<br>(a*b)%m == (a%m * b%m)%m ... použitie chceme zistiť zvyšok po deleni súčinu viacerých veľmi veľkých čísel
+	<br>(a^b)%m == (a%m)^b)%m ... použitie chceme zistiť zvyšok po deleni mocniny veľkých čísel
+	<br>(a^(b*c))%m == (((a%m)^b)%m)^c)%m ... použitie chceme zistiť zvyšok po deleni mocniny veľkých čísel
+	<br>Pre každé prvočíslo p a každé celé n  platí :
+	<br> &nbsp; &nbsp; n<sup>p</sup> = n ( mod p).
+	<br> &nbsp; &nbsp; inak povedané n<sup>p</sup> %p = n % p  
+
+	<br>Príklady: 
+	<ul>	<li>Dokáž, že 12 | n^5-n^3
+		<li>Dokáž, že 133 | 11^(n+2)-12^(2n+1)
+		<li>Uvažujme zobrazenief:N^2›N dané nasledovne:
+			<br>f(0,0)=0;
+			<br>f(n+1,k)= f(n,k)+2(n+k+2)
+			<br>f(n,k+1)= f(n,k)+2(n+k+1)
+			<br>Dokážte, že pre všetky n,k?N platí: f(n,k) = (n+k+2)^2-n-3k-2.
+		<li>Dokážte, že pre všetky prirodzené čísla n?2 platí> n^2?2n.
+		<li>Dokáž, že rovnica a^2+b^2=3c^2 nemá v NxNxN riešenie
+		<li>Dokáž, že rovnica a^2=35b^2 nemá v NxN riešenie
+		<li>Dokáž, že rovnica a^2 -5b=27 nemá v NxN riešenie
+		<li>Dokážte, že pre všetky prirodzené n, n>=8 existujú a,b?N tak, že platí: n= 3a+5b
+		<li>Nájdi všetky prir. n aby čísla 2^n-1, 2^n+1 boli prvočísla
+		<li> Ma tabuli sú čísla od 1 po n. Postupne budeme mazať dvojice [a,b] a>b, a na tabuľu dopíšeme a-b
+		<li>Dá sa určiť či posledné číslo na tabuli bude párne alebo nepárne?
+		<li>Pre ktoré n má rovnica i^n -7j=17 riešenie v NxN
+			<br>pomoc - i^n mod 7 = 3 
+		<li>Zisti zvyšok po delení 3 čísla 1234567891234567891234567891^2
+		<li>ak cif. súčet prirodzeného čísla n je deliteľný 3 tak 3|n 
+		<li>Zisti zvyšok po delení čísla 60<sup>222</sup> číslom 11
+	</ul>
+</dl>
+
+
+</body>
+</html>

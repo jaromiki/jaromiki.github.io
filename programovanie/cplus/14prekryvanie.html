@@ -1,0 +1,93 @@
+<html>
+<head>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+	 <meta name="Content-language" content="sk">	
+	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
+	<title>Prekrývanie funkcií a operátorov</title>
+</head>
+
+<body>
+<dl><dt style="background:#ff99ff; color:#0000ff; font-size:larger" >Prekrývanie funkcií:
+	<dd>
+	Nasledovná látka platí pre C++, kde je možné zadefinovať viac funkcií s rovnakým menom a volanie
+	tej "správnej" je určené podľa parametrov, obdobne operátory. Už sne sa stretli s funkciami na výpočet absolútnej hodnoty
+	abs, fasb, labs - správnu funkciu zvolíme podľa typu argumentu (a teda aj výsledku).
+	<br>V C++ je možné zaviesť jednu funkciu (teda rôzne funkcie s rovnakým názvom) pre všetky typy.
+	<br>Príklad:
+	<code><pre>
+// deklarácie
+int krat(int, int);              //funkcia na násobenie celých čísel
+long krat(long, long);           //funkcia na násobenie veľkých celých čísel
+double krat(double, double);     //funkcia na násobenie reálnych 
+complex krat(complex, complex);   //funkcia na násobenie komplexných čísel
+...
+// defininície
+int krat(int a, int b)
+{ return a*b; }
+long krat(long a, long b)
+{ return a*b; }
+double krat(double a, double b)
+{ return a*b; }
+complex krat(complex a, complex b)
+{complex c;
+ c.x = a.x*b.x-a.y*b.y; 
+ c.y = a.x*b.y+a.y*b.x; 
+return c; }
+	</pre></code>
+	<br><br>
+	Pozn.
+	<ol>
+	<li>Pri volaní sa zvolí funkcia podľa názvu, ak je takých viac zvolí sa podľa typu premenných.
+		<br>Typ funkcie je nepodstatný pre voľbu "správnej" funkcie.
+	<li>Dopredná deklarácia funkcií je tu nutnosť
+	<li>Pri volaní je potrebné dodržať typy premenných, aby voľba fuznkcie bola jednoznačná
+		<br>nie je možné volať krat(2.0, 5), takú funkciu nemáme.
+	</ol>
+    <dl><dt style="color:#0000ff" >Úloha:
+	<dd>Pripomeňme si ako sa dá vypočítať koreň polynomu, ak máme "dobrý" odhad koreňa.<br><br>
+	<table bgcolor="Silver" border="1">
+	<tr><td>
+	<code><pre>
+double ries(double x1,double eps)
+{ double x2=x1+eps+eps;
+  while (abs(x2-x1)>eps)
+  { x2=x1;
+    x1=x2-f(x2)/df(x2);
+  }
+  return x1;
+}</pre></code>
+	</table>
+	<br>
+	Ak máme funkcie fx a jej deriváciu dfx, môžme funkciou <font color="Fuchsia">ries</font> vypočítať reálny koreň. 
+	Za fx volíme polynom.
+	<br>doplňte o funkciu double f(x), df(x) a main v ktorom načítame 
+	<br>1. stupeň polynómu
+	<br>2. koeficienty polynómu a0,...an
+	<br>a zavoláme ries.
+	Problém nastane ak chceme určiť koreň, ktorý je komplexný. Upravte podprogram, aby vedel nájsť aj komplexné korene.
+	<br>Celý výpočet funkcie sa skomplikuje, namiesto operátorov + - * / musíme volať podprogramy, tiež výpočet absolútnej hodnoty
+	a novej hodnoty x1 musí prebehnúť v komplexnej aritmetike. 
+	</dl>
+	<dt style="background:#ff99ff; color:#0000ff; font-size:larger" >Prekrývanie operátorov
+	<dd>Podobne ako môžu existovať viaceré funkcie s rovnakým názvom môžu existovať aj operátory, ktoré podľa argumentov môžu konať
+		odlišne, navyše môžme aj známe operátory predefinovať. Našou úlohou teraz bude zaviesť operátory + - * / aj pre parametre typu
+		complex.
+		<dl><dt>syntax:
+			<dd><font color="Blue">	complex operator + (complex a, complex b)
+									<br>{ complex temp;
+									<br>  temp.x= a.x + b.x;
+									<br>  temp.y= a.y + b.y;
+									<br>  return temp;
+									<br>}   
+				</font>
+				<br><br>Postup je teda úplne analogický ako pri funkcii.
+	 		<dt>sémantika:
+			<dd>Pri použití operátora + s komplexnými operátormi sa zavolá uvedený blok. 
+			    Na operátor + medzi číslami nemá táto definícia vplyv.
+				<br>Týmto postupom môžme predefinovať aj operátory medzi číslami a dať im inú funkciu - význam.
+        <dt style="color:#0000ff" >Úloha:
+		<dd>Vytvorte operátory + - * / pre prácu s komplexnými číslami a napíšte program na hľadanie komplexných koreňov polynomu s reálnymi koeficientami.
+		</dl>		 
+</dl>  
+</body>
+</html>

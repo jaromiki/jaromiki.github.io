@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grafika</title>
+	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
+ 	 <meta name="Content-language" content="sk">	
+	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
+	<script>
+        var canvas; var context;
+		var stena=new Image();
+		var cert=new Image();
+		var plocha=new Array();
+		var surcert=new Array();
+		 surcert[0]=new Array(); surcert[1]=new Array(); surcert[2]=new Array(); surcert[3]=new Array();
+		var poccert=4;
+		var i; var j; var xx; var yy;
+		stena.src="obr/stena.png";
+		cert.src="obr/cert.png";
+		surcert[0][0]=0; surcert[0][1]=0;             
+		surcert[1][0]=0; surcert[1][1]=560;
+		surcert[2][0]=760; surcert[2][1]=0;
+		surcert[3][0]=760; surcert[3][1]=560;
+		var smercert=new Array(2,1,3,0);
+		
+		function pohyb()
+		{var xx; var yy;
+		  for (i=0;i<4;i++) context.fillRect(surcert[i][0], surcert[i][1], 40, 40); 
+		  for (i=0;i<4;i++) 
+		   {  xx=surcert[i][0]/40; yy=surcert[i][1]/40; 
+		     if (smercert[i] ==0)
+			  { if ((surcert[i][1]%40)==0 && plocha[yy][xx+1]==1) smercert[i]=1;
+			    else surcert[i][1]-=2;}
+             if (smercert[i] ==1)
+			  { if ((surcert[i][0]%40)==0 && plocha[yy+1][xx+2]==1) smercert[i]=2;
+                else surcert[i][0]+=2; }
+			 if (smercert[i] ==2)  
+			   {if ((surcert[i][1]%40)==0 && plocha[yy+2][xx+1]==1) smercert[i]=3;
+			   else surcert[i][1]+=2; }
+			 if (smercert[i] ==3)  
+			   {if ((surcert[i][0]%40)==0 && plocha[yy+1][xx]==1) smercert[i]=0;
+    			else  surcert[i][0]-=2; }
+			context.drawImage(cert,surcert[i][0],surcert[i][1],40,40); 
+		  }	
+		   for (i=0;i<4;i++) context.drawImage(cert,surcert[i][0],surcert[i][1],40,40); 
+		}  
+
+		function init()
+		{	canvas = document.getElementById("platno");
+   			if (canvas.getContext) 
+   			{ context = canvas.getContext("2d");
+				context.fillStyle = "#a8c101";
+    			context.fillRect(0, 0, 800, 600); 
+			}
+			plocha[0]=new Array(22);
+			for (i=1;i<16;i++)
+			{plocha[i]=new Array(22);
+		    	for(j=1;j<21;j++) plocha[i][j]=0;
+			}	
+			plocha[16]=new Array(22);	
+			for (j=0;j<22;j++) plocha[0][j]=plocha[16][j]=1;
+		    for(i=0;i<17;i++) plocha[i][0]=plocha[i][21]=1;
+		}
+		function kresli()
+		{ for (i=0;i<15;i++)
+		    for(j=0;j<20;j++) if (pole.value.charAt(i*21+j)=='1') 
+			{ context.drawImage(stena,j*40,i*40,40,40);
+			  plocha[i+1][j+1]=1;
+			}
+			else plocha[i+1][j+1]=0;
+		  for (i=0;i<4;i++) context.drawImage(cert,surcert[i][0],surcert[i][1],40,40);	
+		  alert (plocha[0][0]+"' "+plocha[0][1]+"' "+plocha[2][0]+"' "+plocha[2][1]);
+		}		
+		</script>  
+</head>
+
+<body  onload="init();">
+<center><h3 class=nadpis>Bludisko-plošinovka</h3></center>
+<dl><dt class=main>Načítanie hracieho poľa
+	<dd>Pri tvorbe hry plošinovky je základom načítanie hracieho poľa do premenných a vykreslenie hracieho poľa, ja som zvolil veľkosť hracieho poľa 800x600
+		pri veľkosti jedného políčka 40x40. Tým vznikne "šachovnica" 20x15, postavy sa pohybujú z políčka do políčka (môžu byť aj medzi políčkami) ale meniť smer môžu
+		len keď sú presne v danom políčku. Hracie pole bude zadané v txt súbore napr. pomocou číslic 0-9, kde každá číslica má nejaký význam
+		<br>napr. teraz zvolím
+		<ul><li>0 ... voľné políčko
+			<li>1 ... stena-prekážka kam sa nedá ísť
+			<li>2-9... máme rezervu ak budeme chcieť vkladať "prémiové" predmety poklady, diamanty a pod
+		</ul>
+		Tu bude txt súbor nasimulovaný v memo, môžete hodnoty meniť len treba dodržať rozmer 20x15.	
+	
+<div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
+   <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
+	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0" onclick="window.clearInterval(window.tr);">
+   </div>
+  	<div style="background-color:silver; width:850px;" 
+	 onmousemove="if (canvas.getContext) rect(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );"
+	onmousedown="if (canvas.getContext) mdole(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" 
+	onmouseup="if (canvas.getContext) mhore(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );">
+<canvas width="800" height="600" id="platno" style="margin:6">
+   <br>Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.<br>
+</canvas>
+</div>
+<input type="Button" value="vykresli" onclick="kresli();"> &nbsp; <input type="Button" value="start" onclick="window.tr=window.setInterval('pohyb()',10);"><br>
+<textarea cols="22" rows="16" id="pole">
+00001000000000000000
+00001000011110000000
+00001000010010000000
+00001111100010000000
+00000000000010000000
+11111100000000000000
+00000100010010000000
+00000111111110000000
+00000000100000000000
+00000000100011111110
+00000000100010000000
+00000000100010000000
+00000000110110000000
+00000000000000000000
+00000000000000000000
+</textarea>
+
+</div>
+<br>
+
+	<dt>Podporné akcie
+	<dd>Každý grafický program by mal vedieť svoj vytvorený obrázok zapísať na disk, čo možno spraviť
+		cez menu alebo cez tlačítko. Príkaz je nasledovný
+		<br>Image1.Pictures.SaveToFile('subor.bmp');
+		<br><br>Na voľbu farby možno použiť ColorDialog alebo ColorGrid
+</dl>
+</body>
+</html>
