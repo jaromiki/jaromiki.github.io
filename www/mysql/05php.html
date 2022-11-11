@@ -9,38 +9,38 @@
 </head>
 
 <body>
-<h2>Príkazy PHP pre MySQL</h2>
-V minulej èasti sme si ukázali ako získa dáta z MySQL databázy pomocou rozhrania http (PHP jazyka + prehliadaèa), 
-teraz ukáem ako dáta v databáze meni (pridáva, ruši a editova záznamy)
-<h3>Vkladanie nového záznamu</h3>
-Na vkladanie záznamov v jazyku MySQL máme príkaz INSERT a jeho monosti mono pozrie v èasti o príkazoch MySQL. 
-<br>Jeho typická syntax je: 
+<h2>PrÃ­kazy PHP pre MySQL</h2>
+V minulej Äasti sme si ukÃ¡zali ako zÃ­skaÅ¥ dÃ¡ta z MySQL databÃ¡zy pomocou rozhrania http (PHP jazyka + prehliadaÄa), 
+teraz ukÃ¡Å¾em ako dÃ¡ta v databÃ¡ze meniÅ¥ (pridÃ¡vaÅ¥, ruÅ¡iÅ¥ a editovaÅ¥ zÃ¡znamy)
+<h3>Vkladanie novÃ©ho zÃ¡znamu</h3>
+Na vkladanie zÃ¡znamov v jazyku MySQL mÃ¡me prÃ­kaz INSERT a jeho moÅ¾nosti moÅ¾no pozrieÅ¥ v Äasti o prÃ­kazoch MySQL. 
+<br>Jeho typickÃ¡ syntax je: 
 <p style="background-color:silver">
-INSERT INTO [názov tabu¾ky] (ståpec, ...) VALUES (hodnota, ...) 
+INSERT INTO [nÃ¡zov tabuÄ¾ky] (stÄºpec, ...) VALUES (hodnota, ...) 
 </p>
-To platí v prípade, e dáta do tabu¾ky vkladáme z kódu a pridá to len jeden riadok. 
-<br>Zadávané ståpce uvádzame v okrúhlych zátvorkách podobne ako odpovedajúce hodnoty.
-<br>Hodnotz môu obsahova názvy ståpcov,ktorım u boli priradené hodnoty 
-<br>Dáta však môeme vklada aj z inej tabu¾ky. Potom je syntax nasledovné:
+To platÃ­ v prÃ­pade, Å¾e dÃ¡ta do tabuÄ¾ky vkladÃ¡me z kÃ³du a pridÃ¡ to len jeden riadok. 
+<br>ZadÃ¡vanÃ© stÄºpce uvÃ¡dzame v okrÃºhlych zÃ¡tvorkÃ¡ch podobne ako odpovedajÃºce hodnoty.
+<br>Hodnotz mÃ´Å¾u obsahovaÅ¥ nÃ¡zvy stÄºpcov,ktorÃ½m uÅ¾ boli priradenÃ© hodnoty 
+<br>DÃ¡ta vÅ¡ak mÃ´Å¾eme vkladaÅ¥ aj z inej tabuÄ¾ky. Potom je syntax nasledovnÃ©:
 <p style="background-color:silver">
-INSERT INTO [názov tabu¾ky] (ståpec, ...) SELECT ... 
+INSERT INTO [nÃ¡zov tabuÄ¾ky] (stÄºpec, ...) SELECT ... 
 </p>
-a dodajme, e táto syntax môe vloi všeobecne nula a ve¾a riadkov. Tabu¾ka, do ktorej vkladáme, musí v databáze u existova. 
-Ak by neexistovala, mali by sme ju najprv vytvori príkazom CREATE TABLE. 
-Príkaz INSERT patrí medzi tzv manipulaèné príkazy jazyka SQL. To znamená, e po jeho pouití sa dáta v databáze môu zmeni. 
-Èo sa po SELECT nikdy nestane, SELECT je teda naproti tomu vıberovı príkaz.
+a dodajme, Å¾e tÃ¡to syntax mÃ´Å¾e vloÅ¾iÅ¥ vÅ¡eobecne nula aÅ¾ veÄ¾a riadkov. TabuÄ¾ka, do ktorej vkladÃ¡me, musÃ­ v databÃ¡ze uÅ¾ existovaÅ¥. 
+Ak by neexistovala, mali by sme ju najprv vytvoriÅ¥ prÃ­kazom CREATE TABLE. 
+PrÃ­kaz INSERT patrÃ­ medzi tzv manipulaÄnÃ© prÃ­kazy jazyka SQL. To znamenÃ¡, Å¾e po jeho pouÅ¾itÃ­ sa dÃ¡ta v databÃ¡ze mÃ´Å¾u zmeniÅ¥. 
+ÄŒo sa po SELECT nikdy nestane, SELECT je teda naproti tomu vÃ½berovÃ½ prÃ­kaz.
 <h3>Insert pomocou PHP</h3>
-Ako ste asi èakali, v PHP sa pridávajúce otázky tie realizujú pomocou funkcie mysql_query. 
-V prípade manipulaènıch dotazov vracia funkcia mysql_query TRUE ak sa vydarila, v ostatnıch prípadoch vracia FALSE. 
-Funkcia mysql_query teda nijako nevracia poèet vloenıch záznamov. Ten môeme zisti pomocou inej funkcie, a síce <b>mysql_affected_rows</b>. 
-Tá funguje tak, e vráti poèet vloenıch (zmenenıch, odstránenıch) riadkov ovplyvnenıch poslednom manipulaènım dotazom. 
-Ak poslednı manipulaènı dotaz zlyhal, vracia -1.
-<h3>Menenie záznamov</h3>
-Z databázy u vieme záznamy vybera a vieme ich do nej vklada. Ïalší úkon, ktorı nás èaká je vedie dáta upravi alebo aktualizova.
+Ako ste asi Äakali, v PHP sa pridÃ¡vajÃºce otÃ¡zky tieÅ¾ realizujÃº pomocou funkcie mysql_query. 
+V prÃ­pade manipulaÄnÃ½ch dotazov vracia funkcia mysql_query TRUE ak sa vydarila, v ostatnÃ½ch prÃ­padoch vracia FALSE. 
+Funkcia mysql_query teda nijako nevracia poÄet vloÅ¾enÃ½ch zÃ¡znamov. Ten mÃ´Å¾eme zistiÅ¥ pomocou inej funkcie, a sÃ­ce <b>mysql_affected_rows</b>. 
+TÃ¡ funguje tak, Å¾e vrÃ¡ti poÄet vloÅ¾enÃ½ch (zmenenÃ½ch, odstrÃ¡nenÃ½ch) riadkov ovplyvnenÃ½ch poslednom manipulaÄnÃ½m dotazom. 
+Ak poslednÃ½ manipulaÄnÃ½ dotaz zlyhal, vracia -1.
+<h3>Menenie zÃ¡znamov</h3>
+Z databÃ¡zy uÅ¾ vieme zÃ¡znamy vyberaÅ¥ a vieme ich do nej vkladaÅ¥. ÄalÅ¡Ã­ Ãºkon, ktorÃ½ nÃ¡s ÄakÃ¡ je vedieÅ¥ dÃ¡ta upraviÅ¥ alebo aktualizovaÅ¥.
 
 
 Zase trocha SQL
-V SQL sa k aktualizácii riadku alebo riadkov v databáze pouíva príkaz UPDATE. UPDATE narozdiel od INSERT nevkladá do databázy iadne riadky, ale upravuje existujúce dáta. To znamená, e vykonáte ak na tabulkce príkaz UPDATE, poèet riadkov v tejto tabu¾ke sa nezmení, ale môu sa zmeni údaje v jednotlivıch riadkoch. V MySQL je pochopite¾ne aj k príkazu UPDATE rozsiahla dokumentácia. Jeho najprimitívnejšie forma potom je: 
+V SQL sa k aktualizÃ¡cii riadku alebo riadkov v databÃ¡ze pouÅ¾Ã­va prÃ­kaz UPDATE. UPDATE narozdiel od INSERT nevkladÃ¡ do databÃ¡zy Å¾iadne riadky, ale upravuje existujÃºce dÃ¡ta. To znamenÃ¡, Å¾e vykonÃ¡te ak na tabulkce prÃ­kaz UPDATE, poÄet riadkov v tejto tabuÄ¾ke sa nezmenÃ­, ale mÃ´Å¾u sa zmeniÅ¥ Ãºdaje v jednotlivÃ½ch riadkoch. V MySQL je pochopiteÄ¾ne aj k prÃ­kazu UPDATE rozsiahla dokumentÃ¡cia. Jeho najprimitÃ­vnejÅ¡ie forma potom je: 
 
 
 

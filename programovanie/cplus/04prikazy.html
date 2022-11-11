@@ -3,71 +3,71 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 	 <meta name="Content-language" content="sk">	
 	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
-	<title>Príkazy - výrazové príkazy</title>
+	<title>PrĂ­kazy - vĂ˝razovĂ© prĂ­kazy</title>
 </head>
 
 <body>
 <dl>
 	<dt><font color="Blue">Opakovanie:</font>
 	<dd><ol>
-	<li>Ako sa určí typ výsledku výrazu
-	<li>Je možné reálny výraz priradiť do celočíselnej premennej?
-	<li>Čo je výsledkom výrazu (b=0,a=b++==0) a prečo.
-	<li>Ako zabezpečiť aby nasledovný výraz bol reálny (&gt;0):
+	<li>Ako sa urÄŤĂ­ typ vĂ˝sledku vĂ˝razu
+	<li>Je moĹľnĂ© reĂˇlny vĂ˝raz priradiĹĄ do celoÄŤĂ­selnej premennej?
+	<li>ÄŚo je vĂ˝sledkom vĂ˝razu (b=0,a=b++==0) a preÄŤo.
+	<li>Ako zabezpeÄŤiĹĄ aby nasledovnĂ˝ vĂ˝raz bol reĂˇlny (&gt;0):
 		<br>&nbsp; &nbsp; &nbsp; char a=4,b=5; float c;
 		<br>&nbsp; &nbsp; &nbsp; c=a/b;
-	<li>Čo je obsabom celočíselných premenných a,b,c
+	<li>ÄŚo je obsabom celoÄŤĂ­selnĂ˝ch premennĂ˝ch a,b,c
 		<br>a=2,b=5,c=a==b?a++:b++;
-	<li>Čo je obsabom celočíselných premenných a,b,c
+	<li>ÄŚo je obsabom celoÄŤĂ­selnĂ˝ch premennĂ˝ch a,b,c
 		<br>a=2,b=5,c=a?a:b==b?a++:b++;
-	<li>Čo je obsabom celočíselných premenných a,b,c
+	<li>ÄŚo je obsabom celoÄŤĂ­selnĂ˝ch premennĂ˝ch a,b,c
 		<br>a=2,b=5,c=(a?a:b)==b?a++:b++;
 </ol>
 </dl>
-Bez príkazov sa zmysluplné programy písať nedajú. Teraz je čas si príkazy vysvetliť trochu detailnejšie.
-<dl><dt>Výrazový príkaz
-	<dd>každý výraz sa pridaním bodkočiarky zmení na príkaz.
-	<br>Príklady:
+Bez prĂ­kazov sa zmysluplnĂ© programy pĂ­saĹĄ nedajĂş. Teraz je ÄŤas si prĂ­kazy vysvetliĹĄ trochu detailnejĹˇie.
+<dl><dt>VĂ˝razovĂ˝ prĂ­kaz
+	<dd>kaĹľdĂ˝ vĂ˝raz sa pridanĂ­m bodkoÄŤiarky zmenĂ­ na prĂ­kaz.
+	<br>PrĂ­klady:
 	<br>x = y = 3.14*2; 
 	<br>puts("Ahoj");
 	<br>cout &lt;&lt; "Konecne viem programovat";
 	<br>5/2; &nbsp; //prikaz je spravny, ale nema zmysel
 	<br>i++;
-	<dt>Zložený príkaz, blok
-	<dd>podobne ako v pascale aj v C-čku sa na niektorom mieste vyžaduje 1 príkaz. Ak tam potrebujeme 
-		vložiť príkazov viac, uzavrieme ich zátvorkami a vznikne jeden zložený príkaz. Zložený príkaz
-		ktorý má deklaračnú časť sa častejšie nazýva blok.
-		<br>(v jazyku C možno deklarovať premenné len na začiatku bloku, v C++ možno zadeklarovať premennú hocikde medzi príkazmi programu)
-		<br>teda v každom zloženom príkaze možno zadeklarovať nové premenné platné v tomto bloku.
+	<dt>ZloĹľenĂ˝ prĂ­kaz, blok
+	<dd>podobne ako v pascale aj v C-ÄŤku sa na niektorom mieste vyĹľaduje 1 prĂ­kaz. Ak tam potrebujeme 
+		vloĹľiĹĄ prĂ­kazov viac, uzavrieme ich zĂˇtvorkami a vznikne jeden zloĹľenĂ˝ prĂ­kaz. ZloĹľenĂ˝ prĂ­kaz
+		ktorĂ˝ mĂˇ deklaraÄŤnĂş ÄŤasĹĄ sa ÄŤastejĹˇie nazĂ˝va blok.
+		<br>(v jazyku C moĹľno deklarovaĹĄ premennĂ© len na zaÄŤiatku bloku, v C++ moĹľno zadeklarovaĹĄ premennĂş hocikde medzi prĂ­kazmi programu)
+		<br>teda v kaĹľdom zloĹľenom prĂ­kaze moĹľno zadeklarovaĹĄ novĂ© premennĂ© platnĂ© v tomto bloku.
 		<br>Syntax:
-		<br> &nbsp; { deklarácie a príkazy }
-		<br> &nbsp; Pozn. - za } sa nepíše bodkočiarka, aj posledný príkaz pred } musí mať bodkočiarku
-		<br> &nbsp; Príklad: {int pom; pom=x; x=y; y=pom;}
-	<dt>Prázdny	príkaz:
-	<dd>samotná bodkočiarka tvorí prázdny príkaz (rovnako ako v pascale)
-	<dt>Ukončenie programu:
-	<dd>return; //ukončí funkciu bez návratovej hodnoty
-	<br>return hodnota; //ukončí funkciu s návratovou hodnotou
-	<br>exit( hodnota ); //ukončí celý program s návratovou hodnotou
-	<dt>Príkazy vetvenia
-	<dd>Bude im venovaná samostatná kapitola
-	<dt>Príkazy cyklu
-	<dd>Bude im venovaná samostatná kapitola
-	<dt>Príkaz na ukončenie cyklu, vetvy switchu, zloženého príkazu
-	<dd>break; &nbsp; //pozri príkaz switch a cykly
-	<dt>Úlohy
-	<dd><ul><li>Načítaj 3 znaky a zisti koľko z nich je písmeno malej ang. abecedy
-			<li>Načítaj 3 znaky/čísla a zisti, či aspoň dva sú rovnaké
-			<li>nacitaj 3 ciferné číslo a zisti či jeho ciferný súčet delí to číslo
-			<Li>nacitaj 3 ciferné číslo a zisti, či ono alebo jeho ľavý/pravý sused sú symetrické čísla
-			<li>načítaj tri čísla a zisti, či tvoria strany trojuholníka
-			<li>načítaj dva znaky = písmeno ang. abecedy, zisti koľko písmen je medzi nimi (ak nemaju rovnaku veľkosť zmen jedno z nich)
-			<li>Naprogramuj výpočet povrchu a objemu kocky danej telesovou uhlopriečkou.
-			<li>Naprogramuj výpočet povrchu a objemu kvadra daného telesovou uhlopriečkou, ak vieme, že a=2*b=4*c.
-			<li>zisti koľko korún mám v banke po 6-tich rokoch ak som vložil 1.1.xxxx sumu
-				10 000Sk a úrok bol 20%. Každý ďalší rok bol úrok polovicu predošlého roku a nakonci 
-				roku strhnú poplatok za vedenie 20Sk. 	
-			<li>Na vstupe je celé číslo S (finančná hotovosť v €), napíš mincovku (používame bankovky 200, 100, 50, 20, 10, 5 a mince 2, 1) 
+		<br> &nbsp; { deklarĂˇcie a prĂ­kazy }
+		<br> &nbsp; Pozn. - za } sa nepĂ­Ĺˇe bodkoÄŤiarka, aj poslednĂ˝ prĂ­kaz pred } musĂ­ maĹĄ bodkoÄŤiarku
+		<br> &nbsp; PrĂ­klad: {int pom; pom=x; x=y; y=pom;}
+	<dt>PrĂˇzdny	prĂ­kaz:
+	<dd>samotnĂˇ bodkoÄŤiarka tvorĂ­ prĂˇzdny prĂ­kaz (rovnako ako v pascale)
+	<dt>UkonÄŤenie programu:
+	<dd>return; //ukonÄŤĂ­ funkciu bez nĂˇvratovej hodnoty
+	<br>return hodnota; //ukonÄŤĂ­ funkciu s nĂˇvratovou hodnotou
+	<br>exit( hodnota ); //ukonÄŤĂ­ celĂ˝ program s nĂˇvratovou hodnotou
+	<dt>PrĂ­kazy vetvenia
+	<dd>Bude im venovanĂˇ samostatnĂˇ kapitola
+	<dt>PrĂ­kazy cyklu
+	<dd>Bude im venovanĂˇ samostatnĂˇ kapitola
+	<dt>PrĂ­kaz na ukonÄŤenie cyklu, vetvy switchu, zloĹľenĂ©ho prĂ­kazu
+	<dd>break; &nbsp; //pozri prĂ­kaz switch a cykly
+	<dt>Ăšlohy
+	<dd><ul><li>NaÄŤĂ­taj 3 znaky a zisti koÄľko z nich je pĂ­smeno malej ang. abecedy
+			<li>NaÄŤĂ­taj 3 znaky/ÄŤĂ­sla a zisti, ÄŤi aspoĹ dva sĂş rovnakĂ©
+			<li>nacitaj 3 cifernĂ© ÄŤĂ­slo a zisti ÄŤi jeho cifernĂ˝ sĂşÄŤet delĂ­ to ÄŤĂ­slo
+			<Li>nacitaj 3 cifernĂ© ÄŤĂ­slo a zisti, ÄŤi ono alebo jeho ÄľavĂ˝/pravĂ˝ sused sĂş symetrickĂ© ÄŤĂ­sla
+			<li>naÄŤĂ­taj tri ÄŤĂ­sla a zisti, ÄŤi tvoria strany trojuholnĂ­ka
+			<li>naÄŤĂ­taj dva znaky = pĂ­smeno ang. abecedy, zisti koÄľko pĂ­smen je medzi nimi (ak nemaju rovnaku veÄľkosĹĄ zmen jedno z nich)
+			<li>Naprogramuj vĂ˝poÄŤet povrchu a objemu kocky danej telesovou uhloprieÄŤkou.
+			<li>Naprogramuj vĂ˝poÄŤet povrchu a objemu kvadra danĂ©ho telesovou uhloprieÄŤkou, ak vieme, Ĺľe a=2*b=4*c.
+			<li>zisti koÄľko korĂşn mĂˇm v banke po 6-tich rokoch ak som vloĹľil 1.1.xxxx sumu
+				10 000Sk a Ăşrok bol 20%. KaĹľdĂ˝ ÄŹalĹˇĂ­ rok bol Ăşrok polovicu predoĹˇlĂ©ho roku a nakonci 
+				roku strhnĂş poplatok za vedenie 20Sk. 	
+			<li>Na vstupe je celĂ© ÄŤĂ­slo S (finanÄŤnĂˇ hotovosĹĄ v â‚¬), napĂ­Ĺˇ mincovku (pouĹľĂ­vame bankovky 200, 100, 50, 20, 10, 5 a mince 2, 1) 
 				<br> &nbsp; &nbsp;Napr. S=10573
 				<br> &nbsp; &nbsp;200 ... 52
 				<br> &nbsp; &nbsp;100 ...  1

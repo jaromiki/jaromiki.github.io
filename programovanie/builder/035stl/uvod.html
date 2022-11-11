@@ -4,77 +4,77 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
  	 <meta name="Content-language" content="sk">	
 	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
-	 <title>Úvod</title>
+	 <title>Ăšvod</title>
 
 </head>
 
 <body>
-<h3 class="main">Knižnica STL</h3>
-Gratulujem tým, ktorí sa prebojovali až sem čím sa mmôžu zaradiť už medzi programátorov v jazyku C. V tejto kapitole prejdeme najpokročilejšiu
-súčasť jazyka C a to knižnicu STL. Existencia tejto knižnice pre jazyk C je pre programátora veľkým dôvodom opustiť jazyk pascal, pre ktorý som 
-podobnú profesionálnu knižnicu nenašiel. 
-<br>STL knižnica poskytuje univerzálne šablónové triedy a funkcie, ktoré implementujú množstvo všeobecne používaných algoritmov a dátových štruktúr.
-Zahŕňa napríklad podporu vektorov, zoznamov, haldu, frontu a pod. Aby ste mohli chápať STL knižnicu je vhodné si zopakovať dynamické štruktúry a tiež
-prácu s triedami (šablónami).
-<br>Úplný popis STL knižnice by zaplnil celú knihu, a preto sa obmedzíme na základné prvky tejto knižnice.
-Jadrom knižnice sú tri časti:
+<h3 class="main">KniĹľnica STL</h3>
+Gratulujem tĂ˝m, ktorĂ­ sa prebojovali aĹľ sem ÄŤĂ­m sa mmĂ´Ĺľu zaradiĹĄ uĹľ medzi programĂˇtorov v jazyku C. V tejto kapitole prejdeme najpokroÄŤilejĹˇiu
+sĂşÄŤasĹĄ jazyka C a to kniĹľnicu STL. Existencia tejto kniĹľnice pre jazyk C je pre programĂˇtora veÄľkĂ˝m dĂ´vodom opustiĹĄ jazyk pascal, pre ktorĂ˝ som 
+podobnĂş profesionĂˇlnu kniĹľnicu nenaĹˇiel. 
+<br>STL kniĹľnica poskytuje univerzĂˇlne ĹˇablĂłnovĂ© triedy a funkcie, ktorĂ© implementujĂş mnoĹľstvo vĹˇeobecne pouĹľĂ­vanĂ˝ch algoritmov a dĂˇtovĂ˝ch ĹˇtruktĂşr.
+ZahĹ•Ĺa naprĂ­klad podporu vektorov, zoznamov, haldu, frontu a pod. Aby ste mohli chĂˇpaĹĄ STL kniĹľnicu je vhodnĂ© si zopakovaĹĄ dynamickĂ© ĹˇtruktĂşry a tieĹľ
+prĂˇcu s triedami (ĹˇablĂłnami).
+<br>ĂšplnĂ˝ popis STL kniĹľnice by zaplnil celĂş knihu, a preto sa obmedzĂ­me na zĂˇkladnĂ© prvky tejto kniĹľnice.
+Jadrom kniĹľnice sĂş tri ÄŤasti:
 <ul><li>kontajnery
 	<li>algoritmy
-	<li>iterátory
+	<li>iterĂˇtory
 </ul>	
-V časti kontajnery sú nadefinované dynamické štruktúry a aj základné operácie vhodné pre tú ktorú konkrétnu štruktúru , 
-	v časti algoritmy sú zadefinované zložitejšie operácie so štruktúrami popísanými v časti kontajneri, iterátory sú objekty, 
-	ktoré umožňujú prechádzať štruktúry podobne ako sa smerníkmi prechádzajú polia.
+V ÄŤasti kontajnery sĂş nadefinovanĂ© dynamickĂ© ĹˇtruktĂşry a aj zĂˇkladnĂ© operĂˇcie vhodnĂ© pre tĂş ktorĂş konkrĂ©tnu ĹˇtruktĂşru , 
+	v ÄŤasti algoritmy sĂş zadefinovanĂ© zloĹľitejĹˇie operĂˇcie so ĹˇtruktĂşrami popĂ­sanĂ˝mi v ÄŤasti kontajneri, iterĂˇtory sĂş objekty, 
+	ktorĂ© umoĹľĹujĂş prechĂˇdzaĹĄ ĹˇtruktĂşry podobne ako sa smernĂ­kmi prechĂˇdzajĂş polia.
 <dl>
 <dt class="main">Kontajnery
-<dd>Kontajnery sú teda objekty na ukladanie dát.
-	<br>Popíšem tu tieto objekty:
-	<ul><li>vector - dynamické pole
-			<br> &nbsp; používame ak sa uprednostňuje priamy prístup k prvkom (konštantný čas)
-			<br> &nbsp; vkladanie nakoniec je tiež v konštantnom čase
-			<br> &nbsp; vkladanie a odstraňovanie iných prvkov je v lineárnom čase 
-			<br> &nbsp; ak často potrebujeme vkladať prvky na začiatok poľa volíme radšej deque 
-			<br> &nbsp; vyhľadávanie v utriedenom je logaritmická zložitosť
-		<li>deque - obojstranná fronta a tiež pole
-			<br> &nbsp; funguje ako vector ale má niektoré zaujímavé "vylepšenia", čo je zaplatené väčšou pamäťovou náročnosťou
-			<br> &nbsp; vkladanie/rušenie na oba konce poľa sú v konštantnom čase
-			<br> &nbsp; vyhľadávanie v utriedenom je logaritmická zložitosť
-			<br> &nbsp; vkladanie mimo konce poľa je v lineárnom čase (ak je to základ práce volíme radšej set)
-			<br> &nbsp; narozdiel od vector nie je v pamäti súvislý, čo má výhodu, že pri prekročení capacita 
-			<br> &nbsp;  &nbsp;  &nbsp; sa nemusí celá štruktúra premiestňovať, nemusí v halde existovať "diera" požadovanej veľkosti
-			<br> &nbsp;  &nbsp;  &nbsp; ale nemôžeme predať API funkcii ako parameter
-		<li>stack - zásobník (jednosmerný zoznam)
-			<br> &nbsp; vkladanie a odstraňovanie je možné len na jednom konci (LIFO)
-			<br> &nbsp; nie možné robiť prechod cez prvky
-			<br> &nbsp; nie možné robiť zmeny prvkov
-			<br> &nbsp; nie možné pracovať s iterátormi
-			<br> &nbsp; zásobník možno vcelku jednoducho nasimulovať pomocou poľa, vektora, deque alebo listu
-		<li>queue - front (jednosmerný zoznam)
-			<br> &nbsp; vkladanie je na jednom konci a odstraňovanie je na druhom konci (FIFO)
-			<br> &nbsp; nemáme priamy prístup ku prvkom, môžme však používať prechod cez iterátory
-			<br> &nbsp; vsúvanie prvku na aktuálnu pozíciu, resp. rušenie prvku je v konštantnom čase
-			<br> &nbsp; vyhľadávanie prvku je vždy lineárne, ak často vyhľadávame volíme radšej set
-		<li>list - lineárny obojstranný zoznam
-			<br> &nbsp; ako deque len prechádzať možno oboma smermi
-		<li>set - binárny utriedený strom (samovyvažujúci)
-			<br> &nbsp; vkladanie, odstraňovanie a vyhľadávanie prvkov je v logaritmickom čase 
-			<br> &nbsp; prístup ku najmenšiemu/najväčšiemu prvku je logaritmický
+<dd>Kontajnery sĂş teda objekty na ukladanie dĂˇt.
+	<br>PopĂ­Ĺˇem tu tieto objekty:
+	<ul><li>vector - dynamickĂ© pole
+			<br> &nbsp; pouĹľĂ­vame ak sa uprednostĹuje priamy prĂ­stup k prvkom (konĹˇtantnĂ˝ ÄŤas)
+			<br> &nbsp; vkladanie nakoniec je tieĹľ v konĹˇtantnom ÄŤase
+			<br> &nbsp; vkladanie a odstraĹovanie inĂ˝ch prvkov je v lineĂˇrnom ÄŤase 
+			<br> &nbsp; ak ÄŤasto potrebujeme vkladaĹĄ prvky na zaÄŤiatok poÄľa volĂ­me radĹˇej deque 
+			<br> &nbsp; vyhÄľadĂˇvanie v utriedenom je logaritmickĂˇ zloĹľitosĹĄ
+		<li>deque - obojstrannĂˇ fronta a tieĹľ pole
+			<br> &nbsp; funguje ako vector ale mĂˇ niektorĂ© zaujĂ­mavĂ© "vylepĹˇenia", ÄŤo je zaplatenĂ© vĂ¤ÄŤĹˇou pamĂ¤ĹĄovou nĂˇroÄŤnosĹĄou
+			<br> &nbsp; vkladanie/ruĹˇenie na oba konce poÄľa sĂş v konĹˇtantnom ÄŤase
+			<br> &nbsp; vyhÄľadĂˇvanie v utriedenom je logaritmickĂˇ zloĹľitosĹĄ
+			<br> &nbsp; vkladanie mimo konce poÄľa je v lineĂˇrnom ÄŤase (ak je to zĂˇklad prĂˇce volĂ­me radĹˇej set)
+			<br> &nbsp; narozdiel od vector nie je v pamĂ¤ti sĂşvislĂ˝, ÄŤo mĂˇ vĂ˝hodu, Ĺľe pri prekroÄŤenĂ­ capacita 
+			<br> &nbsp;  &nbsp;  &nbsp; sa nemusĂ­ celĂˇ ĹˇtruktĂşra premiestĹovaĹĄ, nemusĂ­ v halde existovaĹĄ "diera" poĹľadovanej veÄľkosti
+			<br> &nbsp;  &nbsp;  &nbsp; ale nemĂ´Ĺľeme predaĹĄ API funkcii ako parameter
+		<li>stack - zĂˇsobnĂ­k (jednosmernĂ˝ zoznam)
+			<br> &nbsp; vkladanie a odstraĹovanie je moĹľnĂ© len na jednom konci (LIFO)
+			<br> &nbsp; nie moĹľnĂ© robiĹĄ prechod cez prvky
+			<br> &nbsp; nie moĹľnĂ© robiĹĄ zmeny prvkov
+			<br> &nbsp; nie moĹľnĂ© pracovaĹĄ s iterĂˇtormi
+			<br> &nbsp; zĂˇsobnĂ­k moĹľno vcelku jednoducho nasimulovaĹĄ pomocou poÄľa, vektora, deque alebo listu
+		<li>queue - front (jednosmernĂ˝ zoznam)
+			<br> &nbsp; vkladanie je na jednom konci a odstraĹovanie je na druhom konci (FIFO)
+			<br> &nbsp; nemĂˇme priamy prĂ­stup ku prvkom, mĂ´Ĺľme vĹˇak pouĹľĂ­vaĹĄ prechod cez iterĂˇtory
+			<br> &nbsp; vsĂşvanie prvku na aktuĂˇlnu pozĂ­ciu, resp. ruĹˇenie prvku je v konĹˇtantnom ÄŤase
+			<br> &nbsp; vyhÄľadĂˇvanie prvku je vĹľdy lineĂˇrne, ak ÄŤasto vyhÄľadĂˇvame volĂ­me radĹˇej set
+		<li>list - lineĂˇrny obojstrannĂ˝ zoznam
+			<br> &nbsp; ako deque len prechĂˇdzaĹĄ moĹľno oboma smermi
+		<li>set - binĂˇrny utriedenĂ˝ strom (samovyvaĹľujĂşci)
+			<br> &nbsp; vkladanie, odstraĹovanie a vyhÄľadĂˇvanie prvkov je v logaritmickom ÄŤase 
+			<br> &nbsp; prĂ­stup ku najmenĹˇiemu/najvĂ¤ÄŤĹˇiemu prvku je logaritmickĂ˝
 			  
 			
-		<li>string - objekt na prácu s textami
-		<li>unset - objekt na rýchle vyhľadávanie prvkov (hashovanie)
-		<li>bitset - množina=sada bitov, umožňuje pridávanie,rušenie, testovanie
-		<li>map - asociatívne pole (kľúč, hodnota)
-		<li>queue - front (jednosmerný zoznam)
-			<br> &nbsp; vkladanie je na jednom konci a odstraňovanie je na druhom konci (FIFO) 
-		<li>priority_queue - halda objekt ktorý vždy vie svoju max hodnotu 
+		<li>string - objekt na prĂˇcu s textami
+		<li>unset - objekt na rĂ˝chle vyhÄľadĂˇvanie prvkov (hashovanie)
+		<li>bitset - mnoĹľina=sada bitov, umoĹľĹuje pridĂˇvanie,ruĹˇenie, testovanie
+		<li>map - asociatĂ­vne pole (kÄľĂşÄŤ, hodnota)
+		<li>queue - front (jednosmernĂ˝ zoznam)
+			<br> &nbsp; vkladanie je na jednom konci a odstraĹovanie je na druhom konci (FIFO) 
+		<li>priority_queue - halda objekt ktorĂ˝ vĹľdy vie svoju max hodnotu 
 	</ul>	
 <dt class="main">Algoritmy
-<dd>Niektoré základné operácie s dátami, ktoré sa žiaci učia naprogramovať tu často možno iba zavolať. Ide najmä o triedenie, inicializáciu, vyhľadávanie, transformovanie obsahu.
-	Primárne sa predpokladá, že ich budeme aplikovať na objekty popísané v časti kontajnery, ale je možné ich aplikovať aj na polia.
-<dt class="main">Iterátory
-<dd>Ide o objekty veľmi podobných smerníkom (pozri kapitolu "dynamické pole"), možno pomocou nich sekvenčne prechádzať objekty-kontajnery, tiež sa používajú pri
-	určení miesta kam chceme vložiť/odstrániť prvok, niekedy je to návratová hodnota nejakého algoritmu.
+<dd>NiektorĂ© zĂˇkladnĂ© operĂˇcie s dĂˇtami, ktorĂ© sa Ĺľiaci uÄŤia naprogramovaĹĄ tu ÄŤasto moĹľno iba zavolaĹĄ. Ide najmĂ¤ o triedenie, inicializĂˇciu, vyhÄľadĂˇvanie, transformovanie obsahu.
+	PrimĂˇrne sa predpokladĂˇ, Ĺľe ich budeme aplikovaĹĄ na objekty popĂ­sanĂ© v ÄŤasti kontajnery, ale je moĹľnĂ© ich aplikovaĹĄ aj na polia.
+<dt class="main">IterĂˇtory
+<dd>Ide o objekty veÄľmi podobnĂ˝ch smernĂ­kom (pozri kapitolu "dynamickĂ© pole"), moĹľno pomocou nich sekvenÄŤne prechĂˇdzaĹĄ objekty-kontajnery, tieĹľ sa pouĹľĂ­vajĂş pri
+	urÄŤenĂ­ miesta kam chceme vloĹľiĹĄ/odstrĂˇniĹĄ prvok, niekedy je to nĂˇvratovĂˇ hodnota nejakĂ©ho algoritmu.
 
 </body>
 </html>

@@ -7,50 +7,50 @@
     <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
 </head>
 <body>
-<h3>Manuálna tvorba textúry</h3>
-V nasledovnom programe vytváram vzorku tvorenú šachovnicovo - kadé druhé políèko je èierne, biele políèka sú tieòované.
-Zelená farba pribúda doprava
+<h3>ManuÃ¡lna tvorba textÃºry</h3>
+V nasledovnom programe vytvÃ¡ram vzorku tvorenÃº Å¡achovnicovo - kaÅ¾dÃ© druhÃ© polÃ­Äko je Äierne, biele polÃ­Äka sÃº tieÅˆovanÃ©.
+ZelenÃ¡ farba pribÃºda doprava
 <br>
 <img src="textura1.jpg" width="435" height="320" border="0" alt="">  
 <br><br>
-<h3>Deklarácia textúry</h3>
-(volím systém RGB, kde kadá farba je zadaná hodnotou &lt;0;255&gt; ) 
+<h3>DeklarÃ¡cia textÃºry</h3>
+(volÃ­m systÃ©m RGB, kde kaÅ¾dÃ¡ farba je zadanÃ¡ hodnotou &lt;0;255&gt; ) 
 <table bgcolor="#ccccff"><tr><td>
 <code><pre>
     GL_UNSIGNED_BYTE bmp[256][256][3];
    // miesto pre texturu 256*256
 </pre></code>
 </table>
-<h3>Vytvorenie textúry</h3>
-Textúra bude tvorená šachovnicou 8x8 kde sa striedajú èierne políèka so svetlımi, prièom vo svetlıch políèkach pribúda 
-èervenej farby smerom nahor a zelenej pribúda smerom doprava
+<h3>Vytvorenie textÃºry</h3>
+TextÃºra bude tvorenÃ¡ Å¡achovnicou 8x8 kde sa striedajÃº Äierne polÃ­Äka so svetlÃ½mi, priÄom vo svetlÃ½ch polÃ­Äkach pribÃºda 
+Äervenej farby smerom nahor a zelenej pribÃºda smerom doprava
 <table bgcolor="#ccccff"><tr><td>
 <code><pre>
-char bmp[256][256][3]; //0 ... èervená, 1 ... zelená, 2 ... modrá
+char bmp[256][256][3]; //0 ... ÄervenÃ¡, 1 ... zelenÃ¡, 2 ... modrÃ¡
    for (int y=0;y<256;y++)             // pro vsechny radky pixmapy
         for (int x=0;x<256;x++)        // pro vsechny pixely na radku
         if ((y/32+x/32)%2)
             bmp[y][x][0]= bmp[y][x][1]= bmp[y][x][2]= 0;// cierne policko
         else
 		{   bmp[y][x][0]=x; bmp[y][x][1]=y; bmp[y][x][2]= 0; }
-    glEnable(GL_TEXTURE_2D);       // povolime texturu (toto nemusí by, lebo to máme zadané v Unit1.h) 
+    glEnable(GL_TEXTURE_2D);       // povolime texturu (toto nemusÃ­ byÅ¥, lebo to mÃ¡me zadanÃ© v Unit1.h) 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);      // v smere osi x povolime opakovanie textury
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);      // v smere osi y povolime opakovanie textury
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spôsob vıpoètu bodov (textura vacsia)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);  // spôsob vıpoètu bodov (textura mensia)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  // spÃ´sob vÃ½poÄtu bodov (textura vacsia)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);  // spÃ´sob vÃ½poÄtu bodov (textura mensia)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, &bmp);
 </pre></code>
 </table>
-<h3>Natiahnutie textúry</h3>
-textúra tım e sa "naahuje" na plochu sa rôzne deformuje, rozumné vısledky sú ak 
-<ul><li>útvar textury a rovinného útvaru sú podobné
-	<li>textúra je štvorec a rovinnı útvar je rovnobeník.
-	<li>textúra je štvorec a rovinnı útvar je trojuholník 
+<h3>Natiahnutie textÃºry</h3>
+textÃºra tÃ½m Å¾e sa "naÅ¥ahuje" na plochu sa rÃ´zne deformuje, rozumnÃ© vÃ½sledky sÃº ak 
+<ul><li>Ãºtvar textury a rovinnÃ©ho Ãºtvaru sÃº podobnÃ©
+	<li>textÃºra je Å¡tvorec a rovinnÃ½ Ãºtvar je rovnobeÅ¾nÃ­k.
+	<li>textÃºra je Å¡tvorec a rovinnÃ½ Ãºtvar je trojuholnÃ­k 
 </ul>
 <table bgcolor="#ccccff"><tr><td><img src="obr/textura1.png" width="558" height="428" border="0" alt="">
 <td><code><pre>
     glBegin(GL_QUADS);
-//štvorec sa natiahne na štvorec
+//Å¡tvorec sa natiahne na Å¡tvorec
         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +6, -2);
         glTexCoord2f(1.0, 0.0); glVertex3f(+6, +6, -2);
         glTexCoord2f(1.0, 1.0); glVertex3f(+6, -6, -2);
@@ -59,7 +59,7 @@ glEnd();</pre></code></tr>
 <tr><td><img src="obr/textura2.png" width="558" height="428" border="0" alt="">	
 <td><code><pre>
     glBegin(GL_QUADS);
-//štvorec sa natiahne na obdånik
+//Å¡tvorec sa natiahne na obdÄºÅ¾nik
         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +3, -1);
         glTexCoord2f(1.0, 0.0); glVertex3f(+6, +3, -1);
         glTexCoord2f(1.0, 1.0); glVertex3f(+6, -3, -1);
@@ -68,7 +68,7 @@ glEnd();</pre></code></tr>
 <tr><td><img src="obr/textura3.png" width="558" height="428" border="0" alt="">	
 <td><code><pre>
     glBegin(GL_QUADS);
-//štvorec sa natiahne na rovnobeník
+//Å¡tvorec sa natiahne na rovnobeÅ¾nÃ­k
         glTexCoord2f(0.0, 0.0); glVertex3f(-6, +3, 0);
         glTexCoord2f(1.0, 0.0); glVertex3f(+3, +3, 0);
         glTexCoord2f(1.0, 1.0); glVertex3f(+6, -3, 0);
@@ -77,7 +77,7 @@ glEnd();</pre></code></tr>
 <tr><td><img src="obr/textura4.png" width="558" height="428" border="0" alt="">	
 <td><code><pre>
     glBegin(GL_QUADS);
-//lichobeník sa vyree zo štvorca
+//lichobeÅ¾nÃ­k sa vyreÅ¾e zo Å¡tvorca
          glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
         glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
         glTexCoord2f(1.0*10/12, 1.0); glVertex3f(+4, -4, 0);
@@ -86,7 +86,7 @@ glEnd();</pre></code></tr>
 <tr><td><img src="obr/textura5.png" width="558" height="428" border="0" alt="">	
 <td><code><pre>
  glBegin(GL_TRIANGLES);
- //pravouhlı trojuholník sa vyree zo štvorca
+ //pravouhlÃ½ trojuholnÃ­k sa vyreÅ¾e zo Å¡tvorca
          glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
         glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
         glTexCoord2f(0.0, 1.0); glVertex3f(-6, -4, 0);
@@ -94,7 +94,7 @@ glEnd();</pre></code></tr>
 <tr><td><img src="obr/textura6.png" width="558" height="428" border="0" alt="">	
 <td><code><pre>
  glBegin(GL_TRIANGLES);
- //rovnoramennı trojuholník sa vyree zo štvorca
+ //rovnoramennÃ½ trojuholnÃ­k sa vyreÅ¾e zo Å¡tvorca
          glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
         glTexCoord2f(1.0, 0.0); glVertex3f(+6, +4, 0);
         glTexCoord2f(0.5, 1.0); glVertex3f(0, -4, 0);
@@ -103,7 +103,7 @@ glEnd();</pre></code></tr>
 glEnd();</pre></code></tr>
 <tr><td><img src="obr/textura7.png" width="558" height="428" border="0" alt="">	
 <td><code><pre>
-//lichobeník sa vyree zo štvorca vo vodorovnom smere bude 2xto¾ko políèok
+//lichobeÅ¾nÃ­k sa vyreÅ¾e zo Å¡tvorca vo vodorovnom smere bude 2xtoÄ¾ko polÃ­Äok
     glBegin(GL_QUADS);
          glTexCoord2f(0.0, 0.0); glVertex3f(-6, +4, 0);
         glTexCoord2f(2.0, 0.0); glVertex3f(+6, +4, 0);

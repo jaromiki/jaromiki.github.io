@@ -2,111 +2,111 @@
 
 <html>
 <head>
-	<title>Textové súbory</title>
+	<title>TextovÃ© sÃºbory</title>
 </head>
 
 <body>
-Textovı súbor sa skladá z riadkov. Kadı riadok môe ma "¾ubovo¾nú" ve¾kos a je ukonèenı
-CR/LF pod OS DOS a LF pod OS UNIX. Pri zápise systém sám vloí koniec riadku a pri èítaní
-koniec riadku odstráni.
-<dl><dt><font size="+1" color="Blue">Deklarácia</font>
+TextovÃ½ sÃºbor sa skladÃ¡ z riadkov. KaÅ¾dÃ½ riadok mÃ´Å¾e maÅ¥ "Ä¾ubovoÄ¾nÃº" veÄ¾kosÅ¥ a je ukonÄenÃ½
+CR/LF pod OS DOS a LF pod OS UNIX. Pri zÃ¡pise systÃ©m sÃ¡m vloÅ¾Ã­ koniec riadku a pri ÄÃ­tanÃ­
+koniec riadku odstrÃ¡ni.
+<dl><dt><font size="+1" color="Blue">DeklarÃ¡cia</font>
 	<dd><dl><dt><font color="Red">FILE </font>*f,*g
-			<dd>f,g sú názvy-adresy buffra cez ktorı sa spojenie so súborom urobí
-			<br>slovo FILE musí by celé ve¾kımi písmenami
+			<dd>f,g sÃº nÃ¡zvy-adresy buffra cez ktorÃ½ sa spojenie so sÃºborom urobÃ­
+			<br>slovo FILE musÃ­ byÅ¥ celÃ© veÄ¾kÃ½mi pÃ­smenami
 		</dl>
 	<dt><font size="+1" color="Blue">Otvorenie</font>
-	<dd><dl><dt>f<font color="Red">=fopen(</font>cesta, pouitie<font color="Red">)</font>
-			<dd>vytvorí logické spojenie medzi buffrom f a fyzickım súborom
-			<br>ak sú v ceste opaèné lomítka musia by zdvojené
-			<br>pouitie:
-			<br> &nbsp; "r" - otvorenie len na èítanie
-			<br> &nbsp; "w" - otvorenie len na zápis
-			<br> &nbsp; "a" - otvorenie na zápis-pridávanie
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí otvori vráti hodnotu NULL (preddefinovaná konštanta) - môeme testova
+	<dd><dl><dt>f<font color="Red">=fopen(</font>cesta, pouÅ¾itie<font color="Red">)</font>
+			<dd>vytvorÃ­ logickÃ© spojenie medzi buffrom f a fyzickÃ½m sÃºborom
+			<br>ak sÃº v ceste opaÄnÃ© lomÃ­tka musia byÅ¥ zdvojenÃ©
+			<br>pouÅ¾itie:
+			<br> &nbsp; "r" - otvorenie len na ÄÃ­tanie
+			<br> &nbsp; "w" - otvorenie len na zÃ¡pis
+			<br> &nbsp; "a" - otvorenie na zÃ¡pis-pridÃ¡vanie
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ otvoriÅ¥ vrÃ¡ti hodnotu NULL (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
 		</dl>
-	<dt><font size="+1" color="Blue">Uzavretie súboru</font>
-	<dd><dl><dt><font color="Red">fclose(</font>identifikátor<font color="Red">)</font>
-			<dd>Vyprázdni buffer spojenı s danım súborom a súbor korektne uzavrie.  
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí uzavrie vráti hodnotu EOF (preddefinovaná konštanta) - môeme testova
+	<dt><font size="+1" color="Blue">Uzavretie sÃºboru</font>
+	<dd><dl><dt><font color="Red">fclose(</font>identifikÃ¡tor<font color="Red">)</font>
+			<dd>VyprÃ¡zdni buffer spojenÃ½ s danÃ½m sÃºborom a sÃºbor korektne uzavrie.  
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ uzavrieÅ¥ vrÃ¡ti hodnotu EOF (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
 		</dl>
-	<dt><font size="+1" color="Blue">Zápis do súboru </font>
+	<dt><font size="+1" color="Blue">ZÃ¡pis do sÃºboru </font>
 	<dd><dl><dt><font color="Red">fprintf(</font>subor, format, argumenty<font color="Red">)</font>
-			<dd>funguje ako printf, len zápis je do súboru
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí zapísa vráti hodnotu EOF (preddefinovaná konštanta) - môeme testova
+			<dd>funguje ako printf, len zÃ¡pis je do sÃºboru
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ zapÃ­saÅ¥ vrÃ¡ti hodnotu EOF (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
 			<dt><font color="Red">fputc(</font>znak, subor<font color="Red">)</font>
 			<dt><font color="Red">putc(</font>znak, subor<font color="Red">)</font>
-			<dd>Poloí znak do súboru
+			<dd>PoloÅ¾Ã­ znak do sÃºboru
 			<br>!Pozor na poradie parametrov!
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí zapísa vráti hodnotu EOF (preddefinovaná konštanta) - môeme testova
-			<dt><font color="Red">fputs(</font>reazec, subor<font color="Red">)</font>
-			<dd>Poloí reazec do súboru a pridá '\n' - ukonèenie vety
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ zapÃ­saÅ¥ vrÃ¡ti hodnotu EOF (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
+			<dt><font color="Red">fputs(</font>reÅ¥azec, subor<font color="Red">)</font>
+			<dd>PoloÅ¾Ã­ reÅ¥azec do sÃºboru a pridÃ¡ '\n' - ukonÄenie vety
 			<br>!Pozor na poradie parametrov!
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí zapísa vráti hodnotu EOF (preddefinovaná konštanta) - môeme testova
-			<dt><font size="+1" color="Blue">Úlohy</font>
-			<dd><ol><li>Napíšte program na naèítanie textu z klávesnice a jeho zápis do súboru. Názov súboru naèítajte.
-						Pri otváraní i zápise robte kontrolu vykonania - v prípade chyby vypíšte oznam a ukonèite program.
-					<li>Napíš program na generovanie príkladov typu cislo1 operacia cislo2 =
-						<br>poèet príkladov je 10, operácie +,-,*,/
-						<br>cislo1, cislo2 sú náhodné dvojciferné èísla volené tak, aby vısledky boli tie maximálne dvojciferné a celé.
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ zapÃ­saÅ¥ vrÃ¡ti hodnotu EOF (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
+			<dt><font size="+1" color="Blue">Ãšlohy</font>
+			<dd><ol><li>NapÃ­Å¡te program na naÄÃ­tanie textu z klÃ¡vesnice a jeho zÃ¡pis do sÃºboru. NÃ¡zov sÃºboru naÄÃ­tajte.
+						Pri otvÃ¡ranÃ­ i zÃ¡pise robte kontrolu vykonania - v prÃ­pade chyby vypÃ­Å¡te oznam a ukonÄite program.
+					<li>NapÃ­Å¡ program na generovanie prÃ­kladov typu cislo1 operacia cislo2 =
+						<br>poÄet prÃ­kladov je 10, operÃ¡cie +,-,*,/
+						<br>cislo1, cislo2 sÃº nÃ¡hodnÃ© dvojcifernÃ© ÄÃ­sla volenÃ© tak, aby vÃ½sledky boli tieÅ¾ maximÃ¡lne dvojcifernÃ© a celÃ©.
 				</ol>
 		</dl>
 	
-	<dt><font size="+1" color="Blue">Èítanie zo súboru </font>
+	<dt><font size="+1" color="Blue">ÄŒÃ­tanie zo sÃºboru </font>
 	<dd><dl><dt><font color="Red">fscanf(</font>subor, format, argumenty<font color="Red">)</font>
-			<dd>funguje ako scanf, len èíta zo súboru
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí naèíta vráti hodnotu EOF (preddefinovaná konštanta) - môeme testova
+			<dd>funguje ako scanf, len ÄÃ­ta zo sÃºboru
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ naÄÃ­taÅ¥ vrÃ¡ti hodnotu EOF (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
 			<dt><font color="Red">fgetc(</font>subor<font color="Red">)</font>
-			<dd>funguje ako getc, umoní aj vráti posledne preèítanı znak ungetc
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí naèíta vráti hodnotu EOF (preddefinovaná konštanta) - môeme testova
+			<dd>funguje ako getc, umoÅ¾nÃ­ aj vrÃ¡tiÅ¥ posledne preÄÃ­tanÃ½ znak ungetc
+			<br>OÅ¡etrenie chyby:
+			<br>Ak sa nepodarÃ­ naÄÃ­taÅ¥ vrÃ¡ti hodnotu EOF (preddefinovanÃ¡ konÅ¡tanta) - mÃ´Å¾eme testovaÅ¥
 			<dt><font color="Red">fgets(...)</font>
-			<dd>naèíta reazec, preberie sa pri preberaní reazcovıch premennıch
+			<dd>naÄÃ­ta reÅ¥azec, preberie sa pri preberanÃ­ reÅ¥azcovÃ½ch premennÃ½ch
 			<dt><font color="Red">ungetc(znak, subor)</font>
-			<dd>vráti posledne naèítanı znak aby ho bolo moné naèíta - rovnako ako ungetch
-			<dt><font size="+1" color="Blue">Úlohy</font>
+			<dd>vrÃ¡ti posledne naÄÃ­tanÃ½ znak aby ho bolo moÅ¾nÃ© naÄÃ­taÅ¥ - rovnako ako ungetch
+			<dt><font size="+1" color="Blue">Ãšlohy</font>
 			<dd><ol>
-				<li>Napíš program na naèítanie názvu súboru a jeho vıpis na obrazovku, v prípade chyby vypíš oznam.
-				<li>Napíš program, ktorı naèítava súbor vytvorenı úlohou2 v predošlıch úlohách, vypisuje po riadkoch
-					a vyiada si za rovná sa natipovanú správnu odpoveï. Nakoniec vypíš štatistiku odpovedí.
+				<li>NapÃ­Å¡ program na naÄÃ­tanie nÃ¡zvu sÃºboru a jeho vÃ½pis na obrazovku, v prÃ­pade chyby vypÃ­Å¡ oznam.
+				<li>NapÃ­Å¡ program, ktorÃ½ naÄÃ­tava sÃºbor vytvorenÃ½ Ãºlohou2 v predoÅ¡lÃ½ch ÃºlohÃ¡ch, vypisuje po riadkoch
+					a vyÅ¾iada si za rovnÃ¡ sa natipovanÃº sprÃ¡vnu odpoveÄ. Nakoniec vypÃ­Å¡ Å¡tatistiku odpovedÃ­.
 				</ol>
 		</dl>	
-	<dt><font size="+1" color="Blue">Ošetrovanie chıb</font>
-	<dd>Kadá funkcia má návratovú hodnotu a pod¾a nej sa dá testova úspešnos operácie. Ïalšie monosti:
+	<dt><font size="+1" color="Blue">OÅ¡etrovanie chÃ½b</font>
+	<dd>KaÅ¾dÃ¡ funkcia mÃ¡ nÃ¡vratovÃº hodnotu a podÄ¾a nej sa dÃ¡ testovaÅ¥ ÃºspeÅ¡nosÅ¥ operÃ¡cie. ÄalÅ¡ie moÅ¾nosti:
 		<ul>
-		<li><font color="Red">feof(</font> subor<font color="Red"> )</font> ... pri èítaní zo súboru je moné testova "logickú" funkciu feof() 
-		<li><font color="Red">ferror(</font> subor<font color="Red"> )</font> ... vráti èíslo chyby (0=OK)
-		<li><font color="Red">perror(</font> retazec<font color="Red"> )</font> ... vypíše reazec a text chyby 
-		<li><font color="Red">clearerr(</font> subor<font color="Red"> )</font> ... vymae chybovı stav na danom súbore 
+		<li><font color="Red">feof(</font> subor<font color="Red"> )</font> ... pri ÄÃ­tanÃ­ zo sÃºboru je moÅ¾nÃ© testovaÅ¥ "logickÃº" funkciu feof() 
+		<li><font color="Red">ferror(</font> subor<font color="Red"> )</font> ... vrÃ¡ti ÄÃ­slo chyby (0=OK)
+		<li><font color="Red">perror(</font> retazec<font color="Red"> )</font> ... vypÃ­Å¡e reÅ¥azec a text chyby 
+		<li><font color="Red">clearerr(</font> subor<font color="Red"> )</font> ... vymaÅ¾e chybovÃ½ stav na danom sÃºbore 
 		</ul>
-	<dl><dt><font size="+1" color="Blue">Úlohy k ošetrovaniu chıb</font>
-	<dd><ol><li>Naèítaj názov súboru a vypíš ho na obrazovku. V prípade chyby pri otváraní vypíš "Chyba pri otváraní súboru:" 
-				a potom vypíš štandartné chybové hlásenie patriace vzniklej chybe. 
+	<dl><dt><font size="+1" color="Blue">Ãšlohy k oÅ¡etrovaniu chÃ½b</font>
+	<dd><ol><li>NaÄÃ­taj nÃ¡zov sÃºboru a vypÃ­Å¡ ho na obrazovku. V prÃ­pade chyby pri otvÃ¡ranÃ­ vypÃ­Å¡ "Chyba pri otvÃ¡ranÃ­ sÃºboru:" 
+				a potom vypÃ­Å¡ Å¡tandartnÃ© chybovÃ© hlÃ¡senie patriace vzniklej chybe. 
 		</ol>
 	</dl>
-	<dt><font size="+1" color="Blue">Typické úlohy</font>
+	<dt><font size="+1" color="Blue">TypickÃ© Ãºlohy</font>
 	<dd><ol>
-	<li>Poznáme poèet viet - vytvorme súbor plat1996.dat, kde v 12-tich riadkoch bude kadı riadok zaèína platom za jednotlivı mesiac
-		<br>- napíšte program, ktorı vypíše priebeh zárobku za mesiace
-		<br>- vypíše názov mesiaca s najväèším prímom
-	<li>Poèet viet je uvedenı v prvej vete
-		<br>upravme súbor plat1996.dat tak, e v prvej vete bude uvedené poèet spracovanıch mesiacov
-		<br>- vypoèítaj priemernı plat za uvedené mesiace
-	<li>Nevieme poèet viet
-		<br>upravme súbor z úlohy2 tak, e vynecháme prvú vetu
-		<br>- vypíš poèet sledovanıch mesiacov
-		<br>- vypíš priemernı plat za uvedené mesiace
-	<li>Nevieme poèet viet a ani poèet èísel v riadku
-		<br>vytvorme súbor vreckove.dat, kde v kadom riadku budú všetky príjmy za odpovedajúci mesiac
-		<br>- napíš poèet sledovanıch mesiacov
-		<br>- napíš èíslo mesiaca, kde bol najväèší poèet príjmov
-		<br>- napíš èíslo mesiaca, kde bol najmenší príjem
-	<li>Napíš program na okopírovanie súboru. Program si vypıta oba názvy súborov. 	
+	<li>PoznÃ¡me poÄet viet - vytvorme sÃºbor plat1996.dat, kde v 12-tich riadkoch bude kaÅ¾dÃ½ riadok zaÄÃ­na platom za jednotlivÃ½ mesiac
+		<br>- napÃ­Å¡te program, ktorÃ½ vypÃ­Å¡e priebeh zÃ¡robku za mesiace
+		<br>- vypÃ­Å¡e nÃ¡zov mesiaca s najvÃ¤ÄÅ¡Ã­m prÃ­mom
+	<li>PoÄet viet je uvedenÃ½ v prvej vete
+		<br>upravme sÃºbor plat1996.dat tak, Å¾e v prvej vete bude uvedenÃ© poÄet spracovanÃ½ch mesiacov
+		<br>- vypoÄÃ­taj priemernÃ½ plat za uvedenÃ© mesiace
+	<li>Nevieme poÄet viet
+		<br>upravme sÃºbor z Ãºlohy2 tak, Å¾e vynechÃ¡me prvÃº vetu
+		<br>- vypÃ­Å¡ poÄet sledovanÃ½ch mesiacov
+		<br>- vypÃ­Å¡ priemernÃ½ plat za uvedenÃ© mesiace
+	<li>Nevieme poÄet viet a ani poÄet ÄÃ­sel v riadku
+		<br>vytvorme sÃºbor vreckove.dat, kde v kaÅ¾dom riadku budÃº vÅ¡etky prÃ­jmy za odpovedajÃºci mesiac
+		<br>- napÃ­Å¡ poÄet sledovanÃ½ch mesiacov
+		<br>- napÃ­Å¡ ÄÃ­slo mesiaca, kde bol najvÃ¤ÄÅ¡Ã­ poÄet prÃ­jmov
+		<br>- napÃ­Å¡ ÄÃ­slo mesiaca, kde bol najmenÅ¡Ã­ prÃ­jem
+	<li>NapÃ­Å¡ program na okopÃ­rovanie sÃºboru. Program si vypÃ½ta oba nÃ¡zvy sÃºborov. 	
 </ol>
 </dl>
 

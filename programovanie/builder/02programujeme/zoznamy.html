@@ -9,83 +9,83 @@
 
 <body>
 <h3 class=nadpis>Zoznamy</h3>
-V praxi vzniká èasto úloha, aby si uívate¾ vybral vstupnı údaj z mnoiny ponúknutıch,
-napr. zada názov knihy na editovanie, ang. slovo na preklad a pod. Ak necháme uívate¾a
-aby vstupnı údaj naklepal a potom kontrolujeme, èi vstup je z prípustnej mnoiny, vedie to
-ku opakovanému zadávaniu vstupu a program je uívatelsky nepohodlnı.
-<br>Na zadávanie dát vıberom máme viacero špeciálnych objektov:
+V praxi vznikÃ¡ Äasto Ãºloha, aby si uÅ¾Ã­vateÄ¾ vybral vstupnÃ½ Ãºdaj z mnoÅ¾iny ponÃºknutÃ½ch,
+napr. zadaÅ¥ nÃ¡zov knihy na editovanie, ang. slovo na preklad a pod. Ak nechÃ¡me uÅ¾Ã­vateÄ¾a
+aby vstupnÃ½ Ãºdaj naklepal a potom kontrolujeme, Äi vstup je z prÃ­pustnej mnoÅ¾iny, vedie to
+ku opakovanÃ©mu zadÃ¡vaniu vstupu a program je uÅ¾Ã­vatelsky nepohodlnÃ½.
+<br>Na zadÃ¡vanie dÃ¡t vÃ½berom mÃ¡me viacero Å¡peciÃ¡lnych objektov:
 <br><ol>
-	<li>Prepínacie tlaèítka - radiobutton - len do vıberu 5-10 prvkov
-	<li>ListBox - stále rozvinutá ponuka - pouívame ak je na formulári dostatok miesta
-	<li>ComboBox - rozba¾ujúca ponuka - pouívame, ak chceme ušetri miesto 
+	<li>PrepÃ­nacie tlaÄÃ­tka - radiobutton - len do vÃ½beru 5-10 prvkov
+	<li>ListBox - stÃ¡le rozvinutÃ¡ ponuka - pouÅ¾Ã­vame ak je na formulÃ¡ri dostatok miesta
+	<li>ComboBox - rozbaÄ¾ujÃºca ponuka - pouÅ¾Ã­vame, ak chceme uÅ¡etriÅ¥ miesto 
 </ol> 
 <dl>
 	<dt class=main>ListBox
 	<dd><dl>
 			<dt class=second>Items
-			<dd>Oproti Radiogroup má niektoré vıhody:
-				<br>- jednoducho sa riadky pridávajú a odoberajú
-				<br>- riadky mono ¾ahko triedi
-				<br>- v riadkoch mono vyh¾adáva
-				<br>- je preh¾adnejší pri poète riadkov > 5
-				<br>- pri väèšom poète dát (alebo menšom priestore) mono poui podobnı objekt ComboBox
-				<br>Podobne ako v memo, zoznam stringov oddelenı znakom '\n'. 
-				<br>Pridávanie riadkov mono robi v object inspektor - Items a tie za behu - pozri add(), sorted.
-				<br>Riadky mono aj odstráni pozri delete().
-				<br>Riadky mono preusporiada pozri sort.
-				<br>Oznaèenie vıberu - uívate¾om - klik ¾avım, nastavením selected()
+			<dd>Oproti Radiogroup mÃ¡ niektorÃ© vÃ½hody:
+				<br>- jednoducho sa riadky pridÃ¡vajÃº a odoberajÃº
+				<br>- riadky moÅ¾no Ä¾ahko triediÅ¥
+				<br>- v riadkoch moÅ¾no vyhÄ¾adÃ¡vaÅ¥
+				<br>- je prehÄ¾adnejÅ¡Ã­ pri poÄte riadkov > 5
+				<br>- pri vÃ¤ÄÅ¡om poÄte dÃ¡t (alebo menÅ¡om priestore) moÅ¾no pouÅ¾iÅ¥ podobnÃ½ objekt ComboBox
+				<br>Podobne ako v memo, zoznam stringov oddelenÃ½ znakom '\n'. 
+				<br>PridÃ¡vanie riadkov moÅ¾no robiÅ¥ v object inspektor - Items a tieÅ¾ za behu - pozri add(), sorted.
+				<br>Riadky moÅ¾no aj odstrÃ¡niÅ¥ pozri delete().
+				<br>Riadky moÅ¾no preusporiadaÅ¥ pozri sort.
+				<br>OznaÄenie vÃ½beru - uÅ¾Ã­vateÄ¾om - klik Ä¾avÃ½m, nastavenÃ­m selected()
 				<dl><dt>add(s:string)
-					<dd>pridá novı riadok nakoniec ak sorted=False, inak správne zaradí
+					<dd>pridÃ¡ novÃ½ riadok nakoniec ak sorted=False, inak sprÃ¡vne zaradÃ­
 					<dt>insert(c:integer) 
-					<dd>vloí novı riadok na pozíciu riadku 
+					<dd>vloÅ¾Ã­ novÃ½ riadok na pozÃ­ciu riadku 
 					<dt>delete(c:integer)
-					<dd>zruší riadok uvedeného èísla
+					<dd>zruÅ¡Ã­ riadok uvedenÃ©ho ÄÃ­sla
 					<dt>clear
-					<dd>zruší všetky riadky 
+					<dd>zruÅ¡Ã­ vÅ¡etky riadky 
 				</dl>    
-			<dt class=second>Niektoré vlastnosti
-			<dd><ul><li>Columns - poèet ståpcov (dáta listboxu môu by usporiadané vo viacerıch ståpcoch)
-					<li>Counts - poèet riadkov zoznamu
-					<li>ExtendedSelect - len spolu s MultiSelect. Ak je True môme vybera intervaly (pri stlaèenom Shift)
-					<li>MultiSelect - èi povolíme aj vıber viacerıch
-					<li>ItemIndex - index zvoleného riadku (riadok na ktorom je focus)
-					<li>Items - telo zoznamu, môme pridáva, ruši, meni  a naèítava zo súboru riadky
-					<li>SelCount - poèet zvolenıch riadkov
-					<li>Selected - èi bol oznaèenı aspoò jeden riadok
-					<li>Sorted - ak True tak je zoznam automaticky udriavanı
+			<dt class=second>NiektorÃ© vlastnosti
+			<dd><ul><li>Columns - poÄet stÄºpcov (dÃ¡ta listboxu mÃ´Å¾u byÅ¥ usporiadanÃ© vo viacerÃ½ch stÄºpcoch)
+					<li>Counts - poÄet riadkov zoznamu
+					<li>ExtendedSelect - len spolu s MultiSelect. Ak je True mÃ´Å¾me vyberaÅ¥ intervaly (pri stlaÄenom Shift)
+					<li>MultiSelect - Äi povolÃ­me aj vÃ½ber viacerÃ½ch
+					<li>ItemIndex - index zvolenÃ©ho riadku (riadok na ktorom je focus)
+					<li>Items - telo zoznamu, mÃ´Å¾me pridÃ¡vaÅ¥, ruÅ¡iÅ¥, meniÅ¥  a naÄÃ­tavaÅ¥ zo sÃºboru riadky
+					<li>SelCount - poÄet zvolenÃ½ch riadkov
+					<li>Selected - Äi bol oznaÄenÃ½ aspoÅˆ jeden riadok
+					<li>Sorted - ak True tak je zoznam automaticky udrÅ¾iavanÃ½
 				</ul>	  	
-			<dt class=second>Niektoré metódy 
-			<dd><ul><li>Clear - vymae všetky riadky
-					<li>ClearSelection - zruší vıber - odznaèí ale nevymazáva
-					<li>CopySelection(ListBox) - vybrané riadky sa okopírujú a pridajú do uvedeného zoznamu
-					<li>DeleteSelected - vymae oznaèené záznamy
-					<li>SelectAll - oznaèí všetky riadky
+			<dt class=second>NiektorÃ© metÃ³dy 
+			<dd><ul><li>Clear - vymaÅ¾e vÅ¡etky riadky
+					<li>ClearSelection - zruÅ¡Ã­ vÃ½ber - odznaÄÃ­ ale nevymazÃ¡va
+					<li>CopySelection(ListBox) - vybranÃ© riadky sa okopÃ­rujÃº a pridajÃº do uvedenÃ©ho zoznamu
+					<li>DeleteSelected - vymaÅ¾e oznaÄenÃ© zÃ¡znamy
+					<li>SelectAll - oznaÄÃ­ vÅ¡etky riadky
 				</ul>	 
-			<dt class=second>Príklady na precvièenie:
+			<dt class=second>PrÃ­klady na precviÄenie:
 			<dd><table cellspacing="20"><tr><td>
 				<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
 				<td>
 				<ol>
-				<li>Napíš <a href="zoznam.exe">program</a> na prácu s ListBox
+				<li>NapÃ­Å¡ <a href="zoznam.exe">program</a> na prÃ¡cu s ListBox
 				</ol>
 				</table>
 		</dl>
 		<br>
 	<dt class=main>ComboBox
-	<dd>Vypísané zoznamy majú nevıhodu, e zaberajú na obrazovke ve¾a miesta. Tie neumoòujú uívate¾ovi zadáva inú hodnotu
-		ako je uvedené v zozname. Totop všetko napráva ComboBox. ComboBox môe pracova v štyroch reimoch zadanıch vo vlastnosti "Style"
+	<dd>VypÃ­sanÃ© zoznamy majÃº nevÃ½hodu, Å¾e zaberajÃº na obrazovke veÄ¾a miesta. TieÅ¾ neumoÅ¾ÅˆujÃº uÅ¾Ã­vateÄ¾ovi zadÃ¡vaÅ¥ inÃº hodnotu
+		ako je uvedenÃ© v zozname. Totop vÅ¡etko naprÃ¡va ComboBox. ComboBox mÃ´Å¾e pracovaÅ¥ v Å¡tyroch reÅ¾imoch zadanÃ½ch vo vlastnosti "Style"
 		<dl><dt class=second>CsDropDown 
-			<dd>Najvšeobecnejší ComboBox, umoòuje zadáva svoje hodnoty a na poiadanie je monı vıber z ponuky
+			<dd>NajvÅ¡eobecnejÅ¡Ã­ ComboBox, umoÅ¾Åˆuje zadÃ¡vaÅ¥ svoje hodnoty a na poÅ¾iadanie je moÅ¾nÃ½ vÃ½ber z ponuky
 			<dt class=second>CsDropDownList
-			<dd>neumoòuje zadáva svoje hodnoty len vybera z ponuky.
+			<dd>neumoÅ¾Åˆuje zadÃ¡vaÅ¥ svoje hodnoty len vyberaÅ¥ z ponuky.
 			<dt class=second>CsSimple
-			<dd>Volba je stále rozbalená a uívate¾ môe zada aj svoju hodnotu
-			<dt class=second>Príklady na precvièenie:
+			<dd>Volba je stÃ¡le rozbalenÃ¡ a uÅ¾Ã­vateÄ¾ mÃ´Å¾e zadaÅ¥ aj svoju hodnotu
+			<dt class=second>PrÃ­klady na precviÄenie:
 			<dd><table cellspacing="20"><tr><td>
 				<img src="../obr/ktstrofa.wmf" border="0" alt="" height="50">		
 				<td>
 				<ol>
-				<li>Napíš <a href="combo.exe">program</a> na prácu s ComboBox
+				<li>NapÃ­Å¡ <a href="combo.exe">program</a> na prÃ¡cu s ComboBox
 				</ol>
 				</table>
 		</dl>	

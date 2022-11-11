@@ -8,135 +8,135 @@
 
 <body>
 <h3 class="main"><b>string</b></h3>
-V klasickom jazyku C typ string nemáme, je nahradenı po¾om znakov. Ako pracujeme s textom zapísanım v poli charov som popísal v èasti pole.
-Podobne ako pri èíselnıch poliach máme monos vytvori pole statické: char c[20];, tak aj dynamické: char *cc;
-<br>Nevıhodou oproti pascalu je hlavne v tom, e nemáme operátor na priraïovanie ani operátor na spojenie dvoch stringov. Tu popíšem kninicu <b>string</b>,
-ktorá zjednodušuje prácu s textom a prináša pre prácu s textami ïalšie monosti. Pre pohodlnejšiu prácu so stringami máme k dispozícii dve kninice
+V klasickom jazyku C typ string nemÃ¡me, je nahradenÃ½ poÄ¾om znakov. Ako pracujeme s textom zapÃ­sanÃ½m v poli charov som popÃ­sal v Äasti pole.
+Podobne ako pri ÄÃ­selnÃ½ch poliach mÃ¡me moÅ¾nosÅ¥ vytvoriÅ¥ pole statickÃ©: char c[20];, tak aj dynamickÃ©: char *cc;
+<br>NevÃ½hodou oproti pascalu je hlavne v tom, Å¾e nemÃ¡me operÃ¡tor na priraÄovanie ani operÃ¡tor na spojenie dvoch stringov. Tu popÃ­Å¡em kniÅ¾nicu <b>string</b>,
+ktorÃ¡ zjednoduÅ¡uje prÃ¡cu s textom a prinÃ¡Å¡a pre prÃ¡cu s textami ÄalÅ¡ie moÅ¾nosti. Pre pohodlnejÅ¡iu prÃ¡cu so stringami mÃ¡me k dispozÃ­cii dve kniÅ¾nice
 <ul><li><b>cstring</b> resp. string.h
 	<li><b>string</b> - kniznica z STL
 </ul>
-Kadá z tıchto kniníc ponúka iné nástroje pre prácu s textom, tu sa budem venova kninici <b>string</b>.	
-<br>Premennú typu string mono naèíta pomocou operátora &lt;&lt; z cin (alebo funkciou <b>getline(cin, prem)</b> ) a tie vypísa pomocou cout >>.
-<dl><dt>Pripnutie kninice
-		<dd>Podobne ako pri inıch komponentoch z kninice STL aj tu musíme pripnú príslušnú kninicu
+KaÅ¾dÃ¡ z tÃ½chto kniÅ¾nÃ­c ponÃºka inÃ© nÃ¡stroje pre prÃ¡cu s textom, tu sa budem venovaÅ¥ kniÅ¾nici <b>string</b>.	
+<br>PremennÃº typu string moÅ¾no naÄÃ­taÅ¥ pomocou operÃ¡tora &lt;&lt; z cin (alebo funkciou <b>getline(cin, prem)</b> ) a tieÅ¾ vypÃ­saÅ¥ pomocou cout >>.
+<dl><dt>Pripnutie kniÅ¾nice
+		<dd>Podobne ako pri inÃ½ch komponentoch z kniÅ¾nice STL aj tu musÃ­me pripnÃºÅ¥ prÃ­sluÅ¡nÃº kniÅ¾nicu
 			<br><b>#include &lt;string></b>
-			<br>Po pripnutí môme zaèa pouíva objekty popísané v tejto kninici a teraz si základ popíšeme.
-			<br>Pokia¾ chceme pracova aj s benımi stringami pripneme aj kninicu <b>cstring</b>
-	<dt>deklarácia - konštruktor
-	<dd>Je úplne podobné ako pri deklarácii po¾a
-		<ul><li><b>string s1;</b> &nbsp; &nbsp; &nbsp;//vytvorí prázdny string
-			<li><b>string s2(s1);</b> &nbsp; &nbsp; &nbsp;//vytvorí novı string a doòho kopíruje obsah
-			<li><b>string s3(s1, pos, len);</b> &nbsp; &nbsp; &nbsp;//vytvorí novı string a doòho kopíruje obsah od pozície a dlku
-			<li><b>string s4(konst_text);</b> &nbsp; &nbsp; &nbsp;//vytvorí novı string a doòho konštantnı text
-			<li><b>string s5(poc, char);</b> &nbsp; &nbsp; &nbsp;//vytvorí novı string a doòho vloí zadanı znak poc-krát 
-			<li><b>string s5(poc, n);</b> &nbsp; &nbsp; &nbsp;//vytvorí novı string a doòho vloí zadanı n-ty znak z ASCII tab. poc-krát 
-			<li><b>string s6(s.iterator1, s.iterator2);</b> &nbsp; &nbsp; &nbsp;//vytvorí novı string a doòho vloí text zadanı iterátormi
+			<br>Po pripnutÃ­ mÃ´Å¾me zaÄaÅ¥ pouÅ¾Ã­vaÅ¥ objekty popÃ­sanÃ© v tejto kniÅ¾nici a teraz si zÃ¡klad popÃ­Å¡eme.
+			<br>PokiaÄ¾ chceme pracovaÅ¥ aj s beÅ¾nÃ½mi stringami pripneme aj kniÅ¾nicu <b>cstring</b>
+	<dt>deklarÃ¡cia - konÅ¡truktor
+	<dd>Je Ãºplne podobnÃ© ako pri deklarÃ¡cii poÄ¾a
+		<ul><li><b>string s1;</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ prÃ¡zdny string
+			<li><b>string s2(s1);</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ novÃ½ string a doÅˆho kopÃ­ruje obsah
+			<li><b>string s3(s1, pos, len);</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ novÃ½ string a doÅˆho kopÃ­ruje obsah od pozÃ­cie a dlÅ¾ku
+			<li><b>string s4(konst_text);</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ novÃ½ string a doÅˆho konÅ¡tantnÃ½ text
+			<li><b>string s5(poc, char);</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ novÃ½ string a doÅˆho vloÅ¾Ã­ zadanÃ½ znak poc-krÃ¡t 
+			<li><b>string s5(poc, n);</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ novÃ½ string a doÅˆho vloÅ¾Ã­ zadanÃ½ n-ty znak z ASCII tab. poc-krÃ¡t 
+			<li><b>string s6(s.iterator1, s.iterator2);</b> &nbsp; &nbsp; &nbsp;//vytvorÃ­ novÃ½ string a doÅˆho vloÅ¾Ã­ text zadanÃ½ iterÃ¡tormi
 		</ul>	
-	<dt>èlenské funkcie
-		<dd><h4>prístup ku prvkom</h4>
-			<ul><li><b>back()</b> ... môme meni/zisti poslednı prvok (nemono poui na prázdny!!)
+	<dt>ÄlenskÃ© funkcie
+		<dd><h4>prÃ­stup ku prvkom</h4>
+			<ul><li><b>back()</b> ... mÃ´Å¾me meniÅ¥/zistiÅ¥ poslednÃ½ prvok (nemoÅ¾no pouÅ¾iÅ¥ na prÃ¡zdny!!)
 					<br> &nbsp; s1.back()='X';
-				<li>><b>front()</b> ... môme meni/zisti prvı prvok (nemono poui na prázdny!!)
-					<br> &nbsp; s1.front()='X'; //to isté ako s1[0]='X'
+				<li>><b>front()</b> ... mÃ´Å¾me meniÅ¥/zistiÅ¥ prvÃ½ prvok (nemoÅ¾no pouÅ¾iÅ¥ na prÃ¡zdny!!)
+					<br> &nbsp; s1.front()='X'; //to istÃ© ako s1[0]='X'
 				<li><b>operator[]</b>
 			</ul>
-			<h4>iterátory</h4>
-			<ul><li><b>begin()</b> ... ukazovate¾ na zaèiatok
-			    <li><b>end()</b> ... ukazovate¾ na koniec
+			<h4>iterÃ¡tory</h4>
+			<ul><li><b>begin()</b> ... ukazovateÄ¾ na zaÄiatok
+			    <li><b>end()</b> ... ukazovateÄ¾ na koniec
 			</ul>	
-			<h4>dåka</h4>
+			<h4>dÄºÅ¾ka</h4>
 			<ul>
-			<li><b>size()</b>; &nbsp; //vráti aktuálny poèet znakov v stringu (rezervovaná pamä capacity() je vdy väèšia alebo rovná)
-			<li><b>length()</b>;&nbsp; //rovnaké ako size()
-			<li><b>resize(n)</b>; &nbsp; //zmení akt. dåku stringu, ak predlujeme zapåòa nulovımi znakmi
-			<li><b>empty()</b>; &nbsp; //log. funkcia vráti TRUE ak je string prázdny
+			<li><b>size()</b>; &nbsp; //vrÃ¡ti aktuÃ¡lny poÄet znakov v stringu (rezervovanÃ¡ pamÃ¤Å¥ capacity() je vÅ¾dy vÃ¤ÄÅ¡ia alebo rovnÃ¡)
+			<li><b>length()</b>;&nbsp; //rovnakÃ© ako size()
+			<li><b>resize(n)</b>; &nbsp; //zmenÃ­ akt. dÄºÅ¾ku stringu, ak predlÅ¾ujeme zapÄºÅˆa nulovÃ½mi znakmi
+			<li><b>empty()</b>; &nbsp; //log. funkcia vrÃ¡ti TRUE ak je string prÃ¡zdny
 			</ul>
-			<h4>prevodové funkcie</h4>
-			Vo všetkıch tıchto prevodnıch funkciách sa vyskytuje parameter adr_int, èo je ukazovate¾/adresa kam má funkcia zapísa pozíciu, ktorá u nepatrí do èísla.
-			<br>Ak toto nepotrebujeme môme tento parameter nahradi nulovım ukazovate¾om <b>nullptr</b>.
-			<ul><li><b>double stod(string, adr_int)</b>; &nbsp; //funkcia vráti reálne èíslo, ktoré nájde v stringu, navyše na adr_int zapíše pozíciu prvého znaku nepatriaceho do double
-			<li><b>float stof(string, adr_int)</b>; &nbsp; //funkcia vráti reálne èíslo, ktoré nájde v stringu, navyše na adr_int zapíše pozíciu prvého znaku nepatriaceho do float 
-			<li><b>int stoi(string, adr_int)</b>; &nbsp; //funkcia vráti int èíslo, ktoré nájde v stringu, navyše na adr_int zapíše pozíciu prvého znaku nepatriaceho do int
-			<li><b>int stoi(string, adr_int,2)</b>; &nbsp; //funkcia vráti int èíslo, ktoré nájde v stringu, èíslo sa chápe zapísané v sústave so základom 2
-			<li><b>int stoi(string, adr_int,16)</b>; &nbsp; //funkcia vráti int èíslo, ktoré nájde v stringu, èíslo sa chápe zapísané v sústave so základom 16
-			<li><b>int stoi(string, adr_int,n)</b>; &nbsp; //funkcia vráti int èíslo, ktoré nájde v stringu, èíslo sa chápe zapísané v sústave so základom n
-			<li><b>long stol(string, adr_int)</b>; &nbsp; //funkcia vráti long èíslo, ktoré nájde v stringu, navyše na adr_int zapíše pozíciu prvého znaku nepatriaceho do long 
-			<li><b>long stol(string, adr_int,n)</b>; &nbsp; //funkcia vráti long èíslo, ktoré nájde v stringu, èíslo sa chápe zapísané v sústave so základom n
-			<li><b>long long stoll(string, adr_int)</b>; &nbsp; //funkcia vráti long long èíslo, ktoré nájde v stringu, navyše na adr_int zapíše pozíciu prvého znaku nepatriaceho do long long
-			<li><b>long long stoll(string, adr_int,n)</b>; &nbsp; //funkcia vráti long long èíslo, ktoré nájde v stringu, èíslo sa chápe zapísané v sústave so základom n
+			<h4>prevodovÃ© funkcie</h4>
+			Vo vÅ¡etkÃ½ch tÃ½chto prevodnÃ½ch funkciÃ¡ch sa vyskytuje parameter adr_int, Äo je ukazovateÄ¾/adresa kam mÃ¡ funkcia zapÃ­saÅ¥ pozÃ­ciu, ktorÃ¡ uÅ¾ nepatrÃ­ do ÄÃ­sla.
+			<br>Ak toto nepotrebujeme mÃ´Å¾me tento parameter nahradiÅ¥ nulovÃ½m ukazovateÄ¾om <b>nullptr</b>.
+			<ul><li><b>double stod(string, adr_int)</b>; &nbsp; //funkcia vrÃ¡ti reÃ¡lne ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, navyÅ¡e na adr_int zapÃ­Å¡e pozÃ­ciu prvÃ©ho znaku nepatriaceho do double
+			<li><b>float stof(string, adr_int)</b>; &nbsp; //funkcia vrÃ¡ti reÃ¡lne ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, navyÅ¡e na adr_int zapÃ­Å¡e pozÃ­ciu prvÃ©ho znaku nepatriaceho do float 
+			<li><b>int stoi(string, adr_int)</b>; &nbsp; //funkcia vrÃ¡ti int ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, navyÅ¡e na adr_int zapÃ­Å¡e pozÃ­ciu prvÃ©ho znaku nepatriaceho do int
+			<li><b>int stoi(string, adr_int,2)</b>; &nbsp; //funkcia vrÃ¡ti int ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, ÄÃ­slo sa chÃ¡pe zapÃ­sanÃ© v sÃºstave so zÃ¡kladom 2
+			<li><b>int stoi(string, adr_int,16)</b>; &nbsp; //funkcia vrÃ¡ti int ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, ÄÃ­slo sa chÃ¡pe zapÃ­sanÃ© v sÃºstave so zÃ¡kladom 16
+			<li><b>int stoi(string, adr_int,n)</b>; &nbsp; //funkcia vrÃ¡ti int ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, ÄÃ­slo sa chÃ¡pe zapÃ­sanÃ© v sÃºstave so zÃ¡kladom n
+			<li><b>long stol(string, adr_int)</b>; &nbsp; //funkcia vrÃ¡ti long ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, navyÅ¡e na adr_int zapÃ­Å¡e pozÃ­ciu prvÃ©ho znaku nepatriaceho do long 
+			<li><b>long stol(string, adr_int,n)</b>; &nbsp; //funkcia vrÃ¡ti long ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, ÄÃ­slo sa chÃ¡pe zapÃ­sanÃ© v sÃºstave so zÃ¡kladom n
+			<li><b>long long stoll(string, adr_int)</b>; &nbsp; //funkcia vrÃ¡ti long long ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, navyÅ¡e na adr_int zapÃ­Å¡e pozÃ­ciu prvÃ©ho znaku nepatriaceho do long long
+			<li><b>long long stoll(string, adr_int,n)</b>; &nbsp; //funkcia vrÃ¡ti long long ÄÃ­slo, ktorÃ© nÃ¡jde v stringu, ÄÃ­slo sa chÃ¡pe zapÃ­sanÃ© v sÃºstave so zÃ¡kladom n
 			</ul>
-			<h4>porovnávanie</h4>
-			stringy môme porovnáva pomocou relaènıch operátorov. Obmedzíme sa na anglickú abecedu, porovnávanie robí lexikograficky.
-			<br>Je moné poui aj funkciu int compare(text1, text2)  
-			<h4>h¾adanie</h4>
+			<h4>porovnÃ¡vanie</h4>
+			stringy mÃ´Å¾me porovnÃ¡vaÅ¥ pomocou relaÄnÃ½ch operÃ¡torov. ObmedzÃ­me sa na anglickÃº abecedu, porovnÃ¡vanie robÃ­ lexikograficky.
+			<br>Je moÅ¾nÃ© pouÅ¾iÅ¥ aj funkciu int compare(text1, text2)  
+			<h4>hÄ¾adanie</h4>
 			<ul>
-			<li><b>size_t find(char)</b>; &nbsp; //funkcia h¾adá v stringu zadanı znak a vráti pozíciu prvého vıskytu znaku
-				<br>(ak nenájde vráti hodnotu/èíslo rovnú preddefinovanej konštanty npos - èo akési nekoneèno)
-			<li><b>size_t find(stringova_konst)</b>; &nbsp; //funkcia h¾adá v stringu zadanı text a vráti pozíciu prvého znaku kde ten text zaèína
-				<br> &nbsp; &nbsp; &nbsp; &nbsp;(ak text nenájde vráti hodnotu string::npos, mono robi test, èi sa vrátená hodnota rovná string::npos)
-			<br><b>size_t find(stringova_konst, pos)</b>; &nbsp; //funkcia h¾adá v stringu od pozície pos zadanı text a vráti pozíciu prvého znaku kde ten text zaèína
-			<br><b>size_t find(string)</b>; &nbsp; //funkcia h¾adá v našom stringu zadanı text z vloeného stringu a vráti pozíciu prvého znaku kde ten text zaèína	
-			<br><b>size_t find(string, pos)</b>; &nbsp; //funkcia h¾adá v našom stringu od pozície pos zadanı text z vloeného stringu a vráti pozíciu prvého znaku kde ten text zaèína	
-			<br><b>size_t find(pole_char)</b>; &nbsp; //funkcia h¾adá v našom stringu zadanı text z vloeného po¾a a vráti pozíciu prvého znaku kde ten text zaèína	
-			<br><b>size_t find(pole_char, pos)</b>; &nbsp; //funkcia h¾adá v našom stringu od pozície pos zadanı text z vloeného po¾a a vráti pozíciu prvého znaku kde ten text zaèína	
-			<li><b>size_t rfind()</b>; &nbsp; //uplne ako find ale h¾adá od konca po zac.
-			<li><b>size_t find_first_not_of(s)</b>; &nbsp; //funkcia h¾adá pozíciu prvého znaku, ktorı sa nenachádza v texte s (string, pole, konšt.)
-			<li><b>size_t find_first_not_of(s,pos)</b>; &nbsp; //funkcia h¾adá pozíciu prvého znaku od pozície pos, ktorı sa nenachádza v texte s (string, pole, konšt.)
-			<li><b>find_first_of(s)</b>; &nbsp; //funkcia h¾adá pozíciu prvého znaku, ktorı sa nachádza v texte s (string, pole, konšt.)
-			<li><b>size_t find_last_not_of(s)</b>; &nbsp; //funkcia h¾adá pozíciu posledného znaku, ktorı sa nenachádza v texte s (string, pole, konšt.)
-			<li><b>size_t find_last_of(s)</b>; &nbsp; //funkcia h¾adá pozíciu posledného znaku, ktorı sa nachádza v texte s (string, pole, konšt.)
+			<li><b>size_t find(char)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v stringu zadanÃ½ znak a vrÃ¡ti pozÃ­ciu prvÃ©ho vÃ½skytu znaku
+				<br>(ak nenÃ¡jde vrÃ¡ti hodnotu/ÄÃ­slo rovnÃº preddefinovanej konÅ¡tanty npos - Äo akÃ©si nekoneÄno)
+			<li><b>size_t find(stringova_konst)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v stringu zadanÃ½ text a vrÃ¡ti pozÃ­ciu prvÃ©ho znaku kde ten text zaÄÃ­na
+				<br> &nbsp; &nbsp; &nbsp; &nbsp;(ak text nenÃ¡jde vrÃ¡ti hodnotu string::npos, moÅ¾no robiÅ¥ test, Äi sa vrÃ¡tenÃ¡ hodnota rovnÃ¡ string::npos)
+			<br><b>size_t find(stringova_konst, pos)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v stringu od pozÃ­cie pos zadanÃ½ text a vrÃ¡ti pozÃ­ciu prvÃ©ho znaku kde ten text zaÄÃ­na
+			<br><b>size_t find(string)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v naÅ¡om stringu zadanÃ½ text z vloÅ¾enÃ©ho stringu a vrÃ¡ti pozÃ­ciu prvÃ©ho znaku kde ten text zaÄÃ­na	
+			<br><b>size_t find(string, pos)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v naÅ¡om stringu od pozÃ­cie pos zadanÃ½ text z vloÅ¾enÃ©ho stringu a vrÃ¡ti pozÃ­ciu prvÃ©ho znaku kde ten text zaÄÃ­na	
+			<br><b>size_t find(pole_char)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v naÅ¡om stringu zadanÃ½ text z vloÅ¾enÃ©ho poÄ¾a a vrÃ¡ti pozÃ­ciu prvÃ©ho znaku kde ten text zaÄÃ­na	
+			<br><b>size_t find(pole_char, pos)</b>; &nbsp; //funkcia hÄ¾adÃ¡ v naÅ¡om stringu od pozÃ­cie pos zadanÃ½ text z vloÅ¾enÃ©ho poÄ¾a a vrÃ¡ti pozÃ­ciu prvÃ©ho znaku kde ten text zaÄÃ­na	
+			<li><b>size_t rfind()</b>; &nbsp; //uplne ako find ale hÄ¾adÃ¡ od konca po zac.
+			<li><b>size_t find_first_not_of(s)</b>; &nbsp; //funkcia hÄ¾adÃ¡ pozÃ­ciu prvÃ©ho znaku, ktorÃ½ sa nenachÃ¡dza v texte s (string, pole, konÅ¡t.)
+			<li><b>size_t find_first_not_of(s,pos)</b>; &nbsp; //funkcia hÄ¾adÃ¡ pozÃ­ciu prvÃ©ho znaku od pozÃ­cie pos, ktorÃ½ sa nenachÃ¡dza v texte s (string, pole, konÅ¡t.)
+			<li><b>find_first_of(s)</b>; &nbsp; //funkcia hÄ¾adÃ¡ pozÃ­ciu prvÃ©ho znaku, ktorÃ½ sa nachÃ¡dza v texte s (string, pole, konÅ¡t.)
+			<li><b>size_t find_last_not_of(s)</b>; &nbsp; //funkcia hÄ¾adÃ¡ pozÃ­ciu poslednÃ©ho znaku, ktorÃ½ sa nenachÃ¡dza v texte s (string, pole, konÅ¡t.)
+			<li><b>size_t find_last_of(s)</b>; &nbsp; //funkcia hÄ¾adÃ¡ pozÃ­ciu poslednÃ©ho znaku, ktorÃ½ sa nachÃ¡dza v texte s (string, pole, konÅ¡t.)
 			</ul>
-			<h4>modifikátory</h4>
-		<ul><li><b>apend(string)</b>; &nbsp; //pridá string na koniec
-			<br><b>apend(string,pos,len)</b>; &nbsp; //pridá èas stringu od udanej pozície na koniec
-			<br><b>apend(string.iterator1,string.iterator2)</b>; &nbsp; //pridá èas stringu od udanej pozície na koniec
-			<br><b>apend(const string)</b>; &nbsp; //pridá konštantnı text na koniec
-			<br><b>apend(const string, poc)</b>; &nbsp; //pridá èas konštantného textu na koniec
-			<br><b>apend(poc, char)</b>; &nbsp; //pridá na koniec zadanı znak poc-krát
-			<li><b>assign(str)</b>; &nbsp; //prepíše string stringom str upraví size, prípadne aj capacity
-			<br><b>assign(str, pos, len)</b>; &nbsp; //prepíše string èasou stringu str
-			<br><b>assign(const string)</b>; &nbsp; //prepíše string konštantnım textom
-			<br><b>assign(const string, poc)</b>; &nbsp; //prepíše string èasou konštantného textu
-			<br><b>assign(poc, char)</b>; &nbsp; //prepíše string znakom zopakovanım poc-krát
-			<li><b>assign(poc, char)</b>; &nbsp; //prepíše string znakom zopakovanım poc-krát
-			<li><b>replace(pos, len, text)</b>; &nbsp; //odstráni zo stringu od pos zadanı poèet a vloí tam uvedenı text
-			<li><b>replace(pos, len, string)</b>; &nbsp; //odstráni zo stringu od pos zadanı poèet a vloí tam uvedenı text
-			<li><b>replace(pos, len, char)</b>; &nbsp; //odstráni zo stringu od pos zadanı poèet a vloí tam uvedenı znak
-			<li><b>replace(pos, len, char, pocet)</b>; &nbsp; //odstráni zo stringu od pos zadanı poèet a vloí tam uvedenı znak zadanı poèet krát
-			<li><b>replace(iterator1, iterator2, ...)</b>; &nbsp; //ako predošlé prípady
-			<li><b>at(i)</b>; &nbsp; //podobne ako operátor [] vráti znak z miesta i (èíslujeme od 0)
-			<li><b>clear()</b>; &nbsp; //nastaví akt. dåku na 0
-			<li><b>copy(adresa_buf,poc, poz)</b>; &nbsp; //okopíruje znaky od pozície poz zo stringu do buffra/po¾a (nedáva znak ukonèenia textu '\n')
-			<li><b>erase(pos, poc)</b>; &nbsp; //odstráni poc znakov zo stringu znaky od pozície pos (skráti dåku)
-			<br><b>erase(iterator1, iterator2)</b>; &nbsp; //odstráni znaky od iter1 po iter2
-			<br><b>erase(iterator)</b>; &nbsp; //odstráni znaky na zadanej pozícii
+			<h4>modifikÃ¡tory</h4>
+		<ul><li><b>apend(string)</b>; &nbsp; //pridÃ¡ string na koniec
+			<br><b>apend(string,pos,len)</b>; &nbsp; //pridÃ¡ ÄasÅ¥ stringu od udanej pozÃ­cie na koniec
+			<br><b>apend(string.iterator1,string.iterator2)</b>; &nbsp; //pridÃ¡ ÄasÅ¥ stringu od udanej pozÃ­cie na koniec
+			<br><b>apend(const string)</b>; &nbsp; //pridÃ¡ konÅ¡tantnÃ½ text na koniec
+			<br><b>apend(const string, poc)</b>; &nbsp; //pridÃ¡ ÄasÅ¥ konÅ¡tantnÃ©ho textu na koniec
+			<br><b>apend(poc, char)</b>; &nbsp; //pridÃ¡ na koniec zadanÃ½ znak poc-krÃ¡t
+			<li><b>assign(str)</b>; &nbsp; //prepÃ­Å¡e string stringom str upravÃ­ size, prÃ­padne aj capacity
+			<br><b>assign(str, pos, len)</b>; &nbsp; //prepÃ­Å¡e string ÄasÅ¥ou stringu str
+			<br><b>assign(const string)</b>; &nbsp; //prepÃ­Å¡e string konÅ¡tantnÃ½m textom
+			<br><b>assign(const string, poc)</b>; &nbsp; //prepÃ­Å¡e string ÄasÅ¥ou konÅ¡tantnÃ©ho textu
+			<br><b>assign(poc, char)</b>; &nbsp; //prepÃ­Å¡e string znakom zopakovanÃ½m poc-krÃ¡t
+			<li><b>assign(poc, char)</b>; &nbsp; //prepÃ­Å¡e string znakom zopakovanÃ½m poc-krÃ¡t
+			<li><b>replace(pos, len, text)</b>; &nbsp; //odstrÃ¡ni zo stringu od pos zadanÃ½ poÄet a vloÅ¾Ã­ tam uvedenÃ½ text
+			<li><b>replace(pos, len, string)</b>; &nbsp; //odstrÃ¡ni zo stringu od pos zadanÃ½ poÄet a vloÅ¾Ã­ tam uvedenÃ½ text
+			<li><b>replace(pos, len, char)</b>; &nbsp; //odstrÃ¡ni zo stringu od pos zadanÃ½ poÄet a vloÅ¾Ã­ tam uvedenÃ½ znak
+			<li><b>replace(pos, len, char, pocet)</b>; &nbsp; //odstrÃ¡ni zo stringu od pos zadanÃ½ poÄet a vloÅ¾Ã­ tam uvedenÃ½ znak zadanÃ½ poÄet krÃ¡t
+			<li><b>replace(iterator1, iterator2, ...)</b>; &nbsp; //ako predoÅ¡lÃ© prÃ­pady
+			<li><b>at(i)</b>; &nbsp; //podobne ako operÃ¡tor [] vrÃ¡ti znak z miesta i (ÄÃ­slujeme od 0)
+			<li><b>clear()</b>; &nbsp; //nastavÃ­ akt. dÄºÅ¾ku na 0
+			<li><b>copy(adresa_buf,poc, poz)</b>; &nbsp; //okopÃ­ruje znaky od pozÃ­cie poz zo stringu do buffra/poÄ¾a (nedÃ¡va znak ukonÄenia textu '\n')
+			<li><b>erase(pos, poc)</b>; &nbsp; //odstrÃ¡ni poc znakov zo stringu znaky od pozÃ­cie pos (skrÃ¡ti dÄºÅ¾ku)
+			<br><b>erase(iterator1, iterator2)</b>; &nbsp; //odstrÃ¡ni znaky od iter1 po iter2
+			<br><b>erase(iterator)</b>; &nbsp; //odstrÃ¡ni znaky na zadanej pozÃ­cii
 			
-			<li><b>insert(pos, s)</b>; &nbsp; //vloí zadanı string/text/pole na pozíciu pos, zväèší dåku
-			<br><b>insert(pos, string, subpos, len)</b>; &nbsp; //vloí zo zadaného stringu od pozície subpos na pozíciu pos, zväèší dåku
-			<br><b>insert(pos, poc, znak)</b>; &nbsp; //vloí poc-krát zadanı znak na pozíciu pos
-			<br><b>insert(iterator, poc, znak)</b>; &nbsp; //vloí poc-krát zadanı znak na pozíciu iterator
-			<br><b>insert(iterator, string.iterator1, string.iterator2)</b>; &nbsp; //vloí znaky z iného stringu
-			<li><b>swap(string)</b>; &nbsp; //vymení obsah dvoch stringov v konšt. èase
+			<li><b>insert(pos, s)</b>; &nbsp; //vloÅ¾Ã­ zadanÃ½ string/text/pole na pozÃ­ciu pos, zvÃ¤ÄÅ¡Ã­ dÄºÅ¾ku
+			<br><b>insert(pos, string, subpos, len)</b>; &nbsp; //vloÅ¾Ã­ zo zadanÃ©ho stringu od pozÃ­cie subpos na pozÃ­ciu pos, zvÃ¤ÄÅ¡Ã­ dÄºÅ¾ku
+			<br><b>insert(pos, poc, znak)</b>; &nbsp; //vloÅ¾Ã­ poc-krÃ¡t zadanÃ½ znak na pozÃ­ciu pos
+			<br><b>insert(iterator, poc, znak)</b>; &nbsp; //vloÅ¾Ã­ poc-krÃ¡t zadanÃ½ znak na pozÃ­ciu iterator
+			<br><b>insert(iterator, string.iterator1, string.iterator2)</b>; &nbsp; //vloÅ¾Ã­ znaky z inÃ©ho stringu
+			<li><b>swap(string)</b>; &nbsp; //vymenÃ­ obsah dvoch stringov v konÅ¡t. Äase
 			
-			<li><b>push_back(hodnota)</b> //zväèší pole o jeden prvok a zapíše doòho danú hodnotu	
+			<li><b>push_back(hodnota)</b> //zvÃ¤ÄÅ¡Ã­ pole o jeden prvok a zapÃ­Å¡e doÅˆho danÃº hodnotu	
 				<br> &nbsp; &nbsp; &nbsp; napr.: v.push_back(10);
-			<li><b>pop_back(hodnota);</b> //zruší poslednı prvok vektora
+			<li><b>pop_back(hodnota);</b> //zruÅ¡Ã­ poslednÃ½ prvok vektora
 		</ul>	
-	<dt>operátory
-	<dd><ul><li><b>+</b> ... podobne ako v pascale mono spája stringy navzájom, prípadne aj konštantné texty
-				<br> &nbsp; &nbsp; jeden z operandov môe by aj char
-			<li><b>+=</b> ... podobne ako + mono pripája ku stringu string, char, prípadne aj konštantnı text
-			<li><b>relaèné operátory</b> ... texty mono porovnáva na rovnos nerovnos, väèší a pod.
-			<li><b>[]</b> ... pomocou indexu mono vybera jednotlivé znaky z textu
+	<dt>operÃ¡tory
+	<dd><ul><li><b>+</b> ... podobne ako v pascale moÅ¾no spÃ¡jaÅ¥ stringy navzÃ¡jom, prÃ­padne aj konÅ¡tantnÃ© texty
+				<br> &nbsp; &nbsp; jeden z operandov mÃ´Å¾e byÅ¥ aj char
+			<li><b>+=</b> ... podobne ako + moÅ¾no pripÃ¡jaÅ¥ ku stringu string, char, prÃ­padne aj konÅ¡tantnÃ½ text
+			<li><b>relaÄnÃ© operÃ¡tory</b> ... texty moÅ¾no porovnÃ¡vaÅ¥ na rovnosÅ¥ nerovnosÅ¥, vÃ¤ÄÅ¡Ã­ a pod.
+			<li><b>[]</b> ... pomocou indexu moÅ¾no vyberaÅ¥ jednotlivÃ© znaky z textu
 		</ul>
 	<dt>vstup stringu
-	<dd>Popíšem vstup pomocou kninice iostream
-		<br><b>Vstup textu zo štandartného zar.</b>
-		<ul><li>cin &lt;&lt; s1; //zoberie zo vstupu text po prvı biely znak a zapíše ho do s1
-			<li>getline(cin, s1); //zoberie zo vstupu text po enter ('\n') a zapíše ho do s1	
-				<br> &nbsp; &nbsp;štandartnı príkaz cin.getline(), cin.get() nejde na naše stringy poui
+	<dd>PopÃ­Å¡em vstup pomocou kniÅ¾nice iostream
+		<br><b>Vstup textu zo Å¡tandartnÃ©ho zar.</b>
+		<ul><li>cin &lt;&lt; s1; //zoberie zo vstupu text po prvÃ½ biely znak a zapÃ­Å¡e ho do s1
+			<li>getline(cin, s1); //zoberie zo vstupu text po enter ('\n') a zapÃ­Å¡e ho do s1	
+				<br> &nbsp; &nbsp;Å¡tandartnÃ½ prÃ­kaz cin.getline(), cin.get() nejde na naÅ¡e stringy pouÅ¾iÅ¥
 		</ul>	
-		<br><b>Vstup údajov zo stringu</b>
+		<br><b>Vstup Ãºdajov zo stringu</b>
 		<pre>
 #include &lt;iostream&gt;
 #include &lt;sstream&gt;
@@ -146,15 +146,15 @@ string s="125 349";
 stringstream ss=s;
 int aa;
 int main()
-{  ss &gt;&gt;aa;  //naèíta z textu prvé èíslo
-  cout &lt;&lt; "Preèítal som: " &lt;&lt; aa &lt;&lt; "\n";
+{  ss &gt;&gt;aa;  //naÄÃ­ta z textu prvÃ© ÄÃ­slo
+  cout &lt;&lt; "PreÄÃ­tal som: " &lt;&lt; aa &lt;&lt; "\n";
        cin.get();
         return 0;
 }</pre>
 			
 		<hr>
 </ul>
-<dt>Príklady
+<dt>PrÃ­klady
 <dd>
 <ul><li>Vstup textu
 			<table width="90%" border="1">
@@ -181,12 +181,12 @@ return 0;
 			<br>Dobry den Ivan<br>
 			</tr>	
 	</table>
-	Vidíme, e program naèítal len krstné meno, cin >> èíta len po prvı biely znak. Ak chceme naèíta celı vstup a po enter namiesto riadku
-	<br>cin >> meno; zadáme riadok
+	VidÃ­me, Å¾e program naÄÃ­tal len krstnÃ© meno, cin >> ÄÃ­ta len po prvÃ½ biely znak. Ak chceme naÄÃ­taÅ¥ celÃ½ vstup aÅ¾ po enter namiesto riadku
+	<br>cin >> meno; zadÃ¡me riadok
 	<br>getline(cin, meno) 
-	<br>(navyše cin >> meno; nám na vstupe nechal text, èo pri ïa¾šom èítaní, napr. èísel povedie ku chybe)
-	<li>Pouitie funkcie find
-		<br>Úloha: Naèítaj text a zisti, ko¾ko je v texte samohlások, spoluhlások, èíslic a inıch znakov
+	<br>(navyÅ¡e cin >> meno; nÃ¡m na vstupe nechal text, Äo pri ÄaÄ¾Å¡om ÄÃ­tanÃ­, napr. ÄÃ­sel povedie ku chybe)
+	<li>PouÅ¾itie funkcie find
+		<br>Ãšloha: NaÄÃ­taj text a zisti, koÄ¾ko je v texte samohlÃ¡sok, spoluhlÃ¡sok, ÄÃ­slic a inÃ½ch znakov
 			<table width="90%" border="1">
 			<tr><td bgcolor="#6666ff">Project1</tr>
 			<tr><td bgcolor="White">	
@@ -231,8 +231,8 @@ return 0;
 			<br>Press any key to continue . . .
 			</tr>	
 	</table>
-	<li>Pouitie find(), replace()
-		<br>Máme v texte nahradi text "ano" textom "samozrejme"
+	<li>PouÅ¾itie find(), replace()
+		<br>MÃ¡me v texte nahradiÅ¥ text "ano" textom "samozrejme"
 			<table width="90%" border="1">
 			<tr><td bgcolor="#6666ff">Project1</tr>
 			<tr><td bgcolor="White">	
@@ -258,8 +258,8 @@ int main(int argc, char* argv[])
 			<br>
 			</tr>	
 	</table>
-<li>Pouitie count(), reverse(), cout_if()
-	<br>Máme v texte zisti poèet vıskytov nejakého znaku
+<li>PouÅ¾itie count(), reverse(), cout_if()
+	<br>MÃ¡me v texte zistiÅ¥ poÄet vÃ½skytov nejakÃ©ho znaku
 				<table width="90%" border="1">
 			<tr><td bgcolor="#6666ff">Project1</tr>
 			<tr><td bgcolor="White">	
@@ -270,7 +270,7 @@ int main(int argc, char* argv[])
 using namespace std;
 string s="Mam Rad InformatikU";
 int fun1(char x)
-{ return (x>='A' && x<='Z');} // pre ve¾ké písmeno vráti pravdu (isupper() )
+{ return (x>='A' && x<='Z');} // pre veÄ¾kÃ© pÃ­smeno vrÃ¡ti pravdu (isupper() )
 
 int main(int argc, char* argv[])
 {       cout &lt;&lt;"poc a: "&lt;&lt;count(s.begin(),s.end(),'a') &lt;&lt; endl;

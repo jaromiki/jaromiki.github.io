@@ -1,6 +1,6 @@
 <html>
 <head>
-	 <title>Animácia</title>
+	 <title>AnimĂˇcia</title>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
  	 <meta name="Content-language" content="sk">	
 	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
@@ -87,19 +87,19 @@
 </head>
 
 <body onload="init()";>
-<center><h3 class=nadpis>Animácia</h3></center>
-<dl><dt>Animácia
-	<dd>Animácia spočíva v posúvaní (resp. menení) jedného alebo viacerých objektov na obrazovke v krátkych časových úsekoch.
-		Najťažšie ne tejto činnosti je korektne zotrieť posúvaný/menený objekt. Zotretie musí prebehnúť tak, aby obrazovka po zotretí vyzerala
-		presne ako pred nakreslením
+<center><h3 class=nadpis>AnimĂˇcia</h3></center>
+<dl><dt>AnimĂˇcia
+	<dd>AnimĂˇcia spoÄŤĂ­va v posĂşvanĂ­ (resp. menenĂ­) jednĂ©ho alebo viacerĂ˝ch objektov na obrazovke v krĂˇtkych ÄŤasovĂ˝ch Ăşsekoch.
+		NajĹĄaĹľĹˇie ne tejto ÄŤinnosti je korektne zotrieĹĄ posĂşvanĂ˝/menenĂ˝ objekt. Zotretie musĂ­ prebehnĂşĹĄ tak, aby obrazovka po zotretĂ­ vyzerala
+		presne ako pred nakreslenĂ­m
 	<hr>
-	<dt class=main>Animácia zotieraním image farbou
-	<dd>Najjednoduchšia cesta ako zotrieť objekt/objekty je zotrieť celú obrazovku a nakresliť objekt v novej polohe. Pri väčšom a navyše obrázkovom
-		pozadí je táto metóda spojená v veľkým presunom dát, čo môže spôsobovať spomalenie. Programuje sa jednoducho a preto sa táto metóda často používa
+	<dt class=main>AnimĂˇcia zotieranĂ­m image farbou
+	<dd>NajjednoduchĹˇia cesta ako zotrieĹĄ objekt/objekty je zotrieĹĄ celĂş obrazovku a nakresliĹĄ objekt v novej polohe. Pri vĂ¤ÄŤĹˇom a navyĹˇe obrĂˇzkovom
+		pozadĂ­ je tĂˇto metĂłda spojenĂˇ v veÄľkĂ˝m presunom dĂˇt, ÄŤo mĂ´Ĺľe spĂ´sobovaĹĄ spomalenie. Programuje sa jednoducho a preto sa tĂˇto metĂłda ÄŤasto pouĹľĂ­va
 		napriek svojim obmedzeniam a nedostatkom.
-		<br>ukážeme to na najjednoduchšom prípade - pozadie i posúvané objekty sú kreslené. Naprogramujeme kruhy odrážajúce sa od mantinelov, tlačítkom možno pridať
-		ďalší kruh. Do formulára vložíme Image, Timer a Button.
-		<br>Zadeklarujeme premenné:
+		<br>ukĂˇĹľeme to na najjednoduchĹˇom prĂ­pade - pozadie i posĂşvanĂ© objekty sĂş kreslenĂ©. Naprogramujeme kruhy odrĂˇĹľajĂşce sa od mantinelov, tlaÄŤĂ­tkom moĹľno pridaĹĄ
+		ÄŹalĹˇĂ­ kruh. Do formulĂˇra vloĹľĂ­me Image, Timer a Button.
+		<br>Zadeklarujeme premennĂ©:
 <div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
    <div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
    </div>
@@ -111,10 +111,10 @@
 	    n: integer;
 </pre>
 </div></div></div>				  
-		Timer bude robiť celú animáciu spočívajúcu v krokoch:
+		Timer bude robiĹĄ celĂş animĂˇciu spoÄŤĂ­vajĂşcu v krokoch:
 		<ul><li>zotrie Image
-			<li>pre každý kruh 1..n vypočíta jeho novú polohu x,y (prípadne zmení smer pohybu dx,dy) 
-			<li>vykreslí kruhy 1..n
+			<li>pre kaĹľdĂ˝ kruh 1..n vypoÄŤĂ­ta jeho novĂş polohu x,y (prĂ­padne zmenĂ­ smer pohybu dx,dy) 
+			<li>vykreslĂ­ kruhy 1..n
 		</ul>
 <div style="border-width:3;border-style:outset;width:760px;margin:10px;background-color:#dddddd;">
    <div align="left" style="background-color:#3366ff; width:760px; padding:0;border-width:0;color:white">Unit1.pas
@@ -125,7 +125,7 @@
 Var i: integer;
 Begin
 	Image1.Canvas.Brush.Color:=RGB(196,204,255);
-	Image1.Canvas.FillRect(Image1.ClientRect);		//zotrieme celý image
+	Image1.Canvas.FillRect(Image1.ClientRect);		//zotrieme celĂ˝ image
 	for i:=1 to n do
 	Begin
 	  kruhy[i].x:=kruhy[i].x+kruhy[i].dx;
@@ -137,9 +137,9 @@ Begin
 	End;	
 </pre>
 </div></div></div>				  
-	Tlačítko má pridať další kruh do Image. Aby časovač vedel korektne pohybovať týmto novým kruhom potrebuje o tomto novom kruhu vedieť:
+	TlaÄŤĂ­tko mĂˇ pridaĹĄ dalĹˇĂ­ kruh do Image. Aby ÄŤasovaÄŤ vedel korektne pohybovaĹĄ tĂ˝mto novĂ˝m kruhom potrebuje o tomto novom kruhu vedieĹĄ:
 	<ul><li>polohu ... kruhy[n].x,kruhy[n].y
-		<li>rýchlosť pohybu ... kruhy[n].dx,kruhy[n].dy
+		<li>rĂ˝chlosĹĄ pohybu ... kruhy[n].dx,kruhy[n].dy
 		<li>farbu ... kruhy[n].f
 	</ul>
 <div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
@@ -149,20 +149,20 @@ Begin
    <div style="margin:10px">
 <pre>Begin
 	n:=n+1;
-	kruhy[n].x:=50;	kruhy[n].y:=50;        //miesto narodenia nového kruhu
+	kruhy[n].x:=50;	kruhy[n].y:=50;        //miesto narodenia novĂ©ho kruhu
 	kruhy[n].dx:=1+random(6); kruhy[n].dy:=1+Random(5);
 	kruhy[i].f:=rgb(random(128),random(128),random(128));
 End;
 </pre>
 </div></div></div>	
-Program by mohol vyzerať nasledovne:
+Program by mohol vyzeraĹĄ nasledovne:
 <div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
    <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
 	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
    </div>
   	<div style="background-color:silver; width:850px;">
 <canvas width="800" height="600" id="platno" style="margin:6">
-   Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.
+   VĂˇĹˇ prohlĂ­ĹľeÄŤ nepodporuje kreslenie. AnimĂˇcie nebudĂş fungovaĹĄ - zvolte IE9, Mozilla alebo Chrome.
 </canvas>
 <br>
 <input type="Button" value="startuj" id="startuj" onclick="if (canvas.getContext) spusti();" style="margin:6px">
@@ -174,20 +174,20 @@ Program by mohol vyzerať nasledovne:
 
 
 <hr>
-	<dt class=main>Animácia zotieraním image obrázkom
-	<dd>Modifikácia minulého postupu keď pozadie nie je jednoduchá farba ale obrázok a kruhy nie sú jednofarebné ale tiež sú dané obrázkami
-		<br>Dôležité poznámky:
-		<br>- vkladané obrázky môžu byť len typu *.bmp (na iné typy obr. musíme pripnúť patričnú knižnicu napr. uses jpeg)
-		<br>- v obrázku *.bmp možno dať jednu farbu ako priesvitnú (Obyčajne je priesvitná farba daná farbou pixla [1,1] obrázka)
-		<br>- obrázky si môžme namaľovať napr. v Zoner Calisto
-		Keďže budeme vkladať obrázky odporúčam si pozrieť nástroje objektu Canvas pre prácu s obrázkami.
-		<br>Na zotretie objektu možno 
-		<ul><li>prekresliť celé pozadie
-			<li>prekresliť len zasiahnutú oblasť (zdá sa výhodnejšie ale pri "väčšom" počte pohybujúcich je nevýhodné)
+	<dt class=main>AnimĂˇcia zotieranĂ­m image obrĂˇzkom
+	<dd>ModifikĂˇcia minulĂ©ho postupu keÄŹ pozadie nie je jednoduchĂˇ farba ale obrĂˇzok a kruhy nie sĂş jednofarebnĂ© ale tieĹľ sĂş danĂ© obrĂˇzkami
+		<br>DĂ´leĹľitĂ© poznĂˇmky:
+		<br>- vkladanĂ© obrĂˇzky mĂ´Ĺľu byĹĄ len typu *.bmp (na inĂ© typy obr. musĂ­me pripnĂşĹĄ patriÄŤnĂş kniĹľnicu napr. uses jpeg)
+		<br>- v obrĂˇzku *.bmp moĹľno daĹĄ jednu farbu ako priesvitnĂş (ObyÄŤajne je priesvitnĂˇ farba danĂˇ farbou pixla [1,1] obrĂˇzka)
+		<br>- obrĂˇzky si mĂ´Ĺľme namaÄľovaĹĄ napr. v Zoner Calisto
+		KeÄŹĹľe budeme vkladaĹĄ obrĂˇzky odporĂşÄŤam si pozrieĹĄ nĂˇstroje objektu Canvas pre prĂˇcu s obrĂˇzkami.
+		<br>Na zotretie objektu moĹľno 
+		<ul><li>prekresliĹĄ celĂ© pozadie
+			<li>prekresliĹĄ len zasiahnutĂş oblasĹĄ (zdĂˇ sa vĂ˝hodnejĹˇie ale pri "vĂ¤ÄŤĹˇom" poÄŤte pohybujĂşcich je nevĂ˝hodnĂ©)
 		</ul>
-		<br>Vo FormCreate vytvoríme premennú typu Tbitmap
-		a potom do nej načítame obrázok, ktorý chceme mať v pozadí a vykreslíme aj pozadie týmto obrázkom.
-		Ďalej vytvoríme ďalšiu premennú typu TBitmap do ktorej načítame obrázok pohybujúceho sa objektu.
+		<br>Vo FormCreate vytvorĂ­me premennĂş typu Tbitmap
+		a potom do nej naÄŤĂ­tame obrĂˇzok, ktorĂ˝ chceme maĹĄ v pozadĂ­ a vykreslĂ­me aj pozadie tĂ˝mto obrĂˇzkom.
+		ÄŽalej vytvorĂ­me ÄŹalĹˇiu premennĂş typu TBitmap do ktorej naÄŤĂ­tame obrĂˇzok pohybujĂşceho sa objektu.
 		<br>
 <div style="border-width:3;border-style:outset;width:760px;margin:10px;background-color:#dddddd;">
    <div align="left" style="background-color:#3366ff; width:760px; padding:0;border-width:0;color:white">Unit1.pas
@@ -248,20 +248,20 @@ begin
 procedure TForm1.Button1Click(Sender: TObject);
 begin
 <font color="Blue">	n:=n+1;
-	teleso[n].x:=50;	teleso[n].y:=50;        //miesto narodenia nového kruhu
+	teleso[n].x:=50;	teleso[n].y:=50;        //miesto narodenia novĂ©ho kruhu
 	teleso[n].dx:=1+random(6); teleso[n].dy:=1+Random(5);
 </font>end;
 </pre>
 </div></div></div>		
 
-Program by mohol vyzerať nasledovne:
+Program by mohol vyzeraĹĄ nasledovne:
 <div style="border-width:3;border-style:outset;width:850px;margin:10px;background-color:silver;">
    <div align="right" style="background-color:#3366ff; width:850px; padding:0;border-width:0;">
 	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
    </div>
   	<div style="background-color:silver; width:850px;">
 <canvas width="512" height="384" id="platno2" style="margin:6">
-   Váš prohlížeč nepodporuje kreslenie. Animácie nebudú fungovať - zvolte IE9, Mozilla alebo Chrome.
+   VĂˇĹˇ prohlĂ­ĹľeÄŤ nepodporuje kreslenie. AnimĂˇcie nebudĂş fungovaĹĄ - zvolte IE9, Mozilla alebo Chrome.
 </canvas>
 <br>
 <input type="Button" value="startuj" id="startuj2" onclick="if (canvas2.getContext) spusti2();" style="margin:6px">
@@ -271,30 +271,30 @@ Program by mohol vyzerať nasledovne:
 </div></div></div>		
 
 <hr>
-<dt class=main>Animované obrázky
-<dd>Niekedy chceme aby sa obrázok pri pohybe menil - vtáci mávajú krídlami, roboti hýbu nohami atď. Predpokladám, že máme obrázky
-	obr1, ... ,obrn, kde je rozfázovaný pohyb objektu. Zavedieme si bajtovú premennú <font color="red">fáza</font>, kde bude zapísané
-	koľký obrázok - faza -  sa má aktuálne zobraziť.
+<dt class=main>AnimovanĂ© obrĂˇzky
+<dd>Niekedy chceme aby sa obrĂˇzok pri pohybe menil - vtĂˇci mĂˇvajĂş krĂ­dlami, roboti hĂ˝bu nohami atÄŹ. PredpokladĂˇm, Ĺľe mĂˇme obrĂˇzky
+	obr1, ... ,obrn, kde je rozfĂˇzovanĂ˝ pohyb objektu. Zavedieme si bajtovĂş premennĂş <font color="red">fĂˇza</font>, kde bude zapĂ­sanĂ©
+	koÄľkĂ˝ obrĂˇzok - faza -  sa mĂˇ aktuĂˇlne zobraziĹĄ.
 	<br>Postup:
-	<br>- obrázky si cyklom načítame do poľa obrázkov (array of Tpicture) 
-	<br>- časovač robí nasledné  - zotrie obrazovku - zmení fázu a súradnice obrázka a zobrazí ho 
+	<br>- obrĂˇzky si cyklom naÄŤĂ­tame do poÄľa obrĂˇzkov (array of Tpicture) 
+	<br>- ÄŤasovaÄŤ robĂ­ naslednĂ©  - zotrie obrazovku - zmenĂ­ fĂˇzu a sĂşradnice obrĂˇzka a zobrazĂ­ ho 
    <dl>
-   <dt><font color="green">Úlohy:</font>
+   <dt><font color="green">Ăšlohy:</font>
    <dd><ol><li><a href="anim6.exe">uloha1</a></ol>
    </dl>
  <hr>
 <dt class=main>Pohyb pozadia
-<dd>Niekedy potrebujeme posúvať pozadie, napr. hráč prišiel ku kraju okna a zobrazí sa mu ďalší priestor alebo
-	pre efekt letu nad krajinou sa pozadie plynule posúva nabok.
+<dd>Niekedy potrebujeme posĂşvaĹĄ pozadie, napr. hrĂˇÄŤ priĹˇiel ku kraju okna a zobrazĂ­ sa mu ÄŹalĹˇĂ­ priestor alebo
+	pre efekt letu nad krajinou sa pozadie plynule posĂşva nabok.
 	<br>Postup:
 	<ol>
-	<li>pripravíme si do premennej velký obrázok (resp. opakujúci sa obrázok, niečo ako kachličky)
-	<li>parametrami príkazu draw - x,y určíme ktorá časť veľkého obrázku bude vlastne viditelná
-		(x, y môžu byť súradnice mimo canvasu). 
-	<li>menením x,y vznikne dojem pohybujúceho sa pozadia
+	<li>pripravĂ­me si do premennej velkĂ˝ obrĂˇzok (resp. opakujĂşci sa obrĂˇzok, nieÄŤo ako kachliÄŤky)
+	<li>parametrami prĂ­kazu draw - x,y urÄŤĂ­me ktorĂˇ ÄŤasĹĄ veÄľkĂ©ho obrĂˇzku bude vlastne viditelnĂˇ
+		(x, y mĂ´Ĺľu byĹĄ sĂşradnice mimo canvasu). 
+	<li>menenĂ­m x,y vznikne dojem pohybujĂşceho sa pozadia
 	</ol>	 
    <dl>
-   <dt class=second>Úlohy:
+   <dt class=second>Ăšlohy:
    <dd><ol><li><a href="anim7.exe">uloha1</a></ol>
    </dl>
  <hr>

@@ -7,71 +7,71 @@
 
 <body>
 <center><h3 class=nadpis>Triedenie</h3></center>
-Znalos triediacich algoritmov pri programovaní v C-èku nie je nutná, lebo existujú kninièné podprogramy na utriedenie rôznych objektov.
-Viac mono nájst v kapitole venujúcej sa štandartnej kninici STL. Tu je to z dôvodu precvièenia algoritmického myslenia, resp. vycibrenie programátorskej techniky.
-Nech A je mnoina n prvkov {a<sub>i</sub>} na ktorej je definovaná relácia usporiadania t. j. 
-<ul><li>pre všetky 0 &lt; j, k &lt;= n platí niektorı z nasledovnıch vzahov: a<sub>j</sub> = a<sub>k</sub>; a<sub>j</sub> > a<sub>k</sub>; a<sub>j</sub> &lt; a<sub>k</sub>
-	<li>pre všetky 0 &lt; j, k, l &lt;= n platí: a<sub>j</sub> > a<sub>k</sub>  a a<sub>k</sub> > a<sub>l</sub> => a<sub>j</sub> > a<sub>l</sub>
+ZnalosÅ¥ triediacich algoritmov pri programovanÃ­ v C-Äku nie je nutnÃ¡, lebo existujÃº kniÅ¾niÄnÃ© podprogramy na utriedenie rÃ´znych objektov.
+Viac moÅ¾no nÃ¡jst v kapitole venujÃºcej sa Å¡tandartnej kniÅ¾nici STL. Tu je to z dÃ´vodu precviÄenia algoritmickÃ©ho myslenia, resp. vycibrenie programÃ¡torskej techniky.
+Nech A je mnoÅ¾ina n prvkov {a<sub>i</sub>} na ktorej je definovanÃ¡ relÃ¡cia usporiadania t. j. 
+<ul><li>pre vÅ¡etky 0 &lt; j, k &lt;= n platÃ­ niektorÃ½ z nasledovnÃ½ch vzÅ¥ahov: a<sub>j</sub> = a<sub>k</sub>; a<sub>j</sub> > a<sub>k</sub>; a<sub>j</sub> &lt; a<sub>k</sub>
+	<li>pre vÅ¡etky 0 &lt; j, k, l &lt;= n platÃ­: a<sub>j</sub> > a<sub>k</sub>  a a<sub>k</sub> > a<sub>l</sub> => a<sub>j</sub> > a<sub>l</sub>
 </ul>
-Takúto mnoinu voláme lineárne usporiadate¾ná. Problém triedenia je nájs takú permutáciu, aby pre všetky j,k &lt;= n platilo: j>k => a<sub>j</sub> >= a<sub>k</sub>. 	 
+TakÃºto mnoÅ¾inu volÃ¡me lineÃ¡rne usporiadateÄ¾nÃ¡. ProblÃ©m triedenia je nÃ¡jsÅ¥ takÃº permutÃ¡ciu, aby pre vÅ¡etky j,k &lt;= n platilo: j>k => a<sub>j</sub> >= a<sub>k</sub>. 	 
 <br>
-Relácia usporiadania je urèená nejakou vlastnosou prvkov mnoiny a voláme ju k¾úè. V C môme triedi pod¾a èíselnıch, 
-znakovıch a textovıch k¾úèov, princíp je rovnakı. Myšlienka triedenia bude vysvetlená na triedení celıch èísel 
-(zoradenie èísel od najmenšieho po najväèšie), pouitie na triedenie pod¾a inıch k¾úèov je analogické)                   
+RelÃ¡cia usporiadania je urÄenÃ¡ nejakou vlastnosÅ¥ou prvkov mnoÅ¾iny a volÃ¡me ju kÄ¾ÃºÄ. V C mÃ´Å¾me triediÅ¥ podÄ¾a ÄÃ­selnÃ½ch, 
+znakovÃ½ch a textovÃ½ch kÄ¾ÃºÄov, princÃ­p je rovnakÃ½. MyÅ¡lienka triedenia bude vysvetlenÃ¡ na triedenÃ­ celÃ½ch ÄÃ­sel 
+(zoradenie ÄÃ­sel od najmenÅ¡ieho po najvÃ¤ÄÅ¡ie), pouÅ¾itie na triedenie podÄ¾a inÃ½ch kÄ¾ÃºÄov je analogickÃ©)                   
 <dl><dt class=main>M A X  -  S O R T
-	<DD>Je základnım a najjednoduchším triedením. Táto jednoduchá myšlienka je a prekvapujúco rıchla. Myšlienka je nasledovná.
-	<br>Chceme usporiada n iakov stojacich za sebou pod¾a ve¾kosti. Porovnávaním nájdeme najväèšieho a vymeníme ho s poslednım. 
-	Teraz rovnako budeme usporiadava (n-1) iakov a takto budeme h¾ada max. v stále menšej skupine. Keï nám ostane u iba jeden prvok, 
-	je skupina utriedená.
+	<DD>Je zÃ¡kladnÃ½m a najjednoduchÅ¡Ã­m triedenÃ­m. TÃ¡to jednoduchÃ¡ myÅ¡lienka je aÅ¾ prekvapujÃºco rÃ½chla. MyÅ¡lienka je nasledovnÃ¡.
+	<br>Chceme usporiadaÅ¥ n Å¾iakov stojacich za sebou podÄ¾a veÄ¾kosti. PorovnÃ¡vanÃ­m nÃ¡jdeme najvÃ¤ÄÅ¡ieho a vymenÃ­me ho s poslednÃ½m. 
+	Teraz rovnako budeme usporiadavaÅ¥ (n-1) Å¾iakov a takto budeme hÄ¾adaÅ¥ max. v stÃ¡le menÅ¡ej skupine. KeÄ nÃ¡m ostane uÅ¾ iba jeden prvok, 
+	je skupina utriedenÃ¡.
 <TABLE cellSpacing=0 width="80%" align=center bgColor='white' border=1>
          <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie cez maximum</I> </P>
          <TR><TD vAlign=top><PRE>procedure Max;
 { for (i=n-1; i>0; i--)  //i ...na ktore miesto pojde max
-  { im=0;              //kde bıva maximum
+  { im=0;              //kde bÃ½va maximum
     for (j=1; i<=i;i++)   
 	if (a[im] &lt; a[j]) im=j;
 	vymen(a,im,i);     //vymeni v poli a prvky im-ty a i-ty 
   }
 {</pre>
  </table>		 
-Nevıhoda tejto metódy je, e triedenie trvá vdy rovnako dlho - ak je pole skoro alebo úplne utriedené, tak jej to nepomôe. Táto metóda triedenia sa nedá vylepšova.
+NevÃ½hoda tejto metÃ³dy je, Å¾e triedenie trvÃ¡ vÅ¾dy rovnako dlho - ak je pole skoro alebo Ãºplne utriedenÃ©, tak jej to nepomÃ´Å¾e. TÃ¡to metÃ³da triedenia sa nedÃ¡ vylepÅ¡ovaÅ¥.
 
 	<dt class=main>BUBLE-SORT
-	<dd>Toto triedenie si vysvetlíme na príklade.  Predstavte si  takúto situáciu.  Na hodine telocviku  ste sa celá
-	trieda postavili do radu tak, ako ste prichádzali. Keï prišiel uèite¾,  zaèal vás  zoradova. Zobral prvého z¾ava,
-	ak bol jeho pravı sused menší, vymenil ich. Toho, èo bol predtım naj¾avejší, zase porovnal s jeho  pravım susedom. 
-	Ak novı pravı sused bol opä menší, tak aj ich navzájom vymenil.  Ale ak bol pravı sused väèší, tak svojho ob¾úbenca 
-	ponechal tak a zaèal opakova tie isté operácie s tım väèším pravım susedom. Keï došiel opä na pravı koniec radu, 
-	pozrel sa na vás, èi ste u zoradení. Ak ste ešte neboli, tak opä  zaèal rovnako z ¾avého konca. Keï došiel opä 
-	na pravı koniec radu, tak sa zasa pozrel, èi u ste zoradení ...  Ak ste boli, tak skonèil a dal vám rozcvièku.
-	Teraz si to zopakujeme s kartami.  Majme 20 pomiešanıch kariet, na ktorıch sú èísla od 1 do 15.  Prv ne ich zaèneme triedi, 
-	uloíme ich pekne do radu v takom poradí, v akom sme ich našli.  Budeme postupova pod¾a uèite¾ovho algoritmu. 
-	Teda najprv zoberieme naj¾avejšiu a porovnáme ju s kartou,  ktorá je od nej hneï napravo.  Ak tá naša ( v tomto
-	prípade prvá a ïalej to bude vdy  väèšia z posledného porovnania ) je väèšia, tak ich obe vymeníme, ináè svoju pozornos 
-	zameriame na tú väèšiu a ïalšie  operácie  budeme  prevádza  s òou.  Take opä ju porovnáme s kartou  po jej pravici, ...  
-	Keï dôjdeme  na pravı koniec radu je jedna karta zaruèene u na správnom mieste.
-	Urèite ste na to prišli, e posledná karta je najvyššia. Teraz nám treba ešte usporiada N-1 kariet. Po prebehnutí z¾ava doprava
-	sa zas zaruèene na posledné miesto (N-1) dostane najvyššia karta a ostane nám ešte N-2 kariet.
-	<br>Takto budeme pokraèova, a budeme ma len 2 karty, ktoré treba usporiada - porovnáme ich a ak treba zameníme a je jasné,
-	e teraz sú u všetky karty utriedené.
+	<dd>Toto triedenie si vysvetlÃ­me na prÃ­klade.  Predstavte si  takÃºto situÃ¡ciu.  Na hodine telocviku  ste sa celÃ¡
+	trieda postavili do radu tak, ako ste prichÃ¡dzali. KeÄ priÅ¡iel uÄiteÄ¾,  zaÄal vÃ¡s  zoradovaÅ¥. Zobral prvÃ©ho zÄ¾ava,
+	ak bol jeho pravÃ½ sused menÅ¡Ã­, vymenil ich. Toho, Äo bol predtÃ½m najÄ¾avejÅ¡Ã­, zase porovnal s jeho  pravÃ½m susedom. 
+	Ak novÃ½ pravÃ½ sused bol opÃ¤Å¥ menÅ¡Ã­, tak aj ich navzÃ¡jom vymenil.  Ale ak bol pravÃ½ sused vÃ¤ÄÅ¡Ã­, tak svojho obÄ¾Ãºbenca 
+	ponechal tak a zaÄal opakovaÅ¥ tie istÃ© operÃ¡cie s tÃ½m vÃ¤ÄÅ¡Ã­m pravÃ½m susedom. KeÄ doÅ¡iel opÃ¤Å¥ na pravÃ½ koniec radu, 
+	pozrel sa na vÃ¡s, Äi ste uÅ¾ zoradenÃ­. Ak ste eÅ¡te neboli, tak opÃ¤Å¥  zaÄal rovnako z Ä¾avÃ©ho konca. KeÄ doÅ¡iel opÃ¤Å¥ 
+	na pravÃ½ koniec radu, tak sa zasa pozrel, Äi uÅ¾ ste zoradenÃ­ ...  Ak ste boli, tak skonÄil a dal vÃ¡m rozcviÄku.
+	Teraz si to zopakujeme s kartami.  Majme 20 pomieÅ¡anÃ½ch kariet, na ktorÃ½ch sÃº ÄÃ­sla od 1 do 15.  Prv neÅ¾ ich zaÄneme triediÅ¥, 
+	uloÅ¾Ã­me ich pekne do radu v takom poradÃ­, v akom sme ich naÅ¡li.  Budeme postupovaÅ¥ podÄ¾a uÄiteÄ¾ovho algoritmu. 
+	Teda najprv zoberieme najÄ¾avejÅ¡iu a porovnÃ¡me ju s kartou,  ktorÃ¡ je od nej hneÄ napravo.  Ak tÃ¡ naÅ¡a ( v tomto
+	prÃ­pade prvÃ¡ a Äalej to bude vÅ¾dy  vÃ¤ÄÅ¡ia z poslednÃ©ho porovnania ) je vÃ¤ÄÅ¡ia, tak ich obe vymenÃ­me, inÃ¡Ä svoju pozornosÅ¥ 
+	zameriame na tÃº vÃ¤ÄÅ¡iu a ÄalÅ¡ie  operÃ¡cie  budeme  prevÃ¡dzaÅ¥  s Åˆou.  TakÅ¾e opÃ¤Å¥ ju porovnÃ¡me s kartou  po jej pravici, ...  
+	KeÄ dÃ´jdeme  na pravÃ½ koniec radu je jedna karta zaruÄene uÅ¾ na sprÃ¡vnom mieste.
+	UrÄite ste na to priÅ¡li, Å¾e poslednÃ¡ karta je najvyÅ¡Å¡ia. Teraz nÃ¡m treba eÅ¡te usporiadaÅ¥ N-1 kariet. Po prebehnutÃ­ zÄ¾ava doprava
+	sa zas zaruÄene na poslednÃ© miesto (N-1) dostane najvyÅ¡Å¡ia karta a ostane nÃ¡m eÅ¡te N-2 kariet.
+	<br>Takto budeme pokraÄovaÅ¥, aÅ¾ budeme maÅ¥ len 2 karty, ktorÃ© treba usporiadaÅ¥ - porovnÃ¡me ich a ak treba zamenÃ­me a je jasnÃ©,
+	Å¾e teraz sÃº uÅ¾ vÅ¡etky karty utriedenÃ©.
 <TABLE cellSpacing=0  width="80%" align='center' bgColor='white' border=1>
-    <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Prvé bubliny</I> </P>
+    <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>PrvÃ© bubliny</I> </P>
     <TR><TD vAlign=top><PRE>void buble(int *a, int n)   //do podprogramu prenesieme pole a pocet prvkov
 {  for(i=n-1; i>0; i--)           //i ... kolko prvkov este triedime
-      for(j=1; i&lt;=n; j++)       //j ... adresa praveho prvku z dvojice, ktorú porovnávam
+      for(j=1; i&lt;=n; j++)       //j ... adresa praveho prvku z dvojice, ktorÃº porovnÃ¡vam
          if (a[j-1]>a[j]) vymen(a,j,j-1);
 }</pre>
  </table>		 
-	Vidíme, e program je krátky a celkom zrozumitelnı. Skúsme h¾ada nedostatky algoritmu:
-	<ol><li>algoritmus sa nestará, èi náhodov u pole nie je utriedené (kadé pole triedi rovnako dlho)
-		<li>prvky sa premiestòujú len o 1 políèko, èie celá cesta kadého políèka na svoje správne miesto trvá dlho
+	VidÃ­me, Å¾e program je krÃ¡tky a celkom zrozumitelnÃ½. SkÃºsme hÄ¾adaÅ¥ nedostatky algoritmu:
+	<ol><li>algoritmus sa nestarÃ¡, Äi nÃ¡hodov uÅ¾ pole nie je utriedenÃ© (kaÅ¾dÃ© pole triedi rovnako dlho)
+		<li>prvky sa premiestÅˆujÃº len o 1 polÃ­Äko, ÄiÅ¾e celÃ¡ cesta kaÅ¾dÃ©ho polÃ­Äka na svoje sprÃ¡vne miesto trvÃ¡ dlho
 	</ol>	
-	Skúsme teraz upravi algoritmus tak, aby utriedené pole zbytoène netriedil. Vieme zisti, e pole je u utriedené?
-	<br><br>Áno
-	<br>Ak sme pri prechode z¾ava doprava niè nevymieòali, tak je nielen "poslednı" prvok u správne umiestnenı ale aj ostatné.
-	<br>Pozn. Kede podprogram "nièí" premennú n je poèet prvkov prenesenı cez parameter a premenná n v hlavnom programe je ochránená.
+	SkÃºsme teraz upraviÅ¥ algoritmus tak, aby utriedenÃ© pole zbytoÄne netriedil. Vieme zistiÅ¥, Å¾e pole je uÅ¾ utriedenÃ©?
+	<br><br>Ãno
+	<br>Ak sme pri prechode zÄ¾ava doprava niÄ nevymieÅˆali, tak je nielen "poslednÃ½" prvok uÅ¾ sprÃ¡vne umiestnenÃ½ ale aj ostatnÃ©.
+	<br>Pozn. KedÅ¾e podprogram "niÄÃ­" premennÃº n je poÄet prvkov prenesenÃ½ cez parameter a premennÃ¡ n v hlavnom programe je ochrÃ¡nenÃ¡.
 <TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
-         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Druhé - lepšie bubliny</I> </P>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>DruhÃ© - lepÅ¡ie bubliny</I> </P>
          <TR><TD vAlign=top><PRE>void buble2(int *a,int n)
 { for (int este=1;n>0 && este; n--)
   {  este=0;
@@ -79,13 +79,13 @@ Nevıhoda tejto metódy je, e triedenie trvá vdy rovnako dlho - ak je pole skoro
 	   if (a[j-1]>a[j]) 
 	   {  vymen(a,j,j-1); este=1; }</pre>
  </table>		 
-	<br>Tento algoritmus je lepší najmä ak triedené pole nie je moc poprehadzované a monos, e bude utriedené skôr je reálna.
-	Pre náhodne zamiešané polia, však môe by efekt aj opaènı - t. j. triedenie bude trva dlhšie.
+	<br>Tento algoritmus je lepÅ¡Ã­ najmÃ¤ ak triedenÃ© pole nie je moc poprehadzovanÃ© a moÅ¾nosÅ¥, Å¾e bude utriedenÃ© skÃ´r je reÃ¡lna.
+	Pre nÃ¡hodne zamieÅ¡anÃ© polia, vÅ¡ak mÃ´Å¾e byÅ¥ efekt aj opaÄnÃ½ - t. j. triedenie bude trvaÅ¥ dlhÅ¡ie.
 	<br><br>
-	Pri sledovaní vımen urèite prídete na myšlienku, e prvky umiestnené nad poslednou vımenou sú u na svojich miestach a teda
-	pri zniovaní premennej n môme by niekedy "smelší". 
+	Pri sledovanÃ­ vÃ½men urÄite prÃ­dete na myÅ¡lienku, Å¾e prvky umiestnenÃ© nad poslednou vÃ½menou sÃº uÅ¾ na svojich miestach a teda
+	pri zniÅ¾ovanÃ­ premennej n mÃ´Å¾me byÅ¥ niekedy "smelÅ¡Ã­". 
 <TABLE cellSpacing=0 width="80%" align=center bgColor='white' border=1>
-         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Tretie - lepšie bubliny</I> </P>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Tretie - lepÅ¡ie bubliny</I> </P>
          <TR><TD vAlign=top><PRE>void buble3(int *a,int n)
 {  int k;
    for (n--;n>0;n--)
@@ -95,21 +95,21 @@ Nevıhoda tejto metódy je, e triedenie trvá vdy rovnako dlho - ak je pole skoro
 	  n=k;
     }</pre>
  </table>
-	<br>No a to sú u bublinky v plnej dokonalosti. Napriek tomu, e sme ich 2 krát vylepšovali nedosahujú kvalít lepších triedení
-	(asi platí, e èím je nieèo horšie, tım sa to ¾ahšie vylepšuje)
-	Ïalšie vylepšenie je u radikálne - pozri Dobosievicz, poprípade u nasledovné pretriasanie.
+	<br>No a to sÃº uÅ¾ bublinky v plnej dokonalosti. Napriek tomu, Å¾e sme ich 2 krÃ¡t vylepÅ¡ovali nedosahujÃº kvalÃ­t lepÅ¡Ã­ch triedenÃ­
+	(asi platÃ­, Å¾e ÄÃ­m je nieÄo horÅ¡ie, tÃ½m sa to Ä¾ahÅ¡ie vylepÅ¡uje)
+	ÄalÅ¡ie vylepÅ¡enie je uÅ¾ radikÃ¡lne - pozri Dobosievicz, poprÃ­pade uÅ¾ nasledovnÃ© pretriasanie.
 
     <dt class=main>S H A K E R  -  S O R T
-	<dd>Na úvod jedno  dôleité upozornenie! Pred skúmaním tohto triedenia si najprv prezrite BUBBLE-SORT.  
-		Toto triedenie sa toti zakladá práve na òom, je toti jeho vylepšením. Jeden z problémov bubliniek je,
-		e zatia¾ èo ve¾ké prvky vcelku rıchlo putujú doprava, tie malé postupujú len ve¾mi pomaly.
-		<br>Príklad1: Utriedenú postupnos "pokazíme tak, e najväèší prvok prehodíme na druhı koniec. Bublinky na jeden
-		beh túto chybu opravia.
-		<br>Príklad2: Utriedenú postupnos "pokazíme tak, e najmenší prvok prehodíme na druhı koniec. Bublinky musia urobi
-		a n-1 behov, aby to napravili.
-		<br>Tento nedostatok (pomalı posun malıch prvkov) napráva triedenie pretriasaním, kde raz ideme z¾ava doprava 
-		a potom sprava do¾ava. Zároveò budeme robi "smelé" kroky, keï zistíme e dlhšie úseky na zaèiatku, resp. na konci sú u utriedené
-		(pozri predošlı príklad)
+	<dd>Na Ãºvod jedno  dÃ´leÅ¾itÃ© upozornenie! Pred skÃºmanÃ­m tohto triedenia si najprv prezrite BUBBLE-SORT.  
+		Toto triedenie sa totiÅ¾ zakladÃ¡ prÃ¡ve na Åˆom, je totiÅ¾ jeho vylepÅ¡enÃ­m. Jeden z problÃ©mov bubliniek je,
+		Å¾e zatiaÄ¾ Äo veÄ¾kÃ© prvky vcelku rÃ½chlo putujÃº doprava, tie malÃ© postupujÃº len veÄ¾mi pomaly.
+		<br>PrÃ­klad1: UtriedenÃº postupnosÅ¥ "pokazÃ­me tak, Å¾e najvÃ¤ÄÅ¡Ã­ prvok prehodÃ­me na druhÃ½ koniec. Bublinky na jeden
+		beh tÃºto chybu opravia.
+		<br>PrÃ­klad2: UtriedenÃº postupnosÅ¥ "pokazÃ­me tak, Å¾e najmenÅ¡Ã­ prvok prehodÃ­me na druhÃ½ koniec. Bublinky musia urobiÅ¥
+		aÅ¾ n-1 behov, aby to napravili.
+		<br>Tento nedostatok (pomalÃ½ posun malÃ½ch prvkov) naprÃ¡va triedenie pretriasanÃ­m, kde raz ideme zÄ¾ava doprava 
+		a potom sprava doÄ¾ava. ZÃ¡roveÅˆ budeme robiÅ¥ "smelÃ©" kroky, keÄ zistÃ­me Å¾e dlhÅ¡ie Ãºseky na zaÄiatku, resp. na konci sÃº uÅ¾ utriedenÃ©
+		(pozri predoÅ¡lÃ½ prÃ­klad)
 
 <TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
          <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie pretriasanim</I> </P>
@@ -121,22 +121,22 @@ for (int i1=0, int i2=n-1; i1&lt;i2; i2=i4,i1=i3)
    for (i=i4; i>i1; i--) if (a[i]&lt;a[i-1]){ i3=i; vymen(a,i,i-1); }
 }</pre>
  </table>
-Toto zlepšenie budí dojem, e triedenie znaène urıchli ale väèšinou iadny vıraznı pokrok nepobadáme. 
+Toto zlepÅ¡enie budÃ­ dojem, Å¾e triedenie znaÄne urÃ½chli ale vÃ¤ÄÅ¡inou Å¾iadny vÃ½raznÃ½ pokrok nepobadÃ¡me. 
 
     <dt class=main>I N S E R T  -  S O R T
-	<dd>Triedenie vsúvaním je zaloené na myšlienke:
-	<br>Máme utriedenıch iakov a príde novı iak. Najprv mu nájdeme miesto (medzi ktorıch sa má zaradi), iakov od tohto miesta
-	do konca odsunieme a na uvolnené miesto príde novı iak. Tento postup môme viackrát opakova. Toto triedenie je ve¾mi rıchle
-	ak prichádzajúce prvky sú pribline usporiadané (netreba ve¾a presúva). Pri náhodnom usporiadaní je porovnatelné s bublinkami.
+	<dd>Triedenie vsÃºvanÃ­m je zaloÅ¾enÃ© na myÅ¡lienke:
+	<br>MÃ¡me utriedenÃ½ch Å¾iakov a prÃ­de novÃ½ Å¾iak. Najprv mu nÃ¡jdeme miesto (medzi ktorÃ½ch sa mÃ¡ zaradiÅ¥), Å¾iakov od tohto miesta
+	do konca odsunieme a na uvolnenÃ© miesto prÃ­de novÃ½ Å¾iak. Tento postup mÃ´Å¾me viackrÃ¡t opakovaÅ¥. Toto triedenie je veÄ¾mi rÃ½chle
+	ak prichÃ¡dzajÃºce prvky sÃº pribliÅ¾ne usporiadanÃ© (netreba veÄ¾a presÃºvaÅ¥). Pri nÃ¡hodnom usporiadanÃ­ je porovnatelnÃ© s bublinkami.
 	<br>Algoritmus
-	<br>Pri programovaní je vıhodné h¾adanie miesta a odsúvanie robi naraz - usporiadané prvky od konca porovnávame s novım a ak
-		je novı menší prvok v zozname posunieme doprava. 
-	<br>Myšlienka programu je takáto:
-	<br> &nbsp; &nbsp; na zaèiatku si zvolíme pole jednoprvkové (a[0]), ktor0 je utriedené.
-	<br> &nbsp; &nbsp; príde druhı prvok a nájdeme mu miesto kam sa má zaradi (za prvého menšieho alebo na zaèiatok) a zaradíme ho
-	<br> &nbsp; &nbsp; u máme dvojprvkové pole utriedené a príde tretí atï.
+	<br>Pri programovanÃ­ je vÃ½hodnÃ© hÄ¾adanie miesta a odsÃºvanie robiÅ¥ naraz - usporiadanÃ© prvky od konca porovnÃ¡vame s novÃ½m a ak
+		je novÃ½ menÅ¡Ã­ prvok v zozname posunieme doprava. 
+	<br>MyÅ¡lienka programu je takÃ¡to:
+	<br> &nbsp; &nbsp; na zaÄiatku si zvolÃ­me pole jednoprvkovÃ© (a[0]), ktor0 je utriedenÃ©.
+	<br> &nbsp; &nbsp; prÃ­de druhÃ½ prvok a nÃ¡jdeme mu miesto kam sa mÃ¡ zaradiÅ¥ (za prvÃ©ho menÅ¡ieho alebo na zaÄiatok) a zaradÃ­me ho
+	<br> &nbsp; &nbsp; uÅ¾ mÃ¡me dvojprvkovÃ© pole utriedenÃ© a prÃ­de tretÃ­ atÄ.
 <TABLE cellSpacing=0 width="80%" align=center bgColor='white' border=1>
-         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Insert - triedenie vkladaním</I> </P>
+         <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Insert - triedenie vkladanÃ­m</I> </P>
          <TR><TD vAlign=top><PRE>void insert(int *a, int n);
 {  for (i=1;i&lt;n;i++)                 //i ... kto je novy
    {  k=a[i];                            //noveho odlozime nabok, aby sa ostatni mohli posuvat doprava 
@@ -147,48 +147,48 @@ Toto zlepšenie budí dojem, e triedenie znaène urıchli ale väèšinou iadny vıraz
   </pre>
  </table>
     <dt class=main>S H E L L  -  S O R T
-	<dd>Preèo shell ?  Lebo  ho vymyslel  jeden pán  menom Shell.  Na úvod vás chcem poprosi : kto neovláda ešte insertsort 
-		( triedenie vkladaním ), nech si ho najprv detailne pozrie. Budeme ho toti vyuíva. Pán Shell  prišiel na jednu  
-		supergeniálnu vec.  Myslel si, e dobré a rıchle  triedenie musí  robi èo najviac  vımen na ve¾ké vzdialenosti.
-		Poïme na to prakticky. Opä sme na hodine telocviku. Tentoraz sa omeškala skoro polovica triedy. Zvyšná u bola nastúpená. 
-		Uèite¾ ich chcel zoradi klasickım vkladaním, ale všimol si, e tí, èo prišli neskôr sú zväèša menší ako tí, èo prišli vèas. 
-		A tu dostal nápad. Akı ?
-		<br>Uvedomil si, e vkladaním by to  trvalo príliš dlho. Tí menší by toti museli prís a dopredu.  
-		Jeho napadlo povymieòa  ich pred vkladaním. Ale ako ?  Mal dve skupiny :  prvú tvorili tí, èo prišli naèas;  
-		druhú oneskorenci. A tak porovnal prvıch z oboch skupín,  a usporiadal ich. Ako ? Napríklad vımenou. 
-		Tak isto porovnal druhıch zo skupín. Rovnako  tretích, štvrtıch, ...  Èo dosiahol ? 
-		Väèšina  menších sa ocitla v prvej skupine. Teraz však  na prekvapenie mnohıch obe skupiny spojil a znova ich rozdelil na 
-		tri skupiny !  A zase  pokraèoval podobne :  zobral prvıch zo všetkıch troch skupín.  Ich troch usporiadal takto : 
-		prvého porovnal s druhım. Ak bol prvı väèší, vymenil ich.  Ak nie, nechal ich tak. Na to porovnal druhého s tretím. 
-		Zase :  ak bol druhı väèší, vymenil ich; ak nie, nechal. Rovnako aj druhıch zo všetkıch troch skupín usporiadal vkladaním. 
-		Podobne tretích, štvrtıch, ...  A zase ich spojil. Èo urobil potom ?
-		<br>Tentoraz ich u nerozde¾oval,  ale usporiadal ich všetkıch vkladaním. Preèo asi tak urobil ?
-		Jednoducho preto, e keby ich rozdelil na pä skupín, v kadej by boli iba dvaja. A to u je jednoduhšie urobi insertsort 
-		na celej triede.  Prvok sa toti posunie maximálne o jedno miesto smerom dopredu ( k menším ). To však dokáe aj insertsort.
-		<br>Teraz si to môme zopakova s kartami. Máme neusporiadané karty. Rozdelíme ich na tri kôpky pokia¾ mono s rovnakım 
-		poètom prvkov. Na kadej z nich vidíme vrchnú kartu. Vrchné karty utriedime vkladaním. Potom ich poloíme pred jednotlivé 
-		kôpky rubom nahor. Takto na kôpkach vidíme iné karty, ktoré zase utriedime vkladaním. Opä ich preloíme pred kôpky rubom 
-		nahor na tie, èo tam u boli. Takto pokraèujeme a sa nám nevyèerpajú karty. Ak nám na konci nezostanú tri karty, ale dve;
-		tak utriedime len tie dve a preloíme. Ak jedna, iba preloíme. Teraz spojíme kôpky nasledovne. Na ¾avú poloíme strednú 
-		a na to ešte priloíme pravú. Tak dostaneme jednu kopu. Èo urobíme ïalej ?
+	<dd>PreÄo shell ?  Lebo  ho vymyslel  jeden pÃ¡n  menom Shell.  Na Ãºvod vÃ¡s chcem poprosiÅ¥ : kto neovlÃ¡da eÅ¡te insertsort 
+		( triedenie vkladanÃ­m ), nech si ho najprv detailne pozrie. Budeme ho totiÅ¾ vyuÅ¾Ã­vaÅ¥. PÃ¡n Shell  priÅ¡iel na jednu  
+		supergeniÃ¡lnu vec.  Myslel si, Å¾e dobrÃ© a rÃ½chle  triedenie musÃ­  robiÅ¥ Äo najviac  vÃ½men na veÄ¾kÃ© vzdialenosti.
+		PoÄme na to prakticky. OpÃ¤Å¥ sme na hodine telocviku. Tentoraz sa omeÅ¡kala skoro polovica triedy. ZvyÅ¡nÃ¡ uÅ¾ bola nastÃºpenÃ¡. 
+		UÄiteÄ¾ ich chcel zoradiÅ¥ klasickÃ½m vkladanÃ­m, ale vÅ¡imol si, Å¾e tÃ­, Äo priÅ¡li neskÃ´r sÃº zvÃ¤ÄÅ¡a menÅ¡Ã­ ako tÃ­, Äo priÅ¡li vÄas. 
+		A tu dostal nÃ¡pad. AkÃ½ ?
+		<br>Uvedomil si, Å¾e vkladanÃ­m by to  trvalo prÃ­liÅ¡ dlho. TÃ­ menÅ¡Ã­ by totiÅ¾ museli prÃ­sÅ¥ aÅ¾ dopredu.  
+		Jeho napadlo povymieÅˆaÅ¥  ich pred vkladanÃ­m. Ale ako ?  Mal dve skupiny :  prvÃº tvorili tÃ­, Äo priÅ¡li naÄas;  
+		druhÃº oneskorenci. A tak porovnal prvÃ½ch z oboch skupÃ­n,  a usporiadal ich. Ako ? NaprÃ­klad vÃ½menou. 
+		Tak isto porovnal druhÃ½ch zo skupÃ­n. Rovnako  tretÃ­ch, Å¡tvrtÃ½ch, ...  ÄŒo dosiahol ? 
+		VÃ¤ÄÅ¡ina  menÅ¡Ã­ch sa ocitla v prvej skupine. Teraz vÅ¡ak  na prekvapenie mnohÃ½ch obe skupiny spojil a znova ich rozdelil na 
+		tri skupiny !  A zase  pokraÄoval podobne :  zobral prvÃ½ch zo vÅ¡etkÃ½ch troch skupÃ­n.  Ich troch usporiadal takto : 
+		prvÃ©ho porovnal s druhÃ½m. Ak bol prvÃ½ vÃ¤ÄÅ¡Ã­, vymenil ich.  Ak nie, nechal ich tak. Na to porovnal druhÃ©ho s tretÃ­m. 
+		Zase :  ak bol druhÃ½ vÃ¤ÄÅ¡Ã­, vymenil ich; ak nie, nechal. Rovnako aj druhÃ½ch zo vÅ¡etkÃ½ch troch skupÃ­n usporiadal vkladanÃ­m. 
+		Podobne tretÃ­ch, Å¡tvrtÃ½ch, ...  A zase ich spojil. ÄŒo urobil potom ?
+		<br>Tentoraz ich uÅ¾ nerozdeÄ¾oval,  ale usporiadal ich vÅ¡etkÃ½ch vkladanÃ­m. PreÄo asi tak urobil ?
+		Jednoducho preto, Å¾e keby ich rozdelil na pÃ¤Å¥ skupÃ­n, v kaÅ¾dej by boli iba dvaja. A to uÅ¾ je jednoduhÅ¡ie urobiÅ¥ insertsort 
+		na celej triede.  Prvok sa totiÅ¾ posunie maximÃ¡lne o jedno miesto smerom dopredu ( k menÅ¡Ã­m ). To vÅ¡ak dokÃ¡Å¾e aj insertsort.
+		<br>Teraz si to mÃ´Å¾me zopakovaÅ¥ s kartami. MÃ¡me neusporiadanÃ© karty. RozdelÃ­me ich na tri kÃ´pky pokiaÄ¾ moÅ¾no s rovnakÃ½m 
+		poÄtom prvkov. Na kaÅ¾dej z nich vidÃ­me vrchnÃº kartu. VrchnÃ© karty utriedime vkladanÃ­m. Potom ich poloÅ¾Ã­me pred jednotlivÃ© 
+		kÃ´pky rubom nahor. Takto na kÃ´pkach vidÃ­me inÃ© karty, ktorÃ© zase utriedime vkladanÃ­m. OpÃ¤Å¥ ich preloÅ¾Ã­me pred kÃ´pky rubom 
+		nahor na tie, Äo tam uÅ¾ boli. Takto pokraÄujeme aÅ¾ sa nÃ¡m nevyÄerpajÃº karty. Ak nÃ¡m na konci nezostanÃº tri karty, ale dve;
+		tak utriedime len tie dve a preloÅ¾Ã­me. Ak jedna, iba preloÅ¾Ã­me. Teraz spojÃ­me kÃ´pky nasledovne. Na Ä¾avÃº poloÅ¾Ã­me strednÃº 
+		a na to eÅ¡te priloÅ¾Ã­me pravÃº. Tak dostaneme jednu kopu. ÄŒo urobÃ­me Äalej ?
 		<br>
-		Teraz opä rozdelíme kopu na kôpky, napríklad na pä. Kôpky rozloíme z¾ava doprava tak, aby vrchná karta bola lícom nahor. 
-		Vrchné karty zase utriedíme vkladaním a odloíme pred kôpky. Takto postupujeme a do vyèerpania kariet. 
-		Kôpky poskladáme takto : najpravejšiu dáme na jej ¾avého suseda, to èo sme dostali dáme opä na ¾avého suseda, ...  
-		A napokon celú kopu otoèíme lícom nahor. Znova rozdelíme kopu tentoraz na devä kôpok, ...
-		Takto postupujeme kım to je vıhodné. Kedy je to nevıhodné ?  Keï sa karta môe posunú smerom dopredu len o jedno, dve miesta. V tom prípade utriedime celú kopu vkladaním.
-		Otázku ideálneho návrhu parametrov (kroku) vyriešil pán Knuth. Krok je vlastne vzdialenos porovnávanıch prvkov.
-		Našiel aj vzorec na ich jednoduchı vıpoèet : 
-		k<sub>0</sub>=1, k<sub>i</sub>=3*k<sub>i-1</sub>, prièom k<sub>i</sub> &lt; n div 6.
-		Zaèína sa tım najväèším k<sub>i</sub>, potom k<sub>i-1</sub>, ... a po k<sub>0</sub>=1, èo však je obyèajnı insertsort.
-		Všeobecne sa dá poveda, e zmenšujúci krok treba voli tak aby sa neporovnávali stále tie isté skupiny. Dobré vısledky dáva
-		postupnos
+		Teraz opÃ¤Å¥ rozdelÃ­me kopu na kÃ´pky, naprÃ­klad na pÃ¤Å¥. KÃ´pky rozloÅ¾Ã­me zÄ¾ava doprava tak, aby vrchnÃ¡ karta bola lÃ­com nahor. 
+		VrchnÃ© karty zase utriedÃ­me vkladanÃ­m a odloÅ¾Ã­me pred kÃ´pky. Takto postupujeme aÅ¾ do vyÄerpania kariet. 
+		KÃ´pky poskladÃ¡me takto : najpravejÅ¡iu dÃ¡me na jej Ä¾avÃ©ho suseda, to Äo sme dostali dÃ¡me opÃ¤Å¥ na Ä¾avÃ©ho suseda, ...  
+		AÅ¾ napokon celÃº kopu otoÄÃ­me lÃ­com nahor. Znova rozdelÃ­me kopu tentoraz na devÃ¤Å¥ kÃ´pok, ...
+		Takto postupujeme kÃ½m to je vÃ½hodnÃ©. Kedy je to nevÃ½hodnÃ© ?  KeÄ sa karta mÃ´Å¾e posunÃºÅ¥ smerom dopredu len o jedno, dve miesta. V tom prÃ­pade utriedime celÃº kopu vkladanÃ­m.
+		OtÃ¡zku ideÃ¡lneho nÃ¡vrhu parametrov (kroku) vyrieÅ¡il pÃ¡n Knuth. Krok je vlastne vzdialenosÅ¥ porovnÃ¡vanÃ½ch prvkov.
+		NaÅ¡iel aj vzorec na ich jednoduchÃ½ vÃ½poÄet : 
+		k<sub>0</sub>=1, k<sub>i</sub>=3*k<sub>i-1</sub>, priÄom k<sub>i</sub> &lt; n div 6.
+		ZaÄÃ­na sa tÃ½m najvÃ¤ÄÅ¡Ã­m k<sub>i</sub>, potom k<sub>i-1</sub>, ... aÅ¾ po k<sub>0</sub>=1, Äo vÅ¡ak je obyÄajnÃ½ insertsort.
+		VÅ¡eobecne sa dÃ¡ povedaÅ¥, Å¾e zmenÅ¡ujÃºci krok treba voliÅ¥ tak aby sa neporovnÃ¡vali stÃ¡le tie istÃ© skupiny. DobrÃ© vÃ½sledky dÃ¡va
+		postupnosÅ¥
 		<br>k1=n / 5
 		<br>k2=k1 / 3 + k1 / 5 - 1
-		<br>Tento algoritmus  sa nazıva  shellsort  alebo  insertsort s ubúdajúcim krokom.
-		Zaujímavosou je, e robíme zdanlivo viac ako pri vsuvaní (ved klasické vsúvanie sa napokon aj zavolá) a napriek tomu
-		je vısledok opaènı a èas vıpoètu pri pouití Shell triedenia je podstatne kratší. Tu sa ukazuje aké je triedenie vsúvaním
-		rıchle, ak je postupnos "skoro" utriedená.
+		<br>Tento algoritmus  sa nazÃ½va  shellsort  alebo  insertsort s ubÃºdajÃºcim krokom.
+		ZaujÃ­mavosÅ¥ou je, Å¾e robÃ­me zdanlivo viac ako pri vsuvanÃ­ (ved klasickÃ© vsÃºvanie sa napokon aj zavolÃ¡) a napriek tomu
+		je vÃ½sledok opaÄnÃ½ a Äas vÃ½poÄtu pri pouÅ¾itÃ­ Shell triedenia je podstatne kratÅ¡Ã­. Tu sa ukazuje akÃ© je triedenie vsÃºvanÃ­m
+		rÃ½chle, ak je postupnosÅ¥ "skoro" utriedenÃ¡.
 
 
 <TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
@@ -220,52 +220,52 @@ Toto zlepšenie budí dojem, e triedenie znaène urıchli ale väèšinou iadny vıraz
 </table>
 
 	<dt class=main>Q U I C K  -  S O R T
-	<dd>Quick je anglické slovo a znamená asi to¾ko ako rıchly. Teda pod¾a mena by mal by tento algoritmus rıchly. 
-	On aj vskutku je, mnohí ho povaujú za najrıchlejšie triedenie vôbec. Dokonca aj prax to èasto potvrdí.
-	<br>Myšlienka:
-	<br>Tentoraz nebude hodina telocviku, ale si povieme rozprávku.
-	Kde bolo, tam bolo, bola raz jedna krajina menom Putánia. V tej krajine sa piesok sypal a voda sa liala. 
-	Nezvyèajné tu bolo nieèo iné. ili tu toti dva národy : liliputáni a maxiputáni.  Liliputáni boli malí, kım maxiputáni zase ve¾kí.
+	<dd>Quick je anglickÃ© slovo a znamenÃ¡ asi toÄ¾ko ako rÃ½chly. Teda podÄ¾a mena by mal byÅ¥ tento algoritmus rÃ½chly. 
+	On aj vskutku je, mnohÃ­ ho povaÅ¾ujÃº za najrÃ½chlejÅ¡ie triedenie vÃ´bec. Dokonca aj prax to Äasto potvrdÃ­.
+	<br>MyÅ¡lienka:
+	<br>Tentoraz nebude hodina telocviku, ale si povieme rozprÃ¡vku.
+	Kde bolo, tam bolo, bola raz jedna krajina menom PutÃ¡nia. V tej krajine sa piesok sypal a voda sa liala. 
+	NezvyÄajnÃ© tu bolo nieÄo inÃ©. Å½ili tu totiÅ¾ dva nÃ¡rody : liliputÃ¡ni a maxiputÃ¡ni.  LiliputÃ¡ni boli malÃ­, kÃ½m maxiputÃ¡ni zase veÄ¾kÃ­.
 	<br>
-	Liliputáni  sa vdy  saovali,  e sú oproti  maxiputánom v nevıhode. Chceli ma väèšie práva,  ale menšie povinnosti.  
-	To sa však nepáèilo maxiputánom, ktorım sa zdali poiadavky liliputánov prehnané. Nieko¾ko rokov sa osoèovali, a sa napokon 
-	rozhodli, e sa rozdelia a vytvoria dve krajiny : krajinu liliputánov a krajinu maxiputánov. Pôvodnú krajinu rozdelili na 
-	dve polovice a vypoèítali vıšku, ktorá bude rozhodujúcim deliacim kritériom. Vıšku vypoèítali tak, aby existovali aspoò
-	dvaja tej vıšky. Tıch urèili za policajtov.  Po vytıèení hranice však zistili, e nie všetci sa presahovali. Tak prišli 
-	k slovu policajti. Jeden odišiel  do krajiny liliputánov  a tam h¾adal špiónov.  Ako ich spoznal ?  Jednoducho, boli od neho 
-	vyšší. Ten druhı šiel zase do krajiny maxiputánov. Tam tie h¾adal špiónov. Tí boli od neho niší. Keï jeden z nich našiel 
-	špióna, chcel ho da vyhosti. Ale colníci mu oznámili, e cez hranice nemono chodi len tak, a u vôbec nie špióni.
-	Jedine vtedy, ak by šlo o vımenu.  Tak musel poèka,  kım aj ten druhı policajt nájde špióna. Potom si ich mohli vzájomne vymeni.
+	LiliputÃ¡ni  sa vÅ¾dy  sÅ¥aÅ¾ovali,  Å¾e sÃº oproti  maxiputÃ¡nom v nevÃ½hode. Chceli maÅ¥ vÃ¤ÄÅ¡ie prÃ¡va,  ale menÅ¡ie povinnosti.  
+	To sa vÅ¡ak nepÃ¡Äilo maxiputÃ¡nom, ktorÃ½m sa zdali poÅ¾iadavky liliputÃ¡nov prehnanÃ©. NiekoÄ¾ko rokov sa osoÄovali, aÅ¾ sa napokon 
+	rozhodli, Å¾e sa rozdelia a vytvoria dve krajiny : krajinu liliputÃ¡nov a krajinu maxiputÃ¡nov. PÃ´vodnÃº krajinu rozdelili na 
+	dve polovice a vypoÄÃ­tali vÃ½Å¡ku, ktorÃ¡ bude rozhodujÃºcim deliacim kritÃ©riom. VÃ½Å¡ku vypoÄÃ­tali tak, aby existovali aspoÅˆ
+	dvaja tej vÃ½Å¡ky. TÃ½ch urÄili za policajtov.  Po vytÃ½ÄenÃ­ hranice vÅ¡ak zistili, Å¾e nie vÅ¡etci sa presÅ¥ahovali. Tak priÅ¡li 
+	k slovu policajti. Jeden odiÅ¡iel  do krajiny liliputÃ¡nov  a tam hÄ¾adal Å¡piÃ³nov.  Ako ich spoznal ?  Jednoducho, boli od neho 
+	vyÅ¡Å¡Ã­. Ten druhÃ½ Å¡iel zase do krajiny maxiputÃ¡nov. Tam tieÅ¾ hÄ¾adal Å¡piÃ³nov. TÃ­ boli od neho niÅ¾Å¡Ã­. KeÄ jeden z nich naÅ¡iel 
+	Å¡piÃ³na, chcel ho daÅ¥ vyhostiÅ¥. Ale colnÃ­ci mu oznÃ¡mili, Å¾e cez hranice nemoÅ¾no chodiÅ¥ len tak, a uÅ¾ vÃ´bec nie Å¡piÃ³ni.
+	Jedine vtedy, ak by Å¡lo o vÃ½menu.  Tak musel poÄkaÅ¥,  kÃ½m aj ten druhÃ½ policajt nÃ¡jde Å¡piÃ³na. Potom si ich mohli vzÃ¡jomne vymeniÅ¥.
 	<br>
-	Keï si ich vymenili, zase odišli kadı do svojej krajiny h¾ada špiónov. Ak jeden našiel, poèkal kım nájde aj ten druhı 
-	a zase si ich vymenili. Takto pokraèovali, a kım sa v jednej krajine neminuli špióni. Ak ale v tej druhej ešte boli, 
-	presahovali ich ku hraniciam a posunuli hranicu tak, aby špióni zostali za hranicou. Takımto spôsobom vznikli dve nové krajiny : 
-	Liliputánia a Maxiputánia. Stala sa však pritom takáto vec. Liliputánia mala raz to¾ko obyvate¾ov ako Maxiputánia. 
-	To sa ukázalo dramatickım pri vo¾bách do vlády. Kım v Maxiputánii bol kadı tretí ministrom, v Liliputánii to bol iba kadı
-	šiesty. Keïe však všetci si chceli dobre i, tak aj chceli by ministrami. To ale nebolo moné, iba ak by sa Liliputánia 
-	rozdelila na dve krajiny, povedal ktosi. A toho sa ¾udia chytili. Ešte donedávna pevná a jednotná Liliputánia sa rozdelila. 
+	KeÄ si ich vymenili, zase odiÅ¡li kaÅ¾dÃ½ do svojej krajiny hÄ¾adaÅ¥ Å¡piÃ³nov. Ak jeden naÅ¡iel, poÄkal kÃ½m nÃ¡jde aj ten druhÃ½ 
+	a zase si ich vymenili. Takto pokraÄovali, aÅ¾ kÃ½m sa v jednej krajine neminuli Å¡piÃ³ni. Ak ale v tej druhej eÅ¡te boli, 
+	presÅ¥ahovali ich ku hraniciam a posunuli hranicu tak, aby Å¡piÃ³ni zostali za hranicou. TakÃ½mto spÃ´sobom vznikli dve novÃ© krajiny : 
+	LiliputÃ¡nia a MaxiputÃ¡nia. Stala sa vÅ¡ak pritom takÃ¡to vec. LiliputÃ¡nia mala raz toÄ¾ko obyvateÄ¾ov ako MaxiputÃ¡nia. 
+	To sa ukÃ¡zalo dramatickÃ½m pri voÄ¾bÃ¡ch do vlÃ¡dy. KÃ½m v MaxiputÃ¡nii bol kaÅ¾dÃ½ tretÃ­ ministrom, v LiliputÃ¡nii to bol iba kaÅ¾dÃ½
+	Å¡iesty. KeÄÅ¾e vÅ¡ak vÅ¡etci si chceli dobre Å¾iÅ¥, tak aj chceli byÅ¥ ministrami. To ale nebolo moÅ¾nÃ©, iba ak by sa LiliputÃ¡nia 
+	rozdelila na dve krajiny, povedal ktosi. A toho sa Ä¾udia chytili. EÅ¡te donedÃ¡vna pevnÃ¡ a jednotnÃ¡ LiliputÃ¡nia sa rozdelila. 
 	<br>Ako ?  
-	<br>Podobne ako sa rozdelila  bıvalá Putánia. Tak vznikli Lilililiputánia a Maxililiputánia. V snahe všetkıch by ministrami 
-	sa rozdelili nielen tie, ale aj Maxiputánia.
+	<br>Podobne ako sa rozdelila  bÃ½valÃ¡ PutÃ¡nia. Tak vznikli LilililiputÃ¡nia a MaxililiputÃ¡nia. V snahe vÅ¡etkÃ½ch byÅ¥ ministrami 
+	sa rozdelili nielen tie, ale aj MaxiputÃ¡nia.
 	<br>
-	Tak to šlo a dovtedy kım kadı nebol predsedom vlády. Pritom si však nevšimol, e je aj jedinım obyvate¾om krajiny, ktorej vládne. 
-	Tu prišiel cudzinec a všimol si jednu vec.  Postavil obyvate¾ov krajín v takomto poradí : Lililililililili...putánec, 
-	Maxilililililili...putánec, Lililililili...putánec,  Maxilililili...putánec,  Lililili...putánec, Maxilili...putánec, 
-	Lili...putánec, Maxi...putánec a Maximaximaximaxi...putánec. A oni stáli usporiadaní pod¾a ve¾kosti !
+	Tak to Å¡lo aÅ¾ dovtedy kÃ½m kaÅ¾dÃ½ nebol predsedom vlÃ¡dy. Pritom si vÅ¡ak nevÅ¡imol, Å¾e je aj jedinÃ½m obyvateÄ¾om krajiny, ktorej vlÃ¡dne. 
+	Tu priÅ¡iel cudzinec a vÅ¡imol si jednu vec.  Postavil obyvateÄ¾ov krajÃ­n v takomto poradÃ­ : Lililililililili...putÃ¡nec, 
+	Maxilililililili...putÃ¡nec, Lililililili...putÃ¡nec,  Maxilililili...putÃ¡nec,  Lililili...putÃ¡nec, Maxilili...putÃ¡nec, 
+	Lili...putÃ¡nec, Maxi...putÃ¡nec aÅ¾ Maximaximaximaxi...putÃ¡nec. A oni stÃ¡li usporiadanÃ­ podÄ¾a veÄ¾kosti !
 	<br>
-	A rozprávke je koniec. 
-	<br>Hovorí sa, e kadá rozprávka má mravné ponauèenie. Táto nás okrem mnohého iného nauèila aj novú metódu ako utriedi prvky.
-	Teraz si to vysvetlíme na palièkách. Sú neutriedené. Vypoèítame medián ( prvok ve¾kosti, pod¾a ktorej budeme rozde¾ova ).  
-	Policajti pôjdu sprava a z¾ava. Ten, èo ide sprava, h¾adá väèších od seba.
-	Ten, èo ide z¾ava, h¾adá menších od seba. Ak jeden z nich nájde palièku zlej vıšky, poèká kım nájde aj ten druhı. 
-	Potom si ich vymenia a h¾adajú ïalej, a kım sa nestretnú. Tam, kde sa stretnú, vytvoria hranicu. Tım vzniknú dve
-	skupiny, z ktorıch kadú utriedime tak ako tú prvú. Èie znova vypoèítame medián a rozde¾ujeme ... Toto delenie robíme, 
-	kım má naša skupina viac ako jednu palièku. Takú skupinu u toti netreba triedi.
-	Zvláštnosou tohto triedenia je to, e je rekurzívne. To znamená zvıšené nároky na pamä poèítaèa. Ukázalo sa, e rozhodujúcim
-	èinite¾om úspešnosti triedenia je správny vıber mediána. Ak toti zoberieme ako medián najmenší prvok, tak dostaneme prvú 
-	skupinu jednoprvkovú. A našou snahou je rozdeli postupnos pokia¾ mono na polovice. Vıber správneho mediána je ale rovnako 
-	zloitı problém ako samotné triedenie, preto sa medián volí náhodne, napr. aritmetickı priemer prvého a posledného prvku,
-	prípadne hodnota nejakého prvku (prvého, posledného, stredného)
+	A rozprÃ¡vke je koniec. 
+	<br>HovorÃ­ sa, Å¾e kaÅ¾dÃ¡ rozprÃ¡vka mÃ¡ mravnÃ© ponauÄenie. TÃ¡to nÃ¡s okrem mnohÃ©ho inÃ©ho nauÄila aj novÃº metÃ³du ako utriediÅ¥ prvky.
+	Teraz si to vysvetlÃ­me na paliÄkÃ¡ch. SÃº neutriedenÃ©. VypoÄÃ­tame mediÃ¡n ( prvok veÄ¾kosti, podÄ¾a ktorej budeme rozdeÄ¾ovaÅ¥ ).  
+	Policajti pÃ´jdu sprava a zÄ¾ava. Ten, Äo ide sprava, hÄ¾adÃ¡ vÃ¤ÄÅ¡Ã­ch od seba.
+	Ten, Äo ide zÄ¾ava, hÄ¾adÃ¡ menÅ¡Ã­ch od seba. Ak jeden z nich nÃ¡jde paliÄku zlej vÃ½Å¡ky, poÄkÃ¡ kÃ½m nÃ¡jde aj ten druhÃ½. 
+	Potom si ich vymenia a hÄ¾adajÃº Äalej, aÅ¾ kÃ½m sa nestretnÃº. Tam, kde sa stretnÃº, vytvoria hranicu. TÃ½m vzniknÃº dve
+	skupiny, z ktorÃ½ch kaÅ¾dÃº utriedime tak ako tÃº prvÃº. ÄŒiÅ¾e znova vypoÄÃ­tame mediÃ¡n a rozdeÄ¾ujeme ... Toto delenie robÃ­me, 
+	kÃ½m mÃ¡ naÅ¡a skupina viac ako jednu paliÄku. TakÃº skupinu uÅ¾ totiÅ¾ netreba triediÅ¥.
+	ZvlÃ¡Å¡tnosÅ¥ou tohto triedenia je to, Å¾e je rekurzÃ­vne. To znamenÃ¡ zvÃ½Å¡enÃ© nÃ¡roky na pamÃ¤Å¥ poÄÃ­taÄa. UkÃ¡zalo sa, Å¾e rozhodujÃºcim
+	ÄiniteÄ¾om ÃºspeÅ¡nosti triedenia je sprÃ¡vny vÃ½ber mediÃ¡na. Ak totiÅ¾ zoberieme ako mediÃ¡n najmenÅ¡Ã­ prvok, tak dostaneme prvÃº 
+	skupinu jednoprvkovÃº. A naÅ¡ou snahou je rozdeliÅ¥ postupnosÅ¥ pokiaÄ¾ moÅ¾no na polovice. VÃ½ber sprÃ¡vneho mediÃ¡na je ale rovnako 
+	zloÅ¾itÃ½ problÃ©m ako samotnÃ© triedenie, preto sa mediÃ¡n volÃ­ nÃ¡hodne, napr. aritmetickÃ½ priemer prvÃ©ho a poslednÃ©ho prvku,
+	prÃ­padne hodnota nejakÃ©ho prvku (prvÃ©ho, poslednÃ©ho, strednÃ©ho)
 <TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
          <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie Quick</I> </P>
          <TR><TD vAlign=top><PRE>void rozdel(int *a, int left,int right);
@@ -288,30 +288,30 @@ void quick(int *a,int n);
     rozdel(a,1,n)
 }</pre>   	
 </table>
-Program je jednoduchı. Zavolá iba rekurzívnu procedúru rozde¾, ktorá miesto neho všetko urobí.
+Program je jednoduchÃ½. ZavolÃ¡ iba rekurzÃ­vnu procedÃºru rozdeÄ¾, ktorÃ¡ miesto neho vÅ¡etko urobÃ­.
 
 	<dt class=main>D O B O S I E W I C Z  -  S O R T
-	<dd>Toto triedenie je zaloené na triedení pretriasaním, alebo shakersorte. Bolo by dobré pozrie si najprv to.
-	Ak ste to zvládli, môme sa venova dobosiewiczsortu. Odkia¾ také aké meno ?  Po autorovi triedenia, pánovi po¾ského pôvodu, 
-	menom Dobosiewicz. Èím takım sa preslávil ?  Vymyslel triedenie, ktoré sa ve¾mi podobá triedeniu pretriasaním s ubúdajúcim krokom. 
-	Teda jednoducho povedané vyuil myšlienku vımen na dlhé vzdialenosti v triedení pretriasaním. Pritom neobjavil niè nové, 
-	iba spojil to, èo vyuili iní. To však nebol koniec. On ešte takéto triedenie vylepšil ekonomickejšou réiou. Èo to znamená, 
-	uvidíme neskôr.
+	<dd>Toto triedenie je zaloÅ¾enÃ© na triedenÃ­ pretriasanÃ­m, alebo shakersorte. Bolo by dobrÃ© pozrieÅ¥ si najprv to.
+	Ak ste to zvlÃ¡dli, mÃ´Å¾me sa venovaÅ¥ dobosiewiczsortu. OdkiaÄ¾ takÃ© Å¥aÅ¾kÃ© meno ?  Po autorovi triedenia, pÃ¡novi poÄ¾skÃ©ho pÃ´vodu, 
+	menom Dobosiewicz. ÄŒÃ­m takÃ½m sa preslÃ¡vil ?  Vymyslel triedenie, ktorÃ© sa veÄ¾mi podobÃ¡ triedeniu pretriasanÃ­m s ubÃºdajÃºcim krokom. 
+	Teda jednoducho povedanÃ© vyuÅ¾il myÅ¡lienku vÃ½men na dlhÃ© vzdialenosti v triedenÃ­ pretriasanÃ­m. Pritom neobjavil niÄ novÃ©, 
+	iba spojil to, Äo vyuÅ¾ili inÃ­. To vÅ¡ak nebol koniec. On eÅ¡te takÃ©to triedenie vylepÅ¡il ekonomickejÅ¡ou rÃ©Å¾iou. ÄŒo to znamenÃ¡, 
+	uvidÃ­me neskÃ´r.
 	<br>
-	Ste na prvej hodine telocviku a  postavili ste sa do radu ako prišlo. Je vás, dajme tomu, 32. Uèite¾ vás zaèal usporadúva. 
-	Porovnal prvého s dvadsiatympiatym. Ak bol prvı väèší, vymenil ich; ak nie nechal tak.
-	Potom vybral 2. a 26. Rovnakım spôsobom ich porovnal, prípadne vymenil. Obdobne 3. a 27., ... Nakoniec porovnal 8. a 32.
-	Teraz vypoèítal tri štvrtiny z 24 = 18. A zaèal zasa s porovnávaním : 14. s 32., 13. s 31., 12. s 30., 11. s 29., ... , 2. s 20. 
-	a nakoniec 1. s 19. Preèo postupoval opaènım smerom ?  Aby aj tí malí mali šancu dosta sa rıchlo dopredu.
-	Znova vypoèítal krok  ( 18 : 4 ) x 3 = 12 a porovnával tentoraz od zaèiatku : 1. s 13., 2. s 14., 3. s 15., ... , 19. s 31. 
-	a napokon 20. s 32. ïalej pokraèoval s krokom 9 od konca : 23. s 32., 22. s 31., ... , 2. s 11. a 1. s 10.
-	<br>Kedy skonèil ?  Vtedy, keï krok bol rovnı 1 !
-	Aké odlišnosti od shakersortu s ubúdajúcim krokom ste zistili ?
+	Ste na prvej hodine telocviku a  postavili ste sa do radu ako priÅ¡lo. Je vÃ¡s, dajme tomu, 32. UÄiteÄ¾ vÃ¡s zaÄal usporadÃºvaÅ¥. 
+	Porovnal prvÃ©ho s dvadsiatympiatym. Ak bol prvÃ½ vÃ¤ÄÅ¡Ã­, vymenil ich; ak nie nechal tak.
+	Potom vybral 2. a 26. RovnakÃ½m spÃ´sobom ich porovnal, prÃ­padne vymenil. Obdobne 3. a 27., ... Nakoniec porovnal 8. a 32.
+	Teraz vypoÄÃ­tal tri Å¡tvrtiny z 24 = 18. A zaÄal zasa s porovnÃ¡vanÃ­m : 14. s 32., 13. s 31., 12. s 30., 11. s 29., ... , 2. s 20. 
+	a nakoniec 1. s 19. PreÄo postupoval opaÄnÃ½m smerom ?  Aby aj tÃ­ malÃ­ mali Å¡ancu dostaÅ¥ sa rÃ½chlo dopredu.
+	Znova vypoÄÃ­tal krok  ( 18 : 4 ) x 3 = 12 a porovnÃ¡val tentoraz od zaÄiatku : 1. s 13., 2. s 14., 3. s 15., ... , 19. s 31. 
+	aÅ¾ napokon 20. s 32. Äalej pokraÄoval s krokom 9 od konca : 23. s 32., 22. s 31., ... , 2. s 11. a 1. s 10.
+	<br>Kedy skonÄil ?  Vtedy, keÄ krok bol rovnÃ½ 1 !
+	AkÃ© odliÅ¡nosti od shakersortu s ubÃºdajÃºcim krokom ste zistili ?
 	<br>
-	Vysvetlíme si to  na situácii s krokom 9.  V shakersorte s ubúdajúcim krokom by sme prvky : 1., 10., 19. a 28. utriedili shakersortom. 
-	No my namiesto toho porovnáme a keï treba vymeníme 1. s 10., 10. s 19. a 19.s 28. Niè viac !  Podobnos na shakersort s ubúdajúcim 
-	krokom je len povrchná. Vskutku originálnym spôsobom je tu vyuitá myšlienka vımen na ve¾ké vzdialenosti. 
-	Pri zachovaní koeficientu 3/4 sa zdá by toto triedenie najúèinnejšie (porovnate¾né  vısledky  sa dajú  dosiahnu s koeficientom 2/3).
+	VysvetlÃ­me si to  na situÃ¡cii s krokom 9.  V shakersorte s ubÃºdajÃºcim krokom by sme prvky : 1., 10., 19. a 28. utriedili shakersortom. 
+	No my namiesto toho porovnÃ¡me a keÄ treba vymenÃ­me 1. s 10., 10. s 19. a 19.s 28. NiÄ viac !  PodobnosÅ¥ na shakersort s ubÃºdajÃºcim 
+	krokom je len povrchnÃ¡. Vskutku originÃ¡lnym spÃ´sobom je tu vyuÅ¾itÃ¡ myÅ¡lienka vÃ½men na veÄ¾kÃ© vzdialenosti. 
+	Pri zachovanÃ­ koeficientu 3/4 sa zdÃ¡ byÅ¥ toto triedenie najÃºÄinnejÅ¡ie (porovnateÄ¾nÃ©  vÃ½sledky  sa dajÃº  dosiahnuÅ¥ s koeficientom 2/3).
     <TABLE cellSpacing=0 width="80%" align='center' bgColor='white' border=1>
     <TR><TD vAlign=" top" bgColor='#99cccc'><P><I>Triedenie dobosievicz</I> </P>
     <TR><TD vAlign=top><PRE>
@@ -362,34 +362,34 @@ End;
 
 </pre>
 </table>
-<br>V jednoduhšej variante namiesto pretriasania môme da bublinky len jednosmerové, program sa skráti a na èase sa to moc neprejaví.
+<br>V jednoduhÅ¡ej variante namiesto pretriasania mÃ´Å¾me daÅ¥ bublinky len jednosmerovÃ©, program sa skrÃ¡ti a na Äase sa to moc neprejavÃ­.
 
 	<dt class=main>M E R G E  -  S O R T
-	<dd>Alebo triedenie zluèovaním. Dôvod tohto názvu pobadáme za chví¾u. Teraz poïme na hodinu telocviku. Uèite¾ béèkarov ochorel, 
-	tak ste mali telocvik spolu s nimi. Na zaèiatku ste sa postavili obidve triedy osve. Áèka na jedno miesto a béèka na druhé, 
-	ale obe skupiny boli zoradené pod¾a ve¾kosti. Ako ich èo najrıchlejšie usporiada do jednej skupiny pod¾a ve¾kosti?  
-	Uèite¾ to urobil takto :  zobral najmenších ( prvıch ) z oboch skupín,  porovnal ich; menšieho postavil  na zaèiatok nového 
-	radu a  k väèšiemu zavolal ïalšieho ( druhého ) z tej skupiny, do ktorej on nepatril. Tıchto dvoch  opä porovnal a menšieho 
-	zaradil  na druhé miesto novej skupiny. K tomu, èo zostal, zasa pridal ïalšieho z tej skupiny, do ktorej nepatril. 
-	Takto vytváral novú skupinu bez problémov a do chvíle, keï sa mu chalani z jednej skupiny minuli. S tım si však poradil bez
-	problémov. Jednoducho ich všetkıch rad radom presunul do novej skupiny presne v tom poradí, v akom stáli. A mal ich usporiadanıch.
-	Takıto postup sa nazıva zluèovanie. Ide tu v podstate o zlúèenie dvoch usporiadanıch skupín tak, aby sa zachovalo usporiadanie. 
-	Táto metóda je jednoduchá, ale ako ju vyui na triedenie ?  Veï jej predpokladom je existencia utriedenıch skupín. 
-	Ako vyrieši tento problém si vysvetlíme na triedení kariet. Máme kopu neutriedenıch kariet. Rozdelíme ju trebárs na polovice. 
-	Ak by boli usporiadané, vedeli by sme ich zlúèi a neporuši usporiadanie. Ale to sa nestalo. Tak zoberieme prvú skupinu 
-	a znova ju rozdelíme na polovice.  Tu si môeme zopakova :  ak by boli utriedené obe skupiny, vedeli by sme ich zlúèi ...
-	<br>Keïe však nie sú, pokraèujeme v rozde¾ovaní. Vzniká vána námietka : budeme ma po nejakom n-tom rozdelení u usporiadané 
-	obe skupiny ?  Ja tvrdím, e áno ! Bude to vtedy, keï obe skupiny budú najviac jednoprvkové. Je bez pochybností, 
-	e kadá jednoprvková skupina je utriedená, teda vtedy skonèíme rozde¾ovanie a zaèneme zluèovanie. Po zlúèení dostaneme 
-	napr. dvojprvkovú skupinu. Mali by sme ju zlúèi s ïa¾šou dvojprvkovou z predchádzajúceho delenia. Tá však ešte nie usporiadaná. 
-	Tak rozdelíme aj ju na dve jednoprvkové. Tie sú u utriedené, tak ich môeme zlúèi. Vısledok zasa zlúèime pod¾a uèite¾ovej 
-	metódy na štvorprvkovú skupinu. Atï...
+	<dd>Alebo triedenie zluÄovanÃ­m. DÃ´vod tohto nÃ¡zvu pobadÃ¡me za chvÃ­Ä¾u. Teraz poÄme na hodinu telocviku. UÄiteÄ¾ bÃ©Äkarov ochorel, 
+	tak ste mali telocvik spolu s nimi. Na zaÄiatku ste sa postavili obidve triedy osve. ÃÄka na jedno miesto a bÃ©Äka na druhÃ©, 
+	ale obe skupiny boli zoradenÃ© podÄ¾a veÄ¾kosti. Ako ich Äo najrÃ½chlejÅ¡ie usporiadaÅ¥ do jednej skupiny podÄ¾a veÄ¾kosti?  
+	UÄiteÄ¾ to urobil takto :  zobral najmenÅ¡Ã­ch ( prvÃ½ch ) z oboch skupÃ­n,  porovnal ich; menÅ¡ieho postavil  na zaÄiatok novÃ©ho 
+	radu a  k vÃ¤ÄÅ¡iemu zavolal ÄalÅ¡ieho ( druhÃ©ho ) z tej skupiny, do ktorej on nepatril. TÃ½chto dvoch  opÃ¤Å¥ porovnal a menÅ¡ieho 
+	zaradil  na druhÃ© miesto novej skupiny. K tomu, Äo zostal, zasa pridal ÄalÅ¡ieho z tej skupiny, do ktorej nepatril. 
+	Takto vytvÃ¡ral novÃº skupinu bez problÃ©mov aÅ¾ do chvÃ­le, keÄ sa mu chalani z jednej skupiny minuli. S tÃ½m si vÅ¡ak poradil bez
+	problÃ©mov. Jednoducho ich vÅ¡etkÃ½ch rad radom presunul do novej skupiny presne v tom poradÃ­, v akom stÃ¡li. A mal ich usporiadanÃ½ch.
+	TakÃ½to postup sa nazÃ½va zluÄovanie. Ide tu v podstate o zlÃºÄenie dvoch usporiadanÃ½ch skupÃ­n tak, aby sa zachovalo usporiadanie. 
+	TÃ¡to metÃ³da je jednoduchÃ¡, ale ako ju vyuÅ¾iÅ¥ na triedenie ?  VeÄ jej predpokladom je existencia utriedenÃ½ch skupÃ­n. 
+	Ako vyrieÅ¡iÅ¥ tento problÃ©m si vysvetlÃ­me na triedenÃ­ kariet. MÃ¡me kopu neutriedenÃ½ch kariet. RozdelÃ­me ju trebÃ¡rs na polovice. 
+	Ak by boli usporiadanÃ©, vedeli by sme ich zlÃºÄiÅ¥ a neporuÅ¡iÅ¥ usporiadanie. Ale to sa nestalo. Tak zoberieme prvÃº skupinu 
+	a znova ju rozdelÃ­me na polovice.  Tu si mÃ´Å¾eme zopakovaÅ¥ :  ak by boli utriedenÃ© obe skupiny, vedeli by sme ich zlÃºÄiÅ¥ ...
+	<br>KeÄÅ¾e vÅ¡ak nie sÃº, pokraÄujeme v rozdeÄ¾ovanÃ­. VznikÃ¡ vÃ¡Å¾na nÃ¡mietka : budeme maÅ¥ po nejakom n-tom rozdelenÃ­ uÅ¾ usporiadanÃ© 
+	obe skupiny ?  Ja tvrdÃ­m, Å¾e Ã¡no ! Bude to vtedy, keÄ obe skupiny budÃº najviac jednoprvkovÃ©. Je bez pochybnostÃ­, 
+	Å¾e kaÅ¾dÃ¡ jednoprvkovÃ¡ skupina je utriedenÃ¡, teda vtedy skonÄÃ­me rozdeÄ¾ovanie a zaÄneme zluÄovanie. Po zlÃºÄenÃ­ dostaneme 
+	napr. dvojprvkovÃº skupinu. Mali by sme ju zlÃºÄiÅ¥ s ÄaÄ¾Å¡ou dvojprvkovou z predchÃ¡dzajÃºceho delenia. TÃ¡ vÅ¡ak eÅ¡te nie usporiadanÃ¡. 
+	Tak rozdelÃ­me aj ju na dve jednoprvkovÃ©. Tie sÃº uÅ¾ utriedenÃ©, tak ich mÃ´Å¾eme zlÃºÄiÅ¥. VÃ½sledok zasa zlÃºÄime podÄ¾a uÄiteÄ¾ovej 
+	metÃ³dy na Å¡tvorprvkovÃº skupinu. AtÄ...
 
-	Problémom zostáva u len aplikácia postupu v programe. Jednotlivé èinnosti si môme rozdeli na tieto základné : 
-	<br>rozde¾, zlúè. 
-	<br>To budú aj názvy dvoch podstatnıch procedúr. Zostal u len jeden vány problém.  Kam uklada postupnos, ktorú vytvárame 
-	pri zluèovaní ?   Riešenie :  vyuijeme nejaké iné pole, napr. k tomu nášmu zrkadlovo obrátené. Presnejšie to bude pole a(-1), a(-2),
-	a(-3), ...  Teda na zápornom úseku vytvoríme zlúèené pole a potom ho len prenesieme do kladnej èasti.
+	ProblÃ©mom zostÃ¡va uÅ¾ len aplikÃ¡cia postupu v programe. JednotlivÃ© Äinnosti si mÃ´Å¾me rozdeliÅ¥ na tieto zÃ¡kladnÃ© : 
+	<br>rozdeÄ¾, zlÃºÄ. 
+	<br>To budÃº aj nÃ¡zvy dvoch podstatnÃ½ch procedÃºr. Zostal uÅ¾ len jeden vÃ¡Å¾ny problÃ©m.  Kam ukladaÅ¥ postupnosÅ¥, ktorÃº vytvÃ¡rame 
+	pri zluÄovanÃ­ ?   RieÅ¡enie :  vyuÅ¾ijeme nejakÃ© inÃ© pole, napr. k tomu nÃ¡Å¡mu zrkadlovo obrÃ¡tenÃ©. PresnejÅ¡ie to bude pole a(-1), a(-2),
+	a(-3), ...  Teda na zÃ¡pornom Ãºseku vytvorÃ­me zlÃºÄenÃ© pole a potom ho len prenesieme do kladnej Äasti.
 </dl>
 <br><a href="p-demo.html" target="obsah">Demo</a>
 

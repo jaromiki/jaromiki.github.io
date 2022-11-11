@@ -8,15 +8,15 @@
 </head>
 
 <body>
-<h3 style="width:450">Dediènos</h3>
+<h3 style="width:450">DediÄnosÅ¥</h3>
 Zopakujme si:
-<br>objekty sú v definícii triedy rozdelené do maximálne troch skupín
-<ul><li><b>private</b> - privátne objekty vidite¾né vnútri triedy ale zvonka nedostupné
-	<li><b>public</b> -  objekty vidite¾né aj zvnútra aj zvonka triedy
-	<li><b>protected</b> - chránené, podobnı private, ale odvodené triedy majú ku nim prístup
-Budeme sa zaobera jednoduchou dediènosou. Budeme ma jednu základnú triedu <b>base</b> a z nej odvodenú triedu <b>derived</b>.
+<br>objekty sÃº v definÃ­cii triedy rozdelenÃ© do maximÃ¡lne troch skupÃ­n
+<ul><li><b>private</b> - privÃ¡tne objekty viditeÄ¾nÃ© vnÃºtri triedy ale zvonka nedostupnÃ©
+	<li><b>public</b> -  objekty viditeÄ¾nÃ© aj zvnÃºtra aj zvonka triedy
+	<li><b>protected</b> - chrÃ¡nenÃ©, podobnÃ½ private, ale odvodenÃ© triedy majÃº ku nim prÃ­stup
+Budeme sa zaoberaÅ¥ jednoduchou dediÄnosÅ¥ou. Budeme maÅ¥ jednu zÃ¡kladnÃº triedu <b>base</b> a z nej odvodenÃº triedu <b>derived</b>.
 <dl><dt class="main">dedenie <b>public</b>
-    <dd>Všetky prvky základnej triedy si ponechajú spôsob prístupu (zostanú v rovnakej skupine)
+    <dd>VÅ¡etky prvky zÃ¡kladnej triedy si ponechajÃº spÃ´sob prÃ­stupu (zostanÃº v rovnakej skupine)
 				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 				<tr><td>
@@ -43,12 +43,12 @@ int main()
    return 0;
 }</pre>
 		</tr></table>
-		Dedenie pomocou public zabezpeèí, e verejné objekty základnej triedy budú verejnımi aj v odvodenej triede. Inak povedané v odvodenej triede nemusíme robi
-		funkcie na prístup ku privátnym objektom triedy base a môeme pouíva funkcie na to urèené v základnej triede.
-		<br>V triede derived nemáme priamy pristup ku privátnym/súkromnım objektom základnej triedy base. (ku privátnym objektom základnej triedy pri iadnom spôsobe dedenia nemáme
-		priamy prístup)
+		Dedenie pomocou public zabezpeÄÃ­, Å¾e verejnÃ© objekty zÃ¡kladnej triedy budÃº verejnÃ½mi aj v odvodenej triede. Inak povedanÃ© v odvodenej triede nemusÃ­me robiÅ¥
+		funkcie na prÃ­stup ku privÃ¡tnym objektom triedy base a mÃ´Å¾eme pouÅ¾Ã­vaÅ¥ funkcie na to urÄenÃ© v zÃ¡kladnej triede.
+		<br>V triede derived nemÃ¡me priamy pristup ku privÃ¡tnym/sÃºkromnÃ½m objektom zÃ¡kladnej triedy base. (ku privÃ¡tnym objektom zÃ¡kladnej triedy pri Å¾iadnom spÃ´sobe dedenia nemÃ¡me
+		priamy prÃ­stup)
 	<dt class="main">dedenie <b>private</b>
-    <dd>Ak dedíme metódou private, všetky objekty základnej triedy budú zvonku private/súkromné a všetky public základnej triedy budú v triede derived dostupné.	
+    <dd>Ak dedÃ­me metÃ³dou private, vÅ¡etky objekty zÃ¡kladnej triedy budÃº zvonku private/sÃºkromnÃ© a vÅ¡etky public zÃ¡kladnej triedy budÃº v triede derived dostupnÃ©.	
 				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 				<tr><td>
@@ -68,23 +68,23 @@ class derived : private base
 };
 int main()
 {  derived a;
-   <font color="Fuchsia">a.setx(5);</font>      //nesprávne, lebo setx() je private
+   <font color="Fuchsia">a.setx(5);</font>      //nesprÃ¡vne, lebo setx() je private
    a.sety(8);
    <font color="Fuchsia">cout &lt;&lt; x;</font>     //nespravne lebo x tu nepozname
-   <font color="Fuchsia">cout &lt;&lt;a.getx() &lt;&lt;endl;</font>      //nesprávne, lebo getx() je private
+   <font color="Fuchsia">cout &lt;&lt;a.getx() &lt;&lt;endl;</font>      //nesprÃ¡vne, lebo getx() je private
    cout &lt;&lt;a.gety() &lt;&lt;endl;
    return 0;
 }</pre>
 		</tr></table>
-		Ak chceme v triede private ma prístup ku x, musíme si urobi svoje nové funkcie. Napr. namiesto sety() a getx()
-		vytvoríme:
+		Ak chceme v triede private maÅ¥ prÃ­stup ku x, musÃ­me si urobiÅ¥ svoje novÃ© funkcie. Napr. namiesto sety() a getx()
+		vytvorÃ­me:
 <pre>void setxy(int xx, int yy) {setx(xx); y=yy;}
 int novegetx() {return getx();}</pre> 		
-	<dt class="main">chránené objekty
-	<dd>Ak máme odvodenú triedu zo základnej, ktorá má privátne prvky, tak zvnútra odvodenej triedy privátne prvky nevidíme. Rieši to mono 
-		chránenımi prvkami.
-		<br>U vieme, e privátne prvky ostanú privátne - nezáleí ako dedíme.
-		<br>Ak dedíme metódou protected tak privátne a chránené prvky sa stanú chránené.
+	<dt class="main">chrÃ¡nenÃ© objekty
+	<dd>Ak mÃ¡me odvodenÃº triedu zo zÃ¡kladnej, ktorÃ¡ mÃ¡ privÃ¡tne prvky, tak zvnÃºtra odvodenej triedy privÃ¡tne prvky nevidÃ­me. RieÅ¡iÅ¥ to moÅ¾no 
+		chrÃ¡nenÃ½mi prvkami.
+		<br>UÅ¾ vieme, Å¾e privÃ¡tne prvky ostanÃº privÃ¡tne - nezÃ¡leÅ¾Ã­ ako dedÃ­me.
+		<br>Ak dedÃ­me metÃ³dou protected tak privÃ¡tne a chrÃ¡nenÃ© prvky sa stanÃº chrÃ¡nenÃ©.
 				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 				<tr><td>
@@ -118,17 +118,17 @@ class derived3 :protected base
 }</pre>
 			</tr></table>
 			<br>
-			<table border="1"><tr><th colspan="7">Dediènos</tr>
-			<tr><th rowspan="2">Práva v base<th colspan="3">zvnútra derived<th colspan="3">zvonka</tr>
+			<table border="1"><tr><th colspan="7">DediÄnosÅ¥</tr>
+			<tr><th rowspan="2">PrÃ¡va v base<th colspan="3">zvnÃºtra derived<th colspan="3">zvonka</tr>
 			<tr>          <th>public<th>private<th>protected<th>public<th>private<th>protected</tr>
-			<tr><th>public<th> vidím <th> vidím  <th> vidím <th> vidím <th> nevidím  <th>&nbsp;nevidím </tr>
-			<tr><th>private<th>&nbsp;nevidím <th> nevidím <th> nevidím <th> nevidím <th>&nbsp;nevidím  <th> nevidím </tr>
-			<tr><th>protected<th> vidím <th>&nbsp;nevidím <th> vidím <th>&nbsp;nevidím <th> nevidím  <th> nevidím </tr>
+			<tr><th>public<th> vidÃ­m <th> vidÃ­m  <th> vidÃ­m <th> vidÃ­m <th> nevidÃ­m  <th>&nbsp;nevidÃ­m </tr>
+			<tr><th>private<th>&nbsp;nevidÃ­m <th> nevidÃ­m <th> nevidÃ­m <th> nevidÃ­m <th>&nbsp;nevidÃ­m  <th> nevidÃ­m </tr>
+			<tr><th>protected<th> vidÃ­m <th>&nbsp;nevidÃ­m <th> vidÃ­m <th>&nbsp;nevidÃ­m <th> nevidÃ­m  <th> nevidÃ­m </tr>
 			</table>
-   			Vidíme, e spôsob dedenia protected sa zvnútra chová ako public a zvonka ako private.
-   		<dt class="main">konštruktor, deštruktor
-		<dd>Treba si uvedomi, e keï vzniká odvodená trieda volá sa najprv konštruktor základnej triedy a a potom konštruktor odvodenej triedy. V prípade deštruktora je to naopak
-			najprv sa zavolá deštruktor odvodenej triedy a následne deštruktor základnej triedy
+   			VidÃ­me, Å¾e spÃ´sob dedenia protected sa zvnÃºtra chovÃ¡ ako public a zvonka ako private.
+   		<dt class="main">konÅ¡truktor, deÅ¡truktor
+		<dd>Treba si uvedomiÅ¥, Å¾e keÄ vznikÃ¡ odvodenÃ¡ trieda volÃ¡ sa najprv konÅ¡truktor zÃ¡kladnej triedy a aÅ¾ potom konÅ¡truktor odvodenej triedy. V prÃ­pade deÅ¡truktora je to naopak
+			najprv sa zavolÃ¡ deÅ¡truktor odvodenej triedy a nÃ¡sledne deÅ¡truktor zÃ¡kladnej triedy
 				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 				<tr><td>
@@ -145,33 +145,33 @@ int main()
    return 0;
 }</pre>
 			</tr></table>
-			Program vypíše:
+			Program vypÃ­Å¡e:
 			<br>Vznika base
 			<br>Vznika private
 			<br>Zanika private
 			<br>Zanika base
-			<br><br>Komplikovanejšia situácia vzniká, keï konštruktory vyadujú parametre, hlavne ako prenies parameter do koštruktora základnej triedy.
-				Tu budem uvádza len koštruktor derived, iné sa nemení (predpokladáme, konštruktor base potrebuje jeden celoèíselnı parameter)	
+			<br><br>KomplikovanejÅ¡ia situÃ¡cia vznikÃ¡, keÄ konÅ¡truktory vyÅ¾adujÃº parametre, hlavne ako preniesÅ¥ parameter do koÅ¡truktora zÃ¡kladnej triedy.
+				Tu budem uvÃ¡dzaÅ¥ len koÅ¡truktor derived, inÃ© sa nemenÃ­ (predpokladÃ¡me, konÅ¡truktor base potrebuje jeden celoÄÃ­selnÃ½ parameter)	
 				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 				<tr><td>
-<pre>//spoloènı parameter pre base aj derived
+<pre>//spoloÄnÃ½ parameter pre base aj derived
 class derived1
 {  int a;
    public:
-   derived (int aa) : base(aa) {a = aa;} //kon3truktor base sa bude vola s par aa
+   derived (int aa) : base(aa) {a = aa;} //kon3truktor base sa bude volaÅ¥ s par aa
 };
-//inı parameter pre base inı pre derived
+//inÃ½ parameter pre base inÃ½ pre derived
 class derived2
 {  int a;
    public:
-   derived (int aa, int bb) : base(bb) {a = aa;} //konštruktor base sa bude vola s par bb
+   derived (int aa, int bb) : base(bb) {a = aa;} //konÅ¡truktor base sa bude volaÅ¥ s par bb
 };
-//derived nevyaduje parameter
+//derived nevyÅ¾aduje parameter
 class derived3
 {  int a;
    public:
-   derived (int bb) : base(bb) {a = 0;} //konštruktor base sa bude vola s par bb
+   derived (int bb) : base(bb) {a = 0;} //konÅ¡truktor base sa bude volaÅ¥ s par bb
 };
    
 </dl>

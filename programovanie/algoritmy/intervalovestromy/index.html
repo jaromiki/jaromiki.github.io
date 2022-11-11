@@ -4,72 +4,72 @@
 <head>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
  	 <meta name="Content-language" content="sk">	
-	<title>Intervalové stromy</title>
+	<title>IntervalovĂ© stromy</title>
 	<LINK href="../css/style.css" type="text/css"  rel=stylesheet>
 </head>
 
 <body>
-<h3>Intervalové stromy</h3>
-<dl><dt>Použitie - na rýchle spracovávanie a vyhodnocovanie intervalov
-	<dd>Typické úlohy
-	    <ul><li>Na vstupe sú intervaly a hodnoty, všetky čísla v danom intervale máme zväčšiť o danú hodnotu.
-				<br>Potom zadáme číslo a určíme aká je v ňom hodnota
-				<br>Klasické riešenie O(k*n), kde k je počet podintervalov
-			<li>Je dané pole čísel (počet čísel n), na vstupe sú príkazy 
+<h3>IntervalovĂ© stromy</h3>
+<dl><dt>PouĹľitie - na rĂ˝chle spracovĂˇvanie a vyhodnocovanie intervalov
+	<dd>TypickĂ© Ăşlohy
+	    <ul><li>Na vstupe sĂş intervaly a hodnoty, vĹˇetky ÄŤĂ­sla v danom intervale mĂˇme zvĂ¤ÄŤĹˇiĹĄ o danĂş hodnotu.
+				<br>Potom zadĂˇme ÄŤĂ­slo a urÄŤĂ­me akĂˇ je v Ĺom hodnota
+				<br>KlasickĂ© rieĹˇenie O(k*n), kde k je poÄŤet podintervalov
+			<li>Je danĂ© pole ÄŤĂ­sel (poÄŤet ÄŤĂ­sel n), na vstupe sĂş prĂ­kazy 
 				<ul><li>zmen i-te cislo
-					<li>spočítaj čísla od indexu a po b (k - takých príkazov)
+					<li>spoÄŤĂ­taj ÄŤĂ­sla od indexu a po b (k - takĂ˝ch prĂ­kazov)
 				</ul>
-				Klasické riešenie ->Časová zložitosť - O(k*n)	
+				KlasickĂ© rieĹˇenie ->ÄŚasovĂˇ zloĹľitosĹĄ - O(k*n)	
 		</ul>
-	<dt>Myšlienka - prejsť na O(k*log n)
-	<dd>Rozložíme interval na podintervaly (max. log počet) a pre každý podinterval vrátime výsledok v konštantnom čase
-	<dt>Úloha	
-	<dd>Na základný interval &lt;a;b&gt; nám padajú podintervaly a hodnoty, ktoré všetkým číslam v týchto podintervaloch zväčšujú 
-	hodnotu. Počet celých čísel v základnom intervale je b-a+1. My tento počet zväčšíme 
-	<ul><li>pridaním jedného čísla pred a
-		<li>pridaním jedného čísla za b
-		<li>ďalším pridaním čísel za b+1 tak aby počet čísel bol mocninou 2
+	<dt>MyĹˇlienka - prejsĹĄ na O(k*log n)
+	<dd>RozloĹľĂ­me interval na podintervaly (max. log poÄŤet) a pre kaĹľdĂ˝ podinterval vrĂˇtime vĂ˝sledok v konĹˇtantnom ÄŤase
+	<dt>Ăšloha	
+	<dd>Na zĂˇkladnĂ˝ interval &lt;a;b&gt; nĂˇm padajĂş podintervaly a hodnoty, ktorĂ© vĹˇetkĂ˝m ÄŤĂ­slam v tĂ˝chto podintervaloch zvĂ¤ÄŤĹˇujĂş 
+	hodnotu. PoÄŤet celĂ˝ch ÄŤĂ­sel v zĂˇkladnom intervale je b-a+1. My tento poÄŤet zvĂ¤ÄŤĹˇĂ­me 
+	<ul><li>pridanĂ­m jednĂ©ho ÄŤĂ­sla pred a
+		<li>pridanĂ­m jednĂ©ho ÄŤĂ­sla za b
+		<li>ÄŹalĹˇĂ­m pridanĂ­m ÄŤĂ­sel za b+1 tak aby poÄŤet ÄŤĂ­sel bol mocninou 2
 	</ul>
-	<br>Je možné viacero konštrukcií - tu popíšem strom, ktorý budeme tvoriť v poli a prechádzať "odspodu".
-	<br>Strom je vytvorený nasledovne:
-	<br>v spodnom riadku stromu (listy) sú bunky s indexom z nášho základného intervalu a-1, a, a+1, ... b,b+1, ...
-	<br>(za b+1 ešte môžu byť čísla do počtu nejakej mocniny 2)
-	<br>sem (i do ostatných buniek stromu) )budeme pridávať hodnoty z "padajúcich" intervalov
-	<br>o riadok vyššie je interval s hranicami danými indexami v spodnom riadku /inak povedané zjednotenie množiny ľavého a pravého syna
-	<br>podobne je situácia aj v každom vyššom riadku až po koreň
-	<br>Keďže ide o úplný strom, možno ho výhodne zapísať do poľa, postup je nasledovný:
-	<ul><li>koreň je v bunke 1
-		<li>ak je prvok v bunke (i) tak jeho ľavý syn je v bunke (2*i), jeho pravý syn je v bunke (2*i+1) 
-		<li>ak je prvok v bunke (i) tak jeho rodič je v bunke (i div 2)
-		<li>spodný riadok stromu (listy) začínajú od indexu (n) a končia v bunke (2n-1)
-		<li>je zrejmé, že ľavý synovia sú na párnych adresách a pravý na nepárnych
+	<br>Je moĹľnĂ© viacero konĹˇtrukciĂ­ - tu popĂ­Ĺˇem strom, ktorĂ˝ budeme tvoriĹĄ v poli a prechĂˇdzaĹĄ "odspodu".
+	<br>Strom je vytvorenĂ˝ nasledovne:
+	<br>v spodnom riadku stromu (listy) sĂş bunky s indexom z nĂˇĹˇho zĂˇkladnĂ©ho intervalu a-1, a, a+1, ... b,b+1, ...
+	<br>(za b+1 eĹˇte mĂ´Ĺľu byĹĄ ÄŤĂ­sla do poÄŤtu nejakej mocniny 2)
+	<br>sem (i do ostatnĂ˝ch buniek stromu) )budeme pridĂˇvaĹĄ hodnoty z "padajĂşcich" intervalov
+	<br>o riadok vyĹˇĹˇie je interval s hranicami danĂ˝mi indexami v spodnom riadku /inak povedanĂ© zjednotenie mnoĹľiny ÄľavĂ©ho a pravĂ©ho syna
+	<br>podobne je situĂˇcia aj v kaĹľdom vyĹˇĹˇom riadku aĹľ po koreĹ
+	<br>KeÄŹĹľe ide o ĂşplnĂ˝ strom, moĹľno ho vĂ˝hodne zapĂ­saĹĄ do poÄľa, postup je nasledovnĂ˝:
+	<ul><li>koreĹ je v bunke 1
+		<li>ak je prvok v bunke (i) tak jeho ÄľavĂ˝ syn je v bunke (2*i), jeho pravĂ˝ syn je v bunke (2*i+1) 
+		<li>ak je prvok v bunke (i) tak jeho rodiÄŤ je v bunke (i div 2)
+		<li>spodnĂ˝ riadok stromu (listy) zaÄŤĂ­najĂş od indexu (n) a konÄŤia v bunke (2n-1)
+		<li>je zrejmĂ©, Ĺľe ÄľavĂ˝ synovia sĂş na pĂˇrnych adresĂˇch a pravĂ˝ na nepĂˇrnych
 	<ul>
-	<h4>zadávanie intervalu do stromu </h4>
-	Nech nový podinterval je &lt;x;y&gt; a pridávaná hodnota je h
-	<br>nájdem adresu čísla (x-1) medzi listami i:=x-a+n; 
-	<br>(napr. ak som zadal x=a, hľadám kde leží a-1 ,čo je n-ty chlievik nášho poľa)
-	<br>podobne zistím, kde leží číslo (y+1) j:=y-a+n+2
-	<br>(napr. ak som zadal y=a, hľadám kde leží a+1 ,čo je (n+2)-ty chlievik nášho poľa)
-	<br>Teraz obe čísla nechám naraz bublať hore kým nebudú mať rovnakého rodiča (kým sú od seba ďalej ako o 1 políčko)
-	<br>ale pred posunom nahor zistím či 
-	<ul><li>ak i je ľavý syn, tak do jeho pravého brata pripočítam hodnotu h
-		<li>ak j je pravý syn, tak do jeho ľavého brata pripočítam hodnotu h
+	<h4>zadĂˇvanie intervalu do stromu </h4>
+	Nech novĂ˝ podinterval je &lt;x;y&gt; a pridĂˇvanĂˇ hodnota je h
+	<br>nĂˇjdem adresu ÄŤĂ­sla (x-1) medzi listami i:=x-a+n; 
+	<br>(napr. ak som zadal x=a, hÄľadĂˇm kde leĹľĂ­ a-1 ,ÄŤo je n-ty chlievik nĂˇĹˇho poÄľa)
+	<br>podobne zistĂ­m, kde leĹľĂ­ ÄŤĂ­slo (y+1) j:=y-a+n+2
+	<br>(napr. ak som zadal y=a, hÄľadĂˇm kde leĹľĂ­ a+1 ,ÄŤo je (n+2)-ty chlievik nĂˇĹˇho poÄľa)
+	<br>Teraz obe ÄŤĂ­sla nechĂˇm naraz bublaĹĄ hore kĂ˝m nebudĂş maĹĄ rovnakĂ©ho rodiÄŤa (kĂ˝m sĂş od seba ÄŹalej ako o 1 polĂ­ÄŤko)
+	<br>ale pred posunom nahor zistĂ­m ÄŤi 
+	<ul><li>ak i je ÄľavĂ˝ syn, tak do jeho pravĂ©ho brata pripoÄŤĂ­tam hodnotu h
+		<li>ak j je pravĂ˝ syn, tak do jeho ÄľavĂ©ho brata pripoÄŤĂ­tam hodnotu h
 	</ul>
-	Napr. Nech základný interval bol 2 až 15, po pridaní čísel pred a za máme čísla 1 až 16 a tie sú zadané listami stromu
-	<br>&nbsp; &nbsp; &nbsp; Nech podinterval kde chceme pripočítať hodnotu je 4 až 11
-	<br>hľadáme polohu čísla 3 ... i:=n+2
-	<br>hľadáme polohu čísla 12 ... j:=n+11
-	<br>Pri bublaní nahor zmeníme hodnoty buniek označené na obr1 rámikom 
+	Napr. Nech zĂˇkladnĂ˝ interval bol 2 aĹľ 15, po pridanĂ­ ÄŤĂ­sel pred a za mĂˇme ÄŤĂ­sla 1 aĹľ 16 a tie sĂş zadanĂ© listami stromu
+	<br>&nbsp; &nbsp; &nbsp; Nech podinterval kde chceme pripoÄŤĂ­taĹĄ hodnotu je 4 aĹľ 11
+	<br>hÄľadĂˇme polohu ÄŤĂ­sla 3 ... i:=n+2
+	<br>hÄľadĂˇme polohu ÄŤĂ­sla 12 ... j:=n+11
+	<br>Pri bublanĂ­ nahor zmenĂ­me hodnoty buniek oznaÄŤenĂ© na obr1 rĂˇmikom 
 	<br>obr.1<br> 	
 	<img src="itree-3.png" width="514" height="158" border="0" alt="">	 
 	<pre style="YES; font: monospace; margin-top: 0;" style=""> 1   2    3    4    5   6   7    8    9   10  11   12   13  14   15  16</pre>
-	Celý interval 4-11 sme zapísali pomocou {4} + &lt;5;8&gt; + &lt;9;10&gt; + {11}
-	<h4>Teraz ako určíme aká hodnota je v čísle m z nášho základného intervalu?</h4>
-	<ul><li>nájdeme adresu čísla m v listoch k:=m-a+n+1;
-		<li>necháme ho prebublať až nahor
-		<li>pri tejto ceste spočítame všetky čísla, ktoré v bunkách nájdene
+	CelĂ˝ interval 4-11 sme zapĂ­sali pomocou {4} + &lt;5;8&gt; + &lt;9;10&gt; + {11}
+	<h4>Teraz ako urÄŤĂ­me akĂˇ hodnota je v ÄŤĂ­sle m z nĂˇĹˇho zĂˇkladnĂ©ho intervalu?</h4>
+	<ul><li>nĂˇjdeme adresu ÄŤĂ­sla m v listoch k:=m-a+n+1;
+		<li>nechĂˇme ho prebublaĹĄ aĹľ nahor
+		<li>pri tejto ceste spoÄŤĂ­tame vĹˇetky ÄŤĂ­sla, ktorĂ© v bunkĂˇch nĂˇjdene
 	</ul>
-	Celá cesta je zachytená na obr.2 pre číslo m=6	 
+	CelĂˇ cesta je zachytenĂˇ na obr.2 pre ÄŤĂ­slo m=6	 
 	<br>obr.2 	
 	<img align="left" src="itree-2.png" width="516" height="158" border="0" alt="">
 

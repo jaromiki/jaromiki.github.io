@@ -8,39 +8,39 @@
 </head>
 
 <body>
-<h3>Textury - viac obrázkov</h3>
+<h3>Textury - viac obrÃ¡zkov</h3>
 <dl>
-<dt>Viaceré textúry
-<dd>Jedna z moností ako vloi do programu viaceré obrázkové textúry je vytvori si jeden obrázok o rozmere 256x256
-    v ktorom budú 4 obrázky o rozmere 128x128. Naèítame tak jedinú textúru a tom ktorı obrázok sa má ukáza sa rozhodne parametrami
-	príkazu glTexCoord2f().
+<dt>ViacerÃ© textÃºry
+<dd>Jedna z moÅ¾nostÃ­ ako vloÅ¾iÅ¥ do programu viacerÃ© obrÃ¡zkovÃ© textÃºry je vytvoriÅ¥ si jeden obrÃ¡zok o rozmere 256x256
+    v ktorom budÃº 4 obrÃ¡zky o rozmere 128x128. NaÄÃ­tame tak jedinÃº textÃºru a tom ktorÃ½ obrÃ¡zok sa mÃ¡ ukÃ¡zaÅ¥ sa rozhodne parametrami
+	prÃ­kazu glTexCoord2f().
 	
-<br>V prvej úlohe urobíme kocku, kde na všetkıch stenách bude rovnakı obrázok
-<ul><li>zoeniem si pod¾a monosti 4 štvorcové obrázky a vloíme ich do jedného images4.bmp.
-	<li>upravím ho na ve¾kos 256x256
-	<li>vytvorím si globálnu premennú bmp
+<br>V prvej Ãºlohe urobÃ­me kocku, kde na vÅ¡etkÃ½ch stenÃ¡ch bude rovnakÃ½ obrÃ¡zok
+<ul><li>zoÅ¾eniem si podÄ¾a moÅ¾nosti 4 Å¡tvorcovÃ© obrÃ¡zky a vloÅ¾Ã­me ich do jednÃ©ho images4.bmp.
+	<li>upravÃ­m ho na veÄ¾kosÅ¥ 256x256
+	<li>vytvorÃ­m si globÃ¡lnu premennÃº bmp
 		<br><b>char bmp[256][256][3];</b> 		
-		<br>sem potrebujem da pre kadı pixel 4-obrázka mnostvo farieb R,G,B.
-	<li>Otvorím súbor s obrázkom (vytvorím premennú typu FILE a otvorím ho na èítanie)
+		<br>sem potrebujem daÅ¥ pre kaÅ¾dÃ½ pixel 4-obrÃ¡zka mnoÅ¾stvo farieb R,G,B.
+	<li>OtvorÃ­m sÃºbor s obrÃ¡zkom (vytvorÃ­m premennÃº typu FILE a otvorÃ­m ho na ÄÃ­tanie)
 		<br><b>FILE *f  =fopen("images2.bmp","r");</b>	
-	<li>naplním pole <b>bmp</b>
-		<br><b>fread(bmp,54,1,f);</b> // naèítam celú hlavièku obrázka a zahodím ju, kurzor sa presunie na zaèiatok dát
-    	<br><b>fread(bmp,256*256*3,1,f);</b> //a obrázok je naèítanı, pod win je ale problém, e farby sú zapísané v tvare bgr a nie rgb
-	 <li>Teraz zapneme texturu a nastavíme parametre textury
+	<li>naplnÃ­m pole <b>bmp</b>
+		<br><b>fread(bmp,54,1,f);</b> // naÄÃ­tam celÃº hlaviÄku obrÃ¡zka a zahodÃ­m ju, kurzor sa presunie na zaÄiatok dÃ¡t
+    	<br><b>fread(bmp,256*256*3,1,f);</b> //a obrÃ¡zok je naÄÃ­tanÃ½, pod win je ale problÃ©m, Å¾e farby sÃº zapÃ­sanÃ© v tvare bgr a nie rgb
+	 <li>Teraz zapneme texturu a nastavÃ­me parametre textury
 	 	<br><b>glEnable(GL_TEXTURE_2D);</b>
  		<br><b>glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_linear);</b>
  		<br><b>glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_linear);</b>
-	<li>Urèíme, ktorá textúra sa bude zobrazova
+	<li>UrÄÃ­me, ktorÃ¡ textÃºra sa bude zobrazovaÅ¥
 		<br><b>glTexImage2D(GL_TEXTURE_2D,</b> 
-		    <br><b>0,</b>&nbsp; &nbsp; &nbsp;//to je èíslo textúry (ak je jedna dáme 0) 
-			<br><b>3,</b>&nbsp; &nbsp; &nbsp;//poèet farieb (ak nedávame priesvitnos dáme vdy 3)
-			<br><b>256,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -šírka
-			<br><b>256,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -vıška 
+		    <br><b>0,</b>&nbsp; &nbsp; &nbsp;//to je ÄÃ­slo textÃºry (ak je jedna dÃ¡me 0) 
+			<br><b>3,</b>&nbsp; &nbsp; &nbsp;//poÄet farieb (ak nedÃ¡vame priesvitnosÅ¥ dÃ¡me vÅ¾dy 3)
+			<br><b>256,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -Å¡Ã­rka
+			<br><b>256,</b>&nbsp; &nbsp; &nbsp;//rozmer textury -vÃ½Å¡ka 
 			<br><b>0,</b> 
-			<br><b>GL_BGR_EXT,</b> // musíme prehodi poradie farieb, štandartne sa dáva GL_RGB
+			<br><b>GL_BGR_EXT,</b> // musÃ­me prehodiÅ¥ poradie farieb, Å¡tandartne sa dÃ¡va GL_RGB
 			<br><b>GL_UNSIGNED_BYTE,</b> 
-			<br><b>@bmp);</b>&nbsp; &nbsp; &nbsp;//adresa dát kde je textúra naèítaná
-	<li>a môeme da vykresli 
+			<br><b>@bmp);</b>&nbsp; &nbsp; &nbsp;//adresa dÃ¡t kde je textÃºra naÄÃ­tanÃ¡
+	<li>a mÃ´Å¾eme daÅ¥ vykresliÅ¥ 
 <pre>	
 void TForm1::ogl_draw()
 { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -49,7 +49,7 @@ glMatrixMode(GL_MODELVIEW);
   glRotatef(uholx,1.0f,0.0f,0.0f);
   glRotatef(uholy,0.0f,1.0f,0.0f);
 
-//tu zadávame príkazy na kreslenie
+//tu zadÃ¡vame prÃ­kazy na kreslenie
   glColor4f(1.0f, 1.0f, 1.0f,1.0f);
     glBegin(GL_QUADS);
         glTexCoord2f(0.0, 0.0); glVertex3f(-4,-4,-4);
@@ -80,9 +80,9 @@ SwapBuffers(hdc);
 </pre>
 </ul>	
 
-<br>Pouitá textúra:
+<br>PouÅ¾itÃ¡ textÃºra:
 <br><img src="obr/textury/obr256.bmp" width="128" height="128" border="0" alt="">
-Ak vyuijeme tento postup, môme v programe poui 4 obrázkové textúry 128x128, poèet manuálnych prechodovıch textúr nie je obmedzenı.
-<br>V ïalšej èasti si ukáeme ako vytvori v jednom programe viac obrázkovıch textúr (napr. na kadú stenu kocky inú).
+Ak vyuÅ¾ijeme tento postup, mÃ´Å¾me v programe pouÅ¾iÅ¥ 4 obrÃ¡zkovÃ© textÃºry 128x128, poÄet manuÃ¡lnych prechodovÃ½ch textÃºr nie je obmedzenÃ½.
+<br>V ÄalÅ¡ej Äasti si ukÃ¡Å¾eme ako vytvoriÅ¥ v jednom programe viac obrÃ¡zkovÃ½ch textÃºr (napr. na kaÅ¾dÃº stenu kocky inÃº).
 </body>
 </html>

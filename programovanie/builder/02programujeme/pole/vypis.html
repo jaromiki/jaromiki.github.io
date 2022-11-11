@@ -8,54 +8,54 @@
 
 <body>
 <dl>
-<dt class=main>Vıpis po¾a
-<dd>Pole môme chcie vypísa z dôvodu:
-	<ul><li>Hodnoty po¾a sú vısledkom
-		<li>vıpis robíme na kontrolné úèely
-			(napr. na kontrolu, èi je správne naplnené)
+<dt class=main>VÃ½pis poÄ¾a
+<dd>Pole mÃ´Å¾me chcieÅ¥ vypÃ­saÅ¥ z dÃ´vodu:
+	<ul><li>Hodnoty poÄ¾a sÃº vÃ½sledkom
+		<li>vÃ½pis robÃ­me na kontrolnÃ© ÃºÄely
+			(napr. na kontrolu, Äi je sprÃ¡vne naplnenÃ©)
 	</ul>
-	<br>Asi najèastejšie riešime vıpis po¾a do objektu Memo, ale monı je aj vıpis do txt súboru alebo objektu StringGrid. Najèastejšie vypisujeme všetky prvky po¾a
-	(celé pole), ale je moné jednoduchou úpravou dosiahnu aby cyklus išiel od indexu <b>A</b> po index <b>B</b>.
+	<br>Asi najÄastejÅ¡ie rieÅ¡ime vÃ½pis poÄ¾a do objektu Memo, ale moÅ¾nÃ½ je aj vÃ½pis do txt sÃºboru alebo objektu StringGrid. NajÄastejÅ¡ie vypisujeme vÅ¡etky prvky poÄ¾a
+	(celÃ© pole), ale je moÅ¾nÃ© jednoduchou Ãºpravou dosiahnuÅ¥ aby cyklus iÅ¡iel od indexu <b>A</b> po index <b>B</b>.
    <dl>
-   <dt>Vıpis do Mema
-   <dd>Najèastejší prípad, postup je nasledovnı:
-   		<ul><li>vymaeme celé Memo1
-			<li>prejdeme všetky prvky po¾a a zapíšeme ich do Memo1
+   <dt>VÃ½pis do Mema
+   <dd>NajÄastejÅ¡Ã­ prÃ­pad, postup je nasledovnÃ½:
+   		<ul><li>vymaÅ¾eme celÃ© Memo1
+			<li>prejdeme vÅ¡etky prvky poÄ¾a a zapÃ­Å¡eme ich do Memo1
 		</ul>
-		Nech chceme vypísa <b>Pole</b> od indexu <b>1</b> po index <b>N</b>, potom príslušné riadky programu môu vyzera nasledovne:	 
+		Nech chceme vypÃ­saÅ¥ <b>Pole</b> od indexu <b>1</b> po index <b>N</b>, potom prÃ­sluÅ¡nÃ© riadky programu mÃ´Å¾u vyzeraÅ¥ nasledovne:	 
    		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>Vıpis po¾a do Mema:</I></tr>
+		<TR><TD bgColor=#99cccc><I>VÃ½pis poÄ¾a do Mema:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<code>Memo1->Clear;
 			   <br>for (int i=0;i&lt; N; i++) Memo1.Lines.Add(IntToStr(pole[i]));
 			   </code></tr>
 		</table>
-   <dt>Vıpis do StringGrid
-   <dd>StringGrid je vlastne tabu¾ka (umoòuje vıpis tabu¾ky) a umoòuje nám vypísa viac jednorozmernıch polí ved¾a/pod seba,
-    	resp. jedno pole viackrát (napr. pole vypíšeme pred zmenou a po zmene a môme skontrolova èi sme poadovanú zmenu po¾a
-		naprogramovali správne). Odporúèam nultı riadok tabu¾ky ma šedı a pevnı (nerolujúci) a samozrejme poèet riadkov tabu¾ky ma väèší
-		poètu prvkov vo vypisovanom poli. Ak nieèo nie je jasné ako, staèí pozrie uèivo práca s tabu¾kami. 
+   <dt>VÃ½pis do StringGrid
+   <dd>StringGrid je vlastne tabuÄ¾ka (umoÅ¾Åˆuje vÃ½pis tabuÄ¾ky) a umoÅ¾Åˆuje nÃ¡m vypÃ­saÅ¥ viac jednorozmernÃ½ch polÃ­ vedÄ¾a/pod seba,
+    	resp. jedno pole viackrÃ¡t (napr. pole vypÃ­Å¡eme pred zmenou a po zmene a mÃ´Å¾me skontrolovaÅ¥ Äi sme poÅ¾adovanÃº zmenu poÄ¾a
+		naprogramovali sprÃ¡vne). OdporÃºÄam nultÃ½ riadok tabuÄ¾ky maÅ¥ Å¡edÃ½ a pevnÃ½ (nerolujÃºci) a samozrejme poÄet riadkov tabuÄ¾ky maÅ¥ vÃ¤ÄÅ¡Ã­
+		poÄtu prvkov vo vypisovanom poli. Ak nieÄo nie je jasnÃ© ako, staÄÃ­ pozrieÅ¥ uÄivo prÃ¡ca s tabuÄ¾kami. 
    		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>Vıpis celého po¾a do StringGrid1:</I></tr>
+		<TR><TD bgColor=#99cccc><I>VÃ½pis celÃ©ho poÄ¾a do StringGrid1:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<code>StrinGrid1->RowCount= N;
 				<br>StringGrid->Cells[0][0]:="Pole";
 			   <br>for i:=0 to N do StringGrid.Cells[i+1][0]:=IntToStr(Pole[i]);
 			   </code></tr>
 		</table>
-   <dt>Vıpis do textového súboru
-   <dd>Nebudem tu popisova ako zadeklarova, zada meno súboru, ani ako tento súbor otvori na zápis, tu len vypíšem riadky ktoré 
-   		z po¾a Pole zapíšu všetky hodnoty do txt súboru, prièom kadé èíslo bude na samostatnom riadku.
-		<br>Odporúèam pozrie uèivo o textovıch súboroch.
+   <dt>VÃ½pis do textovÃ©ho sÃºboru
+   <dd>Nebudem tu popisovaÅ¥ ako zadeklarovaÅ¥, zadaÅ¥ meno sÃºboru, ani ako tento sÃºbor otvoriÅ¥ na zÃ¡pis, tu len vypÃ­Å¡em riadky ktorÃ© 
+   		z poÄ¾a Pole zapÃ­Å¡u vÅ¡etky hodnoty do txt sÃºboru, priÄom kaÅ¾dÃ© ÄÃ­slo bude na samostatnom riadku.
+		<br>OdporÃºÄam pozrieÅ¥ uÄivo o textovÃ½ch sÃºboroch.
    		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>Vıpis celého po¾a do súboru:</I></tr>
+		<TR><TD bgColor=#99cccc><I>VÃ½pis celÃ©ho poÄ¾a do sÃºboru:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<code>for (i=0;i&lt;N;i++) printf(f,"%f\n",pole[i]);
 			   </code></tr>
 		</table>
-		Pre prípad, ak chceme ma èísla v jednom riadku oddelené medzerou, tak to urobíme takto:
+		Pre prÃ­pad, ak chceme maÅ¥ ÄÃ­sla v jednom riadku oddelenÃ© medzerou, tak to urobÃ­me takto:
    		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>Vıpis celého po¾a do súboru:</I></tr>
+		<TR><TD bgColor=#99cccc><I>VÃ½pis celÃ©ho poÄ¾a do sÃºboru:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<code>for (i=0; i&lt;N; i++) do printf(f,"%f ",Pole[i]);
 			   </code></tr>

@@ -175,47 +175,47 @@
 </head>
 
 <body onload="init();">
-<h3 class=nadpis>Kreslenie priestorovıch útvarov</h3>
+<h3 class=nadpis>Kreslenie priestorovÃ½ch Ãºtvarov</h3>
 <dl><dt class=main>Opakovanie:
-	<dd>Ktorı objekt je urèenı na vykreslovanie?
+	<dd>KtorÃ½ objekt je urÄenÃ½ na vykreslovanie?
 	<br>Kde na kresliacej ploche je bod [0,0]?
-	<br>Aká je súradnicová sústava na kresliacej ploche?
-	<br>Ako kreslíme èiaru?
+	<br>AkÃ¡ je sÃºradnicovÃ¡ sÃºstava na kresliacej ploche?
+	<br>Ako kreslÃ­me Äiaru?
 </dl>
 <h3  class=main>Priestor</h3>
-V priestore je poloha bodu urèená trojicou súradníc [x,y,z] na obrazovke máme súradnice dve [xo,yo]. Keï chceme na monitore zobrazi èas priestoru musíme vymyslie zobrazenie [x,y,z] --&gt;[xo,yo]. Nako¾ko zobrazenie je vhodné keï je jednoduché, zvolíme najjednoduchšie a to e jednu súradnicu zahodíme
+V priestore je poloha bodu urÄenÃ¡ trojicou sÃºradnÃ­c [x,y,z] na obrazovke mÃ¡me sÃºradnice dve [xo,yo]. KeÄ chceme na monitore zobraziÅ¥ ÄasÅ¥ priestoru musÃ­me vymyslieÅ¥ zobrazenie [x,y,z] --&gt;[xo,yo]. NakoÄ¾ko zobrazenie je vhodnÃ© keÄ je jednoduchÃ©, zvolÃ­me najjednoduchÅ¡ie a to Å¾e jednu sÃºradnicu zahodÃ­me
 <br>xo = x
 <br>yo = z
 <br>Vlastne priestor premietnem do roviny xz
-<br>Aby som si 3D objekt mohol pozrie "zo všetkıch strán" musím ho vedie priestorovo otáèa. Uspokojíme sa s dvoma 
-otáèaniami <ul><li>okolo osi z ... uhol budeme nazıva alfa
-				<li>okolo osi x ... uhol budeme nazıva beta
+<br>Aby som si 3D objekt mohol pozrieÅ¥ "zo vÅ¡etkÃ½ch strÃ¡n" musÃ­m ho vedieÅ¥ priestorovo otÃ¡ÄaÅ¥. UspokojÃ­me sa s dvoma 
+otÃ¡Äaniami <ul><li>okolo osi z ... uhol budeme nazÃ½vaÅ¥ alfa
+				<li>okolo osi x ... uhol budeme nazÃ½vaÅ¥ beta
 			</ul>
 <dl>
-	<dt><font color="Blue">Rovnice na otáèanie okolo osi z</font>
+	<dt><font color="Blue">Rovnice na otÃ¡Äanie okolo osi z</font>
 	<dd>    x2:=x1*cos(alfa)+y1*sin(alfa);
         <br>y2:=y1*cos(alfa)-x1*sin(alfa);
 		<br>z2:=z1;
-	<dt><font color="Blue">Rovnice na otáèanie okolo osi y</font>
+	<dt><font color="Blue">Rovnice na otÃ¡Äanie okolo osi y</font>
 	<dd>x3:=x2;
 	<br>y3:=y2*cos(beta)+z2*sin(beta);
 	<br>z3:=z2*cos(beta)-y2*sin(beta);
-	<dt><font color="Blue">Rovnice na prechod na obrazovkové súradnice</font>
+	<dt><font color="Blue">Rovnice na prechod na obrazovkovÃ© sÃºradnice</font>
 		<dd>xo:=200+round(50*x1);
 		<br>yo:=300-round(50*z1);
-		<br>[200,300] ... sú súradnice kam sa premietne bod [0,0,0] teda bod, ktorı sa pri otáèaniach nepohne
-		<br>50 ... je mierka zväèšenia (normálne by bolo, keby si ho program vedel vypoèíta sám, toto je pre jednoduchos
-		<br>yo ... vidíme, e je tam mínus - je to preto, e na obrazovke ide os y opaènım smerom (zhora-&gt;nadol)
+		<br>[200,300] ... sÃº sÃºradnice kam sa premietne bod [0,0,0] teda bod, ktorÃ½ sa pri otÃ¡Äaniach nepohne
+		<br>50 ... je mierka zvÃ¤ÄÅ¡enia (normÃ¡lne by bolo, keby si ho program vedel vypoÄÃ­taÅ¥ sÃ¡m, toto je pre jednoduchosÅ¥
+		<br>yo ... vidÃ­me, Å¾e je tam mÃ­nus - je to preto, Å¾e na obrazovke ide os y opaÄnÃ½m smerom (zhora-&gt;nadol)
 </dl>
-<br>Nako¾ko musíme otoèi kadı vykreslovanı bod je vhodné si na otoèenie spravi podprogram
+<br>NakoÄ¾ko musÃ­me otoÄiÅ¥ kaÅ¾dÃ½ vykreslovanÃ½ bod je vhodnÃ© si na otoÄenie spraviÅ¥ podprogram
 <div style="width:580;backgroung-color:white; border-color:blue;border-width:3;border-style:outset; padding:5;margin:10">
 <div style="background-color:blue;color:white;">Unit1</div>
 <code><pre>
 Procedure Otoc(alfa,beta,x1,y1,z1:real;Var xo,yo:integer);
-Var x2,y2,z2:real;                 // pomocné
+Var x2,y2,z2:real;                 // pomocnÃ©
 Begin
 x2:=x1*cos(alfa)+y1*sin(alfa);     // okolo z
-y2:=y1*cos(alfa)-x1*sin(alfa);     // uhly sú samozrejme v radiánoch
+y2:=y1*cos(alfa)-x1*sin(alfa);     // uhly sÃº samozrejme v radiÃ¡noch
 z2:=z1;
 x1:=x2;
 y1:=y2*cos(beta)+z2*sin(beta);     // okolo y
@@ -225,16 +225,16 @@ yo:=300-round(50*z1);
 End;
 </pre></code>
 </div> 	
-Prechod z reálnych 3D súradníc na obrazovkové teda máme	   	
-Ako bude vyzera program:<a href="project1.exe">Project1.exe</a>
-<br>Po spustení si program 
-<ul><li>zoberie z memo1 súradnice 
-		<br>A=[x1,y1,z1] ... prvé tri riadky 
-		<br>B=[x2,y2,z2] ... druhé tri riadky 
-	<li>otoèí useèky dåky 5 poloené na osiach x,y,z a vykreslí ich
-	<li>otoèí úseèku AB a vykreslí ju
+Prechod z reÃ¡lnych 3D sÃºradnÃ­c na obrazovkovÃ© teda mÃ¡me	   	
+Ako bude vyzeraÅ¥ program:<a href="project1.exe">Project1.exe</a>
+<br>Po spustenÃ­ si program 
+<ul><li>zoberie z memo1 sÃºradnice 
+		<br>A=[x1,y1,z1] ... prvÃ© tri riadky 
+		<br>B=[x2,y2,z2] ... druhÃ© tri riadky 
+	<li>otoÄÃ­ useÄky dÄºÅ¾ky 5 poloÅ¾enÃ© na osiach x,y,z a vykreslÃ­ ich
+	<li>otoÄÃ­ ÃºseÄku AB a vykreslÃ­ ju
 </ul>
-(ve¾kosti uhlov sú v TrackBaroch)		
+(veÄ¾kosti uhlov sÃº v TrackBaroch)		
 <div style="width:680;backgroung-color:white; border-color:blue;border-width:3;border-style:outset; padding:5;margin:10">
 <div style="background-color:blue;color:white;">Unit1</div>
 <code><pre>
@@ -277,11 +277,11 @@ end;
 </pre></code>
 </div> 	
 Pozn. 
-<br>Ak stlaèíme tlaèidlo Vstup, zavolá sa opä FormCreate, èím sa naèítajú hodnoty z memo1
-<br>Pri kadej zmene TrackBar sa tie zavolá FormCreate 
+<br>Ak stlaÄÃ­me tlaÄidlo Vstup, zavolÃ¡ sa opÃ¤Å¥ FormCreate, ÄÃ­m sa naÄÃ­tajÃº hodnoty z memo1
+<br>Pri kaÅ¾dej zmene TrackBar sa tieÅ¾ zavolÃ¡ FormCreate 
 Pozn. 2 
-<br>V èasovaèi nechávam narasta uhol alfa po jednom stupni ale osi netoèím, pre ne sa uhol alfa nemení
-<br>Pre obzvlášnenie som nezotieral obrazovku, aby rotovaním úseèky vzniklo rotaèné teleso
+<br>V ÄasovaÄi nechÃ¡vam narastaÅ¥ uhol alfa po jednom stupni ale osi netoÄÃ­m, pre ne sa uhol alfa nemenÃ­
+<br>Pre obzvlÃ¡Å¡nenie som nezotieral obrazovku, aby rotovanÃ­m ÃºseÄky vzniklo rotaÄnÃ© teleso
 <div style="width:750;backgroung-color:white; border-color:blue;border-width:3;border-style:outset; padding:5;margin:10">
 <div style="background-color:blue;color:white;">Unit1</div>
 <code><pre>
@@ -306,9 +306,9 @@ image1.Canvas.MoveTo(200,300);
 image1.Canvas.LineTo(xo,yo);
 
 alfa:=u1/180*3.1415;
-otoc(alfa,beta,x1,y1,z1,xo,yo);              // 1. bod úseèky
+otoc(alfa,beta,x1,y1,z1,xo,yo);              // 1. bod ÃºseÄky
 image1.Canvas.MoveTo(xo,yo);
-otoc(alfa,beta,x2,y2,z2,xo,yo);              // 1. bod úseèky
+otoc(alfa,beta,x2,y2,z2,xo,yo);              // 1. bod ÃºseÄky
 image1.Canvas.Pen.Width:=1;
 image1.Canvas.Pen.Color:=clred;
 image1.Canvas.LineTo(xo,yo);
@@ -317,26 +317,26 @@ image1.Canvas.Pen.Color:=clblack;
 end;
 </pre></code>
 </div> 	
-<br>Ukáka
+<br>UkÃ¡Å¾ka
 <div style="border-width:3;border-style:outset;width:740px;margin:10px;background-color:silver;">
    <div align="right" style="background-color:#3366ff; width:740px; padding:0;border-width:0;">
 	   <img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0"  onclick="window.clearInterval(window.tr4)";>
    </div>
   	<div style="background-color:silver; width:740px;" >
 <canvas width="700" height="500" id="platno" style="margin:6">
-   <br>Váš prohlíeè nepodporuje kreslenie. Animácie nebudú fungova - zvolte IE9, Mozilla alebo Chrome.<br>
+   <br>VÃ¡Å¡ prohlÃ­Å¾eÄ nepodporuje kreslenie. AnimÃ¡cie nebudÃº fungovaÅ¥ - zvolte IE9, Mozilla alebo Chrome.<br>
 </canvas>
 </div>
 <table><tr><td width="150">
 <input type="Button" value="Kresli" onclick="window.tr4=window.setInterval('kresli()',30);">
 <br><input type="Button" value="Beta+" onclick="beta+=1/180*Math.PI;">
 <br><input type="Button" value="Beta-" onclick="beta-=1/180*Math.PI;">
-<td>dolná plocha <input type="Checkbox" id="dolna_plocha" >
-	<br>horná plocha <input type="Checkbox" id="horna_plocha" >
-	<br>kresba osí <input type="Checkbox" id="os" >
+<td>dolnÃ¡ plocha <input type="Checkbox" id="dolna_plocha" >
+	<br>hornÃ¡ plocha <input type="Checkbox" id="horna_plocha" >
+	<br>kresba osÃ­ <input type="Checkbox" id="os" >
 </tr></table>	
 </div>
-<br>Zobrazenú kocku mono uchopením myšou otáèa
+<br>ZobrazenÃº kocku moÅ¾no uchopenÃ­m myÅ¡ou otÃ¡ÄaÅ¥
 <br>
 <div style="border-width:3;border-style:outset;width:740px;margin:10px;background-color:silver;">
    <div align="right" style="background-color:#3366ff; width:740px; padding:0;border-width:0;">
@@ -347,7 +347,7 @@ end;
 	   onmouseup="dole=0;alfa0=alfa2;beta0=beta2"
 	   onmousemove="myspohyb(event.pageX-this.offsetLeft,event.pageY-this.offsetTop);">
 <canvas width="700" height="500" id="platno2" style="margin:6" >
-   <br>Váš prohlíeè nepodporuje kreslenie. Animácie nebudú fungova - zvolte IE9, Mozilla alebo Chrome.<br>
+   <br>VÃ¡Å¡ prohlÃ­Å¾eÄ nepodporuje kreslenie. AnimÃ¡cie nebudÃº fungovaÅ¥ - zvolte IE9, Mozilla alebo Chrome.<br>
 </canvas>
 </div>
 

@@ -11,39 +11,39 @@
 <h3>Kreslenie</h3>
 <dl>
 <dt>Double Buffering
-<dd>Z programovania grafiky (najmä animácií) pod Builder poznáme príkaz 
+<dd>Z programovania grafiky (najmÃ¤ animÃ¡ciÃ­) pod Builder poznÃ¡me prÃ­kaz 
 	<br><code>DoubleBuffered=1;</code>,
-	<br>ktorı zabezpeèil, aby nám animácie neblikali. Myšlienka je v tom, e kreslenie nebeí priamo na obrazovku
-	ale len do buffra v pamäti a a po ukonèení celého kreslenia sa obraz ukáe (dáta sa nekopírujú, len karte sa povie, 
-	e dáta na zobrazenie má v buffri). V OpenGl som v úvodnıch "zaklínadlách"	dvojité bafrovanie zapol a vısledok kreslenia 
-	uvidíme, a keï dáme príkaz na prepnutie bafrov:
+	<br>ktorÃ½ zabezpeÄil, aby nÃ¡m animÃ¡cie neblikali. MyÅ¡lienka je v tom, Å¾e kreslenie nebeÅ¾Ã­ priamo na obrazovku
+	ale len do buffra v pamÃ¤ti a aÅ¾ po ukonÄenÃ­ celÃ©ho kreslenia sa obraz ukÃ¡Å¾e (dÃ¡ta sa nekopÃ­rujÃº, len karte sa povie, 
+	Å¾e dÃ¡ta na zobrazenie mÃ¡ v buffri). V OpenGl som v ÃºvodnÃ½ch "zaklÃ­nadlÃ¡ch"	dvojitÃ© bafrovanie zapol a vÃ½sledok kreslenia 
+	uvidÃ­me, aÅ¾ keÄ dÃ¡me prÃ­kaz na prepnutie bafrov:
 	<br><font color="Red" style="font-family:'Courier'">SwapBuffers(DC);</font>
-	<br>Tento príkaz bude vdy ukonèova kadé kreslenie.
-<dt>Kreslenie primitív
-<dd>Ak chceme kresli niektorú z primitív (elementárny grafickı objekt) pouijeme konštrukciu:
+	<br>Tento prÃ­kaz bude vÅ¾dy ukonÄovaÅ¥ kaÅ¾dÃ© kreslenie.
+<dt>Kreslenie primitÃ­v
+<dd>Ak chceme kresliÅ¥ niektorÃº z primitÃ­v (elementÃ¡rny grafickÃ½ objekt) pouÅ¾ijeme konÅ¡trukciu:
 	<pre>
-glBegin(zvolená_primitiva);
+glBegin(zvolenÃ¡_primitiva);
    ...
-	zadávanie súradníc a farieb zvoleného objektu
+	zadÃ¡vanie sÃºradnÃ­c a farieb zvolenÃ©ho objektu
 	...
 glEnd();	
 	</pre>
-	Budeme pouíva nasledovné primitiva:
-	<ul><li>GL_POINTS - kreslí body
-		<li>GL_LINES - kreslí èiary-úseèky
-		<li>GL_TRIANGLES - kreslí trojuholníky
-		<li>GL_LINE_STRIP - kreslí lomenú èiaru
-		<li>GL_LINE_LOOP - uzavretá lomená èiara
-		<li>GL_TRIANGLES - trojuholník (kadé tri vrcholy definujú jeden trojúholník)
-		<li>GL_TRIANGLE_FAN - vejáø z trojuholníkov
-		<li>GL_TRIANGLE_STRIP - pás trojuholníkov
-		<li>GL_QUADS - štvoruholníky (quadrilateral)
-		<li>GL_QUAD_STRIP - pás štvoruholníkov
-		<li>GL_POLYGON - polygony (len konvexné polygony s nepretínajúcimi sa hranami) 
+	Budeme pouÅ¾Ã­vaÅ¥ nasledovnÃ© primitiva:
+	<ul><li>GL_POINTS - kreslÃ­ body
+		<li>GL_LINES - kreslÃ­ Äiary-ÃºseÄky
+		<li>GL_TRIANGLES - kreslÃ­ trojuholnÃ­ky
+		<li>GL_LINE_STRIP - kreslÃ­ lomenÃº Äiaru
+		<li>GL_LINE_LOOP - uzavretÃ¡ lomenÃ¡ Äiara
+		<li>GL_TRIANGLES - trojuholnÃ­k (kaÅ¾dÃ© tri vrcholy definujÃº jeden trojÃºholnÃ­k)
+		<li>GL_TRIANGLE_FAN - vejÃ¡Å™ z trojuholnÃ­kov
+		<li>GL_TRIANGLE_STRIP - pÃ¡s trojuholnÃ­kov
+		<li>GL_QUADS - Å¡tvoruholnÃ­ky (quadrilateral)
+		<li>GL_QUAD_STRIP - pÃ¡s Å¡tvoruholnÃ­kov
+		<li>GL_POLYGON - polygony (len konvexnÃ© polygony s nepretÃ­najÃºcimi sa hranami) 
  	</ul>
-	Na vykreslenie obdånika leiaceho v rovine xy mono poui príkaz glRect(x1,y1,x2,y2);
-<dt>Súradnice
-<dd>Kadé primitivum je jednoznaène urèené postupnosou bodov. Body zadávame jednotlivo príkazom
+	Na vykreslenie obdÄºÅ¾nika leÅ¾iaceho v rovine xy moÅ¾no pouÅ¾iÅ¥ prÃ­kaz glRect(x1,y1,x2,y2);
+<dt>SÃºradnice
+<dd>KaÅ¾dÃ© primitivum je jednoznaÄne urÄenÃ© postupnosÅ¥ou bodov. Body zadÃ¡vame jednotlivo prÃ­kazom
 	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">GlVertex3f(suradnice_bodu);</font>
 	<br>(pre typ single = 4B)
 	<br>alebo
@@ -52,41 +52,41 @@ glEnd();
 	<br>alebo
 	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">GlVertex3i(suradnice_bodu);</font>
 	<br>(pre typ int = 4B)
-	<br>Súradnice mono zada 2 - pre dvojrozmernı priestor (GlVertex2f), alebo 3 - pre trojrozmernı oriestor (GlVertex2f),
-	<br>zadáva ich mono celımi alebo desatinnımi èíslami.
-	<br><br>V prípade úseèiek vdy dvojica bodov (2 príkazy GlVertex3f) tvorí úseèku
-		<br>V prípade 3-uholníka trojica vrchol vytvorí trojuholník a tak ïalej
-		<br>Prebıvajúce vrcholy sa ignorujú. 
-<dt>Hrúbka èiary
+	<br>SÃºradnice moÅ¾no zadaÅ¥ 2 - pre dvojrozmernÃ½ priestor (GlVertex2f), alebo 3 - pre trojrozmernÃ½ oriestor (GlVertex2f),
+	<br>zadÃ¡vaÅ¥ ich moÅ¾no celÃ½mi alebo desatinnÃ½mi ÄÃ­slami.
+	<br><br>V prÃ­pade ÃºseÄiek vÅ¾dy dvojica bodov (2 prÃ­kazy GlVertex3f) tvorÃ­ ÃºseÄku
+		<br>V prÃ­pade 3-uholnÃ­ka trojica vrchol vytvorÃ­ trojuholnÃ­k a tak Äalej
+		<br>PrebÃ½vajÃºce vrcholy sa ignorujÃº. 
+<dt>HrÃºbka Äiary
 <dd><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glLineWidth(hodnota);</font>
-	<br>Štandartná hrúbka je 1, ak zaokrúhlením je hrúbka menšia ako 1 je nastavená na 1. Celá èiara má rovnakú hrúbku.
+	<br>Å tandartnÃ¡ hrÃºbka je 1, ak zaokrÃºhlenÃ­m je hrÃºbka menÅ¡ia ako 1 je nastavenÃ¡ na 1. CelÃ¡ Äiara mÃ¡ rovnakÃº hrÃºbku.
 <dt>Farba
-<dd>Vkladaním príkazov na nastavenie farby urèíme farbu vrcholov umiestnenıch nišie v popise objektu. 
-Ak sú v objekte (stene) vrcholy s rovnakou farbou bude stena (èiara) jednofarebná, ak sú rôznej farby
-vznikne farebnı prechod
-Príkaz je tie vo viacerıch variantách
+<dd>VkladanÃ­m prÃ­kazov na nastavenie farby urÄÃ­me farbu vrcholov umiestnenÃ½ch niÅ¾Å¡ie v popise objektu. 
+Ak sÃº v objekte (stene) vrcholy s rovnakou farbou bude stena (Äiara) jednofarebnÃ¡, ak sÃº rÃ´znej farby
+vznikne farebnÃ½ prechod
+PrÃ­kaz je tieÅ¾ vo viacerÃ½ch variantÃ¡ch
 	<br>font color="#cc0000" style="font-family:'Courier'; font-weight:700">glColor(r,g,b,p)</font>
-	<br>r,g,b - urèujú mnotvo farby v RGB modeli a p urèuje priesvitnos (nemusí by zadaná)
-	<br>parametre môu by všetky celé - vtedy volíme hodnoty od 0 po 255, alebo desatinné, tu zadávame hodnoty od 0 po 1
-	<br>Tie je moné u v mene príkazu urèi aké a ko¾ko parametrov zadáme
-	<br>glColor3f - zadávame 3 reálne èísla, glColor4i - zadávame 4 celé èísla 
-	<br>Príklady  
-	<br>glColor3f(1,0,0) - kriklavá èervená
-	<br>glColor3i(1,0,0) - èierna s nádychom do èervena
-	<br>Ak chceme pouíva priesvitné farby, musíme priesvitnos aktivova príkazom (v našom projekte je nastavená):
+	<br>r,g,b - urÄujÃº mnoÅ¾tvo farby v RGB modeli a p urÄuje priesvitnosÅ¥ (nemusÃ­ byÅ¥ zadanÃ¡)
+	<br>parametre mÃ´Å¾u byÅ¥ vÅ¡etky celÃ© - vtedy volÃ­me hodnoty od 0 po 255, alebo desatinnÃ©, tu zadÃ¡vame hodnoty od 0 po 1
+	<br>TieÅ¾ je moÅ¾nÃ© uÅ¾ v mene prÃ­kazu urÄiÅ¥ akÃ© a koÄ¾ko parametrov zadÃ¡me
+	<br>glColor3f - zadÃ¡vame 3 reÃ¡lne ÄÃ­sla, glColor4i - zadÃ¡vame 4 celÃ© ÄÃ­sla 
+	<br>PrÃ­klady  
+	<br>glColor3f(1,0,0) - kriklavÃ¡ ÄervenÃ¡
+	<br>glColor3i(1,0,0) - Äierna s nÃ¡dychom do Äervena
+	<br>Ak chceme pouÅ¾Ã­vaÅ¥ priesvitnÃ© farby, musÃ­me priesvitnosÅ¥ aktivovaÅ¥ prÃ­kazom (v naÅ¡om projekte je nastavenÃ¡):
 	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">  glEnable(GL_BLEND);</font>
-	<br>a potom zvoli, èo sa má s farbami pri zmiešavaní udia, napr. môme zada toto: 
+	<br>a potom zvoliÅ¥, Äo sa mÃ¡ s farbami pri zmieÅ¡avanÃ­ udiaÅ¥, napr. mÃ´Å¾me zadaÅ¥ toto: 
 	<br><font color="#cc0000" style="font-family:'Courier'; font-weight:700">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);</font>
 	<br>
-<dt>Úlohy
-<dd><ul><li>Vykresli osi x a y tak aby ich hrúbka bola 3 a farba z poèiatku prechádzala zo ltej cez èervenú do modra
-		<li>Nakresli na osi x plot z palièiek hrúbky 5, poèet latiek plota bude 20 a medzera medzi palièkami bude rovná latke
-			<br>prvá palièka bude èervená, posledná modrá - tie medzi budú robi farebnı prechod
-		<li>Nakresli osi x,y a modrı trojuholník na súradniciach A=[-3,-3,-3], B=[+3,-3,-3], C=[0,3,0]
-			pridaj tlaèídko, ktoré zmení súradnice nasledovne:
-			<br>bodu A,B sa y súradnica zväèší o 0.2
-			<br>bodu C sa y súradnica zmenší o 0.2
-			<br>Vykresli novı trojuholník  	 
+<dt>Ãšlohy
+<dd><ul><li>Vykresli osi x a y tak aby ich hrÃºbka bola 3 a farba z poÄiatku prechÃ¡dzala zo Å¾ltej cez ÄervenÃº do modra
+		<li>Nakresli na osi x plot z paliÄiek hrÃºbky 5, poÄet latiek plota bude 20 a medzera medzi paliÄkami bude rovnÃ¡ latke
+			<br>prvÃ¡ paliÄka bude ÄervenÃ¡, poslednÃ¡ modrÃ¡ - tie medzi budÃº robiÅ¥ farebnÃ½ prechod
+		<li>Nakresli osi x,y a modrÃ½ trojuholnÃ­k na sÃºradniciach A=[-3,-3,-3], B=[+3,-3,-3], C=[0,3,0]
+			pridaj tlaÄÃ­dko, ktorÃ© zmenÃ­ sÃºradnice nasledovne:
+			<br>bodu A,B sa y sÃºradnica zvÃ¤ÄÅ¡Ã­ o 0.2
+			<br>bodu C sa y sÃºradnica zmenÅ¡Ã­ o 0.2
+			<br>Vykresli novÃ½ trojuholnÃ­k  	 
 	</ul>	
 </dl>
 </body>

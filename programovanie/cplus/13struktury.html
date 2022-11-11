@@ -5,67 +5,67 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <meta name="Content-language" content="sk">	
 	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
-	<title>Štruktúry - záznamy</title>
+	<title>Ĺ truktĂşry - zĂˇznamy</title>
 </head>
 
 <body>
-<dl><dt><font size="+1" color="Blue">Štruktúrovaný typ - záznamy</font>
-	<dd>Záznamy sa tu volajú štruktúry a je viac možností ako ich zadeklarovať. 
-		Štruktúry sú nehomogénne - každý prvok môže byť iného typu a má svoje meno.
+<dl><dt><font size="+1" color="Blue">Ĺ truktĂşrovanĂ˝ typ - zĂˇznamy</font>
+	<dd>ZĂˇznamy sa tu volajĂş ĹˇtruktĂşry a je viac moĹľnostĂ­ ako ich zadeklarovaĹĄ. 
+		Ĺ truktĂşry sĂş nehomogĂ©nne - kaĹľdĂ˝ prvok mĂ´Ĺľe byĹĄ inĂ©ho typu a mĂˇ svoje meno.
 		<ol>
-		<li>Nepomenovaná štruktúra
+		<li>NepomenovanĂˇ ĹˇtruktĂşra
 			<br> &nbsp; struct { int vyska;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;} jano, peter, duro
-			<br>vztvorí 3 premenné typu struc s položkami vyska, vaha
-			<br>žiadna ďalšia premenná nemôže byť toho typu, lebo štruktúra nemá meno
- 		<li>Pomenovaná štruktúra
+			<br>vztvorĂ­ 3 premennĂ© typu struc s poloĹľkami vyska, vaha
+			<br>Ĺľiadna ÄŹalĹˇia premennĂˇ nemĂ´Ĺľe byĹĄ toho typu, lebo ĹˇtruktĂşra nemĂˇ meno
+ 		<li>PomenovanĂˇ ĹˇtruktĂşra
 			<br> &nbsp; struct clovek { int vyska;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; } jano, peter
 			<br> &nbsp; struc clovek duro
-			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
-			<br>štruktúra má meno a môžu vznikať ďalšie premenné toho typu, pred každým názvom štruktúry musí byť slovo struc
-		<li>Vytvorený typ, nepomenovaný
+			<br>vytvorĂ­ 3 premennĂ© typu struc s poloĹľkami vyska, vaha
+			<br>ĹˇtruktĂşra mĂˇ meno a mĂ´Ĺľu vznikaĹĄ ÄŹalĹˇie premennĂ© toho typu, pred kaĹľdĂ˝m nĂˇzvom ĹˇtruktĂşry musĂ­ byĹĄ slovo struc
+		<li>VytvorenĂ˝ typ, nepomenovanĂ˝
 			<br> &nbsp; typedef struct  { int vyska;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;} clovek
 			<br> &nbsp;  clovek jano, peter, duro
-			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
-			<br>štruktúra má meno ale vo vnútri štruktúry ho ešte nepozná, pred každým názvom štruktúry sa už nepíše slovo struc
-		<li>Vytvorený typ, pomenovaný
+			<br>vytvorĂ­ 3 premennĂ© typu struc s poloĹľkami vyska, vaha
+			<br>ĹˇtruktĂşra mĂˇ meno ale vo vnĂştri ĹˇtruktĂşry ho eĹˇte nepoznĂˇ, pred kaĹľdĂ˝m nĂˇzvom ĹˇtruktĂşry sa uĹľ nepĂ­Ĺˇe slovo struc
+		<li>VytvorenĂ˝ typ, pomenovanĂ˝
 			<br> &nbsp; typedef struct CLOVEK { int vyska;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; int vaha;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp; struct CLOVEK *dalsi;
 			<br> &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;} clovek
 			<br> &nbsp;  clovek jano, peter, duro
-			<br>vytvorí 3 premenné typu struc s položkami vyska, vaha
-			<br>štruktúra má meno platné vnútri - CLOVEK, a meno platné navon - clovek
+			<br>vytvorĂ­ 3 premennĂ© typu struc s poloĹľkami vyska, vaha
+			<br>ĹˇtruktĂşra mĂˇ meno platnĂ© vnĂştri - CLOVEK, a meno platnĂ© navon - clovek
 		</ol>
-		My budeme výhradne používať 3. syntax, ktorý je aj pascalu najbližší.
+		My budeme vĂ˝hradne pouĹľĂ­vaĹĄ 3. syntax, ktorĂ˝ je aj pascalu najbliĹľĹˇĂ­.
 		<br>Pozn.:
-		<br> &nbsp; - funkcia môže byť typu struct
-		<br> &nbsp; - parametre funkcie môžu byť typu struct
-		<br> &nbsp; - premenná typu struct môže byť na ľavej strane priradenia
-		<br>Prístup ku položkám:
-		<br> &nbsp; - statické - jano.vyska
-		<br> &nbsp; - dynamické - (*jano).vyska, alebo jano -&gt;vyska
+		<br> &nbsp; - funkcia mĂ´Ĺľe byĹĄ typu struct
+		<br> &nbsp; - parametre funkcie mĂ´Ĺľu byĹĄ typu struct
+		<br> &nbsp; - premennĂˇ typu struct mĂ´Ĺľe byĹĄ na Äľavej strane priradenia
+		<br>PrĂ­stup ku poloĹľkĂˇm:
+		<br> &nbsp; - statickĂ© - jano.vyska
+		<br> &nbsp; - dynamickĂ© - (*jano).vyska, alebo jano -&gt;vyska
 		<br>
-		<br>Inicializácia:
-		<br> &nbsp; - položky štruktúry nemožno inicializovať
-		<br> &nbsp; - celú štruktúru možno inicializovať vymenovaním hodnôt v zátvorkách {}
+		<br>InicializĂˇcia:
+		<br> &nbsp; - poloĹľky ĹˇtruktĂşry nemoĹľno inicializovaĹĄ
+		<br> &nbsp; - celĂş ĹˇtruktĂşru moĹľno inicializovaĹĄ vymenovanĂ­m hodnĂ´t v zĂˇtvorkĂˇch {}
 		<br>
-		<br>Špeciality:
-		<br> &nbsp; - je možné zadefinovať aj bitové štruktúru
+		<br>Ĺ peciality:
+		<br> &nbsp; - je moĹľnĂ© zadefinovaĹĄ aj bitovĂ© ĹˇtruktĂşru
 		<br> &nbsp; typedef {
 		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int b1:1;
 		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int b2_5:4;
 		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int b6_8:3;
 		<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}
 		<br>
-		<br>Úlohy:
+		<br>Ăšlohy:
 		<ol>
-		<li>Vytvorte štruktúru komplex, a vytvorte podprogramy na abs, súčet, rozdiel, súčin, podiel a tlač
+		<li>Vytvorte ĹˇtruktĂşru komplex, a vytvorte podprogramy na abs, sĂşÄŤet, rozdiel, sĂşÄŤin, podiel a tlaÄŤ
 		</ol>
 </dl>
 

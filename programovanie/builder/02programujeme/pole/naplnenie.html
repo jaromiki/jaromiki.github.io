@@ -2,157 +2,157 @@
 <head>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <meta name="Content-language" content="sk">	
-	 <meta name="autor" content="RNDr. Jaroslav Mikuláš">	
+	 <meta name="autor" content="RNDr. Jaroslav MikulĂˇĹˇ">	
  	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
 	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
 </head>
 
 <body>
-<dl><dt class=main>Naplnenie poľa
-	<dd>Základná činnosť (aby sme mohli prejsť na "vznešenejšie" úlohy s poľom, musíme zvládnuť úlohu, ako to množstvo údajov do poľa zapísať).
-		V praxi sa stretávame s nasledujúcimi možnosťami:
-		<ul><li>naklepanie všetkých položiek do mema
-			<li>postupné pridávanie položiek poľa cez Edit
-			<li><a href="#inputbox">postupné pridávanie položiek poľa cez InputBox</a>
-			<li><a href="#nahoda">náhodný vstup</a>
-			<li><a href="#postupnost">položky poľa sú dané postupnosťou</a>
-			<li><a href="#txt">Vstup celého poľa z textového súboru</a>
+<dl><dt class=main>Naplnenie poÄľa
+	<dd>ZĂˇkladnĂˇ ÄŤinnosĹĄ (aby sme mohli prejsĹĄ na "vzneĹˇenejĹˇie" Ăşlohy s poÄľom, musĂ­me zvlĂˇdnuĹĄ Ăşlohu, ako to mnoĹľstvo Ăşdajov do poÄľa zapĂ­saĹĄ).
+		V praxi sa stretĂˇvame s nasledujĂşcimi moĹľnosĹĄami:
+		<ul><li>naklepanie vĹˇetkĂ˝ch poloĹľiek do mema
+			<li>postupnĂ© pridĂˇvanie poloĹľiek poÄľa cez Edit
+			<li><a href="#inputbox">postupnĂ© pridĂˇvanie poloĹľiek poÄľa cez InputBox</a>
+			<li><a href="#nahoda">nĂˇhodnĂ˝ vstup</a>
+			<li><a href="#postupnost">poloĹľky poÄľa sĂş danĂ© postupnosĹĄou</a>
+			<li><a href="#txt">Vstup celĂ©ho poÄľa z textovĂ©ho sĂşboru</a>
 		</ul>	
 	<dl>
-	<dt>Vstup z klávesnice
-	<dd>Pre malé polia je možné zadávať vstupy aj klepaním - užívateľ naklepe prvky poľa. Asi najjednoduchšou cestou je vložiť
-		pre vstup objekt Memo a užívateľ naklepe čísla do riadkov Mema (každé číslo na jednom riadku). Do poľa potom prvky preberieme nasledovne:
+	<dt>Vstup z klĂˇvesnice
+	<dd>Pre malĂ© polia je moĹľnĂ© zadĂˇvaĹĄ vstupy aj klepanĂ­m - uĹľĂ­vateÄľ naklepe prvky poÄľa. Asi najjednoduchĹˇou cestou je vloĹľiĹĄ
+		pre vstup objekt Memo a uĹľĂ­vateÄľ naklepe ÄŤĂ­sla do riadkov Mema (kaĹľdĂ© ÄŤĂ­slo na jednom riadku). Do poÄľa potom prvky preberieme nasledovne:
 		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>naplnenie poľa z mema:</I></tr>
+		<TR><TD bgColor=#99cccc><I>naplnenie poÄľa z mema:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<code>for(i = 1;i&lt;Memo1->Lines->Count; i++) pole[i] := StrToIntDef(Memo1.Lines[i-1],0); 
 			</code></tr>
 		</table>
-		<br>Niekedy je výhodnejšie vstup do poľa riešiť tlačídkom <b>Pridaj</b>, kde po stlačení sa zoberie číslo z Editu 
-			a dopíše na koniec poľa (aktuálny počet čísel v poli nech je zapísaný napr. v premennej N):
+		<br>Niekedy je vĂ˝hodnejĹˇie vstup do poÄľa rieĹˇiĹĄ tlaÄŤĂ­dkom <b>Pridaj</b>, kde po stlaÄŤenĂ­ sa zoberie ÄŤĂ­slo z Editu 
+			a dopĂ­Ĺˇe na koniec poÄľa (aktuĂˇlny poÄŤet ÄŤĂ­sel v poli nech je zapĂ­sanĂ˝ napr. v premennej N):
 		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>naplnenie poľa z Editu:</I></tr>
+		<TR><TD bgColor=#99cccc><I>naplnenie poÄľa z Editu:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
-			<code>n++; &nbsp; &nbsp; &nbsp;//zväčšíme počet prvkov v poli
-			<br>pole[n]:=StrToIntDef(Edit1.Text,0); &nbsp; &nbsp; &nbsp;//zapíšeme pridané číslo</code></tr>
+			<code>n++; &nbsp; &nbsp; &nbsp;//zvĂ¤ÄŤĹˇĂ­me poÄŤet prvkov v poli
+			<br>pole[n]:=StrToIntDef(Edit1.Text,0); &nbsp; &nbsp; &nbsp;//zapĂ­Ĺˇeme pridanĂ© ÄŤĂ­slo</code></tr>
 		</table>
 <!--                                 I N P U T   B O X                                     -->	
-		<br><a name="#inputbox">Pridávané</a> číslo možno získať aj pomocou modálneho okna InputBox (nemusíme mať na ploche pohodený Edit)
+		<br><a name="#inputbox">PridĂˇvanĂ©</a> ÄŤĂ­slo moĹľno zĂ­skaĹĄ aj pomocou modĂˇlneho okna InputBox (nemusĂ­me maĹĄ na ploche pohodenĂ˝ Edit)
 		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>naplnenie poľa z InputBoxu:</I></tr>
+		<TR><TD bgColor=#99cccc><I>naplnenie poÄľa z InputBoxu:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
-			<code>n++; &nbsp; &nbsp; &nbsp;//zväčšíme počet prvkov v poli
-				<br>pole[n]:=StrToIntDef(InputBox("Vstup čísla", "Nový prvok do poľa:", "0"),0); &nbsp; &nbsp; &nbsp;//zapíšeme pridané číslo
+			<code>n++; &nbsp; &nbsp; &nbsp;//zvĂ¤ÄŤĹˇĂ­me poÄŤet prvkov v poli
+				<br>pole[n]:=StrToIntDef(InputBox("Vstup ÄŤĂ­sla", "NovĂ˝ prvok do poÄľa:", "0"),0); &nbsp; &nbsp; &nbsp;//zapĂ­Ĺˇeme pridanĂ© ÄŤĂ­slo
 			</code></tr>
 		</table>
 <!--                                   N A H O D A                                    -->	
-	<dt><a name="nahoda"> </a>Náhodný vstup
-	<dd>V praxi sa často nevyskytuje, ale v školských príkladoch je potrebný. Pokúsim sa vysvetliť prečo. 
-		<br>Chceme urobiť program na vyhodnotenie súťaže skoku do diaľky, kde maximálny počet súťažiacich je 1000. V praxi
-			sa dĺžky skokov budú v nejakej forme programu zadávať (napríklad naklepaním do Mema alebo txt súboru) a program si ich
-			odtade do poľa preberie. Pre školské (ladiace) účely ale nie je vhodné, aby sme tých cca 1000 hodnôt klepali, lebo
-			väčšina času určeného na programovanie by sa neúčelne minula len na klepanie čísel. Tak necháme počítač, aby si jednotlivé skoky
-			súťažiacich počítač náhodne vymyslel a my tie vymyslené čísla zapíšeme do poľa a potom budeme hľadať napr. toho víťaza súťaže.
-			Takto môžme overiť, že je program na vyhodnotenie súťaže správny a vie nájsť víťaza.
-			Potrebujeme k tomu príkaz na vymýšlanie čísel <b>Random()</b> (Treba ale zistiť v ktorej knižnici sa príkaz Random() nachádza a pripnúť túto knižnicu.
+	<dt><a name="nahoda"> </a>NĂˇhodnĂ˝ vstup
+	<dd>V praxi sa ÄŤasto nevyskytuje, ale v ĹˇkolskĂ˝ch prĂ­kladoch je potrebnĂ˝. PokĂşsim sa vysvetliĹĄ preÄŤo. 
+		<br>Chceme urobiĹĄ program na vyhodnotenie sĂşĹĄaĹľe skoku do diaÄľky, kde maximĂˇlny poÄŤet sĂşĹĄaĹľiacich je 1000. V praxi
+			sa dÄşĹľky skokov budĂş v nejakej forme programu zadĂˇvaĹĄ (naprĂ­klad naklepanĂ­m do Mema alebo txt sĂşboru) a program si ich
+			odtade do poÄľa preberie. Pre ĹˇkolskĂ© (ladiace) ĂşÄŤely ale nie je vhodnĂ©, aby sme tĂ˝ch cca 1000 hodnĂ´t klepali, lebo
+			vĂ¤ÄŤĹˇina ÄŤasu urÄŤenĂ©ho na programovanie by sa neĂşÄŤelne minula len na klepanie ÄŤĂ­sel. Tak nechĂˇme poÄŤĂ­taÄŤ, aby si jednotlivĂ© skoky
+			sĂşĹĄaĹľiacich poÄŤĂ­taÄŤ nĂˇhodne vymyslel a my tie vymyslenĂ© ÄŤĂ­sla zapĂ­Ĺˇeme do poÄľa a potom budeme hÄľadaĹĄ napr. toho vĂ­ĹĄaza sĂşĹĄaĹľe.
+			Takto mĂ´Ĺľme overiĹĄ, Ĺľe je program na vyhodnotenie sĂşĹĄaĹľe sprĂˇvny a vie nĂˇjsĹĄ vĂ­ĹĄaza.
+			Potrebujeme k tomu prĂ­kaz na vymĂ˝Ĺˇlanie ÄŤĂ­sel <b>Random()</b> (Treba ale zistiĹĄ v ktorej kniĹľnici sa prĂ­kaz Random() nachĂˇdza a pripnĂşĹĄ tĂşto kniĹľnicu.
 			<TABLE cellSpacing=0  bgColor=white border=1> 
-			<TR><TD bgColor=#99cccc><I>naplnenie poľa náhodnými číslami z intervalu &lt;a,b&gt;:</I></tr>
+			<TR><TD bgColor=#99cccc><I>naplnenie poÄľa nĂˇhodnĂ˝mi ÄŤĂ­slami z intervalu &lt;a,b&gt;:</I></tr>
 			<TR><TD style="padding:5" vAlign=top>
-				<code>for(i=1; i&lt; N; i++) pole[i] = a+Random(b-a+1); &nbsp; &nbsp; &nbsp;//kde N je simulovaný počet súťažiacich</code></tr>
+				<code>for(i=1; i&lt; N; i++) pole[i] = a+Random(b-a+1); &nbsp; &nbsp; &nbsp;//kde N je simulovanĂ˝ poÄŤet sĂşĹĄaĹľiacich</code></tr>
 			</table>
-			Podobne ako v prípade, kde dáta do poľa zadával užívateľ, aj tu môžme riešiť napĺňanie poľa postupným pridávaním čísel (napr. tlačídkom Pridaj). 
-			Nech aktuálny počet čísel (skokanov) máme v premennej <b>N</b>, potom pridanie nového čísla (skoku) sa zrealizuje nasledovne:
+			Podobne ako v prĂ­pade, kde dĂˇta do poÄľa zadĂˇval uĹľĂ­vateÄľ, aj tu mĂ´Ĺľme rieĹˇiĹĄ napÄşĹanie poÄľa postupnĂ˝m pridĂˇvanĂ­m ÄŤĂ­sel (napr. tlaÄŤĂ­dkom Pridaj). 
+			Nech aktuĂˇlny poÄŤet ÄŤĂ­sel (skokanov) mĂˇme v premennej <b>N</b>, potom pridanie novĂ©ho ÄŤĂ­sla (skoku) sa zrealizuje nasledovne:
 			<TABLE cellSpacing=0  bgColor=white border=1> 
-			<TR><TD bgColor=#99cccc><I>pridanie náhodného čísla do poľa:</I></tr>
+			<TR><TD bgColor=#99cccc><I>pridanie nĂˇhodnĂ©ho ÄŤĂ­sla do poÄľa:</I></tr>
 			<TR><TD style="padding:5" vAlign=top>
-				<code><br>n++; &nbsp; &nbsp; &nbsp;//zväčšíme počet prvkov v poli
-				<br>pole[n] := a++Random(b-a+1); &nbsp; &nbsp; &nbsp;//vymyslíme nové číslo a zapíšeme</code></tr>
+				<code><br>n++; &nbsp; &nbsp; &nbsp;//zvĂ¤ÄŤĹˇĂ­me poÄŤet prvkov v poli
+				<br>pole[n] := a++Random(b-a+1); &nbsp; &nbsp; &nbsp;//vymyslĂ­me novĂ© ÄŤĂ­slo a zapĂ­Ĺˇeme</code></tr>
 			</table>
 <!--                                   P O S T U P N O S T                          -->
-	<dt><a name="postupnost"> </a>Naplnenie poľa postupnosťou
-	<dd>Tiež ide o prípad, kedy čísla zapísané v poli nezadáva užívateľ, ale tvorí ich počítač. Napr. chceme aby všetky prvky poľa mali 
-		hodnotu 5. Táto úloha je najjednoduhšia a realizácia je nasledovná:
+	<dt><a name="postupnost"> </a>Naplnenie poÄľa postupnosĹĄou
+	<dd>TieĹľ ide o prĂ­pad, kedy ÄŤĂ­sla zapĂ­sanĂ© v poli nezadĂˇva uĹľĂ­vateÄľ, ale tvorĂ­ ich poÄŤĂ­taÄŤ. Napr. chceme aby vĹˇetky prvky poÄľa mali 
+		hodnotu 5. TĂˇto Ăşloha je najjednoduhĹˇia a realizĂˇcia je nasledovnĂˇ:
 		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>naplnenie poľa rovnakými hodnotami:</I></tr>
+		<TR><TD bgColor=#99cccc><I>naplnenie poÄľa rovnakĂ˝mi hodnotami:</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
-			<code>for(i=1; i&lt; N; i++) pole[i] = 5; &nbsp; &nbsp; &nbsp;//kde N je požadovaný počet čísel v poli</code></tr>
+			<code>for(i=1; i&lt; N; i++) pole[i] = 5; &nbsp; &nbsp; &nbsp;//kde N je poĹľadovanĂ˝ poÄŤet ÄŤĂ­sel v poli</code></tr>
 		</table>
-		<br>Teraz skúsme riešiť "ťažšiu" úlohu, keď v poli nemajú byť rovnaké čísla. 
-		<br>Požadovaná postupnosť môže byť zadaná vzorcom, alebo vypísaním niekoľkých prvých čísel postupnosti a programátor má "uhádnuť" ako 
-			vyzerajú ďalšie (viem, nie je to úplne "košér", ale učiteľ často nechce vzorec, ktorým je postupnosť tvorená žiakom prezradiť, lebo znalosť vzorca 
-			by úlohu veľmi uľahčila).
-		<br>Nech požadovaná postupnosť vyzerá nasledovne:
+		<br>Teraz skĂşsme rieĹˇiĹĄ "ĹĄaĹľĹˇiu" Ăşlohu, keÄŹ v poli nemajĂş byĹĄ rovnakĂ© ÄŤĂ­sla. 
+		<br>PoĹľadovanĂˇ postupnosĹĄ mĂ´Ĺľe byĹĄ zadanĂˇ vzorcom, alebo vypĂ­sanĂ­m niekoÄľkĂ˝ch prvĂ˝ch ÄŤĂ­sel postupnosti a programĂˇtor mĂˇ "uhĂˇdnuĹĄ" ako 
+			vyzerajĂş ÄŹalĹˇie (viem, nie je to Ăşplne "koĹˇĂ©r", ale uÄŤiteÄľ ÄŤasto nechce vzorec, ktorĂ˝m je postupnosĹĄ tvorenĂˇ Ĺľiakom prezradiĹĄ, lebo znalosĹĄ vzorca 
+			by Ăşlohu veÄľmi uÄľahÄŤila).
+		<br>Nech poĹľadovanĂˇ postupnosĹĄ vyzerĂˇ nasledovne:
 		<br>1, 2, 3, 4, ..., N-1, N
-		<br>inak povedané v "chlieviku" 1 má bývať číslo 1, v "chlieviku" 2 má bývať číslo 2, atď
-		<br>(vidíte, že aj ja som učiteľ, lebo som vám postupnosť zadal výpisom a nie vzorcom, lebo ten vzorec je to, čo žiak potrebuje, aby to dobre naprogramoval)
-		<br>Na danú postupnosť možno použiť (vymyslieť) dva vzorce (postupy)
-		<ul><li>a<sub>i</sub> = i, hodnota i-teho prvku postupnosti je zadaná funkciou s premennou i
-			<li>a<sub>i</sub> = a<sub>i-1</sub> +1, hodnota i-teho prvku postupnosti je zadaná pomocou predošlých prvkov postupnosti
-				<br>niekoľko prvých prvkov postupnosti potom musí byť zadaných hodnotou (vzorcom neobsahujúcim predošlé prvky)
-				<br>v tomto prípade a<sub>1</sub> = 1
-			<li>sú postupnosti, kde poznáme vzorec, ktorý obsahuje aj predošlé hodnoty postupnosti aj premennú i
+		<br>inak povedanĂ© v "chlieviku" 1 mĂˇ bĂ˝vaĹĄ ÄŤĂ­slo 1, v "chlieviku" 2 mĂˇ bĂ˝vaĹĄ ÄŤĂ­slo 2, atÄŹ
+		<br>(vidĂ­te, Ĺľe aj ja som uÄŤiteÄľ, lebo som vĂˇm postupnosĹĄ zadal vĂ˝pisom a nie vzorcom, lebo ten vzorec je to, ÄŤo Ĺľiak potrebuje, aby to dobre naprogramoval)
+		<br>Na danĂş postupnosĹĄ moĹľno pouĹľiĹĄ (vymyslieĹĄ) dva vzorce (postupy)
+		<ul><li>a<sub>i</sub> = i, hodnota i-teho prvku postupnosti je zadanĂˇ funkciou s premennou i
+			<li>a<sub>i</sub> = a<sub>i-1</sub> +1, hodnota i-teho prvku postupnosti je zadanĂˇ pomocou predoĹˇlĂ˝ch prvkov postupnosti
+				<br>niekoÄľko prvĂ˝ch prvkov postupnosti potom musĂ­ byĹĄ zadanĂ˝ch hodnotou (vzorcom neobsahujĂşcim predoĹˇlĂ© prvky)
+				<br>v tomto prĂ­pade a<sub>1</sub> = 1
+			<li>sĂş postupnosti, kde poznĂˇme vzorec, ktorĂ˝ obsahuje aj predoĹˇlĂ© hodnoty postupnosti aj premennĂş i
 		</ul>
-		Keďže tu vzorec nie je zadaný, záleží na programátorovi, ktorý vzorec ho napadne, resp. ktorý bude aplikovať na úlohu.
+		KeÄŹĹľe tu vzorec nie je zadanĂ˝, zĂˇleĹľĂ­ na programĂˇtorovi, ktorĂ˝ vzorec ho napadne, resp. ktorĂ˝ bude aplikovaĹĄ na Ăşlohu.
 		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>naplnenie poľa postupnosťou a<sub>i</sub> = i </I></tr>
+		<TR><TD bgColor=#99cccc><I>naplnenie poÄľa postupnosĹĄou a<sub>i</sub> = i </I></tr>
 		<TR><TD style="padding:5" vAlign=top>
-			<code>for(i=1; i&lt; N; i++) pole[i] := i; &nbsp; &nbsp; &nbsp;//vlastne len prepíšeme vzorec do programu</code></tr>
+			<code>for(i=1; i&lt; N; i++) pole[i] := i; &nbsp; &nbsp; &nbsp;//vlastne len prepĂ­Ĺˇeme vzorec do programu</code></tr>
 		</table>
 		<TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>naplnenie poľa postupnosťou a<sub>i</sub> = a<sub>i-1</sub> + 1</I></tr>
+		<TR><TD bgColor=#99cccc><I>naplnenie poÄľa postupnosĹĄou a<sub>i</sub> = a<sub>i-1</sub> + 1</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<code>a[1] := 1;
-			<br>for(i=2; i&lt; N; i++) pole[i] := pole[i-1] +1; &nbsp; &nbsp; &nbsp;//začíname od 2 lebo prvý "chlievik" sme vybavili pred cyklom</code></tr>
+			<br>for(i=2; i&lt; N; i++) pole[i] := pole[i-1] +1; &nbsp; &nbsp; &nbsp;//zaÄŤĂ­name od 2 lebo prvĂ˝ "chlievik" sme vybavili pred cyklom</code></tr>
 		</table>
 		<dl><dt>Pozn.
-			<dd>Všimnime si v druhom príklade, že tie prvky, ktoré nemajú dostatok predchodcov aby mohli byť vypočítané podľa vzorca,
-				sú zadané pred cyklom hodnotou.
-				<br>Cyklus ide od poradového čísla, od ktorého sa už vzorec dá použiť .
-		<dt>Ukážky postupností
-		<dd>Ukážem tento postup ešte na postupnosti:
+			<dd>VĹˇimnime si v druhom prĂ­klade, Ĺľe tie prvky, ktorĂ© nemajĂş dostatok predchodcov aby mohli byĹĄ vypoÄŤĂ­tanĂ© podÄľa vzorca,
+				sĂş zadanĂ© pred cyklom hodnotou.
+				<br>Cyklus ide od poradovĂ©ho ÄŤĂ­sla, od ktorĂ©ho sa uĹľ vzorec dĂˇ pouĹľiĹĄ .
+		<dt>UkĂˇĹľky postupnostĂ­
+		<dd>UkĂˇĹľem tento postup eĹˇte na postupnosti:
 			<br>1, 4, 9, 16, 25, ...
-			<br>pre túto postupnosť "ľahko" nájdeme vzore a<sub>i</sub> = i<sup>2</sup>, 
-				ale nájsť vzorec ako vypočítať a<sub>i</sub> podľa predchodcov
-				nie je také ľahké (netvrdím že sa to nedá, matematicky zručnejší odhalia vzorec a<sub>i</sub>=a<sub>i-1</sub> + 2i-1)
-				Naplnenie poľa bude nasledovné:
+			<br>pre tĂşto postupnosĹĄ "Äľahko" nĂˇjdeme vzore a<sub>i</sub> = i<sup>2</sup>, 
+				ale nĂˇjsĹĄ vzorec ako vypoÄŤĂ­taĹĄ a<sub>i</sub> podÄľa predchodcov
+				nie je takĂ© ÄľahkĂ© (netvrdĂ­m Ĺľe sa to nedĂˇ, matematicky zruÄŤnejĹˇĂ­ odhalia vzorec a<sub>i</sub>=a<sub>i-1</sub> + 2i-1)
+				Naplnenie poÄľa bude nasledovnĂ©:
 				<TABLE cellSpacing=0  bgColor=white border=1> 
-				<TR><TD bgColor=#99cccc><I>naplnenie poľa postupnosťou a<sub>i</sub> = i<sup>2</sup> </I></tr>
+				<TR><TD bgColor=#99cccc><I>naplnenie poÄľa postupnosĹĄou a<sub>i</sub> = i<sup>2</sup> </I></tr>
 				<TR><TD style="padding:5" vAlign=top>
-					<code>for(i=1; i&lt; N; i++) pole[i] := i*i; &nbsp; &nbsp; &nbsp;//vlastne len prepíšeme vzorec do programu</code></tr>
+					<code>for(i=1; i&lt; N; i++) pole[i] := i*i; &nbsp; &nbsp; &nbsp;//vlastne len prepĂ­Ĺˇeme vzorec do programu</code></tr>
 				</table>
-			<br><br>Opačná situácia je napr. pri Fibonacciho postupnosti
+			<br><br>OpaÄŤnĂˇ situĂˇcia je napr. pri Fibonacciho postupnosti
 			<br>1, 1, 2, 3, 5, 8, 13, ...
-			<br>vzorec: a<sub>i</sub> = a<sub>i-1</sub> + a<sub>i-2</sub> je jasný, ale nájsť vzore a<sub>i</sub> = f(i) je úloha dosť matematicky náročná, 
-			tak ju nebudem ani robiť (na riešenie potrebujeme znalosť, ako sa riešia diferenčné rovnice).
-			<br>Naplnenie poľa bude nasledovné:
+			<br>vzorec: a<sub>i</sub> = a<sub>i-1</sub> + a<sub>i-2</sub> je jasnĂ˝, ale nĂˇjsĹĄ vzore a<sub>i</sub> = f(i) je Ăşloha dosĹĄ matematicky nĂˇroÄŤnĂˇ, 
+			tak ju nebudem ani robiĹĄ (na rieĹˇenie potrebujeme znalosĹĄ, ako sa rieĹˇia diferenÄŤnĂ© rovnice).
+			<br>Naplnenie poÄľa bude nasledovnĂ©:
 			<TABLE cellSpacing=0  bgColor=white border=1> 
-			<TR><TD bgColor=#99cccc><I>naplnenie poľa Fibonacciho postupnosťou a<sub>i</sub> = a<sub>i-1</sub> + a<sub>i-2</sub> </I></tr>
+			<TR><TD bgColor=#99cccc><I>naplnenie poÄľa Fibonacciho postupnosĹĄou a<sub>i</sub> = a<sub>i-1</sub> + a<sub>i-2</sub> </I></tr>
 			<TR><TD style="padding:5" vAlign=top>
-				<code>pole[1]=1; pole[2]=1; &nbsp; &nbsp; &nbsp;//až dva prvky sa nedajú rátať podľa vzorca
-				<br>for(i=3; i&lt; N; i++) pole[i] = pole[i-1]+pole[i-2]; &nbsp; &nbsp; &nbsp;//musíme začať až od trojky</code></tr>
+				<code>pole[1]=1; pole[2]=1; &nbsp; &nbsp; &nbsp;//aĹľ dva prvky sa nedajĂş rĂˇtaĹĄ podÄľa vzorca
+				<br>for(i=3; i&lt; N; i++) pole[i] = pole[i-1]+pole[i-2]; &nbsp; &nbsp; &nbsp;//musĂ­me zaÄŤaĹĄ aĹľ od trojky</code></tr>
 			</table>
 		</dl>
 <!--                             T X T   S U B O R Y                                -->
-	<dt><a name="txt"> </a>Naplnenie poľa z txt súboru
-	<dd>	Ak mám dáta v txt súbore môžem ich načítať napr. do Mema (pomocou metódy Mema ... Memo1->Lines->LoadFromFile()) a potom už postupujeme ako som
-		popísal v časti vstup z Mema. Tu budem popisovať spôsob priameho načítania údajov z txt súboru do poľa.  
-		<br>Tu nebudem popisovať ako zadeklarovať premennú na prácu s txt súborom ani ako súbor otvoriť na čítanie, to si čitateľ nájde v časti venovanej 
-		txt súborom. Ak si chcem vytvoriť textový súbor z ktorého budem čísla načítavať použijem buď vstavaný editor programu Builder alebo "Poznámkový blok".
-		<br>(napr. cez File -> New -> Other -> Text môžeme vytvoriť txt súbor, ktorý po naplnení zapíšeme na disk)
-		<br>Predpokladajme, že máme v súbore niekoľko čísel a chceme ich načítať do poľa. V týchto príkladoch neošetrujem prípady, že by dáta v txt súbore
-		boli nekorektné. Postup napĺňania poľa z txt súboru môže byť nasledovný:
+	<dt><a name="txt"> </a>Naplnenie poÄľa z txt sĂşboru
+	<dd>	Ak mĂˇm dĂˇta v txt sĂşbore mĂ´Ĺľem ich naÄŤĂ­taĹĄ napr. do Mema (pomocou metĂłdy Mema ... Memo1->Lines->LoadFromFile()) a potom uĹľ postupujeme ako som
+		popĂ­sal v ÄŤasti vstup z Mema. Tu budem popisovaĹĄ spĂ´sob priameho naÄŤĂ­tania Ăşdajov z txt sĂşboru do poÄľa.  
+		<br>Tu nebudem popisovaĹĄ ako zadeklarovaĹĄ premennĂş na prĂˇcu s txt sĂşborom ani ako sĂşbor otvoriĹĄ na ÄŤĂ­tanie, to si ÄŤitateÄľ nĂˇjde v ÄŤasti venovanej 
+		txt sĂşborom. Ak si chcem vytvoriĹĄ textovĂ˝ sĂşbor z ktorĂ©ho budem ÄŤĂ­sla naÄŤĂ­tavaĹĄ pouĹľijem buÄŹ vstavanĂ˝ editor programu Builder alebo "PoznĂˇmkovĂ˝ blok".
+		<br>(napr. cez File -> New -> Other -> Text mĂ´Ĺľeme vytvoriĹĄ txt sĂşbor, ktorĂ˝ po naplnenĂ­ zapĂ­Ĺˇeme na disk)
+		<br>Predpokladajme, Ĺľe mĂˇme v sĂşbore niekoÄľko ÄŤĂ­sel a chceme ich naÄŤĂ­taĹĄ do poÄľa. V tĂ˝chto prĂ­kladoch neoĹˇetrujem prĂ­pady, Ĺľe by dĂˇta v txt sĂşbore
+		boli nekorektnĂ©. Postup napÄşĹania poÄľa z txt sĂşboru mĂ´Ĺľe byĹĄ nasledovnĂ˝:
 			<TABLE cellSpacing=0  bgColor=white border=1> 
-			<TR><TD bgColor=#99cccc><I>naplnenie poľa z txt súboru</I></tr>
+			<TR><TD bgColor=#99cccc><I>naplnenie poÄľa z txt sĂşboru</I></tr>
 			<TR><TD style="padding:5" vAlign=top>
-			    <code>n=0; &nbsp; &nbsp; &nbsp;//po skončení bude v prem n počet načítaných čísiel
+			    <code>n=0; &nbsp; &nbsp; &nbsp;//po skonÄŤenĂ­ bude v prem n poÄŤet naÄŤĂ­tanĂ˝ch ÄŤĂ­siel
 				<br>while (fscanf(f,"%i\n",&pole[n])!=EOF) n++;
 				</code></tr>
 			</table>
-			Jednoduchšia situácia je, ak v txt súbore je v prvej vete zadaný počet čísel N a potom nasleduje N čísel. 
+			JednoduchĹˇia situĂˇcia je, ak v txt sĂşbore je v prvej vete zadanĂ˝ poÄŤet ÄŤĂ­sel N a potom nasleduje N ÄŤĂ­sel. 
 			<TABLE cellSpacing=0  bgColor=white border=1> 
-			<TR><TD bgColor=#99cccc><I>naplnenie poľa z txt súboru</I></tr>
+			<TR><TD bgColor=#99cccc><I>naplnenie poÄľa z txt sĂşboru</I></tr>
 			<TR><TD style="padding:5" vAlign=top>
-			    <code>fscanf(f,"%i\n",&n); &nbsp; &nbsp; &nbsp;//načítam počet čísel
+			    <code>fscanf(f,"%i\n",&n); &nbsp; &nbsp; &nbsp;//naÄŤĂ­tam poÄŤet ÄŤĂ­sel
 				<br>for(i=1; i&lt; N; i++) fscanf(f,"%i\n",&pole[i]); </code></tr>
 			</table>
 		 		

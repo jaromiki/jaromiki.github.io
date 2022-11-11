@@ -26,50 +26,50 @@
 <body>
 <h3>Kreslenie v PHP</h3>
 <dl><dt>Postup 
-	<dd>Aby sme mohli "kresli" v PHP potrebujeme ma nainštalovanú grafickú kninicu GD. Na väèšine serverov, kde beí PHP
-		(teda aj na našom) je grafická kninica nainštalovaná.
-		<br>Myšlienka je taká, e PHP súbor (napr. pokus.php) vie v pamäti vytvori  akoe súbor typu *.jpeg, *.png alebo *.gif 
-		a keï v dokumente html (napr. aa.html) sa zapíše odkaz na obrázok, kde do adresy zapíšeme názov PHP súboru, ktorı ten obrázok vytvorí.
-		Vıhodou je, e PHP súbor môe ma viacero parametrov, ktoré môu vytvára viacero variant obrázkov. 
-		Ak do adresného po¾a prehliadaèa zapíšeme takıto PHP súbor zobrazí sa len obrázok. Takto vytvorená "stránka" nemá iadny kód.
-		V èasti PHP kódu musia by vytvorené nasledovné èasti:
-		<ul><li><b>hlavièka</b> 
-				<br>header ("Content-type: image/png"); // na vloenie png obrázka
-				<br>header ("Content-type: image/gif"); // na vloenie gif obrázka
-				<br>header ("Content-type: image/jpeg"); // na vloenie jpeg obrázka
-				<br>zabezpeèí vytvorenie správneho obrázka
-			<li><b>vytvorenie obrázka v pamäti servera</b>
+	<dd>Aby sme mohli "kresliÅ¥" v PHP potrebujeme maÅ¥ nainÅ¡talovanÃº grafickÃº kniÅ¾nicu GD. Na vÃ¤ÄÅ¡ine serverov, kde beÅ¾Ã­ PHP
+		(teda aj na naÅ¡om) je grafickÃ¡ kniÅ¾nica nainÅ¡talovanÃ¡.
+		<br>MyÅ¡lienka je takÃ¡, Å¾e PHP sÃºbor (napr. pokus.php) vie v pamÃ¤ti vytvoriÅ¥  akoÅ¾e sÃºbor typu *.jpeg, *.png alebo *.gif 
+		a keÄ v dokumente html (napr. aa.html) sa zapÃ­Å¡e odkaz na obrÃ¡zok, kde do adresy zapÃ­Å¡eme nÃ¡zov PHP sÃºboru, ktorÃ½ ten obrÃ¡zok vytvorÃ­.
+		VÃ½hodou je, Å¾e PHP sÃºbor mÃ´Å¾e maÅ¥ viacero parametrov, ktorÃ© mÃ´Å¾u vytvÃ¡raÅ¥ viacero variant obrÃ¡zkov. 
+		Ak do adresnÃ©ho poÄ¾a prehliadaÄa zapÃ­Å¡eme takÃ½to PHP sÃºbor zobrazÃ­ sa len obrÃ¡zok. Takto vytvorenÃ¡ "strÃ¡nka" nemÃ¡ Å¾iadny kÃ³d.
+		V Äasti PHP kÃ³du musia byÅ¥ vytvorenÃ© nasledovnÃ© Äasti:
+		<ul><li><b>hlaviÄka</b> 
+				<br>header ("Content-type: image/png"); // na vloÅ¾enie png obrÃ¡zka
+				<br>header ("Content-type: image/gif"); // na vloÅ¾enie gif obrÃ¡zka
+				<br>header ("Content-type: image/jpeg"); // na vloÅ¾enie jpeg obrÃ¡zka
+				<br>zabezpeÄÃ­ vytvorenie sprÃ¡vneho obrÃ¡zka
+			<li><b>vytvorenie obrÃ¡zka v pamÃ¤ti servera</b>
 				<ul><li>$prem=ImageCreateTrueColor(int x_size, int y_size);
-						<br>vytvorí true color èierny obrázok s danımi rozmermi, ktorı v ïalších èastiach môme vylepšova. 
-					 	Kadı bod je odpamätanı 24 bitmi, takıto obrázok je ve¾mi nároènı na pamä
+						<br>vytvorÃ­ true color Äierny obrÃ¡zok s danÃ½mi rozmermi, ktorÃ½ v ÄalÅ¡Ã­ch Äastiach mÃ´Å¾me vylepÅ¡ovaÅ¥. 
+					 	KaÅ¾dÃ½ bod je odpamÃ¤tanÃ½ 24 bitmi, takÃ½to obrÃ¡zok je veÄ¾mi nÃ¡roÄnÃ½ na pamÃ¤Å¥
 					<li>$prem=ImageCreate(int x_size, int y_size);
-						<br>vytvorí true color èierny obrázok s danımi rozmermi, ktorı v ïalších èastiach môme vylepšova. 
-					 	Kadı bod je odpamätanı  8 bitmi, takıto obrázok môe z celej palety farieb poui maximálne 256 farieb,
-						pouité farby musia by zapísanı v tabu¾ke farieb.
+						<br>vytvorÃ­ true color Äierny obrÃ¡zok s danÃ½mi rozmermi, ktorÃ½ v ÄalÅ¡Ã­ch Äastiach mÃ´Å¾me vylepÅ¡ovaÅ¥. 
+					 	KaÅ¾dÃ½ bod je odpamÃ¤tanÃ½  8 bitmi, takÃ½to obrÃ¡zok mÃ´Å¾e z celej palety farieb pouÅ¾iÅ¥ maximÃ¡lne 256 farieb,
+						pouÅ¾itÃ© farby musia byÅ¥ zapÃ­sanÃ½ v tabuÄ¾ke farieb.
 				</ul>
-				Obrázky jpeg sú truecolor, gif pouívajú max 256 farieb (ve¾kos tabu¾ky je 256 riadkov)
-				<br>png obrázky môu by truecolor a tie môu pouíva indexovanú farbu, index farby môe by 1,2,4,8,16 bitov.	
-			<li><b>pridanie obsahu obrázku</b>
-				<br>Je ve¾a grafickıch objektov ktoré mono vklada do obrázka, základom pre indexované obrázky je ImageColoralLocate(),
-					lebo pouíva mono len farby zapísané do tabu¾ky pomocou tohto príkazu.
-			<li><b>vıstup obrázka do html dokumentu</b>
-				<br>Imagejpeg($prem) zapíše JPEG obrázok do html
-				<br>Imagepng($prem) zapíše JPEG obrázok do html
-				<br>Imagepng($prem) zapíše JPEG obrázok do html
-			<li><b>zrušenie obrázka</b>
+				ObrÃ¡zky jpeg sÃº truecolor, gif pouÅ¾Ã­vajÃº max 256 farieb (veÄ¾kosÅ¥ tabuÄ¾ky je 256 riadkov)
+				<br>png obrÃ¡zky mÃ´Å¾u byÅ¥ truecolor a tieÅ¾ mÃ´Å¾u pouÅ¾Ã­vaÅ¥ indexovanÃº farbu, index farby mÃ´Å¾e byÅ¥ 1,2,4,8,16 bitov.	
+			<li><b>pridanie obsahu obrÃ¡zku</b>
+				<br>Je veÄ¾a grafickÃ½ch objektov ktorÃ© moÅ¾no vkladaÅ¥ do obrÃ¡zka, zÃ¡kladom pre indexovanÃ© obrÃ¡zky je ImageColoralLocate(),
+					lebo pouÅ¾Ã­vaÅ¥ moÅ¾no len farby zapÃ­sanÃ© do tabuÄ¾ky pomocou tohto prÃ­kazu.
+			<li><b>vÃ½stup obrÃ¡zka do html dokumentu</b>
+				<br>Imagejpeg($prem) zapÃ­Å¡e JPEG obrÃ¡zok do html
+				<br>Imagepng($prem) zapÃ­Å¡e JPEG obrÃ¡zok do html
+				<br>Imagepng($prem) zapÃ­Å¡e JPEG obrÃ¡zok do html
+			<li><b>zruÅ¡enie obrÃ¡zka</b>
 				<br>imageDestroy($prem);
-				<br>Vztv8rané obrázky treba po odoslaní na stránku vymaza, inak môu zahlti server.
+				<br>Vztv8ranÃ© obrÃ¡zky treba po odoslanÃ­ na strÃ¡nku vymazaÅ¥, inak mÃ´Å¾u zahltiÅ¥ server.
 		</ul>		
-	<dt><b>Dôleité funkcie</b>
+	<dt><b>DÃ´leÅ¾itÃ© funkcie</b>
 	<dd>
-		<ul><li>Imagesx($prem)zistí šírku obrázku
-			<li>Imagesy($prem) zistí vıšku obrázku
+		<ul><li>Imagesx($prem)zistÃ­ Å¡Ã­rku obrÃ¡zku
+			<li>Imagesy($prem) zistÃ­ vÃ½Å¡ku obrÃ¡zku
 			<li>
-			<li>$farba=ImageColoralLocate($prem,$r,$g,$b) namieša farbu a pridá ju do tabu¾ky, jej hodnotu je mono odpamäta,
-				<br>nultá farba je pouitá ako pozadie obrázka
-			<li>ImageColorTransparent = ($prem,$farba) nastaví zadanú farbu (index) na priesvistnú. Je moné len pri jpeg a png.  	
-			<li>imagestring( $prem, $ve¾kos_fontu, $x, $y, $text, $farba) vypíše reazec horizontálne
-			<li>Imagestringup( $prem, $ve¾kos_fontu, $x, $y, $text, $farba) vypíše reazec vertikálne
+			<li>$farba=ImageColoralLocate($prem,$r,$g,$b) namieÅ¡a farbu a pridÃ¡ ju do tabuÄ¾ky, jej hodnotu je moÅ¾no odpamÃ¤taÅ¥,
+				<br>nultÃ¡ farba je pouÅ¾itÃ¡ ako pozadie obrÃ¡zka
+			<li>ImageColorTransparent = ($prem,$farba) nastavÃ­ zadanÃº farbu (index) na priesvistnÃº. Je moÅ¾nÃ© len pri jpeg a png.  	
+			<li>imagestring( $prem, $veÄ¾kosÅ¥_fontu, $x, $y, $text, $farba) vypÃ­Å¡e reÅ¥azec horizontÃ¡lne
+			<li>Imagestringup( $prem, $veÄ¾kosÅ¥_fontu, $x, $y, $text, $farba) vypÃ­Å¡e reÅ¥azec vertikÃ¡lne
 			<li>ImageSetPixel($prem,$x,$y,$farba)
 			<li>ImageLine($prem,$x1,$y1,$x2,$y2,$farba)
 			<li>ImageRectangle($prem,$x1,$y1,$x2,$y2,$farba)
@@ -78,35 +78,35 @@
  			<li>ImageFilledPolygon($prem,$body, $pocet,$farba)
 			<li>ImageEllipse($prem, $stredx,$stredy,$sirka,$vyska)
 			<li>ImageFilledEllipse($prem, $stredx,$stredy,$sirka,$vyska)
-			<li>imageArc($prem, $stredx, $stredy, $šírka, $vıška, $uhol1, $uhol2, $farba).
+			<li>imageArc($prem, $stredx, $stredy, $Å¡Ã­rka, $vÃ½Å¡ka, $uhol1, $uhol2, $farba).
 				<br> 
-			<li>imageFilledArc($prem, $stredx, $stredy, $šírka, $vıška, $uhol1, $uhol2, $farba,$stıl).
-				štıl:
-				<ul><li>IMG_ARC_PIE ... koláèovı vısek
-					<li>IMG_ARC_CHORD ... oblúk je nahradenı úseèkou
+			<li>imageFilledArc($prem, $stredx, $stredy, $Å¡Ã­rka, $vÃ½Å¡ka, $uhol1, $uhol2, $farba,$stÃ½l).
+				Å¡tÃ½l:
+				<ul><li>IMG_ARC_PIE ... kolÃ¡ÄovÃ½ vÃ½sek
+					<li>IMG_ARC_CHORD ... oblÃºk je nahradenÃ½ ÃºseÄkou
 					<li>IMG_ARC_EDGED
 					<li>IMG_ARC_NOFILL
 				</ul>	
-			<li>imageFill($prem,$x,$y,$farba)	vyplní útvar
+			<li>imageFill($prem,$x,$y,$farba)	vyplnÃ­ Ãºtvar
 			<li>imageFillToBorder($prem, $x,$y,$farba_border,$farba_vypln)
-			<li>int imageColorAt ( $prem, int x, int y) vráti index farby zo zadanıch súradníc
-			<li>int imageColorExact ($prem, int red, int green, int blue) vráti index zadanej farby (ak nie je v tabu¾ke vráti -1)
-			<li>bool imageColorSet ($prem, int index, int red, int green, int blue) zmení farbu so zadanım indexom
+			<li>int imageColorAt ( $prem, int x, int y) vrÃ¡ti index farby zo zadanÃ½ch sÃºradnÃ­c
+			<li>int imageColorExact ($prem, int red, int green, int blue) vrÃ¡ti index zadanej farby (ak nie je v tabuÄ¾ke vrÃ¡ti -1)
+			<li>bool imageColorSet ($prem, int index, int red, int green, int blue) zmenÃ­ farbu so zadanÃ½m indexom
 		</ul>	
-	<dt><b>Pouitie existujúcich obrázkov</b>
-	<dd>Môme meni existujúce obrázky
-		<ul><li>pridáva nové prvky - napr. text, èiary, plochy
-			<li>meni farby - existujúcemu obrázku môme prepisova tabu¾ku farieb
-			<li>môme hotovı obrázok "peèiatkova" do nášho obrázka
-			<li>vıplò èiar a plôch
+	<dt><b>PouÅ¾itie existujÃºcich obrÃ¡zkov</b>
+	<dd>MÃ´Å¾me meniÅ¥ existujÃºce obrÃ¡zky
+		<ul><li>pridÃ¡vaÅ¥ novÃ© prvky - napr. text, Äiary, plochy
+			<li>meniÅ¥ farby - existujÃºcemu obrÃ¡zku mÃ´Å¾me prepisovaÅ¥ tabuÄ¾ku farieb
+			<li>mÃ´Å¾me hotovÃ½ obrÃ¡zok "peÄiatkovaÅ¥" do nÃ¡Å¡ho obrÃ¡zka
+			<li>vÃ½plÅˆ Äiar a plÃ´ch
 		</ul>
-		Naèítanie existujúceho obrázka:
+		NaÄÃ­tanie existujÃºceho obrÃ¡zka:
 		<br>$obr= imageCreateFromPNG ( string filename )
 		<br>$obr= imageCreateFromJPEG ( string filename )
 		<br>$obr= imageCreateFromGIF ( string filename )
- 	<dt><b>štıl èiar</b>
+ 	<dt><b>Å¡tÃ½l Äiar</b>
 	<dd><table cellpadding="10" bgcolor="white">
-		<tr><th  bgcolor="White"  colspan="2"   >Hrúbka a farba èiary</tr>
+		<tr><th  bgcolor="White"  colspan="2"   >HrÃºbka a farba Äiary</tr>
 		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/ciara.php?farba=1&hrubka=1" alt="" name="ciaraHrubka" height="101" width="301" border="0"></td>
 					<td bgcolor="silver">
 						<form method="post" name="setThicknessForm">
@@ -126,7 +126,7 @@
 		</table>
 		<hr>
 		<table cellpadding="10" bgcolor="white">					
-		<tr><th  bgcolor="White"  colspan="2" >Èiara kreslená bodmi</tr>
+		<tr><th  bgcolor="White"  colspan="2" >ÄŒiara kreslenÃ¡ bodmi</tr>
 		<tr ><td align="center" height="180" bgcolor="#FFFFFF">
 		<img src="obr/ciara.php?style[]=4&style[]=4&style[]=0&style[]=0&style[]=5&style[]=5&style[]=0&style[]=0&hrubka=3" alt="" name="ciaraStyle" height="101" width="301" border="0"></td>
 					<td bgcolor="silver">
@@ -140,7 +140,7 @@
 		</table>			
 		<hr>
 		<table cellpadding="10" bgcolor="white">					
-		<tr><th  bgcolor="White"  colspan="2" >Èiara kreslená obrázkom<br>(obrázok ako tapeta)</tr>
+		<tr><th  bgcolor="White"  colspan="2" >ÄŒiara kreslenÃ¡ obrÃ¡zkom<br>(obrÃ¡zok ako tapeta)</tr>
 		<tr><td  bgcolor="White"  colspan="2" >
 											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
 												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
@@ -168,7 +168,7 @@
 		</table>			
 		<hr>
 		<table cellpadding="10" bgcolor="white">					
-		<tr><th  bgcolor="White"  colspan="2" >Èiara vyplnená obrázkom<br>(jeden obrázok sa ahá po èiare)</tr>
+		<tr><th  bgcolor="White"  colspan="2" >ÄŒiara vyplnenÃ¡ obrÃ¡zkom<br>(jeden obrÃ¡zok sa Å¥ahÃ¡ po Äiare)</tr>
 		<tr><td  bgcolor="White"  colspan="2" >
 											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
 												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
@@ -195,10 +195,10 @@
 					</td></tr>
 		</table>			
 
-	<dt><b>štıl vıplní</b>	
+	<dt><b>Å¡tÃ½l vÃ½plnÃ­</b>	
 	<dd>
 	<table cellpadding="10" bgcolor="white">
-		<tr><th  bgcolor="White"  colspan="2"   >Farba vıplne</tr>
+		<tr><th  bgcolor="White"  colspan="2"   >Farba vÃ½plne</tr>
 		<tr ><td align="center" height="180" bgcolor="#FFFFFF"><img src="obr/plocha.php?farba=1" alt="" name="plochaFarba" height="151" width="301" border="0"></td>
 					<td bgcolor="silver">
 						<form method="post" name="FarbaPlochaForm">
@@ -217,7 +217,7 @@
 		<hr>
 
 		<table cellpadding="10" bgcolor="white">					
-		<tr><th  bgcolor="White"  colspan="2" >Plocha kreslená bodmi</tr>
+		<tr><th  bgcolor="White"  colspan="2" >Plocha kreslenÃ¡ bodmi</tr>
 		<tr ><td align="center" height="180" bgcolor="#FFFFFF">
 		<img src="obr/plocha.php?style[]=4&style[]=4&style[]=0&style[]=0&style[]=5&style[]=5&style[]=0&style[]=0&hrubka=3" alt="" name="plochaStyle" height="151" width="301" border="0"></td>
 					<td bgcolor="silver">
@@ -231,7 +231,7 @@
 
 	
 		<table cellpadding="10" bgcolor="white">					
-		<tr><th  bgcolor="White"  colspan="2" >Vıplò kreslená obrázkom<br>(obrázok ako tapeta)</tr>
+		<tr><th  bgcolor="White"  colspan="2" >VÃ½plÅˆ kreslenÃ¡ obrÃ¡zkom<br>(obrÃ¡zok ako tapeta)</tr>
 		<tr><td  bgcolor="White"  colspan="2" >
 											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
 												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
@@ -263,7 +263,7 @@
 
 		<hr>
 		<table cellpadding="10" bgcolor="white">					
-		<tr><th  bgcolor="White"  colspan="2" >Plocha vyplnená obrázkom<br>(jeden obrázok sa ahá po èiare)</tr>
+		<tr><th  bgcolor="White"  colspan="2" >Plocha vyplnenÃ¡ obrÃ¡zkom<br>(jeden obrÃ¡zok sa Å¥ahÃ¡ po Äiare)</tr>
 		<tr><td  bgcolor="White"  colspan="2" >
 											<table  cellspacing="5" border="1" bgcolor="Aqua"><tr align="center">
 												 <td><img src="obr/cbrd.png" width="16" height="16" border="0" alt="">
@@ -288,13 +288,13 @@
 					</td></tr>
 		</table>			
 				
-	<dt><b>Vkladanie textu do obrázka</b>	
-	<dd>Aby sme mohli vklada text musíme si "zohna" nejaké fonty, pomocou ktorıch bude náš text potom zobrazovanı.
-	Ja som sa obmedzil na fonty *.ttf, ktoré sú súèasou Win a je ich pomerne ¾ahko aj zohna na internete. 
+	<dt><b>Vkladanie textu do obrÃ¡zka</b>	
+	<dd>Aby sme mohli vkladaÅ¥ text musÃ­me si "zohnaÅ¥" nejakÃ© fonty, pomocou ktorÃ½ch bude nÃ¡Å¡ text potom zobrazovanÃ½.
+	Ja som sa obmedzil na fonty *.ttf, ktorÃ© sÃº sÃºÄasÅ¥ou Win a je ich pomerne Ä¾ahko aj zohnaÅ¥ na internete. 
 	<dt>Funkcie
 	<dd>array imageTTFText  ( resource image, int size, int angle, int x, int y, int color, string fontfile, string text)
 		<br>array imageTTFBBox  ( int size, int angle, string fontfile, string text)
-		<br><br>obe funkcie vrátia 8-prvkové pole, kde sú zapísané súradnice bodov ¼D-PD-PH-¼H, prvá funkcia navxše ten text aj zobrazí. 
+		<br><br>obe funkcie vrÃ¡tia 8-prvkovÃ© pole, kde sÃº zapÃ­sanÃ© sÃºradnice bodov Ä½D-PD-PH-Ä½H, prvÃ¡ funkcia navxÅ¡e ten text aj zobrazÃ­. 
 
 		<table cellpadding="10" bgcolor=#99ffff>					
 		<tr><th  bgcolor="White"  colspan="2" >Vkladanie textu do obr</tr>
@@ -330,39 +330,39 @@
 					</td></tr>
 		</table>			
 	
-	<dt><b>Vkladanie obrázka do obrázka</b>	
-	<dd>Niekedy potrebujeme opeèiatkova jedon obrázok do iného obrázka. Na ten úèel máme nieko¾ko moností:
+	<dt><b>Vkladanie obrÃ¡zka do obrÃ¡zka</b>	
+	<dd>Niekedy potrebujeme opeÄiatkovaÅ¥ jedon obrÃ¡zok do inÃ©ho obrÃ¡zka. Na ten ÃºÄel mÃ¡me niekoÄ¾ko moÅ¾nostÃ­:
 		<br><b>bool imageCopy (resource dst_im, resource src_im, int dst_x, int dst_y, int src_x, int src_y, int src_w, int src_h)</b>
-		<br>dst_im ... èíslo obrázka kam sa peèiatkuje
-		<br>src_im ... èíslo obrázka ktorı sa peèiatkuje
-		<br>dst_x ... súradnica kam sa bude peèiatkova
-		<br>dst_y ... súradnica kam sa bude peèiatkova
-		<br>src_x ... súradnica vırezu ktorı sa bude peèiatkova
-		<br>src_y ... súradnica vırezu ktorı sa bude peèiatkova
-		<br>src_w ... šírka vırezu ktorı sa bude peèiatkova
-		<br>src_h ... vıška vırezu ktorı sa bude peèiatkova
-		<br>návratová hodnota je èi sa akcia podarila
-		<br>vısek nemono "naahova"
+		<br>dst_im ... ÄÃ­slo obrÃ¡zka kam sa peÄiatkuje
+		<br>src_im ... ÄÃ­slo obrÃ¡zka ktorÃ½ sa peÄiatkuje
+		<br>dst_x ... sÃºradnica kam sa bude peÄiatkovaÅ¥
+		<br>dst_y ... sÃºradnica kam sa bude peÄiatkovaÅ¥
+		<br>src_x ... sÃºradnica vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>src_y ... sÃºradnica vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>src_w ... Å¡Ã­rka vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>src_h ... vÃ½Å¡ka vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>nÃ¡vratovÃ¡ hodnota je Äi sa akcia podarila
+		<br>vÃ½sek nemoÅ¾no "naÅ¥ahovaÅ¥"
 		<br><br><b>bool imageCopyMerge  ( resource dst_im, resource src_im, int dst_x, int dst_y, int src_x, int src_y, int src_w, int src_h, int pct)</b>
-		<br>identická funkcia ako predošlá, len poslednı parameter urèuje priesvitnos vkladanej peèiatky
-		<br>0 ... úplne priesvitná
-		<br>100 ... úplne nepriesvitná
+		<br>identickÃ¡ funkcia ako predoÅ¡lÃ¡, len poslednÃ½ parameter urÄuje priesvitnosÅ¥ vkladanej peÄiatky
+		<br>0 ... Ãºplne priesvitnÃ¡
+		<br>100 ... Ãºplne nepriesvitnÃ¡
 		<br><br>int imageCopyMergeGray  ( resource dst_im, resource src_im, int dst_x, int dst_y, int src_x, int src_y, int src_w, int src_h, int pct)
-		<br>identická funkcia ako predošlá, len poslednı parameter urèuje "vyšedenie" vkladaného obrázka
+		<br>identickÃ¡ funkcia ako predoÅ¡lÃ¡, len poslednÃ½ parameter urÄuje "vyÅ¡edenie" vkladanÃ©ho obrÃ¡zka
 		<br><br>int imageCopyResized  ( resource dst_im, resource src_im, int dstX, int dstY, int srcX, int srcY, int dstW, int dstH, int srcW, int srcH)
-		<br>dst_im ... èíslo obrázka kam sa peèiatkuje
-		<br>src_im ... èíslo obrázka ktorı sa peèiatkuje
-		<br>dst_x ... súradnica kam sa bude peèiatkova
-		<br>dst_y ... súradnica kam sa bude peèiatkova
-		<br>src_x ... súradnica vırezu ktorı sa bude peèiatkova
-		<br>src_y ... súradnica vırezu ktorı sa bude peèiatkova
-		<br>src_w ... šírka vırezu ktorı sa bude peèiatkova
-		<br>src_h ... vıška vırezu ktorı sa bude peèiatkova
-		<br>dst_w ... šírka vırezu ktorı sa bude peèiatkova
-		<br>dst_h ... vıška vırezu ktorı sa bude peèiatkova
+		<br>dst_im ... ÄÃ­slo obrÃ¡zka kam sa peÄiatkuje
+		<br>src_im ... ÄÃ­slo obrÃ¡zka ktorÃ½ sa peÄiatkuje
+		<br>dst_x ... sÃºradnica kam sa bude peÄiatkovaÅ¥
+		<br>dst_y ... sÃºradnica kam sa bude peÄiatkovaÅ¥
+		<br>src_x ... sÃºradnica vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>src_y ... sÃºradnica vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>src_w ... Å¡Ã­rka vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>src_h ... vÃ½Å¡ka vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>dst_w ... Å¡Ã­rka vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
+		<br>dst_h ... vÃ½Å¡ka vÃ½rezu ktorÃ½ sa bude peÄiatkovaÅ¥
 
-	<dt><b>Ukáky</b>
-	<dd><table border="1" cellpadding="5"><tr><td width="200">Prázdny èierny obrázok<td><img src="cierne.php">
+	<dt><b>UkÃ¡Å¾ky</b>
+	<dd><table border="1" cellpadding="5"><tr><td width="200">PrÃ¡zdny Äierny obrÃ¡zok<td><img src="cierne.php">
 					<td>&lt;?php
 			  			<br>$prem=ImageCreate(200, 100);
 			  			<br>$tc = ImageColorAllocate($prem,0,0,0); 
@@ -371,7 +371,7 @@
 			  			<br>imageDestroy($prem);
 						<br>?>
 					</tr>
-				<tr><td>farebnı obdånik<td><img src="far.php">
+				<tr><td>farebnÃ½ obdÄºÅ¾nik<td><img src="far.php">
 					<td>&lt;?php
 			  			<br>$prem=ImageCreate(200, 100);
 			  			<br>$tc = ImageColorAllocate($prem,100,100,255); 
@@ -379,8 +379,8 @@
 			  			<br>Imagepng($prem);
 			  			<br>imageDestroy($prem);
 						<br>?></tr>
-				<tr><td>farebnı obdånik
-						<br>s cerv. èiarou<td><img src="far2.php">
+				<tr><td>farebnÃ½ obdÄºÅ¾nik
+						<br>s cerv. Äiarou<td><img src="far2.php">
 					<td>&lt;?php
 			  			<br>$prem=ImageCreate(200, 100);
 			  			<br>$tp = ImageColorAllocate($prem,100,100,255); 
@@ -390,7 +390,7 @@
 			  			<br>Imagepng($prem);
 			  			<br>imageDestroy($prem);
 						<br>?></tr>
-				<tr><td>farebnı obdånik
+				<tr><td>farebnÃ½ obdÄºÅ¾nik
 						<br>body sinus<td><img src="far3.php">
 						<td>&lt;?php
 			  				<br>$prem=ImageCreate(201, 101);

@@ -5,78 +5,78 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">    
 	 <meta name="Content-language" content="sk">	
 	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
-	 <title>Práca s obrazovkou - conio.h</title>
+	 <title>PrĂˇca s obrazovkou - conio.h</title>
 </head>
 
 <body>
- Príkazy printf(), scanf(),... sú orientované na štandartný vstup, resp. výstup a môžu
- byť OS presmerované. Pod DOSom existujú ešte príkazy orientované priamo na port obrazovky
- resp. klávesnice a tieto nemôžu byť presmerované, ale poskytujú väčšie možnosti.
- <dl><dt><font size="+1" color="Blue">Vstup z klávesnice</font>
- 	 <dd>Vstup z klávesnice prebieha:
+ PrĂ­kazy printf(), scanf(),... sĂş orientovanĂ© na ĹˇtandartnĂ˝ vstup, resp. vĂ˝stup a mĂ´Ĺľu
+ byĹĄ OS presmerovanĂ©. Pod DOSom existujĂş eĹˇte prĂ­kazy orientovanĂ© priamo na port obrazovky
+ resp. klĂˇvesnice a tieto nemĂ´Ĺľu byĹĄ presmerovanĂ©, ale poskytujĂş vĂ¤ÄŤĹˇie moĹľnosti.
+ <dl><dt><font size="+1" color="Blue">Vstup z klĂˇvesnice</font>
+ 	 <dd>Vstup z klĂˇvesnice prebieha:
 	 <br><ol>
-			<li>číta sa zo špeciálneho 1-znakového buffra 
-			<li>číta sa zo štandartného BIOS buffra klávesnice
-			<li>ak nie sú všetky požadovené premenné uspokojené program zastane a čaká kedy ťukaním na
-				klávesnicu nenaplníme štandartný BIOS buffer klávesnice
+			<li>ÄŤĂ­ta sa zo ĹˇpeciĂˇlneho 1-znakovĂ©ho buffra 
+			<li>ÄŤĂ­ta sa zo ĹˇtandartnĂ©ho BIOS buffra klĂˇvesnice
+			<li>ak nie sĂş vĹˇetky poĹľadovenĂ© premennĂ© uspokojenĂ© program zastane a ÄŤakĂˇ kedy ĹĄukanĂ­m na
+				klĂˇvesnicu nenaplnĂ­me ĹˇtandartnĂ˝ BIOS buffer klĂˇvesnice
 		 </ol>
 		 Pozn.
-		 <br>Jediný spôsob ako dostať znak do špeciálneho 1-znakového buffra je funkcia ungetch()
+		 <br>JedinĂ˝ spĂ´sob ako dostaĹĄ znak do ĹˇpeciĂˇlneho 1-znakovĂ©ho buffra je funkcia ungetch()
 		 <br>
 	<dl>	 
 		<dt><font color="Red">int cscanf( form_ret, zoznam_vyr)</font>
 		<dd>syntax: pozri scanf()
-		<br>veľký rozdiel, je v tom, že vstup prebieha po každom stlačení znaku a nevyžaduje enter
-			a teda po načítaní nemusí odriadkovať
-		<h3>načítanie čísel</h3>
+		<br>veÄľkĂ˝ rozdiel, je v tom, Ĺľe vstup prebieha po kaĹľdom stlaÄŤenĂ­ znaku a nevyĹľaduje enter
+			a teda po naÄŤĂ­tanĂ­ nemusĂ­ odriadkovaĹĄ
+		<h3>naÄŤĂ­tanie ÄŤĂ­sel</h3>
 		<li>cscanf("%i",cislo);
-			<br>Program zastane a číta každú stlačenú klávesu
+			<br>Program zastane a ÄŤĂ­ta kaĹľdĂş stlaÄŤenĂş klĂˇvesu
 			<br>- biele znaky ignoruje-preskakuje 	
-			<br>- ak po bielych príde nečíselný znak (písmeno, interpunkcia) ukončí načítanie - Od tejto prem načítanie nevykoná, znak sa vráti nazad
-			<br>-  ak po bielych príde číselný znak začne sa načítanie čísla až po prvý nečíselný znak, postupnosť číslic vytvorí číslo znak sa vráti
+			<br>- ak po bielych prĂ­de neÄŤĂ­selnĂ˝ znak (pĂ­smeno, interpunkcia) ukonÄŤĂ­ naÄŤĂ­tanie - Od tejto prem naÄŤĂ­tanie nevykonĂˇ, znak sa vrĂˇti nazad
+			<br>-  ak po bielych prĂ­de ÄŤĂ­selnĂ˝ znak zaÄŤne sa naÄŤĂ­tanie ÄŤĂ­sla aĹľ po prvĂ˝ neÄŤĂ­selnĂ˝ znak, postupnosĹĄ ÄŤĂ­slic vytvorĂ­ ÄŤĂ­slo znak sa vrĂˇti
 			<table border="1">
 			<tr align="center" bgcolor="Silver"><th colspan="2">cscanf("%i",&amp;cislo);
 			<tr align="center" bgcolor="Silver"><th>vstup:<th>akcia</tr>
-			<tr align="center"><td>x<td>premenná cislo sa nezmení a znak 'x' ostane na vstupe</tr>
-			<tr align="center"><td>  15a<td>premenná cislo sa nastavi na hodnotu 15 a znak 'a' ostane na vstupe
-							<br>ďalšie znaky nie je možné zadávať</tr>
+			<tr align="center"><td>x<td>premennĂˇ cislo sa nezmenĂ­ a znak 'x' ostane na vstupe</tr>
+			<tr align="center"><td>  15a<td>premennĂˇ cislo sa nastavi na hodnotu 15 a znak 'a' ostane na vstupe
+							<br>ÄŹalĹˇie znaky nie je moĹľnĂ© zadĂˇvaĹĄ</tr>
 			<tr align="center" bgcolor="Silver"><th colspan="2">cscanf("%3i",&amp;cislo);
 			<tr align="center" bgcolor="Silver"><th>vstup:<th>akcia</tr>
-			<tr align="center"><td><span style="background-color:#DDDDDD">123</span><td>premenná cislo sa nastavi na hodnotu 123
-							<br>po stlačení 3 sa vstup ukončí</tr>
-			<tr align="center"><td><span style="background-color:#DDDDDD"> &nbsp; &nbsp;123</span><td>premenná cislo sa nastavi na hodnotu 123
-							<br>úvodné medzery nemajú žiaden vplyv</tr>
+			<tr align="center"><td><span style="background-color:#DDDDDD">123</span><td>premennĂˇ cislo sa nastavi na hodnotu 123
+							<br>po stlaÄŤenĂ­ 3 sa vstup ukonÄŤĂ­</tr>
+			<tr align="center"><td><span style="background-color:#DDDDDD"> &nbsp; &nbsp;123</span><td>premennĂˇ cislo sa nastavi na hodnotu 123
+							<br>ĂşvodnĂ© medzery nemajĂş Ĺľiaden vplyv</tr>
 			<tr align="center" bgcolor="Silver"><th colspan="2">cscanf("%i %i",&amp;cislo1, &amp;cislo2);
 			<tr align="center" bgcolor="Silver"><th>vstup:<th>akcia</tr>
-			<tr align="center"><td>x<td>premenné cislo1,cislo2 sa nezmenia a znak 'x' ostane na vstupe</tr>
-			<tr align="center"><td>5a<td>premenná cislo1 sa nastavi na hodnotu 5, prem cislo2 sa nezmení
-							<br>znak a ostáva na vstupe</tr>
-			<tr align="center"><td>123 45a<td>premenná cislo1 sa nastavi na hodnotu 123, cislo2 na hodnotu 45</tr>
+			<tr align="center"><td>x<td>premennĂ© cislo1,cislo2 sa nezmenia a znak 'x' ostane na vstupe</tr>
+			<tr align="center"><td>5a<td>premennĂˇ cislo1 sa nastavi na hodnotu 5, prem cislo2 sa nezmenĂ­
+							<br>znak a ostĂˇva na vstupe</tr>
+			<tr align="center"><td>123 45a<td>premennĂˇ cislo1 sa nastavi na hodnotu 123, cislo2 na hodnotu 45</tr>
 			<tr align="center" bgcolor="Silver"><th colspan="2">cscanf("%2i%3i",&amp;cislo1, &amp;cislo2);
 			<tr align="center" bgcolor="Silver"><th>vstup:<th>akcia</tr>
-			<tr align="center"><td>12345<td>premenná cislo1 sa nastavi na hodnotu 12, cislo2 na hodnotu 345</tr>
+			<tr align="center"><td>12345<td>premennĂˇ cislo1 sa nastavi na hodnotu 12, cislo2 na hodnotu 345</tr>
 			<tr align="center" bgcolor="Silver"><th colspan="2">cscanf("%i%c",&amp;cislo1, &amp;znak);
 			<tr align="center" bgcolor="Silver"><th>vstup:<th>akcia</tr>
-			<tr align="center"><td>12w<td>premenná cislo1 sa nastavi na hodnotu 12, znak na hodnotu 'w'</tr>
+			<tr align="center"><td>12w<td>premennĂˇ cislo1 sa nastavi na hodnotu 12, znak na hodnotu 'w'</tr>
 			<tr align="center" bgcolor="Silver"><th colspan="2">cscanf("%i,%c",&amp;cislo1, &amp;znak);
 			<tr align="center" bgcolor="Silver"><th>vstup:<th>akcia</tr>
-			<tr align="center"><td>12,,<td>premenná cislo1 sa nastavi na hodnotu 12, znak na hodnotu ','</tr>
+			<tr align="center"><td>12,,<td>premennĂˇ cislo1 sa nastavi na hodnotu 12, znak na hodnotu ','</tr>
 			
 			</table>
 		<dt><font color="Red">int getch( void)</font>
-		<dd>funguje uplne rovnako ako readkey v pascale, len je pridaný špeciálny 1-znakový buffer
-		<br>oproti getchar() je rozdiel v tom, že nerobí echo a nevyžaduje enter 
+		<dd>funguje uplne rovnako ako readkey v pascale, len je pridanĂ˝ ĹˇpeciĂˇlny 1-znakovĂ˝ buffer
+		<br>oproti getchar() je rozdiel v tom, Ĺľe nerobĂ­ echo a nevyĹľaduje enter 
 		<dt><font color="Red">int getche( void)</font>
-		<dd>funguje úplne rovnako ako getch, len robí echo
+		<dd>funguje Ăşplne rovnako ako getch, len robĂ­ echo
 		<dt><font color="Red">int kbhit( void)</font>
-		<dd>funguje úplne rovnako ako keypressed, len kontroluje aj špec. 1-znakový buff.
-		<br>vráti 0 ak je všetko prázdne, 1 ak je čo čítať
+		<dd>funguje Ăşplne rovnako ako keypressed, len kontroluje aj Ĺˇpec. 1-znakovĂ˝ buff.
+		<br>vrĂˇti 0 ak je vĹˇetko prĂˇzdne, 1 ak je ÄŤo ÄŤĂ­taĹĄ
 		<dt><font color="Red">int ungetch( char)</font>
-		<dd>vráti posledne načítaný znak do špec. 1-znakového buffra, tento znak je čitateľný príkazmi
-			cscanf, getch, getche a je viditelný cez kbhit
-			<br>Použitie:
-			<br>Máme načítať trojciferné čísla, ktoré nie sú nijak oddelené a ukončené je to znakom 'K'. 
-				Ak sa pozriem, či nie je na vstupe 'K' načítam prvú cifru čísla a môžem ju vrátiť späť. 
+		<dd>vrĂˇti posledne naÄŤĂ­tanĂ˝ znak do Ĺˇpec. 1-znakovĂ©ho buffra, tento znak je ÄŤitateÄľnĂ˝ prĂ­kazmi
+			cscanf, getch, getche a je viditelnĂ˝ cez kbhit
+			<br>PouĹľitie:
+			<br>MĂˇme naÄŤĂ­taĹĄ trojcifernĂ© ÄŤĂ­sla, ktorĂ© nie sĂş nijak oddelenĂ© a ukonÄŤenĂ© je to znakom 'K'. 
+				Ak sa pozriem, ÄŤi nie je na vstupe 'K' naÄŤĂ­tam prvĂş cifru ÄŤĂ­sla a mĂ´Ĺľem ju vrĂˇtiĹĄ spĂ¤ĹĄ. 
 				<table width="60%" bgcolor="#c0c0c0" border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff" align="center">
 				<tr><th bgcolor="Blue" align="left"> ungetch.cpp</th></tr>
 				<tr><td>
@@ -99,77 +99,77 @@
 </pre></code>
 				</td></tr>
 				</table>
-				<br>Po odremovaní prikazov v programe, vidíme, že príkaz cscanf naozaj ukončí vstup po naklepaní 3 číslic.
-				<br>V cscanf je použité %3d a nie %3i, lebo by nebolo možné zadávať čísla začínajúce nulami (chápal by ich ako osmičkové)
-				<br>Jazyk pascal nám podobnú konštrukciu neumožňuje. 
+				<br>Po odremovanĂ­ prikazov v programe, vidĂ­me, Ĺľe prĂ­kaz cscanf naozaj ukonÄŤĂ­ vstup po naklepanĂ­ 3 ÄŤĂ­slic.
+				<br>V cscanf je pouĹľitĂ© %3d a nie %3i, lebo by nebolo moĹľnĂ© zadĂˇvaĹĄ ÄŤĂ­sla zaÄŤĂ­najĂşce nulami (chĂˇpal by ich ako osmiÄŤkovĂ©)
+				<br>Jazyk pascal nĂˇm podobnĂş konĹˇtrukciu neumoĹľĹuje. 
 	</dl>	
 	<hr width="70%">
-	<dt><font size="+1" color="Blue">Výstup na obrazovku</font>
-	<dd>V textovom režime je obrazovka rozdelená na 25 riadkov a 40 alebo 80 stĺpcov. V každom políčku
-		obrazovky môže byť zobrazený jeden znak. Znak môže byť zobrazený 16-timi rôznymi farbami, pozadie znaku
-		môže byť tvorené jednou z ôsmich farieb, znak navyše môže blikať.
-		<dl><dt><font color="Green">Ovládanie obrazovky</font>
+	<dt><font size="+1" color="Blue">VĂ˝stup na obrazovku</font>
+	<dd>V textovom reĹľime je obrazovka rozdelenĂˇ na 25 riadkov a 40 alebo 80 stÄşpcov. V kaĹľdom polĂ­ÄŤku
+		obrazovky mĂ´Ĺľe byĹĄ zobrazenĂ˝ jeden znak. Znak mĂ´Ĺľe byĹĄ zobrazenĂ˝ 16-timi rĂ´znymi farbami, pozadie znaku
+		mĂ´Ĺľe byĹĄ tvorenĂ© jednou z Ă´smich farieb, znak navyĹˇe mĂ´Ĺľe blikaĹĄ.
+		<dl><dt><font color="Green">OvlĂˇdanie obrazovky</font>
 			<dd><dl><dt><font color="Red">void textmode( int mod)</font>
-					<dd>pre nás budú zaujímavé konštanty: C40 a C80, ktoré určujú počet stĺpcov obrazovky 
+					<dd>pre nĂˇs budĂş zaujĂ­mavĂ© konĹˇtanty: C40 a C80, ktorĂ© urÄŤujĂş poÄŤet stÄşpcov obrazovky 
 					<dt><font color="Red">void window( int vlavo, int dole, int vpravo, int hore)</font> 
-					<dd>parametre určujú oblasť ktorá bude určená na výstup, riadky i stĺpce sú číslované od 1.
-						Každé ďalšie volanie ruší predošlé nastavenie a nastavuje nové
+					<dd>parametre urÄŤujĂş oblasĹĄ ktorĂˇ bude urÄŤenĂˇ na vĂ˝stup, riadky i stÄşpce sĂş ÄŤĂ­slovanĂ© od 1.
+						KaĹľdĂ© ÄŹalĹˇie volanie ruĹˇĂ­ predoĹˇlĂ© nastavenie a nastavuje novĂ©
 				</dl>
-			<dt><font color="Green">Pozícia kurzora na obrazovke</font>
+			<dt><font color="Green">PozĂ­cia kurzora na obrazovke</font>
 			<dd><dl><dt><font color="Red">void gotoxy( int x, int y)</font>
-					<dd>presunie kurzor na určené súradnice
+					<dd>presunie kurzor na urÄŤenĂ© sĂşradnice
 					<dt><font color="Red">int wherex( void)</font>
 					<dt><font color="Red">int wherey( void)</font>
-					<dd>vráti polohu kurzora na obrazovke, resp. aktívnom okne 
+					<dd>vrĂˇti polohu kurzora na obrazovke, resp. aktĂ­vnom okne 
 				</dl>	
 			<dt><font color="Green">Farba </font>
 			<dd><dl><dt><font color="Red">void background( int color)</font>
-					<dd>povolené sú farby 0-7, určí sa farba pozadia pre príkazy výstupu
+					<dd>povolenĂ© sĂş farby 0-7, urÄŤĂ­ sa farba pozadia pre prĂ­kazy vĂ˝stupu
 					<dt><font color="Red">void textcolor( int color)</font>
-					<dd>povolené sú farby 0-15+128, určí sa farba písma pre príkazy výstupu
-					    pridaním 128 sa nastaví blikanie.
+					<dd>povolenĂ© sĂş farby 0-15+128, urÄŤĂ­ sa farba pĂ­sma pre prĂ­kazy vĂ˝stupu
+					    pridanĂ­m 128 sa nastavĂ­ blikanie.
 				</dl>		
 			<dt><font color="Green">Mazanie textu </font>
 			<dd><dl><dt><font color="Red">void clrscr( void)</font>
-					<dd>Zotrie obrazovku, resp. aktívne okno
+					<dd>Zotrie obrazovku, resp. aktĂ­vne okno
 					<dt><font color="Red">void clreol( void)</font>
 					<dd>Zotrie riadok od kurzora po jeho koniec
 					<dt><font color="Red">void delline( void)</font>
-					<dd>Odstráni riadok v ktorom je kurzor, na spodu vzniká prázdny riadok
+					<dd>OdstrĂˇni riadok v ktorom je kurzor, na spodu vznikĂˇ prĂˇzdny riadok
 					<dt><font color="Red">void insline( void)</font>
-					<dd>Vloží riadok tam kde je kurzor, spodný riadok vypadáva 
+					<dd>VloĹľĂ­ riadok tam kde je kurzor, spodnĂ˝ riadok vypadĂˇva 
 				</dl>		
-			<dt><font color="Green">Výstup na obrazovku</font>
+			<dt><font color="Green">VĂ˝stup na obrazovku</font>
 			<dd><dl><dt><font color="Red">int cprintf( form_ret, zoznam_vyr)</font>
-					<dd>Príkaz pracuje rovnako ako printf, len sa nedá presmerovať, a rešpektuje navolenú farbu.
-					<dt><font color="Red">int cputs( reťazec)</font>
-					<dd>položí na obrazovku požadovaný reťazec - podobne ako puts()
+					<dd>PrĂ­kaz pracuje rovnako ako printf, len sa nedĂˇ presmerovaĹĄ, a reĹˇpektuje navolenĂş farbu.
+					<dt><font color="Red">int cputs( reĹĄazec)</font>
+					<dd>poloĹľĂ­ na obrazovku poĹľadovanĂ˝ reĹĄazec - podobne ako puts()
 					<dt><font color="Red">int putch( znak)</font>
-					<dd>Príkaz pracuje rovnako ako putchar, len sa nedá presmerovať, a rešpektuje navolenú farbu.
+					<dd>PrĂ­kaz pracuje rovnako ako putchar, len sa nedĂˇ presmerovaĹĄ, a reĹˇpektuje navolenĂş farbu.
 				</dl>	
 		</dl>
-	<dt>Úlohy:
-	<dd>Napíš program, ktorý:
-	<br> &nbsp; - pohybuje kurzorom pomocou kurzorových šipiek
-	<br> &nbsp; - stlačením Ctrl Ins vloží na miesto kurzora nový riadok
-	<br> &nbsp; - stlačením Ctrl Del odstráni riadok
-	<br> &nbsp; - stlačením znaku zapíše znak na dané miesto
-	<br>Napíš semigrafický editor:
-	<br> &nbsp; - čísla 1,2,3,4,6,7,8,9 riadia pohyb kurzora
-	<br> &nbsp; - číslo 5 prepína pero hore-dole
-	<br> &nbsp; - číslo 0 prepína farbu
-	<br>Napíš program na vyhodnotenie nasledovných výrazov: (každý výraz je na samostatnom riadku)
+	<dt>Ăšlohy:
+	<dd>NapĂ­Ĺˇ program, ktorĂ˝:
+	<br> &nbsp; - pohybuje kurzorom pomocou kurzorovĂ˝ch Ĺˇipiek
+	<br> &nbsp; - stlaÄŤenĂ­m Ctrl Ins vloĹľĂ­ na miesto kurzora novĂ˝ riadok
+	<br> &nbsp; - stlaÄŤenĂ­m Ctrl Del odstrĂˇni riadok
+	<br> &nbsp; - stlaÄŤenĂ­m znaku zapĂ­Ĺˇe znak na danĂ© miesto
+	<br>NapĂ­Ĺˇ semigrafickĂ˝ editor:
+	<br> &nbsp; - ÄŤĂ­sla 1,2,3,4,6,7,8,9 riadia pohyb kurzora
+	<br> &nbsp; - ÄŤĂ­slo 5 prepĂ­na pero hore-dole
+	<br> &nbsp; - ÄŤĂ­slo 0 prepĂ­na farbu
+	<br>NapĂ­Ĺˇ program na vyhodnotenie nasledovnĂ˝ch vĂ˝razov: (kaĹľdĂ˝ vĂ˝raz je na samostatnom riadku)
 	<br> &nbsp; - a+b=
 	<br> &nbsp; - a-b=
 	<br> &nbsp; - a*b=
 	<br> &nbsp; - a/b=
-	<br> &nbsp; výsledok program zapíše inou farbou za rovná sa. Program končí zadaním znaku ESC na novom riadku.
+	<br> &nbsp; vĂ˝sledok program zapĂ­Ĺˇe inou farbou za rovnĂˇ sa. Program konÄŤĂ­ zadanĂ­m znaku ESC na novom riadku.
 	<br>
-	<br>Napíš program na animáciu behajúceho znaku po obrazovke
-	<br> &nbsp; - načítaj a,b - strany obdĺžnika
-	<br> &nbsp; - vykresli bodkami steny obdĺžnika
-	<br> &nbsp; -  na stlačenie "any" pustí hviezdičku behať po zakreslenej ceste
-	<br> &nbsp; - na stlačenie "any" klávesy program končí
+	<br>NapĂ­Ĺˇ program na animĂˇciu behajĂşceho znaku po obrazovke
+	<br> &nbsp; - naÄŤĂ­taj a,b - strany obdÄşĹľnika
+	<br> &nbsp; - vykresli bodkami steny obdÄşĹľnika
+	<br> &nbsp; -  na stlaÄŤenie "any" pustĂ­ hviezdiÄŤku behaĹĄ po zakreslenej ceste
+	<br> &nbsp; - na stlaÄŤenie "any" klĂˇvesy program konÄŤĂ­
 	<br>
 </dl>
 

@@ -8,44 +8,44 @@
 </head>
 
 <body>
-<h2>Príkazy PHP pre MySQL</h2>
-Webové databázové aplikácie sú štandartne postavené na trojvrstvovej architektúre. 
-<dl><dt>Databázová vrstva, 
-	<dd>najnišia-základná vrstva, ktorá je tvorená <br><b>DBMS</b> - Database management system - databázovı systém, zajisuje správu databázy 
-	(vytváranie dát, zmena, odstraòovanie, vyh¾adávanie). Priame nástroje pre prácu v tejto vrstve som popísal v predošlıch kapitolách.
-	<br>Oproti databáze Access, Dbase asi uívate¾ovi chıba vytváranie vıstupnıch zostáv. To je tu prenechané na vyššie vrstvy.
-	<dt>Prostredná vrstva, 
-	<dd>obsahuje scripty (programy), ktoré predávajú databázovej vrstve príkazy pod¾a vo¾by uívate¾a, prípadne inıch udalostí
-		a odovzdáva ich najvyššej vrstvy na zobrazenie. My budeme pouíva PHP.
-	<dt>Najvyššia vrstva, 
-	<dd>ktorá zobrazuje zasielané vısledky. My budeme pouíva webovı prehliadaè, ktorému budeme zasiela html tagy. 	 
+<h2>PrÃ­kazy PHP pre MySQL</h2>
+WebovÃ© databÃ¡zovÃ© aplikÃ¡cie sÃº Å¡tandartne postavenÃ© na trojvrstvovej architektÃºre. 
+<dl><dt>DatabÃ¡zovÃ¡ vrstva, 
+	<dd>najniÅ¾Å¡ia-zÃ¡kladnÃ¡ vrstva, ktorÃ¡ je tvorenÃ¡ <br><b>DBMS</b> - Database management system - databÃ¡zovÃ½ systÃ©m, zajisÅ¥uje sprÃ¡vu databÃ¡zy 
+	(vytvÃ¡ranie dÃ¡t, zmena, odstraÅˆovanie, vyhÄ¾adÃ¡vanie). Priame nÃ¡stroje pre prÃ¡cu v tejto vrstve som popÃ­sal v predoÅ¡lÃ½ch kapitolÃ¡ch.
+	<br>Oproti databÃ¡ze Access, Dbase asi uÅ¾Ã­vateÄ¾ovi chÃ½ba vytvÃ¡ranie vÃ½stupnÃ½ch zostÃ¡v. To je tu prenechanÃ© na vyÅ¡Å¡ie vrstvy.
+	<dt>ProstrednÃ¡ vrstva, 
+	<dd>obsahuje scripty (programy), ktorÃ© predÃ¡vajÃº databÃ¡zovej vrstve prÃ­kazy podÄ¾a voÄ¾by uÅ¾Ã­vateÄ¾a, prÃ­padne inÃ½ch udalostÃ­
+		a odovzdÃ¡va ich najvyÅ¡Å¡ej vrstvy na zobrazenie. My budeme pouÅ¾Ã­vaÅ¥ PHP.
+	<dt>NajvyÅ¡Å¡ia vrstva, 
+	<dd>ktorÃ¡ zobrazuje zasielanÃ© vÃ½sledky. My budeme pouÅ¾Ã­vaÅ¥ webovÃ½ prehliadaÄ, ktorÃ©mu budeme zasielaÅ¥ html tagy. 	 
 </dl>
-<h2>Základné príkazy</h2>
-<h3>Pripojenie k databáze</h3>
+<h2>ZÃ¡kladnÃ© prÃ­kazy</h2>
+<h3>Pripojenie k databÃ¡ze</h3>
 <p>
-  resource mysql_connect ( [string server [, string pouívate¾ské_meno [, string heslo [, bool nové_pripojenie [, int príznaky_klienta] ] ] ] ] )
+  resource mysql_connect ( [string server [, string pouÅ¾Ã­vateÄ¾skÃ©_meno [, string heslo [, bool novÃ©_pripojenie [, int prÃ­znaky_klienta] ] ] ] ] )
 </p>
 <div>
-  Vráti identifikátor pripojenia k MySQL alebo <code>FALSE</code> v prípade chyby.<br />
-  <code>mysql_connect()</code> vytvorí pripojenie k serveru MySQL. 
-  Implicitné hodnoty pre neuvedené parametre bıvajú nasledovné: server = 'localhost:3306', 
-  <br>(nastavené systémovou premennou  mysql.default_user)
-  <br> pouívate¾ské_meno = meno pouívate¾a, 
-  ktorı vlastní proces servera a heslo = prázdne heslo.<br />
-  Parameter server môe tie obsahova èíslo portu napr. "hostite¾:port" alebo cestu k socketu ":/cesta/k/socketu" 
-  v prípade miestneho servera localhost (alebo IP 127.0.0.1).
-  <br>Návratovú adresu tvorí 
+  VrÃ¡ti identifikÃ¡tor pripojenia k MySQL alebo <code>FALSE</code> v prÃ­pade chyby.<br />
+  <code>mysql_connect()</code> vytvorÃ­ pripojenie k serveru MySQL. 
+  ImplicitnÃ© hodnoty pre neuvedenÃ© parametre bÃ½vajÃº nasledovnÃ©: server = 'localhost:3306', 
+  <br>(nastavenÃ© systÃ©movou premennou  mysql.default_user)
+  <br> pouÅ¾Ã­vateÄ¾skÃ©_meno = meno pouÅ¾Ã­vateÄ¾a, 
+  ktorÃ½ vlastnÃ­ proces servera a heslo = prÃ¡zdne heslo.<br />
+  Parameter server mÃ´Å¾e tieÅ¾ obsahovaÅ¥ ÄÃ­slo portu napr. "hostiteÄ¾:port" alebo cestu k socketu ":/cesta/k/socketu" 
+  v prÃ­pade miestneho servera localhost (alebo IP 127.0.0.1).
+  <br>NÃ¡vratovÃº adresu tvorÃ­ 
 </div>
 <p>
   bool mysql_select_db ( string $database_name [, resource $link_identifier] )
 </p>
 <div>
-  <code>mysql_select_db()</code> nastaví aktuálnu databázu na serveri a asociuje ju s uvedenım identifikátorom spojenia.
+  <code>mysql_select_db()</code> nastavÃ­ aktuÃ¡lnu databÃ¡zu na serveri a asociuje ju s uvedenÃ½m identifikÃ¡torom spojenia.
 </div>
 <p>
   &lt;?php<br />
-  $db = mysql_connect("server", "meno", "heslo" ) or die("Nie je moné pripoji sa k DB");<br />
-  mysql_select_db("meno_databázy", $db);<br />
+  $db = mysql_connect("server", "meno", "heslo" ) or die("Nie je moÅ¾nÃ© pripojiÅ¥ sa k DB");<br />
+  mysql_select_db("meno_databÃ¡zy", $db);<br />
   ?&gt;<br /><br />
  
 </p>
@@ -54,15 +54,15 @@ Webové databázové aplikácie sú štandartne postavené na trojvrstvovej architektúr
   resource mysql_query ( string query [, resource spojenie] )
 </p>
 <p>
-  <code>mysql_query()</code> vykoná poiadavku na aktuálnom spojení v aktívnej databáze na serveri a vráti identifikátor vısledku. Ak nie je parameter spojenia uvedenı, pouije posledne otvorené spojenie. Pokia¾ nie je iadne otvorené spojenie nájdené, funkcia sa ho pokúsi vytvori pouitím vıchodzích hodnôt funkcie <code>mysql_connect</code>.
+  <code>mysql_query()</code> vykonÃ¡ poÅ¾iadavku na aktuÃ¡lnom spojenÃ­ v aktÃ­vnej databÃ¡ze na serveri a vrÃ¡ti identifikÃ¡tor vÃ½sledku. Ak nie je parameter spojenia uvedenÃ½, pouÅ¾ije posledne otvorenÃ© spojenie. PokiaÄ¾ nie je Å¾iadne otvorenÃ© spojenie nÃ¡jdenÃ©, funkcia sa ho pokÃºsi vytvoriÅ¥ pouÅ¾itÃ­m vÃ½chodzÃ­ch hodnÃ´t funkcie <code>mysql_connect</code>.
 </p>
 <h3>mysql_fetch_array</h3>
 <p>
   array mysql_fetch_array ( resource $result [, int $result_type] )
 </p>
 <div>
-  Funkcia vracia pole hodnôt naèítaného záznamu alebo <code>FALSE</code>, ak nie je iaden ïalší riadok.<br />
-  <code>mysql_fetch_array()</code> je rozšíøenou verziou <code>mysql_fetch_row</code>. Naviac sú tu dáta uloené v poli nielen pod èíselnımi k¾úèmi, ale aj pod asociatívnymi textovımi k¾úèmi pomenovanımi pod¾a názvu ståpca sql tabu¾ky.
+  Funkcia vracia pole hodnÃ´t naÄÃ­tanÃ©ho zÃ¡znamu alebo <code>FALSE</code>, ak nie je Å¾iaden ÄalÅ¡Ã­ riadok.<br />
+  <code>mysql_fetch_array()</code> je rozÅ¡Ã­Å™enou verziou <code>mysql_fetch_row</code>. Naviac sÃº tu dÃ¡ta uloÅ¾enÃ© v poli nielen pod ÄÃ­selnÃ½mi kÄ¾ÃºÄmi, ale aj pod asociatÃ­vnymi textovÃ½mi kÄ¾ÃºÄmi pomenovanÃ½mi podÄ¾a nÃ¡zvu stÄºpca sql tabuÄ¾ky.
 </div>
 <h3>mysql_fetch_array s MYSQL_NUM</h3>
 <p>
@@ -103,7 +103,7 @@ Webové databázové aplikácie sú štandartne postavené na trojvrstvovej architektúr
   int mysql_num_rows ( resource $result )
 </p>
 <div>
-  <code>mysql_num_rows()</code> vracia poèet záznamov vo vısledku poiadavky. Tento príkaz je pouite¾nı len pre <code>SELECT</code>. Ak potrebujeme získa poèet záznamov ovplyvnenıch príkazmi <code>INSERT</code>, <code>UPDATE</code> alebo <code>DELETE</code>, pouijeme <code>mysql_affected_rows</code>.
+  <code>mysql_num_rows()</code> vracia poÄet zÃ¡znamov vo vÃ½sledku poÅ¾iadavky. Tento prÃ­kaz je pouÅ¾iteÄ¾nÃ½ len pre <code>SELECT</code>. Ak potrebujeme zÃ­skaÅ¥ poÄet zÃ¡znamov ovplyvnenÃ½ch prÃ­kazmi <code>INSERT</code>, <code>UPDATE</code> alebo <code>DELETE</code>, pouÅ¾ijeme <code>mysql_affected_rows</code>.
 </div>
 <p>
   &lt;?php<br />
@@ -118,7 +118,7 @@ Webové databázové aplikácie sú štandartne postavené na trojvrstvovej architektúr
   bool mysql_close ( [resource $link_identifier] )
 </p>
 <div>
-  Funkcia <code>mysql_close()</code> uzavrie spojenie s MySQL serverom, ktoré je asociované s urèitım identikátorom spojenia. Pokia¾ spojenie nie je zadané, uzavrie posledné otvorené spojenie.
+  Funkcia <code>mysql_close()</code> uzavrie spojenie s MySQL serverom, ktorÃ© je asociovanÃ© s urÄitÃ½m identikÃ¡torom spojenia. PokiaÄ¾ spojenie nie je zadanÃ©, uzavrie poslednÃ© otvorenÃ© spojenie.
 </div>
 </body>
 </html>

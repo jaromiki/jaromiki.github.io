@@ -8,68 +8,68 @@
 
 <body>
 <h3>Osvetlovanie telies</h3>
-Zatia¾ sme scému vykreslovali bez vplyvu svetla, èo môe pri statickıch obrázkoch vies ku splošteniu obrazu (straty 3-rozmernosti). Teraz si ukáeme
-jednoduchı postup ako osvetlova scénu. Najprv však bude nutná trocha teórie.
+ZatiaÄ¾ sme scÃ©mu vykreslovali bez vplyvu svetla, Äo mÃ´Å¾e pri statickÃ½ch obrÃ¡zkoch viesÅ¥ ku sploÅ¡teniu obrazu (straty 3-rozmernosti). Teraz si ukÃ¡Å¾eme
+jednoduchÃ½ postup ako osvetlovaÅ¥ scÃ©nu. Najprv vÅ¡ak bude nutnÃ¡ trocha teÃ³rie.
 <dl>
 <dt>Druhy svetla
-<dd>V OpenGL sa pre vıpoèet farby objektov v scéne pouíva takzvanı Phongùv osvet¾ovacie model. Tento model sa snaí èo najviac zjednoduši fyzikálne 
-	a optické vlastnosti reálneho svetla tak, aby vıpoèty osvetlenia boli rıchle a aby sa vıslednı obrázok dostatoène blíil realite. 
-	V Phongovo osvet¾ovacím modelu sa svetlo, ktoré na urèitı objekt dopadá a následne sa od neho odráa, rozkladá na tri svetelné zloky.
-	<ul><li>ambientné svetlo
-			<br>Táto zloka vyjadruje okolité svetlo, ktoré nie je priamo vyarované zo iadnych svetelnıch zdrojov. 
-			Toto svetlo vzniká tak, e sa svetlo z nejakého zdroja nieko¾kokrát odrazí (napríklad od stien v miestnosti), a nie je teda jasne vidite¾nı smer, 
-			odkia¾ prichádza. V Phongovo osvet¾ovacím modelu je toto svetlo povaované za všesmerové, tj osvet¾uje objekt zo všetkıch smerov nezávisle 
-			na polohe a orientáciu zdrojov svetla.
-		<li>difúzna zloka
-			<br>Táto svetelná zloka vyjadruje svetlo, ktoré na povrch objektu dopadá z konkrétneho svetelného zdroja a od povrchu objektu sa odráa do všetkıch 
-			smerov s rovnakou intenzitou. Pomocou difúznej zloky mono teda vytvára matné materiály. V Phongovo osvet¾ovacím modeli sú vıpoèty difúznej 
-			zloky svetla upravené tak, e vısledná farba difúznej zloky je závislá iba na vzájomnej orientácii svetelného zdroja a objektu. 
-			Poloha pozorovate¾a (kamery) nemá vplyv na farbu ani intenzitu difúzna zloky, èoho sa dá vyui napríklad pri urıch¾ovaní vykres¾ovacích algoritmov.	
+<dd>V OpenGL sa pre vÃ½poÄet farby objektov v scÃ©ne pouÅ¾Ã­va takzvanÃ½ PhongÅ¯v osvetÄ¾ovacie model. Tento model sa snaÅ¾Ã­ Äo najviac zjednoduÅ¡iÅ¥ fyzikÃ¡lne 
+	a optickÃ© vlastnosti reÃ¡lneho svetla tak, aby vÃ½poÄty osvetlenia boli rÃ½chle a aby sa vÃ½slednÃ½ obrÃ¡zok dostatoÄne blÃ­Å¾il realite. 
+	V Phongovo osvetÄ¾ovacÃ­m modelu sa svetlo, ktorÃ© na urÄitÃ½ objekt dopadÃ¡ a nÃ¡sledne sa od neho odrÃ¡Å¾a, rozkladÃ¡ na tri svetelnÃ© zloÅ¾ky.
+	<ul><li>ambientnÃ© svetlo
+			<br>TÃ¡to zloÅ¾ka vyjadruje okolitÃ© svetlo, ktorÃ© nie je priamo vyÅ¾arovanÃ© zo Å¾iadnych svetelnÃ½ch zdrojov. 
+			Toto svetlo vznikÃ¡ tak, Å¾e sa svetlo z nejakÃ©ho zdroja niekoÄ¾kokrÃ¡t odrazÃ­ (naprÃ­klad od stien v miestnosti), a nie je teda jasne viditeÄ¾nÃ½ smer, 
+			odkiaÄ¾ prichÃ¡dza. V Phongovo osvetÄ¾ovacÃ­m modelu je toto svetlo povaÅ¾ovanÃ© za vÅ¡esmerovÃ©, tj osvetÄ¾uje objekt zo vÅ¡etkÃ½ch smerov nezÃ¡visle 
+			na polohe a orientÃ¡ciu zdrojov svetla.
+		<li>difÃºzna zloÅ¾ka
+			<br>TÃ¡to svetelnÃ¡ zloÅ¾ka vyjadruje svetlo, ktorÃ© na povrch objektu dopadÃ¡ z konkrÃ©tneho svetelnÃ©ho zdroja a od povrchu objektu sa odrÃ¡Å¾a do vÅ¡etkÃ½ch 
+			smerov s rovnakou intenzitou. Pomocou difÃºznej zloÅ¾ky moÅ¾no teda vytvÃ¡raÅ¥ matnÃ© materiÃ¡ly. V Phongovo osvetÄ¾ovacÃ­m modeli sÃº vÃ½poÄty difÃºznej 
+			zloÅ¾ky svetla upravenÃ© tak, Å¾e vÃ½slednÃ¡ farba difÃºznej zloÅ¾ky je zÃ¡vislÃ¡ iba na vzÃ¡jomnej orientÃ¡cii svetelnÃ©ho zdroja a objektu. 
+			Poloha pozorovateÄ¾a (kamery) nemÃ¡ vplyv na farbu ani intenzitu difÃºzna zloÅ¾ky, Äoho sa dÃ¡ vyuÅ¾iÅ¥ naprÃ­klad pri urÃ½chÄ¾ovanÃ­ vykresÄ¾ovacÃ­ch algoritmov.	
 		<li>odlesky(specular)
-			<br>Poslednı svetelnú zlokou pouitou v Phongovo osvet¾ovacím modeli sú odlesky (specular). Odlesky vznikajú vo chvíli, keï na povrch telesa dopadá 
-			lúè zo zdroja svetla a tento lúè sa od povrchu odráa pod¾a známeho zákona odrazu a lomu. V skutoènosti sa lúè nikdy neodrazí ideálne, vdy nastáva urèité rozptılenie. 
-			Phongùv osvet¾ovacie model tento fenomén modeluje tak, e sa stanoví koeficient zmeny intenzity odrazeného svetla pod¾a uhla odklonu poèítaného odrazeného 
-			lúèa od lúèa ideálne odrazeného. Vektory tıchto dvoch lúèov sa vynásobí a vısledok sa umocní zadanım koeficientom.
+			<br>PoslednÃ½ svetelnÃº zloÅ¾kou pouÅ¾itou v Phongovo osvetÄ¾ovacÃ­m modeli sÃº odlesky (specular). Odlesky vznikajÃº vo chvÃ­li, keÄ na povrch telesa dopadÃ¡ 
+			lÃºÄ zo zdroja svetla a tento lÃºÄ sa od povrchu odrÃ¡Å¾a podÄ¾a znÃ¡meho zÃ¡kona odrazu a lomu. V skutoÄnosti sa lÃºÄ nikdy neodrazÃ­ ideÃ¡lne, vÅ¾dy nastÃ¡va urÄitÃ© rozptÃ½lenie. 
+			PhongÅ¯v osvetÄ¾ovacie model tento fenomÃ©n modeluje tak, Å¾e sa stanovÃ­ koeficient zmeny intenzity odrazenÃ©ho svetla podÄ¾a uhla odklonu poÄÃ­tanÃ©ho odrazenÃ©ho 
+			lÃºÄa od lÃºÄa ideÃ¡lne odrazenÃ©ho. Vektory tÃ½chto dvoch lÃºÄov sa vynÃ¡sobÃ­ a vÃ½sledok sa umocnÃ­ zadanÃ½m koeficientom.
 	</ul>
-	Pri vytváraní scény si premyslíme, kde budú umiestnené zdroje svetla a nastavíme ich vlastnosti. Vlastnosti jednotlivıch zloiek zadávame podobne ako sme zadávali
-	pri zadávaní farby materiálu. Farbu neuèujeme príkazom glColor() ale musíme nastavi vlastnosti svetla a ako sa materiál chová voèi svetlu, 
-	Pre kadé svetlo (zdroj svetla)urèíme jeho tri zloky (ambientnú, difúznu a odleskovú) a materiálu nastavíme ako odráa ambientné svetlo, difúzne a tie akej farby odráa odlesky. 
+	Pri vytvÃ¡ranÃ­ scÃ©ny si premyslÃ­me, kde budÃº umiestnenÃ© zdroje svetla a nastavÃ­me ich vlastnosti. Vlastnosti jednotlivÃ½ch zloÅ¾iek zadÃ¡vame podobne ako sme zadÃ¡vali
+	pri zadÃ¡vanÃ­ farby materiÃ¡lu. Farbu neuÄujeme prÃ­kazom glColor() ale musÃ­me nastaviÅ¥ vlastnosti svetla a ako sa materiÃ¡l chovÃ¡ voÄi svetlu, 
+	Pre kaÅ¾dÃ© svetlo (zdroj svetla)urÄÃ­me jeho tri zloÅ¾ky (ambientnÃº, difÃºznu a odleskovÃº) a materiÃ¡lu nastavÃ­me ako odrÃ¡Å¾a ambientnÃ© svetlo, difÃºzne a tieÅ¾ akej farby odrÃ¡Å¾a odlesky. 
 <dt>Zapnutie svetla
-<dd>Na prácu so svetlom pouijeme príkaz:<b><font color="Blue"> glEnable(GL_LIGHTING)</font></b> ... tım program bude vyhodnocova svetelné podmienky a môme zadáva
-	svetelné zdroje. Maximálne môme poui 8 zdrojov svetla s názvami:GL_LIGHT0, GL_LIGHT1, ...,GL_LIGHT7.
-	<br>Kadé svetlo mono samostatne zapnú/vypnú príkazmi: <b><font color="Blue">glEnable(GL_LIGHTi)</font></b>/<b><font color="Blue">glDisable(GL_LIGHTi)</font></b>.
+<dd>Na prÃ¡cu so svetlom pouÅ¾ijeme prÃ­kaz:<b><font color="Blue"> glEnable(GL_LIGHTING)</font></b> ... tÃ½m program bude vyhodnocovaÅ¥ svetelnÃ© podmienky a mÃ´Å¾me zadÃ¡vaÅ¥
+	svetelnÃ© zdroje. MaximÃ¡lne mÃ´Å¾me pouÅ¾iÅ¥ 8 zdrojov svetla s nÃ¡zvami:GL_LIGHT0, GL_LIGHT1, ...,GL_LIGHT7.
+	<br>KaÅ¾dÃ© svetlo moÅ¾no samostatne zapnÃºÅ¥/vypnÃºÅ¥ prÃ­kazmi: <b><font color="Blue">glEnable(GL_LIGHTi)</font></b>/<b><font color="Blue">glDisable(GL_LIGHTi)</font></b>.
 <dt>Vlastnosti svetla
-<dd>Vlastnos svetelného zdroja mono nastavi/zmeni príkazom: 
-	<br>glLightfv(light, pname, pole) ... pre kadı zdroj nastavíme vlastnosti jednotlivıch zloiek svetla
+<dd>VlastnosÅ¥ svetelnÃ©ho zdroja moÅ¾no nastaviÅ¥/zmeniÅ¥ prÃ­kazom: 
+	<br>glLightfv(light, pname, pole) ... pre kaÅ¾dÃ½ zdroj nastavÃ­me vlastnosti jednotlivÃ½ch zloÅ¾iek svetla
 	<br>Parametre:
-	<br>light ... nastavíme názov zdroja svetla, ktorému ideme nastavova vlastnosti (GL_LIGHT0 ... GL_LIGHT0)
-	<br>pname ... zadáme vlastnos, ktorú chceme nastavi
-	<ul><li>GL_AMBIENT ... štandartná hodnota je [0,0,0,1]
-		<li>GL_DIFFUSE ... štandartná hodnota pre svetlo 0 je [1,1,1,1] pre iné svetlá je [0,0,0,1]
-		<li>GL_SPECULAR ... štandartná hodnota pre svetlo 0 je [1,1,1,1] pre iné svetlá je [0,0,0,1]
-		<li>GL_POSITION ... štandartná hodnota pre svetlo 0 je [0,0,1,0] 
-		<li>GL_SPOT_DIRECTION ... urèuje smer svetla, štandartná hodnota je [0,0,-1]
-			<br> &nbsp; &nbsp; má vıznam len ak uhol svetla (GL_SPOT_CUTOFF) je rôzny od 180
-		<li>GL_SPOT_EXPONENT ... urèuje zaostrenos svetla, povolené hodnoty &lt;0;128&gt;, 0 je rovnomerné svetlo 128 je najsilnejšie v smere svetla
-		<li>GL_SPOT_CUTOFF ... urèuje uhol vyarovaného svetla, prípusné hodnoty sú &lt;0;90&gt; a jedna špeciálna hodnota 180. Defaut hodnota je 180.
+	<br>light ... nastavÃ­me nÃ¡zov zdroja svetla, ktorÃ©mu ideme nastavovaÅ¥ vlastnosti (GL_LIGHT0 ... GL_LIGHT0)
+	<br>pname ... zadÃ¡me vlastnosÅ¥, ktorÃº chceme nastaviÅ¥
+	<ul><li>GL_AMBIENT ... Å¡tandartnÃ¡ hodnota je [0,0,0,1]
+		<li>GL_DIFFUSE ... Å¡tandartnÃ¡ hodnota pre svetlo 0 je [1,1,1,1] pre inÃ© svetlÃ¡ je [0,0,0,1]
+		<li>GL_SPECULAR ... Å¡tandartnÃ¡ hodnota pre svetlo 0 je [1,1,1,1] pre inÃ© svetlÃ¡ je [0,0,0,1]
+		<li>GL_POSITION ... Å¡tandartnÃ¡ hodnota pre svetlo 0 je [0,0,1,0] 
+		<li>GL_SPOT_DIRECTION ... urÄuje smer svetla, Å¡tandartnÃ¡ hodnota je [0,0,-1]
+			<br> &nbsp; &nbsp; mÃ¡ vÃ½znam len ak uhol svetla (GL_SPOT_CUTOFF) je rÃ´zny od 180
+		<li>GL_SPOT_EXPONENT ... urÄuje zaostrenosÅ¥ svetla, povolenÃ© hodnoty &lt;0;128&gt;, 0 je rovnomernÃ© svetlo 128 je najsilnejÅ¡ie v smere svetla
+		<li>GL_SPOT_CUTOFF ... urÄuje uhol vyÅ¾arovanÃ©ho svetla, prÃ­pusnÃ© hodnoty sÃº &lt;0;90&gt; a jedna Å¡peciÃ¡lna hodnota 180. Defaut hodnota je 180.
 	</ul>	
-	Príkaz je: <b><font color="Blue">glMaterialfv(face,pname, pole);</font></b> 
+	PrÃ­kaz je: <b><font color="Blue">glMaterialfv(face,pname, pole);</font></b> 
     <br>Parametre:
-	<ol><li>face - môme zada tieto konštanty<ul><li>GL_FRONT ... urèujeme farbu prednej strany
-												  <li>GL_BACK ... urèujeme farbu zadnej strany	
-												  <li>GL_FRONT_AND_BACK ... ur4ujeme naraz aj prednú aj zadnú stranu
+	<ol><li>face - mÃ´Å¾me zadaÅ¥ tieto konÅ¡tanty<ul><li>GL_FRONT ... urÄujeme farbu prednej strany
+												  <li>GL_BACK ... urÄujeme farbu zadnej strany	
+												  <li>GL_FRONT_AND_BACK ... ur4ujeme naraz aj prednÃº aj zadnÃº stranu
 											  </ul>
-	    <li>pname - tu nastavujeme ktorú svetelnú vlastnos materiálu nastavujeme.
-			<br>Môme zada nasledovné konštanty:<ul><li>GL_AMBIENT ... volíme, keï chceme nastavi ako odráa rozptılené svetlo
-													 <li>GL_DIFFUSE ... volíme,  keï chceme nastavi ako odráa priame svetlo
-													 <li>GL_AMBIENT_AND_DIFFUSE ... volíme,  keï chceme nastavi ako odráa rozptılené i priame svetlo
-													 <li>GL_SPECULAR ... volíme,  keï chceme nastavi ako odráa odlesky
-													 <li>GL_EMISSION ... volíme,  keï chceme nastavi ako vyaruje svetlo
-													 <li>GL_SHININESS ... volíme,  keï chceme nastavi akı ve¾kı odraz bude na materiály 
-													 	<br>(oproti ostanım parametrom, kde tretí parameter je pole, pri tomto tretí parameter volíme èíslo &lt;0;128&gt;
+	    <li>pname - tu nastavujeme ktorÃº svetelnÃº vlastnosÅ¥ materiÃ¡lu nastavujeme.
+			<br>MÃ´Å¾me zadaÅ¥ nasledovnÃ© konÅ¡tanty:<ul><li>GL_AMBIENT ... volÃ­me, keÄ chceme nastaviÅ¥ ako odrÃ¡Å¾a rozptÃ½lenÃ© svetlo
+													 <li>GL_DIFFUSE ... volÃ­me,  keÄ chceme nastaviÅ¥ ako odrÃ¡Å¾a priame svetlo
+													 <li>GL_AMBIENT_AND_DIFFUSE ... volÃ­me,  keÄ chceme nastaviÅ¥ ako odrÃ¡Å¾a rozptÃ½lenÃ© i priame svetlo
+													 <li>GL_SPECULAR ... volÃ­me,  keÄ chceme nastaviÅ¥ ako odrÃ¡Å¾a odlesky
+													 <li>GL_EMISSION ... volÃ­me,  keÄ chceme nastaviÅ¥ ako vyÅ¾aruje svetlo
+													 <li>GL_SHININESS ... volÃ­me,  keÄ chceme nastaviÅ¥ akÃ½ veÄ¾kÃ½ odraz bude na materiÃ¡ly 
+													 	<br>(oproti ostanÃ½m parametrom, kde tretÃ­ parameter je pole, pri tomto tretÃ­ parameter volÃ­me ÄÃ­slo &lt;0;128&gt;
 												 </ul>
 		<li>pole - 										   
 
-            Nastaveniefarby platí pokia¾ ho nezmeníme. Štandartne je											  	  
+            Nastaveniefarby platÃ­ pokiaÄ¾ ho nezmenÃ­me. Å tandartne je											  	  
 </body>
 </html>

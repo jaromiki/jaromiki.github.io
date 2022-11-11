@@ -59,7 +59,7 @@
 	    SUMA[0]=1;
 	    for (i=1;i<=sum;i++) SUMA[i]=0;
 	    for (i=0;i<sum;i++) if (SUMA[i]) SUMA[i+7]=SUMA[i+17]=SUMA[i+27]=1;
-	    vysl4a.value=(SUMA[sum]? 'Dá sa': 'Nedá sa');
+	    vysl4a.value=(SUMA[sum]? 'DÃ¡ sa': 'NedÃ¡ sa');
 	    if (SUMA[sum])
 	    { while (sum-27>=0&&SUMA[sum-27]) {p27++;sum-=27;}
 	      while (sum-17>=0&&SUMA[sum-17]) {p17++;sum-=17;}
@@ -84,7 +84,7 @@
 	    	if (SUMA[i]) for (j=1;j<=n2;j++) if (i+j*p2<=sum) SUMA[i+j*p2]=1;
 	    for (i=sum;i>0;i--) 
 	 		if (SUMA[i]) for (j=1;j<=n3;j++) if (i+j*p3<=sum) SUMA[i+j*p3]=1;
-	    vysl5a.value=(SUMA[sum]? 'Dá sa': 'Nedá sa');
+	    vysl5a.value=(SUMA[sum]? 'DÃ¡ sa': 'NedÃ¡ sa');
 	    if (SUMA[sum])
 	    { while (v3<n3 && sum-p3>=0&&SUMA[sum-p3]) {v3++;sum-=p3;}
 	      while (v2<n2 && sum-p2>=0&&SUMA[sum-p2]) {v2++;sum-=p2;}
@@ -110,7 +110,7 @@
 	{ var S=parseInt(vstup6.value); var sp=0; var ss=0;var mdl=30;var ii=0,sm=0;jj=0;
 	  var TOTAL=0;
 	  for (i=1;i<21;i++) TOTAL+=p[i];
-	  if (S>TOTAL) alert(' Poadovanı súèet je moc ve¾kı, \n úloha nemá riešenie ');
+	  if (S>TOTAL) alert(' PoÅ¾adovanÃ½ sÃºÄet je moc veÄ¾kÃ½, \n Ãºloha nemÃ¡ rieÅ¡enie ');
 	  else
 	  {	i=0;j=1; 
 	  	while (i<21)
@@ -173,8 +173,8 @@
 	function hladajtr1()
 	{  var V= parseInt(vstup9.value);
 	   var vx=S-V; var pom=1;
-	   for (i=1; i<8;i++) if (vx == p[i]) {pom=0; vystup9.value = 'chıba trpaslík: '+i;}
-	   if (pom) vystup9.value = 'chybné zadanie';
+	   for (i=1; i<8;i++) if (vx == p[i]) {pom=0; vystup9.value = 'chÃ½ba trpaslÃ­k: '+i;}
+	   if (pom) vystup9.value = 'chybnÃ© zadanie';
 	}
 	function napln10()
 	{  S=0;
@@ -202,13 +202,13 @@
 		for (j=V; j>=0;j--)
         {  ii=j+p[i]; if (pom[i-1][j]) { pom[i][j]=pom[i-1][j]; if (ii<=V) pom[i][ii]=pom[i-1][ii]+1; }
 		}
-	  if (!pom[20][V])	alert ('Nesprávne údaje');
+	  if (!pom[20][V])	alert ('NesprÃ¡vne Ãºdaje');
 	  else
 	  {  for (k=20;k>0;k--) 
 	     {  if (pom[k][V]==pom[k-1][V]) document.getElementById('odp'+k).value= 'vonku';
 			else { if (pom[k][V]) 
 			         if (pom[k-1][V]==0) document.getElementById('odp'+k).value= 'doma';
-				     else  document.getElementById('odp'+k).value= 'mono';
+				     else  document.getElementById('odp'+k).value= 'moÅ¾no';
 			       for (i=k-1; i>=0;i--)
 			         for (j=V; j>=0;j--) if (pom[i][j])  if (j+p[k]<=V) pom[i][j+p[k]]=pom[i][j+p[k]]+1;
 				 }	 
@@ -363,20 +363,20 @@ function hladajmob()
 	if (pole[i-1][m]==n) mobsum.value=i; else mobsum.value=i-1;
 }
 function help(n)
-{	nove=window.open("","okno","scroollbar=1,status=0,left=100,top=100"); //vytvorí nové okno bez statusu 
-	nove.resizeTo(900,550); //urèí oknu va¾kos 
-	nove.document.open(); // open otvorí prúd do okna (vymae ho zároveò) 
-	nove.document.write("<html>"); // prvı text do okna 
+{	nove=window.open("","okno","scroollbar=1,status=0,left=100,top=100"); //vytvorÃ­ novÃ© okno bez statusu 
+	nove.resizeTo(900,550); //urÄÃ­ oknu vaÄ¾kosÅ¥ 
+	nove.document.open(); // open otvorÃ­ prÃºd do okna (vymaÅ¾e ho zÃ¡roveÅˆ) 
+	nove.document.write("<html>"); // prvÃ½ text do okna 
 	nove.document.write("<head>\n"); 
 	nove.document.write("<META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'>\n"); 
 	nove.document.write('<title>Help</title>'); 
-	nove.document.write("</head>\n"); // koniec hlavièky 
-	nove.document.write("<body>\n"); // a zaèína telo
+	nove.document.write("</head>\n"); // koniec hlaviÄky 
+	nove.document.write("<body>\n"); // a zaÄÃ­na telo
 		
 	switch (n)
 	{ case 1: 
-		nove.document.write("Návod:<br>Cyklom prejdeme cez prvky po¾a. Keï èíslo zapadá do rastúcej postupnosti,");
-		nove.document.write("<br>zväèšíme dåku aktuálneho úseku, keï nie tak aktuálnu dåku porovnáme s maximálnou.");
+		nove.document.write("NÃ¡vod:<br>Cyklom prejdeme cez prvky poÄ¾a. KeÄ ÄÃ­slo zapadÃ¡ do rastÃºcej postupnosti,");
+		nove.document.write("<br>zvÃ¤ÄÅ¡Ã­me dÄºÅ¾ku aktuÃ¡lneho Ãºseku, keÄ nie tak aktuÃ¡lnu dÄºÅ¾ku porovnÃ¡me s maximÃ¡lnou.");
 		nove.document.write("<P>\n");
 		nove.document.write("<br><code>maxu=1;akt_dlzka=1;\n"); 
 		nove.document.write("<br>for(int i=2;i&lt;=n;i++");  
@@ -388,10 +388,10 @@ function help(n)
 		nove.document.close(); 
 		break;
 	 case 2:
-		nove.document.write("Návod:<br>Zloitejšia úloha oproti predošlej. Pre kadı prvok po¾a si budeme pamäta dåku maximálnej postupnosti,\n");
-		nove.document.write("<br>ktorá v òom konèí. Prejdeme všetky prky po¾a a pre kadı prvok nájdeme všetky predošlé prvky ktoré sú menšie ako aktuálny.\n");
-		nove.document.write("<br>Vyberieme ten v ktorom konèí najdlhšia postupnos - v aktuálnom prvku potom konèí postupnos o 1 dlhšia\n");
-		nove.document.write("<br>Zloitos tohoto algoritmu je O(n<sup>2</sup>), ale dá sa zefektívni na O(n logn)\n");
+		nove.document.write("NÃ¡vod:<br>ZloÅ¾itejÅ¡ia Ãºloha oproti predoÅ¡lej. Pre kaÅ¾dÃ½ prvok poÄ¾a si budeme pamÃ¤taÅ¥ dÄºÅ¾ku maximÃ¡lnej postupnosti,\n");
+		nove.document.write("<br>ktorÃ¡ v Åˆom konÄÃ­. Prejdeme vÅ¡etky prky poÄ¾a a pre kaÅ¾dÃ½ prvok nÃ¡jdeme vÅ¡etky predoÅ¡lÃ© prvky ktorÃ© sÃº menÅ¡ie ako aktuÃ¡lny.\n");
+		nove.document.write("<br>Vyberieme ten v ktorom konÄÃ­ najdlhÅ¡ia postupnosÅ¥ - v aktuÃ¡lnom prvku potom konÄÃ­ postupnosÅ¥ o 1 dlhÅ¡ia\n");
+		nove.document.write("<br>ZloÅ¾itosÅ¥ tohoto algoritmu je O(n<sup>2</sup>), ale dÃ¡ sa zefektÃ­vniÅ¥ na O(n logn)\n");
 		nove.document.write("<P>\n");
 		nove.document.write("<br><code>for (int i=1;i&lt;=n;i++) maxu[i]=1;\n"); 
 		nove.document.write("<br>for(int i=2;i&lt;=n;i++)\n");  
@@ -399,19 +399,19 @@ function help(n)
 		nove.document.write("<br> &nbsp; &nbsp; if (a[i]>a[j])  maxu[i] = max(maxu[i],maxu[j]+1)\n");
 		nove.document.write("<br>imax = 1;\n");
 		nove.document.write("<br>for(int i=2;i&lt;=n;i++) if (maxu[i]> maxu[imax]) imax= i;\n");  
-		nove.document.write("<br>// teraz uz vieme, kde konèí max. vybratá podpostupnos, celú postupnos mono nájs cúvaním\n");
-		nove.document.write("<br>//e nájdeme v¾avo èíslo menšie ako aktuálne také, e v òom konèí podpostupnos o 1 menšia\n");
+		nove.document.write("<br>// teraz uz vieme, kde konÄÃ­ max. vybratÃ¡ podpostupnosÅ¥, celÃº postupnosÅ¥ moÅ¾no nÃ¡jsÅ¥ cÃºvanÃ­m\n");
+		nove.document.write("<br>//Å¾e nÃ¡jdeme vÄ¾avo ÄÃ­slo menÅ¡ie ako aktuÃ¡lne takÃ©, Å¾e v Åˆom konÄÃ­ podpostupnosÅ¥ o 1 menÅ¡ia\n");
 		nove.document.write("</P>\n");
 		nove.document.write("</body>"); 
 		nove.document.write("</html>"); 
 		nove.document.close(); 
 		break;
 	case 4:	
-		nove.document.write("Návod:<br>Zaèneme tım, e vieme urèite zaplati sumu 0€ (poèet minutıch poukáok je 0)\n)");
-		nove.document.write("<br>Budeme prechádza èísla od 0 po suma, ak sa nejaké èíslo A dá poukákami zaplati, tak si poznaèíme èísla\n)");
-	 	nove.document.write("<br>èísla A + poukazka1, A+poukazka2, A+poukazka3, ktoré sa tie dajú tie poukákami zaplati\n)");
-		nove.document.write("<br>Technicky to zrealizujeme po¾om DASA[0..suma] of boolean, kde všade bude na zaèiatku false, okrem DASA[0], kde bude TRUE.\n)");
-		nove.document.write("<br>Postupne budeme vytvára všetky hodnoty, ktoré sa dajú poukákami zaplati.\n)");
+		nove.document.write("NÃ¡vod:<br>ZaÄneme tÃ½m, Å¾e vieme urÄite zaplatiÅ¥ sumu 0â‚¬ (poÄet minutÃ½ch poukÃ¡Å¾ok je 0)\n)");
+		nove.document.write("<br>Budeme prechÃ¡dzaÅ¥ ÄÃ­sla od 0 po suma, ak sa nejakÃ© ÄÃ­slo A dÃ¡ poukÃ¡Å¾kami zaplatiÅ¥, tak si poznaÄÃ­me ÄÃ­sla\n)");
+	 	nove.document.write("<br>ÄÃ­sla A + poukazka1, A+poukazka2, A+poukazka3, ktorÃ© sa tieÅ¾ dajÃº tieÅ¾ poukÃ¡Å¾kami zaplatiÅ¥\n)");
+		nove.document.write("<br>Technicky to zrealizujeme poÄ¾om DASA[0..suma] of boolean, kde vÅ¡ade bude na zaÄiatku false, okrem DASA[0], kde bude TRUE.\n)");
+		nove.document.write("<br>Postupne budeme vytvÃ¡raÅ¥ vÅ¡etky hodnoty, ktorÃ© sa dajÃº poukÃ¡Å¾kami zaplatiÅ¥.\n)");
 		nove.document.write("<P>\n");
 		nove.document.write("<br><code>DASA[0]:=TRUE;\n"); 
 		nove.document.write("<br>for(int i=0;i&lt;=suma;i++)\n");  
@@ -428,16 +428,16 @@ function help(n)
 		nove.document.close(); 
 		break;
 	case 5:	
-		nove.document.write("Návod: Nech máme poukáky:\n)");
+		nove.document.write("NÃ¡vod: Nech mÃ¡me poukÃ¡Å¾ky:\n)");
 		nove.document.write("<br>hodnota ... poukazka1 , &nbsp; &nbsp; pocet ... n1\n)");
 		nove.document.write("<br>hodnota ... poukazka2 , &nbsp; &nbsp; pocet ... n2\n)");
 		nove.document.write("<br>hodnota ... poukazka3 , &nbsp; &nbsp; pocet ... n3\n)");
-		nove.document.write("<br>Zaèneme tım, e vieme urèite zaplati sumu 0€ (poèet minutıch poukáok je 0)\n)");
-		nove.document.write("<br>Najprv vytvorím všetky sumy &lt;= suma, ktoré sa dajú vytvori pomocou prvej poukáky\n)");
-	 	nove.document.write("<br>Teraz ku všetkım sumám, ktoré vieme vyrobi pridávame druhé poukáky\n)");
-	 	nove.document.write("<br>Nakoniec ku všetkım sumám, ktoré vieme vyrobi pridávame tretie poukáky\n)");
-		nove.document.write("<br>Technicky to zrealizujeme po¾om DASA[0..suma] of boolean, kde všade bude na zaèiatku false, okrem DASA[0], kde bude TRUE.\n)");
-		nove.document.write("<br>Postupne budeme vytvára všetky hodnoty, ktoré sa dajú poukákami zaplati.\n)");
+		nove.document.write("<br>ZaÄneme tÃ½m, Å¾e vieme urÄite zaplatiÅ¥ sumu 0â‚¬ (poÄet minutÃ½ch poukÃ¡Å¾ok je 0)\n)");
+		nove.document.write("<br>Najprv vytvorÃ­m vÅ¡etky sumy &lt;= suma, ktorÃ© sa dajÃº vytvoriÅ¥ pomocou prvej poukÃ¡Å¾ky\n)");
+	 	nove.document.write("<br>Teraz ku vÅ¡etkÃ½m sumÃ¡m, ktorÃ© vieme vyrobiÅ¥ pridÃ¡vame druhÃ© poukÃ¡Å¾ky\n)");
+	 	nove.document.write("<br>Nakoniec ku vÅ¡etkÃ½m sumÃ¡m, ktorÃ© vieme vyrobiÅ¥ pridÃ¡vame tretie poukÃ¡Å¾ky\n)");
+		nove.document.write("<br>Technicky to zrealizujeme poÄ¾om DASA[0..suma] of boolean, kde vÅ¡ade bude na zaÄiatku false, okrem DASA[0], kde bude TRUE.\n)");
+		nove.document.write("<br>Postupne budeme vytvÃ¡raÅ¥ vÅ¡etky hodnoty, ktorÃ© sa dajÃº poukÃ¡Å¾kami zaplatiÅ¥.\n)");
 		nove.document.write("<P>\n");
 		nove.document.write("<br><code>DASA[0]=TRUE;\n"); 
 		nove.document.write("<br>for(int i=1;i&lt;=n1;i++) if (i*poukazka1&lt;=suma) DASA[i*poukazka1]=TRUE;\n");  
@@ -456,13 +456,13 @@ function help(n)
 		nove.document.close(); 
 		break;
 	case 6:				
-		nove.document.write("Návod: Vytvorme si premenné:\n");
-		nove.document.write("<br>sd ... súèet aktuálnej podpostupnosti\n");
-		nove.document.write("<br>smax ... súèet maximálnej podpostupnosti\n");
-		nove.document.write("<br>i1 ... kde zaèína aktuálna podpostupnos\n");
-		nove.document.write("<br>ip ... poèet prvkov v aktuálnej podpostupnosti\n");
-		nove.document.write("<br>imax1 ... kde zaèína maximálna podpostupnos\n");
-		nove.document.write("<br>ipmax ... poèet prvkov v maximálnej podpostupnosti\n");
+		nove.document.write("NÃ¡vod: Vytvorme si premennÃ©:\n");
+		nove.document.write("<br>sd ... sÃºÄet aktuÃ¡lnej podpostupnosti\n");
+		nove.document.write("<br>smax ... sÃºÄet maximÃ¡lnej podpostupnosti\n");
+		nove.document.write("<br>i1 ... kde zaÄÃ­na aktuÃ¡lna podpostupnosÅ¥\n");
+		nove.document.write("<br>ip ... poÄet prvkov v aktuÃ¡lnej podpostupnosti\n");
+		nove.document.write("<br>imax1 ... kde zaÄÃ­na maximÃ¡lna podpostupnosÅ¥\n");
+		nove.document.write("<br>ipmax ... poÄet prvkov v maximÃ¡lnej podpostupnosti\n");
 		nove.document.write("<br>\n");
 		nove.document.write("<br>sd=0; smax=0; i1=1; imax=0; ip=0; ipmax=0;\n");
 		nove.document.write("<br>for(int i=1;i&lt;=N;i++)\n");
@@ -475,38 +475,38 @@ function help(n)
 		nove.document.write("</html>"); 
 		break;
 	case 7:				
-		nove.document.write("Myšlienka: Vytvorím si dva ukazovatele: jeden ukazuje na zaèiatok postupnosti (ZAS) a druhı na koniec (KON)\n");
-		nove.document.write("<br>Na zaèiatku obidva ukazujú na zaèiatok nášho po¾a\n");
-		nove.document.write("<br>KON budeme posúva pokia¾ súèet podpostupnosti je menší ako poadovanı min. súèet (S)\n");
-		nove.document.write("<br>Keï KON zastane zaèneme posúva ZAC aby súèet podpostupnosti bol stále väèší alebo rovnı S\n");
-		nove.document.write("<br>Keïa ZAS zastane porovnáme dåku nájdenej postupnosti s MIN ... (na zaciatku bol MIN rovnı dåke po¾a)\n");
-		nove.document.write("<br>Posunieme ZAS o jedno miesto a vrátime sa v programe na miesto, kde pohybujeme ukazovate¾om KON\n");
-		nove.document.write("<br>Vrátime sa v programe na miesto, kde pohybujeme ukazovate¾om\n");
-		nove.document.write("<br>Program konèí keï KON \"vybehne\" z po¾a\n");
+		nove.document.write("MyÅ¡lienka: VytvorÃ­m si dva ukazovatele: jeden ukazuje na zaÄiatok postupnosti (ZAS) a druhÃ½ na koniec (KON)\n");
+		nove.document.write("<br>Na zaÄiatku obidva ukazujÃº na zaÄiatok nÃ¡Å¡ho poÄ¾a\n");
+		nove.document.write("<br>KON budeme posÃºvaÅ¥ pokiaÄ¾ sÃºÄet podpostupnosti je menÅ¡Ã­ ako poÅ¾adovanÃ½ min. sÃºÄet (S)\n");
+		nove.document.write("<br>KeÄ KON zastane zaÄneme posÃºvaÅ¥ ZAC aby sÃºÄet podpostupnosti bol stÃ¡le vÃ¤ÄÅ¡Ã­ alebo rovnÃ½ S\n");
+		nove.document.write("<br>KeÄa ZAS zastane porovnÃ¡me dÄºÅ¾ku nÃ¡jdenej postupnosti s MIN ... (na zaciatku bol MIN rovnÃ½ dÄºÅ¾ke poÄ¾a)\n");
+		nove.document.write("<br>Posunieme ZAS o jedno miesto a vrÃ¡time sa v programe na miesto, kde pohybujeme ukazovateÄ¾om KON\n");
+		nove.document.write("<br>VrÃ¡time sa v programe na miesto, kde pohybujeme ukazovateÄ¾om\n");
+		nove.document.write("<br>Program konÄÃ­ keÄ KON \"vybehne\" z poÄ¾a\n");
 		nove.document.write("</body>"); 
 		nove.document.write("</html>"); 
 		break;
 	case 81:				
-		nove.document.write("Myšlienka: Vytvorím si pomocne pole POM[][], ktoré bude ma poèet riadkov == poètu prvkov v poli P2 a poèet ståpcov bude == poètu prvkov v P1\n");
-		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... v POM[i][j] bude dåka spoloènej popostupnosti keï POLE1[] má len j prvkov a POLE2[] má i prvkov\n");
-		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... prvı riadok po¾a POM[] urobím ¾ahko - pokia¾ POLE2[1] !=POLE1[j] bude POM[1][j]==0, od prípadnej zhody bude POM[1][j]==1\n");
-		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... teraz treba porozmıšla ako vypoèíta POM[i][j] v ïa¾ších riadkoch a ako po skonèení napåòania POM[][] urèi tú spoloènú podpostupnos\n");
+		nove.document.write("MyÅ¡lienka: VytvorÃ­m si pomocne pole POM[][], ktorÃ© bude maÅ¥ poÄet riadkov == poÄtu prvkov v poli P2 a poÄet stÄºpcov bude == poÄtu prvkov v P1\n");
+		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... v POM[i][j] bude dÄºÅ¾ka spoloÄnej popostupnosti keÄ POLE1[] mÃ¡ len j prvkov a POLE2[] mÃ¡ i prvkov\n");
+		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... prvÃ½ riadok poÄ¾a POM[] urobÃ­m Ä¾ahko - pokiaÄ¾ POLE2[1] !=POLE1[j] bude POM[1][j]==0, od prÃ­padnej zhody bude POM[1][j]==1\n");
+		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... teraz treba porozmÃ½Å¡laÅ¥ ako vypoÄÃ­taÅ¥ POM[i][j] v ÄaÄ¾Å¡Ã­ch riadkoch a ako po skonÄenÃ­ napÄºÅˆania POM[][] urÄiÅ¥ tÃº spoloÄnÃº podpostupnosÅ¥\n");
 		nove.document.write("</body>"); 
 		nove.document.write("</html>"); 
 		break;
 	case 82:				
-		nove.document.write(" POM[i][j] vypoèítam pomocou hodnôt POLE2[i], POLE1[j], POM[i-1][j-1],POM[i-1][j], POM[i][j-1]\n");
+		nove.document.write(" POM[i][j] vypoÄÃ­tam pomocou hodnÃ´t POLE2[i], POLE1[j], POM[i-1][j-1],POM[i-1][j], POM[i][j-1]\n");
 		nove.document.write("<br> ak POLE2[i] == POLE1[j] tak POM[i][j] = POM[i-1][j-1] +1\n");
 		nove.document.write(" <br>inak POM[i][j] = max(POM[i-1][j],POM[i][j-1] \n");
-		nove.document.write(" <br>postupnos nájdeme 'cúvacím' algoritmom z pravého dolného rohu po¾a POM[][]\n");
+		nove.document.write(" <br>postupnosÅ¥ nÃ¡jdeme 'cÃºvacÃ­m' algoritmom z pravÃ©ho dolnÃ©ho rohu poÄ¾a POM[][]\n");
 		nove.document.write("</body>"); 
 		nove.document.write("</html>"); 
 		break;
 	case 11:				
-		nove.document.write("Myšlienka: Vytvorím si dve pomocné polia ANO[], NIE[] poèet prvkov v tıchto poliach bude rovnı poètu fliaš na polici\n");
-		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... v ANO[i] bude maximálne mnostvo alkoholu, ktoré sa dá vypi z fliaš (1 a i) ak i-tu flašu pijem\n");
-		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... v NIE[i] bude maximálne mnostvo alkoholu, ktoré sa dá vypi z fliaš (1 a i) ak i-tu flašu nepijem\n");
-		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... teraz treba porozmıšla ako vypoèíta ANO[i], NIE[i] pomocou predošlıch hodnôt v tıchto poliach\n");
+		nove.document.write("MyÅ¡lienka: VytvorÃ­m si dve pomocnÃ© polia ANO[], NIE[] poÄet prvkov v tÃ½chto poliach bude rovnÃ½ poÄtu fliaÅ¡ na polici\n");
+		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... v ANO[i] bude maximÃ¡lne mnoÅ¾stvo alkoholu, ktorÃ© sa dÃ¡ vypiÅ¥ z fliaÅ¡ (1 aÅ¾ i) ak i-tu flaÅ¡u pijem\n");
+		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... v NIE[i] bude maximÃ¡lne mnoÅ¾stvo alkoholu, ktorÃ© sa dÃ¡ vypiÅ¥ z fliaÅ¡ (1 aÅ¾ i) ak i-tu flaÅ¡u nepijem\n");
+		nove.document.write("<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... teraz treba porozmÃ½Å¡laÅ¥ ako vypoÄÃ­taÅ¥ ANO[i], NIE[i] pomocou predoÅ¡lÃ½ch hodnÃ´t v tÃ½chto poliach\n");
 		nove.document.write("</body>"); 
 		nove.document.write("</html>"); 
 		break;
@@ -516,28 +516,28 @@ function help(n)
 </head>
 
 <body onload="napln8();napln9();">
-<h3 style="width:500">Ukáky programov, kde hlavnú úlohu má pouitie po¾a. </h3>
-Všetky moje ukáky pracujú s celoèíselnım po¾om, ale pre väèšinu z nich nie je obsah po¾a vıznamnı. V niektorıch programoch je algoritmus aspoò v hrubıch rysoch popísanı,
-v niektorıch "zámerne" nie -&gt; h¾adanie algoritmu je ponechané na iakovi. iak si môe na náhodnıch (alebo svojich) dátach vyskúša, akı vısledok program dá.
+<h3 style="width:500">UkÃ¡Å¾ky programov, kde hlavnÃº Ãºlohu mÃ¡ pouÅ¾itie poÄ¾a. </h3>
+VÅ¡etky moje ukÃ¡Å¾ky pracujÃº s celoÄÃ­selnÃ½m poÄ¾om, ale pre vÃ¤ÄÅ¡inu z nich nie je obsah poÄ¾a vÃ½znamnÃ½. V niektorÃ½ch programoch je algoritmus aspoÅˆ v hrubÃ½ch rysoch popÃ­sanÃ½,
+v niektorÃ½ch "zÃ¡merne" nie -&gt; hÄ¾adanie algoritmu je ponechanÃ© na Å¾iakovi. Å½iak si mÃ´Å¾e na nÃ¡hodnÃ½ch (alebo svojich) dÃ¡tach vyskÃºÅ¡aÅ¥, akÃ½ vÃ½sledok program dÃ¡.
 <br>Pozn.
-<br>V ukákach nie je robená kontrola vstupu, predpokladá sa, e vstupné dáta budú zadané korektne.   
-<br>Zatia¾ som spracoval nasledovné ukáky:
-<ul><li>H¾adanie najdlhšieho súvislého rastúceho úseku v poli
-	<li><a href="#u2">H¾adanie najdlhšieho nesúvislého rastúceho úseku v poli</a>
-	<li><a href="#u3">H¾adanie najèastejšie sa vyskytujúci znak v texte</a>
-	<li><a href="#u4">Platenie poukákami</a>
-	<li><a href="#u5">Platenie poukákami - všeobecnejšia verzia</a>
-	<li><a href="#u6">Podoblas po¾a s maximálnym súètom</a>
-	<li><a href="#u7">H¾adanie najkratšej súvislej oblasti so súètom väèším ako daná hodnota </a>
-	<li><a href="#u8">H¾adanie spoloènej podpostupnosti</a>
+<br>V ukÃ¡Å¾kach nie je robenÃ¡ kontrola vstupu, predpokladÃ¡ sa, Å¾e vstupnÃ© dÃ¡ta budÃº zadanÃ© korektne.   
+<br>ZatiaÄ¾ som spracoval nasledovnÃ© ukÃ¡Å¾ky:
+<ul><li>HÄ¾adanie najdlhÅ¡ieho sÃºvislÃ©ho rastÃºceho Ãºseku v poli
+	<li><a href="#u2">HÄ¾adanie najdlhÅ¡ieho nesÃºvislÃ©ho rastÃºceho Ãºseku v poli</a>
+	<li><a href="#u3">HÄ¾adanie najÄastejÅ¡ie sa vyskytujÃºci znak v texte</a>
+	<li><a href="#u4">Platenie poukÃ¡Å¾kami</a>
+	<li><a href="#u5">Platenie poukÃ¡Å¾kami - vÅ¡eobecnejÅ¡ia verzia</a>
+	<li><a href="#u6">PodoblasÅ¥ poÄ¾a s maximÃ¡lnym sÃºÄtom</a>
+	<li><a href="#u7">HÄ¾adanie najkratÅ¡ej sÃºvislej oblasti so sÃºÄtom vÃ¤ÄÅ¡Ã­m ako danÃ¡ hodnota </a>
+	<li><a href="#u8">HÄ¾adanie spoloÄnej podpostupnosti</a>
 	<li><a href="#u9">Sedem trpaslikov1</a>
 	<li><a href="#u10">Sedem trpaslikov2</a>
-	<li><a href="#u11">Dopíjame flaše</a>
-	<li><a href="#u12">Hra s èíslami 1</a>
-	<li><a href="#u13">Hra s èíslami 2</a>
-	<li><a href="#u14">Rozbíjame mobily</a>
+	<li><a href="#u11">DopÃ­jame flaÅ¡e</a>
+	<li><a href="#u12">Hra s ÄÃ­slami 1</a>
+	<li><a href="#u13">Hra s ÄÃ­slami 2</a>
+	<li><a href="#u14">RozbÃ­jame mobily</a>
 </ul>	
-<dl><dt>H¾adanie najdlhšieho súvislého rastúceho úseku v poli
+<dl><dt>HÄ¾adanie najdlhÅ¡ieho sÃºvislÃ©ho rastÃºceho Ãºseku v poli
 	<dd>
 		<div style="border-width:3;border-style:outset;width:450;margin:10;background-color:silver;">
 		   <div align="right" style="background-color:#3366ff; width:450; padding:0;border-width:0;">
@@ -545,7 +545,7 @@ v niektorıch "zámerne" nie -&gt; h¾adanie algoritmu je ponechané na iakovi. ia
 		   </div>
 	   <div style="background-color:silver; width:450px;">
 	      <div style="margin:10">
-		  <h4>Najdlhší súvislı rastúci úsek postupnosti</h4>
+		  <h4>NajdlhÅ¡Ã­ sÃºvislÃ½ rastÃºci Ãºsek postupnosti</h4>
 		  pole:<br>
 		  <script>
 		  for (i=1;i<21;i++) document.write('<input type="Text" value="'+(p[i]=10+Math.round(89*Math.random(1))).toFixed()+'" id="input'+i+'" style="width:40;text-align:right" >');
@@ -553,22 +553,22 @@ v niektorıch "zámerne" nie -&gt; h¾adanie algoritmu je ponechané na iakovi. ia
 		  <input type="Button" value="Napln" style="margin:5" onclick="for (i=1;i<21;i++) { document.getElementById('input'+i).value=(p[i]=10+Math.round(89*Math.random(1))).toFixed(); document.getElementById('input'+i).style.color='black';}">
 		  <input type="Button" value="Hladaj" onclick="hladajsuvislyrast();" style="margin:5">
 		  <input type="Button" value="Help" onclick="help(1);" style="margin:5">
-		  <br>Dåka rastúceho úseku: <input type="Text" value="?" readonly style="text-align:right" id="dlzkavysl"> 
+		  <br>DÄºÅ¾ka rastÃºceho Ãºseku: <input type="Text" value="?" readonly style="text-align:right" id="dlzkavysl"> 
 		  </div>
 		</div></div>  
-		V prípade, ak sa vám úlohu nedarí rieši ako je na ukáke, zjednodušte vıpis po¾a (nap. do Mema) bez farebného zvırazòovania.
-		<br>Ak vás zaujíma ako sa na vıpis po¾a dá poui skupina Editov, pozri si <a href="helpu1.html" target="_blank"><input type="Button" value="Help"></a>
+		V prÃ­pade, ak sa vÃ¡m Ãºlohu nedarÃ­ rieÅ¡iÅ¥ ako je na ukÃ¡Å¾ke, zjednoduÅ¡te vÃ½pis poÄ¾a (nap. do Mema) bez farebnÃ©ho zvÃ½razÅˆovania.
+		<br>Ak vÃ¡s zaujÃ­ma ako sa na vÃ½pis poÄ¾a dÃ¡ pouÅ¾iÅ¥ skupina Editov, pozri si <a href="helpu1.html" target="_blank"><input type="Button" value="Help"></a>
 <br><br>
 
-<dt><a name="u2">H¾adanie najdlhšieho nesúvislého rastúceho úseku v poli</a>
-<dd>H¾adáme akú najdlhšiu rastúcu podpostupnos mono vybra z po¾a. 
+<dt><a name="u2">HÄ¾adanie najdlhÅ¡ieho nesÃºvislÃ©ho rastÃºceho Ãºseku v poli</a>
+<dd>HÄ¾adÃ¡me akÃº najdlhÅ¡iu rastÃºcu podpostupnosÅ¥ moÅ¾no vybraÅ¥ z poÄ¾a. 
 		<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
 		   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
 		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
 		   </div>
 	   <div style="background-color:silver; width:450px;">
 	      <div style="margin:10">
-		  <h4>Najdlhšia nesúvislá rastúca podpostupnos</h4>
+		  <h4>NajdlhÅ¡ia nesÃºvislÃ¡ rastÃºca podpostupnosÅ¥</h4>
 		  pole:<br>
 		  <script>
 		  for (i=1;i<21;i++) document.write('<input type="Text" value="'+(p[i]=10+Math.round(89*Math.random(1))).toFixed()+'" id="in'+i+'" style="width:40;text-align:right" >');
@@ -576,24 +576,24 @@ v niektorıch "zámerne" nie -&gt; h¾adanie algoritmu je ponechané na iakovi. ia
 		  <input type="Button" value="Napln" style="margin:5" onclick="for (i=1;i<21;i++) { document.getElementById('in'+i).value=(p[i]=10+Math.round(89*Math.random(1))).toFixed(); document.getElementById('in'+i).style.color='black';}">
 		  <input type="Button" value="Hladaj" onclick="hladajrast();" style="margin:5">
 		  <input type="Button" value="Help" onclick="help(2);" style="margin:5">
-		  <br>Dåka rastúceho úseku: <input type="Text" value="?" readonly style="text-align:right" id="dlzkavysl2"> 
+		  <br>DÄºÅ¾ka rastÃºceho Ãºseku: <input type="Text" value="?" readonly style="text-align:right" id="dlzkavysl2"> 
 		  
 		  </div>
 		</div></div>  
 <br><hr>
 
-<dt><a name="u3">H¾adanie najèastejšie sa vyskytujúci znak v texte</a>
-<dd>Táto úloha je zadaním trochu odlišná (nároènejšia) od predošlıch. 
-	<ol><li>Je povedané len èo máme dosiahnu ale nie je povedané ako (v zadaní ani pole nie je spomenuté).
-		<li>budeme potrebova pole, ktoré nemá indexy èísla ale znaky
+<dt><a name="u3">HÄ¾adanie najÄastejÅ¡ie sa vyskytujÃºci znak v texte</a>
+<dd>TÃ¡to Ãºloha je zadanÃ­m trochu odliÅ¡nÃ¡ (nÃ¡roÄnejÅ¡ia) od predoÅ¡lÃ½ch. 
+	<ol><li>Je povedanÃ© len Äo mÃ¡me dosiahnuÅ¥ ale nie je povedanÃ© ako (v zadanÃ­ ani pole nie je spomenutÃ©).
+		<li>budeme potrebovaÅ¥ pole, ktorÃ© nemÃ¡ indexy ÄÃ­sla ale znaky
 	</ol>
-	Myšlienka algoritmu bude nasledovná:
-	<ul><li>Vytvoríme pole POCET[] so znakovımi indexami #0 a #255 (všetky znaky)
-		<li>V cykle budeme prechádza stringom po jednotlivıch znakoch a pre kadı znak v poli príslušné políèko 
-			v poli POCET zväèšíme o 1. 
-		<li>Po ukonèení tohoto cyklu zistíme v poli POCET maximálnu hodnotu
-		<li>Index, kde bıva max. hodnota, je h¾adané najviac sa vyskytujúce písmenko
-		<li>Nájdená max. hodnota hovorí ko¾ko krát sa v texte vyskytlo
+	MyÅ¡lienka algoritmu bude nasledovnÃ¡:
+	<ul><li>VytvorÃ­me pole POCET[] so znakovÃ½mi indexami #0 aÅ¾ #255 (vÅ¡etky znaky)
+		<li>V cykle budeme prechÃ¡dzaÅ¥ stringom po jednotlivÃ½ch znakoch a pre kaÅ¾dÃ½ znak v poli prÃ­sluÅ¡nÃ© polÃ­Äko 
+			v poli POCET zvÃ¤ÄÅ¡Ã­me o 1. 
+		<li>Po ukonÄenÃ­ tohoto cyklu zistÃ­me v poli POCET maximÃ¡lnu hodnotu
+		<li>Index, kde bÃ½va max. hodnota, je hÄ¾adanÃ© najviac sa vyskytujÃºce pÃ­smenko
+		<li>NÃ¡jdenÃ¡ max. hodnota hovorÃ­ koÄ¾ko krÃ¡t sa v texte vyskytlo
 	</ul>	 	
 		<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
 		   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
@@ -601,325 +601,57 @@ v niektorıch "zámerne" nie -&gt; h¾adanie algoritmu je ponechané na iakovi. ia
 		   </div>
 	   <div style="background-color:silver; width:450px;">
 	      <div style="margin:10">
-		  <h4>H¾adanie najèastejšie sa vyskytujúceho znaku v texte</h4>
-		  Sem zadaj text: <input type="Text" id=vstup3 value="Gymnázium Vavrinca Benedikta Nedoerského" style="width:350; font-family: monospace;" >
-		  <input type="Button" value="Naplò text" style="margin:5" 
+		  <h4>HÄ¾adanie najÄastejÅ¡ie sa vyskytujÃºceho znaku v texte</h4>
+		  Sem zadaj text: <input type="Text" id=vstup3 value="GymnÃ¡zium Vavrinca Benedikta NedoÅ¾erskÃ©ho" style="width:350; font-family: monospace;" >
+		  <input type="Button" value="NaplÅˆ text" style="margin:5" 
          onclick="vstup3.value=''; for (i=1;i<41;i++) vstup3.value+=String.fromCharCode(Math.round(32+90*Math.random(1))); ">
 		 <input type="Button" value="Hladaj" onclick="hladajpocetnost();" style="margin:5">
-		  <br>Najèastejší znak: <input type="Text" value="?" readonly style="text-align:right;width:30" id="znakvysl3a" > 
-		  <br>Poèet vıskytov:&nbsp; <input type="Text" value="?" readonly style="text-align:right;width:30" id="znakvysl3b"> 
+		  <br>NajÄastejÅ¡Ã­ znak: <input type="Text" value="?" readonly style="text-align:right;width:30" id="znakvysl3a" > 
+		  <br>PoÄet vÃ½skytov:&nbsp; <input type="Text" value="?" readonly style="text-align:right;width:30" id="znakvysl3b"> 
 		  </div>
 		</div></div>  
 <hr>
-<dt><a name="u4">Platenie poukákami</a>
-<dd>Máme dané ¾ubovo¾né (nekoneèné) mnostvo platovıch poukáok v hodnote: 7€, 17€, 27€ a máme zadanú sumu S (prirodzené èíslo)
-	<ul><li>Zisti, èi sa suma dá presne splati našimi poukákami
-		<li>Ak sa dá, vypíš ko¾ko ktorıch potrebujem
-			<br>Ak je viac riešení, vypíš ¾ubovo¾né z nich.
+<dt><a name="u4">Platenie poukÃ¡Å¾kami</a>
+<dd>MÃ¡me danÃ© Ä¾ubovoÄ¾nÃ© (nekoneÄnÃ©) mnoÅ¾stvo platovÃ½ch poukÃ¡Å¾ok v hodnote: 7â‚¬, 17â‚¬, 27â‚¬ a mÃ¡me zadanÃº sumu S (prirodzenÃ© ÄÃ­slo)
+	<ul><li>Zisti, Äi sa suma dÃ¡ presne splatiÅ¥ naÅ¡imi poukÃ¡Å¾kami
+		<li>Ak sa dÃ¡, vypÃ­Å¡ koÄ¾ko ktorÃ½ch potrebujem
+			<br>Ak je viac rieÅ¡enÃ­, vypÃ­Å¡ Ä¾ubovoÄ¾nÃ© z nich.
 	</ul>
-	Podobne ako v predošlom riešení, treba najprv algoritmus vymyslie.
+	Podobne ako v predoÅ¡lom rieÅ¡enÃ­, treba najprv algoritmus vymyslieÅ¥.
 	<div style="border-width:3;border-style:outset;width:450;margin:10;background-color:silver;">
 		   <div align="right" style="background-color:#3366ff; width:450; padding:0;border-width:0;">
 		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
 		   </div>
 	<div style="background-color:silver; width:450px;">
 	      <div style="margin:10">
-		  	<h4>Platenie platovımi poukákami v hodnote 7€, 17€ a 27€</h4>
+		  	<h4>Platenie platovÃ½mi poukÃ¡Å¾kami v hodnote 7â‚¬, 17â‚¬ a 27â‚¬</h4>
 		  	Sem zadaj sumu: <input type="Text" id=vstup4 value="100" style="width:70; font-family: monospace;text-align:right" >
-		  	<br><input type="Button" value="Naplò sumu" style="margin:5; margin:10" 
+		  	<br><input type="Button" value="NaplÅˆ sumu" style="margin:5; margin:10" 
             	  onclick="vstup4.value=Math.round(1000*Math.random(1)).toString(); ">
 		  	<input type="Button" value="Hladaj" onclick="hladajpoukazky1();" style="margin:10">
 		    <input type="Button" value="Help" onclick="help(4);" style="margin:5">
-		  	<div style="margin:5">Dá sa/Nedá sa: <input type="Text" value="?" readonly style="text-align:right;width:80" id="vysl4a" > </div>
-		  	<div>Poèet poukáok: 7€ <input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl4b"> 
-		                     17€ <input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl4c">
-							 27€ <input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl4d">
+		  	<div style="margin:5">DÃ¡ sa/NedÃ¡ sa: <input type="Text" value="?" readonly style="text-align:right;width:80" id="vysl4a" > </div>
+		  	<div>PoÄet poukÃ¡Å¾ok: 7â‚¬ <input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl4b"> 
+		                     17â‚¬ <input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl4c">
+							 27â‚¬ <input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl4d">
 		  	</div>					 
 		  </div>
 	</div></div>  
 <br>
-<dt><a name="u5">Platenie poukákami - všeobecnejšia verzia</a>
-<dd>Máme dané koneèné mnostvá N1,N2,N3 platovıch poukáok v hodnote: P1 €, P2 €, P3 € a máme zadanú sumu S (prirodzené èíslo)
-	<ul><li>Zisti, èi sa suma dá presne splati našimi poukákami
-		<li>Ak sa dá, vypíš ko¾ko ktorıch potrebujem
-			<br>Ak je viac riešení, vypíš ¾ubovo¾né z nich.
+<dt><a name="u5">Platenie poukÃ¡Å¾kami - vÅ¡eobecnejÅ¡ia verzia</a>
+<dd>MÃ¡me danÃ© koneÄnÃ© mnoÅ¾stvÃ¡ N1,N2,N3 platovÃ½ch poukÃ¡Å¾ok v hodnote: P1 â‚¬, P2 â‚¬, P3 â‚¬ a mÃ¡me zadanÃº sumu S (prirodzenÃ© ÄÃ­slo)
+	<ul><li>Zisti, Äi sa suma dÃ¡ presne splatiÅ¥ naÅ¡imi poukÃ¡Å¾kami
+		<li>Ak sa dÃ¡, vypÃ­Å¡ koÄ¾ko ktorÃ½ch potrebujem
+			<br>Ak je viac rieÅ¡enÃ­, vypÃ­Å¡ Ä¾ubovoÄ¾nÃ© z nich.
 	</ul>
-	Podobne ako v predošlom riešení, treba najprv algoritmus vymyslie.
+	Podobne ako v predoÅ¡lom rieÅ¡enÃ­, treba najprv algoritmus vymyslieÅ¥.
 		<div style="border-width:3;border-style:outset;width:400;margin:10;background-color:silver;">
 		   <div align="right" style="background-color:#3366ff; width:400px; padding:0;border-width:0;">
 		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
 		   </div>
 	   <div style="background-color:silver; width:400px;">
 	      <div style="margin:10">
-		  <h4 align="center">Platenie platovımi poukákami</h4>
+		  <h4 align="center">Platenie platovÃ½mi poukÃ¡Å¾kami</h4>
 		  <table border="1" frame="box" rules="cols">
-		        <tr><td colspan="2" align="center" style="padding:0"><div style="border: medium outset;padding:4">Poukáky</div></tr>
-		  		<tr bgcolor=#dddddd><td>Zadané<td align="center"  style="padding:5">Vypoèítané</tr>
-		  		<tr><td style="padding:5">1: poèet <input type="Text" value="10" style="text-align:right;width:20" id="vstup51a"> &nbsp; &nbsp;hodnota 
-		  		   <input type="Text" value="7" style="text-align:right;width:20" id="vstup51b">
-					<td><input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl51"></tr>
-		  		<tr><td style="padding:5">2: poèet <input type="Text" value="10" style="text-align:right;width:20" id="vstup52a"> &nbsp; &nbsp;hodnota 
-		  		   <input type="Text" value="17" style="text-align:right;width:20" id="vstup52b">
-				   <td><input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl52"></tr>
-		  		<tr><td style="padding:5">3: poèet <input type="Text" value="10" style="text-align:right;width:20" id="vstup53a"> &nbsp; &nbsp;hodnota 
-		  		   <input type="Text" value="27" style="text-align:right;width:20" id="vstup53b">
-				   <td><input type="Text" value="?" readonly style="text-align:right;width:30" id="vysl53"></tr>
-		</table>		   
-		  Sem zadaj sumu: <input type="Text" id=vstup5 value="100" style="width:70; font-family: monospace;text-align:right" > &nbsp; &nbsp; &nbsp;
-		  <input type="Button" value="Vıpoèet" onclick="hladajpoukazky2();" >
-	    <input type="Button" value="Help" onclick="help(5);" style="margin:5">
-		  <div style="margin:5">Dá sa/Nedá sa: <input type="Text" value="?" readonly style="text-align:right;width:80" id="vysl5a" > </div>
-		  </div>
-		</div></div>  
-<hr>
-<dt><a name="u6">Podoblas s maximálnym súètom</a>
-<dd>Máme dané pole s celımi (aj zápornımi) èíslami. Máme nájs súvislú podoblas s maximálnym súètom.
-	<div style="border-width:3;border-style:outset;width:450;margin:10;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:450; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:450;">
-	      <div style="margin:10">
-			  <h4>Podoblas s maximálnym súètom</h4>
-			  pole:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="'+(p[i]=-20+Math.round(41*Math.random(1))).toFixed()+'" id="inp'+i+'" style="width:40;text-align:right" >');
-			  </script><br>
-			  <input type="Button" value="Napln" style="margin:5" onclick="for (i=1;i<21;i++) { document.getElementById('inp'+i).value=(p[i]=-20+Math.round(41*Math.random(1))).toFixed(); document.getElementById('inp'+i).style.color='black';}">
-		  <input type="Button" value="Hladaj" onclick="hladajsum();" style="margin:5">
-   	 	    <input type="Button" value="Help" onclick="help(6);" style="margin:5">
-		  <br>Úsek zaèína: <input type="Text" value="?" readonly style="text-align:right" id="sumvysl1"> 
-		  <br>Poèet èísel: <input type="Text" value="?" readonly style="text-align:right" id="sumvysl2"> 
-		  <br>Súèet èísel: <input type="Text" value="?" readonly style="text-align:right" id="sumvysl3"> 
-		  </div>
-		</div></div>  
-<hr>
-<dt><a name="u7">H¾adanie najkratšej súvislej oblasti so súètom väèším ako daná hodnota</a>
-<dd>Máme zadané pole s kladnımi èíslami (môu by aj reálne), nech súèet všetkıch prvkov po¾a je TOTAL &gt; 0.
-	<br>Nech je dané èíslo S: 0 &lt; S &lt;= TOTAL. Úlohou je nájs najkratšiu súvislú podpostupnos tak, aby jej 
-	súèet bol &gt;= S.
-	<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:450px;">
-	      <div style="margin:10">
-			  <h4>Podoblas s maximálnym súètom</h4>
-			  Poadovanı súèet aspoò: &nbsp;<input type="Text" value="50" style="text-align:right" id="vstup6">
-			  <br></p>pole:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="'+(p[i]=1+Math.round(41*Math.random(1))).toFixed()+'" id="inpu'+i+'" style="width:40;text-align:right" >');
-			  </script><br>
-			  <input type="Button" value="Napln" style="margin:5" onclick="for (i=1;i<21;i++) { document.getElementById('inpu'+i).value=(p[i]=1+Math.round(41*Math.random(1))).toFixed(); document.getElementById('inpu'+i).style.color='black';}">
-		  <input type="Button" value="Hladaj" onclick="hladajkratke();" style="margin:5">
-		  <input type="Button" value="Help" onclick="help(7);" style="margin:5">
-		  <br>Úsek zaèína: <input type="Text" value="?" readonly style="text-align:right" id="sumvyslk1"> 
-		  <br>Poèet èísel: <input type="Text" value="?" readonly style="text-align:right" id="sumvyslk2"> 
-		  <br>Súèet èísel: <input type="Text" value="?" readonly style="text-align:right" id="sumvyslk3"> 
-		  </div>
-		</div></div>  
-<hr>
-<dt><a name="u8">Zistenie poètu najdlhšej podpostupnosti dvoch postupností</a>
-<dd>Nech máme postupnos A={ai} (i&lt;=pocA) a postupnos B={bi}  (i&lt;=pocB), 
-	<br>h¾adáme najdlhšiu postupnos C={ci}takú, e C je podpostupnosou postupností A aj B
-	<br>Na zistenie postupnosti C je vhodné pri riešení poui dvojrozmerné pole, na zistenie len dåky
-	postaèí jednorozmerné pole. 
-	<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:450px;">
-	      <div style="margin:10">
-			  <h4>Spoloèná podpostupnos</h4>
-			  pole1:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="" id="pp'+i+'" style="width:40;text-align:right" >');
-			  </script><br>
-			  pole2:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="" id="ppole'+i+'" style="width:40;text-align:right" >');
-			 
-			  </script><br>
-			  <input type="Button" value="Napln" style="margin:5" onclick="napln8();">
-				<input type="Button" value="Help1" onclick="help(81);" style="margin:5">
-				<input type="Button" value="Help2" onclick="help(82);" style="margin:5">
-		  <input type="Button" value="Hladaj" onclick="hladajspol();" style="margin:5">
-		  <br>Poèet èísel: <input type="Text" value="?" readonly style="text-align:right" id="spoldlz"> 
-		  </div>
-		</div></div>  
-	Pozn.:
-	<br>Existujú úlohy, ktoré sú analogické tejto úlohy
-	<ul><li>máme dve postupnosti, ko¾ko prvkov musíme škrtnú aby vznikli rovnaké postupnosti
-		<li>máme danú postupnos, ko¾ko prvkov musíme škrtnú aby vznikol palindróm
-	</ul>	
-<hr>
-<dt><a name="u9">Úloha o siedmych trpaslíkoch</a>
-<dd>Poznáme (máme v poli) váhy našich 7 trpaslíkov {Vi}, prièom Vi &lt;&gt; Vj pre i&lt;&gt;j. 
-	<br>Z vıletu sa vrátilo len 6 trpaslíkov a sumárna váha tıch šiestich je V.
-	<br>Zistite, ktorı trpaslík chıba. 
-	<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:450px;">
-	      <div style="margin:10">
-			  <h4>Sedem trpaslíkov</h4>
-			  trpaslíci:<br>
-			  <script>
-			  for (i=1;i<8;i++) document.write('<input type="Text" value="" id="tt'+i+'" style="width:40;text-align:right" >');
-			  
-			  </script><br>
-              <br>
-			  Váha šiestich: <input type="Text" id="vstup9" style="text-align:right" value="">
-			  <br><br>  
-  			  	<input type="Button" value="Napln" style="margin:5" onclick="napln9();">
-		  		<input type="Button" value="Hladaj" onclick="hladajtr1();" style="margin:5">
-              <br><br>
-			  Chıba: <input type="Text" id="vystup9" style="text-align:right" readonly value="?">
-		  </div>
-		</div></div>  
-<dt><a name="u10">Úloha o siedmych trpaslíkoch - zloitejšia varianta</a>
-<dd>Oproti predošlej úlohy zväèšíme mnostvo trpaslíkov na 20 a hlavne nevieme ko¾kí trpaslíci sa nám vrátili a ešte aj povolíme aj rovnaké váhy trpaslíkov
-	<br>Odpoveïou pre kadého trpaslíka bude :
-		<ol><li>trpaslík je zaruèene doma
-			<li>trpaslík sa mono vrátil domov
-			<li>trpaslík sa zaruèene nevrátil
-		</ol>
-		Alebo program vypíše oznam: "Chybne zadaná váha".<br>
-		Celé to môe vyzera nasledovne:
-	<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:450px;">
-	      <div style="margin:10">
-			  <h4>Sedem trpaslíkov 2</h4>
-			  trpaslici:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="" id="ttt'+i+'" style="width:40;text-align:right" >');
-			  </script>
-              <br><br>
-			  Váha vrátivších trpaslíkov: <input type="Text" id="vstup10" style="text-align:right" value="">
-			  <br><br>  
-  			  	<input type="Button" value="Napln" style="margin:5" onclick="napln10();">
-		  		<input type="Button" value="Hladaj" onclick="hladajtr2();" style="margin:5">
-              <br><br>
-			  odpovede:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="?" id="odp'+i+'" style="width:40;text-align:right" >');
-			  </script>
-		  </div>
-		</div></div>  
-<dt><a name="u11">Problém dopíjania fliaš</a>
-<dd>Volá sa to aj problém alkoholika. Na polici máme N fliaš s nápojom (asi minerálky), prièom v kadej z nich je zadané
-	mnostvo nápoja prirodzenım èíslom {mi}. Chceme vypi èo najviac nápoja ale musíme dodra nasledovné pravidlá:
-	<br>- flaše nesmieme prehadzova (meni poradie)
-	<br>- zvolenú f¾ašu musíme vypi dodna
-	<br>- po skonèení pitia nesmú by ved¾a seba 2 f¾aše s obsahom 0 (prázdne)
-	<br>¼ahšia otázka je - aké mnostvo tekutiny  sa dá vypi najviac
-	<br>ašia otázka je - ktoré flašky mám vypi, aby som vypil èo najviac
-	<div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:450px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:450px;">
-	      <div style="margin:10">
-			  <h4>Problém dopíjania fliaš</h4>
-			  f¾aše:<br>
-			  <script>
-			  for (i=1;i<21;i++) document.write('<input type="Text" value="" id="f'+i+'" style="width:40;text-align:right" >');
-			  </script>
-              <br><br>
-  			  	<input type="Button" value="Napln" style="margin:5" onclick="napln11();">
-		  		<input type="Button" value="Hladaj" onclick="hladajf2();" style="margin:5">
-				<input type="Button" value="Help" onclick="help(11);" style="margin:5">
-              <br><br>
-			  odpoveï:
-			  <br>Maximálne mono vypi: <input type="Text" value="?" id="fosum"><br><br>
-		  </div>
-		</div></div>  
-	<dt><a name="u12">Hra s èíslami 1</a>
-	<dd>V poli máme celé kladné èísla (v našom príklade 10 prvkov, ale snate sa nájs algoritmus fungujúci v reálnom èase aj pre poèet=1 000). Hráèí budú striedavo odobera èísla z kraja, prièom my zaèíname.
-	<br>Predpokladáme, e náš súper je tak rozumnı, e odoberá tak, aby v najhoršom prípade mal najväèší zisk, resp. najmenšiu stratu.
-	<br>Úloha:
-	<br>Zisti akı maximálny zisk (min. stratu) máme zaruèenı. 
-	<div style="border-width:3;border-style:outset;width:480px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:480px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:480px;">
-	      <div style="margin:10">
-			  <h4>Hra s èíslami</h4>
-			  Vstupné údaje pre "hru" mono zada manuálne alebo ich necha vygenerova (stlaèením Naplò)
-			  <br><br>poèet: <input type="Text" value="10" id="ccn" style="width:40;text-align:right" >
-			  <br>èísla:
-			  <script>
-			  for (i=1;i<11;i++) document.write('<input type="Text" value="" id="cc'+i+'" style="width:40;text-align:right" >');
-			  </script>
-              <br><br>
-  			  	<input type="Button" value="Napln" style="margin:5" onclick="naplncc();">
-		  		<input type="Button" value="Hladaj" onclick="hladajcc();" style="margin:5">
-              <br><br>
-			  odpoveï:
-			  <br>Maximálne mono získa: <input type="Text" value="?" id="ccsum"><br><br>
-		  </div>
-		</div></div>  
-	<dt><a name="u13">Hra s èíslami 2 </a>
-	<dd>V poli máme celé kladné èísla (v našom príklade 10 prvkov, ale snate sa nájs algoritmus fungujúci v reálnom èase aj pre poèet=1 000). Hráèí budú striedavo odobera èísla z kraja, prièom my zaèíname.
-	<br>Predpokladáme, e náš súper u nie je tak rozumnı, ale e má namiesto optimálneho ahu jednoducho odoberá tak, 
-	e zoberie z ponúkanıch èísel vdy to väèšie.
-	<br>Úloha:
-	<br>Zisti akı maximálny zisk (min. stratu) máme zaruèenı (poznáme stratégiu protihráèa a vyuijeme to). 
-	<div style="border-width:3;border-style:outset;width:480px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:480px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:480px;">
-	      <div style="margin:10">
-			  <h4>Hra s èíslami 2</h4>
-			  Vstupné údaje pre "hru" mono zada manuálne alebo ich necha vygenerova (stlaèením Naplò)
-			  <br><br>poèet: <input type="Text" value="10" id="ccn2" style="width:40;text-align:right" >
-			  <br>èísla:
-			  <script>
-			  for (i=1;i<11;i++) document.write('<input type="Text" value="" id="cc2'+i+'" style="width:40;text-align:right" >');
-			  </script>
-              <br><br>
-  			  	<input type="Button" value="Napln" style="margin:5" onclick="naplncc2();">
-		  		<input type="Button" value="Hladaj" onclick="hladajcc2();" style="margin:5">
-              <br><br>
-			  odpoveï:
-			  <br>Maximálne mono získa: <input type="Text" value="?" id="ccsum2"><br><br>
-		  </div>
-		</div></div>  
-	<dt><a name="u14">Hra s mobilmi </a>
-	<dd>Máme danıch m mobilov a n poschodovú budovu. Ulohou je testova odolnos mobilov na pád z poschodia - presnejšie máme nájs najnišie poschodie kde sa mobil 
-	vyhodenı z okna u rozbije. (je monı aj vısledok, e sa mobil nerozbije pri iadnom poschodí, resp. e sa rozbije hneï na 1. poschodí)
-	<br>V budove je vıah -schody nie sú. Vıah z prízemia ide na ¾ubovo¾né poschodie, z poschodia ide na prízemie. Za kadé pouitie vıahu (prízemie -> poschodie -> prízemie) je poplatok 1€. 
-	<br>Ko¾ko peòazí musíme ma, aby sme experimentovaním zaruèene našli h¾adané poschodie?
-	<br>Napr.
-	<br>m=1, n=3 ... potrebujem 3€
-	<br>m=2, n=3 ... potrebujem 2€
-	<br>V našom ukákovom príklade bude m ohranièené na 100 a n na 50 000
-	<div style="border-width:3;border-style:outset;width:480px;margin:10px;background-color:silver;">
-	   <div align="right" style="background-color:#3366ff; width:480px; padding:0;border-width:0;">
-		   <img src="../../obr/krizik.jpg" width="70" height="22" border="0" alt="" style="margin:0">
-	   </div>
-	   <div style="background-color:silver; width:480px;">
-	      <div style="margin:10">
-			  <h4>Hra s mobilmi</h4>
-			  Vstupné údaje pre "hru" mono zada manuálne alebo ich necha vygenerova (stlaèením Naplò)
-			  <br><br>poèet mobilov: <input type="Text" value="10" id="mob_m" style="width:40;text-align:right" >
-			  <br><br>poèet poschodí: <input type="Text" value="10" id="mob_n" style="width:45;text-align:right" >
-              <br><br>
-  			  	<input type="Button" value="Napln" style="margin:5" onclick="naplnmob();">
-		  		<input type="Button" value="Hladaj" onclick="hladajmob();" style="margin:5">
-              <br><br>
-			  odpoveï:
-			  <br>Potrebujem: <input type="Text" value="?" id="mobsum" style="width:40;text-align:right" READONLY>€<br><br>
-		  </div>
-		</div></div>  
-
-</dl>
-
-</body>
-</html>
+		        <tr><td colspan="2" align="center" style="padding:0"><div style="border: medium outset;padding:4">PoukÃ¡Å¾ky</div></tr>
+		  		<t

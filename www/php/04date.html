@@ -7,46 +7,46 @@
 </head>
 
 <body>
-<h2>Podprogrami pre prácu s èasom</h2>
-Jazyk PHP má mnostvo zadefinovanıch funkcií-podprogramov. Teraz si ukáeme funkcie
-pre prácu s dátumom a èasom.
+<h2>Podprogrami pre prÃ¡cu s Äasom</h2>
+Jazyk PHP mÃ¡ mnoÅ¾stvo zadefinovanÃ½ch funkciÃ­-podprogramov. Teraz si ukÃ¡Å¾eme funkcie
+pre prÃ¡cu s dÃ¡tumom a Äasom.
 <dl>
-<dt>date(reazec,dátum) ... funkcia typu text
-<dd>Funkcia vráti vloenı reazec ale niektoré znaky nahradí èasovımi údajmi, dátum je nepovinnı par. 
-	ak nie je uvedenı berie sa aktuálny dátum a èas. Namiesto neho mono poui napr. time()+pocet_sek (pozri nizsie).
-	Parameter dátum sa zadáva v sek.
+<dt>date(reÅ¥azec,dÃ¡tum) ... funkcia typu text
+<dd>Funkcia vrÃ¡ti vloÅ¾enÃ½ reÅ¥azec ale niektorÃ© znaky nahradÃ­ ÄasovÃ½mi Ãºdajmi, dÃ¡tum je nepovinnÃ½ par. 
+	ak nie je uvedenÃ½ berie sa aktuÃ¡lny dÃ¡tum a Äas. Namiesto neho moÅ¾no pouÅ¾iÅ¥ napr. time()+pocet_sek (pozri nizsie).
+	Parameter dÃ¡tum sa zadÃ¡va v sek.
 	<table>
 	<tr><td>Y ... rok xxxx<td>y ... rok xx</tr>  
 	<tr><td width="150">M ... mes text<td width="150">m ... mes xx<td width="150">n ...mes x </tr>  
 	<tr><td>D ... den text<td>d ... den xx<td>j ...den x </tr>  
 	<tr><td>H ... hodina 01-24<td>h ... hodina 01-12</tr>  
-	<tr><td>i ... minúty 00-59<td>s ... sekundy</tr>
-	<tr><td>w ... p.è. dòa 0-6</tr>  
+	<tr><td>i ... minÃºty 00-59<td>s ... sekundy</tr>
+	<tr><td>w ... p.Ä. dÅˆa 0-6</tr>  
 	</table>  
-<dt>time() funkcia typu celé èíslo
-<dd>funkcia vracajúca aktuálny èas v sek. Pouíva sa ako druhı par. vo funkcii date ak chceme zobrazi dátum nie dnešného dòa (hodiny).
-	<br>Príklad:
+<dt>time() funkcia typu celÃ© ÄÃ­slo
+<dd>funkcia vracajÃºca aktuÃ¡lny Äas v sek. PouÅ¾Ã­va sa ako druhÃ½ par. vo funkcii date ak chceme zobraziÅ¥ dÃ¡tum nie dneÅ¡nÃ©ho dÅˆa (hodiny).
+	<br>PrÃ­klad:
 	<ul>
-	<li>echo date("j.n.Y"); // zapíše aktuálny dátum v tvare d.m.rrrr
-	<li>echo date("j.n.Y",time()+24*60*60); // zapíše zajtrajší dátum v tvare d.m.rrrr
-	<li>if (date("w",time()-24*60*60)==5 && date("d",time()-24*60*60)==13) echo "Vèera bol piatok 13-teho, máme to za sebou";
+	<li>echo date("j.n.Y"); // zapÃ­Å¡e aktuÃ¡lny dÃ¡tum v tvare d.m.rrrr
+	<li>echo date("j.n.Y",time()+24*60*60); // zapÃ­Å¡e zajtrajÅ¡Ã­ dÃ¡tum v tvare d.m.rrrr
+	<li>if (date("w",time()-24*60*60)==5 && date("d",time()-24*60*60)==13) echo "VÄera bol piatok 13-teho, mÃ¡me to za sebou";
 	</ul> 
-	<br>Úlohy:
+	<br>Ãšlohy:
 	<ul>
-	<li>vytvor tabu¾ku od najblišieho pondelka
+	<li>vytvor tabuÄ¾ku od najbliÅ¾Å¡ieho pondelka
 		<table border="1">
-		<tr align="center"><th width="100">Deò<th width="100">Dátum<th>Odrobené hodiny</tr>
-		<tr align="center"><td>Pondelok<td width="100">dátum<td> x</tr>
+		<tr align="center"><th width="100">DeÅˆ<th width="100">DÃ¡tum<th>OdrobenÃ© hodiny</tr>
+		<tr align="center"><td>Pondelok<td width="100">dÃ¡tum<td> x</tr>
 		<tr align="center"><td>...<th width="100">...<td>...</tr>
-		<tr align="center"><td>Piatok<td width="100">dátum<td> x</tr>
+		<tr align="center"><td>Piatok<td width="100">dÃ¡tum<td> x</tr>
 		</table>
 	</ul>	
-<dt>mktime(hod,min,sek,mes,den,rok):celé èíslo 
-<dd>Vráti datum/èas v sekundách. Pouíva sa na vytvorenie dátumu v sekundách zo zadanıch parametrov. Môme poui ako druhı par. vo funkcii date().
-	Zadané parametre môu by aj záporné.		
-	<br>Príklad:
+<dt>mktime(hod,min,sek,mes,den,rok):celÃ© ÄÃ­slo 
+<dd>VrÃ¡ti datum/Äas v sekundÃ¡ch. PouÅ¾Ã­va sa na vytvorenie dÃ¡tumu v sekundÃ¡ch zo zadanÃ½ch parametrov. MÃ´Å¾me pouÅ¾iÅ¥ ako druhÃ½ par. vo funkcii date().
+	ZadanÃ© parametre mÃ´Å¾u byÅ¥ aj zÃ¡pornÃ©.		
+	<br>PrÃ­klad:
 	<ul>
-	<li>echo date("j.n.Y",mktime(0,0,0,3,-1,2009); // zapíše dátum posledného februára tvare d.m.rrrr
+	<li>echo date("j.n.Y",mktime(0,0,0,3,-1,2009); // zapÃ­Å¡e dÃ¡tum poslednÃ©ho februÃ¡ra tvare d.m.rrrr
 	</ul>
 </body>
 </html>

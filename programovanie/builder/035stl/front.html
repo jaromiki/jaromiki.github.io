@@ -13,46 +13,46 @@ pre
 <body>
 <h3 class="main"><b>queue</b></h3>
 
-Queue/fronta je objekt na doèasné odloenie nejakej hodnoty a jej opätovné získanie, takıto objekt sa nazıva tie FIFO
-(prvı dnu ide prvı von), ako keï ¾udia vchádzajú do úzkej chodby -> na jednom konci sa vchádza na druhom vychádza (FIFO).
-<br>Vkladanie je na jednom konci (back) a odstraòovanie je na druhom konci (front)  nemáme priamy prístup ku prvkom, 
-nemôme pouíva prechod cez iterátory. Ak potrebujeme ma k dispozícii aj prechod prvkami štruktúry, zmenu prvkov atï
-volíme radšej štruktúru list.
+Queue/fronta je objekt na doÄasnÃ© odloÅ¾enie nejakej hodnoty a jej opÃ¤tovnÃ© zÃ­skanie, takÃ½to objekt sa nazÃ½va tieÅ¾ FIFO
+(prvÃ½ dnu ide prvÃ½ von), ako keÄ Ä¾udia vchÃ¡dzajÃº do Ãºzkej chodby -> na jednom konci sa vchÃ¡dza na druhom vychÃ¡dza (FIFO).
+<br>Vkladanie je na jednom konci (back) a odstraÅˆovanie je na druhom konci (front)  nemÃ¡me priamy prÃ­stup ku prvkom, 
+nemÃ´Å¾me pouÅ¾Ã­vaÅ¥ prechod cez iterÃ¡tory. Ak potrebujeme maÅ¥ k dispozÃ­cii aj prechod prvkami Å¡truktÃºry, zmenu prvkov atÄ
+volÃ­me radÅ¡ej Å¡truktÃºru list.
 <br>
-K dispozícii máme hlavne tieto èinnosti: back, push, pop. Implementácia v pamäti je jednosmernım zoznamom.
-<br>Vkladáme na koniec, vyberáme zo zaèiatku
-<dl><dt>pripnutie kninice
-		<dd>Aby sme mohli pouíva frontu musíme pripnú príslušnú kninicu
+K dispozÃ­cii mÃ¡me hlavne tieto Äinnosti: back, push, pop. ImplementÃ¡cia v pamÃ¤ti je jednosmernÃ½m zoznamom.
+<br>VkladÃ¡me na koniec, vyberÃ¡me zo zaÄiatku
+<dl><dt>pripnutie kniÅ¾nice
+		<dd>Aby sme mohli pouÅ¾Ã­vaÅ¥ frontu musÃ­me pripnÃºÅ¥ prÃ­sluÅ¡nÃº kniÅ¾nicu
 			<br><b>#include &lt;queue></b>
-			<br>Po pripnutí môme zaèa pouíva objekty popísané v tejto kninici a teraz si základ popíšeme.
-	<dt>deklarácia
-	<dd>Je úplne podobné ako pri deklarácii po¾a.
-		<ul><li>queue &lt;typ> v1; //vytvorí prázdnu frontu
-			<li>queue &lt;typ> v2(5); //vytvorí neprázdnu frontu s 5-timi prvkami
-			<li>queue &lt;typ> v3(5,hodnota); //vytvorí neprázdnu frontu s 5-timi prvkami s predpísanou hodnotou
-			<li>queue &lt;typ> v4(v2); //vytvorí kópiu fronty
+			<br>Po pripnutÃ­ mÃ´Å¾me zaÄaÅ¥ pouÅ¾Ã­vaÅ¥ objekty popÃ­sanÃ© v tejto kniÅ¾nici a teraz si zÃ¡klad popÃ­Å¡eme.
+	<dt>deklarÃ¡cia
+	<dd>Je Ãºplne podobnÃ© ako pri deklarÃ¡cii poÄ¾a.
+		<ul><li>queue &lt;typ> v1; //vytvorÃ­ prÃ¡zdnu frontu
+			<li>queue &lt;typ> v2(5); //vytvorÃ­ neprÃ¡zdnu frontu s 5-timi prvkami
+			<li>queue &lt;typ> v3(5,hodnota); //vytvorÃ­ neprÃ¡zdnu frontu s 5-timi prvkami s predpÃ­sanou hodnotou
+			<li>queue &lt;typ> v4(v2); //vytvorÃ­ kÃ³piu fronty
 		</ul>
-	<dt>èlenské funkcie
-	<dd><ul><li><b>size()</b>; // vráti poèet prvkov vo fronte v konšt. èase
-			<li><b>empty();</b> // funkcia vráti TRUE ak je front prázdny
-			<li><b>push(hodnota)</b>; //vloí hodnotu do fronty na koniec
-			<li><b>pop()</b>; // odstráni hodnotu z vrchola frontu
-			<li><b>front()</b>; // vráti hodnotu z vrchola frontu
-			<li><b>back()</b>; // vráti hodnotu z vrchola frontu
-			<li><b>swap()</b>; // vymení obsah dvoch frontov v konšt. èase
+	<dt>ÄlenskÃ© funkcie
+	<dd><ul><li><b>size()</b>; // vrÃ¡ti poÄet prvkov vo fronte v konÅ¡t. Äase
+			<li><b>empty();</b> // funkcia vrÃ¡ti TRUE ak je front prÃ¡zdny
+			<li><b>push(hodnota)</b>; //vloÅ¾Ã­ hodnotu do fronty na koniec
+			<li><b>pop()</b>; // odstrÃ¡ni hodnotu z vrchola frontu
+			<li><b>front()</b>; // vrÃ¡ti hodnotu z vrchola frontu
+			<li><b>back()</b>; // vrÃ¡ti hodnotu z vrchola frontu
+			<li><b>swap()</b>; // vymenÃ­ obsah dvoch frontov v konÅ¡t. Äase
 		</ul>	
-	<dt>Pouitie
-	<dd>Úloha: 
-		<br>Naprogramuj simulátor èakárne u lekára. Program má vedie:
-		<br>zaevidova príchod nového pacienta do èakárne
-		<br>vypísa ko¾ko ¾udí je v èakárni
-		<br>odchod pacienta klekárovi
-		<br>vypísa kto je prvı k lekárovi
+	<dt>PouÅ¾itie
+	<dd>Ãšloha: 
+		<br>Naprogramuj simulÃ¡tor ÄakÃ¡rne u lekÃ¡ra. Program mÃ¡ vedieÅ¥:
+		<br>zaevidovaÅ¥ prÃ­chod novÃ©ho pacienta do ÄakÃ¡rne
+		<br>vypÃ­saÅ¥ koÄ¾ko Ä¾udÃ­ je v ÄakÃ¡rni
+		<br>odchod pacienta klekÃ¡rovi
+		<br>vypÃ­saÅ¥ kto je prvÃ½ k lekÃ¡rovi
 		<hr>
-		Úloha:
-		<br>Naprogramuj h¾adanie najkratšej cesty v rovinnom bludisku (pozri úlohu v èasti stack)
-		<br>(vo fronte budeme evidova políèka, v ktorıch u máme zistenú dåku min. cesty ale ešte nemáme dåku cesty ku ich susedom)
-				<br>Riešenie:
+		Ãšloha:
+		<br>Naprogramuj hÄ¾adanie najkratÅ¡ej cesty v rovinnom bludisku (pozri Ãºlohu v Äasti stack)
+		<br>(vo fronte budeme evidovaÅ¥ polÃ­Äka, v ktorÃ½ch uÅ¾ mÃ¡me zistenÃº dÄºÅ¾ku min. cesty ale eÅ¡te nemÃ¡me dÄºÅ¾ku cesty ku ich susedom)
+				<br>RieÅ¡enie:
 						<table width="90%" border="1"><tr><td bgcolor="#6666ff">Project1</tr>
 				<tr><td bgcolor="White">	
 <pre>

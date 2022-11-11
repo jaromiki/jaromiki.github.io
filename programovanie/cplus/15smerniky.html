@@ -3,85 +3,85 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <meta name="Content-language" content="sk">	
 	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
-	<title>Smerníky</title>
+	<title>SmernĂ­ky</title>
 </head>
 
 <body>
-V jazyku C majú smerníky dôležitejšiu úlohu ako v jazyku Pascal, viac sme nútení porozumieť im, ale získame tým viac možností
-práce nad dátami.
-<dl><dt style="background:#ff99ff; color:#0000ff; font-size:larger">Čo je smerník
-	<dd>Smerník-ukazovateľ je premenná, do ktorej môže byť zapísaná adresa. Väčšinou nás tá adresa nezaujíma, ale zaujímajú nás dáta
-		zapísané na uvedenej adrese. Premenná typu smerník je (ako aj ostatné premenné) uložená v dátovom segmente (resp. zásobníku -
-		ak je lokálna) ale adresa môže byť z celého adresného priestoru &lt;1 ; 1M&gt;.
-    <dt style="background:#ff99ff; color:#0000ff; font-size:larger">Pamäť pod DOSom
-	<dd>Táto časť sa priamo práci s premennými typu smerník netýka, možno ju preskočiť, je len na objasnenie širších súvislostí.
+V jazyku C majĂş smernĂ­ky dĂ´leĹľitejĹˇiu Ăşlohu ako v jazyku Pascal, viac sme nĂştenĂ­ porozumieĹĄ im, ale zĂ­skame tĂ˝m viac moĹľnostĂ­
+prĂˇce nad dĂˇtami.
+<dl><dt style="background:#ff99ff; color:#0000ff; font-size:larger">ÄŚo je smernĂ­k
+	<dd>SmernĂ­k-ukazovateÄľ je premennĂˇ, do ktorej mĂ´Ĺľe byĹĄ zapĂ­sanĂˇ adresa. VĂ¤ÄŤĹˇinou nĂˇs tĂˇ adresa nezaujĂ­ma, ale zaujĂ­majĂş nĂˇs dĂˇta
+		zapĂ­sanĂ© na uvedenej adrese. PremennĂˇ typu smernĂ­k je (ako aj ostatnĂ© premennĂ©) uloĹľenĂˇ v dĂˇtovom segmente (resp. zĂˇsobnĂ­ku -
+		ak je lokĂˇlna) ale adresa mĂ´Ĺľe byĹĄ z celĂ©ho adresnĂ©ho priestoru &lt;1 ; 1M&gt;.
+    <dt style="background:#ff99ff; color:#0000ff; font-size:larger">PamĂ¤ĹĄ pod DOSom
+	<dd>TĂˇto ÄŤasĹĄ sa priamo prĂˇci s premennĂ˝mi typu smernĂ­k netĂ˝ka, moĹľno ju preskoÄŤiĹĄ, je len na objasnenie ĹˇirĹˇĂ­ch sĂşvislostĂ­.
 		<table bgcolor="Silver" border="1"><tr><td colspan="2">BIOS data area
-													<br>oblasť dôležitých údajov, ich náhodná zmena vedie obyčajne ku "zamrznutiu" počítača
+													<br>oblasĹĄ dĂ´leĹľitĂ˝ch Ăşdajov, ich nĂˇhodnĂˇ zmena vedie obyÄŤajne ku "zamrznutiu" poÄŤĂ­taÄŤa
 											<tr><td colspan="2">DOS data area
-													<br>údaje o disku, premenné prostredia, dĺžka tohto priestoru je pevná
-											<tr><td colspan="2">rezidenty, Command.com - prvá časť
-													<br>rezidentné programy, ich adresný priestor už nie je pevná
-											<tr><td rowspan="4" width="10%" align="center">P<br>r<br>o<br>g<br>r<br>a<br>m <td>Code segment<br>kód-inštrukcie programu
-											<tr>												<td>Data segment<br>dáta programu - oblasť pre globálne premenné
-											<tr>												<td>Stack segment<br>zásobník programu - oblasť pre lokálne premenné
-											<tr>												<td>Halda<br>volná pamäť, program môže a nemusí obsadiť, siaha max. po 640kB
-											<tr><td colspan="2">Command.com - druhá časť, môže byť programom prepísaná, po skončení programu sa obnoví
-											<tr><td colspan="2">Videopamäť<br>od 640kB po 1MB je videopamäť, obyčajne na videokarte
-																		  <br>na adrese segment=0xA000, offset=0x0000 je grafická obrazovka
-																		  <br>na adrese segment=0xB800, offset=0x0000 je textová obrazovka
+													<br>Ăşdaje o disku, premennĂ© prostredia, dÄşĹľka tohto priestoru je pevnĂˇ
+											<tr><td colspan="2">rezidenty, Command.com - prvĂˇ ÄŤasĹĄ
+													<br>rezidentnĂ© programy, ich adresnĂ˝ priestor uĹľ nie je pevnĂˇ
+											<tr><td rowspan="4" width="10%" align="center">P<br>r<br>o<br>g<br>r<br>a<br>m <td>Code segment<br>kĂłd-inĹˇtrukcie programu
+											<tr>												<td>Data segment<br>dĂˇta programu - oblasĹĄ pre globĂˇlne premennĂ©
+											<tr>												<td>Stack segment<br>zĂˇsobnĂ­k programu - oblasĹĄ pre lokĂˇlne premennĂ©
+											<tr>												<td>Halda<br>volnĂˇ pamĂ¤ĹĄ, program mĂ´Ĺľe a nemusĂ­ obsadiĹĄ, siaha max. po 640kB
+											<tr><td colspan="2">Command.com - druhĂˇ ÄŤasĹĄ, mĂ´Ĺľe byĹĄ programom prepĂ­sanĂˇ, po skonÄŤenĂ­ programu sa obnovĂ­
+											<tr><td colspan="2">VideopamĂ¤ĹĄ<br>od 640kB po 1MB je videopamĂ¤ĹĄ, obyÄŤajne na videokarte
+																		  <br>na adrese segment=0xA000, offset=0x0000 je grafickĂˇ obrazovka
+																		  <br>na adrese segment=0xB800, offset=0x0000 je textovĂˇ obrazovka
 	</table>
-	Code segment, data segment sú určené programom a ich maximálne velkosti sú dané pamäťovým modelom
-	<br> &nbsp; &nbsp; &nbsp;tiny - kód, dáta sú spolu a zaberajú max. 64kB 
-	<br> &nbsp; &nbsp; &nbsp;small - kód max. 64kB, dáta max. 64kB
-	<br> &nbsp; &nbsp; &nbsp;medium - kód max. 1MB, dáta max. 64kB
-	<br> &nbsp; &nbsp; &nbsp;compact - kód max. 64kB, dáta max. 1MB
-	<br> &nbsp; &nbsp; &nbsp;large - kód max. 1MB, dáta max. 1MB velkosť 1 premennej max. 64kB
-	<br> &nbsp; &nbsp; &nbsp;huge - kód max. 1MB, dáta max. 1MB, premenné sú neobmedzené 
-	<br>veľkosť zásobníka môžme nastaviť v Options (volíme od 1kB po 64kB)
-	<br>veľkosť ďalšej obsadenej pamäte môžme ovplyvniť príkazmi pre kompilátor 
-    <dt style="background:#ff99ff; color:#0000ff; font-size:larger">Druhy smerníkov
-	<dd>Poznáme:
-		1. near - blízky, zaberá 2B a je v ňom offsetová adresa. Implicitne sa používa pre malé pamäťové modely.
-		2. far - vzdialený, zaberá 4B a je v ňom segmentová i offsetová adresa. V rámci jedného objektu sa mení len offset.
-		3. huge - rozsiahly, zaberá 4B a je v ňom segmentová i offsetová adresa.
-		<br><br>Pokiaľ nie je žiadny z uvedených modifikátorov uvedený je typ smerníka určený podľa pamäťového modelu. 
+	Code segment, data segment sĂş urÄŤenĂ© programom a ich maximĂˇlne velkosti sĂş danĂ© pamĂ¤ĹĄovĂ˝m modelom
+	<br> &nbsp; &nbsp; &nbsp;tiny - kĂłd, dĂˇta sĂş spolu a zaberajĂş max. 64kB 
+	<br> &nbsp; &nbsp; &nbsp;small - kĂłd max. 64kB, dĂˇta max. 64kB
+	<br> &nbsp; &nbsp; &nbsp;medium - kĂłd max. 1MB, dĂˇta max. 64kB
+	<br> &nbsp; &nbsp; &nbsp;compact - kĂłd max. 64kB, dĂˇta max. 1MB
+	<br> &nbsp; &nbsp; &nbsp;large - kĂłd max. 1MB, dĂˇta max. 1MB velkosĹĄ 1 premennej max. 64kB
+	<br> &nbsp; &nbsp; &nbsp;huge - kĂłd max. 1MB, dĂˇta max. 1MB, premennĂ© sĂş neobmedzenĂ© 
+	<br>veÄľkosĹĄ zĂˇsobnĂ­ka mĂ´Ĺľme nastaviĹĄ v Options (volĂ­me od 1kB po 64kB)
+	<br>veÄľkosĹĄ ÄŹalĹˇej obsadenej pamĂ¤te mĂ´Ĺľme ovplyvniĹĄ prĂ­kazmi pre kompilĂˇtor 
+    <dt style="background:#ff99ff; color:#0000ff; font-size:larger">Druhy smernĂ­kov
+	<dd>PoznĂˇme:
+		1. near - blĂ­zky, zaberĂˇ 2B a je v Ĺom offsetovĂˇ adresa. Implicitne sa pouĹľĂ­va pre malĂ© pamĂ¤ĹĄovĂ© modely.
+		2. far - vzdialenĂ˝, zaberĂˇ 4B a je v Ĺom segmentovĂˇ i offsetovĂˇ adresa. V rĂˇmci jednĂ©ho objektu sa menĂ­ len offset.
+		3. huge - rozsiahly, zaberĂˇ 4B a je v Ĺom segmentovĂˇ i offsetovĂˇ adresa.
+		<br><br>PokiaÄľ nie je Ĺľiadny z uvedenĂ˝ch modifikĂˇtorov uvedenĂ˝ je typ smernĂ­ka urÄŤenĂ˝ podÄľa pamĂ¤ĹĄovĂ©ho modelu. 
 		<br>
     <dt style="background:#ff99ff; color:#0000ff; font-size:larger">Halda
-	<dd>Smerníkové premenné obyčajne ukazujú na:
-		1. na statické systémom vytvorené premenné
-		2. na objekty v halde - voľná-nevyužívaná pamäť, objekty vznikajú a zanikajú podľa programu
-		V C máme 2 haldy blízku a ďalekú. 
-		<br>V blízkej sa používa near smerník a preto je maximálne 64kB (je spoločná s lokálnymi premennými, ak máme veľké lokálne pole blízka halda je malinká) 
-		<br>V ďalekej sa používa far smerník a preto maximálna hranica je 1MB (obyčajne maximálne 400kB).Ide o pamäť od konca programu po 1MB.
+	<dd>SmernĂ­kovĂ© premennĂ© obyÄŤajne ukazujĂş na:
+		1. na statickĂ© systĂ©mom vytvorenĂ© premennĂ©
+		2. na objekty v halde - voÄľnĂˇ-nevyuĹľĂ­vanĂˇ pamĂ¤ĹĄ, objekty vznikajĂş a zanikajĂş podÄľa programu
+		V C mĂˇme 2 haldy blĂ­zku a ÄŹalekĂş. 
+		<br>V blĂ­zkej sa pouĹľĂ­va near smernĂ­k a preto je maximĂˇlne 64kB (je spoloÄŤnĂˇ s lokĂˇlnymi premennĂ˝mi, ak mĂˇme veÄľkĂ© lokĂˇlne pole blĂ­zka halda je malinkĂˇ) 
+		<br>V ÄŹalekej sa pouĹľĂ­va far smernĂ­k a preto maximĂˇlna hranica je 1MB (obyÄŤajne maximĂˇlne 400kB).Ide o pamĂ¤ĹĄ od konca programu po 1MB.
 		<dl><dt style="color:red">Vytvorenie premennej v halde
 			<dd><dl><dt style="color:blue"> void * malloc(int size)
-					<dd>funkcia v halde alokuje predpísaný počet bajtov a adresu na daný objekt vráti ako
-						návratovú hodnotu.
+					<dd>funkcia v halde alokuje predpĂ­sanĂ˝ poÄŤet bajtov a adresu na danĂ˝ objekt vrĂˇti ako
+						nĂˇvratovĂş hodnotu.
 						<font color="Green">
 						<br>int *p;
 						<br>p=(int *) malloc(10*sizeof(int)); 
-						<br>//vytvori priestor pre 10 integer premenných a adresu prvého zapíše do prem. p
+						<br>//vytvori priestor pre 10 integer premennĂ˝ch a adresu prvĂ©ho zapĂ­Ĺˇe do prem. p
 						</font>
 				 	<dt style="color:blue"> void * calloc(int pocet, int size)		
-					<dd>funkcia v halde alokuje predpísaný počet objektov - pocet - pričom každý objekt má dĺžku
-						size, celková dĺžka alokovanéko priestoru bude: pocet * size, adresu na daný objekt vráti ako
-						návratovú hodnotu. Na rozdiel od funkcie malloc sú všetky položky inicializované na hodnotu 0 
-						preto táto funkcia je pomalšia.
+					<dd>funkcia v halde alokuje predpĂ­sanĂ˝ poÄŤet objektov - pocet - priÄŤom kaĹľdĂ˝ objekt mĂˇ dÄşĹľku
+						size, celkovĂˇ dÄşĹľka alokovanĂ©ko priestoru bude: pocet * size, adresu na danĂ˝ objekt vrĂˇti ako
+						nĂˇvratovĂş hodnotu. Na rozdiel od funkcie malloc sĂş vĹˇetky poloĹľky inicializovanĂ© na hodnotu 0 
+						preto tĂˇto funkcia je pomalĹˇia.
 						<br>int *p;
 						<br>p=(int *) calloc(10,sizeof(int)); 
-						<br>//vytvori priestor pre 10 integer premenných a adresu prvého zapíše do prem. p
+						<br>//vytvori priestor pre 10 integer premennĂ˝ch a adresu prvĂ©ho zapĂ­Ĺˇe do prem. p
 					<dt style="color:blue"> void * realloc(void *prem, int size)
-					<dd>ak premenná prem bola vytvorená v halde funkciou malloc, resp. calloc je možné jej veľkosť zmeniť
-						príkazom realloc. Dáta v nej zapísané zostávajú zachované. Veľkosť sa môže zväčšovať i zmenšovať.
-						Návratová hodnota je adresa na prvú položku tohto objektu (pri zväčšovaní sa môže premiestniť)	
+					<dd>ak premennĂˇ prem bola vytvorenĂˇ v halde funkciou malloc, resp. calloc je moĹľnĂ© jej veÄľkosĹĄ zmeniĹĄ
+						prĂ­kazom realloc. DĂˇta v nej zapĂ­sanĂ© zostĂˇvajĂş zachovanĂ©. VeÄľkosĹĄ sa mĂ´Ĺľe zvĂ¤ÄŤĹˇovaĹĄ i zmenĹˇovaĹĄ.
+						NĂˇvratovĂˇ hodnota je adresa na prvĂş poloĹľku tohto objektu (pri zvĂ¤ÄŤĹˇovanĂ­ sa mĂ´Ĺľe premiestniĹĄ)	
 				</dl>
 			<dt style="color:red">Uvolnenie premennej z haldy
 			<dd><dl><dt style="color:blue"> void  free(void * prem)
-					<dd>pamäť premennej prem umiestnenej v halde sa týmto uvolní
+					<dd>pamĂ¤ĹĄ premennej prem umiestnenej v halde sa tĂ˝mto uvolnĂ­
 				</dl>	
-		    <dt style="color:red">Zistenie voľného miesta v halde
+		    <dt style="color:red">Zistenie voÄľnĂ©ho miesta v halde
 			<dd><dl><dt style="color:blue">unsigned coreleft(void)
-					<dd>funkcia vráti maximálny voľný úsek pamäti v halde
+					<dd>funkcia vrĂˇti maximĂˇlny voÄľnĂ˝ Ăşsek pamĂ¤ti v halde
 </dl>																			  
 </body>
 </html>

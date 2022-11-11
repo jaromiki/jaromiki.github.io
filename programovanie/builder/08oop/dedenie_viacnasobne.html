@@ -8,14 +8,14 @@
 </head>
 
 <body>
-<h3 style="width:450">Viacnásobná dediènos</h3>
-Situácia okolo dedenia sa mierne komplilkuje pri viacnásobnej dediènosti. Násobná dediènos môe by
-<ul><li>do håbky - odvodzujeme novú triedu z triedy, ktorá je u odvodená z inej
-	<li>do šírky - trieda je odvodená z viacerıch tried
-	<li>kombinácia oboch predošlıch
+<h3 style="width:450">ViacnÃ¡sobnÃ¡ dediÄnosÅ¥</h3>
+SituÃ¡cia okolo dedenia sa mierne komplilkuje pri viacnÃ¡sobnej dediÄnosti. NÃ¡sobnÃ¡ dediÄnosÅ¥ mÃ´Å¾e byÅ¥
+<ul><li>do hÄºbky - odvodzujeme novÃº triedu z triedy, ktorÃ¡ je uÅ¾ odvodenÃ¡ z inej
+	<li>do Å¡Ã­rky - trieda je odvodenÃ¡ z viacerÃ½ch tried
+	<li>kombinÃ¡cia oboch predoÅ¡lÃ½ch
 </ul>	
-<dl><dt class="main">Do håbky
-	<dd>Pri dedení do väèšej håbky sú konštruktory postupne volané od najzákladnejšej triedy a konštruktory v opaènom poradí.
+<dl><dt class="main">Do hÄºbky
+	<dd>Pri dedenÃ­ do vÃ¤ÄÅ¡ej hÄºbky sÃº konÅ¡truktory postupne volanÃ© od najzÃ¡kladnejÅ¡ej triedy a konÅ¡truktory v opaÄnom poradÃ­.
 		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 		<tr><td>
@@ -39,21 +39,21 @@ class Z : public Y
 {   int e;
     public:
 	int f;
-	// tu priamo vidíme premenné: a, b, c, d, e, f
+	// tu priamo vidÃ­me premennÃ©: a, b, c, d, e, f
 	void setc(int cc) {c=cc;}   
    int getc() {return c;}
    Z(int aa, int cc): Y(aa,cc) {e=1;}
 };
 int main()
-{ Z m; //vytvoril som triedu Z a má meno m
+{ Z m; //vytvoril som triedu Z a mÃ¡ meno m
        //najprv sa vzkonal kon3truktor X(), potom Y() a napokon Z()
   //cez bodku priamo vidim: f, e, d, b
 }</pre>
 		</tr></table>
-		Pri zakreslovaní grafu dediènosti pouívame orientované grafy, prièom šipka smeruje z odvodenej triedy do jej základnej.
-		<br>V našom príklade teda Z -> Y -> X 
-	<dt class="main">Do šírky
-	<dd>Pri dedení do šírky je jedna trieda odvodená z dvoch triede. Konštruktory sú postupne volané pod¾a poradia uvedenom v dedení z¾ava doprava.
+		Pri zakreslovanÃ­ grafu dediÄnosti pouÅ¾Ã­vame orientovanÃ© grafy, priÄom Å¡ipka smeruje z odvodenej triedy do jej zÃ¡kladnej.
+		<br>V naÅ¡om prÃ­klade teda Z -> Y -> X 
+	<dt class="main">Do Å¡Ã­rky
+	<dd>Pri dedenÃ­ do Å¡Ã­rky je jedna trieda odvodenÃ¡ z dvoch triede. KonÅ¡truktory sÃº postupne volanÃ© podÄ¾a poradia uvedenom v dedenÃ­ zÄ¾ava doprava.
 		<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 		<tr><td>
@@ -77,30 +77,30 @@ class Z : public X, public Y
 {   int e;
     public:
 	int f;
-	// tu priamo vidíme premenné: a, b, c, d, e, f
+	// tu priamo vidÃ­me premennÃ©: a, b, c, d, e, f
 	void setc(int cc) {c=cc;}   
    int getc() {return c;}
    Z(int aa, int cc, int ee): X(aa),Y(cc) {e=ee;  cout &lt;&lt;"konstr Z" &lt;&lt; endl;}
 };
 int main()
-{ Z m; //vytvoril som triedu Z a má meno m
+{ Z m; //vytvoril som triedu Z a mÃ¡ meno m
        //najprv sa vykonal kon3truktor X(), potom Y() a napokon Z()
   //cez bodku priamo vidim: f, e, d, b
   return 0;
 }
-//vypíše:
+//vypÃ­Å¡e:
 //konstr X
 //konstr Y
 //konstr Z</pre>
 		</tr></table>
-		<dl><dt>virtuálne základné triedy
-			<dd>Majme nasledovne urèenú dediènos
+		<dl><dt>virtuÃ¡lne zÃ¡kladnÃ© triedy
+			<dd>Majme nasledovne urÄenÃº dediÄnosÅ¥
 <pre>D3 -> D1 -> base
    -> D2 -> base</pre>
-				Trieda base je rovnaká základná trieda aj pre triedu D1 aj triedu D2. Pri obyèajnom postupe dedenia, by trieda base bola v triede D3 obsiahnutá
-				dva krát, èo by pri práci s jej objektami viedlo ku nejednoznaènostiam a chybe prekladu. Oprava spoèíva v tom, e triedu base budeme dedi ako virtuálnu,
-				èo zabezpeèí e bude v koneènej triede len raz. Ešte malı problem je, e v triedach D1 a D2, ktoré sú oznaèené ako virtual nie je moné urèi volanie 
-				konštruktora base s parametrom. Obídeme to tım, e hodnoty v base nastavíme pomocou public funkcií. 
+				Trieda base je rovnakÃ¡ zÃ¡kladnÃ¡ trieda aj pre triedu D1 aj triedu D2. Pri obyÄajnom postupe dedenia, by trieda base bola v triede D3 obsiahnutÃ¡
+				dva krÃ¡t, Äo by pri prÃ¡ci s jej objektami viedlo ku nejednoznaÄnostiam a chybe prekladu. Oprava spoÄÃ­va v tom, Å¾e triedu base budeme dediÅ¥ ako virtuÃ¡lnu,
+				Äo zabezpeÄÃ­ Å¾e bude v koneÄnej triede len raz. EÅ¡te malÃ½ problem je, Å¾e v triedach D1 a D2, ktorÃ© sÃº oznaÄenÃ© ako virtual nie je moÅ¾nÃ© urÄiÅ¥ volanie 
+				konÅ¡truktora base s parametrom. ObÃ­deme to tÃ½m, Å¾e hodnoty v base nastavÃ­me pomocou public funkciÃ­. 
 				<table width="60%" bgcolor=cccccc border="2" bordercolor="#cccccc" bordercolordark="#999999" bordercolorlight="ffffff">
 				<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 				<tr><td>
@@ -135,7 +135,7 @@ int main()
    return 0;
 }</pre>
 		</tr></table>
-		V pr9pade ak bz sme chceli aby base bolo D3 dvakrát, nepouijeme virtual ale pri pouívaní musíme uvies z ktorej triedy chceme poui objekt z base.
+		V pr9pade ak bz sme chceli aby base bolo D3 dvakrÃ¡t, nepouÅ¾ijeme virtual ale pri pouÅ¾Ã­vanÃ­ musÃ­me uviesÅ¥ z ktorej triedy chceme pouÅ¾iÅ¥ objekt z base.
 		<br>Napr. D1::seta(5), D2::geta()  
 		</dl>
 </dl>		

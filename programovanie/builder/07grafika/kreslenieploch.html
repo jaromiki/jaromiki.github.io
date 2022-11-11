@@ -46,32 +46,32 @@
 </head>
 
 <body  onload="init();">
-<center><h3 class=nadpis>Kreslenie plôch myšou</h3></center>
-<dl><dt class=main>Úvod
-	<dd>Urèite ste sa stretli s nejakım rastrovım grafickım programom, ktorı umoòuje kresli obrázky (napr. MsPain).
-		Kreslenie plôch (kruhou, obdånikov, ...) tam prebieha nasledovne:
-		<ul><li>uívate¾ zvolí miesto, kde bude plocha zaèína a stlaèí tam ¾avé tlaèítko myši
-			<li>ahaním/posúvaním myši vzniká "doèasnı" plošnı útvar
-				<br>pri kadom posunutí "starı" plošnı objekt zanikne a "novı" sa vykreslí
-			<li>po uvo¾není tlaèítka myši je plošnı útvar nakreslenı definitívne a u sa nedá "naahova"
+<center><h3 class=nadpis>Kreslenie plÃ´ch myÅ¡ou</h3></center>
+<dl><dt class=main>Ãšvod
+	<dd>UrÄite ste sa stretli s nejakÃ½m rastrovÃ½m grafickÃ½m programom, ktorÃ½ umoÅ¾Åˆuje kresliÅ¥ obrÃ¡zky (napr. MsPain).
+		Kreslenie plÃ´ch (kruhou, obdÄºÅ¾nikov, ...) tam prebieha nasledovne:
+		<ul><li>uÅ¾Ã­vateÄ¾ zvolÃ­ miesto, kde bude plocha zaÄÃ­naÅ¥ a stlaÄÃ­ tam Ä¾avÃ© tlaÄÃ­tko myÅ¡i
+			<li>Å¥ahanÃ­m/posÃºvanÃ­m myÅ¡i vznikÃ¡ "doÄasnÃ½" ploÅ¡nÃ½ Ãºtvar
+				<br>pri kaÅ¾dom posunutÃ­ "starÃ½" ploÅ¡nÃ½ objekt zanikne a "novÃ½" sa vykreslÃ­
+			<li>po uvoÄ¾nenÃ­ tlaÄÃ­tka myÅ¡i je ploÅ¡nÃ½ Ãºtvar nakreslenÃ½ definitÃ­vne a uÅ¾ sa nedÃ¡ "naÅ¥ahovaÅ¥"
 		</ul>
-		Cie¾om tejto lekcie bude ukáza si základné myšlienky, ako tento efekt dosiahnu 
-	<dt>Udalosti súvisiace s myšou
-	<dd>Na grafickej ploche mono ošetrova 3 rôzne udalosti súvisiace s myšou: 
-		<ul><li>onMouseDown - zatlaèili sme nad plochou niektoré tlaèidlo myši 
-			<li>onMouseMove - myš sa hıbe nad plochou 
-			<li>onMouseUp - pustili sme tlaèidlo myši 
+		CieÄ¾om tejto lekcie bude ukÃ¡zaÅ¥ si zÃ¡kladnÃ© myÅ¡lienky, ako tento efekt dosiahnuÅ¥ 
+	<dt>Udalosti sÃºvisiace s myÅ¡ou
+	<dd>Na grafickej ploche moÅ¾no oÅ¡etrovaÅ¥ 3 rÃ´zne udalosti sÃºvisiace s myÅ¡ou: 
+		<ul><li>onMouseDown - zatlaÄili sme nad plochou niektorÃ© tlaÄidlo myÅ¡i 
+			<li>onMouseMove - myÅ¡ sa hÃ½be nad plochou 
+			<li>onMouseUp - pustili sme tlaÄidlo myÅ¡i 
 		</ul>	
-	<dt>Jednoduchım ahaním myši kreslíme obdånik
-	<dd>Kreslenie "na prvı pokus" sa v praxi pouíva menej ale jednoducho sa programuje. Myšlienka je nasledovná:
-	<br>stlaèíme myš a natiahneme obdånik - zväèšova moono ale zmenši nejde - po pustení myši je obdånik ukonèenı.
-		Na testovanie vyuijeme parameter Shift: je typu TShiftState (èo je vlastne mnoina zatlaèenıch "vıznamnıch" tlaèítok)
+	<dt>JednoduchÃ½m Å¥ahanÃ­m myÅ¡i kreslÃ­me obdÄºÅ¾nik
+	<dd>Kreslenie "na prvÃ½ pokus" sa v praxi pouÅ¾Ã­va menej ale jednoducho sa programuje. MyÅ¡lienka je nasledovnÃ¡:
+	<br>stlaÄÃ­me myÅ¡ a natiahneme obdÄºÅ¾nik - zvÃ¤ÄÅ¡ovaÅ¥ mooÅ¾no ale zmenÅ¡iÅ¥ nejde - po pustenÃ­ myÅ¡i je obdÄºÅ¾nik ukonÄenÃ½.
+		Na testovanie vyuÅ¾ijeme parameter Shift: je typu TShiftState (Äo je vlastne mnoÅ¾ina zatlaÄenÃ½ch "vÃ½znamnÃ½ch" tlaÄÃ­tok)
 		 <br>type TShiftState = set of (ssShift,ssAlt,ssCtrl,ssLeft,ssRight,ssMiddle,ssDouble);
-		 <br>Tlaèítko do mnoiny automaticky patrí ak je zatlaèené, ak ho uvo¾níme automaticky sa 
-		 z tejto mnoiny vyradí. My budeme sledova ¾avé tlaèítko myši - ssLeft
-		Na testovanie, èi prvok patrí do mnoiny sa pouíva metóda  <b>Contains</b>. 
-		Pozri <a href="../02programujeme/mnoziny.html" target="_blank">mnoiny</a>
-		Takto vyzerá program, ktorı kreslí len pri stlaèenom ¾avom tlaèítku myši
+		 <br>TlaÄÃ­tko do mnoÅ¾iny automaticky patrÃ­ ak je zatlaÄenÃ©, ak ho uvoÄ¾nÃ­me automaticky sa 
+		 z tejto mnoÅ¾iny vyradÃ­. My budeme sledovaÅ¥ Ä¾avÃ© tlaÄÃ­tko myÅ¡i - ssLeft
+		Na testovanie, Äi prvok patrÃ­ do mnoÅ¾iny sa pouÅ¾Ã­va metÃ³da  <b>Contains</b>. 
+		Pozri <a href="../02programujeme/mnoziny.html" target="_blank">mnoÅ¾iny</a>
+		Takto vyzerÃ¡ program, ktorÃ½ kreslÃ­ len pri stlaÄenom Ä¾avom tlaÄÃ­tku myÅ¡i
 		<div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
    		<div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.pas
    		</div>
@@ -87,54 +87,54 @@ void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int 
 }
 </pre>	
 		</div></div></div>
-		Obdånik je hneï krelenı farbou vıplne a pera a nie je ho moné "naahovaním zmenšova. Skúste porozmıšla ako by program fungoval, 
-		ak by sme nedali vetvu else - overte si, èi ste "uhádli".
-	<dt>ahaním myši kreslíme obdånik
-	<dd>Treba upozorni, e nasledovnı postup funguje pri pouití príkazu Rectangle ale pri FillRect nefunguje
-	Tu potrebujeme kresli "doèasné" plochy, ktoré budú pri pohybe myši do nového koncového bodu miznú a nové sa zas kresli.
-	<br>Na doèasné obdåniky nemáme poiadavky, e by mal by jednofarebné, hlavné aby sme ich vedeli odstráni 
-		<br>Èo budeme k tomu potrebova:
-		<ul><li>premenné
-				<br>xx,yy - poloha zaèiatku našej plochy - napr. súradnica ¾avého horného rohu - (nastaví sa pri stlaèení ¾avého tlaèítka)
-				<br>xs,ys - "stará" poloha koncového bodu úseèky napr. súradnica pravého dolného rohu - (nastaví sa po vykrelení "doèasnej" 
-				plochy do nového koncového bodu	
-			<li>techniku ako zotrie doèasnú plochu s tım, e sa obrazovka vráti do stavu v akom bola pred jej nakreslením. 
-				Táto úloha sa zdá by aká, ale pomocou nastavenia Pen.Mode:=pmNot je to jednoduché riešenie.
-				<br>(Je zvláštne, e nastavenie vlastnosti pera má vplyv na vıplò, ale funguje to) 
+		ObdÄºÅ¾nik je hneÄ krelenÃ½ farbou vÃ½plne a pera a nie je ho moÅ¾nÃ© "naÅ¥ahovanÃ­m zmenÅ¡ovaÅ¥. SkÃºste porozmÃ½Å¡laÅ¥ ako by program fungoval, 
+		ak by sme nedali vetvu else - overte si, Äi ste "uhÃ¡dli".
+	<dt>Å¤ahanÃ­m myÅ¡i kreslÃ­me obdÄºÅ¾nik
+	<dd>Treba upozorniÅ¥, Å¾e nasledovnÃ½ postup funguje pri pouÅ¾itÃ­ prÃ­kazu Rectangle ale pri FillRect nefunguje
+	Tu potrebujeme kresliÅ¥ "doÄasnÃ©" plochy, ktorÃ© budÃº pri pohybe myÅ¡i do novÃ©ho koncovÃ©ho bodu miznÃºÅ¥ a novÃ© sa zas kresliÅ¥.
+	<br>Na doÄasnÃ© obdÄºÅ¾niky nemÃ¡me poÅ¾iadavky, Å¾e by mal byÅ¥ jednofarebnÃ©, hlavnÃ© aby sme ich vedeli odstrÃ¡niÅ¥ 
+		<br>ÄŒo budeme k tomu potrebovaÅ¥:
+		<ul><li>premennÃ©
+				<br>xx,yy - poloha zaÄiatku naÅ¡ej plochy - napr. sÃºradnica Ä¾avÃ©ho hornÃ©ho rohu - (nastavÃ­ sa pri stlaÄenÃ­ Ä¾avÃ©ho tlaÄÃ­tka)
+				<br>xs,ys - "starÃ¡" poloha koncovÃ©ho bodu ÃºseÄky napr. sÃºradnica pravÃ©ho dolnÃ©ho rohu - (nastavÃ­ sa po vykrelenÃ­ "doÄasnej" 
+				plochy do novÃ©ho koncovÃ©ho bodu	
+			<li>techniku ako zotrieÅ¥ doÄasnÃº plochu s tÃ½m, Å¾e sa obrazovka vrÃ¡ti do stavu v akom bola pred jej nakreslenÃ­m. 
+				TÃ¡to Ãºloha sa zdÃ¡ byÅ¥ Å¥aÅ¾kÃ¡, ale pomocou nastavenia Pen.Mode:=pmNot je to jednoduchÃ© rieÅ¡enie.
+				<br>(Je zvlÃ¡Å¡tne, Å¾e nastavenie vlastnosti pera mÃ¡ vplyv na vÃ½plÅˆ, ale funguje to) 
 				<br>Vysvetlenie:
-				<br>Ak kreslíme plochu v reime pmNot nekreslí sa farbou vıplne a pera (navolená farba vıplne a pera nemá na zobrazenú plochu vplyv)
-				ale robí inverziu/negáciu podkladu (biely podlkad -&gt;èierna farba, zelenı podklad -&gt;fialová èiara).
-				Z matematiky vieme, e ak urobíme 2-krát negáciu dostaneme pôvodnú hodnotu.
-				<br>Èie ak druhı-krát nakreslíme tú istú plochu tak nám plocha korektne zmizne.
+				<br>Ak kreslÃ­me plochu v reÅ¾ime pmNot nekreslÃ­ sa farbou vÃ½plne a pera (navolenÃ¡ farba vÃ½plne a pera nemÃ¡ na zobrazenÃº plochu vplyv)
+				ale robÃ­ inverziu/negÃ¡ciu podkladu (biely podlkad -&gt;Äierna farba, zelenÃ½ podklad -&gt;fialovÃ¡ Äiara).
+				Z matematiky vieme, Å¾e ak urobÃ­me 2-krÃ¡t negÃ¡ciu dostaneme pÃ´vodnÃº hodnotu.
+				<br>ÄŒiÅ¾e ak druhÃ½-krÃ¡t nakreslÃ­me tÃº istÃº plochu tak nÃ¡m plocha korektne zmizne.
 		</ul>		
-		<br>A takto nejak by to mohlo by naprogramované:
+		<br>A takto nejak by to mohlo byÅ¥ naprogramovanÃ©:
 		<div style="border-width:3;border-style:outset;width:800px;margin:10px;background-color:#dddddd;">
    		<div align="left" style="background-color:#3366ff; width:800px; padding:0;border-width:0;color:white">Unit1.pas
    		</div>
    		<div style="background-color:#dddddd; width:800px;" >
    			<div style="margin:10px">
 <pre>
-//****************** Pohyb myši nad Image *********************************
+//****************** Pohyb myÅ¡i nad Image *********************************
 void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
 {
   if (Shift.Contains(ssLeft)) 
-  {   Image1->Canvas->Rectangle(xx,yy,xs,ys);    //zotrieme starú doèasnú úseèku
-      Image1->Canvas->Rectangle(xx,yy,X,Y);  //nakreslíme novú doèasnú úseèku
-      xs:=X; ys:=Y;                 		//odpamätáme, aby sme neskôr mohli zmaza
+  {   Image1->Canvas->Rectangle(xx,yy,xs,ys);    //zotrieme starÃº doÄasnÃº ÃºseÄku
+      Image1->Canvas->Rectangle(xx,yy,X,Y);  //nakreslÃ­me novÃº doÄasnÃº ÃºseÄku
+      xs:=X; ys:=Y;                 		//odpamÃ¤tÃ¡me, aby sme neskÃ´r mohli zmazaÅ¥
   {
-//ak nie je stlaèené tlaèítko myši nerobíme niè
+//ak nie je stlaÄenÃ© tlaÄÃ­tko myÅ¡i nerobÃ­me niÄ
 }
-//****************** Stlaèili sme dole *************************************
+//****************** StlaÄili sme dole *************************************
 void __fastcall TForm1::Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
-{   xx = X; yy = Y;                    //zapamätáme si zaèiatok novej doèasnej úseèky
+{   xx = X; yy = Y;                    //zapamÃ¤tÃ¡me si zaÄiatok novej doÄasnej ÃºseÄky
     xs = X;  ys = Y;
-    Image1->Canvas->Pen->Mode = pmNot;   //zapneme doèasnı mód
+    Image1->Canvas->Pen->Mode = pmNot;   //zapneme doÄasnÃ½ mÃ³d
 }
-//****************** Pustili sme tlaèítko myši *****************************
+//****************** Pustili sme tlaÄÃ­tko myÅ¡i *****************************
 void __fastcall TForm1::Image1MouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
-{     Image1->Canvas->Rectangle(xx,yy,xs,ys);  //zotrieme starú plochu (pre istotu)
-      Image1->Canvas->Pen->Mode = pmCopy;   //zapneme "normálny" reim kreslenia
-      Image1->Canvas->Rectangle(xx,yy,x,y);  //nakreslíme novú trvalú PLOCHU
+{     Image1->Canvas->Rectangle(xx,yy,xs,ys);  //zotrieme starÃº plochu (pre istotu)
+      Image1->Canvas->Pen->Mode = pmCopy;   //zapneme "normÃ¡lny" reÅ¾im kreslenia
+      Image1->Canvas->Rectangle(xx,yy,x,y);  //nakreslÃ­me novÃº trvalÃº PLOCHU
 }
 /pre>	
 		</div></div></div>
@@ -148,7 +148,7 @@ void __fastcall TForm1::Image1MouseUp(TObject *Sender, TMouseButton Button, TShi
 	onmousedown="if (canvas.getContext) mdole(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" 
 	onmouseup="if (canvas.getContext) mhore(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );">
 <canvas width="800" height="600" id="platno" style="margin:6">
-   <br>Váš prohlíeè nepodporuje kreslenie. Animácie nebudú fungova - zvolte IE9, Mozilla alebo Chrome.<br>
+   <br>VÃ¡Å¡ prohlÃ­Å¾eÄ nepodporuje kreslenie. AnimÃ¡cie nebudÃº fungovaÅ¥ - zvolte IE9, Mozilla alebo Chrome.<br>
 </canvas>
 </div>
 <table border="1"><tr><td rowspan="2" colspan="2" id="f" bgcolor="#000000" >&nbsp; &nbsp;<td bgcolor="black" onclick="f.style.background='black'">&nbsp;
@@ -172,11 +172,11 @@ void __fastcall TForm1::Image1MouseUp(TObject *Sender, TMouseButton Button, TShi
 </div>
 <br>
 
-	<dt>Podporné akcie
-	<dd>Kadı grafickı program by mal vedie svoj vytvorenı obrázok zapísa na disk, èo mono spravi
-		cez menu alebo cez tlaèítko. Príkaz je nasledovnı
+	<dt>PodpornÃ© akcie
+	<dd>KaÅ¾dÃ½ grafickÃ½ program by mal vedieÅ¥ svoj vytvorenÃ½ obrÃ¡zok zapÃ­saÅ¥ na disk, Äo moÅ¾no spraviÅ¥
+		cez menu alebo cez tlaÄÃ­tko. PrÃ­kaz je nasledovnÃ½
 		<br>Image1.Pictures.SaveToFile('subor.bmp');
-		<br><br>Na vo¾bu farby mono poui ColorDialog alebo ColorGrid
+		<br><br>Na voÄ¾bu farby moÅ¾no pouÅ¾iÅ¥ ColorDialog alebo ColorGrid
 </dl>
 </body>
 </html>

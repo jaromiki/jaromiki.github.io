@@ -9,51 +9,51 @@
 
 <body>
 <center><h3 class=nadpis>Grafika</h3></center>
-Na kreslenie na plochu je viacero moností, je vhodné si do formulára vloi objekt <b>Image</b> (karta Additional), nieèo ako stôl na kreslenie, vkladanie obrazkov. 
-Jeden z objektov patriacich <b>Image</b> je <b>Canvas</b>, èo je ako maliarske plátno a naò u mono umiestòova grafické obekty - kresli,. Hlavnou vıhodou je: 
-<ul><li>väèšie mnostvo farieb
-    <li>"¾ubovo¾ná" ve¾kos maliarskeho plátna (rozlíšenie XxY)
-	<li>podstatne väèšia mnoina grafickıch príkazov
-	<li>animácie neblikajú (blikanie sa dá potlaèi)
-	<li>monos pouíva èasovaè v animáciách
+Na kreslenie na plochu je viacero moÅ¾nostÃ­, je vhodnÃ© si do formulÃ¡ra vloÅ¾iÅ¥ objekt <b>Image</b> (karta Additional), nieÄo ako stÃ´l na kreslenie, vkladanie obrazkov. 
+Jeden z objektov patriacich <b>Image</b> je <b>Canvas</b>, Äo je ako maliarske plÃ¡tno a naÅˆ uÅ¾ moÅ¾no umiestÅˆovaÅ¥ grafickÃ© obekty - kresliÅ¥,. Hlavnou vÃ½hodou je: 
+<ul><li>vÃ¤ÄÅ¡ie mnoÅ¾stvo farieb
+    <li>"Ä¾ubovoÄ¾nÃ¡" veÄ¾kosÅ¥ maliarskeho plÃ¡tna (rozlÃ­Å¡enie XxY)
+	<li>podstatne vÃ¤ÄÅ¡ia mnoÅ¾ina grafickÃ½ch prÃ­kazov
+	<li>animÃ¡cie neblikajÃº (blikanie sa dÃ¡ potlaÄiÅ¥)
+	<li>moÅ¾nosÅ¥ pouÅ¾Ã­vaÅ¥ ÄasovaÄ v animÃ¡ciÃ¡ch
 </ul>
-Nevıhodou stále ostáva pomalos vykreslovania - máloktorá hra je písaná v takejto základnej grafike - ak chceme
-vykreslova 3D objekty v reálnom èase aj s viditelnosou, musíme siahnu po nástrojoch OpenGl alebo DirectX.	
+NevÃ½hodou stÃ¡le ostÃ¡va pomalosÅ¥ vykreslovania - mÃ¡loktorÃ¡ hra je pÃ­sanÃ¡ v takejto zÃ¡kladnej grafike - ak chceme
+vykreslovaÅ¥ 3D objekty v reÃ¡lnom Äase aj s viditelnosÅ¥ou, musÃ­me siahnuÅ¥ po nÃ¡strojoch OpenGl alebo DirectX.	
 <dl>
-	<dt class=main>Zaèíname
-	<dd>Vloíme grafickı objekt Image1 na plochu a urèíme mu nami zvolenú ve¾kos. Ak teraz spustíme aplikáciu
-		budeme zaskoèenı, e sa nám na ploche tento objekt neobjavil. Treba si zapamäta, e objekt Image1 sa zobrazí a po 
-		nakreslení nejakej èiary alebo plochy. Ja to riešim tak, e vo FormCreate dám príkaz na zotretie kresliacej plochy
-		(v skutoènosti cez celú kresliacu plochu nakreslím biely obdånik).
+	<dt class=main>ZaÄÃ­name
+	<dd>VloÅ¾Ã­me grafickÃ½ objekt Image1 na plochu a urÄÃ­me mu nami zvolenÃº veÄ¾kosÅ¥. Ak teraz spustÃ­me aplikÃ¡ciu
+		budeme zaskoÄenÃ½, Å¾e sa nÃ¡m na ploche tento objekt neobjavil. Treba si zapamÃ¤taÅ¥, Å¾e objekt Image1 sa zobrazÃ­ aÅ¾ po 
+		nakreslenÃ­ nejakej Äiary alebo plochy. Ja to rieÅ¡im tak, Å¾e vo FormCreate dÃ¡m prÃ­kaz na zotretie kresliacej plochy
+		(v skutoÄnosti cez celÃº kresliacu plochu nakreslÃ­m biely obdÄºÅ¾nik).
 		<br>Image1.Canvas.FillRectangle(Image1.ClientRect);
-		<br>Podrobnejšie tento príkaz bude popísanı v èasti Kreslenie plôch.
-		<br>Keï teraz pustíme aplikáciu vidíme objekt Image1 ako biely obdånik poloenı na Forme.
+		<br>PodrobnejÅ¡ie tento prÃ­kaz bude popÃ­sanÃ½ v Äasti Kreslenie plÃ´ch.
+		<br>KeÄ teraz pustÃ­me aplikÃ¡ciu vidÃ­me objekt Image1 ako biely obdÄºÅ¾nik poloÅ¾enÃ½ na Forme.
 		<br><img src="../obr/image1.png" width="235" height="192" border="0" alt="">
-		<br>Polohu bodu v Image1 mono zadáva pomocou dvojíc [x,y] kde x udáva vodorovnú 
-		vzdialenos bodu od ¾avého okraja Image1. 
-		<br>a y udáva zvislú vzdialenos od horného okraja Image1 
-		<br>Treba si zvyknú, e y-súradnica je oproti matematike orientovaná opaène (zväèšovaním hodnoty klesáme a nie stúpame).
-	<dt class=main>Poèiatoèné hodnoty
-	<dd>Základné kreslené prvky majú nastavené poèiatoèné vlastnosti:
-	     Poèiatoèná poloha gr. kurzora: [0;0] (v¾avo hore)
-	     Èiary - farba-èierna, hrúbka-1, style-solid (súvislá)	
-		 Plochy- farba-biela, style-solid (súvislá)
+		<br>Polohu bodu v Image1 moÅ¾no zadÃ¡vaÅ¥ pomocou dvojÃ­c [x,y] kde x udÃ¡va vodorovnÃº 
+		vzdialenosÅ¥ bodu od Ä¾avÃ©ho okraja Image1. 
+		<br>a y udÃ¡va zvislÃº vzdialenosÅ¥ od hornÃ©ho okraja Image1 
+		<br>Treba si zvyknÃºÅ¥, Å¾e y-sÃºradnica je oproti matematike orientovanÃ¡ opaÄne (zvÃ¤ÄÅ¡ovanÃ­m hodnoty klesÃ¡me a nie stÃºpame).
+	<dt class=main>PoÄiatoÄnÃ© hodnoty
+	<dd>ZÃ¡kladnÃ© kreslenÃ© prvky majÃº nastavenÃ© poÄiatoÄnÃ© vlastnosti:
+	     PoÄiatoÄnÃ¡ poloha gr. kurzora: [0;0] (vÄ¾avo hore)
+	     ÄŒiary - farba-Äierna, hrÃºbka-1, style-solid (sÃºvislÃ¡)	
+		 Plochy- farba-biela, style-solid (sÃºvislÃ¡)
 
-	<dt class=main>Práca s farbami
-	<dd>Na urèenie farby objektov v štádiu tvorby projektu vyuijeme vlastnos <b>Color</b>
-		a vyberieme si z ponúkanıch farieb.
-		<br>Ak chceme meni farbu za behu programu, môeme poui nasledovné postupy:
+	<dt class=main>PrÃ¡ca s farbami
+	<dd>Na urÄenie farby objektov v Å¡tÃ¡diu tvorby projektu vyuÅ¾ijeme vlastnosÅ¥ <b>Color</b>
+		a vyberieme si z ponÃºkanÃ½ch farieb.
+		<br>Ak chceme meniÅ¥ farbu za behu programu, mÃ´Å¾eme pouÅ¾iÅ¥ nasledovnÃ© postupy:
 		<ol>
-		<li>Vlastnosti Color priradíme slovné oznaèenie farby (napr. clred)
-		<li>Vlastnosti Color priradíme èíselné oznaèenie farby - 0x00bbggrr, ide o štvoricu bajtov
-		<li>Vlastnosti Color priradíme funkciu RGB(r,g,b), kde r,g,b sú èísla 0..255 
-		<li>Pouijeme objekt ColorBox, kde si uívate¾ môe vybra farbu,  vybraná farba je vo vlastnosti  Selected
-		<li>Pouijeme objekt ColorDialog, zvolená farba je vo vlastnosti Color
-		<li>Pouijeme objekt CColorGrid, kde uívate¾ ¾avım tlaèídkom myši volí farbu fg (farba èiar)
-			<br> &nbsp; &nbsp;pravım tlaèídkom volíme farbu bg (farba plôch) 
-		<li>Pouijeme 3 objekty ScrollBar, na kadom necháme uívate¾a, aby nastavil jas farby a pomocou RGB vytvoríme vıslednú farbu.  
+		<li>Vlastnosti Color priradÃ­me slovnÃ© oznaÄenie farby (napr. clred)
+		<li>Vlastnosti Color priradÃ­me ÄÃ­selnÃ© oznaÄenie farby - 0x00bbggrr, ide o Å¡tvoricu bajtov
+		<li>Vlastnosti Color priradÃ­me funkciu RGB(r,g,b), kde r,g,b sÃº ÄÃ­sla 0..255 
+		<li>PouÅ¾ijeme objekt ColorBox, kde si uÅ¾Ã­vateÄ¾ mÃ´Å¾e vybraÅ¥ farbu,  vybranÃ¡ farba je vo vlastnosti  Selected
+		<li>PouÅ¾ijeme objekt ColorDialog, zvolenÃ¡ farba je vo vlastnosti Color
+		<li>PouÅ¾ijeme objekt CColorGrid, kde uÅ¾Ã­vateÄ¾ Ä¾avÃ½m tlaÄÃ­dkom myÅ¡i volÃ­ farbu fg (farba Äiar)
+			<br> &nbsp; &nbsp;pravÃ½m tlaÄÃ­dkom volÃ­me farbu bg (farba plÃ´ch) 
+		<li>PouÅ¾ijeme 3 objekty ScrollBar, na kaÅ¾dom nechÃ¡me uÅ¾Ã­vateÄ¾a, aby nastavil jas farby a pomocou RGB vytvorÃ­me vÃ½slednÃº farbu.  
 		</ol>
-		Viac o zadávaní farieb si pozri kap. <a href="../01zaciname/farby.html" target="obsah">Zaèíname/Farby</a>
+		Viac o zadÃ¡vanÃ­ farieb si pozri kap. <a href="../01zaciname/farby.html" target="obsah">ZaÄÃ­name/Farby</a>
 </dl>
 
 </body>

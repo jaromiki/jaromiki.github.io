@@ -15,9 +15,9 @@
 		var znak=" ";
 		function z(obj,ii,jj)
 		{ 
-		  if (znak=='Š') { document.getElementById('y'+ys+'x'+xs).value=" "; ys=ii; xs=jj;}
+		  if (znak=='Å ') { document.getElementById('y'+ys+'x'+xs).value=" "; ys=ii; xs=jj;}
 		  if (znak=='C') { document.getElementById('y'+yc+'x'+xc).value=" "; yc=ii; xc=jj;}
-		  if (obj.value!='Š' &&obj.value!='C') obj.value=znak;
+		  if (obj.value!='Å ' &&obj.value!='C') obj.value=znak;
 		  obj.style.color='black';
 		}
 		function cesta()
@@ -76,14 +76,14 @@
 </head>
 
 <body>
-<h3 style="width:500">H¾adanie najkratšej cesty v bludisku zadanom tabu¾kou. </h3>
-<dl><dt>Riešenie bludiska
-	<dd>Máme zadanú rovinnú úlohu (plošinovka), kde vo¾né políèka sú reprezentované napr. medzerou a prekáky napr. znakom 'X'. Ïalej je dané miesto štartu a cie¾a. Našou úlohou je nájs
-		nakratšiu cestu prièom sa môme pohybova vo 4 smeroch (hore, doprava, dole, do¾ava) a na políèko s prekákou nesmieme stúpi. Väèšinou nám v príkladoch staèí zisti dåku najkratšej
-		cesty (prípadne neexistencia cesty) no v nasledujúcej ukáke sa príslušná cesta aj zobrazí. Pouitá je zjednodušená varianta Dijkstrovho algoritmu (pozri v èasti Grafy).
-		<br>V ukáke mono oznaèova políèka za vo¾né, prekákové, štartovné alebo cie¾ové. Tlaèítkami si zvo¾ aké tlaèítka budeš oznaèova a klikaním do tabu¾ky/bludiska vytvoríme svoje
-		bludisko a stlaèením tlaèídka "h¾adaj" algoritmus nájde najkratšiu cestu. 
-		<br>Nie je problém povoli pre blúdiaceho aj šikmı smer.
+<h3 style="width:500">HÄ¾adanie najkratÅ¡ej cesty v bludisku zadanom tabuÄ¾kou. </h3>
+<dl><dt>RieÅ¡enie bludiska
+	<dd>MÃ¡me zadanÃº rovinnÃº Ãºlohu (ploÅ¡inovka), kde voÄ¾nÃ© polÃ­Äka sÃº reprezentovanÃ© napr. medzerou a prekÃ¡Å¾ky napr. znakom 'X'. Äalej je danÃ© miesto Å¡tartu a cieÄ¾a. NaÅ¡ou Ãºlohou je nÃ¡jsÅ¥
+		nakratÅ¡iu cestu priÄom sa mÃ´Å¾me pohybovaÅ¥ vo 4 smeroch (hore, doprava, dole, doÄ¾ava) a na polÃ­Äko s prekÃ¡Å¾kou nesmieme stÃºpiÅ¥. VÃ¤ÄÅ¡inou nÃ¡m v prÃ­kladoch staÄÃ­ zistiÅ¥ dÄºÅ¾ku najkratÅ¡ej
+		cesty (prÃ­padne neexistencia cesty) no v nasledujÃºcej ukÃ¡Å¾ke sa prÃ­sluÅ¡nÃ¡ cesta aj zobrazÃ­. PouÅ¾itÃ¡ je zjednoduÅ¡enÃ¡ varianta Dijkstrovho algoritmu (pozri v Äasti Grafy).
+		<br>V ukÃ¡Å¾ke moÅ¾no oznaÄovaÅ¥ polÃ­Äka za voÄ¾nÃ©, prekÃ¡Å¾kovÃ©, Å¡tartovnÃ© alebo cieÄ¾ovÃ©. TlaÄÃ­tkami si zvoÄ¾ akÃ© tlaÄÃ­tka budeÅ¡ oznaÄovaÅ¥ a klikanÃ­m do tabuÄ¾ky/bludiska vytvorÃ­me svoje
+		bludisko a stlaÄenÃ­m tlaÄÃ­dka "hÄ¾adaj" algoritmus nÃ¡jde najkratÅ¡iu cestu. 
+		<br>Nie je problÃ©m povoliÅ¥ pre blÃºdiaceho aj Å¡ikmÃ½ smer.
 	<br>
 	<table bgcolor="silver"><tr><td>
 		<div style="border-width:3;border-style:outset;width:520px;margin:10px;background-color:silver;">
@@ -92,28 +92,28 @@
 		   </div>
 	   <div style="background-color:silver; width:520px;">
 	      <div style="margin:10">
-		  <h4>H¾adanie najkratšej cesty</h4>
+		  <h4>HÄ¾adanie najkratÅ¡ej cesty</h4>
 	Bludisko:<br>
 	<script>
 	for (i=1;i<31;i++)
 	{ for (j=1;j<31;j++) document.write ('<input class="t" type="text" readonly onclick="z(this,'+i+','+j+');" value=" " id="y'+i+'x'+j+'" >');
       document.write('<br>');
 	}  
-	y1x1.value="Š"; y30x30.value="C";
+	y1x1.value="Å "; y30x30.value="C";
 	</script> 
 <td valign="top" style="padding:20">
 	<div style=" border: thin solid #F8F8FF; padding:10;">
-	Nástroje na editáciu bludiska<br>
-	<input type="Button" value="vo¾né" onclick="znak=' '" style="width:100">
-	<input type="Button" value="prekáka" onclick="znak='X'" style="width:100">
-	<input type="Button" value="štart" onclick="znak='Š'" style="width:100">
-	<input type="Button" value="cie¾" onclick="znak='C'" style="width:100">
-	<input type="Button" value="zma cestu" onclick="zmaz1();" style="width:100">
-	<input type="Button" value="zma prekáky" onclick="zmaz2();" style="width:100">	
+	NÃ¡stroje na editÃ¡ciu bludiska<br>
+	<input type="Button" value="voÄ¾nÃ©" onclick="znak=' '" style="width:100">
+	<input type="Button" value="prekÃ¡Å¾ka" onclick="znak='X'" style="width:100">
+	<input type="Button" value="Å¡tart" onclick="znak='Å '" style="width:100">
+	<input type="Button" value="cieÄ¾" onclick="znak='C'" style="width:100">
+	<input type="Button" value="zmaÅ¾ cestu" onclick="zmaz1();" style="width:100">
+	<input type="Button" value="zmaÅ¾ prekÃ¡Å¾ky" onclick="zmaz2();" style="width:100">	
 	</div>
-	<input type="Button" value=" h¾adaj " onclick="cesta();" style="width:120; margin:10;">
+	<input type="Button" value=" hÄ¾adaj " onclick="cesta();" style="width:120; margin:10;">
 	<br><br>
-	Dåka cesty: &nbsp;<input type="Text" value='?' Style="text-align:right; width:55" id="vysl1">
+	DÄºÅ¾ka cesty: &nbsp;<input type="Text" value='?' Style="text-align:right; width:55" id="vysl1">
 	</tr></table>
 	</div></div></div>
 </body>

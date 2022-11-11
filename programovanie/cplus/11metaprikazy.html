@@ -5,26 +5,26 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <meta name="Content-language" content="sk">	
 	  <LINK href="css/style.css" type="text/css" rel=stylesheet>
-	<title>Metapríkazy</title>
+	<title>MetaprĂ­kazy</title>
 </head>
 
 <body>
-Metapríkazy sú príkazy pre kompilátor, sú to riadky začínajúce znakom #, nemusia byť ukončené znakom ;
-<br>Už sme sa stretli s takýmtoi riadkom na pripájanie hlavičkových súborov no naše možnosti sú väčšie.
-Platnosť je od miesta deklarácie až do konca bloku.
-<dl><dt><font size="+1" color="Blue">Definovanie netypových konštánt - makro bez parametra</font>
+MetaprĂ­kazy sĂş prĂ­kazy pre kompilĂˇtor, sĂş to riadky zaÄŤĂ­najĂşce znakom #, nemusia byĹĄ ukonÄŤenĂ© znakom ;
+<br>UĹľ sme sa stretli s takĂ˝mtoi riadkom na pripĂˇjanie hlaviÄŤkovĂ˝ch sĂşborov no naĹˇe moĹľnosti sĂş vĂ¤ÄŤĹˇie.
+PlatnosĹĄ je od miesta deklarĂˇcie aĹľ do konca bloku.
+<dl><dt><font size="+1" color="Blue">Definovanie netypovĂ˝ch konĹˇtĂˇnt - makro bez parametra</font>
 	<dd><dl><dt>Syntax:
-			<dd><font color="Red">#define</font> identifikator reťazec
-				<br>medzi identifikátorom a reťazcom je medzera, reťazec je ukončený enterom
-			<dt>Sémantika:
-			<dd>kompilátor nahradí v programe identifikátor zadaným reťazcom	
-			<dt>Poznámka:
-			<dd>Je zvykom ako identifikátory používať len veľké písmená
-			<dt>Príklady:
+			<dd><font color="Red">#define</font> identifikator reĹĄazec
+				<br>medzi identifikĂˇtorom a reĹĄazcom je medzera, reĹĄazec je ukonÄŤenĂ˝ enterom
+			<dt>SĂ©mantika:
+			<dd>kompilĂˇtor nahradĂ­ v programe identifikĂˇtor zadanĂ˝m reĹĄazcom	
+			<dt>PoznĂˇmka:
+			<dd>Je zvykom ako identifikĂˇtory pouĹľĂ­vaĹĄ len veÄľkĂ© pĂ­smenĂˇ
+			<dt>PrĂ­klady:
 			<dd>#define POCET 100
 			<br>#define POZDRAV1 'Ahoj'
 			<br>#define POZDRAV2 'Dovidenia'
-			<br>// pre "zarytých" pascalistov možno C-čko trochu upraviť na pascalský vzhľad
+			<br>// pre "zarytĂ˝ch" pascalistov moĹľno C-ÄŤko trochu upraviĹĄ na pascalskĂ˝ vzhÄľad
 			<br>#define BEGIN { 
 			<br>#define begin { 
 			<br>#define END }
@@ -33,14 +33,14 @@ Platnosť je od miesta deklarácie až do konca bloku.
 			<br>#define and &amp;&amp; 
  			<br>#define or || 
 			<br>#define INTFORMAT "%i " 
-			<br>// reťazec môže obsahovať výrazy, príkazy i predtým definované konštanty
+			<br>// reĹĄazec mĂ´Ĺľe obsahovaĹĄ vĂ˝razy, prĂ­kazy i predtĂ˝m definovanĂ© konĹˇtanty
 			<br>#define zotri clrscr();
 			<br>#define spocitaj for(i=1;i&lt;POCET;i++) suma +=i;
-			<dt>Použitie makra:
+			<dt>PouĹľitie makra:
 			<dd><code><pre>
 void main() 
 BEGIN int suma=POCET; // BEGIN bude nahradeny {
-&nbsp; zotri //nemusíme dať ; lebo makro tam ; má 
+&nbsp; zotri //nemusĂ­me daĹĄ ; lebo makro tam ; mĂˇ 
 &nbsp; puts(POZDRAV1);
 &nbsp; spocitaj
 &nbsp; printf(INTFORMAT,suma);
@@ -48,46 +48,46 @@ END;
 </pre></code>
 		</dl>
 	<dt><font size="+1" color="Blue">Definovanie makra s parametrami</font>
-	<dd>Makra s parametrami sú veľmi podobné jednoduchým funkciám, uprednostňujeme ich ak nám
-		viac záleží viac na rýchlosti ako na dĺžke kódu. Identifikátor je zvykom voliť z malých písmen.
+	<dd>Makra s parametrami sĂş veÄľmi podobnĂ© jednoduchĂ˝m funkciĂˇm, uprednostĹujeme ich ak nĂˇm
+		viac zĂˇleĹľĂ­ viac na rĂ˝chlosti ako na dÄşĹľke kĂłdu. IdentifikĂˇtor je zvykom voliĹĄ z malĂ˝ch pĂ­smen.
 		<dl><dt>Syntax:
-			<dd><font color="Red">#define</font> identifikátor( parametre) reťazec
-			<br>Medzi identifikátorom a zátvorkou nesmie byť medzera
-			<br>parametre - identifikátory - formálne parametre
-			<dt>Sémantika - kompilátor hľadá v reťazci formálne parametre a nahradí ich skutočnými
-			<dd>Skutočný parameter môže byť ľubovoľný reťazec
-			<dt>Príklady:
+			<dd><font color="Red">#define</font> identifikĂˇtor( parametre) reĹĄazec
+			<br>Medzi identifikĂˇtorom a zĂˇtvorkou nesmie byĹĄ medzera
+			<br>parametre - identifikĂˇtory - formĂˇlne parametre
+			<dt>SĂ©mantika - kompilĂˇtor hÄľadĂˇ v reĹĄazci formĂˇlne parametre a nahradĂ­ ich skutoÄŤnĂ˝mi
+			<dd>SkutoÄŤnĂ˝ parameter mĂ´Ĺľe byĹĄ ÄľubovoÄľnĂ˝ reĹĄazec
+			<dt>PrĂ­klady:
 			<dd>#define stvorec(x) x*x
-			<br>z=stvorec(5); //priradí do z číslo 5*5 čiže 25
-			<br>z=stvorec(2+3); //zdanlivo zas 25 v skutočnosti 2+3*2+3 čiže 11
-			<br>lepšie je
+			<br>z=stvorec(5); //priradĂ­ do z ÄŤĂ­slo 5*5 ÄŤiĹľe 25
+			<br>z=stvorec(2+3); //zdanlivo zas 25 v skutoÄŤnosti 2+3*2+3 ÄŤiĹľe 11
+			<br>lepĹˇie je
 			<br>#define stvorec(x) (x)*(x)
 			<br>#define pytagor(x,y) ((x*x)+(y*y))
-			<br>z=3*pytagor(2+3,1+3); // tu je jasné načo je veľká zátvorka
-			<br><br>V reťazci - výraze je dobrým zvykom všetky formálne parametre dávať do zátvoriek a celý výraz tiež do zátvorky.
-			<dt>Úlohy:
+			<br>z=3*pytagor(2+3,1+3); // tu je jasnĂ© naÄŤo je veÄľkĂˇ zĂˇtvorka
+			<br><br>V reĹĄazci - vĂ˝raze je dobrĂ˝m zvykom vĹˇetky formĂˇlne parametre dĂˇvaĹĄ do zĂˇtvoriek a celĂ˝ vĂ˝raz tieĹľ do zĂˇtvorky.
+			<dt>Ăšlohy:
 			<dd><ol>
-				<li>Napíš makro citaj na načítanie znaku zo štand. vstupu
-				<li>Napíš makro na ciferný súčet int čísla 
-				<li>Napíš makrá na tlač celých a reálnych čísel
+				<li>NapĂ­Ĺˇ makro citaj na naÄŤĂ­tanie znaku zo Ĺˇtand. vstupu
+				<li>NapĂ­Ĺˇ makro na cifernĂ˝ sĂşÄŤet int ÄŤĂ­sla 
+				<li>NapĂ­Ĺˇ makrĂˇ na tlaÄŤ celĂ˝ch a reĂˇlnych ÄŤĂ­sel
 				</ol> 
 		</dl>
 		<br>Pozn.
-		<br>Každé makro možno ľubovoľne predefinovať opätovným príkazom #define.
-		<br>Platnosť makra možno zrušiť príkazom #undefine identif
-	<dt><font size="+1" color="Blue">Vkladanie hlavičkových súborov</font>
-	<dd>Syntax:<dl> <dt><font color="Red">#include &lt;</font>filename<font color="Red">&gt;</font> //súbor hľadá najprv v systémovom adresári
-					<dt><font color="Red">#include "</font>filename<font color="Red">"</font> //súbor hľadá najprv v aktuálnom adresári
-					<dd>používa sa na vkladanie textou z iných súborov, najčastejšie hlavičkových súborou, kde sú popísané konštanty, makrá, typy, premenné, hlavičky podprogramou.
-						Ak vkladáme systémový hlavičkový súbor, používame prvú syntax, ak vkladáme svoj súbor použijeme druhý syntax.
+		<br>KaĹľdĂ© makro moĹľno ÄľubovoÄľne predefinovaĹĄ opĂ¤tovnĂ˝m prĂ­kazom #define.
+		<br>PlatnosĹĄ makra moĹľno zruĹˇiĹĄ prĂ­kazom #undefine identif
+	<dt><font size="+1" color="Blue">Vkladanie hlaviÄŤkovĂ˝ch sĂşborov</font>
+	<dd>Syntax:<dl> <dt><font color="Red">#include &lt;</font>filename<font color="Red">&gt;</font> //sĂşbor hÄľadĂˇ najprv v systĂ©movom adresĂˇri
+					<dt><font color="Red">#include "</font>filename<font color="Red">"</font> //sĂşbor hÄľadĂˇ najprv v aktuĂˇlnom adresĂˇri
+					<dd>pouĹľĂ­va sa na vkladanie textou z inĂ˝ch sĂşborov, najÄŤastejĹˇie hlaviÄŤkovĂ˝ch sĂşborou, kde sĂş popĂ­sanĂ© konĹˇtanty, makrĂˇ, typy, premennĂ©, hlaviÄŤky podprogramou.
+						Ak vkladĂˇme systĂ©movĂ˝ hlaviÄŤkovĂ˝ sĂşbor, pouĹľĂ­vame prvĂş syntax, ak vkladĂˇme svoj sĂşbor pouĹľijeme druhĂ˝ syntax.
 				</dl>
-	<dt><font size="+1" color="Blue">Úlohy:</font>
+	<dt><font size="+1" color="Blue">Ăšlohy:</font>
 	<dd><ol>
-	<li>Napíšte svoj hlavičkový súbor - moj.h, ktorý obsahuje:
-		<br>- makro na vstup celého čísla 
-		<br>- makro na výpočet druhej mocniny - moc2
-		<br>- makro ma výpočet súčtu mocnín a*a+b*b - sucet
-		<br>Napíšte program na načítanie 3 celých čísel - strán trojuholníka a zistite, či je pravouhlý
+	<li>NapĂ­Ĺˇte svoj hlaviÄŤkovĂ˝ sĂşbor - moj.h, ktorĂ˝ obsahuje:
+		<br>- makro na vstup celĂ©ho ÄŤĂ­sla 
+		<br>- makro na vĂ˝poÄŤet druhej mocniny - moc2
+		<br>- makro ma vĂ˝poÄŤet sĂşÄŤtu mocnĂ­n a*a+b*b - sucet
+		<br>NapĂ­Ĺˇte program na naÄŤĂ­tanie 3 celĂ˝ch ÄŤĂ­sel - strĂˇn trojuholnĂ­ka a zistite, ÄŤi je pravouhlĂ˝
 </ol>
 </dl>
 

@@ -8,37 +8,37 @@
 
 <body>
 <h3>Hmla</h3>
-Pre vytvorenie realistickej scény mono nastavi hmlu, ktorá skrıva objekty, ktoré sú od nás na osi y viac vzdialené.
-Existujú viaceré scenáre zobrazenia hmly, tu si ukáeme hmlu lineárnu a exponenciálnu (ide o to ako narastá hustita hmly
-v závislosti od súradnice y). 
-Polohu hmly urèujeme súradnicami z (start, end) vzdialenosou od oka
-<dl><dt>Umonenie hmly
-	<dd>Štandartne je vıpoèet hmly vypnutı a ak chceme hmlu pouíva, musíme zapnú hmlu podobne ako pri zadávaní svetla
-		<br>Príkaz: <b>glEnable(GL_FOG)</b>
-		<br>Bez tohoto príkazy pre vıpoèet hmly nemajú iadny úèinok
+Pre vytvorenie realistickej scÃ©ny moÅ¾no nastaviÅ¥ hmlu, ktorÃ¡ skrÃ½va objekty, ktorÃ© sÃº od nÃ¡s na osi y viac vzdialenÃ©.
+ExistujÃº viacerÃ© scenÃ¡re zobrazenia hmly, tu si ukÃ¡Å¾eme hmlu lineÃ¡rnu a exponenciÃ¡lnu (ide o to ako narastÃ¡ hustita hmly
+v zÃ¡vislosti od sÃºradnice y). 
+Polohu hmly urÄujeme sÃºradnicami z (start, end) vzdialenosÅ¥ou od oka
+<dl><dt>UmoÅ¾nenie hmly
+	<dd>Å tandartne je vÃ½poÄet hmly vypnutÃ½ a ak chceme hmlu pouÅ¾Ã­vaÅ¥, musÃ­me zapnÃºÅ¥ hmlu podobne ako pri zadÃ¡vanÃ­ svetla
+		<br>PrÃ­kaz: <b>glEnable(GL_FOG)</b>
+		<br>Bez tohoto prÃ­kazy pre vÃ½poÄet hmly nemajÃº Å¾iadny ÃºÄinok
 	<dt>Typ hmly
-	<dd>Ako sme u uviedli máme monosti:
+	<dd>Ako sme uÅ¾ uviedli mÃ¡me moÅ¾nosti:
 		<ul><li>GL_LINEAR
 			<li>GL_EXP
 			<li>GL_EXP2
 		</ul>
-		<dl><dt>lineárna hmla
-			<dd>Aby sme pochopili ako lineárnu hmlu nastavi, musíme vedie kde sa nachádza "oko" scény. Štandartne je 
-				umiestnené v bode [0;0;0]. Pri tvorbe hmly je vıhodné ma celú scénu v jednom polpriestore (napr. všetky z súradnice budú záporné/kladné 
-				- èo dosiahneme príkazom glTranslatef())
-				lebo hmla je vytvárané symetricky v oboch polpriestoroch.
-				Pri lineárnej hmle urèujeme zaèiatok, kde hmla zaèína (par. GL_FOG_START) a kde konèí (par. GL_FOG_END)
-				Oba nastavíme príkazom:
+		<dl><dt>lineÃ¡rna hmla
+			<dd>Aby sme pochopili ako lineÃ¡rnu hmlu nastaviÅ¥, musÃ­me vedieÅ¥ kde sa nachÃ¡dza "oko" scÃ©ny. Å tandartne je 
+				umiestnenÃ© v bode [0;0;0]. Pri tvorbe hmly je vÃ½hodnÃ© maÅ¥ celÃº scÃ©nu v jednom polpriestore (napr. vÅ¡etky z sÃºradnice budÃº zÃ¡pornÃ©/kladnÃ© 
+				- Äo dosiahneme prÃ­kazom glTranslatef())
+				lebo hmla je vytvÃ¡ranÃ© symetricky v oboch polpriestoroch.
+				Pri lineÃ¡rnej hmle urÄujeme zaÄiatok, kde hmla zaÄÃ­na (par. GL_FOG_START) a kde konÄÃ­ (par. GL_FOG_END)
+				Oba nastavÃ­me prÃ­kazom:
 				<br>glFogf(GL_FOG_START,<i>hodnota</i>); &nbsp; &nbsp;//default je 0
 				<br>glFogf(GL_FOG_END,<i>hodnota</i>); &nbsp; &nbsp;//default je 1
-				<br>Vıpoèet ko¾ko bude pôvodnej farby z intervalu &lt;0;1&gt; je urèené vzorcom f=(end-z)/(end-start),
-				<br>vısledná farba sa vypoèíta pod¾a vzorca: vysl_farba =f*farba+(1-f)*hmla.
+				<br>VÃ½poÄet koÄ¾ko bude pÃ´vodnej farby z intervalu &lt;0;1&gt; je urÄenÃ© vzorcom f=(end-z)/(end-start),
+				<br>vÃ½slednÃ¡ farba sa vypoÄÃ­ta podÄ¾a vzorca: vysl_farba =f*farba+(1-f)*hmla.
 				<br>Pre z&lt;start je farba bez hmly, pre z&gt;end je len farba hmly
-				<br><br>Príklad:
-				<br>Nech scéna je tvorená telesom o súradniciach z patriacich do intervalu &lt;-3;3&gt;. Nedá sa priamo vytvori hmlu napr. od 1 po 3,
-				ale posunutím scény napr. príkazom glTranslatef(0,0,+4); zväèšíme z-súradnice o 4 a teleso bude teda na sur. &lt;+1;+7&gt;.
-				<br>Urèením napr. start = 9, end = 1 bude "zaèiatok" tesesa v ¾ahkej hmle a najvzdialenejšia èas tesesa bude u v úplnej hmle.
-				<br>Urèením napr. start = 0, end = 6 bude hmla narasta v opaènom smere (smerom ku nám) a vidie budeme lepšie vzdialenejšie èasti telesa.
+				<br><br>PrÃ­klad:
+				<br>Nech scÃ©na je tvorenÃ¡ telesom o sÃºradniciach z patriacich do intervalu &lt;-3;3&gt;. NedÃ¡ sa priamo vytvoriÅ¥ hmlu napr. od 1 po 3,
+				ale posunutÃ­m scÃ©ny napr. prÃ­kazom glTranslatef(0,0,+4); zvÃ¤ÄÅ¡Ã­me z-sÃºradnice o 4 a teleso bude teda na sur. &lt;+1;+7&gt;.
+				<br>UrÄenÃ­m napr. start = 9, end = 1 bude "zaÄiatok" tesesa v Ä¾ahkej hmle a najvzdialenejÅ¡ia ÄasÅ¥ tesesa bude uÅ¾ v Ãºplnej hmle.
+				<br>UrÄenÃ­m napr. start = 0, end = 6 bude hmla narastaÅ¥ v opaÄnom smere (smerom ku nÃ¡m) a vidieÅ¥ budeme lepÅ¡ie vzdialenejÅ¡ie Äasti telesa.
 				<div style="border-width:3;border-style:outset;width:700px;margin:10px;background-color:silver;">
    				<div align="right" style="background-color:#3366ff; width:700px; padding:0;border-width:0;">
 	   				<img src="../obr/krizik.jpg" width="70px" height="22px" border="0" alt="" style="margin:0">
@@ -46,9 +46,9 @@ Polohu hmly urèujeme súradnicami z (start, end) vzdialenosou od oka
   				<div style="background-color:silver; width:700px;" onclick="mdole(event.pageX-this.offsetLeft-5,event.pageY-this.offsetTop-5 );">
 				<pre> glMatrixMode(GL_MODELVIEW);
  glLoadIdentity();
- glTranslatef(0,0,+4);     //posun telesa o 4 ku nám
- glRotatef(20,1,0,0);      //pootoèenie okolo osi x o 20 stupòov
- glRotatef(uholx,0,1,0);   //pootoèenie okolo osi y, ve¾kos meníme v èasovaèi
+ glTranslatef(0,0,+4);     //posun telesa o 4 ku nÃ¡m
+ glRotatef(20,1,0,0);      //pootoÄenie okolo osi x o 20 stupÅˆov
+ glRotatef(uholx,0,1,0);   //pootoÄenie okolo osi y, veÄ¾kosÅ¥ menÃ­me v ÄasovaÄi
  glBegin(GL_QUADS);
         glTexCoord2f(0.0, 0.0); glVertex3i(0,0,-3);
         glTexCoord2f(1.0, 0.0); glVertex3i(3,0,-3);
@@ -70,13 +70,13 @@ Polohu hmly urèujeme súradnicami z (start, end) vzdialenosou od oka
 				</pre>
  				</div>
 				</div>
-		<dt>exponenciálna hmla 1
-		<dd>Tu je automaticky nastavenı zaèiatok hmly do z=0 a narastá do nekoneèna s rastúcim |z| pod¾a funkcie f=exp(-denzity*|z|), 
-			parameter denzity nastavíme príkazom:
+		<dt>exponenciÃ¡lna hmla 1
+		<dd>Tu je automaticky nastavenÃ½ zaÄiatok hmly do z=0 a narastÃ¡ do nekoneÄna s rastÃºcim |z| podÄ¾a funkcie f=exp(-denzity*|z|), 
+			parameter denzity nastavÃ­me prÃ­kazom:
 			<br>glFogf(GL_FOG_DENSITY,<i>hodnota</i>); &nbsp; &nbsp;//default hodnota je 1
-			<br>Povolené sú kladné èísla, èím väèšiu hodnotu zadáme tım hmla hustne rıchlejšie. Obyèajne posunieme objekty do zápornıch èísel
-			aby hmla narastala smerom od nás. Nevıhodou takejto hmly je nemonos urèi oblas, kde by hmla ešte nebola (oproti linear)
-			a tie dos rıchly nástup narastania hmly (pomalší nábeh je pri vo¾be EXP2)
+			<br>PovolenÃ© sÃº kladnÃ© ÄÃ­sla, ÄÃ­m vÃ¤ÄÅ¡iu hodnotu zadÃ¡me tÃ½m hmla hustne rÃ½chlejÅ¡ie. ObyÄajne posunieme objekty do zÃ¡pornÃ½ch ÄÃ­sel
+			aby hmla narastala smerom od nÃ¡s. NevÃ½hodou takejto hmly je nemoÅ¾nosÅ¥ urÄiÅ¥ oblasÅ¥, kde by hmla eÅ¡te nebola (oproti linear)
+			a tieÅ¾ dosÅ¥ rÃ½chly nÃ¡stup narastania hmly (pomalÅ¡Ã­ nÃ¡beh je pri voÄ¾be EXP2)
 			 
 
 

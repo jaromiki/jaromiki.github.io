@@ -4,43 +4,43 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
  	 <meta name="Content-language" content="sk">	
 	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
-	 <title>Úvod</title>
+	 <title>Ăšvod</title>
 
 </head>
 
 <body>
 <dl>
-<dt class="main">degue - obojstranná fronta
-<dd>Táto štruktúra je realizovaná ako dynamické poľe, a teda použitie deque je rovnaké ako u vektora. 
-    Oproti poľu môžme v konštantnom čase vkladať/rušiť prvky na oboch koncoch štruktúry (podobne ako pri list),
-	oproti listu máme priamy prístup ku položkám štruktúry. 
-	Týmto vytvoríme štruktúru do ktorej možno sekvenčne zapísať viacero hodnôt a máme k položkám priamy prístup cez index 
-	(ale získame aj ďalšie možnosti, ktoré ďalej popíšem), prvky možno meniť, získavať v konštantnom čase. 
-	Zvyčajne je size deque definovaná pri deklarácii, 
-	je to tak najefektívnejšie (najrýchlejšie), ale nemôžme počet prvkov prispôsobovať aktuálnej potrebe. 
-	Oproti objektu vector má deque jeden rozdiel - dáta nemusia tvoriť v halde súvislú oblasť, preto pri častých zmenách
-	veľkosti (size) je použitie deque rýchlejšie. V prípade ak potrebujeme <b>data</b> poslať nejakej API funkcii, tak tá ich
-	vyžaduje súvislé, čo bude problém. 
-	Hlavné použitie je v metódach:
-	<br>void <b>push_front(hodnota)</b>; &nbsp; &nbsp;//vloží dopredu novú hodnotu (konšt. čas)
-	<br>void <b>push_back(hodnota)</b>; &nbsp; &nbsp;//vloží dozadu novú hodnotu (konšt. čas)
-	<br>void <b>pop_front()</b>; &nbsp; &nbsp;//odstráni prvú hodnotu (konšt. čas)
-	<br>void <b>pop_back()</b>; &nbsp; &nbsp;//odstráni poslednú hodnotu (konšt. čas)
-	<br>typ <b>front()</b>; &nbsp; &nbsp;//funkcia vráti hodnotu prvého prvku (konšt. čas)
-	<br>typ <b>back()</b>; &nbsp; &nbsp;//funkcia vráti hodnotu posledného prvku (konšt. čas)
-	<br><br>Na vkladanie na iné miesto ako je niektorý z koncov nie štruktúra až tak vhodná (lepší je list),
-	ale možme vsúvať v lineárnom čase na danú pozíciu (iterátor)
-	<br>Ak vsúvame jeden prvok použijeme metódu emplace(), ak viac hodnôt naraz metódu insert(), obe pri vsúvaní jedného prvku
-	vrátia iterátor na ten prvok, pri vsúvaní viacerých hodnôt naraz nie je vrátený iterátor validný.
-	<br>iterátor <b>emplace(iterator, hodnota)</b>; &nbsp; &nbsp;//vloží na dané miesto novú hodnotu (lin. čas od vzdialenosti)
-	<br>iterátor <b>insert(iterator, hodnota)</b>; &nbsp; &nbsp;//vloží na dané miesto novú hodnotu (lin. čas od vzdialenosti)
-	<br>iterátor <b>insert(iterator, pocet, hodnota)</b>; &nbsp; &nbsp;//vloží na dané miesto novú hodnotu viackrát (lin. čas od vzdialenosti)
-	<br>iterátor <b>insert(iterator, iterator_zac, iterator_kon)</b>; &nbsp; &nbsp;//vloží na dané miesto viaceré hodnoty (lin. čas od vzdialenosti)
-	<br><br>Na odstránenie prvku/prvkov z iných miest ako koncov môžme v lin. čase použiť metódu erase(), vráti nám iterátor na prvok
-	za posledným zrušeným. 
-	<br>iterátor <b>erase(iterator)</b>; &nbsp; &nbsp;//odstráni z daného miesta prvok (lin. čas od vzdialenosti)
-	<br>iterátor <b>erase(iterator_zac, iterator_kon)</b>; &nbsp; &nbsp;//odstráni z daného miesta prvky zadané iterátormi (lin. čas od vzdialenosti)
-	<br><br>Celá práca s degue je ďalej rovnaká ako s objektom vector a príslušné metódy je možné pozrieť tam.
+<dt class="main">degue - obojstrannĂˇ fronta
+<dd>TĂˇto ĹˇtruktĂşra je realizovanĂˇ ako dynamickĂ© poÄľe, a teda pouĹľitie deque je rovnakĂ© ako u vektora. 
+    Oproti poÄľu mĂ´Ĺľme v konĹˇtantnom ÄŤase vkladaĹĄ/ruĹˇiĹĄ prvky na oboch koncoch ĹˇtruktĂşry (podobne ako pri list),
+	oproti listu mĂˇme priamy prĂ­stup ku poloĹľkĂˇm ĹˇtruktĂşry. 
+	TĂ˝mto vytvorĂ­me ĹˇtruktĂşru do ktorej moĹľno sekvenÄŤne zapĂ­saĹĄ viacero hodnĂ´t a mĂˇme k poloĹľkĂˇm priamy prĂ­stup cez index 
+	(ale zĂ­skame aj ÄŹalĹˇie moĹľnosti, ktorĂ© ÄŹalej popĂ­Ĺˇem), prvky moĹľno meniĹĄ, zĂ­skavaĹĄ v konĹˇtantnom ÄŤase. 
+	ZvyÄŤajne je size deque definovanĂˇ pri deklarĂˇcii, 
+	je to tak najefektĂ­vnejĹˇie (najrĂ˝chlejĹˇie), ale nemĂ´Ĺľme poÄŤet prvkov prispĂ´sobovaĹĄ aktuĂˇlnej potrebe. 
+	Oproti objektu vector mĂˇ deque jeden rozdiel - dĂˇta nemusia tvoriĹĄ v halde sĂşvislĂş oblasĹĄ, preto pri ÄŤastĂ˝ch zmenĂˇch
+	veÄľkosti (size) je pouĹľitie deque rĂ˝chlejĹˇie. V prĂ­pade ak potrebujeme <b>data</b> poslaĹĄ nejakej API funkcii, tak tĂˇ ich
+	vyĹľaduje sĂşvislĂ©, ÄŤo bude problĂ©m. 
+	HlavnĂ© pouĹľitie je v metĂłdach:
+	<br>void <b>push_front(hodnota)</b>; &nbsp; &nbsp;//vloĹľĂ­ dopredu novĂş hodnotu (konĹˇt. ÄŤas)
+	<br>void <b>push_back(hodnota)</b>; &nbsp; &nbsp;//vloĹľĂ­ dozadu novĂş hodnotu (konĹˇt. ÄŤas)
+	<br>void <b>pop_front()</b>; &nbsp; &nbsp;//odstrĂˇni prvĂş hodnotu (konĹˇt. ÄŤas)
+	<br>void <b>pop_back()</b>; &nbsp; &nbsp;//odstrĂˇni poslednĂş hodnotu (konĹˇt. ÄŤas)
+	<br>typ <b>front()</b>; &nbsp; &nbsp;//funkcia vrĂˇti hodnotu prvĂ©ho prvku (konĹˇt. ÄŤas)
+	<br>typ <b>back()</b>; &nbsp; &nbsp;//funkcia vrĂˇti hodnotu poslednĂ©ho prvku (konĹˇt. ÄŤas)
+	<br><br>Na vkladanie na inĂ© miesto ako je niektorĂ˝ z koncov nie ĹˇtruktĂşra aĹľ tak vhodnĂˇ (lepĹˇĂ­ je list),
+	ale moĹľme vsĂşvaĹĄ v lineĂˇrnom ÄŤase na danĂş pozĂ­ciu (iterĂˇtor)
+	<br>Ak vsĂşvame jeden prvok pouĹľijeme metĂłdu emplace(), ak viac hodnĂ´t naraz metĂłdu insert(), obe pri vsĂşvanĂ­ jednĂ©ho prvku
+	vrĂˇtia iterĂˇtor na ten prvok, pri vsĂşvanĂ­ viacerĂ˝ch hodnĂ´t naraz nie je vrĂˇtenĂ˝ iterĂˇtor validnĂ˝.
+	<br>iterĂˇtor <b>emplace(iterator, hodnota)</b>; &nbsp; &nbsp;//vloĹľĂ­ na danĂ© miesto novĂş hodnotu (lin. ÄŤas od vzdialenosti)
+	<br>iterĂˇtor <b>insert(iterator, hodnota)</b>; &nbsp; &nbsp;//vloĹľĂ­ na danĂ© miesto novĂş hodnotu (lin. ÄŤas od vzdialenosti)
+	<br>iterĂˇtor <b>insert(iterator, pocet, hodnota)</b>; &nbsp; &nbsp;//vloĹľĂ­ na danĂ© miesto novĂş hodnotu viackrĂˇt (lin. ÄŤas od vzdialenosti)
+	<br>iterĂˇtor <b>insert(iterator, iterator_zac, iterator_kon)</b>; &nbsp; &nbsp;//vloĹľĂ­ na danĂ© miesto viacerĂ© hodnoty (lin. ÄŤas od vzdialenosti)
+	<br><br>Na odstrĂˇnenie prvku/prvkov z inĂ˝ch miest ako koncov mĂ´Ĺľme v lin. ÄŤase pouĹľiĹĄ metĂłdu erase(), vrĂˇti nĂˇm iterĂˇtor na prvok
+	za poslednĂ˝m zruĹˇenĂ˝m. 
+	<br>iterĂˇtor <b>erase(iterator)</b>; &nbsp; &nbsp;//odstrĂˇni z danĂ©ho miesta prvok (lin. ÄŤas od vzdialenosti)
+	<br>iterĂˇtor <b>erase(iterator_zac, iterator_kon)</b>; &nbsp; &nbsp;//odstrĂˇni z danĂ©ho miesta prvky zadanĂ© iterĂˇtormi (lin. ÄŤas od vzdialenosti)
+	<br><br>CelĂˇ prĂˇca s degue je ÄŹalej rovnakĂˇ ako s objektom vector a prĂ­sluĹˇnĂ© metĂłdy je moĹľnĂ© pozrieĹĄ tam.
 </dl>	
  </body>
 </html>

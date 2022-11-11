@@ -2,7 +2,7 @@
 <head>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <LINK href="css/style.css" type="text/css" rel=stylesheet>	
-	<title>Časovač</title>
+	<title>ÄŚasovaÄŤ</title>
 	<script>
 	  function okno()
 	  {	
@@ -12,7 +12,7 @@
 	    nove.document.write("<html>");
 	    nove.document.write("<head>\n");
 		nove.document.write("<META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'>\n");
-		nove.document.write('<title>Ukážka času</title>\n');
+		nove.document.write('<title>UkĂˇĹľka ÄŤasu</title>\n');
 		nove.document.write("<script>\n");
 		nove.document.write("function hodiny()\n");
 		nove.document.write("{  var a = new Date();\n");
@@ -35,7 +35,7 @@
 	    novez.document.write("&lt;html><br>");
 	    novez.document.write("&lt;head><br>");
 		novez.document.write("&lt;META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'><br>");
-		novez.document.write('&lt;title>Ukážka času&lt;/title><br>');
+		novez.document.write('&lt;title>UkĂˇĹľka ÄŤasu&lt;/title><br>');
 		novez.document.write("&lt;script><br>");
 		novez.document.write("function hodiny()<br>");
 		novez.document.write("{  var a = new Date();<br>");
@@ -129,7 +129,7 @@
 		novez.document.writeln('&lt;/div>'); 
 		novez.document.writeln('&lt;input type="Button" onclick="window.tr=window.setInterval(');
 		novez.document.writeln("'anim()',30)");
-		novez.document.writeln(' value="Štart"><br>');
+		novez.document.writeln(' value="Ĺ tart"><br>');
 		novez.document.writeln('&lt;input type="Button" onclick="window.clearInterval(window.tr)" value="Stop"><br>'); 
 		novez.document.writeln('</div>&lt;/BODY><br>'); 
 		novez.document.close();
@@ -185,51 +185,51 @@
 </head>
 
 <body>
-Na animáciu obrázkov, textov s výhodou možno použiť časovač. V ňom možno nastaviť ktoré príkazy
-sa majú každých n ms vykonať, alebo odložiť vykonanie príkazov o n ms.
-<dl><dt>window.tr= setInterval(text-príkazy, cislo)
-	<dd> setInterval je funkcia, návratová hodnota je jedinečný kód
-	<br> text-príkazy ... text v ktorom sú zapísané príkazy, ktoré sa majú pravidelne spúšťať - obyčajne funkcia
-	<br> cislo ... časový interval v ms (zrýchlovanie zmenšovaním tejto hodnoty funguje len po určitú hranicu.
-	<br> tr ... je premenná v ktorej bude id-kód potrebný na zrušenie opakovania
+Na animĂˇciu obrĂˇzkov, textov s vĂ˝hodou moĹľno pouĹľiĹĄ ÄŤasovaÄŤ. V Ĺom moĹľno nastaviĹĄ ktorĂ© prĂ­kazy
+sa majĂş kaĹľdĂ˝ch n ms vykonaĹĄ, alebo odloĹľiĹĄ vykonanie prĂ­kazov o n ms.
+<dl><dt>window.tr= setInterval(text-prĂ­kazy, cislo)
+	<dd> setInterval je funkcia, nĂˇvratovĂˇ hodnota je jedineÄŤnĂ˝ kĂłd
+	<br> text-prĂ­kazy ... text v ktorom sĂş zapĂ­sanĂ© prĂ­kazy, ktorĂ© sa majĂş pravidelne spĂşĹˇĹĄaĹĄ - obyÄŤajne funkcia
+	<br> cislo ... ÄŤasovĂ˝ interval v ms (zrĂ˝chlovanie zmenĹˇovanĂ­m tejto hodnoty funguje len po urÄŤitĂş hranicu.
+	<br> tr ... je premennĂˇ v ktorej bude id-kĂłd potrebnĂ˝ na zruĹˇenie opakovania
     <dt>clearInterval(tr)
-	<dd>zruší setInterval
-	<br>tr ... premenná v ktorej je kód priradený pomocou setInterval
-    <dt>setTimeout(text-príkazy, cislo-cas)
-	<dd>setTimeout je funkcia, návratová hodnota je jedinečný kód, použitie na spomalené vykonávanie
-	<br> text-príkazy ... text v ktorom sú zapísané príkazy, ktoré sa majú "o chvíľu" vykonať
-	<br> cislo-cas ... časový interval v ms 
-	<br> návratovú adresu možno použiť na zrušenie vykonania
+	<dd>zruĹˇĂ­ setInterval
+	<br>tr ... premennĂˇ v ktorej je kĂłd priradenĂ˝ pomocou setInterval
+    <dt>setTimeout(text-prĂ­kazy, cislo-cas)
+	<dd>setTimeout je funkcia, nĂˇvratovĂˇ hodnota je jedineÄŤnĂ˝ kĂłd, pouĹľitie na spomalenĂ© vykonĂˇvanie
+	<br> text-prĂ­kazy ... text v ktorom sĂş zapĂ­sanĂ© prĂ­kazy, ktorĂ© sa majĂş "o chvĂ­Äľu" vykonaĹĄ
+	<br> cislo-cas ... ÄŤasovĂ˝ interval v ms 
+	<br> nĂˇvratovĂş adresu moĹľno pouĹľiĹĄ na zruĹˇenie vykonania
     <dt>clearTimeout(tr)
-	<dd>clearTimeout je funkcia na zrušenie setTimeout
+	<dd>clearTimeout je funkcia na zruĹˇenie setTimeout
 <br>
 </dl>	
-<dl><dt>Digitálne hodiny
+<dl><dt>DigitĂˇlne hodiny
 	<dd>
-		<dl><dt>Čo k tomu potrebujeme"
-		<dd>miesto, kde budeme čas vypisovať ... &lt;div id="ncas"> tu bude čas&lt;/div>
-		<br>premennú s aktuálnym časom ... var a= new Date()
-		<br>vybratie hodín, minút a sek. z prem. a ... a.getHours(), a.getMinutes(), a.getSeconds()
-		<br>zápis na stránku ncas.innerText=...<br>
-		<br>tlačítko na spustenie časovača (poprípade na zastavenie)
-		<input type="Button" onclick="okno();nove.focus()" value="Ukážka">
+		<dl><dt>ÄŚo k tomu potrebujeme"
+		<dd>miesto, kde budeme ÄŤas vypisovaĹĄ ... &lt;div id="ncas"> tu bude ÄŤas&lt;/div>
+		<br>premennĂş s aktuĂˇlnym ÄŤasom ... var a= new Date()
+		<br>vybratie hodĂ­n, minĂşt a sek. z prem. a ... a.getHours(), a.getMinutes(), a.getSeconds()
+		<br>zĂˇpis na strĂˇnku ncas.innerText=...<br>
+		<br>tlaÄŤĂ­tko na spustenie ÄŤasovaÄŤa (poprĂ­pade na zastavenie)
+		<input type="Button" onclick="okno();nove.focus()" value="UkĂˇĹľka">
 		<input type="Button" onclick="zdroj()" value="Zdroj">
 		</dl>
-	<dt>Animácia-obrázku
-	<dd><dl><dt>Čo k tomu potrebujeme
-			<dd>- objekt ktorý sa má pohybovať (obyčajne obrázok) a ktorému určíme súradnice.
-			<br>- podprogram, ktorý určí novú pozíciu a objekt presunie
-			<br> &nbsp; (ak je obrázkov viac využijeme pole <font color="Green">document.images[])</font> 
+	<dt>AnimĂˇcia-obrĂˇzku
+	<dd><dl><dt>ÄŚo k tomu potrebujeme
+			<dd>- objekt ktorĂ˝ sa mĂˇ pohybovaĹĄ (obyÄŤajne obrĂˇzok) a ktorĂ©mu urÄŤĂ­me sĂşradnice.
+			<br>- podprogram, ktorĂ˝ urÄŤĂ­ novĂş pozĂ­ciu a objekt presunie
+			<br> &nbsp; (ak je obrĂˇzkov viac vyuĹľijeme pole <font color="Green">document.images[])</font> 
 				<br><div style="width:400; height:300; background:white">
 			 		<img src="gulicka.gif" style="position:relative; top=10; left=10;">
 			 		<img src="gulicka.gif" style="position:relative; top=10; left=100;">
 					</div>
-		<input type="Button" onclick="window.tr=window.setInterval('anim()',30)" value="Štart">
+		<input type="Button" onclick="window.tr=window.setInterval('anim()',30)" value="Ĺ tart">
 		<input type="Button" onclick="window.clearInterval(window.tr)" value="Stop">
 		<br><br>
 		</dl>
-	<dt>Animácia textu - videostop
-	<dd>Časovač sa spustí po stlačení štart a po stlačení stop sa časovač zastaví a upraví konto.
+	<dt>AnimĂˇcia textu - videostop
+	<dd>ÄŚasovaÄŤ sa spustĂ­ po stlaÄŤenĂ­ Ĺˇtart a po stlaÄŤenĂ­ stop sa ÄŤasovaÄŤ zastavĂ­ a upravĂ­ konto.
 		<table cellspacing="20" id=30><tr id="34"><td id="35">
 		<code>
 		<div  id="36" style="width:236; height:100; background:darkblue; padding:10">
@@ -251,7 +251,7 @@ sa majú každých n ms vykonať, alebo odložiť vykonanie príkazov o n ms.
 </dl>
 		<br>
 		<div style="height=16; width=700; border-width:0 0 8 0;border-color:'blue';border-style:ridge;filter:shadow(Color=#3333ff,Direction=45)"> </div><br>
-		<input type="Button" value="Zdroj ku loptičkám" onclick="vypis_lopty()"> &nbsp; 
+		<input type="Button" value="Zdroj ku loptiÄŤkĂˇm" onclick="vypis_lopty()"> &nbsp; 
 		<input type="Button" value="Zdroj ku videostopu" onclick="vypis_video()">
 </body>
 </html>

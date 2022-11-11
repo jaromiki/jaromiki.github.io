@@ -5,158 +5,158 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	<meta name="Content-language" content="sk">
 	  <LINK href="css/style.css" type="text/css" rel=stylesheet>	
-	<title>Databáza</title>
+	<title>DatabĂˇza</title>
 </head>
 
 <body>
-PHP by určite nebolo tak rozšírené , keby nevedelo pracovať s databázami , najmä s MySQL . 
-Databázy sú téma veľmi rozsiahle a už to vydalo na veľa seriálov . My sa sústredíme na to , 
-čo nám pomôže vybudovať kvalitný PHP - databázový web . Pokiaľ s databázami aktívne pracujete , 
-budete pravdepodobne schopní tento článok vynechať , ak nie, čítajte pozorne ďalej.
+PHP by urÄŤite nebolo tak rozĹˇĂ­renĂ© , keby nevedelo pracovaĹĄ s databĂˇzami , najmĂ¤ s MySQL . 
+DatabĂˇzy sĂş tĂ©ma veÄľmi rozsiahle a uĹľ to vydalo na veÄľa seriĂˇlov . My sa sĂşstredĂ­me na to , 
+ÄŤo nĂˇm pomĂ´Ĺľe vybudovaĹĄ kvalitnĂ˝ PHP - databĂˇzovĂ˝ web . PokiaÄľ s databĂˇzami aktĂ­vne pracujete , 
+budete pravdepodobne schopnĂ­ tento ÄŤlĂˇnok vynechaĹĄ , ak nie, ÄŤĂ­tajte pozorne ÄŹalej.
 <br>
 <br>
-Aby sme mohli nejako účinne pracovať s databázami , predstavme si teraz , ako sú dáta v týchto databázach uložené . 
+Aby sme mohli nejako ĂşÄŤinne pracovaĹĄ s databĂˇzami , predstavme si teraz , ako sĂş dĂˇta v tĂ˝chto databĂˇzach uloĹľenĂ© . 
 <BR><br>
-<b>Relačné model </b>
-<br>Dáta sú v databázach uložené v celkoch , ktorým sa hovorí tabuľky . Majme napríklad tabuľku autorov , 
-ktorí prispievajú na portál Linuxsoftu . Táto tabuľka by mohla vyzerať nasledovne : 
+<b>RelaÄŤnĂ© model </b>
+<br>DĂˇta sĂş v databĂˇzach uloĹľenĂ© v celkoch , ktorĂ˝m sa hovorĂ­ tabuÄľky . Majme naprĂ­klad tabuÄľku autorov , 
+ktorĂ­ prispievajĂş na portĂˇl Linuxsoftu . TĂˇto tabuÄľka by mohla vyzeraĹĄ nasledovne : 
 <table border="1" width="300">
 <tr ><th> Jmeno<th>Prijmeni<th>Email</tr> 
 <tr><td style="padding-left:5"> Petr <td>Zajac<td>petr@xzajic.cz </tr>
 <tr><td> Pavel<td>Adam<td>pa@pajus.com </tr>
-<tr><td> Niekto<td>Iný<td>kdosi@kdesi.cz </tr>
+<tr><td> Niekto<td>InĂ˝<td>kdosi@kdesi.cz </tr>
  </table>
 
-Keď ste niekedy pracovali napríklad s OpenOffice , môžete si to predstaviť ako list aplikácie Calc. Naša tabuľka má tri stĺpce 
-a nejaký počet riadkov. Každý riadok v tabuľke obsahuje určitú skupinu dát , teda napríklad údaje o jednej osobe . 
-Keď budeme pridávať riadky , znamená to , že meníme dáta v tabuľke , ak budeme pridávať stĺpce , 
-znamená to, že meníme štruktúru tabuľky . 
-<br>Pozn : databázovému riadku sa tiež niekedy hovorí veta alebo záznam (record). 
+KeÄŹ ste niekedy pracovali naprĂ­klad s OpenOffice , mĂ´Ĺľete si to predstaviĹĄ ako list aplikĂˇcie Calc. NaĹˇa tabuÄľka mĂˇ tri stÄşpce 
+a nejakĂ˝ poÄŤet riadkov. KaĹľdĂ˝ riadok v tabuÄľke obsahuje urÄŤitĂş skupinu dĂˇt , teda naprĂ­klad Ăşdaje o jednej osobe . 
+KeÄŹ budeme pridĂˇvaĹĄ riadky , znamenĂˇ to , Ĺľe menĂ­me dĂˇta v tabuÄľke , ak budeme pridĂˇvaĹĄ stÄşpce , 
+znamenĂˇ to, Ĺľe menĂ­me ĹˇtruktĂşru tabuÄľky . 
+<br>Pozn : databĂˇzovĂ©mu riadku sa tieĹľ niekedy hovorĂ­ veta alebo zĂˇznam (record). 
 <br>
-<br>To bolo pomerne jednoduché .Teraz si predstavte , že budete chcieť mať inú tabuľku , ktorá bude obsahovať údaje o tom, 
-kto napísal na server školy aké články. To už je zaujímavejšie problém. Ide totiž o to (a väčšinou to tak býva), 
-že jeden autor napíše viac článkov .Ako by mohla takáto tabuľka vyzerať ? Mohla by vyzerať napríklad takto: 
+<br>To bolo pomerne jednoduchĂ© .Teraz si predstavte , Ĺľe budete chcieĹĄ maĹĄ inĂş tabuÄľku , ktorĂˇ bude obsahovaĹĄ Ăşdaje o tom, 
+kto napĂ­sal na server Ĺˇkoly akĂ© ÄŤlĂˇnky. To uĹľ je zaujĂ­mavejĹˇie problĂ©m. Ide totiĹľ o to (a vĂ¤ÄŤĹˇinou to tak bĂ˝va), 
+Ĺľe jeden autor napĂ­Ĺˇe viac ÄŤlĂˇnkov .Ako by mohla takĂˇto tabuÄľka vyzeraĹĄ ? Mohla by vyzeraĹĄ naprĂ­klad takto: 
 <table border="1">
 <tr><th>Jmeno <th> Prijmeni <th> Email <th> Nazov <th> URL</tr> 
-<tr><td>Petr<td> Zajac <td> petr@xzajic.cz <td> PHP ( 1 ) história a budúcnosť <th> http://www.linuxsoft.cz/article.php?id_article=171 </tr>
+<tr><td>Petr<td> Zajac <td> petr@xzajic.cz <td> PHP ( 1 ) histĂłria a budĂşcnosĹĄ <th> http://www.linuxsoft.cz/article.php?id_article=171 </tr>
 <tr><td>Petr <td> Zajac <td> petr@xzajic.cz <td> PHP ( 2 ) ako to funguje <td> http://www.linuxsoft.cz/article.php?id_article=172 </tr>
-<tr><td>Pavel <td> Adam <td> pa@pajus.com <td> Úvod do C + + <td> http://www.linuxsoft.cz/article.php?id_article=196 </tr>
-<tr><td>Niekto <td> Iný <td> kdosi@kdesi.cz <td> Mám rád gympel <td> http://www.utopia.sk/nikdy/sa_to_nestane.php </tr>
+<tr><td>Pavel <td> Adam <td> pa@pajus.com <td> Ăšvod do C + + <td> http://www.linuxsoft.cz/article.php?id_article=196 </tr>
+<tr><td>Niekto <td> InĂ˝ <td> kdosi@kdesi.cz <td> MĂˇm rĂˇd gympel <td> http://www.utopia.sk/nikdy/sa_to_nestane.php </tr>
  </table>
 
-To nás privádza k zaujímavému problému - meno, priezvisko a e - mail autora tam máme zbytočne v oboch tabuľkách.
-Mať v tabuľke článkov kompletné informácie o autoroch nemusia byť z niekoľkých dôvodov výhodné. Tak napríklad : 
-<br>Tabuľka článkov bude zbytočne veľká a pomalá , pretože sa v nej údaje budú opakovať.
-<br>Keď budeme chcieť zmeniť, dajme tomu, e - mailovú adresu autora, budeme to musieť urobiť na viacerých miestach.
-<br>Keby sme chceli okrem mena, priezviska a e - mailu evidovať ešte niečo iné, budeme musieť meniť štruktúru niekoľkých 
-(časom skôr mnohých ) tabuliek. 
-Asi tušíte, že sa to tak v praxi naozaj nerobí - a máte pravdu. V praxi sa riadky v tabuľke autorov očíslujú a namiesto toho, 
-aby sa údaje opisovali do tabuľky článkov sa v tejto tabuľke uvedie len odkaz na súvisiace záznam. Asi bude najlepšie to ukázať : 
+To nĂˇs privĂˇdza k zaujĂ­mavĂ©mu problĂ©mu - meno, priezvisko a e - mail autora tam mĂˇme zbytoÄŤne v oboch tabuÄľkĂˇch.
+MaĹĄ v tabuÄľke ÄŤlĂˇnkov kompletnĂ© informĂˇcie o autoroch nemusia byĹĄ z niekoÄľkĂ˝ch dĂ´vodov vĂ˝hodnĂ©. Tak naprĂ­klad : 
+<br>TabuÄľka ÄŤlĂˇnkov bude zbytoÄŤne veÄľkĂˇ a pomalĂˇ , pretoĹľe sa v nej Ăşdaje budĂş opakovaĹĄ.
+<br>KeÄŹ budeme chcieĹĄ zmeniĹĄ, dajme tomu, e - mailovĂş adresu autora, budeme to musieĹĄ urobiĹĄ na viacerĂ˝ch miestach.
+<br>Keby sme chceli okrem mena, priezviska a e - mailu evidovaĹĄ eĹˇte nieÄŤo inĂ©, budeme musieĹĄ meniĹĄ ĹˇtruktĂşru niekoÄľkĂ˝ch 
+(ÄŤasom skĂ´r mnohĂ˝ch ) tabuliek. 
+Asi tuĹˇĂ­te, Ĺľe sa to tak v praxi naozaj nerobĂ­ - a mĂˇte pravdu. V praxi sa riadky v tabuÄľke autorov oÄŤĂ­slujĂş a namiesto toho, 
+aby sa Ăşdaje opisovali do tabuÄľky ÄŤlĂˇnkov sa v tejto tabuÄľke uvedie len odkaz na sĂşvisiace zĂˇznam. Asi bude najlepĹˇie to ukĂˇzaĹĄ : 
 <table border="1">
 <tr><th>ID<th>Jmeno<th>Prijmeni<th>Email</tr> 
 <tr><td>1<td>Petr<td>Zajac<td>petr@xzajic.cz </tr>
 <tr><td>2<td>Pavel<td>Adam<td>pa@pajus.com </tr>
-<tr>3<td>Niekto<td>Iný <td>kdosi@kdesi.cz </tr>
+<tr>3<td>Niekto<td>InĂ˝ <td>kdosi@kdesi.cz </tr>
 </table>
 <br>
 <table border="1"> 
 <tr><th>Autor<th>Nazov <th>URL</tr> 
-<tr><td>1<td>PHP ( 1 ) história a budúcnosť <td> http://www.linuxsoft.cz/article.php?id_article=171  </tr>
+<tr><td>1<td>PHP ( 1 ) histĂłria a budĂşcnosĹĄ <td> http://www.linuxsoft.cz/article.php?id_article=171  </tr>
 <tr><td>1<td>PHP ( 2 ) ako to funguje<td>http://www.linuxsoft.cz/article.php?id_article=172  </tr>
-<tr><td>2<td>Úvod do C + + <td>http://www.linuxsoft.cz/article.php?id_article=196  </tr>
-<tr><td>3<td> Mám rád gympel <td>http://www.utopie.cz/nikdy/se_to_nestane.php</tr>
+<tr><td>2<td>Ăšvod do C + + <td>http://www.linuxsoft.cz/article.php?id_article=196  </tr>
+<tr><td>3<td> MĂˇm rĂˇd gympel <td>http://www.utopie.cz/nikdy/se_to_nestane.php</tr>
 </table>
-Z toho môžeme vidieť, že sa nám tabuľka článkov smrskla z piatich polí na tri a že namiesto toho, aby sme uvádzali podrobnosti 
-o každom autorovi, uvádzame len číslo záznamu v súvisiacej tabuľke. Vzťahu medzi tabuľkou autorov a článkov sa hovorí odborne relácie 
-a práve preto, že možno dáta v tabuľkách takto organizovať, nazývajú sa tieto databázy relačné . 
+Z toho mĂ´Ĺľeme vidieĹĄ, Ĺľe sa nĂˇm tabuÄľka ÄŤlĂˇnkov smrskla z piatich polĂ­ na tri a Ĺľe namiesto toho, aby sme uvĂˇdzali podrobnosti 
+o kaĹľdom autorovi, uvĂˇdzame len ÄŤĂ­slo zĂˇznamu v sĂşvisiacej tabuÄľke. VzĹĄahu medzi tabuÄľkou autorov a ÄŤlĂˇnkov sa hovorĂ­ odborne relĂˇcie 
+a prĂˇve preto, Ĺľe moĹľno dĂˇta v tabuÄľkĂˇch takto organizovaĹĄ, nazĂ˝vajĂş sa tieto databĂˇzy relaÄŤnĂ© . 
 <br>
-<br><b>Stĺpce tabuľky </b>
-<br>Zhruba povedané sa do tabuľky dá ukladať to, čo sa v PHP dá ukladať do premenných. Takže reťazce ( jedno alebo vícepísmenné ), 
-logické hodnoty, dátumy a rôzne presné čísla. Každý stĺpec tabuľky má pri jej založení určený typ dát, ktoré sa do neho budú ukladať. 
-Keď sa pokúsite do stĺpca uložiť hodnotu iného dátového typu, môžu databázy reagovať rôzne - niekedy vykonajú čosi ako pretypovanie, 
-niekedy to skončí chybou. V MySQL sa najčastejšie používajú nasledujúce typy stĺpcov: 
+<br><b>StÄşpce tabuÄľky </b>
+<br>Zhruba povedanĂ© sa do tabuÄľky dĂˇ ukladaĹĄ to, ÄŤo sa v PHP dĂˇ ukladaĹĄ do premennĂ˝ch. TakĹľe reĹĄazce ( jedno alebo vĂ­cepĂ­smennĂ© ), 
+logickĂ© hodnoty, dĂˇtumy a rĂ´zne presnĂ© ÄŤĂ­sla. KaĹľdĂ˝ stÄşpec tabuÄľky mĂˇ pri jej zaloĹľenĂ­ urÄŤenĂ˝ typ dĂˇt, ktorĂ© sa do neho budĂş ukladaĹĄ. 
+KeÄŹ sa pokĂşsite do stÄşpca uloĹľiĹĄ hodnotu inĂ©ho dĂˇtovĂ©ho typu, mĂ´Ĺľu databĂˇzy reagovaĹĄ rĂ´zne - niekedy vykonajĂş ÄŤosi ako pretypovanie, 
+niekedy to skonÄŤĂ­ chybou. V MySQL sa najÄŤastejĹˇie pouĹľĂ­vajĂş nasledujĂşce typy stÄşpcov: 
 
-Typ stĺpca 
- Čo do neho 
+Typ stÄşpca 
+ ÄŚo do neho 
  Rozsah 
  
 int 
- Celé čísla 
- -2147483648 až -2147483647  
+ CelĂ© ÄŤĂ­sla 
+ -2147483648 aĹľ -2147483647  
 char ( n ) 
- Reťazca 
- Práve n znakov dlhé reťazce 
+ ReĹĄazca 
+ PrĂˇve n znakov dlhĂ© reĹĄazce 
  
 varchar ( n ) 
- Reťazca 
- Maximálne n znakov dlhý reťazec 
+ ReĹĄazca 
+ MaximĂˇlne n znakov dlhĂ˝ reĹĄazec 
  
 date 
- Dátumy 
- 1.1.1000 až 31.12.9999 
+ DĂˇtumy 
+ 1.1.1000 aĹľ 31.12.9999 
  
 
-Kde nič nie je ... 
-tam smrť síce neberie , ale databáza áno . Zvyknite si na to , že v tabuľkách nebývajú všetky polia povinné . Dajme tomu , že by sme v databáze autorov u niekoho nevyplnili e - mail , pretože ho nevieme . V tom prípade môžu nastať pri uložení riadku zhruba dve situácie : 
+Kde niÄŤ nie je ... 
+tam smrĹĄ sĂ­ce neberie , ale databĂˇza Ăˇno . Zvyknite si na to , Ĺľe v tabuÄľkĂˇch nebĂ˝vajĂş vĹˇetky polia povinnĂ© . Dajme tomu , Ĺľe by sme v databĂˇze autorov u niekoho nevyplnili e - mail , pretoĹľe ho nevieme . V tom prĂ­pade mĂ´Ĺľu nastaĹĄ pri uloĹľenĂ­ riadku zhruba dve situĂˇcie : 
 
-Databáza má nariadené , že keď dané políčko nebude vyplnené , má tam dodať nejakú predvolené ( default ) hodnotu . Trebárs prázdny reťazec . 
-Databáza nemá nariadené nič , a preto si poznamená , že obsah tohto poľa je neznámy , čiže NULL . 
-NULL nie je rovné ničomu, čo sme až doteraz poznali . Nerovná sa nule , prázdnemu reťazcu ani logické hodnote false . S NULL sa dajú robiť databázové operácie , o ktorých si povieme niekedy nabudúce . Ale už teraz by ste mali mať na pamäti , že to je osobitná vec . 
+DatabĂˇza mĂˇ nariadenĂ© , Ĺľe keÄŹ danĂ© polĂ­ÄŤko nebude vyplnenĂ© , mĂˇ tam dodaĹĄ nejakĂş predvolenĂ© ( default ) hodnotu . TrebĂˇrs prĂˇzdny reĹĄazec . 
+DatabĂˇza nemĂˇ nariadenĂ© niÄŤ , a preto si poznamenĂˇ , Ĺľe obsah tohto poÄľa je neznĂˇmy , ÄŤiĹľe NULL . 
+NULL nie je rovnĂ© niÄŤomu, ÄŤo sme aĹľ doteraz poznali . NerovnĂˇ sa nule , prĂˇzdnemu reĹĄazcu ani logickĂ© hodnote false . S NULL sa dajĂş robiĹĄ databĂˇzovĂ© operĂˇcie , o ktorĂ˝ch si povieme niekedy nabudĂşce . Ale uĹľ teraz by ste mali maĹĄ na pamĂ¤ti , Ĺľe to je osobitnĂˇ vec . 
 
-Nabudúce zanecháme suché teórie a ukážeme si, ako sa z PHP k databáze vôbec napojiť . 
+NabudĂşce zanechĂˇme suchĂ© teĂłrie a ukĂˇĹľeme si, ako sa z PHP k databĂˇze vĂ´bec napojiĹĄ . 
 
 
 
 
 <br><br>
-Pakliže jste četli minulé díly našeho seriálu, víte, že MySQL je systémová databáze a že tudíž běží jako serverový proces. Proto musí každý, kdo se chce k MySQL připojit, znát tyto přihlašovací informace:
+PakliĹľe jste ÄŤetli minulĂ© dĂ­ly naĹˇeho seriĂˇlu, vĂ­te, Ĺľe MySQL je systĂ©movĂˇ databĂˇze a Ĺľe tudĂ­Ĺľ bÄ›ĹľĂ­ jako serverovĂ˝ proces. Proto musĂ­ kaĹľdĂ˝, kdo se chce k MySQL pĹ™ipojit, znĂˇt tyto pĹ™ihlaĹˇovacĂ­ informace:
 
 
-Název hostitele
-MySQL pochopitelně běží na nějakém stroji. Název hostitele se může zadávat jménem (třeba mysql.nekde.cz) nebo IP adresou. Pokud budete provozovat MySQL server doma, můžete většinou použít localhost či 127.0.0.1. Pokud se budete připojovat k MySQL u providera, název hostitele Vám sdělí. 
+NĂˇzev hostitele
+MySQL pochopitelnÄ› bÄ›ĹľĂ­ na nÄ›jakĂ©m stroji. NĂˇzev hostitele se mĹŻĹľe zadĂˇvat jmĂ©nem (tĹ™eba mysql.nekde.cz) nebo IP adresou. Pokud budete provozovat MySQL server doma, mĹŻĹľete vÄ›tĹˇinou pouĹľĂ­t localhost ÄŤi 127.0.0.1. Pokud se budete pĹ™ipojovat k MySQL u providera, nĂˇzev hostitele VĂˇm sdÄ›lĂ­. 
 
 
-Pozn.: Server, na němž běží databáze nemusí být nutně týž, na němž běží webový (http) server.
+Pozn.: Server, na nÄ›mĹľ bÄ›ĹľĂ­ databĂˇze nemusĂ­ bĂ˝t nutnÄ› tĂ˝Ĺľ, na nÄ›mĹľ bÄ›ĹľĂ­ webovĂ˝ (http) server.
 
 Port
-MySQL naslouchá standardně na portu 3306, pokud není při konfiguraci určeno jinak. Pravděpodobně můžete port vynechat, 3306 je doplněno automaticky.
+MySQL naslouchĂˇ standardnÄ› na portu 3306, pokud nenĂ­ pĹ™i konfiguraci urÄŤeno jinak. PravdÄ›podobnÄ› mĹŻĹľete port vynechat, 3306 je doplnÄ›no automaticky.
 
-Název databáze 
-Zde by mohlo dojít k určitému matení pojmů: Na databázovém serveru MySQL existuje většinou několik vzájemně nesouvisejících databází. Každá databáze obsahuje žádnou nebo více tabulek a každá může mít vlastní nastavení práv. V praxi to většinou bývá tak, že součástí hostingových služeb je možnost používat jednu databázi. V ní můžete mít teoreticky nomezený počet tabulek a ostatní uživatelé serveru nemají k vaší databázi přístup. Vy zase nemáte přístup k jejich databázím.
+NĂˇzev databĂˇze 
+Zde by mohlo dojĂ­t k urÄŤitĂ©mu matenĂ­ pojmĹŻ: Na databĂˇzovĂ©m serveru MySQL existuje vÄ›tĹˇinou nÄ›kolik vzĂˇjemnÄ› nesouvisejĂ­cĂ­ch databĂˇzĂ­. KaĹľdĂˇ databĂˇze obsahuje ĹľĂˇdnou nebo vĂ­ce tabulek a kaĹľdĂˇ mĹŻĹľe mĂ­t vlastnĂ­ nastavenĂ­ prĂˇv. V praxi to vÄ›tĹˇinou bĂ˝vĂˇ tak, Ĺľe souÄŤĂˇstĂ­ hostingovĂ˝ch sluĹľeb je moĹľnost pouĹľĂ­vat jednu databĂˇzi. V nĂ­ mĹŻĹľete mĂ­t teoreticky nomezenĂ˝ poÄŤet tabulek a ostatnĂ­ uĹľivatelĂ© serveru nemajĂ­ k vaĹˇĂ­ databĂˇzi pĹ™Ă­stup. Vy zase nemĂˇte pĹ™Ă­stup k jejich databĂˇzĂ­m.
 
 
-Uživatelské jméno 
-Znalci prominou, ale je potřeba zdůraznit, že uživatelské jméno k databázovému serveru nijak nesouvisí s přihlašovacím jménem k serveru. Ve skutečnosti většinou nebudete mít na serveru, na němž databáze poběží, zřízen systémový účet. Uživatelské jméno nejspíš dostanete od správce databáze.
+UĹľivatelskĂ© jmĂ©no 
+Znalci prominou, ale je potĹ™eba zdĹŻraznit, Ĺľe uĹľivatelskĂ© jmĂ©no k databĂˇzovĂ©mu serveru nijak nesouvisĂ­ s pĹ™ihlaĹˇovacĂ­m jmĂ©nem k serveru. Ve skuteÄŤnosti vÄ›tĹˇinou nebudete mĂ­t na serveru, na nÄ›mĹľ databĂˇze pobÄ›ĹľĂ­, zĹ™Ă­zen systĂ©movĂ˝ ĂşÄŤet. UĹľivatelskĂ© jmĂ©no nejspĂ­Ĺˇ dostanete od sprĂˇvce databĂˇze.
 
 
 Heslo 
-Asi i heslo dostanete od správce databáze. Většinou bude splňovat základní bezpečnostní pravidla, tzn. bude dostatečně dlouhé a bude se skládat z písmen, číslic, případně dalších znaků. 
+Asi i heslo dostanete od sprĂˇvce databĂˇze. VÄ›tĹˇinou bude splĹovat zĂˇkladnĂ­ bezpeÄŤnostnĂ­ pravidla, tzn. bude dostateÄŤnÄ› dlouhĂ© a bude se sklĂˇdat z pĂ­smen, ÄŤĂ­slic, pĹ™Ă­padnÄ› dalĹˇĂ­ch znakĹŻ. 
 
 
-V PHP se k MySQL databázi můžete připojit pomocí funkce myslq_connect. Jejími parametry jsou název hostitele, uživatelské jméno a heslo. Po připojení k MySQL si ještě musíte vybrat svoji databázi, což se děje příkazem mysql_select_db. Celé to může vypadat v nejjednodušším případě takto:
+V PHP se k MySQL databĂˇzi mĹŻĹľete pĹ™ipojit pomocĂ­ funkce myslq_connect. JejĂ­mi parametry jsou nĂˇzev hostitele, uĹľivatelskĂ© jmĂ©no a heslo. Po pĹ™ipojenĂ­ k MySQL si jeĹˇtÄ› musĂ­te vybrat svoji databĂˇzi, coĹľ se dÄ›je pĹ™Ă­kazem mysql_select_db. CelĂ© to mĹŻĹľe vypadat v nejjednoduĹˇĹˇĂ­m pĹ™Ă­padÄ› takto:
 
 <?
 mysql_connect("localhost", "uzivatel", "heslo");
 mysql_select_db("mojedb");
 ?> 
-Aniž bychom zabíhali do podrobností dodejme, že pokud to dopadne úspěšně, budou se od tohoto místa ve skriptu všechny příkazy určené pro MySQL provádět na tomto spojení. Pokud v témže skriptu zavoláte mysql_connect znovu se stejnými parametry, pokusí se PHP použít první spojení nemísto vytvoření nového (vytvoření nového spojení jde ale vynutit pomocí nepovinného čtvrtého parametru funkce mysql_connect). Spojení vytvořené pomocí mysql_connect je otevřené až do doby, než je zavolána funkce mysql_close, nebo do ukončení běhu skriptu.
+AniĹľ bychom zabĂ­hali do podrobnostĂ­ dodejme, Ĺľe pokud to dopadne ĂşspÄ›ĹˇnÄ›, budou se od tohoto mĂ­sta ve skriptu vĹˇechny pĹ™Ă­kazy urÄŤenĂ© pro MySQL provĂˇdÄ›t na tomto spojenĂ­. Pokud v tĂ©mĹľe skriptu zavolĂˇte mysql_connect znovu se stejnĂ˝mi parametry, pokusĂ­ se PHP pouĹľĂ­t prvnĂ­ spojenĂ­ nemĂ­sto vytvoĹ™enĂ­ novĂ©ho (vytvoĹ™enĂ­ novĂ©ho spojenĂ­ jde ale vynutit pomocĂ­ nepovinnĂ©ho ÄŤtvrtĂ©ho parametru funkce mysql_connect). SpojenĂ­ vytvoĹ™enĂ© pomocĂ­ mysql_connect je otevĹ™enĂ© aĹľ do doby, neĹľ je zavolĂˇna funkce mysql_close, nebo do ukonÄŤenĂ­ bÄ›hu skriptu.
 
 
-Trvalá spojení
-K příkazu mysql_connect existuje alternativní příkaz mysql_pconnect. Jediný rozdíl mezi nimi je ten, že mysql_pconnect se neuzavírá po ukončení běhu skriptu, ale zůstává otevřené. Mysql_pconnect lze použít pouze tehdy, když běží PHP jako modul Apache a jeho výzam spočívá vlastně jen v tom, že šetří čas, který mysql_connect spotřebovává při každém otevření spojení.
+TrvalĂˇ spojenĂ­
+K pĹ™Ă­kazu mysql_connect existuje alternativnĂ­ pĹ™Ă­kaz mysql_pconnect. JedinĂ˝ rozdĂ­l mezi nimi je ten, Ĺľe mysql_pconnect se neuzavĂ­rĂˇ po ukonÄŤenĂ­ bÄ›hu skriptu, ale zĹŻstĂˇvĂˇ otevĹ™enĂ©. Mysql_pconnect lze pouĹľĂ­t pouze tehdy, kdyĹľ bÄ›ĹľĂ­ PHP jako modul Apache a jeho vĂ˝zam spoÄŤĂ­vĂˇ vlastnÄ› jen v tom, Ĺľe ĹˇetĹ™Ă­ ÄŤas, kterĂ˝ mysql_connect spotĹ™ebovĂˇvĂˇ pĹ™i kaĹľdĂ©m otevĹ™enĂ­ spojenĂ­.
 
 
-Pozn.: V typickém prostředí vícevláknových serverů je ale čas potřebný pro vykonání funkce mysql_connect zanedbatelný.
+Pozn.: V typickĂ©m prostĹ™edĂ­ vĂ­cevlĂˇknovĂ˝ch serverĹŻ je ale ÄŤas potĹ™ebnĂ˝ pro vykonĂˇnĂ­ funkce mysql_connect zanedbatelnĂ˝.
 
 
-Profi přístup
-Jelikož je připojení k databázi něco, co se bude v našich skriptech mnohokrát opakovat, měli bychom si ukázat nějaký pokročilejší příklad na připojování. Naše ukázka má totiž několik zásadních nevýhod:
+Profi pĹ™Ă­stup
+JelikoĹľ je pĹ™ipojenĂ­ k databĂˇzi nÄ›co, co se bude v naĹˇich skriptech mnohokrĂˇt opakovat, mÄ›li bychom si ukĂˇzat nÄ›jakĂ˝ pokroÄŤilejĹˇĂ­ pĹ™Ă­klad na pĹ™ipojovĂˇnĂ­. NaĹˇe ukĂˇzka mĂˇ totiĹľ nÄ›kolik zĂˇsadnĂ­ch nevĂ˝hod:
 
 
-nikomu se asi nebude chtít psát do každého skriptu údaje pro spojení 
-neošetřujeme chyby 
-typicky budeme mít vývojové prostředí doma a reálnou aplikaci "venku", takže se údaje pro spojení budou lišit 
-Všechno lze poměrně jednoduše řešit. Jak říkal můj učitel programování: "Udělej to jednou, udělej to pořádně a zapomeň na to". Především si údaje do spojení uložíme do konstant (můžete rovněž použít například asociativního pole), abychom při změně konfigurace nemuseli údaje přepisovat na mnoha místech. Za druhé, konstanty uložíme do samostatného souboru, který pak vložíme do našich skriptů pomocí direktivy include. A za třetí - pomocí proměnné prostředí zjistíme, kde náš kód běží a nastavíme hodnoty podle toho. Celý includovaný soubor pak může vypadat asi následovně:
+nikomu se asi nebude chtĂ­t psĂˇt do kaĹľdĂ©ho skriptu Ăşdaje pro spojenĂ­ 
+neoĹˇetĹ™ujeme chyby 
+typicky budeme mĂ­t vĂ˝vojovĂ© prostĹ™edĂ­ doma a reĂˇlnou aplikaci "venku", takĹľe se Ăşdaje pro spojenĂ­ budou liĹˇit 
+VĹˇechno lze pomÄ›rnÄ› jednoduĹˇe Ĺ™eĹˇit. Jak Ĺ™Ă­kal mĹŻj uÄŤitel programovĂˇnĂ­: "UdÄ›lej to jednou, udÄ›lej to poĹ™ĂˇdnÄ› a zapomeĹ na to". PĹ™edevĹˇĂ­m si Ăşdaje do spojenĂ­ uloĹľĂ­me do konstant (mĹŻĹľete rovnÄ›Ĺľ pouĹľĂ­t napĹ™Ă­klad asociativnĂ­ho pole), abychom pĹ™i zmÄ›nÄ› konfigurace nemuseli Ăşdaje pĹ™episovat na mnoha mĂ­stech. Za druhĂ©, konstanty uloĹľĂ­me do samostatnĂ©ho souboru, kterĂ˝ pak vloĹľĂ­me do naĹˇich skriptĹŻ pomocĂ­ direktivy include. A za tĹ™etĂ­ - pomocĂ­ promÄ›nnĂ© prostĹ™edĂ­ zjistĂ­me, kde nĂˇĹˇ kĂłd bÄ›ĹľĂ­ a nastavĂ­me hodnoty podle toho. CelĂ˝ includovanĂ˝ soubor pak mĹŻĹľe vypadat asi nĂˇsledovnÄ›:
 
 <?
 if ($_SERVER["SERVER_ADDR"]=="localhost")
@@ -175,64 +175,64 @@ else
 }
 ?>
 
-Pozn.: Je samozřejmě možné mít místo toho dva soubory začlenění, lokální a serverový. Většinou je ale dříve či později pomícháte nebo přepíšete, což se ve výše uvedeném případě nemůže stát.
+Pozn.: Je samozĹ™ejmÄ› moĹľnĂ© mĂ­t mĂ­sto toho dva soubory zaÄŤlenÄ›nĂ­, lokĂˇlnĂ­ a serverovĂ˝. VÄ›tĹˇinou je ale dĹ™Ă­ve ÄŤi pozdÄ›ji pomĂ­chĂˇte nebo pĹ™epĂ­Ĺˇete, coĹľ se ve vĂ˝Ĺˇe uvedenĂ©m pĹ™Ă­padÄ› nemĹŻĹľe stĂˇt.
 
 
-A je tu čas vypořádat se s chybami - jak mysql_connect, tak i mysql_select_db mohou skončit chybou. Testovat to je naštěstí poměrně jednoduché, protože v případě úspěchu vracejí obě procedury FALSE.  Takže můžeme použít něco ve smyslu:
+A je tu ÄŤas vypoĹ™Ăˇdat se s chybami - jak mysql_connect, tak i mysql_select_db mohou skonÄŤit chybou. Testovat to je naĹˇtÄ›stĂ­ pomÄ›rnÄ› jednoduchĂ©, protoĹľe v pĹ™Ă­padÄ› ĂşspÄ›chu vracejĂ­ obÄ› procedury FALSE.  TakĹľe mĹŻĹľeme pouĹľĂ­t nÄ›co ve smyslu:
 
 <?
 include ("config.php");
-mysql_connect(SQL_HOST, SQL_USERNAME, SQL_PASSWORD) or die("Nelze se připojit k MySQL: " . mysql_error());
-mysql_select_db(SQL_DBNAME) or die("Nelze vybrat databázi: ". mysql_error());    
+mysql_connect(SQL_HOST, SQL_USERNAME, SQL_PASSWORD) or die("Nelze se pĹ™ipojit k MySQL: " . mysql_error());
+mysql_select_db(SQL_DBNAME) or die("Nelze vybrat databĂˇzi: ". mysql_error());    
 ?> 
-kde config.php je soubor s definicí konstant (viz výše). Jak jste nejspíš pochopili, vrací mysql_error chybovou hlášku z MySQL. Co se týče použití die, můžete zavzpomínat na jeden z předchozích dílů našeho seriálu, který rozebírá jeho úskalí. Pokud by to, že se nemůžete připojit k databázi nebylo pro skript fatální, nejspíš použijete return.
+kde config.php je soubor s definicĂ­ konstant (viz vĂ˝Ĺˇe). Jak jste nejspĂ­Ĺˇ pochopili, vracĂ­ mysql_error chybovou hlĂˇĹˇku z MySQL. Co se tĂ˝ÄŤe pouĹľitĂ­ die, mĹŻĹľete zavzpomĂ­nat na jeden z pĹ™edchozĂ­ch dĂ­lĹŻ naĹˇeho seriĂˇlu, kterĂ˝ rozebĂ­rĂˇ jeho ĂşskalĂ­. Pokud by to, Ĺľe se nemĹŻĹľete pĹ™ipojit k databĂˇzi nebylo pro skript fatĂˇlnĂ­, nejspĂ­Ĺˇ pouĹľijete return.
 
 
-Příklady
-My budeme v seriálu používat přesně tuto metodu připojování. Pro demonstrativní účely máme na serveru Linuxsoftu k dispozici databázi; platné hodnoty připojovacích údajů však nezveřejním. Na začátku každého databázového skriptu budu vkládat soubor začlenění (něco jako výše include("config.php")), který bude tyto údaje obsahovat. Ve výpisu zdrojového kódu souboru bude tento řádek nahrazen komentářem; fungovat to bude normálně.
+PĹ™Ă­klady
+My budeme v seriĂˇlu pouĹľĂ­vat pĹ™esnÄ› tuto metodu pĹ™ipojovĂˇnĂ­. Pro demonstrativnĂ­ ĂşÄŤely mĂˇme na serveru Linuxsoftu k dispozici databĂˇzi; platnĂ© hodnoty pĹ™ipojovacĂ­ch ĂşdajĹŻ vĹˇak nezveĹ™ejnĂ­m. Na zaÄŤĂˇtku kaĹľdĂ©ho databĂˇzovĂ©ho skriptu budu vklĂˇdat soubor zaÄŤlenÄ›nĂ­ (nÄ›co jako vĂ˝Ĺˇe include("config.php")), kterĂ˝ bude tyto Ăşdaje obsahovat. Ve vĂ˝pisu zdrojovĂ©ho kĂłdu souboru bude tento Ĺ™Ăˇdek nahrazen komentĂˇĹ™em; fungovat to bude normĂˇlnÄ›.
 <br><br>
 PHP (37) - Tvorba tabulek v MySQL
-Ako sme si už ukázali , skladajú sa databáza z tabuliek a tabuľky zo riadkov a stĺpcov . Predtým , než môžete nejakú tabuľku použiť , musíte ju definovať . K tomu slúži určitá podmnožina príkazov jazyka pre prácu s databázou .
+Ako sme si uĹľ ukĂˇzali , skladajĂş sa databĂˇza z tabuliek a tabuÄľky zo riadkov a stÄşpcov . PredtĂ˝m , neĹľ mĂ´Ĺľete nejakĂş tabuÄľku pouĹľiĹĄ , musĂ­te ju definovaĹĄ . K tomu slĂşĹľi urÄŤitĂˇ podmnoĹľina prĂ­kazov jazyka pre prĂˇcu s databĂˇzou .
 
 
-Veľmi ľahký úvod do SQL
+VeÄľmi ÄľahkĂ˝ Ăşvod do SQL
 
-SQL , čiže štruktúrovaný dopytovací jazyk je jazyk , ktorému rozumie databábáze . Takže , typický skript PHP pracujúce s databázou má nasledujúcu štruktúru :
+SQL , ÄŤiĹľe ĹˇtruktĂşrovanĂ˝ dopytovacĂ­ jazyk je jazyk , ktorĂ©mu rozumie databĂˇbĂˇze . TakĹľe , typickĂ˝ skript PHP pracujĂşce s databĂˇzou mĂˇ nasledujĂşcu ĹˇtruktĂşru :
 
-Nejaký kód PHP , ktorý sa ( okrem iného ) postará o pripojenie k databáze 
-Kód SQL , ktorý " povie " databázu , čo od nej potrebujeme 
-Kód PHP , ktorý spracuje to , čo nám databáza odpovedala 
-Kód PHP , ktorý spojenie k databáze uzavrie . 
-Samotné príkazy jazyka SQL sa delia podľa účelu , na ktorý pri komunikácii s databázou slúži na :
+NejakĂ˝ kĂłd PHP , ktorĂ˝ sa ( okrem inĂ©ho ) postarĂˇ o pripojenie k databĂˇze 
+KĂłd SQL , ktorĂ˝ " povie " databĂˇzu , ÄŤo od nej potrebujeme 
+KĂłd PHP , ktorĂ˝ spracuje to , ÄŤo nĂˇm databĂˇza odpovedala 
+KĂłd PHP , ktorĂ˝ spojenie k databĂˇze uzavrie . 
+SamotnĂ© prĂ­kazy jazyka SQL sa delia podÄľa ĂşÄŤelu , na ktorĂ˝ pri komunikĂˇcii s databĂˇzou slĂşĹľi na :
 
-Oblasť
+OblasĹĄ
  Popis
- Príkaz ( y )
+ PrĂ­kaz ( y )
  
-Definičný
- Umožňujú spravovať štruktúru databázy
+DefiniÄŤnĂ˝
+ UmoĹľĹujĂş spravovaĹĄ ĹˇtruktĂşru databĂˇzy
  CREATE TABLE , DROP TABLE
  
-Výberové
- Umožňujú získať z databázy dáta
+VĂ˝berovĂ©
+ UmoĹľĹujĂş zĂ­skaĹĄ z databĂˇzy dĂˇta
  SELECT
  
-Pridávací
- Umožňujú pridávať nové dáta do tabuľky alebo tabuliek
+PridĂˇvacĂ­
+ UmoĹľĹujĂş pridĂˇvaĹĄ novĂ© dĂˇta do tabuÄľky alebo tabuliek
  INSERT
  
-Aktualizačný
- Umožňujú meniť existujúce dáta v tabuľkách
+AktualizaÄŤnĂ˝
+ UmoĹľĹujĂş meniĹĄ existujĂşce dĂˇta v tabuÄľkĂˇch
  UPDATE , REPLACE
  
-Odstraňovacia
- Umožňujú zmazať riadky z tabuľky alebo tabuliek
+OdstraĹovacia
+ UmoĹľĹujĂş zmazaĹĄ riadky z tabuÄľky alebo tabuliek
  DELETE
  
 
-Pozn : Nie sú všetky , len tie hlavné .
+Pozn : Nie sĂş vĹˇetky , len tie hlavnĂ© .
 
-My sa dnes pozrieme na definície príkazy jazyka SQL a vytvoríme si v databáze tabuľku . K definovanie tabuľky slúži príkaz CREATE TABLE . Ako budete môcť definovať tabuľku , mali by ste presne vedieť koľko bude mať stĺpcov , čo bude v jednotlivých stĺpcoch uložené a ako sa majú menovať . Ak by ste napríklad chceli mať v tabuľke nejaký zoznam zamestnancov , mohol by definičný príkaz vyzerať takto :
+My sa dnes pozrieme na definĂ­cie prĂ­kazy jazyka SQL a vytvorĂ­me si v databĂˇze tabuÄľku . K definovanie tabuÄľky slĂşĹľi prĂ­kaz CREATE TABLE . Ako budete mĂ´cĹĄ definovaĹĄ tabuÄľku , mali by ste presne vedieĹĄ koÄľko bude maĹĄ stÄşpcov , ÄŤo bude v jednotlivĂ˝ch stÄşpcoch uloĹľenĂ© a ako sa majĂş menovaĹĄ . Ak by ste naprĂ­klad chceli maĹĄ v tabuÄľke nejakĂ˝ zoznam zamestnancov , mohol by definiÄŤnĂ˝ prĂ­kaz vyzeraĹĄ takto :
 
 CREATE TABLE zamestnanci (
 jmeno varchar ( 10 ) ,
@@ -240,14 +240,14 @@ prijmeni varchar ( 15 ) ,
 cislo int,
 datum_narozeni date
 ) 
-Čo preložené do slovenčiny znamená : " Milá databáza , mala by si začať niečo robiť . Potrebujem vytvoriť novú tabuľku , bude sa menovať zamestnanci , a bude mať 4 stĺpce nasledujúcich typov a veľkostí : ... " . Dovolil by som si k tomu niekoľko poznámok :
+ÄŚo preloĹľenĂ© do slovenÄŤiny znamenĂˇ : " MilĂˇ databĂˇza , mala by si zaÄŤaĹĄ nieÄŤo robiĹĄ . Potrebujem vytvoriĹĄ novĂş tabuÄľku , bude sa menovaĹĄ zamestnanci , a bude maĹĄ 4 stÄşpce nasledujĂşcich typov a veÄľkostĂ­ : ... " . Dovolil by som si k tomu niekoÄľko poznĂˇmok :
 
 
-MySQL rozlišuje v názvoch tabuliek a názvoch stĺpcov veľkosť písmen . Takže , pozor na to . Niektorí sa rozhodli písať všetko malými písmenami , rozhodne treba mať v tom nejaký systém . 
-Názvy stĺpcov by mali byť dostatočne výstižné . 
+MySQL rozliĹˇuje v nĂˇzvoch tabuliek a nĂˇzvoch stÄşpcov veÄľkosĹĄ pĂ­smen . TakĹľe , pozor na to . NiektorĂ­ sa rozhodli pĂ­saĹĄ vĹˇetko malĂ˝mi pĂ­smenami , rozhodne treba maĹĄ v tom nejakĂ˝ systĂ©m . 
+NĂˇzvy stÄşpcov by mali byĹĄ dostatoÄŤne vĂ˝stiĹľnĂ© . 
 
-Názvy stĺpcov i tabuliek by mali byť dostatočne krátke , inak sa upíše a budete robiť viac chýb . 
-Uvádzať všetky podrobnosti syntaxe príkazu CREATE TABLE nebudeme , na to slúži oficiálnej dokumentácie. Z dôvodov , ktoré budeme vysvetľovať neskôr však môže byť výhodné mať v tabuľke pole , ktoré sa bude postupne pri vložení záznamu číslovať . To by sme urobili nasledovne :
+NĂˇzvy stÄşpcov i tabuliek by mali byĹĄ dostatoÄŤne krĂˇtke , inak sa upĂ­Ĺˇe a budete robiĹĄ viac chĂ˝b . 
+UvĂˇdzaĹĄ vĹˇetky podrobnosti syntaxe prĂ­kazu CREATE TABLE nebudeme , na to slĂşĹľi oficiĂˇlnej dokumentĂˇcie. Z dĂ´vodov , ktorĂ© budeme vysvetÄľovaĹĄ neskĂ´r vĹˇak mĂ´Ĺľe byĹĄ vĂ˝hodnĂ© maĹĄ v tabuÄľke pole , ktorĂ© sa bude postupne pri vloĹľenĂ­ zĂˇznamu ÄŤĂ­slovaĹĄ . To by sme urobili nasledovne :
 
 CREATE TABLE zamestnanci (
 id INT NOT NULL AUTO_INCREMENT ,
@@ -255,39 +255,39 @@ prijmeni VARCHAR ( 20 ) NOT NULL ,
 jmeno VARCHAR ( 10 ) NOT NULL ,
 PRIMARY KEY ( id ) 
 ) 
-ako vidíte , väčšinou sa jednoduchým pohľadom na príkaz SQL dá odvodiť , čo asi robí .
+ako vidĂ­te , vĂ¤ÄŤĹˇinou sa jednoduchĂ˝m pohÄľadom na prĂ­kaz SQL dĂˇ odvodiĹĄ , ÄŤo asi robĂ­ .
 
 
-Opakom príkazu CREATE TABLE je potom príkaz DROP TABLE . Ten celú tabuľku odstráni . Takže by ste mohli napísať :
+Opakom prĂ­kazu CREATE TABLE je potom prĂ­kaz DROP TABLE . Ten celĂş tabuÄľku odstrĂˇni . TakĹľe by ste mohli napĂ­saĹĄ :
 
 DROP TABLE zamestnanci 
-Ale pozor ! Tento príkaz bez milosti odstráni tabuľku iv prípade , že už v nej sú nejaké dáta . Mal by sa preto používať s rozvahou . Príkaz DROP TABLE už pochopiteľne nepotrebuje poznať štruktúru tabuľky , pretože ju rovnako bude mazať .
+Ale pozor ! Tento prĂ­kaz bez milosti odstrĂˇni tabuÄľku iv prĂ­pade , Ĺľe uĹľ v nej sĂş nejakĂ© dĂˇta . Mal by sa preto pouĹľĂ­vaĹĄ s rozvahou . PrĂ­kaz DROP TABLE uĹľ pochopiteÄľne nepotrebuje poznaĹĄ ĹˇtruktĂşru tabuÄľky , pretoĹľe ju rovnako bude mazaĹĄ .
 
 
-Pozn : Väčšinou môže byť výhodnejšie použiť na definovanie tabuliek nejaký hotový program . V praxi to býva často tak , že sa štruktúra tabuliek sa navrhuje mimo PHP a skripty neobsahujú veľa definičných príkazov .
+Pozn : VĂ¤ÄŤĹˇinou mĂ´Ĺľe byĹĄ vĂ˝hodnejĹˇie pouĹľiĹĄ na definovanie tabuliek nejakĂ˝ hotovĂ˝ program . V praxi to bĂ˝va ÄŤasto tak , Ĺľe sa ĹˇtruktĂşra tabuliek sa navrhuje mimo PHP a skripty neobsahujĂş veÄľa definiÄŤnĂ˝ch prĂ­kazov .
 
 
 Ako na to v PHP
-V PHP slúži všeobecne k zasielanie príkazov jazyka SQL databáz príkaz mysql_query . Mysql_query vyžaduje , aby už existovalo prepojenie na databázu vytvorené pomocou mysql_connect alebo mysql_pconnect . Ak spojenie existovať nebude, pokúsia sa ho PHP vytvoriť s predvolenými hodnotami (čo pravdepodobne zlyhá ) . Takže by sme mohli napísať niečo ako : 
+V PHP slĂşĹľi vĹˇeobecne k zasielanie prĂ­kazov jazyka SQL databĂˇz prĂ­kaz mysql_query . Mysql_query vyĹľaduje , aby uĹľ existovalo prepojenie na databĂˇzu vytvorenĂ© pomocou mysql_connect alebo mysql_pconnect . Ak spojenie existovaĹĄ nebude, pokĂşsia sa ho PHP vytvoriĹĄ s predvolenĂ˝mi hodnotami (ÄŤo pravdepodobne zlyhĂˇ ) . TakĹľe by sme mohli napĂ­saĹĄ nieÄŤo ako : 
 
 < ?
-/ / tu je include súboru s konštantami
+/ / tu je include sĂşboru s konĹˇtantami
 mysql_connect(SQL_HOST, SQL_USERNAME, SQL_PASSWORD) ;
 mysql_select_db(SQL_DBNAME) ;
 mysql_query(" CREATE TABLE zamestnanci ( jmeno varchar ( 10 ) , prijmeni varchar ( 15 ) , cislo int, datum_narozeni date ) ")
-or die (" Nemožno vykonať definície dotaz : " . mysql_error( ) ) ;
+or die (" NemoĹľno vykonaĹĄ definĂ­cie dotaz : " . mysql_error( ) ) ;
 ? > 
-Všimnite si , že reťazec pre mysql_query môžeme napísať na jeden riadok , nemusí byť nevyhnutne členená tak , som to ukazoval prve . Aj funkcie mysql_query má samozrejme právo skončiť chybou . O vychytávania chýb z tejto funkcie platí to, čo bolo povedané v minulom diele . Len dodajme , že príčin zlyhania mysql_query môže byť celá rada . Medzi najznámejšie patria :
+VĹˇimnite si , Ĺľe reĹĄazec pre mysql_query mĂ´Ĺľeme napĂ­saĹĄ na jeden riadok , nemusĂ­ byĹĄ nevyhnutne ÄŤlenenĂˇ tak , som to ukazoval prve . Aj funkcie mysql_query mĂˇ samozrejme prĂˇvo skonÄŤiĹĄ chybou . O vychytĂˇvania chĂ˝b z tejto funkcie platĂ­ to, ÄŤo bolo povedanĂ© v minulom diele . Len dodajme , Ĺľe prĂ­ÄŤin zlyhania mysql_query mĂ´Ĺľe byĹĄ celĂˇ rada . Medzi najznĂˇmejĹˇie patria :
 
-Ako argument je odovzdaný niečo , čo databázy nepochopí ako platný kód jazyka SQL 
-Príkaz SQL je síce syntakticky správny, ale nemožno ho vykonať ( potrebné vytvorenie tabuľky , ktorá už existuje ) . 
-Pre vykonanie príkazu nemáte potrebné práva . 
-Neexistuje spojenie, ktoré by mysql_query obslúžili .
+Ako argument je odovzdanĂ˝ nieÄŤo , ÄŤo databĂˇzy nepochopĂ­ ako platnĂ˝ kĂłd jazyka SQL 
+PrĂ­kaz SQL je sĂ­ce syntakticky sprĂˇvny, ale nemoĹľno ho vykonaĹĄ ( potrebnĂ© vytvorenie tabuÄľky , ktorĂˇ uĹľ existuje ) . 
+Pre vykonanie prĂ­kazu nemĂˇte potrebnĂ© prĂˇva . 
+Neexistuje spojenie, ktorĂ© by mysql_query obslĂşĹľili .
 
-Použitie funkcie mysql_error môžem v tomto prípade len odporučiť . MySQL sa totiž pokúsi vysvetliť Vám , čo jej nevoňajú .
+PouĹľitie funkcie mysql_error mĂ´Ĺľem v tomto prĂ­pade len odporuÄŤiĹĄ . MySQL sa totiĹľ pokĂşsi vysvetliĹĄ VĂˇm , ÄŤo jej nevoĹajĂş .
 
 
-V ďalšom diele nášho seriálu sa stretneme s hotovou aplikáciou na vyhľadávanie PSČ a názvov obcí . Na nej Vám ukážem , ako fungujú výberové dotazy .
+V ÄŹalĹˇom diele nĂˇĹˇho seriĂˇlu sa stretneme s hotovou aplikĂˇciou na vyhÄľadĂˇvanie PSÄŚ a nĂˇzvov obcĂ­ . Na nej VĂˇm ukĂˇĹľem , ako fungujĂş vĂ˝berovĂ© dotazy .
 
 <br><br>
 

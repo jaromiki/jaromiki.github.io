@@ -10,8 +10,8 @@
 
 <body>
 <h3>Polymorfizmus</h3>
-<dl><dt  class="main">virtuálne funkcie
-	<dd>Je definovaná v základnej triede a redefinovaná v triede odvodenej. Toto je základ polymorfizmu. K¾úèové slovo virtual je pouité v základnej 
+<dl><dt  class="main">virtuÃ¡lne funkcie
+	<dd>Je definovanÃ¡ v zÃ¡kladnej triede a redefinovanÃ¡ v triede odvodenej. Toto je zÃ¡klad polymorfizmu. KÄ¾ÃºÄovÃ© slovo virtual je pouÅ¾itÃ© v zÃ¡kladnej 
 		triede.
 		<table width="60%" bgcolor=#cccccc border="2" >
 		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
@@ -42,22 +42,22 @@ int main()
    derived1 d1(5);
    derived2 d2(10,5);
    p=&amp;bas;
-   p->func();    //zavolá funkciu z base
+   p->func();    //zavolÃ¡ funkciu z base
    p=&amp;d1;
-   p->func();    //zavolá funkciu z derived1
+   p->func();    //zavolÃ¡ funkciu z derived1
    p=&amp;d2;
-   p->func();    //zavolá funkciu z derived2
+   p->func();    //zavolÃ¡ funkciu z derived2
    return 0;
 }</pre>
 		</tr></table>
-		Na prvı poh¾ad je to podobné preaovaniu, tu sa však nelíšime parametrami (naopak virtuálna f sa parametrami nesmie líši). Treba si uvedomi,
-		e po príkaze <code>p=&amp;d2;</code> vidíme cez p-> len prvky triedy base (napríklad ku premennej j nemáme iadny prístup, o to "zvláštnejšie"
-		pôsobí fakt, e ju dokáeme pripoèíta ku premennej i).
-		<br>Dôleitı poznatok:  Do ukazovate¾a základnej triedy mono zapísa adresu odvodenej triedy a potom vyuíva objekty zo základnej
-		triedy.  Naopak to nie je moné, ak vytvoríme premennú 
+		Na prvÃ½ pohÄ¾ad je to podobnÃ© preÅ¥aÅ¾ovaniu, tu sa vÅ¡ak nelÃ­Å¡ime parametrami (naopak virtuÃ¡lna f sa parametrami nesmie lÃ­Å¡iÅ¥). Treba si uvedomiÅ¥,
+		Å¾e po prÃ­kaze <code>p=&amp;d2;</code> vidÃ­me cez p-> len prvky triedy base (naprÃ­klad ku premennej j nemÃ¡me Å¾iadny prÃ­stup, o to "zvlÃ¡Å¡tnejÅ¡ie"
+		pÃ´sobÃ­ fakt, Å¾e ju dokÃ¡Å¾eme pripoÄÃ­taÅ¥ ku premennej i).
+		<br>DÃ´leÅ¾itÃ½ poznatok:  Do ukazovateÄ¾a zÃ¡kladnej triedy moÅ¾no zapÃ­saÅ¥ adresu odvodenej triedy a potom vyuÅ¾Ã­vaÅ¥ objekty zo zÃ¡kladnej
+		triedy.  Naopak to nie je moÅ¾nÃ©, ak vytvorÃ­me premennÃº 
 		<pre>derived1 *bb; </pre>
-		nemono doòho vloi adresu triedy typu base ani derived2.
-		<br>Teraz "trochu" praktickejší príklad
+		nemoÅ¾no doÅˆho vloÅ¾iÅ¥ adresu triedy typu base ani derived2.
+		<br>Teraz "trochu" praktickejÅ¡Ã­ prÃ­klad
 		<table width="60%" bgcolor=#cccccc border="2">
 		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 		<tr><td>
@@ -66,7 +66,7 @@ using namespace std;
 class utvar
 {  double s1,s2;
    public:
-   virtual double plocha() {cout &lt;&lt; "táto funkcia musí by prepísaná v odvodenej triede"; return 0.0;}
+   virtual double plocha() {cout &lt;&lt; "tÃ¡to funkcia musÃ­ byÅ¥ prepÃ­sanÃ¡ v odvodenej triede"; return 0.0;}
    void setrozmer(double aa, double bb) {s1=aa; s2=bb;}
    void getrozmer(double &aa, double &bb) {aa=s1; bb=s2;}
 };
@@ -85,25 +85,25 @@ int main()
    trojuholnik t3;
    t3.setrozmer(3,4);
    b=&ob;
-   cout &lt;&lt; b->plocha()&lt;&lt;endl;    //zavolá funkciu z obdlznik
+   cout &lt;&lt; b->plocha()&lt;&lt;endl;    //zavolÃ¡ funkciu z obdlznik
    b=&t3;
-   cout &lt;&lt; b->plocha()&lt;&lt;endl;    //zavolá funkciu z trojuholnik
+   cout &lt;&lt; b->plocha()&lt;&lt;endl;    //zavolÃ¡ funkciu z trojuholnik
    cin.get();
   return 0;
    cin.get();
    return 0;
 }</pre>
 		</tr></table>
-   		Vidíme, e v základnej triede existuje funkcia plocha ale nemá iadny vıznam, kadá odvodená trieda by ju mala predefinova.
-		Toto je moné aj vynúti, ak virtuálnu funkciu <code>plocha()</code> zadefinujeme nasledovne:
+   		VidÃ­me, Å¾e v zÃ¡kladnej triede existuje funkcia plocha ale nemÃ¡ Å¾iadny vÃ½znam, kaÅ¾dÃ¡ odvodenÃ¡ trieda by ju mala predefinovaÅ¥.
+		Toto je moÅ¾nÃ© aj vynÃºtiÅ¥, ak virtuÃ¡lnu funkciu <code>plocha()</code> zadefinujeme nasledovne:
 		<pre>virtual double plocha() =0;</pre>
-		takúto funkciu voláme "èisto virtuálna funkcia". Tá nula prekladaèu povie, e funkcia v tejto základnej triede nemá iadne telo.
-		Ak sa pokúsime vytvori odvodenú triedu, ktorá obsahuje èisto virtuálnu triedu nemajúcu telo, program spadne (nedovolí to).
-		Tımto základná trieda donútime odvodené triedy aby museli urobi redefiníciu tejto funcie
+		takÃºto funkciu volÃ¡me "Äisto virtuÃ¡lna funkcia". TÃ¡ nula prekladaÄu povie, Å¾e funkcia v tejto zÃ¡kladnej triede nemÃ¡ Å¾iadne telo.
+		Ak sa pokÃºsime vytvoriÅ¥ odvodenÃº triedu, ktorÃ¡ obsahuje Äisto virtuÃ¡lnu triedu nemajÃºcu telo, program spadne (nedovolÃ­ to).
+		TÃ½mto zÃ¡kladnÃ¡ trieda donÃºtime odvodenÃ© triedy aby museli urobiÅ¥ redefinÃ­ciu tejto funcie
 		<br>Pozn.
-		<br>Ak je funkcia v základnej triede oznaèená ako virtual, je automaticky táto funkcia tie virtual (aj keï neobsahuje slovo virtual)
-		a teda môe by prepísaná-redefinovaná.
-   		<br>Triedu utvar teda lepšie zapíšeme nasledovne:
+		<br>Ak je funkcia v zÃ¡kladnej triede oznaÄenÃ¡ ako virtual, je automaticky tÃ¡to funkcia tieÅ¾ virtual (aj keÄ neobsahuje slovo virtual)
+		a teda mÃ´Å¾e byÅ¥ prepÃ­sanÃ¡-redefinovanÃ¡.
+   		<br>Triedu utvar teda lepÅ¡ie zapÃ­Å¡eme nasledovne:
 		<table width="60%" bgcolor=#cccccc>
 		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 		<tr><td>
@@ -118,20 +118,20 @@ class utvar
 };
 </pre>
 		</tr></table>
-		Teraz sme si ukázali ako polymorfizmus funguje a ako ho realizova. Ešte nám ostala tá najašia úloha - kedy a preèo ho poui. 
-		Polymorfizmus nám pomá ha zjednoduši zloité systémy, jednım dobre definovanım rozhraním mono pristupova ku rôznym ale podobnım operáciám.
-		<br>Pri objektovom programovaní existujú dva pojmy
-		<ul><li>skorá väzba
-			<li>neskorá väzba
+		Teraz sme si ukÃ¡zali ako polymorfizmus funguje a ako ho realizovaÅ¥. EÅ¡te nÃ¡m ostala tÃ¡ najÅ¥aÅ¾Å¡ia Ãºloha - kedy a preÄo ho pouÅ¾iÅ¥. 
+		Polymorfizmus nÃ¡m pomÃ¡ ha zjednoduÅ¡iÅ¥ zloÅ¾itÃ© systÃ©my, jednÃ½m dobre definovanÃ½m rozhranÃ­m moÅ¾no pristupovaÅ¥ ku rÃ´znym ale podobnÃ½m operÃ¡ciÃ¡m.
+		<br>Pri objektovom programovanÃ­ existujÃº dva pojmy
+		<ul><li>skorÃ¡ vÃ¤zba
+			<li>neskorÃ¡ vÃ¤zba
 		</ul>
-		<dl><dt>Skorá väzba (statické viazanie)
-			<dd>- ktorá funkcia sa bude vola sa rozhodne u pri preklade, ide o "normálne" funkcie, preaované funkcie, nevirtuálne spriatelené funkcie.
-				Hlavnou vıhodou je, e je to ve¾mi efektívne a nevıhodou je e takıto kód nemono meni.
-			<dt>Neskorá väzba (dynamické viazanie)
-			<dd>Ide o udalos, ktorá a za behu programu urèí adresu, ktorá sa má vola. Keï je k virtuálnej funkcii pristupované cez ukazovate¾ na základnú triedu
-			program a za behu urèí na ktorı typ objektu je ukazované a ktorá verzia prehodnocovanej funkcie sa spustí.	
+		<dl><dt>SkorÃ¡ vÃ¤zba (statickÃ© viazanie)
+			<dd>- ktorÃ¡ funkcia sa bude volaÅ¥ sa rozhodne uÅ¾ pri preklade, ide o "normÃ¡lne" funkcie, preÅ¥aÅ¾ovanÃ© funkcie, nevirtuÃ¡lne spriatelenÃ© funkcie.
+				Hlavnou vÃ½hodou je, Å¾e je to veÄ¾mi efektÃ­vne a nevÃ½hodou je Å¾e takÃ½to kÃ³d nemoÅ¾no meniÅ¥.
+			<dt>NeskorÃ¡ vÃ¤zba (dynamickÃ© viazanie)
+			<dd>Ide o udalosÅ¥, ktorÃ¡ aÅ¾ za behu programu urÄÃ­ adresu, ktorÃ¡ sa mÃ¡ volaÅ¥. KeÄ je k virtuÃ¡lnej funkcii pristupovanÃ© cez ukazovateÄ¾ na zÃ¡kladnÃº triedu
+			program aÅ¾ za behu urÄÃ­ na ktorÃ½ typ objektu je ukazovanÃ© a ktorÃ¡ verzia prehodnocovanej funkcie sa spustÃ­.	
 		</dl>
-		Aplikáciu polymorfnıch objektov si ukáeme ešte na naprogramovaní dvoch štruktúr - fronta a zásobník, prièom vkladanie a vıber urobíme cez jedno rozhranie
+		AplikÃ¡ciu polymorfnÃ½ch objektov si ukÃ¡Å¾eme eÅ¡te na naprogramovanÃ­ dvoch Å¡truktÃºr - fronta a zÃ¡sobnÃ­k, priÄom vkladanie a vÃ½ber urobÃ­me cez jedno rozhranie
 		<table width="60%" bgcolor=#cccccc>
 		<tr><th bgcolor=#99aaff align="left"> Unit1.cpp</th></tr>
 		<tr><td>

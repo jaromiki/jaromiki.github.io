@@ -10,62 +10,62 @@
 </head>
 
 <body >
-<h2>SELECT - vıber dát z databázy</h2>
-Na akéko¾vek získavanie údajov slúi jedinı príkaz – SELECT.
-<br><br>SELECT slúi na zobrazenie èohoko¾vek. Môete napríklad napísa
+<h2>SELECT - vÃ½ber dÃ¡t z databÃ¡zy</h2>
+Na akÃ©koÄ¾vek zÃ­skavanie Ãºdajov slÃºÅ¾i jedinÃ½ prÃ­kaz â€“ SELECT.
+<br><br>SELECT slÃºÅ¾i na zobrazenie ÄohokoÄ¾vek. MÃ´Å¾ete naprÃ­klad napÃ­saÅ¥
 <br><b>SELECT 1 + 1;</b>
 <br>alebo
 <br><b>SELECT 2 * PI() * 5;</b>
-a v oboch prípadoch dostanete správnu odpoveï. Tieto príklady sa ale ve¾mi nevzahujú
-k tabu¾kám, ktoré naša databáza spravuje. Najjednoduhšia forma príkazu SELECT, ktorá sa tıka databázy má tvar: 
+a v oboch prÃ­padoch dostanete sprÃ¡vnu odpoveÄ. Tieto prÃ­klady sa ale veÄ¾mi nevzÅ¥ahujÃº
+k tabuÄ¾kÃ¡m, ktorÃ© naÅ¡a databÃ¡za spravuje. NajjednoduhÅ¡ia forma prÃ­kazu SELECT, ktorÃ¡ sa tÃ½ka databÃ¡zy mÃ¡ tvar: 
 <br><b>SELECT * FROM klienti;</b>
-<br>Hviezdièka má v tomto príkaze vıznam „úplne všetko“. Nie vdy má ale zmysel vypisova úplne všetko. 
-Keby sme napríklad chceli iba mennı zoznam klientov kninice usporiadanı pod¾a abecedy, pouili by sme príkaz
+<br>HviezdiÄka mÃ¡ v tomto prÃ­kaze vÃ½znam â€Ãºplne vÅ¡etkoâ€œ. Nie vÅ¾dy mÃ¡ ale zmysel vypisovaÅ¥ Ãºplne vÅ¡etko. 
+Keby sme naprÃ­klad chceli iba mennÃ½ zoznam klientov kniÅ¾nice usporiadanÃ½ podÄ¾a abecedy, pouÅ¾ili by sme prÃ­kaz
 <br><b>SELECT meno, priezvisko FROM klienti ORDER BY priezvisko, meno;</b>
-Namiesto všetkıch kolóniek sa teraz budú vypisova iba dve. Príkazom ORDER BY dávame
-serveru najavo, e vısledky chceme ma usporiadané pod¾a priezvisk a v prípade rovností priezvisk
-pod¾a mien. V prípade, e by sme takıto príkaz chceli vykonáva èasto nad ve¾kou tabu¾kou, je
-vhodné spravi si index, pod¾a ktorého chceme triedi/vypisova.
-<br>V niektorıch situáciach by sa vám mohlo hodi, aby vısledok funkcie SELECT nebol
-v dvoch ståpcoch, ale v jednom. Niè nám nebráni poui funkciu CONCAT, ktorá spája reazce, ktoré
-jej zadáte do jednoho. Príkaz môe vyzera napríklad takto:
+Namiesto vÅ¡etkÃ½ch kolÃ³niek sa teraz budÃº vypisovaÅ¥ iba dve. PrÃ­kazom ORDER BY dÃ¡vame
+serveru najavo, Å¾e vÃ½sledky chceme maÅ¥ usporiadanÃ© podÄ¾a priezvisk a v prÃ­pade rovnostÃ­ priezvisk
+podÄ¾a mien. V prÃ­pade, Å¾e by sme takÃ½to prÃ­kaz chceli vykonÃ¡vaÅ¥ Äasto nad veÄ¾kou tabuÄ¾kou, je
+vhodnÃ© spraviÅ¥ si index, podÄ¾a ktorÃ©ho chceme triediÅ¥/vypisovaÅ¥.
+<br>V niektorÃ½ch situÃ¡ciach by sa vÃ¡m mohlo hodiÅ¥, aby vÃ½sledok funkcie SELECT nebol
+v dvoch stÄºpcoch, ale v jednom. NiÄ nÃ¡m nebrÃ¡ni pouÅ¾iÅ¥ funkciu CONCAT, ktorÃ¡ spÃ¡ja reÅ¥azce, ktorÃ©
+jej zadÃ¡te do jednoho. PrÃ­kaz mÃ´Å¾e vyzeraÅ¥ naprÃ­klad takto:
 <br><b>SELECT CONCAT(meno," ",prezvisko) FROM klienti ORDER BY priezvisko, meno;</b>
-<br>Keby ste chceli, aby databázovı stroj nevrátil všetky vısledky (napríklad preto, lebo chcete
-zobrazi vısledky na webovej stránke a všetky sa na stránku nezmestia), môete to zariadi
-príkazom LIMIT. Napríklad príkaz
+<br>Keby ste chceli, aby databÃ¡zovÃ½ stroj nevrÃ¡til vÅ¡etky vÃ½sledky (naprÃ­klad preto, lebo chcete
+zobraziÅ¥ vÃ½sledky na webovej strÃ¡nke a vÅ¡etky sa na strÃ¡nku nezmestia), mÃ´Å¾ete to zariadiÅ¥
+prÃ­kazom LIMIT. NaprÃ­klad prÃ­kaz
 <br><b>SELECT nazov FROM knihy ORDER BY nazov LIMIT 40, 10;</b>
-<br>Vypíše z tabu¾ky kníh 10, prièom zaène štyridsiatou. Vısledky funkcie SELECT sú èíslované ako v Cèku,
-to znamená, e na zaèiatku je nultı vısledok. Keby sme chceli z tabu¾ky klientov vypísa všetkıch bratislavèanov, spravili by sme to príkazom
+<br>VypÃ­Å¡e z tabuÄ¾ky knÃ­h 10, priÄom zaÄne Å¡tyridsiatou. VÃ½sledky funkcie SELECT sÃº ÄÃ­slovanÃ© ako v CÄku,
+to znamenÃ¡, Å¾e na zaÄiatku je nultÃ½ vÃ½sledok. Keby sme chceli z tabuÄ¾ky klientov vypÃ­saÅ¥ vÅ¡etkÃ½ch bratislavÄanov, spravili by sme to prÃ­kazom
 <br><b>SELECT meno,priezvisko FROM klienti WHERE bydlisko_obec="Bratislava";</b>
-<br>a ak chceme všetky knihy, ktoré majú v názve SQL, spravíme to takto:
+<br>a ak chceme vÅ¡etky knihy, ktorÃ© majÃº v nÃ¡zve SQL, spravÃ­me to takto:
 <br><b>SELECT knihy.nazov FROM knihy WHERE knihy.nazov LIKE "%SQL%";</b>
-<br>A koneène sa dostávame k tomu, preèo sa databázy ovládané SQL jazykom nazıvajú
-relaèné databázy. Všetky príkazy SELECT sa doteraz tıkali jednej jedinej tabu¾ky. Lene medzi
-tabu¾kami môu by zloité vzahy a my chceme zachyti tie vztahy medzi tabu¾kami. Príkaz SELECT je ale schopnı vyh¾adáva 
-vo viacerıch tabu¾kách naraz. Zaèneme nieèim jednoduchım. Napríklad chceme zoznam názvov kniiek aj
-s autormi. Názvy kniiek sú v inej tabu¾ke, ne mená autorov. SELECT bude teda musie èíta obe
-tabu¾ky a priradi správneho autora k správnej knike. Spraví sa to takto:
+<br>A koneÄne sa dostÃ¡vame k tomu, preÄo sa databÃ¡zy ovlÃ¡danÃ© SQL jazykom nazÃ½vajÃº
+relaÄnÃ© databÃ¡zy. VÅ¡etky prÃ­kazy SELECT sa doteraz tÃ½kali jednej jedinej tabuÄ¾ky. LenÅ¾e medzi
+tabuÄ¾kami mÃ´Å¾u byÅ¥ zloÅ¾itÃ© vzÅ¥ahy a my chceme zachytiÅ¥ tie vzÅ¥tahy medzi tabuÄ¾kami. PrÃ­kaz SELECT je ale schopnÃ½ vyhÄ¾adÃ¡vaÅ¥ 
+vo viacerÃ½ch tabuÄ¾kÃ¡ch naraz. ZaÄneme nieÄim jednoduchÃ½m. NaprÃ­klad chceme zoznam nÃ¡zvov kniÅ¾iek aj
+s autormi. NÃ¡zvy kniÅ¾iek sÃº v inej tabuÄ¾ke, neÅ¾ menÃ¡ autorov. SELECT bude teda musieÅ¥ ÄÃ­taÅ¥ obe
+tabuÄ¾ky a priradiÅ¥ sprÃ¡vneho autora k sprÃ¡vnej kniÅ¾ke. SpravÃ­ sa to takto:
 <br><b>SELECT autori.meno, knihy.nazov FROM knihy, autori WHERE knihy.autor_id = autori.autor_id;</b>
-<br>Ako to vlastne funguje? Skúste zada databáze ten istı príkaz, ale bez èasti WHERE. Zistíte, e vám
-vypíše kadého autora s kadou knikou. No a èas WHERE spôsobí, e sa z tejto masy vypíšu iba
-tie veci, kde je èíslo autora z tabu¾ky kníh rovnaké ako èíslo autora z tabu¾ky autorov.
-Teraz nieèo kúsok zloitejšie. Potrebujeme zoznam všetkıch hororov, ktoré máme
-v kninici. Spraví sa to takto:
+<br>Ako to vlastne funguje? SkÃºste zadaÅ¥ databÃ¡ze ten istÃ½ prÃ­kaz, ale bez Äasti WHERE. ZistÃ­te, Å¾e vÃ¡m
+vypÃ­Å¡e kaÅ¾dÃ©ho autora s kaÅ¾dou kniÅ¾kou. No a ÄasÅ¥ WHERE spÃ´sobÃ­, Å¾e sa z tejto masy vypÃ­Å¡u iba
+tie veci, kde je ÄÃ­slo autora z tabuÄ¾ky knÃ­h rovnakÃ© ako ÄÃ­slo autora z tabuÄ¾ky autorov.
+Teraz nieÄo kÃºsok zloÅ¾itejÅ¡ie. Potrebujeme zoznam vÅ¡etkÃ½ch hororov, ktorÃ© mÃ¡me
+v kniÅ¾nici. SpravÃ­ sa to takto:
 <br><b>SELECT knihy.nazov FROM knihy,kategorie WHERE knihy.kategoria_id = kategorie.kategoria_id AND kategorie.nazov = "Horor";</b>
-<br>Keby sme poznali èíslo kategórie „horor“, vystaèili by sme aj so selectom, ktorı by pristupoval iba
-k tabu¾ke knihy. To však bene nevieme, lebo to bıva vnútornou záleitosou databázy.
-Ïalšia úloha – potrebujeme zisti mená ¾udí, ktorí majú nejaké poièané knihy a to, aké
-knihy majú poièané. Príkaz bude vyzera takto:
+<br>Keby sme poznali ÄÃ­slo kategÃ³rie â€hororâ€œ, vystaÄili by sme aj so selectom, ktorÃ½ by pristupoval iba
+k tabuÄ¾ke knihy. To vÅ¡ak beÅ¾ne nevieme, lebo to bÃ½va vnÃºtornou zÃ¡leÅ¾itosÅ¥ou databÃ¡zy.
+ÄalÅ¡ia Ãºloha â€“ potrebujeme zistiÅ¥ menÃ¡ Ä¾udÃ­, ktorÃ­ majÃº nejakÃ© poÅ¾iÄanÃ© knihy a to, akÃ©
+knihy majÃº poÅ¾iÄanÃ©. PrÃ­kaz bude vyzeraÅ¥ takto:
 <br><br><b>SELECT klienti.meno, klienti.priezvisko, knihy.nazov FROM knihy,klienti,pozicky
 <br>WHERE pozicky.klient_id = klienti.klient_id
 <br>AND pozicky.kniha_id=knihy.kniha_id
 <br>AND pozicky.datum_uzatvorenia IS NULL;</b>
-<br><br>Všimnite si, e aj keï tabu¾ka pozicky nesie v tomto prípade podstatnú informáciu, iadne dáta
-priamo z nej sa nevypisujú – za príkazom SELECT nasledujú len kolónky z tabuliek klienti a knihy.
-Príkaz select polia vyberá sa pod¾a ståpcov, ktoré sú oddelené èiarkou. Ak chceme vybra všetky ståpce môeme poui znak *. 
+<br><br>VÅ¡imnite si, Å¾e aj keÄ tabuÄ¾ka pozicky nesie v tomto prÃ­pade podstatnÃº informÃ¡ciu, Å¾iadne dÃ¡ta
+priamo z nej sa nevypisujÃº â€“ za prÃ­kazom SELECT nasledujÃº len kolÃ³nky z tabuliek klienti a knihy.
+PrÃ­kaz select polia vyberÃ¡ sa podÄ¾a stÄºpcov, ktorÃ© sÃº oddelenÃ© Äiarkou. Ak chceme vybraÅ¥ vÅ¡etky stÄºpce mÃ´Å¾eme pouÅ¾iÅ¥ znak *. 
 <em>Syntax:</em>
 <p>
-  SELECT zoznam_poloziek FROM nazvy_tabuliek &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>//povinná èas</em><br />
+  SELECT zoznam_poloziek FROM nazvy_tabuliek &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>//povinnÃ¡ ÄasÅ¥</em><br />
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE podmienky<br />
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GROUP BY nazov_stlpca_pre_zoskupenie<br />
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HAVING skupinova_podmienka<br />
@@ -73,7 +73,7 @@ Príkaz select polia vyberá sa pod¾a ståpcov, ktoré sú oddelené èiarkou. Ak chcem
 	<!--  <em>//komentar</em><br />   -->  
 </p>
 
-<em>Príklad:</em>
+<em>PrÃ­klad:</em>
 <p>
   SELECT * FROM udaje;
 </p>
@@ -87,8 +87,8 @@ Príkaz select polia vyberá sa pod¾a ståpcov, ktoré sú oddelené èiarkou. Ak chcem
 </table><br />
 <!--  ////////////////////////////////////////////////////////////////   -->
 <h2>DISTINCT</h2>
-<p>Aby sme zabránili  opakovaniu hodnôt, hneï za SELECT vloíme k¾úèové slovo <code>DISTINCT</code>.</p>
-<em>Príklad:</em>
+<p>Aby sme zabrÃ¡nili  opakovaniu hodnÃ´t, hneÄ za SELECT vloÅ¾Ã­me kÄ¾ÃºÄovÃ© slovo <code>DISTINCT</code>.</p>
+<em>PrÃ­klad:</em>
 <p>
   SELECT DISTINCT meno FROM udaje;
 </p>
@@ -99,21 +99,21 @@ Príkaz select polia vyberá sa pod¾a ståpcov, ktoré sú oddelené èiarkou. Ak chcem
   <tr><td>Ema</tr>
   <tr><td>Jan</tr>  
 </table><br />
-<em>Príklad:</em>
+<em>PrÃ­klad:</em>
 <p>
   SELECT COUNT(DISTINCT meno) as pocet_roznych_mien FROM udaje;
-	<em>//Vıstup: 5</em>  
+	<em>//VÃ½stup: 5</em>  
 </p>
-<p>Ak je ståpcov èi vırazov viac <code>DISTINCT</code> musí nasledova bezprostredne za slovom SELECT a h¾adajú sa rôzne riadky ako celky, nie jednotlivé ich èasti.</p><br />
+<p>Ak je stÄºpcov Äi vÃ½razov viac <code>DISTINCT</code> musÃ­ nasledovaÅ¥ bezprostredne za slovom SELECT a hÄ¾adajÃº sa rÃ´zne riadky ako celky, nie jednotlivÃ© ich Äasti.</p><br />
 <h2>WHERE</h2>
-<p>Príkaz <code>WHERE</code> vyberie len tie záznamy, ktoré vyhovujú podmienke, ostatné záznamy sa ignorujú.<br />
-V podmienke môu by operácie:</p>
+<p>PrÃ­kaz <code>WHERE</code> vyberie len tie zÃ¡znamy, ktorÃ© vyhovujÃº podmienke, ostatnÃ© zÃ¡znamy sa ignorujÃº.<br />
+V podmienke mÃ´Å¾u byÅ¥ operÃ¡cie:</p>
 <ul>
-<li>s textovım reazcom (rovnos, nerovnos, podobnos),</li>
-<li>matematické (rovnos, nerovnos, väèší ne, menší ne),</li>
-<li>logické (AND, OR, NOT).</li>
+<li>s textovÃ½m reÅ¥azcom (rovnosÅ¥, nerovnosÅ¥, podobnosÅ¥),</li>
+<li>matematickÃ© (rovnosÅ¥, nerovnosÅ¥, vÃ¤ÄÅ¡Ã­ neÅ¾, menÅ¡Ã­ neÅ¾),</li>
+<li>logickÃ© (AND, OR, NOT).</li>
 </ul>
-<em>Príklad:</em>
+<em>PrÃ­klad:</em>
 <p>
   SELECT meno, priezvisko, vek FROM udaje WHERE vek > 25;
 </p>
@@ -122,33 +122,33 @@ V podmienke môu by operácie:</p>
   <tr><td>Ema<td>Balazova<td>45</tr>   
   <tr><td>Jan<td>Novak<td>37</tr>   
 </table>
-<p>Ak by sme chceli porovnáva urèitú hodnotu s hodnotou NULL pomocou porovnávacích operátorov nemalo by to zmysel. Take nasledujúci dotaz nemá v princípe iadny zmysel, pretoe sa snaíme porovna ståpec a neznámu hodnotu:</p>
-<em>Príklad:</em>
+<p>Ak by sme chceli porovnÃ¡vaÅ¥ urÄitÃº hodnotu s hodnotou NULL pomocou porovnÃ¡vacÃ­ch operÃ¡torov nemalo by to zmysel. TakÅ¾e nasledujÃºci dotaz nemÃ¡ v princÃ­pe Å¾iadny zmysel, pretoÅ¾e sa snaÅ¾Ã­me porovnaÅ¥ stÄºpec a neznÃ¡mu hodnotu:</p>
+<em>PrÃ­klad:</em>
 <p>
   SELECT meno, priezvisko, vek FROM udaje WHERE vek > NULL;
 </p>
-<p>Pouitím vırazu <code>IS NULL</code> bude všetko v poriadku.</p>
-<em>Príklad:</em>
+<p>PouÅ¾itÃ­m vÃ½razu <code>IS NULL</code> bude vÅ¡etko v poriadku.</p>
+<em>PrÃ­klad:</em>
 <p>
   SELECT meno, priezvisko, vek FROM udaje WHERE vek IS NULL;
 </p>
-<p>V súvislosti <code>WHERE</code> a <code>NULL</code> môe nasta ešte jeden problém. V prípade, e chceme vypísa všetky osoby v tabu¾ke a zadali by sme nasledovnı príkaz:</p>
-<em>Príklad:</em>
+<p>V sÃºvislosti <code>WHERE</code> a <code>NULL</code> mÃ´Å¾e nastaÅ¥ eÅ¡te jeden problÃ©m. V prÃ­pade, Å¾e chceme vypÃ­saÅ¥ vÅ¡etky osoby v tabuÄ¾ke a zadali by sme nasledovnÃ½ prÃ­kaz:</p>
+<em>PrÃ­klad:</em>
 <p>
   SELECT meno, priezvisko, vek FROM udaje WHERE vek > 20;
 	<!--  <em>//komentar</em><br />   -->  
 </p>
-<p>môe ale aj nemusí vypísa. Ak ståpec vek nesmie obsahova hodnoty NULL je všetko v poriadku. Ale ak hodnoty NULL môe obsahova a nachádza sa v tabu¾ke záznam s hodnotou NULL nevypíšu sa všetky osoby. Nasledovnım príkazom sa vyrieši aj tento problém.</p>
-<em>Príklad:</em>
+<p>mÃ´Å¾e ale aj nemusÃ­ vypÃ­saÅ¥. Ak stÄºpec vek nesmie obsahovaÅ¥ hodnoty NULL je vÅ¡etko v poriadku. Ale ak hodnoty NULL mÃ´Å¾e obsahovaÅ¥ a nachÃ¡dza sa v tabuÄ¾ke zÃ¡znam s hodnotou NULL nevypÃ­Å¡u sa vÅ¡etky osoby. NasledovnÃ½m prÃ­kazom sa vyrieÅ¡i aj tento problÃ©m.</p>
+<em>PrÃ­klad:</em>
 <p>
   SELECT meno, priezvisko, vek FROM udaje WHERE vek > 20 or vek IS NULL;
 </p><br />
 <!--  ////////////////////////////////////////////////////////////////   -->
 <h2>GROUP BY</h2>
-<p>Nie vdy nás zaujíma agregovaná hodnota v rámci celej tabu¾ky. Niekedy potrebujeme hodnoty v rámci nejakej podskupiny. <code>GROUP BY</code> slúi k tomu, aby zlúèila záznamy, ktoré obsahujú rovnaké hodnoty do jedného záznamu, prípadne jednej hodnoty.</p>
+<p>Nie vÅ¾dy nÃ¡s zaujÃ­ma agregovanÃ¡ hodnota v rÃ¡mci celej tabuÄ¾ky. Niekedy potrebujeme hodnoty v rÃ¡mci nejakej podskupiny. <code>GROUP BY</code> slÃºÅ¾i k tomu, aby zlÃºÄila zÃ¡znamy, ktorÃ© obsahujÃº rovnakÃ© hodnoty do jednÃ©ho zÃ¡znamu, prÃ­padne jednej hodnoty.</p>
 
-<em>Príklad:</em><br />
-<p>Ak by sme chceli zisti zastúpenie jednotlivıch mien v našej tabu¾ke pouijeme nasledovnı príkaz:</p>
+<em>PrÃ­klad:</em><br />
+<p>Ak by sme chceli zistiÅ¥ zastÃºpenie jednotlivÃ½ch mien v naÅ¡ej tabuÄ¾ke pouÅ¾ijeme nasledovnÃ½ prÃ­kaz:</p>
 <p>
   SELECT meno, count(meno) as 'pocet' FROM udaje GROUP BY meno;
 </p>
@@ -161,13 +161,13 @@ V podmienke môu by operácie:</p>
   <tr> <td>Jan<td>1</tr>  
 </table>
 
-<p>Vznikol nám novı ståpec, ktorı nám urèuje poèet vıskytov jednotlivıch mien v tabu¾ke. Nadpis tohoto po¾a by bol "count(meno)" a preto sme ho pomocou <code>as</code> premenovali na "pocet".</p><br /> 
+<p>Vznikol nÃ¡m novÃ½ stÄºpec, ktorÃ½ nÃ¡m urÄuje poÄet vÃ½skytov jednotlivÃ½ch mien v tabuÄ¾ke. Nadpis tohoto poÄ¾a by bol "count(meno)" a preto sme ho pomocou <code>as</code> premenovali na "pocet".</p><br /> 
 <!--  ////////////////////////////////////////////////////////////////   -->
 <h2>HAVING</h2>
-<p>Niekedy potrebujeme v rámci zoskupenıch záznamov vybra len tie záznamy, ktoré budú spåòa ïalšie podmienky. Pouitím príkazu <code>HAVING</code> obmedzíme rozsah vıpisu tabu¾ky tım, e z agregovanıch riadkov vyradíme tie, ktoré nevyhovujú uvedenej podmienke.</p>
+<p>Niekedy potrebujeme v rÃ¡mci zoskupenÃ½ch zÃ¡znamov vybraÅ¥ len tie zÃ¡znamy, ktorÃ© budÃº spÄºÅˆaÅ¥ ÄalÅ¡ie podmienky. PouÅ¾itÃ­m prÃ­kazu <code>HAVING</code> obmedzÃ­me rozsah vÃ½pisu tabuÄ¾ky tÃ½m, Å¾e z agregovanÃ½ch riadkov vyradÃ­me tie, ktorÃ© nevyhovujÃº uvedenej podmienke.</p>
 
-<em>Príklad:</em><br />
-<p>Vypíšeme si len tie mená, ktorıch poèet je väèší ako jedna.</p>
+<em>PrÃ­klad:</em><br />
+<p>VypÃ­Å¡eme si len tie menÃ¡, ktorÃ½ch poÄet je vÃ¤ÄÅ¡Ã­ ako jedna.</p>
 <p>
   SELECT meno, count(meno) as 'pocet' FROM udaje GROUP BY meno HAVING count(meno)>1;
 </p>
@@ -176,9 +176,9 @@ V podmienke môu by operácie:</p>
   <tr><td>Maria<td>2</tr>
 </table><br />
 <h2>ORDER BY</h2>
-<p>Pre vzostupné zoradenie údajov v tabu¾ke pod¾a urèitého ståpca slúi príkaz <code>ORDER BY</code>.</p>
+<p>Pre vzostupnÃ© zoradenie Ãºdajov v tabuÄ¾ke podÄ¾a urÄitÃ©ho stÄºpca slÃºÅ¾i prÃ­kaz <code>ORDER BY</code>.</p>
 
-<em>Príklad:</em>
+<em>PrÃ­klad:</em>
 <p>
   SELECT * FROM udaje ORDER BY priezvisko;
 </p>
@@ -192,19 +192,19 @@ V podmienke môu by operácie:</p>
   <tr> <td>2<td>Jozko<td>Stary<td>25<td>0902002223</tr>   
 </table>
 
-<p>Pokia¾ by sme chceli zoradi tabu¾ku zostupne pouijeme príkaz <code>DESC</code>.</p>
-<em>Príklad:</em>
+<p>PokiaÄ¾ by sme chceli zoradiÅ¥ tabuÄ¾ku zostupne pouÅ¾ijeme prÃ­kaz <code>DESC</code>.</p>
+<em>PrÃ­klad:</em>
 <p>
   SELECT * FROM udaje ORDER BY priezvisko DESC;
 </p><br />
 
 <h2>LIMIT</h2>
-<p>Ak si myslíme, e vıpis príkazu SELECT by mohol by ve¾mi dlhı a chceli by sme ho obmedzi na poèet prvıch x-riadkov, pouijeme k¾úèové slovo <code>LIMIT</code> na konci príkazu. Parameter n je offset a znaèí, od ktorého nasledujúceho riadku bude vıpis pokraèova a parameter m znaèí maximum vypísanıch riadkov.</p>
+<p>Ak si myslÃ­me, Å¾e vÃ½pis prÃ­kazu SELECT by mohol byÅ¥ veÄ¾mi dlhÃ½ a chceli by sme ho obmedziÅ¥ na poÄet prvÃ½ch x-riadkov, pouÅ¾ijeme kÄ¾ÃºÄovÃ© slovo <code>LIMIT</code> na konci prÃ­kazu. Parameter n je offset a znaÄÃ­, od ktorÃ©ho nasledujÃºceho riadku bude vÃ½pis pokraÄovaÅ¥ a parameter m znaÄÃ­ maximum vypÃ­sanÃ½ch riadkov.</p>
 <em>Syntax:</em>
 <p>
   SELECT zoznam_poloziek FROM nazov_tabulky WHERE podmienka LIMIT n[, m];
 </p>
-<em>Príklad:</em>
+<em>PrÃ­klad:</em>
 <p>
   SELECT * FROM udaje WHERE meno='Maria' LIMIT 1;
 </p>

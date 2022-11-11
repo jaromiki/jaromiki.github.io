@@ -4,39 +4,39 @@
 <head>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <meta name="Content-language" content="sk">	
-	 <meta name="autor" content="RNDr. Jaroslav Mikuláš">	
+	 <meta name="autor" content="RNDr. Jaroslav MikulĂˇĹˇ">	
  	<META http-equiv="Page-Enter" content="blendTrans(Duration=1)">
 	  <LINK href="../../css/style.css" type="text/css" rel=stylesheet>
 </head>
 <body>
 <h3>Pole ako parameter</h3>
-Niekedy potrebujeme preniesť pole do nášho podprogramu/funkcie a najlepšia cesta ako to urobiť je cez parametre. Keďže premenná typu pole je vlastne ukazovateľ
-tak pole sa prenáša referenciou (možno meniť jeho položky, čím sa budú meniť aj položky poľa v hlavnom programe. Tým, že sa vlastne do podprogramu prenesie len smerník
-na prvú položku poľa nemá podprogram ako vedieť koľko položiek pole vlastne má. Preto je zvykom pole prenášať dvomi položkami 
-<ul><li>adresa nultej položky poľa
-	<li>počet prvkov poľa
+Niekedy potrebujeme preniesĹĄ pole do nĂˇĹˇho podprogramu/funkcie a najlepĹˇia cesta ako to urobiĹĄ je cez parametre. KeÄŹĹľe premennĂˇ typu pole je vlastne ukazovateÄľ
+tak pole sa prenĂˇĹˇa referenciou (moĹľno meniĹĄ jeho poloĹľky, ÄŤĂ­m sa budĂş meniĹĄ aj poloĹľky poÄľa v hlavnom programe. TĂ˝m, Ĺľe sa vlastne do podprogramu prenesie len smernĂ­k
+na prvĂş poloĹľku poÄľa nemĂˇ podprogram ako vedieĹĄ koÄľko poloĹľiek pole vlastne mĂˇ. Preto je zvykom pole prenĂˇĹˇaĹĄ dvomi poloĹľkami 
+<ul><li>adresa nultej poloĹľky poÄľa
+	<li>poÄŤet prvkov poÄľa
 </ul>
-Pole môžme zapísať ako parameter dvoma spôsobmi
-<ul><li>typ prem[] ... napríklad: int a[], počet prvkov do zátvorky nezadávame
-	<li>typ  *prem ... je rovnocenné predošlému
+Pole mĂ´Ĺľme zapĂ­saĹĄ ako parameter dvoma spĂ´sobmi
+<ul><li>typ prem[] ... naprĂ­klad: int a[], poÄŤet prvkov do zĂˇtvorky nezadĂˇvame
+	<li>typ  *prem ... je rovnocennĂ© predoĹˇlĂ©mu
 </ul>
-Parameter pole môžme v podprograme používať pomocou indexov ale aj smerníkovou aritmetikou.	 
-<dl><dt>Ukážka
+Parameter pole mĂ´Ĺľme v podprograme pouĹľĂ­vaĹĄ pomocou indexov ale aj smernĂ­kovou aritmetikou.	 
+<dl><dt>UkĂˇĹľka
 	<dd><br><TABLE cellSpacing=0  bgColor=white border=1> 
-		<TR><TD bgColor=#99cccc><I>Prenos poľa do podprogramu</I></tr>
+		<TR><TD bgColor=#99cccc><I>Prenos poÄľa do podprogramu</I></tr>
 		<TR><TD style="padding:5" vAlign=top>
 			<pre>
 #include &lt;iostream>
 using namespace std;
 int pole[10]={5,8,10,9,7,5,11,1,6,2} ;
 
-int polemax(int *a,int n)    //pole je prenesené do a, počet je donesený do n
+int polemax(int *a,int n)    //pole je prenesenĂ© do a, poÄŤet je donesenĂ˝ do n
 { int mm=a[0];
   for (int i=1;i&lt;n; i++) if (mm&lt;a[i]) mm=a[i];
   return mm;
 }
 int main()
-{  cout &lt;&lt; "Maximálne číslo v poli:";
+{  cout &lt;&lt; "MaximĂˇlne ÄŤĂ­slo v poli:";
    for (int i=0;i&lt;10; i++) cout &lt;&lt;pole[i] &lt;&lt;' ';
    cout &lt;&lt; endl&lt;&lt;polemax(pole,10);
    cin.get();
@@ -44,8 +44,8 @@ int main()
 		</pre></tr>
 		</table>
 <hr>
-	Keby sme v podprograme polemax() menili položky poľa a[], tak by sa menili aj položky poľa pole[], lebo bývajú na tej istej adrese. Samozrejme, že ak by sme do premennej a zapísali
-	inú adresu (pole a by bývalo na iných adresách), tak táto zmena by sa netýkala poľa pole[].
+	Keby sme v podprograme polemax() menili poloĹľky poÄľa a[], tak by sa menili aj poloĹľky poÄľa pole[], lebo bĂ˝vajĂş na tej istej adrese. Samozrejme, Ĺľe ak by sme do premennej a zapĂ­sali
+	inĂş adresu (pole a by bĂ˝valo na inĂ˝ch adresĂˇch), tak tĂˇto zmena by sa netĂ˝kala poÄľa pole[].
 </dl>
 
 </body>

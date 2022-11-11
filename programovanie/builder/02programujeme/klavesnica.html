@@ -1,34 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
 <html>
 <head>
-	 <title>Klávesnica</title>
+	 <title>KlĂˇvesnica</title>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
  	 <meta name="Content-language" content="sk">	
 	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
 </head>
 
 <body>
-<dl><dt class="main">Ošetrenie vstupu
-	<dd>Pri zadávaní vstupu do textových polí (Edit, prípadne memo) často potrebujeme užívateľovi znemožniť zadávať 
-	do vstupných políčok "hlúposti", čím možno zabrániť padnutiu programu. Postup býva najčastejšie taký, že umožníme
-	naklepať užívateľovi čokoľvek a po opustení políčka (napr. udalosť OnExit nášho Editu) skontrolujeme korektnosť zadaných údajov
-	a v prípade nekorektného vstupu vrátime kurzor naspäť do Editu (Edit1->SetFokus). 
-	<br>Tento pokus si ukážeme na nasledovnom príklade - vytvoríme nasledovný formulár:
+<dl><dt class="main">OĹˇetrenie vstupu
+	<dd>Pri zadĂˇvanĂ­ vstupu do textovĂ˝ch polĂ­ (Edit, prĂ­padne memo) ÄŤasto potrebujeme uĹľĂ­vateÄľovi znemoĹľniĹĄ zadĂˇvaĹĄ 
+	do vstupnĂ˝ch polĂ­ÄŤok "hlĂşposti", ÄŤĂ­m moĹľno zabrĂˇniĹĄ padnutiu programu. Postup bĂ˝va najÄŤastejĹˇie takĂ˝, Ĺľe umoĹľnĂ­me
+	naklepaĹĄ uĹľĂ­vateÄľovi ÄŤokoÄľvek a po opustenĂ­ polĂ­ÄŤka (napr. udalosĹĄ OnExit nĂˇĹˇho Editu) skontrolujeme korektnosĹĄ zadanĂ˝ch Ăşdajov
+	a v prĂ­pade nekorektnĂ©ho vstupu vrĂˇtime kurzor naspĂ¤ĹĄ do Editu (Edit1->SetFokus). 
+	<br>Tento pokus si ukĂˇĹľeme na nasledovnom prĂ­klade - vytvorĂ­me nasledovnĂ˝ formulĂˇr:
 <div style="border-width:3;border-style:outset;width:450px;margin:10px;background-color:#dddddd;">
    <div align="left" style="background-color:#3366ff; width:450px; padding:0;border-width:0;color:white">Form1
    </div>
    <div style="background-color:#dddddd; width:450px;" align="center">
-   <h4 align="center">Zadávanie a kontrola rodného čísla žiaka</h4>
-   žiak : <input type="Text" value="Róbert Dokonalý" READONLY >
-	<BR><br>rodné číslo: <input type="Text" value="?" size="11" >
+   <h4 align="center">ZadĂˇvanie a kontrola rodnĂ©ho ÄŤĂ­sla Ĺľiaka</h4>
+   Ĺľiak : <input type="Text" value="RĂłbert DokonalĂ˝" READONLY >
+	<BR><br>rodnĂ© ÄŤĂ­slo: <input type="Text" value="?" size="11" >
    	<br><br>
-   	<input type="Button" value="Zapíš"> &nbsp; &nbsp; <input type="Button" value="Next"><br>
+   	<input type="Button" value="ZapĂ­Ĺˇ"> &nbsp; &nbsp; <input type="Button" value="Next"><br>
    </div>
 </div>	
-Pre aktívneho žiaka chceme umožniť zadať rodné číslo v tvare xxxxxx/xxxx, kontrolovať budeme len dĺžku vstupu 
-(11 znakov) ďalej či 7-my znak je lomítko a či obe hodnoty sú číselné. V prípade nesúladu nás pri pokuse zapísať
-údaje systém oboznámi s chybou a vráti nás na rodné číslo.
-Ošetrovať budeme udalosť OnClick tlačídka, ktoré odosiela údaje napr. takto
+Pre aktĂ­vneho Ĺľiaka chceme umoĹľniĹĄ zadaĹĄ rodnĂ© ÄŤĂ­slo v tvare xxxxxx/xxxx, kontrolovaĹĄ budeme len dÄşĹľku vstupu 
+(11 znakov) ÄŹalej ÄŤi 7-my znak je lomĂ­tko a ÄŤi obe hodnoty sĂş ÄŤĂ­selnĂ©. V prĂ­pade nesĂşladu nĂˇs pri pokuse zapĂ­saĹĄ
+Ăşdaje systĂ©m oboznĂˇmi s chybou a vrĂˇti nĂˇs na rodnĂ© ÄŤĂ­slo.
+OĹˇetrovaĹĄ budeme udalosĹĄ OnClick tlaÄŤĂ­dka, ktorĂ© odosiela Ăşdaje napr. takto
 <div style="border-width:3;border-style:outset;width:750px;margin:10px;background-color:#dddddd;">
    <div align="left" style="background-color:#3366ff; width:750px; padding:0;border-width:0;color:white">Unit1.cpp
    </div>
@@ -50,20 +50,20 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 </pre>  
 </div></div>
 </div>
-Iný spôsob kontroly spočíva v tom, že užívateľovi navyše nedovolíme zadávať iné ako povolené znaky.
-v našom prípade povolíme zadať len znaky '/' '0'..'9'
-(nebol by problém povoliť znak / len ako 7-my znak, prípadne by ho program mohol klepnúť aj za užívateľa)
-Aby sme mohli takéto "fintičky" robiť naučíme sa používať obsluhu klávesnice.
-<H3>Klávesnica</H3>
-<P>S klávesnicou pracujeme pomocou troch udalostí: </P>
+InĂ˝ spĂ´sob kontroly spoÄŤĂ­va v tom, Ĺľe uĹľĂ­vateÄľovi navyĹˇe nedovolĂ­me zadĂˇvaĹĄ inĂ© ako povolenĂ© znaky.
+v naĹˇom prĂ­pade povolĂ­me zadaĹĄ len znaky '/' '0'..'9'
+(nebol by problĂ©m povoliĹĄ znak / len ako 7-my znak, prĂ­padne by ho program mohol klepnĂşĹĄ aj za uĹľĂ­vateÄľa)
+Aby sme mohli takĂ©to "fintiÄŤky" robiĹĄ nauÄŤĂ­me sa pouĹľĂ­vaĹĄ obsluhu klĂˇvesnice.
+<H3>KlĂˇvesnica</H3>
+<P>S klĂˇvesnicou pracujeme pomocou troch udalostĂ­: </P>
 <UL>
-   <LI><B>onKeyDown</B> - práve bol zatlačený nejaký kláves 
-   <LI><B>onKeyUp</B> - práve bol pustený nejaký kláves 
-   <LI><B>onKeyPress</B> - stlačili sme "obyčajný" kláves (ktorý má svoj ASCII kód) 
+   <LI><B>onKeyDown</B> - prĂˇve bol zatlaÄŤenĂ˝ nejakĂ˝ klĂˇves 
+   <LI><B>onKeyUp</B> - prĂˇve bol pustenĂ˝ nejakĂ˝ klĂˇves 
+   <LI><B>onKeyPress</B> - stlaÄŤili sme "obyÄŤajnĂ˝" klĂˇves (ktorĂ˝ mĂˇ svoj ASCII kĂłd) 
 </UL>
 
-<P>prvé dve udalosti oznámia nie ASCII kód klávesu ale "virtuálny kód" (nižšie si pozrite identifikátory konštánt) 
-	a tiež v parametri Shift zistíme, či bol pri tom zatlačený napr. Shift alebo Ctrl (podobne ako pri udalostiach pri práci s myšou) </P>
+<P>prvĂ© dve udalosti oznĂˇmia nie ASCII kĂłd klĂˇvesu ale "virtuĂˇlny kĂłd" (niĹľĹˇie si pozrite identifikĂˇtory konĹˇtĂˇnt) 
+	a tieĹľ v parametri Shift zistĂ­me, ÄŤi bol pri tom zatlaÄŤenĂ˝ napr. Shift alebo Ctrl (podobne ako pri udalostiach pri prĂˇci s myĹˇou) </P>
 <code>
 <Table>
 <tr align="left"><th>Virtual Key Code<th>Corresponding key
@@ -176,7 +176,7 @@ Aby sme mohli takéto "fintičky" robiť naučíme sa používať obsluhu klávesnice.
 <tr><td>VK_OEM_CLEAR<td>Clear key
 </table>
 </code>
-<p>Ukážeme si použitie udalosti OnKeyPress
+<p>UkĂˇĹľeme si pouĹľitie udalosti OnKeyPress
    <br> 
 <div style="border-width:3;border-style:outset;width:690px;margin:10px;background-color:#dddddd;">
    <div align="left" style="background-color:#3366ff; width:690px; padding:0;border-width:0;color:white">Unit1.cpp
@@ -190,25 +190,25 @@ void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
 </pre>  
 </div></div>
 </div>
-<br><br>Celá táto procedúra sa vykoná po pustení klávesy na klávesnici ešte pred zápisom stlačeného klávesu do vstupného políčka. Ak je klávesa číslica alebo lomítko, nerobíme nič (príkaz bodkočiarka), ak sme stlačiliu niečo iné tak to zlikvidujeme, aby sa to nedostalo do Editu.
+<br><br>CelĂˇ tĂˇto procedĂşra sa vykonĂˇ po pustenĂ­ klĂˇvesy na klĂˇvesnici eĹˇte pred zĂˇpisom stlaÄŤenĂ©ho klĂˇvesu do vstupnĂ©ho polĂ­ÄŤka. Ak je klĂˇvesa ÄŤĂ­slica alebo lomĂ­tko, nerobĂ­me niÄŤ (prĂ­kaz bodkoÄŤiarka), ak sme stlaÄŤiliu nieÄŤo inĂ© tak to zlikvidujeme, aby sa to nedostalo do Editu.
 </p>
 
-<P>Udalosti OnKeyDown, OnKeyUp používame ak chceme umožniť súčasné stlačenie a evidovanie viacerých kláves naraz (napr. dvaja hráči hrajú proti sebe na tej istej klávesnici.
-<br>Nasledujúci program ukáže príklad takéhoto použitia klávesnice. Do formulára umiestnime komponenty Label1 a Timer1 (nastavíme mu nejaký krátky 
-   Interval) - teraz môžeme na klávesnici súčasne tlačiť aj viac šípok a tým riadiť pohyb textu po ploche formulára: </P>
+<P>Udalosti OnKeyDown, OnKeyUp pouĹľĂ­vame ak chceme umoĹľniĹĄ sĂşÄŤasnĂ© stlaÄŤenie a evidovanie viacerĂ˝ch klĂˇves naraz (napr. dvaja hrĂˇÄŤi hrajĂş proti sebe na tej istej klĂˇvesnici.
+<br>NasledujĂşci program ukĂˇĹľe prĂ­klad takĂ©hoto pouĹľitia klĂˇvesnice. Do formulĂˇra umiestnime komponenty Label1 a Timer1 (nastavĂ­me mu nejakĂ˝ krĂˇtky 
+   Interval) - teraz mĂ´Ĺľeme na klĂˇvesnici sĂşÄŤasne tlaÄŤiĹĄ aj viac ĹˇĂ­pok a tĂ˝m riadiĹĄ pohyb textu po ploche formulĂˇra: </P>
 
 <TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
 <TBODY><TR><TD vAlign=" top" bgColor=#99cccc>
-           <P><I>pohyb textu vo formulári:</I> </P>
+           <P><I>pohyb textu vo formulĂˇri:</I> </P>
        <TR><TD vAlign=top>
 <PRE>var
-  dx,dy:integer;    <I><FONT color=navy>// môžeme predpokladať, že sú inicializované na 0</FONT></I>
+  dx,dy:integer;    <I><FONT color=navy>// mĂ´Ĺľeme predpokladaĹĄ, Ĺľe sĂş inicializovanĂ© na 0</FONT></I>
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   with Label1 do begin
     Left:=Left+dx;
-          <I><FONT color=navy>// nedá sa urobiť inc(Left,dx); lebo Left nie je premenná</FONT></I>
+          <I><FONT color=navy>// nedĂˇ sa urobiĹĄ inc(Left,dx); lebo Left nie je premennĂˇ</FONT></I>
     Top:=Top+dy;
   end;
 end;
@@ -238,20 +238,20 @@ end;</PRE>
 </TBODY></TABLE>
 
 <UL>
-   <LI>pri práci s klávesnicou si treba dávať pozor na iné komponenty, ktoré "kradnú" informácie z klávesnice (napr. Memo, 
-       Button, Edit a pod.) - najjednoduchšie riešenie v prípade, že chceme pracovať s klávesnicou, je ich nepoužívať, alebo 
-       spracovávať vstup z klávesnice na týchto komponentoch...
+   <LI>pri prĂˇci s klĂˇvesnicou si treba dĂˇvaĹĄ pozor na inĂ© komponenty, ktorĂ© "kradnĂş" informĂˇcie z klĂˇvesnice (napr. Memo, 
+       Button, Edit a pod.) - najjednoduchĹˇie rieĹˇenie v prĂ­pade, Ĺľe chceme pracovaĹĄ s klĂˇvesnicou, je ich nepouĹľĂ­vaĹĄ, alebo 
+       spracovĂˇvaĹĄ vstup z klĂˇvesnice na tĂ˝chto komponentoch...
 </UL>
 
-<H3>Príklad</H3>
+<H3>PrĂ­klad</H3>
 <UL>
-  <LI>text zadávaný z klávesnice vypisujeme do grafickej plochy Image1, Enter posunie kurzor o riadok nižšie - príklad ilustruje 
-      použitie onKeyPress
+  <LI>text zadĂˇvanĂ˝ z klĂˇvesnice vypisujeme do grafickej plochy Image1, Enter posunie kurzor o riadok niĹľĹˇie - prĂ­klad ilustruje 
+      pouĹľitie onKeyPress
 </UL>
 
 <TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
 <TBODY><TR><TD class=namo-th vAlign=" top" bgColor=#99cccc>
-           <P><I>prvá jednoduchá verzia:</I> </P>
+           <P><I>prvĂˇ jednoduchĂˇ verzia:</I> </P>
        <TR><TD vAlign=top>
 <PRE>var
   x,y:integer;
@@ -277,13 +277,13 @@ end;</PRE></code>
 </TBODY></TABLE>
 
 <UL type=disc>
-   <LI>druhá verzia ukazuje, ako môžeme zobrazovať textový kurzor, zároveň používa metódu <B>TextExtend</B>, pomocou ktorej zistí 
-       šírku a výšku vypisovaného znaku
+   <LI>druhĂˇ verzia ukazuje, ako mĂ´Ĺľeme zobrazovaĹĄ textovĂ˝ kurzor, zĂˇroveĹ pouĹľĂ­va metĂłdu <B>TextExtend</B>, pomocou ktorej zistĂ­ 
+       ĹˇĂ­rku a vĂ˝Ĺˇku vypisovanĂ©ho znaku
 </UL>
 
 <TABLE cellSpacing=0 borderColorDark=white width="90%" align=center bgColor=white borderColorLight=gray border=1>
 <TBODY><TR><TD vAlign=" top" bgColor=#99cccc>
-           <P><I>druhá verzia - proporčné písmo a kurzor:</I> </P>
+           <P><I>druhĂˇ verzia - proporÄŤnĂ© pĂ­smo a kurzor:</I> </P>
        <TR><TD vAlign=top>
 <code><PRE>var
   x,y:integer;
@@ -302,7 +302,7 @@ procedure TForm1.FormKeyPress(Sender: TObject; var Key: Char);
 var
   s:TSize;
 begin
-  with Image1.Canvas do begin       <I><FONT color=navy>// zmaže kurzor</FONT></I>
+  with Image1.Canvas do begin       <I><FONT color=navy>// zmaĹľe kurzor</FONT></I>
     Pen.Color:=clWhite;
     MoveTo(x,y); LineTo(x,y+Font.Height);
   end;
@@ -315,17 +315,17 @@ begin
     s:=Image1.Canvas.TextExtent('M');
     x:=20; inc(y,s.cy);
   end;
-  with Image1.Canvas do begin        <I><FONT color=navy>// nakreslí kurzor</FONT></I>
+  with Image1.Canvas do begin        <I><FONT color=navy>// nakreslĂ­ kurzor</FONT></I>
     Pen.Color:=clBlack;
     MoveTo(x,y); LineTo(x,y+Font.Height);
   end;
 end;</PRE>
 </TBODY></TABLE>
 
-<H3>NDÚ</H3>
+<H3>NDĂš</H3>
 <UL type=disc>
-   <LI>zrealizujte kláves Backspace -&nbsp;treba si pamätať každý zapísaný znak (v niečom podobnom&nbsp;ako zásobník) - aby sme ho 
-       mohli zmazať, treba vedieť jeho pozíciu a buď jeho hodnotu alebo veľkosť 
+   <LI>zrealizujte klĂˇves Backspace -&nbsp;treba si pamĂ¤taĹĄ kaĹľdĂ˝ zapĂ­sanĂ˝ znak (v nieÄŤom podobnom&nbsp;ako zĂˇsobnĂ­k) - aby sme ho 
+       mohli zmazaĹĄ, treba vedieĹĄ jeho pozĂ­ciu a buÄŹ jeho hodnotu alebo veÄľkosĹĄ 
 </UL>
 </body>
 </html>

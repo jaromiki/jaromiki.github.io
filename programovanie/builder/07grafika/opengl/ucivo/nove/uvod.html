@@ -3,81 +3,81 @@
 <META http-equiv=Content-Type content="text/html; charset=windows-1250">
 <html>
 <head>
-	<title>OpenGL-úvod</title>
+	<title>OpenGL-Ăşvod</title>
 </head>
 
 <body>
-<dl><dt>Základní informace o OpenGL
-	<dd>Knihovna OpenGL(Open Graphics Library) bola navržena firmou SGI (Silicon Graphics Inc.) 
-	jako aplikační programové rozhraní (Application Programming Interface - API) k akcelerovaným grafickým kartám 
-	resp. celým grafickým subsystémům. Předchůdcem této knihovny byla programová knihovna 
+<dl><dt>ZĂˇkladnĂ­ informace o OpenGL
+	<dd>Knihovna OpenGL(Open Graphics Library) bola navrĹľena firmou SGI (Silicon Graphics Inc.) 
+	jako aplikaÄŤnĂ­ programovĂ© rozhranĂ­ (Application Programming Interface - API) k akcelerovanĂ˝m grafickĂ˝m kartĂˇm 
+	resp. celĂ˝m grafickĂ˝m subsystĂ©mĹŻm. PĹ™edchĹŻdcem tĂ©to knihovny byla programovĂˇ knihovna 
 	IRIS GL (Silicon Graphics IRIS Graphics Library). 
-	OpenGL byla navržena s důrazem na to, aby byla použitelná na různých typech grafických akcelerátorů 
-	a aby ji bylo možno použít i v případě, že na určité platformě žádný grafický akcelerátor 
-	není nainstalován - v tom případě se použije softwarová simulace. 
-	V současné době lze knihovnu OpenGL použít na různých verzích unixových systémů (včetně Linuxu a samozřejmě IRIXu), 
-	OS/2 a na platformách Microsoft Windows.
-	Logo OpenGL a název OpenGLTM je registrovaná známka firmy Silicon Graphics Inc.
-	Na některých platformách je možné rozdělení aplikace na dvě relativně samostatné části - serverovou a klientskou. 
-	Při vykreslování se potom jednotlivé příkazy (což jsou většinou parametry funkcí OpenGL) přenášejí přes síťové rozhraní. 
-	Knihovna OpenGL (narozdíl od IRIS GL nebo Direct 3D) byla vytvořena tak, aby byla nezávislá na použitém operačním systému, 
-	grafických ovladačích a správcích oken (Window Managers). Proto také neobsahuje žádné funkce pro práci s okny 
-	(otevírání, zrušení, změnu velikosti), pro vytváření grafického uživatelského rozhraní 
-	(Graphical User Interface - GUI) ani pro zpracování událostí. 
-	Tyto funkce lze zajistit buď přímo voláním funkcí příslušného správce oken, nebo lze použít některou z nadstaveb, 
-	například již dříve na ROOTovi popsanou knihovnu GLUT [4] [5] (OpenGL Utility Toolkit). 
-	Pro dosažení co největší nezávislosti na použité platformě zavádí knihovna OpenGL vlastní primitivní datové typy, 
-	například GLbyte, GLint nebo GLdouble. Tyto typy a jejich použití budou podrobněji popsány v dalších dílech seriálu.
-	Programátorské rozhraní knihovny OpenGL je vytvořeno tak, aby knihovna byla použitelná v téměř libovolném programovacím jazyce. 
-	Primárně je k dispozici hlavičkový soubor pro jazyky C a C++. V tomto souboru jsou deklarovány 
-	nové datové typy používané knihovnou, některé symbolické konstanty (např. GL_POINTS) 
-	a sada cca 120 funkcí tvořících vlastní rozhraní. Existují však i podobné soubory s deklaracemi pro další programovací jazyky, 
-	například Fortran, Object Pascal či Javu; tyto soubory jsou většinou automaticky vytvářeny z Cčkovských hlavičkových souborů.
-	Z programátorského hlediska se OpenGL chová jako stavový automat. 
-	To znamená, že během zadávání příkazů pro vykreslování lze průběžně měnit vlastnosti vykreslovaných primitiv 
-	(barva, průhlednost) nebo celé scény (volba způsobu vykreslování, transformace) a toto nastavení zůstane zachováno do té doby, 
-	než ho explicitně změníme. Výhoda tohoto přístupu spočívá především v tom, 
-	že funkce pro vykreslování mají menší počet parametrů a že jedním příkazem lze globálně změnit způsob vykreslení celé scény, 
-	například volbu drátového zobrazení modelu (wireframe model) nebo zobrazení pomocí vyplněných polygonů (filled model). 
-	Vykreslování scény se provádí procedurálně - voláním funkcí OpenGL se vykreslí výsledný rastrový obrázek. 
-	Výsledkem volání těchto funkcí je rastrový obrázek uložený v tzv. framebufferu, kde je každému pixelu přiřazena barva, hloubka, 
-	alfa složka popř. i další atributy. Z framebufferu lze získat pouze barevnou informaci 
-	a tu je možné následně zobrazit na obrazovce - viz následující obrázek.
-	OpenGL nezaručuje, že při spuštění identického programu používajícího knihovnu OpenGL na různých platformách 
-	nebo různých grafických akcelerátorech dostaneme vždy přesně stejný výsledek. 
-	Pokud bychom oba výsledné rastrové obrázky porovnali pixel po pixelu, mohli bychom zjistit mírné rozdíly v barvách. 
-	Může to být způsobeno například odlišnou přesností reprezentace čísel na grafické kartě, odlišnými algoritmy 
-	pro interpolaci barvy, normály a texturových souřadnic nebo jinou bitovou hloubkou Z-bufferu. 
-	Celkové geometrické a barevné podání scény by však mělo být zachováno.
-	Pomocí funkcí poskytovaných knihovnou OpenGL lze vykreslovat obrazce a tělesa složená ze základních geometrických prvků, 
-	které nazýváme grafická primitiva. Mezi tato primitiva patří bod, úsečka, trojúhelník, čtyřúhelník, 
-	plošný konvexní polygon, bitmapa (jednobarevný rastrový obraz) a pixmapa (barevný rastrový obraz). 
-	Existují i funkce, které podporují proudové vykreslování některých primitiv - lze například vykreslit polyčáru (line loop), 
-	pruh trojúhelníků (triangle strip), pruh čtyřúhelníků (quad strip) nebo trs trojúhelníků (triangle fan). 
-	Na vrcholy tvořící jednotlivá grafická primitiva lze aplikovat různé transformace (otočení, změna měřítka, posun, 
-	perspektivní projekce), pomocí kterých lze poměrně jednoduše vytvořit animace. 
-	Vykreslovaná primitiva mohou být osvětlena nebo pokryta texturou. Dále je možné celou vykreslovanou scénu "skrýt" v mlze.
-	Z hlediska datové reprezentace vykreslované scény poskytují funkce OpenGL, podobně jako Direct 3D Immediate Mode, 
-	pouze základní rozhraní pro přístup ke grafickým akcelerátorům. Existují však rozšiřující knihovny, 
-	které funkcionalitu dále zvyšují. Jednou ze základních knihoven používaných společně s OpenGL je knihovna GLU 
-	(OpenGL Utilities), která umožňuje využívat tesselátory (rozložení nekonvexních polygonů na trojúhelníky), 
-	evaluátory (výpočet souřadnic bodů ležících na parametrických plochách) a vykreslovat kvadriky (koule, válce, kužely a disky). 
-	Další nadstavbovou knihovnou je Open Inventor, pomocí kterého lze konstruovat celé scény 
-	složené z hierarchicky navázaných objektů. V porovnání s Direct 3D Retained Mode, kde se také pracuje s hierarchií scény, 
-	je však Open Inventor knihovna mnohem mocnější a přitom má poměrně jednoduché rozhraní.
-	V dalším dílu tohoto seriálu si popíšeme syntaxi funkcí deklarovaných v OpenGL a uvedeme si příklad na vykreslení 
-	jednoduchého obrazce.
+	OpenGL byla navrĹľena s dĹŻrazem na to, aby byla pouĹľitelnĂˇ na rĹŻznĂ˝ch typech grafickĂ˝ch akcelerĂˇtorĹŻ 
+	a aby ji bylo moĹľno pouĹľĂ­t i v pĹ™Ă­padÄ›, Ĺľe na urÄŤitĂ© platformÄ› ĹľĂˇdnĂ˝ grafickĂ˝ akcelerĂˇtor 
+	nenĂ­ nainstalovĂˇn - v tom pĹ™Ă­padÄ› se pouĹľije softwarovĂˇ simulace. 
+	V souÄŤasnĂ© dobÄ› lze knihovnu OpenGL pouĹľĂ­t na rĹŻznĂ˝ch verzĂ­ch unixovĂ˝ch systĂ©mĹŻ (vÄŤetnÄ› Linuxu a samozĹ™ejmÄ› IRIXu), 
+	OS/2 a na platformĂˇch Microsoft Windows.
+	Logo OpenGL a nĂˇzev OpenGLTM je registrovanĂˇ znĂˇmka firmy Silicon Graphics Inc.
+	Na nÄ›kterĂ˝ch platformĂˇch je moĹľnĂ© rozdÄ›lenĂ­ aplikace na dvÄ› relativnÄ› samostatnĂ© ÄŤĂˇsti - serverovou a klientskou. 
+	PĹ™i vykreslovĂˇnĂ­ se potom jednotlivĂ© pĹ™Ă­kazy (coĹľ jsou vÄ›tĹˇinou parametry funkcĂ­ OpenGL) pĹ™enĂˇĹˇejĂ­ pĹ™es sĂ­ĹĄovĂ© rozhranĂ­. 
+	Knihovna OpenGL (narozdĂ­l od IRIS GL nebo Direct 3D) byla vytvoĹ™ena tak, aby byla nezĂˇvislĂˇ na pouĹľitĂ©m operaÄŤnĂ­m systĂ©mu, 
+	grafickĂ˝ch ovladaÄŤĂ­ch a sprĂˇvcĂ­ch oken (Window Managers). Proto takĂ© neobsahuje ĹľĂˇdnĂ© funkce pro prĂˇci s okny 
+	(otevĂ­rĂˇnĂ­, zruĹˇenĂ­, zmÄ›nu velikosti), pro vytvĂˇĹ™enĂ­ grafickĂ©ho uĹľivatelskĂ©ho rozhranĂ­ 
+	(Graphical User Interface - GUI) ani pro zpracovĂˇnĂ­ udĂˇlostĂ­. 
+	Tyto funkce lze zajistit buÄŹ pĹ™Ă­mo volĂˇnĂ­m funkcĂ­ pĹ™Ă­sluĹˇnĂ©ho sprĂˇvce oken, nebo lze pouĹľĂ­t nÄ›kterou z nadstaveb, 
+	napĹ™Ă­klad jiĹľ dĹ™Ă­ve na ROOTovi popsanou knihovnu GLUT [4] [5] (OpenGL Utility Toolkit). 
+	Pro dosaĹľenĂ­ co nejvÄ›tĹˇĂ­ nezĂˇvislosti na pouĹľitĂ© platformÄ› zavĂˇdĂ­ knihovna OpenGL vlastnĂ­ primitivnĂ­ datovĂ© typy, 
+	napĹ™Ă­klad GLbyte, GLint nebo GLdouble. Tyto typy a jejich pouĹľitĂ­ budou podrobnÄ›ji popsĂˇny v dalĹˇĂ­ch dĂ­lech seriĂˇlu.
+	ProgramĂˇtorskĂ© rozhranĂ­ knihovny OpenGL je vytvoĹ™eno tak, aby knihovna byla pouĹľitelnĂˇ v tĂ©mÄ›Ĺ™ libovolnĂ©m programovacĂ­m jazyce. 
+	PrimĂˇrnÄ› je k dispozici hlaviÄŤkovĂ˝ soubor pro jazyky C a C++. V tomto souboru jsou deklarovĂˇny 
+	novĂ© datovĂ© typy pouĹľĂ­vanĂ© knihovnou, nÄ›kterĂ© symbolickĂ© konstanty (napĹ™. GL_POINTS) 
+	a sada cca 120 funkcĂ­ tvoĹ™Ă­cĂ­ch vlastnĂ­ rozhranĂ­. ExistujĂ­ vĹˇak i podobnĂ© soubory s deklaracemi pro dalĹˇĂ­ programovacĂ­ jazyky, 
+	napĹ™Ă­klad Fortran, Object Pascal ÄŤi Javu; tyto soubory jsou vÄ›tĹˇinou automaticky vytvĂˇĹ™eny z CÄŤkovskĂ˝ch hlaviÄŤkovĂ˝ch souborĹŻ.
+	Z programĂˇtorskĂ©ho hlediska se OpenGL chovĂˇ jako stavovĂ˝ automat. 
+	To znamenĂˇ, Ĺľe bÄ›hem zadĂˇvĂˇnĂ­ pĹ™Ă­kazĹŻ pro vykreslovĂˇnĂ­ lze prĹŻbÄ›ĹľnÄ› mÄ›nit vlastnosti vykreslovanĂ˝ch primitiv 
+	(barva, prĹŻhlednost) nebo celĂ© scĂ©ny (volba zpĹŻsobu vykreslovĂˇnĂ­, transformace) a toto nastavenĂ­ zĹŻstane zachovĂˇno do tĂ© doby, 
+	neĹľ ho explicitnÄ› zmÄ›nĂ­me. VĂ˝hoda tohoto pĹ™Ă­stupu spoÄŤĂ­vĂˇ pĹ™edevĹˇĂ­m v tom, 
+	Ĺľe funkce pro vykreslovĂˇnĂ­ majĂ­ menĹˇĂ­ poÄŤet parametrĹŻ a Ĺľe jednĂ­m pĹ™Ă­kazem lze globĂˇlnÄ› zmÄ›nit zpĹŻsob vykreslenĂ­ celĂ© scĂ©ny, 
+	napĹ™Ă­klad volbu drĂˇtovĂ©ho zobrazenĂ­ modelu (wireframe model) nebo zobrazenĂ­ pomocĂ­ vyplnÄ›nĂ˝ch polygonĹŻ (filled model). 
+	VykreslovĂˇnĂ­ scĂ©ny se provĂˇdĂ­ procedurĂˇlnÄ› - volĂˇnĂ­m funkcĂ­ OpenGL se vykreslĂ­ vĂ˝slednĂ˝ rastrovĂ˝ obrĂˇzek. 
+	VĂ˝sledkem volĂˇnĂ­ tÄ›chto funkcĂ­ je rastrovĂ˝ obrĂˇzek uloĹľenĂ˝ v tzv. framebufferu, kde je kaĹľdĂ©mu pixelu pĹ™iĹ™azena barva, hloubka, 
+	alfa sloĹľka popĹ™. i dalĹˇĂ­ atributy. Z framebufferu lze zĂ­skat pouze barevnou informaci 
+	a tu je moĹľnĂ© nĂˇslednÄ› zobrazit na obrazovce - viz nĂˇsledujĂ­cĂ­ obrĂˇzek.
+	OpenGL nezaruÄŤuje, Ĺľe pĹ™i spuĹˇtÄ›nĂ­ identickĂ©ho programu pouĹľĂ­vajĂ­cĂ­ho knihovnu OpenGL na rĹŻznĂ˝ch platformĂˇch 
+	nebo rĹŻznĂ˝ch grafickĂ˝ch akcelerĂˇtorech dostaneme vĹľdy pĹ™esnÄ› stejnĂ˝ vĂ˝sledek. 
+	Pokud bychom oba vĂ˝slednĂ© rastrovĂ© obrĂˇzky porovnali pixel po pixelu, mohli bychom zjistit mĂ­rnĂ© rozdĂ­ly v barvĂˇch. 
+	MĹŻĹľe to bĂ˝t zpĹŻsobeno napĹ™Ă­klad odliĹˇnou pĹ™esnostĂ­ reprezentace ÄŤĂ­sel na grafickĂ© kartÄ›, odliĹˇnĂ˝mi algoritmy 
+	pro interpolaci barvy, normĂˇly a texturovĂ˝ch souĹ™adnic nebo jinou bitovou hloubkou Z-bufferu. 
+	CelkovĂ© geometrickĂ© a barevnĂ© podĂˇnĂ­ scĂ©ny by vĹˇak mÄ›lo bĂ˝t zachovĂˇno.
+	PomocĂ­ funkcĂ­ poskytovanĂ˝ch knihovnou OpenGL lze vykreslovat obrazce a tÄ›lesa sloĹľenĂˇ ze zĂˇkladnĂ­ch geometrickĂ˝ch prvkĹŻ, 
+	kterĂ© nazĂ˝vĂˇme grafickĂˇ primitiva. Mezi tato primitiva patĹ™Ă­ bod, ĂşseÄŤka, trojĂşhelnĂ­k, ÄŤtyĹ™ĂşhelnĂ­k, 
+	ploĹˇnĂ˝ konvexnĂ­ polygon, bitmapa (jednobarevnĂ˝ rastrovĂ˝ obraz) a pixmapa (barevnĂ˝ rastrovĂ˝ obraz). 
+	ExistujĂ­ i funkce, kterĂ© podporujĂ­ proudovĂ© vykreslovĂˇnĂ­ nÄ›kterĂ˝ch primitiv - lze napĹ™Ă­klad vykreslit polyÄŤĂˇru (line loop), 
+	pruh trojĂşhelnĂ­kĹŻ (triangle strip), pruh ÄŤtyĹ™ĂşhelnĂ­kĹŻ (quad strip) nebo trs trojĂşhelnĂ­kĹŻ (triangle fan). 
+	Na vrcholy tvoĹ™Ă­cĂ­ jednotlivĂˇ grafickĂˇ primitiva lze aplikovat rĹŻznĂ© transformace (otoÄŤenĂ­, zmÄ›na mÄ›Ĺ™Ă­tka, posun, 
+	perspektivnĂ­ projekce), pomocĂ­ kterĂ˝ch lze pomÄ›rnÄ› jednoduĹˇe vytvoĹ™it animace. 
+	VykreslovanĂˇ primitiva mohou bĂ˝t osvÄ›tlena nebo pokryta texturou. DĂˇle je moĹľnĂ© celou vykreslovanou scĂ©nu "skrĂ˝t" v mlze.
+	Z hlediska datovĂ© reprezentace vykreslovanĂ© scĂ©ny poskytujĂ­ funkce OpenGL, podobnÄ› jako Direct 3D Immediate Mode, 
+	pouze zĂˇkladnĂ­ rozhranĂ­ pro pĹ™Ă­stup ke grafickĂ˝m akcelerĂˇtorĹŻm. ExistujĂ­ vĹˇak rozĹˇiĹ™ujĂ­cĂ­ knihovny, 
+	kterĂ© funkcionalitu dĂˇle zvyĹˇujĂ­. Jednou ze zĂˇkladnĂ­ch knihoven pouĹľĂ­vanĂ˝ch spoleÄŤnÄ› s OpenGL je knihovna GLU 
+	(OpenGL Utilities), kterĂˇ umoĹľĹuje vyuĹľĂ­vat tesselĂˇtory (rozloĹľenĂ­ nekonvexnĂ­ch polygonĹŻ na trojĂşhelnĂ­ky), 
+	evaluĂˇtory (vĂ˝poÄŤet souĹ™adnic bodĹŻ leĹľĂ­cĂ­ch na parametrickĂ˝ch plochĂˇch) a vykreslovat kvadriky (koule, vĂˇlce, kuĹľely a disky). 
+	DalĹˇĂ­ nadstavbovou knihovnou je Open Inventor, pomocĂ­ kterĂ©ho lze konstruovat celĂ© scĂ©ny 
+	sloĹľenĂ© z hierarchicky navĂˇzanĂ˝ch objektĹŻ. V porovnĂˇnĂ­ s Direct 3D Retained Mode, kde se takĂ© pracuje s hierarchiĂ­ scĂ©ny, 
+	je vĹˇak Open Inventor knihovna mnohem mocnÄ›jĹˇĂ­ a pĹ™itom mĂˇ pomÄ›rnÄ› jednoduchĂ© rozhranĂ­.
+	V dalĹˇĂ­m dĂ­lu tohoto seriĂˇlu si popĂ­Ĺˇeme syntaxi funkcĂ­ deklarovanĂ˝ch v OpenGL a uvedeme si pĹ™Ă­klad na vykreslenĂ­ 
+	jednoduchĂ©ho obrazce.
 </DL>
-<H2>Úvod</H2>
-<P>Naučíme sa používať knižnicu OpenGL. Knižnice OpenGL slúžia na prácu s 2D aj 
-3D grafikou. V knižnici sú implementované algoritmy pre transformáciu a 
-zobrazovanie geometrických útvarov. Je výhodné používať grafickú kartu s 
-akcelerovanou 3D grafikou, pretože knižnice prenesú značnú časť výpočtov na 
-hardvér grafickej karty, čím sa výrazne urýchlia výpočty a vykresľovanie. Pri 
-programovaní (aspoň v našom prípade) sa však nemusíme trápiť s tým, akú grafickú 
-kartu máme v počítači nainštalovanú. Rozdiely v hardvéry zakrývajú knižnice a 
-operačný systém.</P>
-<P>Podrobné informácie:</P>
+<H2>Ăšvod</H2>
+<P>NauÄŤĂ­me sa pouĹľĂ­vaĹĄ kniĹľnicu OpenGL. KniĹľnice OpenGL slĂşĹľia na prĂˇcu s 2D aj 
+3D grafikou. V kniĹľnici sĂş implementovanĂ© algoritmy pre transformĂˇciu a 
+zobrazovanie geometrickĂ˝ch Ăştvarov. Je vĂ˝hodnĂ© pouĹľĂ­vaĹĄ grafickĂş kartu s 
+akcelerovanou 3D grafikou, pretoĹľe kniĹľnice prenesĂş znaÄŤnĂş ÄŤasĹĄ vĂ˝poÄŤtov na 
+hardvĂ©r grafickej karty, ÄŤĂ­m sa vĂ˝razne urĂ˝chlia vĂ˝poÄŤty a vykresÄľovanie. Pri 
+programovanĂ­ (aspoĹ v naĹˇom prĂ­pade) sa vĹˇak nemusĂ­me trĂˇpiĹĄ s tĂ˝m, akĂş grafickĂş 
+kartu mĂˇme v poÄŤĂ­taÄŤi nainĹˇtalovanĂş. Rozdiely v hardvĂ©ry zakrĂ˝vajĂş kniĹľnice a 
+operaÄŤnĂ˝ systĂ©m.</P>
+<P>PodrobnĂ© informĂˇcie:</P>
 <UL>
   <LI>opengl.hlp 
   <LI><A href="http://www.opengl.org/">http://www.opengl.org/</A> 
@@ -85,7 +85,7 @@ operačný systém.</P>
   href="http://www.root.cz/serialy/graficka-knihovna-opengl/">http://www.root.cz/serialy/graficka-knihovna-opengl/</A> 
   </LI></UL>
 <H2>Inicializovanie</H2>
-<P>Pre inicializovanie použijeme nasledujúcu šablónu:</P>
+<P>Pre inicializovanie pouĹľijeme nasledujĂşcu ĹˇablĂłnu:</P>
 <TABLE bgcolor="#ffff99" border="1" bordercolor="Blue" >
   <TBODY>
   <TR>
@@ -126,12 +126,12 @@ operačný systém.</P>
       wglMakeCurrent(0, 0);<BR>&nbsp; wglDeleteContext(RC);<BR>&nbsp; 
       RC:=0;<BR>&nbsp; ReleaseDC(Handle, DC);<BR>&nbsp; DC:=0;<BR></SPAN><SPAN 
       class=reserverword>end;</SPAN></TD></TR></TBODY></TABLE>
-<P><U>NDÚ:</U> Vytvorte knižnicu, v ktorej skryjete predchádzajúcu inicializáciu 
-a finalizáciu.</P>
-<P>Vidíme, že knižnica OpenGL je neobjektová. Funkcie knižnice OpenGL začínajú 
-prefixom<FONT color=#0044ff><SPAN class=program> gl</SPAN></FONT>... a pomocné 
+<P><U>NDĂš:</U> Vytvorte kniĹľnicu, v ktorej skryjete predchĂˇdzajĂşcu inicializĂˇciu 
+a finalizĂˇciu.</P>
+<P>VidĂ­me, Ĺľe kniĹľnica OpenGL je neobjektovĂˇ. Funkcie kniĹľnice OpenGL zaÄŤĂ­najĂş 
+prefixom<FONT color=#0044ff><SPAN class=program> gl</SPAN></FONT>... a pomocnĂ© 
 funkcie prefixom<FONT color=#0044ff><SPAN class=program> glu</SPAN></FONT>... Do 
-takéhoto programu budeme postupne dopĺňať kód.</P>
+takĂ©hoto programu budeme postupne dopÄşĹaĹĄ kĂłd.</P>
 
 
 

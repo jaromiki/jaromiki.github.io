@@ -19,111 +19,111 @@
 </head>
 <body>
 <h2>Document</h2>
-Dokument predstavuje celú stránku, ve¾ké mnostvo vlastností preberá z tagu BODY. Najèastejšie sa stretávame s metódou write.
+Dokument predstavuje celÃº strÃ¡nku, veÄ¾kÃ© mnoÅ¾stvo vlastnostÃ­ preberÃ¡ z tagu BODY. NajÄastejÅ¡ie sa stretÃ¡vame s metÃ³dou write.
 <dl>
-	<dt>Metódy
+	<dt>MetÃ³dy
 	<dd><dl>
 			<dt>open()
-			<dd>otvorí prúd do ktorého môeme zapisova obsah dokumentu - vyprázdni stránku
+			<dd>otvorÃ­ prÃºd do ktorÃ©ho mÃ´Å¾eme zapisovaÅ¥ obsah dokumentu - vyprÃ¡zdni strÃ¡nku
 			<dt>close()
-			<dd>uzatvorí prúd otvorenı pomocou open(), az po uzavretí je dokument vidie
+			<dd>uzatvorÃ­ prÃºd otvorenÃ½ pomocou open(), az po uzavretÃ­ je dokument vidieÅ¥
 			<dt>write( text )
-			<dd>parameter text je zapísanı do dokumentu
-				<ul><li>ak je prúd otvorenı pridá parameter-text na aktuálny koniec stránky
-					<li>ak nie je prúd otvorenı otvorí - a tım teda vyprázdni stránku a potom zapíše
+			<dd>parameter text je zapÃ­sanÃ½ do dokumentu
+				<ul><li>ak je prÃºd otvorenÃ½ pridÃ¡ parameter-text na aktuÃ¡lny koniec strÃ¡nky
+					<li>ak nie je prÃºd otvorenÃ½ otvorÃ­ - a tÃ½m teda vyprÃ¡zdni strÃ¡nku a potom zapÃ­Å¡e
 				</ul>
 			<dt>writeln( text )
-			<dd>vkladá znak konca riadku (má vıznam ak sme v &lt;PRE&gt;
+			<dd>vkladÃ¡ znak konca riadku (mÃ¡ vÃ½znam ak sme v &lt;PRE&gt;
 		</dl>
 	<dt>Vlastnosti
 	<dd><ul><li>bgColor = " color " // farba pozadia
-			<li>fgColor = " color " // farba písma
-			<li>title = " text " // text z hlavièky stránky, textová vlastnos urèená len na èítanie
-			<li>lastModifield ... reazec s dátumom urèenı len na èítanie
-			<li>aplets[] ... pole apletov pouitıch v stránke - umoní prístup ku ich verejnım prem.
-			<li>forms[] ... pole formulárov stránky (aj bez mena umoní prístup k formulárom stránky)
-			<li>images[] ... pole všetkıch obrázkov stránky, indexy idú od nuly 
-			<li>all[] ... pole všetkıch objektov v poradí vzniku, umoní ku objektom pristupova cez indexy
-			<li>all.tags('nazov_tagu')[] ... pole všetkıch objektov, ktoré sú uvedeného typu 
+			<li>fgColor = " color " // farba pÃ­sma
+			<li>title = " text " // text z hlaviÄky strÃ¡nky, textovÃ¡ vlastnosÅ¥ urÄenÃ¡ len na ÄÃ­tanie
+			<li>lastModifield ... reÅ¥azec s dÃ¡tumom urÄenÃ½ len na ÄÃ­tanie
+			<li>aplets[] ... pole apletov pouÅ¾itÃ½ch v strÃ¡nke - umoÅ¾nÃ­ prÃ­stup ku ich verejnÃ½m prem.
+			<li>forms[] ... pole formulÃ¡rov strÃ¡nky (aj bez mena umoÅ¾nÃ­ prÃ­stup k formulÃ¡rom strÃ¡nky)
+			<li>images[] ... pole vÅ¡etkÃ½ch obrÃ¡zkov strÃ¡nky, indexy idÃº od nuly 
+			<li>all[] ... pole vÅ¡etkÃ½ch objektov v poradÃ­ vzniku, umoÅ¾nÃ­ ku objektom pristupovaÅ¥ cez indexy
+			<li>all.tags('nazov_tagu')[] ... pole vÅ¡etkÃ½ch objektov, ktorÃ© sÃº uvedenÃ©ho typu 
 		</ul>
-		<br>Pomocou vlastnosti all, resp. all.tags môme pomocou cyklu meni vlastnosti ve¾kému poètu objektov v documente.
-		<br>Pomocou document.all.tags('body')[0].width (height) môme èíta i meni size okna 
+		<br>Pomocou vlastnosti all, resp. all.tags mÃ´Å¾me pomocou cyklu meniÅ¥ vlastnosti veÄ¾kÃ©mu poÄtu objektov v documente.
+		<br>Pomocou document.all.tags('body')[0].width (height) mÃ´Å¾me ÄÃ­taÅ¥ i meniÅ¥ size okna 
 </dl>
 <h2>Window</h2>
-V tomto objekte sú vlastnosti okna, v ktorom je dokument vypísanı.
+V tomto objekte sÃº vlastnosti okna, v ktorom je dokument vypÃ­sanÃ½.
 <dl>
-	<dt>Metódy
+	<dt>MetÃ³dy
 	<dd><ul>
-			<li>alert( text ) // vypíše oznam v dialógovom okne
-			<li>okno.blur () // pošle okno do pozadia
-			<li>focus() // pošle okno dopopredia
-			<li>okno.clearInterval(intervalid) // procedura, zruší periodické vykonávanie príkazov - vypne danı èasovaè
-			<li>okno.setInterval(kod,interval) // funkcia, zapne èasovaè - nastaví opakovanie kódu kadıch interval ms, vrati hodnotu intervalid
- 			<li>okno.setTimeout(kod, cas) // pozastaví vykonávanie na zadanı èas (ako sleep, delay)
-			<li>moveto() // presun okna na dané súradnice obrazovky
-			<li>okno.print() //vytlaèí dokument
-			<li>resizeBy(dsir,dvys) // zmení ve¾kos okna o danú ve¾kos
-			<li>resizeTo(sir,vys) // zmení ve¾kos okna na danú ve¾kos
-			<li>okno.scrollBy(dx,dy) // roluje okno o zadanı poèet bodov
-			<li>okno.open(url,nazov,prvky) // funkcia vráti názov okna pouitelnı v odkazoch target (zvonka)
-				<ul><li>url - nepovinné, adresa stránky, ak prázdny reazec je stránka prázdna
-					<li>nazov - meno okna na prístup ku vlastnostiam, metódam okna zvnútra okna
-					<li>prvky - ktoré vizuálne prvky má okno ma, ak neuvedieme bude ma všetky, ak jeden uvedieme ostatné nemá  
-					<ul><li>fullscreen=yes|no ... na celú obrazovku?
-						<li>height= cislo ... urèí vıšku okna
-						<li>width= cislo ... urèí šírku okna
-						<li>left= cislo ... x-sová súradnica okna na obrazovke
-						<li>top= cislo ... y-nová súradnica okna na obrazovke
-						<li>location=yes|no ... vstupnı riadok áno/nie
-						<li>menubar=yes|no ... menu áno/nie
-						<li>toolbar=yes|no ... paleta nástrojov áno/nie
-						<li>scroolbar=yes|no ... zobrazenie posuvníka
-						<li>status=yes|no ... stavovı riadok áno/nie
-						<li>resizable=yes|no ... èi budú nástroje na zmenu ve¾kosti
+			<li>alert( text ) // vypÃ­Å¡e oznam v dialÃ³govom okne
+			<li>okno.blur () // poÅ¡le okno do pozadia
+			<li>focus() // poÅ¡le okno dopopredia
+			<li>okno.clearInterval(intervalid) // procedura, zruÅ¡Ã­ periodickÃ© vykonÃ¡vanie prÃ­kazov - vypne danÃ½ ÄasovaÄ
+			<li>okno.setInterval(kod,interval) // funkcia, zapne ÄasovaÄ - nastavÃ­ opakovanie kÃ³du kaÅ¾dÃ½ch interval ms, vrati hodnotu intervalid
+ 			<li>okno.setTimeout(kod, cas) // pozastavÃ­ vykonÃ¡vanie na zadanÃ½ Äas (ako sleep, delay)
+			<li>moveto() // presun okna na danÃ© sÃºradnice obrazovky
+			<li>okno.print() //vytlaÄÃ­ dokument
+			<li>resizeBy(dsir,dvys) // zmenÃ­ veÄ¾kosÅ¥ okna o danÃº veÄ¾kosÅ¥
+			<li>resizeTo(sir,vys) // zmenÃ­ veÄ¾kosÅ¥ okna na danÃº veÄ¾kosÅ¥
+			<li>okno.scrollBy(dx,dy) // roluje okno o zadanÃ½ poÄet bodov
+			<li>okno.open(url,nazov,prvky) // funkcia vrÃ¡ti nÃ¡zov okna pouÅ¾itelnÃ½ v odkazoch target (zvonka)
+				<ul><li>url - nepovinnÃ©, adresa strÃ¡nky, ak prÃ¡zdny reÅ¥azec je strÃ¡nka prÃ¡zdna
+					<li>nazov - meno okna na prÃ­stup ku vlastnostiam, metÃ³dam okna zvnÃºtra okna
+					<li>prvky - ktorÃ© vizuÃ¡lne prvky mÃ¡ okno maÅ¥, ak neuvedieme bude maÅ¥ vÅ¡etky, ak jeden uvedieme ostatnÃ© nemÃ¡  
+					<ul><li>fullscreen=yes|no ... na celÃº obrazovku?
+						<li>height= cislo ... urÄÃ­ vÃ½Å¡ku okna
+						<li>width= cislo ... urÄÃ­ Å¡Ã­rku okna
+						<li>left= cislo ... x-sovÃ¡ sÃºradnica okna na obrazovke
+						<li>top= cislo ... y-novÃ¡ sÃºradnica okna na obrazovke
+						<li>location=yes|no ... vstupnÃ½ riadok Ã¡no/nie
+						<li>menubar=yes|no ... menu Ã¡no/nie
+						<li>toolbar=yes|no ... paleta nÃ¡strojov Ã¡no/nie
+						<li>scroolbar=yes|no ... zobrazenie posuvnÃ­ka
+						<li>status=yes|no ... stavovÃ½ riadok Ã¡no/nie
+						<li>resizable=yes|no ... Äi budÃº nÃ¡stroje na zmenu veÄ¾kosti
 					</ul>
 				</ul>
 		</ul>		
 	<dt>Vlastnosti
-	<dd><ul><li>frames[] ... pole rámcov, frames.length urèuje ko¾ko ich je. Typ poloky je window.
+	<dd><ul><li>frames[] ... pole rÃ¡mcov, frames.length urÄuje koÄ¾ko ich je. Typ poloÅ¾ky je window.
 			<li>screen ... objekt kde je popis obrazovky na ktorej je okno
-			<li>status ... reazec v stavovom riadku
+			<li>status ... reÅ¥azec v stavovom riadku
 			<li>event ... objekt na popis poslednej udalosti
-				<br> clientX, clientY ... súradnice miesta, kde sme klikli (pohli) myšou
+				<br> clientX, clientY ... sÃºradnice miesta, kde sme klikli (pohli) myÅ¡ou
 	<dt>Udalosti
 	<dd>onblur ... pri odchode do pozadia
-	<br>onerror ... pri vıskyte chyby
-	<br>onload ... pri úplnom naèítaní (document.close())
-	<br>onunload ... ak opúšame aktuálny dokument 
-	<dt>Ukáka
-	<dd>nove=window.open("","okno","status=no"); //vytvorí nové okno bez statusu
-		<br>nove.resizeTo(165,30); //urèí oknu va¾kos 
-		<br>nove.document.open(); // open otvorí prúd do okna (vymae ho zároveò)
-	    <br>nove.document.write("&lt;html>"); // prvı text do okna
+	<br>onerror ... pri vÃ½skyte chyby
+	<br>onload ... pri Ãºplnom naÄÃ­tanÃ­ (document.close())
+	<br>onunload ... ak opÃºÅ¡Å¥ame aktuÃ¡lny dokument 
+	<dt>UkÃ¡Å¾ka
+	<dd>nove=window.open("","okno","status=no"); //vytvorÃ­ novÃ© okno bez statusu
+		<br>nove.resizeTo(165,30); //urÄÃ­ oknu vaÄ¾kosÅ¥ 
+		<br>nove.document.open(); // open otvorÃ­ prÃºd do okna (vymaÅ¾e ho zÃ¡roveÅˆ)
+	    <br>nove.document.write("&lt;html>"); // prvÃ½ text do okna
 	    <br>nove.document.write("&lt;head>\n");
 		<br>nove.document.write("&lt;META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=windows-1250'>\n");
 		<br>nove.document.write('&lt;title>Pokus</title>\n');
-	    <br>nove.document.write("&lt;/head>\n"); // koniec hlavièky
-		<br>nove.document.write("&lt;body>\n"); // a zaèína telo
-		<br>nove.document.write("&lt;div >\n"); // vytvorím objekt v tele dokumentu
-		<br>nove.document.write(" Text"); // tento text sa zobrazí
+	    <br>nove.document.write("&lt;/head>\n"); // koniec hlaviÄky
+		<br>nove.document.write("&lt;body>\n"); // a zaÄÃ­na telo
+		<br>nove.document.write("&lt;div >\n"); // vytvorÃ­m objekt v tele dokumentu
+		<br>nove.document.write(" Text"); // tento text sa zobrazÃ­
 		<br>nove.document.write("&lt;/div>\n"); // koniec objektu div
 	    <br>nove.document.write("&lt;/body>"); // koniec tela
 	    <br>nove.document.write("&lt;/html>"); // koniec html
-		<br>nove.document.close(); // a uz by okno aj malo vidie
+		<br>nove.document.close(); // a uz by okno aj malo vidieÅ¥
 </dl>
 
 <h2>Screen</h2>
-Tu je popísaná obrazovka na ktorej je okno.
+Tu je popÃ­sanÃ¡ obrazovka na ktorej je okno.
 <dl>
 	<dt>Vlastnosti
-	<dd>height, availHeight ... vıška a dostupná vıška obrazovky v pixloch
-	<br>width, availwidth ... šírka a dostupná šírka obrazovky
-	<br>colorDepth ... dvojkovı logaritmus poètu farieb
+	<dd>height, availHeight ... vÃ½Å¡ka a dostupnÃ¡ vÃ½Å¡ka obrazovky v pixloch
+	<br>width, availwidth ... Å¡Ã­rka a dostupnÃ¡ Å¡Ã­rka obrazovky
+	<br>colorDepth ... dvojkovÃ½ logaritmus poÄtu farieb
 </dl>	
 
-<h3>Úlohy</h3>
-1. Napíšte kód na pridanie riadku Upravené dòa:...<br>
-2. Vytvor nasledovné pridávanie novej stránky
+<h3>Ãšlohy</h3>
+1. NapÃ­Å¡te kÃ³d na pridanie riadku UpravenÃ© dÅˆa:...<br>
+2. Vytvor nasledovnÃ© pridÃ¡vanie novej strÃ¡nky
 <table align="center">
 <tr><td><code>
 		 <INPUT TYPE="checkbox" NAME="tb" VALUE=1>Toolbar<BR>
@@ -138,7 +138,7 @@ Tu je popísaná obrazovka na ktorej je okno.
                     <input type="Button" onclick="meno.close()" value="Close">
 </table>
 <script>
-if (Date.parse(document.lastModified) != 0) document.write("<p><hr><small><i>Upravené dòa:"+document.lastModified+"</i></small>")
+if (Date.parse(document.lastModified) != 0) document.write("<p><hr><small><i>UpravenÃ© dÅˆa:"+document.lastModified+"</i></small>")
 </script>
 </body>
 </html>

@@ -8,21 +8,21 @@
 
 <body>
 <h3 class=nadpis>Rekurzia</h3>
-Vieme, e z podprogramu môme vola len tie podprogramy, ktoré sú z miesta volania vidite¾né. Vola mono "svoje deti" a starších 
-bratov a tie kadı podprogram môe vola sám seba. Práve volanie seba má špeciálne vyuitie a nazıvame to "rekurzia".
-<br>Rekurzia je podobná cyklu ale sú niektoré dôleité rozdiely:
-<ul><li>Kadé volanie podprogramu (a teda aj volanie samo seba) vytvorí nové lokálne premenné. Kadı beh rekurzie je teda
-		pamäovo nároènı - do zásobníka sa uloí 
-		<ul type="square"><li>návratová adresa
-			<li>lokálne premenné vèítane parametrov
+Vieme, Å¾e z podprogramu mÃ´Å¾me volaÅ¥ len tie podprogramy, ktorÃ© sÃº z miesta volania viditeÄ¾nÃ©. VolaÅ¥ moÅ¾no "svoje deti" a starÅ¡Ã­ch 
+bratov a tieÅ¾ kaÅ¾dÃ½ podprogram mÃ´Å¾e volaÅ¥ sÃ¡m seba. PrÃ¡ve volanie seba mÃ¡ Å¡peciÃ¡lne vyuÅ¾itie a nazÃ½vame to "rekurzia".
+<br>Rekurzia je podobnÃ¡ cyklu ale sÃº niektorÃ© dÃ´leÅ¾itÃ© rozdiely:
+<ul><li>KaÅ¾dÃ© volanie podprogramu (a teda aj volanie samo seba) vytvorÃ­ novÃ© lokÃ¡lne premennÃ©. KaÅ¾dÃ½ beh rekurzie je teda
+		pamÃ¤Å¥ovo nÃ¡roÄnÃ½ - do zÃ¡sobnÃ­ka sa uloÅ¾Ã­ 
+		<ul type="square"><li>nÃ¡vratovÃ¡ adresa
+			<li>lokÃ¡lne premennÃ© vÄÃ­tane parametrov
 		</ul>	 
-	<li>Cyklus moe teoreticky zbehnú neobmedzenı poèet krát - rekurzia vdy narazí na hranicu urèenú ve¾kosou zásobníka
-		(nieko¾ko 100kB) po prekroèení ktorého nastane error "Stack overflow"
-	<li>kadı cyklus jednoducho mono nahradi rekurziou no nahradenie rekurzie je úloha niekedy ve¾mi obtiana	 
+	<li>Cyklus moÅ¾e teoreticky zbehnÃºÅ¥ neobmedzenÃ½ poÄet krÃ¡t - rekurzia vÅ¾dy narazÃ­ na hranicu urÄenÃº veÄ¾kosÅ¥ou zÃ¡sobnÃ­ka
+		(niekoÄ¾ko 100kB) po prekroÄenÃ­ ktorÃ©ho nastane error "Stack overflow"
+	<li>kaÅ¾dÃ½ cyklus jednoducho moÅ¾no nahradiÅ¥ rekurziou no nahradenie rekurzie je Ãºloha niekedy veÄ¾mi obtiaÅ¾na	 
 </ul>	
-<dl><dt>Nekoneèná rekurzia
+<dl><dt>NekoneÄnÃ¡ rekurzia
 	<dd><TABLE cellSpacing=0 borderColorDark=white width="80%" align=center bgColor=white borderColorLight=gray border=1>
-         <TR><TD vAlign=" top" bgColor=#99cccc><P><I>procedúra <B>pridaj</B> volá samu seba:</I> </P></TD></TR>
+         <TR><TD vAlign=" top" bgColor=#99cccc><P><I>procedÃºra <B>pridaj</B> volÃ¡ samu seba:</I> </P></TD></TR>
          <TR><TD vAlign=top><PRE>float s=0;
 void pridaj()
 {  s+=StrToFloatDef(InputBox(Vstup, Zadaj sumu, "1"),0);}
@@ -32,23 +32,23 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
   pridaj();
 }</PRE>
 </TABLE>
-	Úlohou procedúry je prida súètu <b>s</b> naèítané èíslo. Kadé volanie zapíše do zásobníka 
-	<br> - návratovú adresu 32-bitov
-	<br> - stringovú premennú s (náhodná hodnota)
-	<br> - integerovú premennú i (náhodná hodnota)
-	<br> - bajtovú premennú n (hodnota pod¾a hodnoty pri volaní)
-	a nakoniec teda narazí na strop zásobníka a spadne s chybou "Preteèenie zásobníka". Nekoneèná rekurzia teda nemá v programovaní 
-	vıznam lebo vedie zaruèene ku pádu programu.
-	<dl><dt>Dôsledok
-		<dd>Kadı "dobrı" rekurzívny podprogram má "nerekurzívnu" vetvu - vetvu, kde sa nenachádza volanie sama seba. Ináè povedané:
-			<br><b>"kadı správny rekurzívny podprogram musí ma šancu nevola sám seba"</b>.  
+	Ãšlohou procedÃºry je pridaÅ¥ sÃºÄtu <b>s</b> naÄÃ­tanÃ© ÄÃ­slo. KaÅ¾dÃ© volanie zapÃ­Å¡e do zÃ¡sobnÃ­ka 
+	<br> - nÃ¡vratovÃº adresu 32-bitov
+	<br> - stringovÃº premennÃº s (nÃ¡hodnÃ¡ hodnota)
+	<br> - integerovÃº premennÃº i (nÃ¡hodnÃ¡ hodnota)
+	<br> - bajtovÃº premennÃº n (hodnota podÄ¾a hodnoty pri volanÃ­)
+	a nakoniec teda narazÃ­ na strop zÃ¡sobnÃ­ka a spadne s chybou "PreteÄenie zÃ¡sobnÃ­ka". NekoneÄnÃ¡ rekurzia teda nemÃ¡ v programovanÃ­ 
+	vÃ½znam lebo vedie zaruÄene ku pÃ¡du programu.
+	<dl><dt>DÃ´sledok
+		<dd>KaÅ¾dÃ½ "dobrÃ½" rekurzÃ­vny podprogram mÃ¡ "nerekurzÃ­vnu" vetvu - vetvu, kde sa nenachÃ¡dza volanie sama seba. InÃ¡Ä povedanÃ©:
+			<br><b>"kaÅ¾dÃ½ sprÃ¡vny rekurzÃ­vny podprogram musÃ­ maÅ¥ Å¡ancu nevolaÅ¥ sÃ¡m seba"</b>.  
    	</dl>
 
- 	<dt class=second>Jednoduchá - chvostová rekurzia
-	<dd>Chvostová rekurzia nastane vtedy, keï rekurzívna procedúra volá samu seba ako poslednı svoj príkaz. Takáto rekurzia sa ve¾mi
-		¾ahko dá prepísa na cyklus. Jej pouitie je iba na cvièné úèely.
+ 	<dt class=second>JednoduchÃ¡ - chvostovÃ¡ rekurzia
+	<dd>ChvostovÃ¡ rekurzia nastane vtedy, keÄ rekurzÃ­vna procedÃºra volÃ¡ samu seba ako poslednÃ½ svoj prÃ­kaz. TakÃ¡to rekurzia sa veÄ¾mi
+		Ä¾ahko dÃ¡ prepÃ­saÅ¥ na cyklus. Jej pouÅ¾itie je iba na cviÄnÃ© ÃºÄely.
 		<table cellSpacing=0 borderColorDark=white width="80%" align=center bgColor=white borderColorLight=gray border=1>
-		<tr><th bgColor=#99cccc  align="left">Rekurzívna verzia
+		<tr><th bgColor=#99cccc  align="left">RekurzÃ­vna verzia
 		<tr><td><pre>
 long long faktorial(int n)
 { if (n) return n*faktorial(n-1);
@@ -57,7 +57,7 @@ long long faktorial(int n)
 void __fastcall TForm1::Button1Click(TObject *Sender)
 { Edit2->Text = IntToStr(faktorial(StrToInt(Edit1->Text)); }
 </pre>
-	<tr><th bgColor=#99cccc align="left">Nerekurzívna verzia
+	<tr><th bgColor=#99cccc align="left">NerekurzÃ­vna verzia
 	<tr><td><pre>long long faktorial(int n)
 { for (int i=1,f=1;i&lt;n;i++) f*=i; 
   else return f;
@@ -66,54 +66,54 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 { Edit2->Text = IntToStr(faktorial(StrToInt(Edit1->Text)); }
 </pre>
 </table>			
-		Tu nemá zmysel pouitie rekurzie, lebo oproti iterácii je omnoho èasovo nároènejšia i ašie laditelná.
- 	<dt>Pravá rekurzia
-	<dd>Ak sa za rekurzívnym volaním nachádzajú ešte nejaké príkazy alebo ak rekurzívne voláme na viacerıch miestach 
-		programu je prechod na nerekurzívny algoritmus zloitejší.   
-		<br>Typické úlohy riešené rekurzívne:
-		<dl><dt><font color="Blue">Rozde¾ a panuj</font>
-			<dd>Ide o delenie úlohy nejakej zloitosti na 2 alebo viac podúloh menšej zloitosti. 
-				<br>Typickımi úlohami sú napríklad:
-				<ul><li>Naplò bunky po¾a "<b>pole</b>" indexu N1 ... N2 rovnakou hodnotou 1 bez pouitia cyklu
-						<br>Myšlienka je rozdeli rozdeli úsek o dåke N2-N1+1 na menšie úseky. Úloha je zloitosti N2-N1+1 a mono
-						ju deli na úlohu zloitosti 1 (úsek dåky 1) a N2-N1 alebo šikovnejšie je deli zloitos pribline
-						ma rovnako zloité úseky.
+		Tu nemÃ¡ zmysel pouÅ¾itie rekurzie, lebo oproti iterÃ¡cii je omnoho Äasovo nÃ¡roÄnejÅ¡ia i Å¥aÅ¾Å¡ie laditelnÃ¡.
+ 	<dt>PravÃ¡ rekurzia
+	<dd>Ak sa za rekurzÃ­vnym volanÃ­m nachÃ¡dzajÃº eÅ¡te nejakÃ© prÃ­kazy alebo ak rekurzÃ­vne volÃ¡me na viacerÃ½ch miestach 
+		programu je prechod na nerekurzÃ­vny algoritmus zloÅ¾itejÅ¡Ã­.   
+		<br>TypickÃ© Ãºlohy rieÅ¡enÃ© rekurzÃ­vne:
+		<dl><dt><font color="Blue">RozdeÄ¾ a panuj</font>
+			<dd>Ide o delenie Ãºlohy nejakej zloÅ¾itosti na 2 alebo viac podÃºloh menÅ¡ej zloÅ¾itosti. 
+				<br>TypickÃ½mi Ãºlohami sÃº naprÃ­klad:
+				<ul><li>NaplÅˆ bunky poÄ¾a "<b>pole</b>" indexu N1 ... N2 rovnakou hodnotou 1 bez pouÅ¾itia cyklu
+						<br>MyÅ¡lienka je rozdeliÅ¥ rozdeliÅ¥ Ãºsek o dÄºÅ¾ke N2-N1+1 na menÅ¡ie Ãºseky. Ãšloha je zloÅ¾itosti N2-N1+1 a moÅ¾no
+						ju deliÅ¥ na Ãºlohu zloÅ¾itosti 1 (Ãºsek dÄºÅ¾ky 1) a N2-N1 alebo Å¡ikovnejÅ¡ie je deliÅ¥ zloÅ¾itosÅ¥ pribliÅ¾ne
+						ma rovnako zloÅ¾itÃ© Ãºseky.
 						<table cellSpacing=0 borderColorDark=white width="80%" align=center bgColor=white borderColorLight=gray border=1>
-						<tr><th bgColor=#99dddd  align="left">Naplnenie po¾a</tr>
+						<tr><th bgColor=#99dddd  align="left">Naplnenie poÄ¾a</tr>
 						<tr><td><pre>
-void plnenie(int pole[],int a,int b) &nbsp; &nbsp;//naplníme jednotkami
+void plnenie(int pole[],int a,int b) &nbsp; &nbsp;//naplnÃ­me jednotkami
 {  int s=(a+b)/2;
    if (b-a) {plnenie(a,s); plnenie(s+1,b);}
    else pole[a]=1;
 }</pre></tr></table>
-Dôkaz správnosti algoritmu je cez matematickú indukciu.
-					<li>Hanojské vee
-					<li><a href="permutacie.exe">Permutácia</a> n prvkov
-					<li>Súèet ve¾kého poètu reálnych èísel v poli
+DÃ´kaz sprÃ¡vnosti algoritmu je cez matematickÃº indukciu.
+					<li>HanojskÃ© veÅ¾e
+					<li><a href="permutacie.exe">PermutÃ¡cia</a> n prvkov
+					<li>SÃºÄet veÄ¾kÃ©ho poÄtu reÃ¡lnych ÄÃ­sel v poli
 				</ul>	
-		    <dt><font color="Blue">Prehladávanie s návratom</font>
-			<dd>Tie niekedy nazıvaná metóda<b> "pokus omyl"</b>. Ide o úlohy, keï je systém popísanı stavmi a prechodmi 
-				z ktorého stavu mono prejs do ktorého. Našou úlohou bıva zisti èi existuje prechod zo stavu A do stavu B.
-				<ul><li>Najznámejší príklad je klasické plošné bludisko, kde je úlohou nájs miestnos s nejakou vlastnosou. Pohyb
-					po bludisku pripomína dávny príbeh z minulosti Tezeus &lt; -- > Minotaurus. Hrdina sa vyberie jednou z prístupnıch
-					ciest, znaèí si kde u bol a keï sa nedá ís ïalej vráti sa spä. Touto metódou zaruèene prejdeme celé bludisko. 
+		    <dt><font color="Blue">PrehladÃ¡vanie s nÃ¡vratom</font>
+			<dd>TieÅ¾ niekedy nazÃ½vanÃ¡ metÃ³da<b> "pokus omyl"</b>. Ide o Ãºlohy, keÄ je systÃ©m popÃ­sanÃ½ stavmi a prechodmi 
+				z ktorÃ©ho stavu moÅ¾no prejsÅ¥ do ktorÃ©ho. NaÅ¡ou Ãºlohou bÃ½va zistiÅ¥ Äi existuje prechod zo stavu A do stavu B.
+				<ul><li>NajznÃ¡mejÅ¡Ã­ prÃ­klad je klasickÃ© ploÅ¡nÃ© bludisko, kde je Ãºlohou nÃ¡jsÅ¥ miestnosÅ¥ s nejakou vlastnosÅ¥ou. Pohyb
+					po bludisku pripomÃ­na dÃ¡vny prÃ­beh z minulosti Tezeus &lt; -- > Minotaurus. Hrdina sa vyberie jednou z prÃ­stupnÃ½ch
+					ciest, znaÄÃ­ si kde uÅ¾ bol a keÄ sa nedÃ¡ Ã­sÅ¥ Äalej vrÃ¡ti sa spÃ¤Å¥. Touto metÃ³dou zaruÄene prejdeme celÃ© bludisko. 
 				<br><a href='bludisko.exe'>stiahni</a>
-					<li>Zistenie plochy najväèšieho ostrova na mape (mapa je napr. daná tabu¾kou, kde voda je napr. '.' a pevnina 'X')
-					<li>problém 8 dám na šachovnici
+					<li>Zistenie plochy najvÃ¤ÄÅ¡ieho ostrova na mape (mapa je napr. danÃ¡ tabuÄ¾kou, kde voda je napr. '.' a pevnina 'X')
+					<li>problÃ©m 8 dÃ¡m na Å¡achovnici
 				</ul>	
-			<dt><font color="Blue">Rekuzívne obrázky</font>
-			<dd>Ve¾mi pripomínajú úlohy Rozde¾ a panuj" ale ide o špecifické grafické úlohy a tak sa èasto uvádzajú samostatne. 
-			<dt><font color="Blue">Špeciálne úlohy</font>
-			<dd><ul><li>Bez po¾a a bez stringu naèítaj znaky ukonèené znakom Enter (#13) a vypíšte ich odzadu 
-					<li>Riešenie diofantickıch úloh ax-by = 1, pre a,b>0 v obore Z<sub>0</sub><sup>+</sup> 
+			<dt><font color="Blue">RekuzÃ­vne obrÃ¡zky</font>
+			<dd>VeÄ¾mi pripomÃ­najÃº Ãºlohy RozdeÄ¾ a panuj" ale ide o Å¡pecifickÃ© grafickÃ© Ãºlohy a tak sa Äasto uvÃ¡dzajÃº samostatne. 
+			<dt><font color="Blue">Å peciÃ¡lne Ãºlohy</font>
+			<dd><ul><li>Bez poÄ¾a a bez stringu naÄÃ­taj znaky ukonÄenÃ© znakom Enter (#13) a vypÃ­Å¡te ich odzadu 
+					<li>RieÅ¡enie diofantickÃ½ch Ãºloh ax-by = 1, pre a,b>0 v obore Z<sub>0</sub><sup>+</sup> 
 						<br>(Nech a>b, a=b*q+r ->ax-by=(bq+r)x-by = rx -b(y-qx)=1
 						<br>nech b>a, b=a*q+r ->ax-by=ax-(aq+r)y = a(x-qy)-ry=1
-						<br>trivialne riešenia sú ak a*b=0 alebo (a-1)*(b-1)=0)
+						<br>trivialne rieÅ¡enia sÃº ak a*b=0 alebo (a-1)*(b-1)=0)
 		</dl>
- 	<dt class=second>Otázky
-	<dd><ol><li>Èo je rekurzia
-			<li>Preèo nemôe rekurzia vytvori nekoneènú smyèku
-			<li>Ako by ste riešili úlohu Hanojskıch veí
+ 	<dt class=second>OtÃ¡zky
+	<dd><ol><li>ÄŒo je rekurzia
+			<li>PreÄo nemÃ´Å¾e rekurzia vytvoriÅ¥ nekoneÄnÃº smyÄku
+			<li>Ako by ste rieÅ¡ili Ãºlohu HanojskÃ½ch veÅ¾Ã­
 		</ol>	
 	</dl>		
 </body>

@@ -5,342 +5,342 @@
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
 	 <meta name="Content-language" content="sk">	
 	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
-	<title>Textové súbory</title>
+	<title>TextovĂ© sĂşbory</title>
 </head>
 
 <body>
-<h3>Textové súbory</h3>
-Súbory rozlišujeme na textové a binárne. Textové súbory možno editovať (vidieť obsah, meniť obsah) bežnými txt editormi,
-napr. Notepad, alebo zabudovaný editor v Builderi. 
-<br>(Txt súbor vytvorený programom možno čítať v Notepad a aj naopak txt súbor vytvorený napr. v Notepad možno čítať programom)
-<br>Všetky nečíselné údaje sú prevedené do textovej podoby a v nej sú v txt súbore.
-zapísané. 
-<dl><dt>Štruktúra txt súboru
+<h3>TextovĂ© sĂşbory</h3>
+SĂşbory rozliĹˇujeme na textovĂ© a binĂˇrne. TextovĂ© sĂşbory moĹľno editovaĹĄ (vidieĹĄ obsah, meniĹĄ obsah) beĹľnĂ˝mi txt editormi,
+napr. Notepad, alebo zabudovanĂ˝ editor v Builderi. 
+<br>(Txt sĂşbor vytvorenĂ˝ programom moĹľno ÄŤĂ­taĹĄ v Notepad a aj naopak txt sĂşbor vytvorenĂ˝ napr. v Notepad moĹľno ÄŤĂ­taĹĄ programom)
+<br>VĹˇetky neÄŤĂ­selnĂ© Ăşdaje sĂş prevedenĂ© do textovej podoby a v nej sĂş v txt sĂşbore.
+zapĂ­sanĂ©. 
+<dl><dt>Ĺ truktĂşra txt sĂşboru
 <dd>
-Textový súbor sa skladá z riadkov-viet. Každý riadok/veta môže mať "ľubovoľnú" veľkosť a je ukončený
-CR/LF (0x0d, 0xa) pod OS Win a LF (0xa) pod OS UNIX. Celý súbor môže (ale nemusí) byť ukončený špeciálnym znakom EOF (vo Win je to znak 0x1a=Ctrl Z)
-Všeobecne sa nedá zo súboru čítať za znakom EOF.
-<br>všeobecne číselné údaje v txt súboroch musíme od seba oddelovať nejakým bielym znakom aby sa dali programom naspäť prečítať.
-<br>(tento fakt nám značne navyšuje dĺžku txt súborov s číselnými údajmi - niekedy je preto výhodnejšie zvoliť binárny súbor)
-<br>(samozrejme ak vieme, že dĺžka každého čísla v txt súbore je rovnaká a známa je možné tento oddelovač vynechať - jazyk C dokáže takéto čísla načítať)
-<dt>Práca s txt súborom
+TextovĂ˝ sĂşbor sa skladĂˇ z riadkov-viet. KaĹľdĂ˝ riadok/veta mĂ´Ĺľe maĹĄ "ÄľubovoÄľnĂş" veÄľkosĹĄ a je ukonÄŤenĂ˝
+CR/LF (0x0d, 0xa) pod OS Win a LF (0xa) pod OS UNIX. CelĂ˝ sĂşbor mĂ´Ĺľe (ale nemusĂ­) byĹĄ ukonÄŤenĂ˝ ĹˇpeciĂˇlnym znakom EOF (vo Win je to znak 0x1a=Ctrl Z)
+VĹˇeobecne sa nedĂˇ zo sĂşboru ÄŤĂ­taĹĄ za znakom EOF.
+<br>vĹˇeobecne ÄŤĂ­selnĂ© Ăşdaje v txt sĂşboroch musĂ­me od seba oddelovaĹĄ nejakĂ˝m bielym znakom aby sa dali programom naspĂ¤ĹĄ preÄŤĂ­taĹĄ.
+<br>(tento fakt nĂˇm znaÄŤne navyĹˇuje dÄşĹľku txt sĂşborov s ÄŤĂ­selnĂ˝mi Ăşdajmi - niekedy je preto vĂ˝hodnejĹˇie zvoliĹĄ binĂˇrny sĂşbor)
+<br>(samozrejme ak vieme, Ĺľe dÄşĹľka kaĹľdĂ©ho ÄŤĂ­sla v txt sĂşbore je rovnakĂˇ a znĂˇma je moĹľnĂ© tento oddelovaÄŤ vynechaĹĄ - jazyk C dokĂˇĹľe takĂ©to ÄŤĂ­sla naÄŤĂ­taĹĄ)
+<dt>PrĂˇca s txt sĂşborom
 <dd><ul>
 	<li>otvorenie
-		<ul><li>na čítanie - nastaví čítací kurzor na začiatok súboru
-			<li>na zápis do nového súboru - zapisovací kurzor nastaví na začiatok súboru
-			<li>na pripísanie viet do existujúceho - zapisovací kurzor nastaví za posledný znak súboru
+		<ul><li>na ÄŤĂ­tanie - nastavĂ­ ÄŤĂ­tacĂ­ kurzor na zaÄŤiatok sĂşboru
+			<li>na zĂˇpis do novĂ©ho sĂşboru - zapisovacĂ­ kurzor nastavĂ­ na zaÄŤiatok sĂşboru
+			<li>na pripĂ­sanie viet do existujĂşceho - zapisovacĂ­ kurzor nastavĂ­ za poslednĂ˝ znak sĂşboru
 		</ul>	
-	<li>čítanie
-		<br>súbor je po otvorení na čítanie možné sekvenčne čítať, nie je možné "skokom" sa presúvať ani dopredu ani dozadu. 
-		Po prečítaní nejakých dát zo súboru sa čítací kurzor presunie na prvý neprečítaný znak. Po čítaní za koncom súboru
-		program nepadne, programátor si toto musí ošetriť sám.
-		<br>Opätovné otvorenie súboru na čítanie presunie  čítací kurzor na začiatok súboru
-	<li>zápis
-		<br>zapisované údaje sa automaticky prevedú na textové a zapíšu sa do súboru od miesta zapisovacieho súboru. Dĺžka súboru
-		sa zväčší o zapísané znaky.
-	<li>zatvorenie súboru
-		<br>Ak bol súbor otvorený na zápis je dôležité za posledným zápisom urobiť zatvorenie súboru, čím sa 
-		<ul><li>fyzicky zapíšu dovtedy prikázané zápisy do súboru 
-			<li>zruší sa jeho uzamknutie v operačnom systéme a je ho možné používať v iných programoch
+	<li>ÄŤĂ­tanie
+		<br>sĂşbor je po otvorenĂ­ na ÄŤĂ­tanie moĹľnĂ© sekvenÄŤne ÄŤĂ­taĹĄ, nie je moĹľnĂ© "skokom" sa presĂşvaĹĄ ani dopredu ani dozadu. 
+		Po preÄŤĂ­tanĂ­ nejakĂ˝ch dĂˇt zo sĂşboru sa ÄŤĂ­tacĂ­ kurzor presunie na prvĂ˝ nepreÄŤĂ­tanĂ˝ znak. Po ÄŤĂ­tanĂ­ za koncom sĂşboru
+		program nepadne, programĂˇtor si toto musĂ­ oĹˇetriĹĄ sĂˇm.
+		<br>OpĂ¤tovnĂ© otvorenie sĂşboru na ÄŤĂ­tanie presunie  ÄŤĂ­tacĂ­ kurzor na zaÄŤiatok sĂşboru
+	<li>zĂˇpis
+		<br>zapisovanĂ© Ăşdaje sa automaticky prevedĂş na textovĂ© a zapĂ­Ĺˇu sa do sĂşboru od miesta zapisovacieho sĂşboru. DÄşĹľka sĂşboru
+		sa zvĂ¤ÄŤĹˇĂ­ o zapĂ­sanĂ© znaky.
+	<li>zatvorenie sĂşboru
+		<br>Ak bol sĂşbor otvorenĂ˝ na zĂˇpis je dĂ´leĹľitĂ© za poslednĂ˝m zĂˇpisom urobiĹĄ zatvorenie sĂşboru, ÄŤĂ­m sa 
+		<ul><li>fyzicky zapĂ­Ĺˇu dovtedy prikĂˇzanĂ© zĂˇpisy do sĂşboru 
+			<li>zruĹˇĂ­ sa jeho uzamknutie v operaÄŤnom systĂ©me a je ho moĹľnĂ© pouĹľĂ­vaĹĄ v inĂ˝ch programoch
 		</ul>
-		Pozn. : Ak v programe súbor neuzatvoríme a náš program, ktorý zapisoval do txt súboru bude ukončený násilne, 
-		nemusia byť v txt súbore všetky vety, ktoré sme do txt súboru dali zapísať
+		Pozn. : Ak v programe sĂşbor neuzatvorĂ­me a nĂˇĹˇ program, ktorĂ˝ zapisoval do txt sĂşboru bude ukonÄŤenĂ˝ nĂˇsilne, 
+		nemusia byĹĄ v txt sĂşbore vĹˇetky vety, ktorĂ© sme do txt sĂşboru dali zapĂ­saĹĄ
 	</ul>			
-<dt><font size="+1" color="Blue">Deklarácia</font>
+<dt><font size="+1" color="Blue">DeklarĂˇcia</font>
 <dd><dl><dt><font color="Red">FILE </font>*f,*g
-		<dd>f,g sú názvy-adresy buffra cez ktorý sa spojenie so súborom urobí
-			<br>slovo FILE musí byť celé veľkými písmenami
+		<dd>f,g sĂş nĂˇzvy-adresy buffra cez ktorĂ˝ sa spojenie so sĂşborom urobĂ­
+			<br>slovo FILE musĂ­ byĹĄ celĂ© veÄľkĂ˝mi pĂ­smenami
 	</dl>
 <dt><font size="+1" color="Blue">Otvorenie</font>
-<dd><dl><dt>f<font color="Red">=fopen(</font>cesta, použitie<font color="Red">)</font>
-		<dd>vytvorí logické spojenie medzi buffrom f a fyzickým súborom
-			<br>ak sú v ceste opačné lomítka musia byť zdvojené
-			<br>použitie:
-			<br> &nbsp; "r" - otvorenie len na čítanie
-			<br> &nbsp; "w" - otvorenie len na zápis
-			<br> &nbsp; "a" - otvorenie na zápis-pridávanie
-			<br>Ošetrenie chyby:
-			<br>Subor na zapis (ak je pripadná cesta k nemu spravna) sa da pod Win otvoriť prakticky vždy
-			<br>Ak otvárame súbor na čítanie alebo pridávanie tak tento musí existovať (ak neexistuje funkcia vráti NULL)
-			<br>Podobne ako v pascale môžme otvorení na čítanie testovať, či súbor existuje alebo nie. 
+<dd><dl><dt>f<font color="Red">=fopen(</font>cesta, pouĹľitie<font color="Red">)</font>
+		<dd>vytvorĂ­ logickĂ© spojenie medzi buffrom f a fyzickĂ˝m sĂşborom
+			<br>ak sĂş v ceste opaÄŤnĂ© lomĂ­tka musia byĹĄ zdvojenĂ©
+			<br>pouĹľitie:
+			<br> &nbsp; "r" - otvorenie len na ÄŤĂ­tanie
+			<br> &nbsp; "w" - otvorenie len na zĂˇpis
+			<br> &nbsp; "a" - otvorenie na zĂˇpis-pridĂˇvanie
+			<br>OĹˇetrenie chyby:
+			<br>Subor na zapis (ak je pripadnĂˇ cesta k nemu spravna) sa da pod Win otvoriĹĄ prakticky vĹľdy
+			<br>Ak otvĂˇrame sĂşbor na ÄŤĂ­tanie alebo pridĂˇvanie tak tento musĂ­ existovaĹĄ (ak neexistuje funkcia vrĂˇti NULL)
+			<br>Podobne ako v pascale mĂ´Ĺľme otvorenĂ­ na ÄŤĂ­tanie testovaĹĄ, ÄŤi sĂşbor existuje alebo nie. 
 	</dl>
-<dt><font size="+1" color="Blue">Uzavretie súboru</font>
-<dd><dl><dt><font color="Red">fclose(</font>identifikátor<font color="Red">)</font>
-		<dd>Vyprázdni buffer spojený s daným súborom a súbor korektne uzavrie.  
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí uzavrieť vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+<dt><font size="+1" color="Blue">Uzavretie sĂşboru</font>
+<dd><dl><dt><font color="Red">fclose(</font>identifikĂˇtor<font color="Red">)</font>
+		<dd>VyprĂˇzdni buffer spojenĂ˝ s danĂ˝m sĂşborom a sĂşbor korektne uzavrie.  
+			<br>OĹˇetrenie chyby:
+			<br>Ak sa nepodarĂ­ uzavrieĹĄ vrĂˇti hodnotu EOF (preddefinovanĂˇ konĹˇtanta) - mĂ´Ĺľeme testovaĹĄ
 	</dl>
-<dt><font size="+1" color="Blue">Zápis do súboru </font>
+<dt><font size="+1" color="Blue">ZĂˇpis do sĂşboru </font>
 <dd><dl><dt><font color="Red">fprintf(</font>subor, format, argumenty<font color="Red">)</font>
-		<dd>funguje ako printf, len zápis je do súboru
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí zapísať vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+		<dd>funguje ako printf, len zĂˇpis je do sĂşboru
+			<br>OĹˇetrenie chyby:
+			<br>Ak sa nepodarĂ­ zapĂ­saĹĄ vrĂˇti hodnotu EOF (preddefinovanĂˇ konĹˇtanta) - mĂ´Ĺľeme testovaĹĄ
 		<dt><font color="Red">putc(</font>znak, subor<font color="Red">)</font>
-		<dd>Položí znak do súboru
+		<dd>PoloĹľĂ­ znak do sĂşboru
 			<br>!Pozor na poradie parametrov!
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí zapísať vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
-		<dt><font color="Red">fputs(</font>reťazec, subor<font color="Red">)</font>
-		<dd>Položí reťazec do súboru a pridá '\n' - ukončenie vety
+			<br>OĹˇetrenie chyby:
+			<br>Ak sa nepodarĂ­ zapĂ­saĹĄ vrĂˇti hodnotu EOF (preddefinovanĂˇ konĹˇtanta) - mĂ´Ĺľeme testovaĹĄ
+		<dt><font color="Red">fputs(</font>reĹĄazec, subor<font color="Red">)</font>
+		<dd>PoloĹľĂ­ reĹĄazec do sĂşboru a pridĂˇ '\n' - ukonÄŤenie vety
 			<br>!Pozor na poradie parametrov!
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí zapísať vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
-		<dt><font size="+1" color="Blue">Úlohy</font>
-		<dd><ol><li>Napíšte program na načítanie textu z klávesnice a jeho zápis do súboru. Názov súboru načítajte.
-						Pri otváraní i zápise robte kontrolu vykonania - v prípade chyby vypíšte oznam a ukončite program.
-				<li>Napíš program na generovanie príkladov typu cislo1 operacia cislo2 =
-					<br>počet príkladov je 10, operácie +,-,*,/
-					<br>cislo1, cislo2 sú náhodné dvojciferné čísla volené tak, aby výsledky boli tiež maximálne dvojciferné a celé.
+			<br>OĹˇetrenie chyby:
+			<br>Ak sa nepodarĂ­ zapĂ­saĹĄ vrĂˇti hodnotu EOF (preddefinovanĂˇ konĹˇtanta) - mĂ´Ĺľeme testovaĹĄ
+		<dt><font size="+1" color="Blue">Ăšlohy</font>
+		<dd><ol><li>NapĂ­Ĺˇte program na naÄŤĂ­tanie textu z klĂˇvesnice a jeho zĂˇpis do sĂşboru. NĂˇzov sĂşboru naÄŤĂ­tajte.
+						Pri otvĂˇranĂ­ i zĂˇpise robte kontrolu vykonania - v prĂ­pade chyby vypĂ­Ĺˇte oznam a ukonÄŤite program.
+				<li>NapĂ­Ĺˇ program na generovanie prĂ­kladov typu cislo1 operacia cislo2 =
+					<br>poÄŤet prĂ­kladov je 10, operĂˇcie +,-,*,/
+					<br>cislo1, cislo2 sĂş nĂˇhodnĂ© dvojcifernĂ© ÄŤĂ­sla volenĂ© tak, aby vĂ˝sledky boli tieĹľ maximĂˇlne dvojcifernĂ© a celĂ©.
 			</ol>
 	</dl>
-<dt><font size="+1" color="Blue">Čítanie zo súboru </font>
+<dt><font size="+1" color="Blue">ÄŚĂ­tanie zo sĂşboru </font>
 <dd><dl><dt><font color="Red">fscanf(</font>subor, format, argumenty<font color="Red">)</font>
-		<dd>funguje ako scanf, len číta zo súboru
-			<br>Návratová hodnota:
-			<br><b>EOF</b> - Ak sa pokúsime čítať za koncom súboru vráti hodnotu EOF (preddefinovaná konštanta)
-			          <br> &nbsp; &nbsp; ak však načíta aspoň jeden znak nevráti EOF ale počet uspokojených premenných
-			<br><b>0</b> - ak sa žiadna premenná nenaplnila
-			<br><b>n</b> - ak sa naplnilo n premenných zo zoznamu premenných
-			<br>Pozn. - Ak sa niektorý údaj zo vstupu nepodarí zapísať-skonvertovať do premennej 
-			    načítanie končí bez chyby a funkcia vráti počet úspešne zmenených premenných.
+		<dd>funguje ako scanf, len ÄŤĂ­ta zo sĂşboru
+			<br>NĂˇvratovĂˇ hodnota:
+			<br><b>EOF</b> - Ak sa pokĂşsime ÄŤĂ­taĹĄ za koncom sĂşboru vrĂˇti hodnotu EOF (preddefinovanĂˇ konĹˇtanta)
+			          <br> &nbsp; &nbsp; ak vĹˇak naÄŤĂ­ta aspoĹ jeden znak nevrĂˇti EOF ale poÄŤet uspokojenĂ˝ch premennĂ˝ch
+			<br><b>0</b> - ak sa Ĺľiadna premennĂˇ nenaplnila
+			<br><b>n</b> - ak sa naplnilo n premennĂ˝ch zo zoznamu premennĂ˝ch
+			<br>Pozn. - Ak sa niektorĂ˝ Ăşdaj zo vstupu nepodarĂ­ zapĂ­saĹĄ-skonvertovaĹĄ do premennej 
+			    naÄŤĂ­tanie konÄŤĂ­ bez chyby a funkcia vrĂˇti poÄŤet ĂşspeĹˇne zmenenĂ˝ch premennĂ˝ch.
 		<dt><font color="Red">fgetc(</font>subor<font color="Red">)</font>
-		<dd>funkcia funguje ako getch z klávesnice, umožní aj vrátiť posledne prečítaný znak ungetc
-			<br>( úplne rovnako možno použiť aj makro getc(subor))
-			<br>Ošetrenie chyby:
-			<br>Ak sa nepodarí načítať (čítame za koncom súboru) vráti hodnotu EOF (preddefinovaná konštanta) - môžeme testovať
+		<dd>funkcia funguje ako getch z klĂˇvesnice, umoĹľnĂ­ aj vrĂˇtiĹĄ posledne preÄŤĂ­tanĂ˝ znak ungetc
+			<br>( Ăşplne rovnako moĹľno pouĹľiĹĄ aj makro getc(subor))
+			<br>OĹˇetrenie chyby:
+			<br>Ak sa nepodarĂ­ naÄŤĂ­taĹĄ (ÄŤĂ­tame za koncom sĂşboru) vrĂˇti hodnotu EOF (preddefinovanĂˇ konĹˇtanta) - mĂ´Ĺľeme testovaĹĄ
 		<dt><font color="Red">fgets(...)</font>
-		<dd>načíta reťazec, preberie sa pri preberaní reťazcových premenných
+		<dd>naÄŤĂ­ta reĹĄazec, preberie sa pri preberanĂ­ reĹĄazcovĂ˝ch premennĂ˝ch
 		<dt><font color="Red">ungetc(znak, subor)</font>
-		<dd>vráti zadaný znak (obyčajne posledne načítaný), aby ho bolo možné opätovne načítať 
-		    (funguje podobne ako ungetch() pri načítaní z klávesnice)
-		<dt><font size="+1" color="Blue">Úlohy</font>
+		<dd>vrĂˇti zadanĂ˝ znak (obyÄŤajne posledne naÄŤĂ­tanĂ˝), aby ho bolo moĹľnĂ© opĂ¤tovne naÄŤĂ­taĹĄ 
+		    (funguje podobne ako ungetch() pri naÄŤĂ­tanĂ­ z klĂˇvesnice)
+		<dt><font size="+1" color="Blue">Ăšlohy</font>
 		<dd><ol>
-			<li>Napíš program na načítanie názvu súboru a jeho výpis na obrazovku, v prípade chyby vypíš oznam.
-			<li>Napíš program, ktorý načítava súbor vytvorený úlohou2 v predošlých úlohách, vypisuje po riadkoch
-				a vyžiada si za rovná sa natipovanú správnu odpoveď. Nakoniec vypíš štatistiku odpovedí.
+			<li>NapĂ­Ĺˇ program na naÄŤĂ­tanie nĂˇzvu sĂşboru a jeho vĂ˝pis na obrazovku, v prĂ­pade chyby vypĂ­Ĺˇ oznam.
+			<li>NapĂ­Ĺˇ program, ktorĂ˝ naÄŤĂ­tava sĂşbor vytvorenĂ˝ Ăşlohou2 v predoĹˇlĂ˝ch ĂşlohĂˇch, vypisuje po riadkoch
+				a vyĹľiada si za rovnĂˇ sa natipovanĂş sprĂˇvnu odpoveÄŹ. Nakoniec vypĂ­Ĺˇ Ĺˇtatistiku odpovedĂ­.
 			</ol>
 	</dl>	
-<dt><font size="+1" color="Blue">Ošetrovanie chýb</font>
-<dd>Každá funkcia má návratovú hodnotu a podľa nej sa dá testovať úspešnosť operácie. Ďalšie možnosti:
+<dt><font size="+1" color="Blue">OĹˇetrovanie chĂ˝b</font>
+<dd>KaĹľdĂˇ funkcia mĂˇ nĂˇvratovĂş hodnotu a podÄľa nej sa dĂˇ testovaĹĄ ĂşspeĹˇnosĹĄ operĂˇcie. ÄŽalĹˇie moĹľnosti:
 	<ul>
-	<li><font color="Red">feof(</font> subor<font color="Red"> )</font> ... pri čítaní zo súboru je možné testovať "logickú" funkciu feof() 
-	<li><font color="Red">ferror(</font> subor<font color="Red"> )</font> ... vráti číslo chyby (0=OK)
-	<li><font color="Red">perror(</font> retazec<font color="Red"> )</font> ... vypíše reťazec a text chyby 
-	<li><font color="Red">clearerr(</font> subor<font color="Red"> )</font> ... vymaže chybový stav na danom súbore 
+	<li><font color="Red">feof(</font> subor<font color="Red"> )</font> ... pri ÄŤĂ­tanĂ­ zo sĂşboru je moĹľnĂ© testovaĹĄ "logickĂş" funkciu feof() 
+	<li><font color="Red">ferror(</font> subor<font color="Red"> )</font> ... vrĂˇti ÄŤĂ­slo chyby (0=OK)
+	<li><font color="Red">perror(</font> retazec<font color="Red"> )</font> ... vypĂ­Ĺˇe reĹĄazec a text chyby 
+	<li><font color="Red">clearerr(</font> subor<font color="Red"> )</font> ... vymaĹľe chybovĂ˝ stav na danom sĂşbore 
 	</ul>
 	<dl>
-	<dt><font size="+1" color="Blue">Úlohy k ošetrovaniu chýb</font>
-	<dd><ol><li>Načítaj názov súboru a vypíš ho na obrazovku. V prípade chyby pri otváraní vypíš "Chyba pri otváraní súboru:" 
-				a potom vypíš štandartné chybové hlásenie patriace vzniklej chybe. 
+	<dt><font size="+1" color="Blue">Ăšlohy k oĹˇetrovaniu chĂ˝b</font>
+	<dd><ol><li>NaÄŤĂ­taj nĂˇzov sĂşboru a vypĂ­Ĺˇ ho na obrazovku. V prĂ­pade chyby pri otvĂˇranĂ­ vypĂ­Ĺˇ "Chyba pri otvĂˇranĂ­ sĂşboru:" 
+				a potom vypĂ­Ĺˇ ĹˇtandartnĂ© chybovĂ© hlĂˇsenie patriace vzniklej chybe. 
 		</ol>
 	</dl>
-<dt><font size="+1" color="Blue">Typické úlohy</font>
+<dt><font size="+1" color="Blue">TypickĂ© Ăşlohy</font>
 <dd><ol>
-	<li>Poznáme počet viet - vytvorme súbor plat1996.dat, kde v 12-tich riadkoch bude každý riadok začína platom za jednotlivý mesiac
-		<br>- napíšte program, ktorý vypíše priebeh zárobku za mesiace
-		<br>- vypíše názov mesiaca s najväčším prímom
-	<li>Počet viet je uvedený v prvej vete
-		<br>upravme súbor plat1996.dat tak, že v prvej vete bude uvedené počet spracovaných mesiacov
-		<br>- vypočítaj priemerný plat za uvedené mesiace
-	<li>Nevieme počet viet
-		<br>upravme súbor z úlohy2 tak, že vynecháme prvú vetu
-		<br>- vypíš počet sledovaných mesiacov
-		<br>- vypíš priemerný plat za uvedené mesiace
-	<li>Nevieme počet viet a ani počet čísel v riadku
- 		<br>vytvorme súbor vreckove.dat, kde v každom riadku budú všetky príjmy za odpovedajúci mesiac
-		<br>- napíš počet sledovaných mesiacov
-		<br>- napíš číslo mesiaca, kde bol najväčší počet príjmov
-		<br>- napíš číslo mesiaca, kde bol najmenší príjem
-	<li>Napíš program na okopírovanie súboru. Program si vypýta oba názvy súborov.
-	<li>Napíš program na spočítanie počtu bajtov,písmen, číslic a riadkov.
+	<li>PoznĂˇme poÄŤet viet - vytvorme sĂşbor plat1996.dat, kde v 12-tich riadkoch bude kaĹľdĂ˝ riadok zaÄŤĂ­na platom za jednotlivĂ˝ mesiac
+		<br>- napĂ­Ĺˇte program, ktorĂ˝ vypĂ­Ĺˇe priebeh zĂˇrobku za mesiace
+		<br>- vypĂ­Ĺˇe nĂˇzov mesiaca s najvĂ¤ÄŤĹˇĂ­m prĂ­mom
+	<li>PoÄŤet viet je uvedenĂ˝ v prvej vete
+		<br>upravme sĂşbor plat1996.dat tak, Ĺľe v prvej vete bude uvedenĂ© poÄŤet spracovanĂ˝ch mesiacov
+		<br>- vypoÄŤĂ­taj priemernĂ˝ plat za uvedenĂ© mesiace
+	<li>Nevieme poÄŤet viet
+		<br>upravme sĂşbor z Ăşlohy2 tak, Ĺľe vynechĂˇme prvĂş vetu
+		<br>- vypĂ­Ĺˇ poÄŤet sledovanĂ˝ch mesiacov
+		<br>- vypĂ­Ĺˇ priemernĂ˝ plat za uvedenĂ© mesiace
+	<li>Nevieme poÄŤet viet a ani poÄŤet ÄŤĂ­sel v riadku
+ 		<br>vytvorme sĂşbor vreckove.dat, kde v kaĹľdom riadku budĂş vĹˇetky prĂ­jmy za odpovedajĂşci mesiac
+		<br>- napĂ­Ĺˇ poÄŤet sledovanĂ˝ch mesiacov
+		<br>- napĂ­Ĺˇ ÄŤĂ­slo mesiaca, kde bol najvĂ¤ÄŤĹˇĂ­ poÄŤet prĂ­jmov
+		<br>- napĂ­Ĺˇ ÄŤĂ­slo mesiaca, kde bol najmenĹˇĂ­ prĂ­jem
+	<li>NapĂ­Ĺˇ program na okopĂ­rovanie sĂşboru. Program si vypĂ˝ta oba nĂˇzvy sĂşborov.
+	<li>NapĂ­Ĺˇ program na spoÄŤĂ­tanie poÄŤtu bajtov,pĂ­smen, ÄŤĂ­slic a riadkov.
 	</ol>
-<dt><font size="+1" color="Blue">Špeciálne funkcie pre prácu so súbormi</font>
+<dt><font size="+1" color="Blue">Ĺ peciĂˇlne funkcie pre prĂˇcu so sĂşbormi</font>
 <dd><font color="Red">int remove(subor)</font>
-	<br>je to makro na zrušenie súboru, ak OK vráti nulu 0
+	<br>je to makro na zruĹˇenie sĂşboru, ak OK vrĂˇti nulu 0
 	<br><font color="Red">int rename(stare_meno, nove_meno)</font>
-	<br>je makro na premenovanie súboru
+	<br>je makro na premenovanie sĂşboru
 	<dl>
-	<dt>Úlohy:
-	<dd>Napíšte program na pridávanie čísel do usporiadaného zoznamu čísel
-	<br>(každé číslo je na samostatnom riadku)
-	<br>program bude ovládaný pomocou menu:
+	<dt>Ăšlohy:
+	<dd>NapĂ­Ĺˇte program na pridĂˇvanie ÄŤĂ­sel do usporiadanĂ©ho zoznamu ÄŤĂ­sel
+	<br>(kaĹľdĂ© ÄŤĂ­slo je na samostatnom riadku)
+	<br>program bude ovlĂˇdanĂ˝ pomocou menu:
 	<ul>
 	<li>pridaj nove cislo
-	<li>vypis cisel po strankach (aj s poradovými číslami)
+	<li>vypis cisel po strankach (aj s poradovĂ˝mi ÄŤĂ­slami)
 	<li>zrus cislo pod por. cislom
-	<li>hladaj číslo
+	<li>hladaj ÄŤĂ­slo
 	<li>koniec
 	</ul>
 	</dl>
 </dl>
-<h3>Prúdy - knižnica fstream.h</h3>
-Podobne ako pri práci so štandartným vstupom-klávesnicou a štandartným výstupom-monitor aj tu možno prácu riešiť objektovo - pomocou streamov.
+<h3>PrĂşdy - kniĹľnica fstream.h</h3>
+Podobne ako pri prĂˇci so ĹˇtandartnĂ˝m vstupom-klĂˇvesnicou a ĹˇtandartnĂ˝m vĂ˝stupom-monitor aj tu moĹľno prĂˇcu rieĹˇiĹĄ objektovo - pomocou streamov.
 <dl>
-<dt>Knižnica
-<dd>Príkazy sú v knižnici fstream.h
-<dt>Deklarácia
-<dd>ifstream prem1; // premenná pre vstup zo súboru
-	<br>ofstream prem2; // premenná pre výstup do súboru 	
-<dt>Deklarácia + otvorenie
-<dd>ifstream prem1(text); //v texte je názov súboru (prípadne aj s cestou)
+<dt>KniĹľnica
+<dd>PrĂ­kazy sĂş v kniĹľnici fstream.h
+<dt>DeklarĂˇcia
+<dd>ifstream prem1; // premennĂˇ pre vstup zo sĂşboru
+	<br>ofstream prem2; // premennĂˇ pre vĂ˝stup do sĂşboru 	
+<dt>DeklarĂˇcia + otvorenie
+<dd>ifstream prem1(text); //v texte je nĂˇzov sĂşboru (prĂ­padne aj s cestou)
 	<br>ofstream prem1(text);
-	<br>V texte je adresa s názvom súboru, takto zadefinovanú premennú už netreba otvárať, overenie či sa otvorenie podarilo
-	urobíme pomocou testu <b>if (prem1)</b> čo vráti <b>true</b> ak sa otvorenie podarilo.
+	<br>V texte je adresa s nĂˇzvom sĂşboru, takto zadefinovanĂş premennĂş uĹľ netreba otvĂˇraĹĄ, overenie ÄŤi sa otvorenie podarilo
+	urobĂ­me pomocou testu <b>if (prem1)</b> ÄŤo vrĂˇti <b>true</b> ak sa otvorenie podarilo.
 	<br>alebo pomocou <b>if (prem1.is_open())</b>
 	
-<dt>Otvorenie súboru
-<dd>Ak sme súbor neotvorili pri deklarácii, musíme ho otvoriť príkazom:
-	<br><b>prem1.open(string)</b> // v stringu je zapísaný názov súboru (prípadne aj s cestou), otvorí na čítanie
-	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ak súbor neexistuje (otvorenie sa nepodarí) môžme otestovať pomocou 
+<dt>Otvorenie sĂşboru
+<dd>Ak sme sĂşbor neotvorili pri deklarĂˇcii, musĂ­me ho otvoriĹĄ prĂ­kazom:
+	<br><b>prem1.open(string)</b> // v stringu je zapĂ­sanĂ˝ nĂˇzov sĂşboru (prĂ­padne aj s cestou), otvorĂ­ na ÄŤĂ­tanie
+	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ak sĂşbor neexistuje (otvorenie sa nepodarĂ­) mĂ´Ĺľme otestovaĹĄ pomocou 
 	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; logickej funkcie <b>prem1.fail()</b>, resp <b>prem1.good()</b>
-	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; alebo testom  <b>if (prem1.is_open())</b> alebo <b>if (prem1)</b> čo vráti <b>true</b>
-	<br>prem2.open(string) // v stringu je zapísaný názov súboru (prípadne aj s cestou), otvorí na zápis
-<dt>Zápis do súboru
-<dd>Zápis možno robiť pomocou operátora &lt;&lt; 
+	<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; alebo testom  <b>if (prem1.is_open())</b> alebo <b>if (prem1)</b> ÄŤo vrĂˇti <b>true</b>
+	<br>prem2.open(string) // v stringu je zapĂ­sanĂ˝ nĂˇzov sĂşboru (prĂ­padne aj s cestou), otvorĂ­ na zĂˇpis
+<dt>ZĂˇpis do sĂşboru
+<dd>ZĂˇpis moĹľno robiĹĄ pomocou operĂˇtora &lt;&lt; 
 	<br>(napr. prem2 &lt;&lt; "Ahojte vsetci!") podobne ako s cout
 	<br>alebo pomocou funkcie put(char) (napr. prem2.put(char))
 
-<dt>Čítanie zo súboru
+<dt>ÄŚĂ­tanie zo sĂşboru
 <dd><dl>
-	<dt>test vykonania operácie
-	<dd><ul><li>good(prem1) - vráti 1 ak posledná operácia dopadla dobre, 0 ak zle
-			<li>prem1.good() - vráti 1 ak posledná operácia dopadla dobre, 0 ak zle
-			<li>prem1.fail(prem1) - vráti 0 ak posledná operácia dopadla dobre, 1 ak zle
-			<li><b>prem1.eof()</b> - vráti TRUE, ak je nastavený eofbit (čítali sme za koncom)
-			<li><b>prem1.clear()</b> - funkcia, ktorá vymaže príznak chyby (bez vymazania sa už nedá urobiť žiaden vstup)
+	<dt>test vykonania operĂˇcie
+	<dd><ul><li>good(prem1) - vrĂˇti 1 ak poslednĂˇ operĂˇcia dopadla dobre, 0 ak zle
+			<li>prem1.good() - vrĂˇti 1 ak poslednĂˇ operĂˇcia dopadla dobre, 0 ak zle
+			<li>prem1.fail(prem1) - vrĂˇti 0 ak poslednĂˇ operĂˇcia dopadla dobre, 1 ak zle
+			<li><b>prem1.eof()</b> - vrĂˇti TRUE, ak je nastavenĂ˝ eofbit (ÄŤĂ­tali sme za koncom)
+			<li><b>prem1.clear()</b> - funkcia, ktorĂˇ vymaĹľe prĂ­znak chyby (bez vymazania sa uĹľ nedĂˇ urobiĹĄ Ĺľiaden vstup)
 		</ul>
-		Testovanie, či čítame za koncom súboru:
-		<br>Ak čítame pomocou operátora &gt;&gt; - nastaví nám eofbit až po prvom neúspešnom čítaní (nevieme pred čítaním, či sa čítanie podarí)
-		<br>Ak čítame pomocou get()  - možno testovať vrátenú hodnotu na konštantu EOF.
+		Testovanie, ÄŤi ÄŤĂ­tame za koncom sĂşboru:
+		<br>Ak ÄŤĂ­tame pomocou operĂˇtora &gt;&gt; - nastavĂ­ nĂˇm eofbit aĹľ po prvom neĂşspeĹˇnom ÄŤĂ­tanĂ­ (nevieme pred ÄŤĂ­tanĂ­m, ÄŤi sa ÄŤĂ­tanie podarĂ­)
+		<br>Ak ÄŤĂ­tame pomocou get()  - moĹľno testovaĹĄ vrĂˇtenĂş hodnotu na konĹˇtantu EOF.
 	 
-	<dt>Čítanie do premennej
+	<dt>ÄŚĂ­tanie do premennej
 	<dd>prem1 &gt;&gt; prem
-		<br>prem1 ... zdroj dátového toku
-			<br>&gt;&gt; ... operátor, ktorý dáta zľava pošle cielu uvedenému vpravo
-			<br>prem ... povolené typy premenných sú znaky, texty, celé čísla a reálne čísla
-			<br>(je dôležité si uvedomiť, že operátorom &gt;&gt; nemožno načítavať do char premennej biele znaky, tie sú ignorované)
+		<br>prem1 ... zdroj dĂˇtovĂ©ho toku
+			<br>&gt;&gt; ... operĂˇtor, ktorĂ˝ dĂˇta zÄľava poĹˇle cielu uvedenĂ©mu vpravo
+			<br>prem ... povolenĂ© typy premennĂ˝ch sĂş znaky, texty, celĂ© ÄŤĂ­sla a reĂˇlne ÄŤĂ­sla
+			<br>(je dĂ´leĹľitĂ© si uvedomiĹĄ, Ĺľe operĂˇtorom &gt;&gt; nemoĹľno naÄŤĂ­tavaĹĄ do char premennej biele znaky, tie sĂş ignorovanĂ©)
 			<br><br>Pozn.
-			<br>operátor môžme aj zreťaziť - prem1 &gt;&gt; a &gt;&gt; b &gt;&gt;c;
-			<br>načíta sa a potom b a nakoniec c
+			<br>operĂˇtor mĂ´Ĺľme aj zreĹĄaziĹĄ - prem1 &gt;&gt; a &gt;&gt; b &gt;&gt;c;
+			<br>naÄŤĂ­ta sa a potom b a nakoniec c
 	<dt>Funkcie objektu prem1
-	<dd><ul><li>prem1.eof() - vráti 1 ak sme na konci súboru
-			<li>prem1.good()- vráti 1 ak sa posledná operácia podarila 
-			<li>prem1.fail()- vráti 1 ak sa posledná operácia nepodarila 
-			<li>prem1.get() - načíta zo vstupu 1 znak a vráti ho ako návratovú hodnotu (alebo vráti EOF)
-			<li>prem1.get(char prem) - načíta zo vstupu 1 znak a zapíše ho do parametra
-			<li>prem1.get(char *prem,int n) - načíta zo vstupu text až po enter a zapíše ho do prem. Enter zostane na vstupe
-				<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+	<dd><ul><li>prem1.eof() - vrĂˇti 1 ak sme na konci sĂşboru
+			<li>prem1.good()- vrĂˇti 1 ak sa poslednĂˇ operĂˇcia podarila 
+			<li>prem1.fail()- vrĂˇti 1 ak sa poslednĂˇ operĂˇcia nepodarila 
+			<li>prem1.get() - naÄŤĂ­ta zo vstupu 1 znak a vrĂˇti ho ako nĂˇvratovĂş hodnotu (alebo vrĂˇti EOF)
+			<li>prem1.get(char prem) - naÄŤĂ­ta zo vstupu 1 znak a zapĂ­Ĺˇe ho do parametra
+			<li>prem1.get(char *prem,int n) - naÄŤĂ­ta zo vstupu text aĹľ po enter a zapĂ­Ĺˇe ho do prem. Enter zostane na vstupe
+				<br>Vstup je ukonÄŤenĂ˝ pri splnenĂ­ niektorej z nasledujĂşcich podmienok:
 				<ul><li>narazili sme na enter
-					<li>načítali sme už (n-1) znakov
+					<li>naÄŤĂ­tali sme uĹľ (n-1) znakov
 					<li>narazili sme na EOF
 				</ul>	
-			<li>prem1.get(char *,int ,char) - načíta zo vstupu text a zapíše ho do prem. 
-				<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
-				<ul><li>narazili sme na znak 3. parameter - znak z zostáva na vstupe
-					<li>načítali sme už (n-1) znakov (druhý parameter)
+			<li>prem1.get(char *,int ,char) - naÄŤĂ­ta zo vstupu text a zapĂ­Ĺˇe ho do prem. 
+				<br>Vstup je ukonÄŤenĂ˝ pri splnenĂ­ niektorej z nasledujĂşcich podmienok:
+				<ul><li>narazili sme na znak 3. parameter - znak z zostĂˇva na vstupe
+					<li>naÄŤĂ­tali sme uĹľ (n-1) znakov (druhĂ˝ parameter)
 					<li>narazili sme na EOF
 				</ul>	
-			<li>prem1.getline(char *,int ) - načíta zo vstupu text až po enter a zapíše ho do prem. 
-				<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
+			<li>prem1.getline(char *,int ) - naÄŤĂ­ta zo vstupu text aĹľ po enter a zapĂ­Ĺˇe ho do prem. 
+				<br>Vstup je ukonÄŤenĂ˝ pri splnenĂ­ niektorej z nasledujĂşcich podmienok:
 				<ul><li>narazili sme na enter (nezostane na vstupe)
-					<li>načítali sme už (n-1) znakov
+					<li>naÄŤĂ­tali sme uĹľ (n-1) znakov
 					<li>narazili sme na EOF
 				</ul>	
-			<li>prem1.getline(char *,int,char) - načíta zo vstupu text a zapíše ho do prem. 
-				<br>Vstup je ukončený pri splnení niektorej z nasledujúcich podmienok:
-				<ul><li>narazili sme na znak z - znak z nezostáva na vstupe
-					<li>načítali sme už (n-1) znakov
+			<li>prem1.getline(char *,int,char) - naÄŤĂ­ta zo vstupu text a zapĂ­Ĺˇe ho do prem. 
+				<br>Vstup je ukonÄŤenĂ˝ pri splnenĂ­ niektorej z nasledujĂşcich podmienok:
+				<ul><li>narazili sme na znak z - znak z nezostĂˇva na vstupe
+					<li>naÄŤĂ­tali sme uĹľ (n-1) znakov
 					<li>narazili sme na EOF
 				</ul>
-			<li><b>prem1.ignore(int n, char c)</b> - načíta zo vstupu text a zahodí ho.
-				<br>čítanie je ukončené ak sme načítali n znakov
-				<br>čítanie je ukončené ak sme načítali ukončovací znak c
-				<br>čítanie je ukončené ak sme načítali EOF
-				<br>používa sa na vyprázdnenie vstupnej fronty - ukončovací znak dáme '\n'
-			<li><b>prem1.unget()</b> - vráti posledne načítaný char nazad do prúdu
-				<br>(používame napr. na testovanie konca súboru/riadka, znak načítame pomocou get()
-				<br> a otestujeme, či prišlo '\n', EOF, ak nie vrátime nazad)
+			<li><b>prem1.ignore(int n, char c)</b> - naÄŤĂ­ta zo vstupu text a zahodĂ­ ho.
+				<br>ÄŤĂ­tanie je ukonÄŤenĂ© ak sme naÄŤĂ­tali n znakov
+				<br>ÄŤĂ­tanie je ukonÄŤenĂ© ak sme naÄŤĂ­tali ukonÄŤovacĂ­ znak c
+				<br>ÄŤĂ­tanie je ukonÄŤenĂ© ak sme naÄŤĂ­tali EOF
+				<br>pouĹľĂ­va sa na vyprĂˇzdnenie vstupnej fronty - ukonÄŤovacĂ­ znak dĂˇme '\n'
+			<li><b>prem1.unget()</b> - vrĂˇti posledne naÄŤĂ­tanĂ˝ char nazad do prĂşdu
+				<br>(pouĹľĂ­vame napr. na testovanie konca sĂşboru/riadka, znak naÄŤĂ­tame pomocou get()
+				<br> a otestujeme, ÄŤi priĹˇlo '\n', EOF, ak nie vrĂˇtime nazad)
 		</ul>
-	<dt>Zápis do súboru
+	<dt>ZĂˇpis do sĂşboru
 	<dd><dl>
-		<dt>operátor &lt;&lt;
-		<dd>prem2 je objekt triedy ofstream (pozri deklaráciu). Pre tento objekt sú definované
-			<ul><li>operátor &lt;&lt; ... pomocou neho možno do prúdu zapisovať hodnoty číselných, znakových a textových výrazov 
-					<br>(priamo možno teda vypísať celé i desatinné čísla, znaky, pole charov, výraz typu string)
-					<br>(ak chceme priamo vypisovať štruktúrované premenné, musíme to program "naučiť" - pozri nižšie)
-				<li>funkcie ... pomocou nich možno nastavovať vlastnosti výstupu a zapisovať znaky/texty
+		<dt>operĂˇtor &lt;&lt;
+		<dd>prem2 je objekt triedy ofstream (pozri deklarĂˇciu). Pre tento objekt sĂş definovanĂ©
+			<ul><li>operĂˇtor &lt;&lt; ... pomocou neho moĹľno do prĂşdu zapisovaĹĄ hodnoty ÄŤĂ­selnĂ˝ch, znakovĂ˝ch a textovĂ˝ch vĂ˝razov 
+					<br>(priamo moĹľno teda vypĂ­saĹĄ celĂ© i desatinnĂ© ÄŤĂ­sla, znaky, pole charov, vĂ˝raz typu string)
+					<br>(ak chceme priamo vypisovaĹĄ ĹˇtruktĂşrovanĂ© premennĂ©, musĂ­me to program "nauÄŤiĹĄ" - pozri niĹľĹˇie)
+				<li>funkcie ... pomocou nich moĹľno nastavovaĹĄ vlastnosti vĂ˝stupu a zapisovaĹĄ znaky/texty
 			</ul>	
-			<br>prem2 &lt;&lt; výraz
-			<br>&lt;&lt; ... operátor, ktorý dáta sprava pošle cieľu uvedenému vľavo (do súboru)
-			<br>výraz ... povolené typy výrazov sú znaky, texty (podporuje aj moderný typ string z STL), celé čísla a reálne čísla
-			<br>prem2 &lt;&lt; výraz  bez bodkočiarky je výrazom a výsledkom tohoto výrazu je opäť výraz typu ofstream 
-				a preto operátory &lt;&lt; možno reťaziť (tiež môžme použiť všade tam, kde je zadanie takéhoto výrazu možné)
+			<br>prem2 &lt;&lt; vĂ˝raz
+			<br>&lt;&lt; ... operĂˇtor, ktorĂ˝ dĂˇta sprava poĹˇle cieÄľu uvedenĂ©mu vÄľavo (do sĂşboru)
+			<br>vĂ˝raz ... povolenĂ© typy vĂ˝razov sĂş znaky, texty (podporuje aj modernĂ˝ typ string z STL), celĂ© ÄŤĂ­sla a reĂˇlne ÄŤĂ­sla
+			<br>prem2 &lt;&lt; vĂ˝raz  bez bodkoÄŤiarky je vĂ˝razom a vĂ˝sledkom tohoto vĂ˝razu je opĂ¤ĹĄ vĂ˝raz typu ofstream 
+				a preto operĂˇtory &lt;&lt; moĹľno reĹĄaziĹĄ (tieĹľ mĂ´Ĺľme pouĹľiĹĄ vĹˇade tam, kde je zadanie takĂ©hoto vĂ˝razu moĹľnĂ©)
 			<br>prem2 &lt;&lt; a &lt;&lt; b &lt;&lt;c;
-			<br>do súboru sa odošle obsah <b>a</b> potom <b>b</b> a nakoniec <b>c</b>
+			<br>do sĂşboru sa odoĹˇle obsah <b>a</b> potom <b>b</b> a nakoniec <b>c</b>
 			<br>Pozn.
-			<br>Ak sa pozriete v učive C++ v kapitole výrazy na prioritu operátora <b>&lt;&lt;</b>, tak výrazy obsahujúce operátory
+			<br>Ak sa pozriete v uÄŤive C++ v kapitole vĂ˝razy na prioritu operĂˇtora <b>&lt;&lt;</b>, tak vĂ˝razy obsahujĂşce operĂˇtory
 			<br>+ | - | * | / | % | ++ | -- | ! |
-			<br>fungujú správne aj bez uzátvorkovania
-			<br>pri použití operátorov
-			<br><b>= | += | -= | /= | %= | += | ?: | a všetkých porovnávajúcich operátorov musíme výraz dať do zátvoriek</b>
-			<br>prem2 &lt;&lt; a*b; &nbsp; &nbsp;//vypíše výsledok násobenia
-			<br>prem2 &lt;&lt; c=a*b; &nbsp; &nbsp;//zahlási chybu
-			<br>prem2 &lt;&lt; (c=a*b); &nbsp; &nbsp;//vypíše výsledok násobenia
-		<dt>Manipulátory - formátovače výstupu
-		<dd>Manipulátory používame na formátovanie výstupu (ak niektoré manipulátory nebude prekladač poznať, pripnite ešte
-			knižnicu <b>iomanip</b>
-			<br>(pre manipulátory, ktoré majú za svojim menom zátvorky je potrebné pripnúť knižnicu <b>iomanip</b>)
-			<br>(manipulátory, ktoré majú za svojim menom zátvorky je možné nahradiť funkciou a potom nemusíme pripájať knižnicu) 
-			<br>(manipulátory, ktoré nemajú zátvorky platia až do svojho zrušenia)
+			<br>fungujĂş sprĂˇvne aj bez uzĂˇtvorkovania
+			<br>pri pouĹľitĂ­ operĂˇtorov
+			<br><b>= | += | -= | /= | %= | += | ?: | a vĹˇetkĂ˝ch porovnĂˇvajĂşcich operĂˇtorov musĂ­me vĂ˝raz daĹĄ do zĂˇtvoriek</b>
+			<br>prem2 &lt;&lt; a*b; &nbsp; &nbsp;//vypĂ­Ĺˇe vĂ˝sledok nĂˇsobenia
+			<br>prem2 &lt;&lt; c=a*b; &nbsp; &nbsp;//zahlĂˇsi chybu
+			<br>prem2 &lt;&lt; (c=a*b); &nbsp; &nbsp;//vypĂ­Ĺˇe vĂ˝sledok nĂˇsobenia
+		<dt>ManipulĂˇtory - formĂˇtovaÄŤe vĂ˝stupu
+		<dd>ManipulĂˇtory pouĹľĂ­vame na formĂˇtovanie vĂ˝stupu (ak niektorĂ© manipulĂˇtory nebude prekladaÄŤ poznaĹĄ, pripnite eĹˇte
+			kniĹľnicu <b>iomanip</b>
+			<br>(pre manipulĂˇtory, ktorĂ© majĂş za svojim menom zĂˇtvorky je potrebnĂ© pripnĂşĹĄ kniĹľnicu <b>iomanip</b>)
+			<br>(manipulĂˇtory, ktorĂ© majĂş za svojim menom zĂˇtvorky je moĹľnĂ© nahradiĹĄ funkciou a potom nemusĂ­me pripĂˇjaĹĄ kniĹľnicu) 
+			<br>(manipulĂˇtory, ktorĂ© nemajĂş zĂˇtvorky platia aĹľ do svojho zruĹˇenia)
 			<br>#include &lt;iomanip&gt;
-			<br><b>dec</b> ... nastaví výstup celých čísel v dekadickej sústave
-			<br><b>hex</b> ... nastaví výstup celých čísel v hexa sústave
-			<br><b>oct</b> ... nastaví výstup celých čísel v osmičkovej sústave
-			<br><b>showbase</b> ... pri nastavení hex pridá pred číslo 0x, pri oct pridá nulu
-			<br><b>noshowbase</b> ... zruší showbase
-			<br><b>fixed</b> ... nastaví výstup desatinných čísel v desatinnom tvare
-			<br><b>scientific</b> ... nastaví výstup desatinných čísel vo vedeckom (exponenciálnom) tvare
-			<br><b>left</b> ... výstup zarovná zľava - výplňové znaky dá sprava
-			<br><b>right</b> ... výstup zarovná sprava - výplňové znaky dá zľava
-			<br><b>setw(int n)</b> ... nastaví počet políčok do ktorých sa urobí výstup (platí len pre jeden výstup)
-			<br><b>setprecision(int n)</b> ... nastaví presnosť pri reálnych číslach (platí do odvolania)
-			<br><b>setfill(char z)</b> ... štandartne sú nezapísané políčka zaplnené medzerou, ale môžme to zmeniť (platí do odvolania)
-			<br><b>setbase(int n)</b> ... všetky celočíselné údaje budú zapísané v sústave so základom n (povolene sú len 8,10,16)
-			<br><b>uppercase</b> ... všetky malé písmená anglickej abecedy budú prekonvertované na veľké (včítane hexa číslic) 
-			<br><b>nouppercase</b> ... zruší prekonvertovanie na veľké 
-			<br><b>endl</b> ... pridá znak ukončenia riadku ('\n')
+			<br><b>dec</b> ... nastavĂ­ vĂ˝stup celĂ˝ch ÄŤĂ­sel v dekadickej sĂşstave
+			<br><b>hex</b> ... nastavĂ­ vĂ˝stup celĂ˝ch ÄŤĂ­sel v hexa sĂşstave
+			<br><b>oct</b> ... nastavĂ­ vĂ˝stup celĂ˝ch ÄŤĂ­sel v osmiÄŤkovej sĂşstave
+			<br><b>showbase</b> ... pri nastavenĂ­ hex pridĂˇ pred ÄŤĂ­slo 0x, pri oct pridĂˇ nulu
+			<br><b>noshowbase</b> ... zruĹˇĂ­ showbase
+			<br><b>fixed</b> ... nastavĂ­ vĂ˝stup desatinnĂ˝ch ÄŤĂ­sel v desatinnom tvare
+			<br><b>scientific</b> ... nastavĂ­ vĂ˝stup desatinnĂ˝ch ÄŤĂ­sel vo vedeckom (exponenciĂˇlnom) tvare
+			<br><b>left</b> ... vĂ˝stup zarovnĂˇ zÄľava - vĂ˝plĹovĂ© znaky dĂˇ sprava
+			<br><b>right</b> ... vĂ˝stup zarovnĂˇ sprava - vĂ˝plĹovĂ© znaky dĂˇ zÄľava
+			<br><b>setw(int n)</b> ... nastavĂ­ poÄŤet polĂ­ÄŤok do ktorĂ˝ch sa urobĂ­ vĂ˝stup (platĂ­ len pre jeden vĂ˝stup)
+			<br><b>setprecision(int n)</b> ... nastavĂ­ presnosĹĄ pri reĂˇlnych ÄŤĂ­slach (platĂ­ do odvolania)
+			<br><b>setfill(char z)</b> ... Ĺˇtandartne sĂş nezapĂ­sanĂ© polĂ­ÄŤka zaplnenĂ© medzerou, ale mĂ´Ĺľme to zmeniĹĄ (platĂ­ do odvolania)
+			<br><b>setbase(int n)</b> ... vĹˇetky celoÄŤĂ­selnĂ© Ăşdaje budĂş zapĂ­sanĂ© v sĂşstave so zĂˇkladom n (povolene sĂş len 8,10,16)
+			<br><b>uppercase</b> ... vĹˇetky malĂ© pĂ­smenĂˇ anglickej abecedy budĂş prekonvertovanĂ© na veÄľkĂ© (vÄŤĂ­tane hexa ÄŤĂ­slic) 
+			<br><b>nouppercase</b> ... zruĹˇĂ­ prekonvertovanie na veÄľkĂ© 
+			<br><b>endl</b> ... pridĂˇ znak ukonÄŤenia riadku ('\n')
 			<dt>Funkcie objektu typu ofstream
 			<dd><ul>
-					<li><b>prem2.put(char)</b> - položí na výstup znak (znak možno zadať aj celočíselnou hodnotou - int nemusíme pretypovať na char)
-					<li><b>prem2.fill(char)</b> - ako manipulátor setfill()
-					<li><b>prem2.fill()</b> - vráti aktuálny výplňový znak
-					<li><b>prem2.precision(int)</b> - ako manipulátor setprecision
-					<li><b>prem2.width(int)</b> - ako manipulátor setw
+					<li><b>prem2.put(char)</b> - poloĹľĂ­ na vĂ˝stup znak (znak moĹľno zadaĹĄ aj celoÄŤĂ­selnou hodnotou - int nemusĂ­me pretypovaĹĄ na char)
+					<li><b>prem2.fill(char)</b> - ako manipulĂˇtor setfill()
+					<li><b>prem2.fill()</b> - vrĂˇti aktuĂˇlny vĂ˝plĹovĂ˝ znak
+					<li><b>prem2.precision(int)</b> - ako manipulĂˇtor setprecision
+					<li><b>prem2.width(int)</b> - ako manipulĂˇtor setw
 				</ul>	
-			Pri výpise reálnych čísel možno presnosť nastaviť:
-			<ul><li>počtom platných cifier vo výpise
+			Pri vĂ˝pise reĂˇlnych ÄŤĂ­sel moĹľno presnosĹĄ nastaviĹĄ:
+			<ul><li>poÄŤtom platnĂ˝ch cifier vo vĂ˝pise
 					<pre>prem2 &lt;&lt;setprecision(n);
-	prem2 &lt;&lt;setprecision(3)&lt;&lt;1.23456;       //vypíše 1.23  (tri cifry)
-	prem2 &lt;&lt;setprecision(3)&lt;&lt;123.456;       //vypíše 123  (tri cifry)
-	prem2 &lt;&lt;setprecision(3)&lt;&lt;0.0123456;       //vypíše 0.0123  (tri cifry)
-	prem2 &lt;&lt;setprecision(3)&lt;&lt;1234.56;       //vypíše číslo vo vedeckom tvare - nedá sa splniť
+	prem2 &lt;&lt;setprecision(3)&lt;&lt;1.23456;       //vypĂ­Ĺˇe 1.23  (tri cifry)
+	prem2 &lt;&lt;setprecision(3)&lt;&lt;123.456;       //vypĂ­Ĺˇe 123  (tri cifry)
+	prem2 &lt;&lt;setprecision(3)&lt;&lt;0.0123456;       //vypĂ­Ĺˇe 0.0123  (tri cifry)
+	prem2 &lt;&lt;setprecision(3)&lt;&lt;1234.56;       //vypĂ­Ĺˇe ÄŤĂ­slo vo vedeckom tvare - nedĂˇ sa splniĹĄ
 resp.   prem2.precision(n);</pre>
-				<li>počtom desatinných čísel
+				<li>poÄŤtom desatinnĂ˝ch ÄŤĂ­sel
 					<pre>prem2 &lt;&lt;fixed &lt;&lt; setprecision(n);
-	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;1.23456;       //vypíše 1.235  (tri cifry za bodkou)
-	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;1234.56;       //vypíše 1234.560  (tri cifry za bodkou)
-	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;10.0;       //vypíše 10.000  (tri cifry za bodkou)
-	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;10;       //vypíše 10  (na celé čísla to neplatí)
+	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;1.23456;       //vypĂ­Ĺˇe 1.235  (tri cifry za bodkou)
+	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;1234.56;       //vypĂ­Ĺˇe 1234.560  (tri cifry za bodkou)
+	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;10.0;       //vypĂ­Ĺˇe 10.000  (tri cifry za bodkou)
+	prem2 &lt;&lt;fixed&lt;&lt;setprecision(3)&lt;&lt;10;       //vypĂ­Ĺˇe 10  (na celĂ© ÄŤĂ­sla to neplatĂ­)
 resp.   prem2 &lt;&lt;fixed; prem2.precision(n);</pre>
 			</ul>					
-			fixed zabezpečí navyše aj písanie koncových núl (číslo 1.4 pri výpise na tri desatinné bude 1.400).
-			<br>Pri výpise znaku je niekedy nutné vložiť zátvorky (nech char z='a' )
-			<br>napr. prem2 &lt;&lt;z; // vypíše a
-			<br>prem2 &lt;&lt; z+1; //vypíše 97, lebo z+1 je už typu int
-			<br>prem2 &lt;&lt; char(z+1); // vypíše b
-			<br>prem2.put(z+1); // vypíše b
-			<dt>Úlohy
-			<dd><ul><li>vypíšte do súboru pod seba nasledovnú tabuľku (bodky označujú medzery)
+			fixed zabezpeÄŤĂ­ navyĹˇe aj pĂ­sanie koncovĂ˝ch nĂşl (ÄŤĂ­slo 1.4 pri vĂ˝pise na tri desatinnĂ© bude 1.400).
+			<br>Pri vĂ˝pise znaku je niekedy nutnĂ© vloĹľiĹĄ zĂˇtvorky (nech char z='a' )
+			<br>napr. prem2 &lt;&lt;z; // vypĂ­Ĺˇe a
+			<br>prem2 &lt;&lt; z+1; //vypĂ­Ĺˇe 97, lebo z+1 je uĹľ typu int
+			<br>prem2 &lt;&lt; char(z+1); // vypĂ­Ĺˇe b
+			<br>prem2.put(z+1); // vypĂ­Ĺˇe b
+			<dt>Ăšlohy
+			<dd><ul><li>vypĂ­Ĺˇte do sĂşboru pod seba nasledovnĂş tabuÄľku (bodky oznaÄŤujĂş medzery)
 <code>						<br>...n....n!
 						<br>...1.....1
 						<br>...2.....2
@@ -348,11 +348,11 @@ resp.   prem2 &lt;&lt;fixed; prem2.precision(n);</pre>
 						<br>...4....24
 						<br>...5...120
 </code>						<br>
-					<li>Načítajte celé číslo n vypíšte do súboru n hviezdičiek (bez použitia cyklu)
-					<li>Načítaj dve celé čísla oddelené medzerou a do súboru ich vypíš usporiadané.
+					<li>NaÄŤĂ­tajte celĂ© ÄŤĂ­slo n vypĂ­Ĺˇte do sĂşboru n hviezdiÄŤiek (bez pouĹľitia cyklu)
+					<li>NaÄŤĂ­taj dve celĂ© ÄŤĂ­sla oddelenĂ© medzerou a do sĂşboru ich vypĂ­Ĺˇ usporiadanĂ©.
         		</ul>
-			<dt>Preťažovanie operátora &lt;&lt;
-			<dd>Operátor &lt;&lt;, ktorý má dva parametre (1.-kam pošleme dáta, 2. hodnotu) možno naučiť priamo vypisovať napr. aj štruktúry
+			<dt>PreĹĄaĹľovanie operĂˇtora &lt;&lt;
+			<dd>OperĂˇtor &lt;&lt;, ktorĂ˝ mĂˇ dva parametre (1.-kam poĹˇleme dĂˇta, 2. hodnotu) moĹľno nauÄŤiĹĄ priamo vypisovaĹĄ napr. aj ĹˇtruktĂşry
 			<TABLE cellSpacing=0  bgColor=white border=1> 
 		<TR><TD bgColor=#99cccc><I>Pretazovanie operatora &lt;&lt;</I></tr>
 		<TR><TD style="padding:5" vAlign=top>

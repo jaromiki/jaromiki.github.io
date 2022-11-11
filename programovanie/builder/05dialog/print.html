@@ -1,80 +1,80 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	 <title>Časovač a dialógy</title>
+	 <title>ÄŚasovaÄŤ a dialĂłgy</title>
 	 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1250">
  	 <meta name="Content-language" content="sk">	
 	  <LINK href="../css/style.css" type="text/css" rel=stylesheet>
 </head>
 
 <body>
-<h3>Dialógové okná - Save</h3>
-Vo Win máme štandartné prostriedky na voľbu niektorých prostriedkov - volajú sa dialógové okná.				 
-<br>Dialógové okná sú prostriedky Windows na prácu s 
-<br><font color="Blue">tlačiarňou</font> - chceme aby užívateľ zvolil tlačiareň, alebo ju nastavil
-<br><font color="Blue">súbormi</font> - chceme aby užívateľ zvolil súbor na načítanie alebo zápis
-<br><font color="Blue">adresármi</font> - chceme aby užívateľ zvolil aktívny disk, adresár
-<br><font color="Blue">farbami</font> - chceme aby užívateľ vyberal aktívnu farbu
-<br><br>Z programov Word, Excel a ďalších poznáme postup ako zvoliť vytlačenie súboru. Tu si ukážeme ako tento spôsob voľby
-tlače pre užívateľa naučiť aj náš program.
+<h3>DialĂłgovĂ© oknĂˇ - Save</h3>
+Vo Win mĂˇme ĹˇtandartnĂ© prostriedky na voÄľbu niektorĂ˝ch prostriedkov - volajĂş sa dialĂłgovĂ© oknĂˇ.				 
+<br>DialĂłgovĂ© oknĂˇ sĂş prostriedky Windows na prĂˇcu s 
+<br><font color="Blue">tlaÄŤiarĹou</font> - chceme aby uĹľĂ­vateÄľ zvolil tlaÄŤiareĹ, alebo ju nastavil
+<br><font color="Blue">sĂşbormi</font> - chceme aby uĹľĂ­vateÄľ zvolil sĂşbor na naÄŤĂ­tanie alebo zĂˇpis
+<br><font color="Blue">adresĂˇrmi</font> - chceme aby uĹľĂ­vateÄľ zvolil aktĂ­vny disk, adresĂˇr
+<br><font color="Blue">farbami</font> - chceme aby uĹľĂ­vateÄľ vyberal aktĂ­vnu farbu
+<br><br>Z programov Word, Excel a ÄŹalĹˇĂ­ch poznĂˇme postup ako zvoliĹĄ vytlaÄŤenie sĂşboru. Tu si ukĂˇĹľeme ako tento spĂ´sob voÄľby
+tlaÄŤe pre uĹľĂ­vateÄľa nauÄŤiĹĄ aj nĂˇĹˇ program.
 
 <dl>
 	<dt class=main>PrintDialog
-	<dd>Toto dialógové okno použijeme, ak chceme aby užívateľ zvolil tlačiareň, nastavil jej vlastnosti. Tento dialóg ale
-	 nič netlačí, len umožní nám postupom bežným vo Win zvoliť si vlastnosti tlače. Dialógové okno <b>PrintDialog</b> nájdeme
-	  na karte <b>Dialogs</b>, vložíme ho do nášho formulára. Ide o nevizuálny objekt a tak umiestnenie v okne nemá vplyv na
-	   použitie. Po vložení do formulára získame funkciu <b>PrintDialog1.execute</b>, ktorá vytvorí dialógové okno 
-	   na voľbu vlastností tlače: 
-		<ul><li>tlačiareň 
-			<li>nastaviť vlastnosti zvolenej tlačiarne
-			<li>určiť oblasť tlače
-			<li>počet kópií
+	<dd>Toto dialĂłgovĂ© okno pouĹľijeme, ak chceme aby uĹľĂ­vateÄľ zvolil tlaÄŤiareĹ, nastavil jej vlastnosti. Tento dialĂłg ale
+	 niÄŤ netlaÄŤĂ­, len umoĹľnĂ­ nĂˇm postupom beĹľnĂ˝m vo Win zvoliĹĄ si vlastnosti tlaÄŤe. DialĂłgovĂ© okno <b>PrintDialog</b> nĂˇjdeme
+	  na karte <b>Dialogs</b>, vloĹľĂ­me ho do nĂˇĹˇho formulĂˇra. Ide o nevizuĂˇlny objekt a tak umiestnenie v okne nemĂˇ vplyv na
+	   pouĹľitie. Po vloĹľenĂ­ do formulĂˇra zĂ­skame funkciu <b>PrintDialog1.execute</b>, ktorĂˇ vytvorĂ­ dialĂłgovĂ© okno 
+	   na voÄľbu vlastnostĂ­ tlaÄŤe: 
+		<ul><li>tlaÄŤiareĹ 
+			<li>nastaviĹĄ vlastnosti zvolenej tlaÄŤiarne
+			<li>urÄŤiĹĄ oblasĹĄ tlaÄŤe
+			<li>poÄŤet kĂłpiĂ­
 		</ul>
-		<br>a v object inspector alebo príkazmi možno pred zavolaním okna nastaviť nejaké vlastnosti
+		<br>a v object inspector alebo prĂ­kazmi moĹľno pred zavolanĂ­m okna nastaviĹĄ nejakĂ© vlastnosti
 		<ul>
-			<li>obmedzenie na maximálny a minimálny počet strán textu 
+			<li>obmedzenie na maximĂˇlny a minimĂˇlny poÄŤet strĂˇn textu 
 		</ul>
 	<dt><font color="Green">Execute</font>
-	<dd>- základná funkcia objektu, ktorá vytvorí na obrazovke okno cez ktoré bude
-		komunikovať s užívateľom. V tomto okne sú vstupné polia, kde volíme tlačiareň 
-		nastavujeme jej vlastnosti zadávame rozsah strán, počet kópií a sú tu dve tlačítka <b>OK</b> a <b>Storno</b>.	
-		Funkcia nadobúda logickú hodnotu <b>TRUE</b> - ak užívateľ stlačí <b>OK</b> a <b>FALSE</b> ak stlačí
+	<dd>- zĂˇkladnĂˇ funkcia objektu, ktorĂˇ vytvorĂ­ na obrazovke okno cez ktorĂ© bude
+		komunikovaĹĄ s uĹľĂ­vateÄľom. V tomto okne sĂş vstupnĂ© polia, kde volĂ­me tlaÄŤiareĹ 
+		nastavujeme jej vlastnosti zadĂˇvame rozsah strĂˇn, poÄŤet kĂłpiĂ­ a sĂş tu dve tlaÄŤĂ­tka <b>OK</b> a <b>Storno</b>.	
+		Funkcia nadobĂşda logickĂş hodnotu <b>TRUE</b> - ak uĹľĂ­vateÄľ stlaÄŤĂ­ <b>OK</b> a <b>FALSE</b> ak stlaÄŤĂ­
 		<b>Storno</b> alebo okno len zavrie. 
-		Celú tlač robíme pomocou objektu <b>Printer</b>, kde prenesieme nastavené vlastnosti tlače zadané užívateľom
+		CelĂş tlaÄŤ robĂ­me pomocou objektu <b>Printer</b>, kde prenesieme nastavenĂ© vlastnosti tlaÄŤe zadanĂ© uĹľĂ­vateÄľom
 </dl>
-<H3>Tlač dokumentu</H3>
-Na prácu s tlačiarňou je potrebné pripojiť knižnicu s potrebnými príkazmi. Takou je mapríklad knižnica <font color="Red"><b>printers</b></font>.
-Po pripojení máme k dispozícii objekt printer pomocou ktorého môžme posielať text na výstup. Otvorenie tlačového portu je príkazom 
-<b>BeginDoc</b>, zatvorenie pomocou príkazu <b>EndDoc</b>.
-<h3>Vlastnosti a metódy objektu printer</h3>
+<H3>TlaÄŤ dokumentu</H3>
+Na prĂˇcu s tlaÄŤiarĹou je potrebnĂ© pripojiĹĄ kniĹľnicu s potrebnĂ˝mi prĂ­kazmi. Takou je maprĂ­klad kniĹľnica <font color="Red"><b>printers</b></font>.
+Po pripojenĂ­ mĂˇme k dispozĂ­cii objekt printer pomocou ktorĂ©ho mĂ´Ĺľme posielaĹĄ text na vĂ˝stup. Otvorenie tlaÄŤovĂ©ho portu je prĂ­kazom 
+<b>BeginDoc</b>, zatvorenie pomocou prĂ­kazu <b>EndDoc</b>.
+<h3>Vlastnosti a metĂłdy objektu printer</h3>
 <dl>	
 	<dt style="color:#009900">BeginDoc
-	<dd>Vytvorí spojenie plochy a tlačiarne, pripraví prázdnu plochu "správnej" veľkosti.
+	<dd>VytvorĂ­ spojenie plochy a tlaÄŤiarne, pripravĂ­ prĂˇzdnu plochu "sprĂˇvnej" veÄľkosti.
 	<dt style="color:#009900">EndDoc
-	<dd>Odošle plochu do tlačiarne a ukončí spojenie plochy s tlačiarňou.
+	<dd>OdoĹˇle plochu do tlaÄŤiarne a ukonÄŤĂ­ spojenie plochy s tlaÄŤiarĹou.
 	<dt style="color:#009900">NewPage
-	<dd>Odošle plochu do tlačiarne a pripraví ďalšiu prázdnu plochu.
+	<dd>OdoĹˇle plochu do tlaÄŤiarne a pripravĂ­ ÄŹalĹˇiu prĂˇzdnu plochu.
 	<dt style="color:#009900">Orientation
-	<dd>určuje orientáciu papiera. Prípustné sú 2 hodnoty:
-		<br>poPortrait - na výšku	
-		<br>poLandscape- na šírku	
+	<dd>urÄŤuje orientĂˇciu papiera. PrĂ­pustnĂ© sĂş 2 hodnoty:
+		<br>poPortrait - na vĂ˝Ĺˇku	
+		<br>poLandscape- na ĹˇĂ­rku	
 	<dt style="color:#009900">Copies
-	<dd>počet kópií tlačeného dokumentuntu	
+	<dd>poÄŤet kĂłpiĂ­ tlaÄŤenĂ©ho dokumentuntu	
 	<dt style="color:#009900">Canvas
-	<dd>plocha kam môžeme kresliť písať a môže byť odoslané na štandartnú tlačiareň.
-		<br>Najpoužívanejšie príkazy na písanie-kreslenie na Canvas
+	<dd>plocha kam mĂ´Ĺľeme kresliĹĄ pĂ­saĹĄ a mĂ´Ĺľe byĹĄ odoslanĂ© na ĹˇtandartnĂş tlaÄŤiareĹ.
+		<br>NajpouĹľĂ­vanejĹˇie prĂ­kazy na pĂ­sanie-kreslenie na Canvas
 		<dl><dt>Font.size, Font.name, Font.color
-			<dd>veľkosť, meno fontu, farba písma
+			<dd>veÄľkosĹĄ, meno fontu, farba pĂ­sma
 			<dt>TextOut(x,y,text)
-			<dd>vypíše text na súradnice [x,y]. 
+			<dd>vypĂ­Ĺˇe text na sĂşradnice [x,y]. 
 			<dt>TextRect(rect,x,y,text)
-			<dd>vypíše text do obdĺžnika <font color="Green">rect</font>, text je na súradnici x,y viditelná je len tá časť, ktorá
-				je vnútri obdĺžnika. 
+			<dd>vypĂ­Ĺˇe text do obdÄşĹľnika <font color="Green">rect</font>, text je na sĂşradnici x,y viditelnĂˇ je len tĂˇ ÄŤasĹĄ, ktorĂˇ
+				je vnĂştri obdÄşĹľnika. 
 			<dt>TextWidth(text), TextHeight(text)
-			<dd>šírka, výška textu v pixloch, ponocou týchto hodnôt môžeme zistiť, či sa text zmestí na dané miesto papiera.	
+			<dd>ĹˇĂ­rka, vĂ˝Ĺˇka textu v pixloch, ponocou tĂ˝chto hodnĂ´t mĂ´Ĺľeme zistiĹĄ, ÄŤi sa text zmestĂ­ na danĂ© miesto papiera.	
 	<dt>PageHeight, PageWidth
-	<dd>výška, resp. šírka tlačenej plochy. Veľkosť plochy je určená veľkosťou papiera - ktorý je nastavený v tlačiarni - 
-		a tiež počtom pixelov na palec - hustota tlače.
+	<dd>vĂ˝Ĺˇka, resp. ĹˇĂ­rka tlaÄŤenej plochy. VeÄľkosĹĄ plochy je urÄŤenĂˇ veÄľkosĹĄou papiera - ktorĂ˝ je nastavenĂ˝ v tlaÄŤiarni - 
+		a tieĹľ poÄŤtom pixelov na palec - hustota tlaÄŤe.
 </dl>
 </dl>
 

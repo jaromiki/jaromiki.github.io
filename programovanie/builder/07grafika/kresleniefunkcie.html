@@ -55,32 +55,32 @@ function kresba()
 <body onload="init();">
 <h3 class=nadpis>Kreslenie priebehu funkcie</h3>
 <dl><dt class=main>Priebeh polynomu
-	<dd>Zvolil som polynom lebo sa s ním stretávame najèastejšie a menením parametrov mono odsledova zmeny v priebehu funkcie.
-		Èo by malo by zadané:
-		<ul><li>koeficienty polynomu/polynomov (zvolil som max. 4. stupeò)
-			<li>interval x na ktorom chceme f sledova &lt;x1; x2&gt; 
+	<dd>Zvolil som polynom lebo sa s nÃ­m stretÃ¡vame najÄastejÅ¡ie a menenÃ­m parametrov moÅ¾no odsledovaÅ¥ zmeny v priebehu funkcie.
+		ÄŒo by malo byÅ¥ zadanÃ©:
+		<ul><li>koeficienty polynomu/polynomov (zvolil som max. 4. stupeÅˆ)
+			<li>interval x na ktorom chceme f sledovaÅ¥ &lt;x1; x2&gt; 
 		</ul>
-		Èo by som pred vykreslovaním mal vypoèíta:
-		<ul><li>obor funkènıch hodnôt polynomu resp. všetkıch zobrazovanıch polynomov &lt;y1; y2&gt; 
+		ÄŒo by som pred vykreslovanÃ­m mal vypoÄÃ­taÅ¥:
+		<ul><li>obor funkÄnÃ½ch hodnÃ´t polynomu resp. vÅ¡etkÃ½ch zobrazovanÃ½ch polynomov &lt;y1; y2&gt; 
 		</ul>
-		Nech x je hodnota zo sledovaného intervalu &lt;xa; xb&gt; a f(x) je hodnota niektorého polynomu
-		Nech polynomy chceme vykresli vykresli na obrazovke do obdånika [ [ox1; oy1]; [ox2; oy2] ], kde ox,oy sú celé 
-		<br>Potrebujeme vedie premietnu:
+		Nech x je hodnota zo sledovanÃ©ho intervalu &lt;xa; xb&gt; a f(x) je hodnota niektorÃ©ho polynomu
+		Nech polynomy chceme vykresliÅ¥ vykresliÅ¥ na obrazovke do obdÄºÅ¾nika [ [ox1; oy1]; [ox2; oy2] ], kde ox,oy sÃº celÃ© 
+		<br>Potrebujeme vedieÅ¥ premietnuÅ¥:
 		<ul><li>x z &lt;x1; x2&gt; do ox z intervalu &lt;0x1; 0x2&gt;
 			<li>ox z &lt;ox1; ox2&gt; do x z intervalu &lt;x1; x2&gt;
 			<li>y z &lt;y1; y2&gt; do oy z intervalu &lt;0y1; 0y2&gt;
 		</ul>
-		<br>Tu sú rovnice na príslušné premietania:
+		<br>Tu sÃº rovnice na prÃ­sluÅ¡nÃ© premietania:
 		x -&gt; ox
 		<br>ox = round((x-x1)/(x2-x1)*(ox2-ox1))+ox1
 		<br>ox -&gt; x
 		<br>x = ((ox-ox1)/(ox2-ox1)*(x2-x1))+x1
-		<br><br>A teraz u môme zaèa vykreslova funkciu, postup bude nasledovnı
-		<ul><li>v cykle budeme prechádza cez obrazovkovı interval ox z &lt;0x1; 0x2&gt;
-			<li>preklopíme ox na x
-			<li>vypoèítame y (hodnota polynomu)
-			<li>preklopíme y na oy
-			<li>vykreslíme (LineTo(ox,oy) )
+		<br><br>A teraz uÅ¾ mÃ´Å¾me zaÄaÅ¥ vykreslovaÅ¥ funkciu, postup bude nasledovnÃ½
+		<ul><li>v cykle budeme prechÃ¡dzaÅ¥ cez obrazovkovÃ½ interval ox z &lt;0x1; 0x2&gt;
+			<li>preklopÃ­me ox na x
+			<li>vypoÄÃ­tame y (hodnota polynomu)
+			<li>preklopÃ­me y na oy
+			<li>vykreslÃ­me (LineTo(ox,oy) )
 		</ul>	
 
 <div style="border-width:3;border-style:outset;width:750px;margin:10px;background-color:silver;">
@@ -89,7 +89,7 @@ function kresba()
    </div>
   	<div style="background-color:silver; width:750px;" onmousemove="if (canvas.getContext) ciara(event.pageX-this.offsetLeft,event.pageY-this.offsetTop );" onmousedown="dole=1" onmouseup="dole=0">
 <canvas width="710" height="550" id="platno" style="margin:6">
-   <br>Váš prohlíeè nepodporuje kreslenie. Animácie nebudú fungova - zvolte IE9, Mozilla alebo Chrome.<br>
+   <br>VÃ¡Å¡ prohlÃ­Å¾eÄ nepodporuje kreslenie. AnimÃ¡cie nebudÃº fungovaÅ¥ - zvolte IE9, Mozilla alebo Chrome.<br>
 </canvas>
 </div>
 Sem zadaj parametre polynomu:<br>
@@ -97,9 +97,9 @@ y=<input type="Text" value=1 id="a4" style="text-align:'right'">x^4+<input type=
   <input type="Text" value=1 id="a1" size="3" style="text-align:'right'">x^1+<input type="Text" value=1 id="a0" size="3" style="text-align:'right'">
 <br><br>Sem zadaj minimum a maximum x  
 <br>x1:<input type="Text" value=-1 id="x1" size="3" style="text-align:'right'"> &nbsp; &nbsp; &nbsp;x2:<input type="Text" value=1 id="x2" size="3" style="text-align:'right'">
-<br><br>Vıpoèet mierky y1,y2 <br><input type="Button" value=" Mierka " onclick="mierka();" style="margin:6">
+<br><br>VÃ½poÄet mierky y1,y2 <br><input type="Button" value=" Mierka " onclick="mierka();" style="margin:6">
 <br>y1: <input type="Text" value=-1 id="y1" size="3" style="text-align:'right'"> &nbsp; &nbsp; &nbsp;y2:<input type="Text" value=1 id="y2" size="3" style="text-align:'right'">
-<br><br>Ak chceš môeš ruène korigova vypoèítanú mierku y1,y2 (y1 odporúèam meni len nadol a y2 nahor)
+<br><br>Ak chceÅ¡ mÃ´Å¾eÅ¡ ruÄne korigovaÅ¥ vypoÄÃ­tanÃº mierku y1,y2 (y1 odporÃºÄam meniÅ¥ len nadol a y2 nahor)
 <br><input type="Button" value="Kresba" onclick="kresba();" style="margin:6"> <input type="Button" value="Clear" onclick="context.fillStyle = '#a8c101';context.fillRect(0, 0, 710, 550);" style="margin:6">
 <br>
 </div>

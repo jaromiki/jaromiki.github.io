@@ -8,31 +8,31 @@
 
 <body>
 <h2>Hmla</h2>
-Grafická kninica OpenGL podporuje metódu, pomocou ktorej sa dá do vykreslovanej scény prida takzvanú hmlu (fog). 
-Ide o grafickı efekt, pri ktorom sa zo vzrastajúcou vzdialenosou od pozorovatela postupne mení farba vykreslovanıch telies. 
-V blízkosti pozorovate¾a (malej vzdialenosti) má teleso svoju pôvodnú farbu (zadanú príkazom glColor*(), texturou, alebo materiálom), 
-vo velkej vzdialenosti potom farbu hmly. Pokia¾ je farba hmly totoná s farbou pozadia, dosiahne se vcelku realistickı efekt, 
-kedy se teleso stráca v hmle alebo v tme. Farba hmly a pozadia však môe by odlišná, èo sa dá vyui pre tvorbu rôznych nerealistickıch 
-efektù.
-Ukázka pouitia tejto metódy znázoròuje prvı obrázok. Na obrázku je vidie, e trávnatı povrch je zobrazenı pôvodnou farbou 
-(resp. barvou textury), vzdialenejší povrch a budova sa však stráca v hmle, ktorá je, podobne ako pozadie, nastavená na šedú farbu.
+GrafickÃ¡ kniÅ¾nica OpenGL podporuje metÃ³du, pomocou ktorej sa dÃ¡ do vykreslovanej scÃ©ny pridaÅ¥ takzvanÃº hmlu (fog). 
+Ide o grafickÃ½ efekt, pri ktorom sa zo vzrastajÃºcou vzdialenosÅ¥ou od pozorovatela postupne menÃ­ farba vykreslovanÃ½ch telies. 
+V blÃ­zkosti pozorovateÄ¾a (malej vzdialenosti) mÃ¡ teleso svoju pÃ´vodnÃº farbu (zadanÃº prÃ­kazom glColor*(), texturou, alebo materiÃ¡lom), 
+vo velkej vzdialenosti potom farbu hmly. PokiaÄ¾ je farba hmly totoÅ¾nÃ¡ s farbou pozadia, dosiahne se vcelku realistickÃ½ efekt, 
+kedy se teleso strÃ¡ca v hmle alebo v tme. Farba hmly a pozadia vÅ¡ak mÃ´Å¾e byÅ¥ odliÅ¡nÃ¡, Äo sa dÃ¡ vyuÅ¾iÅ¥ pre tvorbu rÃ´znych nerealistickÃ½ch 
+efektÅ¯.
+UkÃ¡zka pouÅ¾itia tejto metÃ³dy znÃ¡zorÅˆuje prvÃ½ obrÃ¡zok. Na obrÃ¡zku je vidieÅ¥, Å¾e trÃ¡vnatÃ½ povrch je zobrazenÃ½ pÃ´vodnou farbou 
+(resp. barvou textury), vzdialenejÅ¡Ã­ povrch a budova sa vÅ¡ak strÃ¡ca v hmle, ktorÃ¡ je, podobne ako pozadie, nastavenÃ¡ na Å¡edÃº farbu.
 <br>
-Obrázok1: Priestorová scéna s aplikovanım efektom hmly 
+ObrÃ¡zok1: PriestorovÃ¡ scÃ©na s aplikovanÃ½m efektom hmly 
 <br>
 <img src="hmla1.jpg" width="410" height="392" border="0" alt="">
 <h3>Princip efektu</h3>
-Na prvı poh¾ad vypadá tento efekt velmi sloitı. V skutoènosti je jeho princíp ve¾mi jednoduchı. 
-Pomocí príkazov z grafickej kninice OpenGL sa zadajú základné vlastnosti hmly. 
-Potom sa pri vıpoète farby kadého fragmentu získa jeho farba bez pôsobenia hmly (tj. pouije se napríklad texturovánie alebo 
-osvetlenie) a potom sa táto farba mieša s farbou hmly. Pomer pôvodnej farby fragmentu a farby hmly vo vıslednej farbe je danı 
-parametrami funkcie hmly a vzdialenosou fragmentu od pozorovate¾a (táto vzdialenost sa ak tak musí poèíta, 
-minimálne pre potreby håbkového buffra). Princip tohto efektu je naznaèenı na druhom obrázku.
+Na prvÃ½ pohÄ¾ad vypadÃ¡ tento efekt velmi sloÅ¾itÃ½. V skutoÄnosti je jeho princÃ­p veÄ¾mi jednoduchÃ½. 
+PomocÃ­ prÃ­kazov z grafickej kniÅ¾nice OpenGL sa zadajÃº zÃ¡kladnÃ© vlastnosti hmly. 
+Potom sa pri vÃ½poÄte farby kaÅ¾dÃ©ho fragmentu zÃ­ska jeho farba bez pÃ´sobenia hmly (tj. pouÅ¾ije se naprÃ­klad texturovÃ¡nie alebo 
+osvetlenie) a potom sa tÃ¡to farba mieÅ¡a s farbou hmly. Pomer pÃ´vodnej farby fragmentu a farby hmly vo vÃ½slednej farbe je danÃ½ 
+parametrami funkcie hmly a vzdialenosÅ¥ou fragmentu od pozorovateÄ¾a (tÃ¡to vzdialenost sa ak tak musÃ­ poÄÃ­taÅ¥, 
+minimÃ¡lne pre potreby hÄºbkovÃ©ho buffra). Princip tohto efektu je naznaÄenÃ½ na druhom obrÃ¡zku.
 <img src="hmla2.gif" width="320" height="240" border="0" alt="">
 <h3>Zadanie hmly v programe</h3>
 <dl><dt>glEnable(GL_FOG); glDisable(GL_FOG);
-	<dd>Tento príkaz povolí efekt hmly alebo zakáe. Príkaz nemení nastavenie parametrov hmly.
+	<dd>Tento prÃ­kaz povolÃ­ efekt hmly alebo zakÃ¡Å¾e. PrÃ­kaz nemenÃ­ nastavenie parametrov hmly.
 	<dt>glFog(GL_FOG_MODE, fogmode);
-	<dd>Parameter hmly - tento urèuje ako má hmla hustnú so zväèšujúcou sa vzdialenosou.
+	<dd>Parameter hmly - tento urÄuje ako mÃ¡ hmla hustnÃºÅ¥ so zvÃ¤ÄÅ¡ujÃºcou sa vzdialenosÅ¥ou.
 		<img align="left" src="hmla3.gif" width="450" height="250" border="0" alt=""> 
 		fogmode=
 		<ul><li>GL_LINEAR <li>GL_EXP <li>GL_EXP2 </ul>  
